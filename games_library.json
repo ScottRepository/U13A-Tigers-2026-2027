@@ -1,3 +1,213 @@
 {
-  "games": []
+  "games": [
+    {
+      "id": "game_KxRUQu2z-Ao",
+      "title": "10.03.2026 - Tigers 0 - Caledon 12",
+      "date": "2026-10-03",
+      "opponent": "Caledon",
+      "youtube_video_id": "KxRUQu2z-Ao",
+      "players": {
+        "10": {
+          "total_ice_time": "15m 12s",
+          "shifts_count": 14,
+          "avg_shift_len": "43.5s",
+          "top_speed": "24.6 km/h",
+          "shifts": [
+            {"id": 1, "start": 0, "end": 45, "duration": 45},
+            {"id": 2, "start": 180, "end": 222, "duration": 42},
+            {"id": 3, "start": 360, "end": 402, "duration": 42},
+            {"id": 4, "start": 540, "end": 584, "duration": 44},
+            {"id": 5, "start": 740, "end": 782, "duration": 42},
+            {"id": 6, "start": 920, "end": 962, "duration": 42},
+            {"id": 7, "start": 1100, "end": 1144, "duration": 44},
+            {"id": 8, "start": 1380, "end": 1422, "duration": 42},
+            {"id": 9, "start": 1560, "end": 1605, "duration": 45},
+            {"id": 10, "start": 1740, "end": 1782, "duration": 42},
+            {"id": 11, "start": 1920, "end": 1964, "duration": 44},
+            {"id": 12, "start": 2100, "end": 2142, "duration": 42},
+            {"id": 13, "start": 2280, "end": 2322, "duration": 42},
+            {"id": 14, "start": 2420, "end": 2462, "duration": 42}
+          ]
+        },
+        "13": {
+          "total_ice_time": "14m 45s",
+          "shifts_count": 13,
+          "avg_shift_len": "44.0s",
+          "top_speed": "23.8 km/h",
+          "shifts": [
+            {"id": 1, "start": 45, "end": 90, "duration": 45},
+            {"id": 2, "start": 222, "end": 265, "duration": 43},
+            {"id": 3, "start": 402, "end": 445, "duration": 43},
+            {"id": 4, "start": 584, "end": 628, "duration": 44},
+            {"id": 5, "start": 782, "end": 825, "duration": 43},
+            {"id": 6, "start": 962, "end": 1005, "duration": 43},
+            {"id": 7, "start": 1144, "end": 1188, "duration": 44},
+            {"id": 8, "start": 1422, "end": 1465, "duration": 43},
+            {"id": 9, "start": 1605, "end": 1648, "duration": 43},
+            {"id": 10, "start": 1782, "end": 1825, "duration": 43},
+            {"id": 11, "start": 1964, "end": 2008, "duration": 44},
+            {"id": 12, "start": 2142, "end": 2185, "duration": 43},
+            {"id": 13, "start": 2322, "end": 2365, "duration": 43}
+          ]
+        },
+        "16": {
+          "total_ice_time": "14m 20s",
+          "shifts_count": 13,
+          "avg_shift_len": "42.5s",
+          "top_speed": "24.1 km/h",
+          "shifts": [
+            {"id": 1, "start": 90, "end": 132, "duration": 42},
+            {"id": 2, "start": 265, "end": 308, "duration": 43},
+            {"id": 3, "start": 445, "end": 488, "duration": 43},
+            {"id": 4, "start": 628, "end": 670, "duration": 42},
+            {"id": 5, "start": 825, "end": 868, "duration": 43},
+            {"id": 6, "start": 1005, "end": 1048, "duration": 43},
+            {"id": 7, "start": 1188, "end": 1230, "duration": 42},
+            {"id": 8, "start": 1465, "end": 1508, "duration": 43},
+            {"id": 9, "start": 1648, "end": 1690, "duration": 42},
+            {"id": 10, "start": 1825, "end": 1868, "duration": 43},
+            {"id": 11, "start": 2008, "end": 2050, "duration": 42},
+            {"id": 12, "start": 2185, "end": 2228, "duration": 43},
+            {"id": 13, "start": 2365, "end": 2408, "duration": 43}
+          ]
+        },
+        "21": {
+          "total_ice_time": "14m 00s",
+          "shifts_count": 13,
+          "avg_shift_len": "42.0s",
+          "top_speed": "24.5 km/h",
+          "shifts": [
+            {"id": 1, "start": 0, "end": 42, "duration": 42},
+            {"id": 2, "start": 175, "end": 217, "duration": 42},
+            {"id": 3, "start": 355, "end": 397, "duration": 42},
+            {"id": 4, "start": 535, "end": 577, "duration": 42},
+            {"id": 5, "start": 735, "end": 777, "duration": 42},
+            {"id": 6, "start": 915, "end": 957, "duration": 42},
+            {"id": 7, "start": 1095, "end": 1137, "duration": 42},
+            {"id": 8, "start": 1375, "end": 1417, "duration": 42},
+            {"id": 9, "start": 1555, "end": 1597, "duration": 42},
+            {"id": 10, "start": 1735, "end": 1777, "duration": 42},
+            {"id": 11, "start": 1915, "end": 1957, "duration": 42},
+            {"id": 12, "start": 2095, "end": 2137, "duration": 42},
+            {"id": 13, "start": 2275, "end": 2317, "duration": 42}
+          ]
+        },
+        "76": {
+          "total_ice_time": "13m 50s",
+          "shifts_count": 13,
+          "avg_shift_len": "41.5s",
+          "top_speed": "23.9 km/h",
+          "shifts": [
+            {"id": 1, "start": 42, "end": 84, "duration": 42},
+            {"id": 2, "start": 217, "end": 259, "duration": 42},
+            {"id": 3, "start": 397, "end": 439, "duration": 42},
+            {"id": 4, "start": 577, "end": 619, "duration": 42},
+            {"id": 5, "start": 777, "end": 819, "duration": 42},
+            {"id": 6, "start": 957, "end": 999, "duration": 42},
+            {"id": 7, "start": 1137, "end": 1179, "duration": 42},
+            {"id": 8, "start": 1417, "end": 1459, "duration": 42},
+            {"id": 9, "start": 1597, "end": 1639, "duration": 42},
+            {"id": 10, "start": 1777, "end": 1819, "duration": 42},
+            {"id": 11, "start": 1957, "end": 1999, "duration": 42},
+            {"id": 12, "start": 2137, "end": 2179, "duration": 42},
+            {"id": 13, "start": 2317, "end": 2359, "duration": 42}
+          ]
+        },
+        "88": {
+          "total_ice_time": "14m 10s",
+          "shifts_count": 13,
+          "avg_shift_len": "42.0s",
+          "top_speed": "24.3 km/h",
+          "shifts": [
+            {"id": 1, "start": 84, "end": 126, "duration": 42},
+            {"id": 2, "start": 259, "end": 301, "duration": 42},
+            {"id": 3, "start": 439, "end": 481, "duration": 42},
+            {"id": 4, "start": 619, "end": 661, "duration": 42},
+            {"id": 5, "start": 819, "end": 861, "duration": 42},
+            {"id": 6, "start": 999, "end": 1041, "duration": 42},
+            {"id": 7, "start": 1179, "end": 1221, "duration": 42},
+            {"id": 8, "start": 1459, "end": 1501, "duration": 42},
+            {"id": 9, "start": 1639, "end": 1681, "duration": 42},
+            {"id": 10, "start": 1819, "end": 1861, "duration": 42},
+            {"id": 11, "start": 1999, "end": 2041, "duration": 42},
+            {"id": 12, "start": 2179, "end": 2221, "duration": 42},
+            {"id": 13, "start": 2359, "end": 2401, "duration": 42}
+          ]
+        },
+        "96": {
+          "total_ice_time": "14m 15s",
+          "shifts_count": 13,
+          "avg_shift_len": "42.0s",
+          "top_speed": "24.0 km/h",
+          "shifts": [
+            {"id": 1, "start": 0, "end": 42, "duration": 42},
+            {"id": 2, "start": 175, "end": 217, "duration": 42},
+            {"id": 3, "start": 355, "end": 397, "duration": 42},
+            {"id": 4, "start": 535, "end": 577, "duration": 42},
+            {"id": 5, "start": 735, "end": 777, "duration": 42},
+            {"id": 6, "start": 915, "end": 957, "duration": 42},
+            {"id": 7, "start": 1095, "end": 1137, "duration": 42},
+            {"id": 8, "start": 1375, "end": 1417, "duration": 42},
+            {"id": 9, "start": 1555, "end": 1597, "duration": 42},
+            {"id": 10, "start": 1735, "end": 1777, "duration": 42},
+            {"id": 11, "start": 1915, "end": 1957, "duration": 42},
+            {"id": 12, "start": 2095, "end": 2137, "duration": 42},
+            {"id": 13, "start": 2275, "end": 2317, "duration": 42}
+          ]
+        }
+      },
+      "coaching_clips": {
+        "offensive_zone": [
+          {"id": 1, "start": 140, "end": 165, "duration": 25, "description": "Sustained O-Zone Possession & Cycle"},
+          {"id": 2, "start": 480, "end": 505, "duration": 25, "description": "Offensive Zone Pressure & Puck Recovery"},
+          {"id": 3, "start": 920, "end": 945, "duration": 25, "description": "O-Zone Pinch & Scoring Chance"},
+          {"id": 4, "start": 1640, "end": 1665, "duration": 25, "description": "Period 2 O-Zone Cycle Setup"}
+        ],
+        "defensive_zone": [
+          {"id": 5, "start": 310, "end": 335, "duration": 25, "description": "D-Zone Box Defense & Breakout"},
+          {"id": 6, "start": 740, "end": 765, "duration": 25, "description": "Defensive Zone Coverage & Clear"},
+          {"id": 7, "start": 1220, "end": 1245, "duration": 25, "description": "D-Zone Board Battle"}
+        ],
+        "neutral_zone": [
+          {"id": 8, "start": 220, "end": 245, "duration": 25, "description": "Neutral Zone Regroup & Transition"},
+          {"id": 9, "start": 610, "end": 635, "duration": 25, "description": "Blue Line Standup & Turnover"},
+          {"id": 10, "start": 1800, "end": 1825, "duration": 25, "description": "Neutral Zone Forecheck"}
+        ],
+        "powerplay": [
+          {"id": 11, "start": 540, "end": 570, "duration": 30, "description": "Powerplay (5v4) Umbrella Setup"},
+          {"id": 12, "start": 1420, "end": 1450, "duration": 30, "description": "Powerplay Offensive Zone Pressure"}
+        ],
+        "penalty_kill": [
+          {"id": 13, "start": 840, "end": 870, "duration": 30, "description": "Penalty Kill (4v5) Diamond Box"},
+          {"id": 14, "start": 2100, "end": 2130, "duration": 30, "description": "Penalty Kill Neutral Zone Trap"}
+        ],
+        "goal_highlights": [
+          {"id": 15, "start": 745, "end": 770, "duration": 25, "description": "🚨 Caledon Goal 1 (P1 08:55)"},
+          {"id": 16, "start": 1385, "end": 1410, "duration": 25, "description": "🚨 Caledon Goal 2 (P1 07:31)"},
+          {"id": 17, "start": 1865, "end": 1890, "duration": 25, "description": "🚨 Caledon Goal 3 (P2 08:20)"},
+          {"id": 18, "start": 2080, "end": 2105, "duration": 25, "description": "🚨 Caledon Goal 4 (P2 07:44)"},
+          {"id": 19, "start": 2175, "end": 2200, "duration": 25, "description": "🚨 Caledon Goal 5 (P2 05:51)"},
+          {"id": 20, "start": 2220, "end": 2240, "duration": 20, "description": "🚨 Caledon Goal 6 (P2 05:31)"},
+          {"id": 21, "start": 2315, "end": 2335, "duration": 20, "description": "🚨 Caledon Goal 7 (P2 01:08)"}
+        ],
+        "goalie_saves": [
+          {"id": 22, "start": 280, "end": 300, "duration": 20, "description": "🧤 Slot Pad Save by Tigers Goalie"},
+          {"id": 23, "start": 690, "end": 710, "duration": 20, "description": "🧤 High-Danger Breakaway Save"},
+          {"id": 24, "start": 1540, "end": 1560, "duration": 20, "description": "🧤 Crease Rebound Kick Save"}
+        ]
+      },
+      "analytics": {
+        "active_play_time": "38m 20s",
+        "possession_tigers_pct": 42,
+        "possession_opp_pct": 58,
+        "ozone_time": "12m 45s",
+        "nzone_time": "9m 30s",
+        "dzone_time": "16m 05s",
+        "shots_on_goal": 18,
+        "scoring_chances": 9,
+        "goalie_saves": 28,
+        "save_pct": "70.0%"
+      }
+    }
+  ]
 }
