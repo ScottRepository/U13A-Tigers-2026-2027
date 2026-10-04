@@ -7,92 +7,27 @@
       "opponent": "Caledon",
       "youtube_video_id": "KxRUQu2z-Ao",
       "players": {
-        "3": {
-          "name": "Stewart Dolmage",
-          "total_ice_time": "14m 10s",
-          "shifts_count": 13,
-          "avg_shift_len": "41.5s",
-          "top_speed": "24.1 km/h",
+        "23": {
+          "name": "Easton Carpentier",
+          "total_ice_time": "15m 30s",
+          "shifts_count": 14,
+          "avg_shift_len": "43.5s",
+          "top_speed": "24.8 km/h",
           "shifts": [
-            {"id": 1, "start": 0, "end": 42, "duration": 42},
-            {"id": 2, "start": 180, "end": 222, "duration": 42},
-            {"id": 3, "start": 360, "end": 402, "duration": 42},
-            {"id": 4, "start": 540, "end": 582, "duration": 42},
-            {"id": 5, "start": 740, "end": 782, "duration": 42},
-            {"id": 6, "start": 920, "end": 962, "duration": 42},
-            {"id": 7, "start": 1100, "end": 1142, "duration": 42},
-            {"id": 8, "start": 1380, "end": 1422, "duration": 42},
-            {"id": 9, "start": 1560, "end": 1602, "duration": 42},
-            {"id": 10, "start": 1740, "end": 1782, "duration": 42},
-            {"id": 11, "start": 1920, "end": 1962, "duration": 42},
-            {"id": 12, "start": 2100, "end": 2142, "duration": 42},
-            {"id": 13, "start": 2280, "end": 2322, "duration": 42}
-          ]
-        },
-        "5": {
-          "name": "Nathan Zhao",
-          "total_ice_time": "14m 25s",
-          "shifts_count": 13,
-          "avg_shift_len": "42.5s",
-          "top_speed": "23.9 km/h",
-          "shifts": [
-            {"id": 1, "start": 42, "end": 85, "duration": 43},
-            {"id": 2, "start": 222, "end": 265, "duration": 43},
-            {"id": 3, "start": 402, "end": 445, "duration": 43},
-            {"id": 4, "start": 582, "end": 625, "duration": 43},
-            {"id": 5, "start": 782, "end": 825, "duration": 43},
-            {"id": 6, "start": 962, "end": 1005, "duration": 43},
-            {"id": 7, "start": 1142, "end": 1185, "duration": 43},
-            {"id": 8, "start": 1422, "end": 1465, "duration": 43},
-            {"id": 9, "start": 1602, "end": 1645, "duration": 43},
-            {"id": 10, "start": 1782, "end": 1825, "duration": 43},
-            {"id": 11, "start": 1962, "end": 2005, "duration": 43},
-            {"id": 12, "start": 2142, "end": 2185, "duration": 43},
-            {"id": 13, "start": 2322, "end": 2365, "duration": 43}
-          ]
-        },
-        "7": {
-          "name": "Maxwell Dey",
-          "total_ice_time": "14m 00s",
-          "shifts_count": 13,
-          "avg_shift_len": "41.5s",
-          "top_speed": "24.3 km/h",
-          "shifts": [
-            {"id": 1, "start": 85, "end": 127, "duration": 42},
-            {"id": 2, "start": 265, "end": 307, "duration": 42},
-            {"id": 3, "start": 445, "end": 487, "duration": 42},
-            {"id": 4, "start": 625, "end": 667, "duration": 42},
-            {"id": 5, "start": 825, "end": 867, "duration": 42},
-            {"id": 6, "start": 1005, "end": 1047, "duration": 42},
-            {"id": 7, "start": 1185, "end": 1227, "duration": 42},
-            {"id": 8, "start": 1465, "end": 1507, "duration": 42},
-            {"id": 9, "start": 1645, "end": 1687, "duration": 42},
-            {"id": 10, "start": 1825, "end": 1867, "duration": 42},
-            {"id": 11, "start": 2005, "end": 2047, "duration": 42},
-            {"id": 12, "start": 2185, "end": 2227, "duration": 42},
-            {"id": 13, "start": 2365, "end": 2407, "duration": 42}
-          ]
-        },
-        "9": {
-          "name": "Oliver Patterson",
-          "total_ice_time": "14m 30s",
-          "shifts_count": 13,
-          "avg_shift_len": "42.0s",
-          "top_speed": "24.5 km/h",
-          "shifts": [
-            {"id": 1, "start": 0, "end": 42, "duration": 42},
-            {"id": 2, "start": 178, "end": 220, "duration": 42},
-            {"id": 3, "start": 358, "end": 400, "duration": 42},
-            {"id": 4, "start": 538, "end": 580, "duration": 42},
-            {"id": 5, "start": 738, "end": 780, "duration": 42},
-            {"id": 6, "start": 918, "end": 960, "duration": 42},
-            {"id": 7, "start": 1098, "end": 1140, "duration": 42},
-            {"id": 8, "start": 1378, "end": 1420, "duration": 42},
-            {"id": 9, "start": 1558, "end": 1600, "duration": 42},
-            {"id": 10, "start": 1738, "end": 1780, "duration": 42},
-            {"id": 11, "start": 1918, "end": 1960, "duration": 42},
-            {"id": 12, "start": 2098, "end": 2140, "duration": 42},
-            {"id": 13, "start": 2278, "end": 2320, "duration": 42}
+            {"id": 1, "start": 0, "end": 44, "duration": 44},
+            {"id": 2, "start": 180, "end": 224, "duration": 44},
+            {"id": 3, "start": 360, "end": 403, "duration": 43},
+            {"id": 4, "start": 540, "end": 584, "duration": 44},
+            {"id": 5, "start": 740, "end": 783, "duration": 43},
+            {"id": 6, "start": 920, "end": 964, "duration": 44},
+            {"id": 7, "start": 1100, "end": 1144, "duration": 44},
+            {"id": 8, "start": 1380, "end": 1424, "duration": 44},
+            {"id": 9, "start": 1560, "end": 1603, "duration": 43},
+            {"id": 10, "start": 1740, "end": 1784, "duration": 44},
+            {"id": 11, "start": 1920, "end": 1963, "duration": 43},
+            {"id": 12, "start": 2100, "end": 2144, "duration": 44},
+            {"id": 13, "start": 2280, "end": 2323, "duration": 43},
+            {"id": 14, "start": 2420, "end": 2463, "duration": 43}
           ]
         },
         "10": {
@@ -118,26 +53,26 @@
             {"id": 14, "start": 2420, "end": 2462, "duration": 42}
           ]
         },
-        "11": {
-          "name": "Andrew Bichay",
-          "total_ice_time": "14m 15s",
+        "76": {
+          "name": "Matt Davis",
+          "total_ice_time": "14m 20s",
           "shifts_count": 13,
           "avg_shift_len": "42.0s",
-          "top_speed": "23.7 km/h",
+          "top_speed": "24.2 km/h",
           "shifts": [
-            {"id": 1, "start": 42, "end": 84, "duration": 42},
-            {"id": 2, "start": 220, "end": 262, "duration": 42},
-            {"id": 3, "start": 400, "end": 442, "duration": 42},
-            {"id": 4, "start": 580, "end": 622, "duration": 42},
-            {"id": 5, "start": 780, "end": 822, "duration": 42},
-            {"id": 6, "start": 960, "end": 1002, "duration": 42},
-            {"id": 7, "start": 1140, "end": 1182, "duration": 42},
-            {"id": 8, "start": 1420, "end": 1462, "duration": 42},
-            {"id": 9, "start": 1600, "end": 1642, "duration": 42},
-            {"id": 10, "start": 1780, "end": 1822, "duration": 42},
-            {"id": 11, "start": 1960, "end": 2002, "duration": 42},
-            {"id": 12, "start": 2140, "end": 2182, "duration": 42},
-            {"id": 13, "start": 2320, "end": 2362, "duration": 42}
+            {"id": 1, "start": 0, "end": 42, "duration": 42},
+            {"id": 2, "start": 178, "end": 220, "duration": 42},
+            {"id": 3, "start": 358, "end": 400, "duration": 42},
+            {"id": 4, "start": 538, "end": 580, "duration": 42},
+            {"id": 5, "start": 738, "end": 780, "duration": 42},
+            {"id": 6, "start": 918, "end": 960, "duration": 42},
+            {"id": 7, "start": 1098, "end": 1140, "duration": 42},
+            {"id": 8, "start": 1378, "end": 1420, "duration": 42},
+            {"id": 9, "start": 1558, "end": 1600, "duration": 42},
+            {"id": 10, "start": 1738, "end": 1780, "duration": 42},
+            {"id": 11, "start": 1918, "end": 1960, "duration": 42},
+            {"id": 12, "start": 2098, "end": 2140, "duration": 42},
+            {"id": 13, "start": 2278, "end": 2320, "duration": 42}
           ]
         },
         "13": {
@@ -184,28 +119,6 @@
             {"id": 13, "start": 2365, "end": 2408, "duration": 43}
           ]
         },
-        "18": {
-          "name": "Nathan Carinci",
-          "total_ice_time": "14m 10s",
-          "shifts_count": 13,
-          "avg_shift_len": "42.0s",
-          "top_speed": "24.4 km/h",
-          "shifts": [
-            {"id": 1, "start": 0, "end": 42, "duration": 42},
-            {"id": 2, "start": 180, "end": 222, "duration": 42},
-            {"id": 3, "start": 360, "end": 402, "duration": 42},
-            {"id": 4, "start": 540, "end": 582, "duration": 42},
-            {"id": 5, "start": 740, "end": 782, "duration": 42},
-            {"id": 6, "start": 920, "end": 962, "duration": 42},
-            {"id": 7, "start": 1100, "end": 1142, "duration": 42},
-            {"id": 8, "start": 1380, "end": 1422, "duration": 42},
-            {"id": 9, "start": 1560, "end": 1602, "duration": 42},
-            {"id": 10, "start": 1740, "end": 1782, "duration": 42},
-            {"id": 11, "start": 1920, "end": 1962, "duration": 42},
-            {"id": 12, "start": 2100, "end": 2142, "duration": 42},
-            {"id": 13, "start": 2280, "end": 2322, "duration": 42}
-          ]
-        },
         "21": {
           "name": "Caleb Irgengioro-Wu",
           "total_ice_time": "14m 00s",
@@ -226,29 +139,6 @@
             {"id": 11, "start": 1915, "end": 1957, "duration": 42},
             {"id": 12, "start": 2095, "end": 2137, "duration": 42},
             {"id": 13, "start": 2275, "end": 2317, "duration": 42}
-          ]
-        },
-        "23": {
-          "name": "Easton Carpentier",
-          "total_ice_time": "15m 30s",
-          "shifts_count": 14,
-          "avg_shift_len": "43.5s",
-          "top_speed": "24.8 km/h",
-          "shifts": [
-            {"id": 1, "start": 0, "end": 44, "duration": 44},
-            {"id": 2, "start": 180, "end": 224, "duration": 44},
-            {"id": 3, "start": 360, "end": 403, "duration": 43},
-            {"id": 4, "start": 540, "end": 584, "duration": 44},
-            {"id": 5, "start": 740, "end": 783, "duration": 43},
-            {"id": 6, "start": 920, "end": 964, "duration": 44},
-            {"id": 7, "start": 1100, "end": 1144, "duration": 44},
-            {"id": 8, "start": 1380, "end": 1424, "duration": 44},
-            {"id": 9, "start": 1560, "end": 1603, "duration": 43},
-            {"id": 10, "start": 1740, "end": 1784, "duration": 44},
-            {"id": 11, "start": 1920, "end": 1963, "duration": 43},
-            {"id": 12, "start": 2100, "end": 2144, "duration": 44},
-            {"id": 13, "start": 2280, "end": 2323, "duration": 43},
-            {"id": 14, "start": 2420, "end": 2463, "duration": 43}
           ]
         },
         "27": {
@@ -273,6 +163,138 @@
             {"id": 13, "start": 2323, "end": 2365, "duration": 42}
           ]
         },
+        "88": {
+          "name": "Roy Chen",
+          "total_ice_time": "14m 10s",
+          "shifts_count": 13,
+          "avg_shift_len": "42.0s",
+          "top_speed": "24.3 km/h",
+          "shifts": [
+            {"id": 1, "start": 42, "end": 84, "duration": 42},
+            {"id": 2, "start": 220, "end": 262, "duration": 42},
+            {"id": 3, "start": 400, "end": 442, "duration": 42},
+            {"id": 4, "start": 580, "end": 622, "duration": 42},
+            {"id": 5, "start": 780, "end": 822, "duration": 42},
+            {"id": 6, "start": 960, "end": 1002, "duration": 42},
+            {"id": 7, "start": 1140, "end": 1182, "duration": 42},
+            {"id": 8, "start": 1420, "end": 1462, "duration": 42},
+            {"id": 9, "start": 1600, "end": 1642, "duration": 42},
+            {"id": 10, "start": 1780, "end": 1822, "duration": 42},
+            {"id": 11, "start": 1960, "end": 2002, "duration": 42},
+            {"id": 12, "start": 2140, "end": 2182, "duration": 42},
+            {"id": 13, "start": 2320, "end": 2362, "duration": 42}
+          ]
+        },
+        "9": {
+          "name": "Oliver Patterson",
+          "total_ice_time": "14m 30s",
+          "shifts_count": 13,
+          "avg_shift_len": "42.0s",
+          "top_speed": "24.5 km/h",
+          "shifts": [
+            {"id": 1, "start": 0, "end": 42, "duration": 42},
+            {"id": 2, "start": 178, "end": 220, "duration": 42},
+            {"id": 3, "start": 358, "end": 400, "duration": 42},
+            {"id": 4, "start": 538, "end": 580, "duration": 42},
+            {"id": 5, "start": 738, "end": 780, "duration": 42},
+            {"id": 6, "start": 918, "end": 960, "duration": 42},
+            {"id": 7, "start": 1098, "end": 1140, "duration": 42},
+            {"id": 8, "start": 1378, "end": 1420, "duration": 42},
+            {"id": 9, "start": 1558, "end": 1600, "duration": 42},
+            {"id": 10, "start": 1738, "end": 1780, "duration": 42},
+            {"id": 11, "start": 1918, "end": 1960, "duration": 42},
+            {"id": 12, "start": 2098, "end": 2140, "duration": 42},
+            {"id": 13, "start": 2278, "end": 2320, "duration": 42}
+          ]
+        },
+        "7": {
+          "name": "Maxwell Dey",
+          "total_ice_time": "14m 00s",
+          "shifts_count": 13,
+          "avg_shift_len": "41.5s",
+          "top_speed": "24.3 km/h",
+          "shifts": [
+            {"id": 1, "start": 85, "end": 127, "duration": 42},
+            {"id": 2, "start": 265, "end": 307, "duration": 42},
+            {"id": 3, "start": 445, "end": 487, "duration": 42},
+            {"id": 4, "start": 625, "end": 667, "duration": 42},
+            {"id": 5, "start": 825, "end": 867, "duration": 42},
+            {"id": 6, "start": 1005, "end": 1047, "duration": 42},
+            {"id": 7, "start": 1185, "end": 1227, "duration": 42},
+            {"id": 8, "start": 1465, "end": 1507, "duration": 42},
+            {"id": 9, "start": 1645, "end": 1687, "duration": 42},
+            {"id": 10, "start": 1825, "end": 1867, "duration": 42},
+            {"id": 11, "start": 2005, "end": 2047, "duration": 42},
+            {"id": 12, "start": 2185, "end": 2227, "duration": 42},
+            {"id": 13, "start": 2365, "end": 2407, "duration": 42}
+          ]
+        },
+        "5": {
+          "name": "Nathan Zhao",
+          "total_ice_time": "14m 25s",
+          "shifts_count": 13,
+          "avg_shift_len": "42.5s",
+          "top_speed": "23.9 km/h",
+          "shifts": [
+            {"id": 1, "start": 42, "end": 85, "duration": 43},
+            {"id": 2, "start": 222, "end": 265, "duration": 43},
+            {"id": 3, "start": 402, "end": 445, "duration": 43},
+            {"id": 4, "start": 582, "end": 625, "duration": 43},
+            {"id": 5, "start": 782, "end": 825, "duration": 43},
+            {"id": 6, "start": 962, "end": 1005, "duration": 43},
+            {"id": 7, "start": 1142, "end": 1185, "duration": 43},
+            {"id": 8, "start": 1422, "end": 1465, "duration": 43},
+            {"id": 9, "start": 1602, "end": 1645, "duration": 43},
+            {"id": 10, "start": 1782, "end": 1825, "duration": 43},
+            {"id": 11, "start": 1962, "end": 2005, "duration": 43},
+            {"id": 12, "start": 2142, "end": 2185, "duration": 43},
+            {"id": 13, "start": 2322, "end": 2365, "duration": 43}
+          ]
+        },
+        "18": {
+          "name": "Nathan Carinci",
+          "total_ice_time": "14m 10s",
+          "shifts_count": 13,
+          "avg_shift_len": "42.0s",
+          "top_speed": "24.4 km/h",
+          "shifts": [
+            {"id": 1, "start": 0, "end": 42, "duration": 42},
+            {"id": 2, "start": 180, "end": 222, "duration": 42},
+            {"id": 3, "start": 360, "end": 402, "duration": 42},
+            {"id": 4, "start": 540, "end": 582, "duration": 42},
+            {"id": 5, "start": 740, "end": 782, "duration": 42},
+            {"id": 6, "start": 920, "end": 962, "duration": 42},
+            {"id": 7, "start": 1100, "end": 1142, "duration": 42},
+            {"id": 8, "start": 1380, "end": 1422, "duration": 42},
+            {"id": 9, "start": 1560, "end": 1602, "duration": 42},
+            {"id": 10, "start": 1740, "end": 1782, "duration": 42},
+            {"id": 11, "start": 1920, "end": 1962, "duration": 42},
+            {"id": 12, "start": 2100, "end": 2142, "duration": 42},
+            {"id": 13, "start": 2280, "end": 2322, "duration": 42}
+          ]
+        },
+        "11": {
+          "name": "Andrew Bichay",
+          "total_ice_time": "14m 15s",
+          "shifts_count": 13,
+          "avg_shift_len": "42.0s",
+          "top_speed": "23.7 km/h",
+          "shifts": [
+            {"id": 1, "start": 42, "end": 84, "duration": 42},
+            {"id": 2, "start": 220, "end": 262, "duration": 42},
+            {"id": 3, "start": 400, "end": 442, "duration": 42},
+            {"id": 4, "start": 580, "end": 622, "duration": 42},
+            {"id": 5, "start": 780, "end": 822, "duration": 42},
+            {"id": 6, "start": 960, "end": 1002, "duration": 42},
+            {"id": 7, "start": 1140, "end": 1182, "duration": 42},
+            {"id": 8, "start": 1420, "end": 1462, "duration": 42},
+            {"id": 9, "start": 1600, "end": 1642, "duration": 42},
+            {"id": 10, "start": 1780, "end": 1822, "duration": 42},
+            {"id": 11, "start": 1960, "end": 2002, "duration": 42},
+            {"id": 12, "start": 2140, "end": 2182, "duration": 42},
+            {"id": 13, "start": 2320, "end": 2362, "duration": 42}
+          ]
+        },
         "28": {
           "name": "Ross Elley",
           "total_ice_time": "13m 50s",
@@ -295,48 +317,26 @@
             {"id": 13, "start": 2365, "end": 2407, "duration": 42}
           ]
         },
-        "76": {
-          "name": "Matt Davis",
-          "total_ice_time": "14m 20s",
-          "shifts_count": 13,
-          "avg_shift_len": "42.0s",
-          "top_speed": "24.2 km/h",
-          "shifts": [
-            {"id": 1, "start": 0, "end": 42, "duration": 42},
-            {"id": 2, "start": 178, "end": 220, "duration": 42},
-            {"id": 3, "start": 358, "end": 400, "duration": 42},
-            {"id": 4, "start": 538, "end": 580, "duration": 42},
-            {"id": 5, "start": 738, "end": 780, "duration": 42},
-            {"id": 6, "start": 918, "end": 960, "duration": 42},
-            {"id": 7, "start": 1098, "end": 1140, "duration": 42},
-            {"id": 8, "start": 1378, "end": 1420, "duration": 42},
-            {"id": 9, "start": 1558, "end": 1600, "duration": 42},
-            {"id": 10, "start": 1738, "end": 1780, "duration": 42},
-            {"id": 11, "start": 1918, "end": 1960, "duration": 42},
-            {"id": 12, "start": 2098, "end": 2140, "duration": 42},
-            {"id": 13, "start": 2278, "end": 2320, "duration": 42}
-          ]
-        },
-        "88": {
-          "name": "Roy Chen",
+        "3": {
+          "name": "Stewart Dolmage",
           "total_ice_time": "14m 10s",
           "shifts_count": 13,
-          "avg_shift_len": "42.0s",
-          "top_speed": "24.3 km/h",
+          "avg_shift_len": "41.5s",
+          "top_speed": "24.1 km/h",
           "shifts": [
-            {"id": 1, "start": 42, "end": 84, "duration": 42},
-            {"id": 2, "start": 220, "end": 262, "duration": 42},
-            {"id": 3, "start": 400, "end": 442, "duration": 42},
-            {"id": 4, "start": 580, "end": 622, "duration": 42},
-            {"id": 5, "start": 780, "end": 822, "duration": 42},
-            {"id": 6, "start": 960, "end": 1002, "duration": 42},
-            {"id": 7, "start": 1140, "end": 1182, "duration": 42},
-            {"id": 8, "start": 1420, "end": 1462, "duration": 42},
-            {"id": 9, "start": 1600, "end": 1642, "duration": 42},
-            {"id": 10, "start": 1780, "end": 1822, "duration": 42},
-            {"id": 11, "start": 1960, "end": 2002, "duration": 42},
-            {"id": 12, "start": 2140, "end": 2182, "duration": 42},
-            {"id": 13, "start": 2320, "end": 2362, "duration": 42}
+            {"id": 1, "start": 0, "end": 42, "duration": 42},
+            {"id": 2, "start": 180, "end": 222, "duration": 42},
+            {"id": 3, "start": 360, "end": 402, "duration": 42},
+            {"id": 4, "start": 540, "end": 582, "duration": 42},
+            {"id": 5, "start": 740, "end": 782, "duration": 42},
+            {"id": 6, "start": 920, "end": 962, "duration": 42},
+            {"id": 7, "start": 1100, "end": 1142, "duration": 42},
+            {"id": 8, "start": 1380, "end": 1422, "duration": 42},
+            {"id": 9, "start": 1560, "end": 1602, "duration": 42},
+            {"id": 10, "start": 1740, "end": 1782, "duration": 42},
+            {"id": 11, "start": 1920, "end": 1962, "duration": 42},
+            {"id": 12, "start": 2100, "end": 2142, "duration": 42},
+            {"id": 13, "start": 2280, "end": 2322, "duration": 42}
           ]
         },
         "97": {
@@ -362,43 +362,64 @@
         }
       },
       "coaching_clips": {
-        "offensive_zone": [
-          {"id": 1, "start": 140, "end": 165, "duration": 25, "description": "Sustained O-Zone Possession & Cycle"},
-          {"id": 2, "start": 480, "end": 505, "duration": 25, "description": "Offensive Zone Pressure & Puck Recovery"},
-          {"id": 3, "start": 920, "end": 945, "duration": 25, "description": "O-Zone Pinch & Scoring Chance"},
-          {"id": 4, "start": 1640, "end": 1665, "duration": 25, "description": "Period 2 O-Zone Cycle Setup"}
-        ],
         "defensive_zone": [
-          {"id": 5, "start": 310, "end": 335, "duration": 25, "description": "D-Zone Box Defense & Breakout"},
-          {"id": 6, "start": 740, "end": 765, "duration": 25, "description": "Defensive Zone Coverage & Clear"},
-          {"id": 7, "start": 1220, "end": 1245, "duration": 25, "description": "D-Zone Board Battle"}
+          {"id": 1, "start": 15, "end": 45, "duration": 30, "period": "1st Period", "description": "D-Zone Opening Faceoff Scramble", "suggested": false},
+          {"id": 2, "start": 210, "end": 245, "duration": 35, "period": "1st Period", "description": "Slot Pressure & Board Pin", "suggested": true},
+          {"id": 3, "start": 305, "end": 345, "duration": 40, "period": "1st Period", "description": "D-Zone Box Defense & Breakout Pass", "suggested": true},
+          {"id": 4, "start": 480, "end": 520, "duration": 40, "period": "1st Period", "description": "Opponent Cycle & Point Shot Block", "suggested": false},
+          {"id": 5, "start": 660, "end": 700, "duration": 40, "period": "1st Period", "description": "Corner Board Battle & Clear", "suggested": false},
+          {"id": 6, "start": 740, "end": 775, "duration": 35, "period": "1st Period", "description": "Heavy Crease Pressure before Goal 1", "suggested": true},
+          {"id": 7, "start": 915, "end": 955, "duration": 40, "period": "1st Period", "description": "Defensive Positioning in High Slot", "suggested": false},
+          {"id": 8, "start": 1220, "end": 1255, "duration": 35, "period": "1st Period", "description": "Net Front Screening Defense", "suggested": false},
+          {"id": 9, "start": 1360, "end": 1395, "duration": 35, "period": "1st Period", "description": "Odd Man Rush Defense before Goal 2", "suggested": true},
+          {"id": 10, "start": 1550, "end": 1590, "duration": 40, "period": "2nd Period", "description": "Period 2 Opening D-Zone Setup", "suggested": false},
+          {"id": 11, "start": 1720, "end": 1765, "duration": 45, "period": "2nd Period", "description": "Sustained Caledon Cycling in Tigers End", "suggested": true},
+          {"id": 12, "start": 1840, "end": 1880, "duration": 40, "period": "2nd Period", "description": "Crease Scramble before Goal 3", "suggested": true},
+          {"id": 13, "start": 2060, "end": 2095, "duration": 35, "period": "2nd Period", "description": "Turnover in Corner leading to Goal 4", "suggested": true},
+          {"id": 14, "start": 2150, "end": 2190, "duration": 40, "period": "2nd Period", "description": "Slot Coverage Breakdown before Goal 5", "suggested": true},
+          {"id": 15, "start": 2290, "end": 2330, "duration": 40, "period": "2nd Period", "description": "Puck Battle behind Goal Line", "suggested": false}
+        ],
+        "offensive_zone": [
+          {"id": 16, "start": 140, "end": 175, "duration": 35, "period": "1st Period", "description": "Tigers Sustained O-Zone Possession & Cycle", "suggested": true},
+          {"id": 17, "start": 380, "end": 415, "duration": 35, "period": "1st Period", "description": "Deep Forecheck Pressure & Puck Recovery", "suggested": true},
+          {"id": 18, "start": 560, "end": 595, "duration": 35, "period": "1st Period", "description": "O-Zone Pinch by Defenseman", "suggested": false},
+          {"id": 19, "start": 820, "end": 855, "duration": 35, "period": "1st Period", "description": "Right Wing Drive & Shot on Net", "suggested": true},
+          {"id": 20, "start": 1040, "end": 1075, "duration": 35, "period": "1st Period", "description": "Board Play & Point Shot Setup", "suggested": false},
+          {"id": 21, "start": 1480, "end": 1515, "duration": 35, "period": "2nd Period", "description": "Tigers Quick Break-in & Slot Chance", "suggested": true},
+          {"id": 22, "start": 1640, "end": 1680, "duration": 40, "period": "2nd Period", "description": "Umbrella Cycle in Offensive Zone", "suggested": true},
+          {"id": 23, "start": 1980, "end": 2015, "duration": 35, "period": "2nd Period", "description": "O-Zone Rebound Retrieval", "suggested": false}
         ],
         "neutral_zone": [
-          {"id": 8, "start": 220, "end": 245, "duration": 25, "description": "Neutral Zone Regroup & Transition"},
-          {"id": 9, "start": 610, "end": 635, "duration": 25, "description": "Blue Line Standup & Turnover"},
-          {"id": 10, "start": 1800, "end": 1825, "duration": 25, "description": "Neutral Zone Forecheck"}
+          {"id": 24, "start": 85, "end": 120, "duration": 35, "period": "1st Period", "description": "Neutral Zone Regroup & Speed Transition", "suggested": false},
+          {"id": 25, "start": 260, "end": 295, "duration": 35, "period": "1st Period", "description": "Center Ice Turnover & Tiger Backcheck", "suggested": true},
+          {"id": 26, "start": 440, "end": 475, "duration": 35, "period": "1st Period", "description": "Blue Line Standup & Dump-In", "suggested": false},
+          {"id": 27, "start": 620, "end": 655, "duration": 35, "period": "1st Period", "description": "Forecheck Trap at Red Line", "suggested": true},
+          {"id": 28, "start": 980, "end": 1015, "duration": 35, "period": "1st Period", "description": "Neutral Zone Passing Sequence", "suggested": false},
+          {"id": 29, "start": 1280, "end": 1315, "duration": 35, "period": "1st Period", "description": "Neutral Zone Faceoff & Quick Transition", "suggested": false},
+          {"id": 30, "start": 1780, "end": 1815, "duration": 35, "period": "2nd Period", "description": "Tigers 3-Man Neutral Zone Wall", "suggested": true}
         ],
         "powerplay": [
-          {"id": 11, "start": 540, "end": 570, "duration": 30, "description": "Powerplay (5v4) Umbrella Setup"},
-          {"id": 12, "start": 1420, "end": 1450, "duration": 30, "description": "Powerplay Offensive Zone Pressure"}
+          {"id": 31, "start": 540, "end": 575, "duration": 35, "period": "1st Period", "description": "Powerplay (5v4) Break-in Setup", "suggested": false},
+          {"id": 32, "start": 1420, "end": 1460, "duration": 40, "period": "2nd Period", "description": "Powerplay Umbrella Movement & One-Timer", "suggested": true}
         ],
         "penalty_kill": [
-          {"id": 13, "start": 840, "end": 870, "duration": 30, "description": "Penalty Kill (4v5) Diamond Box"},
-          {"id": 14, "start": 2100, "end": 2130, "duration": 30, "description": "Penalty Kill Neutral Zone Trap"}
+          {"id": 33, "start": 840, "end": 880, "duration": 40, "period": "1st Period", "description": "Penalty Kill (4v5) Diamond Box Clear", "suggested": true},
+          {"id": 34, "start": 2100, "end": 2135, "duration": 35, "period": "2nd Period", "description": "Penalty Kill Neutral Zone Pressure", "suggested": false}
         ],
         "goal_highlights": [
-          {"id": 15, "start": 745, "end": 770, "duration": 25, "description": "🚨 Caledon Goal 1 (P1 08:55)"},
-          {"id": 16, "start": 1385, "end": 1410, "duration": 25, "description": "🚨 Caledon Goal 2 (P1 07:31)"},
-          {"id": 17, "start": 1865, "end": 1890, "duration": 25, "description": "🚨 Caledon Goal 3 (P2 08:20)"},
-          {"id": 18, "start": 2080, "end": 2105, "duration": 25, "description": "🚨 Caledon Goal 4 (P2 07:44)"},
-          {"id": 19, "start": 2175, "end": 2200, "duration": 25, "description": "🚨 Caledon Goal 5 (P2 05:51)"},
-          {"id": 20, "start": 2220, "end": 2240, "duration": 20, "description": "🚨 Caledon Goal 6 (P2 05:31)"},
-          {"id": 21, "start": 2315, "end": 2335, "duration": 20, "description": "🚨 Caledon Goal 7 (P2 01:08)"}
+          {"id": 35, "start": 745, "end": 772, "duration": 27, "period": "1st Period", "description": "🚨 Caledon Goal 1 (P1 08:55 Clock)", "suggested": true},
+          {"id": 36, "start": 1385, "end": 1412, "duration": 27, "period": "1st Period", "description": "🚨 Caledon Goal 2 (P1 07:31 Clock)", "suggested": true},
+          {"id": 37, "start": 1865, "end": 1892, "duration": 27, "period": "2nd Period", "description": "🚨 Caledon Goal 3 (P2 08:20 Clock)", "suggested": true},
+          {"id": 38, "start": 2080, "end": 2106, "duration": 26, "period": "2nd Period", "description": "🚨 Caledon Goal 4 (P2 07:44 Clock)", "suggested": true},
+          {"id": 39, "start": 2175, "end": 2200, "duration": 25, "period": "2nd Period", "description": "🚨 Caledon Goal 5 (P2 05:51 Clock)", "suggested": true},
+          {"id": 40, "start": 2218, "end": 2240, "duration": 22, "period": "2nd Period", "description": "🚨 Caledon Goal 6 (P2 05:31 Clock)", "suggested": true},
+          {"id": 41, "start": 2315, "end": 2338, "duration": 23, "period": "2nd Period", "description": "🚨 Caledon Goal 7 (P2 01:08 Clock)", "suggested": true}
         ],
         "goalie_saves": [
-          {"id": 22, "start": 280, "end": 300, "duration": 20, "description": "🧤 Slot Pad Save by Tigers Goalie"},
-          {"id": 23, "start": 690, "end": 710, "duration": 20, "description": "🧤 High-Danger Breakaway Save"},
-          {"id": 24, "start": 1540, "end": 1560, "duration": 20, "description": "🧤 Crease Rebound Kick Save"}
+          {"id": 42, "start": 280, "end": 302, "duration": 22, "period": "1st Period", "description": "🧤 Slot One-Timer Pad Save", "suggested": true},
+          {"id": 43, "start": 690, "end": 712, "duration": 22, "period": "1st Period", "description": "🧤 Breakaway Pad Stop & Rebound Kick", "suggested": true},
+          {"id": 44, "start": 1150, "end": 1172, "duration": 22, "period": "1st Period", "description": "🧤 Point Shot Glove Save", "suggested": false},
+          {"id": 45, "start": 1540, "end": 1565, "duration": 25, "period": "2nd Period", "description": "🧤 Scramble in Crease & Whistle Freeze", "suggested": true}
         ]
       },
       "analytics": {
