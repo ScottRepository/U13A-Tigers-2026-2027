@@ -1,0 +1,40 @@
+name: Auto-Sync YouTube Games
+
+on:
+  schedule:
+    - cron: '0 * * * *' # Checks your playlist hourly
+  workflow_dispatch:     # Allows 1-click manual trigger
+
+jobs:
+  check_and_process:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+
+      - name: Install Dependencies
+        run: |
+          sudo apt-get update && sudo apt-get install -y ffmpeg
+          pip install ultralytics supervision opencv-python-headless yt-dlp numpy
+
+      - name: Run Auto Sync Script
+        run: |
+          python auto_sync.py
+        env:
+          YOUTUBE_SOURCE: "https://www.youtube.com/playlist?list=PLXFVFYYSmylE"
+
+      - name: Commit & Push Changes
+        run: |
+          git config --global user.name "Hockey Auto Bot"
+          git config --global user.email "bot@hockey-app.local"
+          git add games_library.json
+          git commit -m "Auto-published game from YouTube playlist" || exit 0
+          git push
