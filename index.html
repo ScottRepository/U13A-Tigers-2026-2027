@@ -11,7 +11,7 @@
 </head>
 <body class="bg-slate-900 text-slate-100 min-h-screen p-3 md:p-6 select-none">
 
-  <!-- ================= AUTH MODAL ================= -->
+  <!-- AUTH MODAL -->
   <div id="auth-modal" class="fixed inset-0 bg-black/85 backdrop-blur-sm flex items-center justify-center p-4 z-50">
     <div class="bg-slate-800 border border-slate-700 p-6 md:p-8 rounded-2xl max-w-sm w-full text-center shadow-2xl">
       <div class="text-4xl mb-3">🏒</div>
@@ -26,7 +26,7 @@
           class="w-full bg-slate-900 border border-slate-600 rounded-lg px-4 py-3 text-center text-lg font-bold tracking-widest text-yellow-400 focus:outline-none focus:border-yellow-400 mb-3"
           autofocus
         />
-        <p id="auth-error" class="text-xs text-red-400 font-semibold mb-3 hidden">Incorrect passcode. Try again.</p>
+        <p id="auth-error" class="text-xs text-red-400 font-semibold mb-3 hidden">Incorrect passcode.</p>
         <button type="submit" class="w-full bg-blue-600 hover:bg-blue-500 font-bold py-3 rounded-lg transition text-sm tracking-wide">
           ENTER PORTAL
         </button>
@@ -34,7 +34,7 @@
     </div>
   </div>
 
-  <!-- ================= SHARE & DOWNLOAD MODAL ================= -->
+  <!-- SHARE & DOWNLOAD MODAL -->
   <div id="share-modal" class="fixed inset-0 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4 z-50 hidden">
     <div class="bg-slate-800 border border-slate-700 p-6 rounded-2xl max-w-md w-full shadow-2xl">
       <div class="flex justify-between items-center mb-4">
@@ -57,7 +57,7 @@
     </div>
   </div>
 
-  <!-- ================= PARENT TAGGING MODAL ================= -->
+  <!-- PARENT TAGGING MODAL -->
   <div id="tagging-modal" class="fixed inset-0 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4 z-50 hidden">
     <div class="bg-slate-800 border border-slate-700 p-6 rounded-2xl max-w-lg w-full shadow-2xl">
       <div class="flex justify-between items-center mb-3">
@@ -69,12 +69,11 @@
     </div>
   </div>
 
-  <!-- Toast Notification -->
   <div id="toast" class="fixed bottom-6 right-6 bg-emerald-600 text-white px-4 py-2.5 rounded-lg shadow-xl font-medium text-sm transition-opacity duration-300 opacity-0 pointer-events-none z-50 flex items-center gap-2">
     <span id="toast-text">✅ Done!</span>
   </div>
 
-  <!-- ================= MAIN APP ================= -->
+  <!-- MAIN APP -->
   <div id="main-content" class="max-w-6xl mx-auto opacity-0 transition-opacity duration-300">
     <header class="mb-5 flex flex-col md:flex-row justify-between items-start md:items-center border-b border-slate-700 pb-4 gap-4">
       <div>
@@ -110,14 +109,38 @@
           <select id="game-select" class="w-full bg-slate-900 border border-slate-600 rounded px-2.5 py-1.5 text-xs font-semibold text-white focus:outline-none focus:border-blue-500"></select>
         </div>
 
-        <div class="flex items-center gap-2 bg-slate-800 p-3 rounded-xl border border-slate-700">
-          <input id="player-input" type="text" placeholder="Jersey #" class="w-full bg-slate-900 border border-slate-600 rounded px-3 py-1.5 text-center font-bold text-lg text-yellow-400 focus:outline-none focus:border-yellow-400" />
-          <button id="search-btn" class="bg-blue-600 hover:bg-blue-500 font-semibold px-4 py-2 rounded text-sm transition">Find</button>
+        <!-- Roster Quick Select & Search -->
+        <div class="bg-slate-800 p-3 rounded-xl border border-slate-700 space-y-2">
+          <label class="text-xs text-slate-300 font-bold block">👤 Select Player from Roster:</label>
+          <select id="roster-select" onchange="selectFromRoster(this.value)" class="w-full bg-slate-900 border border-slate-600 rounded px-3 py-2 text-xs font-semibold text-yellow-400 focus:outline-none focus:border-yellow-400">
+            <option value="">-- Choose Player --</option>
+            <option value="23">#23 Easton Carpentier</option>
+            <option value="10">#10 Arjun Manjunath</option>
+            <option value="76">#76 Matt Davis</option>
+            <option value="13">#13 Matthew Hart</option>
+            <option value="16">#16 Joshua Liu</option>
+            <option value="21">#21 Caleb Irgengioro-Wu</option>
+            <option value="27">#27 Alen Fazlic</option>
+            <option value="88">#88 Roy Chen</option>
+            <option value="9">#9 Oliver Patterson</option>
+            <option value="7">#7 Maxwell Dey</option>
+            <option value="5">#5 Nathan Zhao</option>
+            <option value="18">#18 Nathan Carinci</option>
+            <option value="11">#11 Andrew Bichay</option>
+            <option value="28">#28 Ross Elley</option>
+            <option value="3">#3 Stewart Dolmage</option>
+            <option value="97">#97 Hudson Millar (G)</option>
+            <option value="98">#98 Hudson Barfitt (G)</option>
+          </select>
+          <div class="flex items-center gap-2 pt-1">
+            <input id="player-input" type="text" placeholder="Or type Jersey #" class="w-full bg-slate-900 border border-slate-600 rounded px-2.5 py-1.5 text-center font-bold text-sm text-yellow-400 focus:outline-none focus:border-yellow-400" />
+            <button id="search-btn" class="bg-blue-600 hover:bg-blue-500 font-semibold px-4 py-1.5 rounded text-xs transition">Find</button>
+          </div>
         </div>
 
         <div id="stats-card" class="bg-slate-800 rounded-xl p-4 border border-slate-700 hidden">
           <div class="flex justify-between items-center mb-3">
-            <h2 class="text-md font-bold text-yellow-400" id="player-title">Player Stats</h2>
+            <h2 class="text-sm font-bold text-yellow-400" id="player-title">Player Stats</h2>
             <button onclick="openTaggingModal()" class="text-xs bg-slate-700 hover:bg-slate-600 text-slate-300 px-2 py-1 rounded transition">✏️ Re-tag</button>
           </div>
           <div class="grid grid-cols-2 gap-2 text-xs">
@@ -143,7 +166,7 @@
           </div>
 
           <div id="shifts-list" class="space-y-2 max-h-[350px] overflow-y-auto pr-1">
-            <p class="text-xs text-slate-500 italic">Enter your child's jersey number above.</p>
+            <p class="text-xs text-slate-500 italic">Select a player above to load their shifts.</p>
           </div>
         </div>
       </div>
@@ -185,8 +208,6 @@
 
     <!-- TAB 3: COACH ANALYTICS & TACTICAL HUB -->
     <section id="tab-content-coaches" class="space-y-5 hidden">
-      
-      <!-- LIVE GAME ANALYTICS CARD -->
       <div class="bg-slate-800 p-5 rounded-2xl border border-slate-700 shadow-xl space-y-4">
         <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-2 border-b border-slate-700 pb-3">
           <div>
@@ -201,7 +222,6 @@
           </div>
         </div>
 
-        <!-- Puck Possession Gauge -->
         <div class="bg-slate-900/80 p-4 rounded-xl border border-slate-700/60 space-y-2">
           <div class="flex justify-between text-xs font-bold">
             <span class="text-orange-400 flex items-center gap-1.5">🏒 U13A Tigers Possession: <span id="metric-poss-tigers">50%</span></span>
@@ -213,7 +233,6 @@
           </div>
         </div>
 
-        <!-- Zone Time Breakdown -->
         <div class="bg-slate-900/80 p-4 rounded-xl border border-slate-700/60 space-y-2">
           <span class="text-xs font-bold text-slate-300 block mb-1">Zone Distribution (Pure Action Time)</span>
           <div class="grid grid-cols-3 gap-3 text-center text-xs">
@@ -232,7 +251,6 @@
           </div>
         </div>
 
-        <!-- Box Score Metrics -->
         <div class="grid grid-cols-2 md:grid-cols-4 gap-3 text-xs">
           <div class="bg-slate-900 p-3 rounded-lg border border-slate-700/60 text-center">
             <span class="text-slate-400 text-[10px] uppercase font-bold block">Shots on Goal</span>
@@ -253,7 +271,6 @@
         </div>
       </div>
 
-      <!-- Tactical Clips Filter Buttons -->
       <div class="grid grid-cols-2 md:grid-cols-3 gap-2 text-xs font-bold">
         <button onclick="loadCoachingCategory('offensive_zone')" class="p-3 rounded-lg bg-emerald-900/60 hover:bg-emerald-800 border border-emerald-700 text-emerald-300 text-left transition">🟢 O-Zone Possessions</button>
         <button onclick="loadCoachingCategory('defensive_zone')" class="p-3 rounded-lg bg-red-900/60 hover:bg-red-800 border border-red-700 text-red-300 text-left transition">🔴 D-Zone Defense</button>
@@ -411,7 +428,7 @@
         card.innerHTML = `
           <div>
             <div class="flex justify-between items-start mb-2">
-              <span class="text-xs font-mono text-blue-400 font-bold">Game Archive</span>
+              <span class="text-xs font-mono text-blue-400 font-bold">${g.date || 'Season Game'}</span>
               <span class="text-[10px] bg-slate-900 text-slate-300 px-2 py-0.5 rounded border border-slate-700 font-bold">${Object.keys(g.players || {}).length} Skaters</span>
             </div>
             <h3 class="font-bold text-white text-base mb-1">${g.title}</h3>
@@ -469,7 +486,12 @@
       });
     }
 
-    // --- RENDER COACH ANALYTICS ---
+    function selectFromRoster(val) {
+      if (!val) return;
+      document.getElementById('player-input').value = val;
+      loadPlayer();
+    }
+
     function renderGameAnalytics() {
       if (!currentGame) return;
       document.getElementById('analytics-game-title').innerText = currentGame.title;
@@ -502,7 +524,6 @@
       document.getElementById('metric-save-pct').innerText = a.save_pct;
     }
 
-    // --- CONTROLS, SHARE, & SHIFTS ---
     function setSpeed(rate) {
       if (isPlayerReady && ytPlayer) ytPlayer.setPlaybackRate(rate);
     }
@@ -609,7 +630,7 @@
       const shiftList = document.getElementById('shifts-list');
 
       statsCard.classList.remove('hidden');
-      document.getElementById('player-title').innerText = `Player #${jerseyNum} Summary`;
+      document.getElementById('player-title').innerText = player.name ? `#${jerseyNum} ${player.name}` : `Player #${jerseyNum} Summary`;
       document.getElementById('stat-toi').innerText = player.total_ice_time;
       document.getElementById('stat-speed').innerText = player.top_speed;
       document.getElementById('stat-shifts').innerText = player.shifts_count;
@@ -642,7 +663,7 @@
             <span class="text-[11px] text-slate-400 font-mono">${startMin}:${startSec} - ${endMin}:${endSec}</span>
           </button>
           ${isCoach ? `
-            <button onclick="toggleStarClip({gameId: '${currentGame.id}', gameTitle: '${currentGame.title}', title: 'Player #${jerseyNum} - Shift ${s.id}', start: ${s.start}, end: ${s.end}, duration: ${s.duration}})" 
+            <button onclick="toggleStarClip({gameId: '${currentGame.id}', gameTitle: '${currentGame.title}', title: '#${jerseyNum} ${player.name || ''} - Shift ${s.id}', start: ${s.start}, end: ${s.end}, duration: ${s.duration}})" 
                     class="p-1 rounded ${isStarred ? 'text-amber-400 font-bold' : 'text-slate-500'}">
               ${isStarred ? '★' : '☆'}
             </button>
@@ -710,7 +731,7 @@
         const row = document.createElement('div');
         row.className = "flex items-center justify-between p-2.5 rounded-lg bg-slate-900 text-xs";
         row.innerHTML = `
-          <span>Skater #${trackId} (${p.shifts_count} shifts • ${p.total_ice_time})</span>
+          <span>#${trackId} ${p.name || ''} (${p.shifts_count} shifts)</span>
           <button onclick="confirmTag('${trackId}')" class="px-2.5 py-1 bg-emerald-600 text-white font-bold rounded">Tag #${currentJersey}</button>
         `;
         list.appendChild(row);
