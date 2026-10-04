@@ -238,7 +238,7 @@
         </div>
       </div>
 
-      <!-- VIDEO CONTROLS BAR -->
+      <!-- VIDEO CONTROLS & TIMELINE STATUS -->
       <div class="flex flex-wrap items-center justify-between gap-3 text-xs border-t border-slate-800/80 pt-2 px-1">
         <div class="flex items-center gap-1.5">
           <button id="stage-video-btn" onclick="setStageMode('video')" class="px-3 py-1.5 rounded-lg bg-blue-600 text-white font-bold cursor-pointer transition shadow">
@@ -249,17 +249,29 @@
           </button>
         </div>
 
-        <div id="video-playback-controls" class="flex items-center gap-2">
+        <div id="video-playback-controls" class="flex flex-wrap items-center gap-2">
+          <!-- Playback Speed -->
           <div class="flex items-center gap-1">
             <span class="text-[10px] text-slate-400 font-bold uppercase mr-1">Speed:</span>
             <button onclick="setSpeed(1.0)" id="rate-1" class="px-2 py-1 rounded bg-blue-600 text-white font-bold cursor-pointer">1x</button>
             <button onclick="setSpeed(0.75)" id="rate-075" class="px-2 py-1 rounded bg-slate-800 text-slate-300 hover:text-white cursor-pointer">0.75x</button>
             <button onclick="setSpeed(0.5)" id="rate-05" class="px-2 py-1 rounded bg-slate-800 text-slate-300 hover:text-white cursor-pointer">0.5x</button>
           </div>
+
+          <!-- Basic Step/Pause -->
           <div class="flex items-center gap-1">
             <button onclick="stepSeconds(-1)" class="px-2 py-1 rounded bg-slate-800 hover:bg-slate-700 text-slate-200 cursor-pointer">⏮️ -1s</button>
             <button onclick="togglePlayPause()" id="play-pause-btn" class="px-2.5 py-1 rounded bg-slate-800 hover:bg-slate-700 text-white font-bold cursor-pointer">⏸️</button>
             <button onclick="stepSeconds(1)" class="px-2 py-1 rounded bg-slate-800 hover:bg-slate-700 text-slate-200 cursor-pointer">⏭️ +1s</button>
+          </div>
+
+          <!-- SKIP BUTTONS (+5s, +15s, +30s and -5s) -->
+          <div class="flex items-center gap-1 bg-slate-950 px-2 py-0.5 rounded-lg border border-slate-800">
+            <span class="text-[10px] text-slate-400 font-bold uppercase mr-0.5">Jump:</span>
+            <button onclick="stepSeconds(-5)" class="px-2 py-1 rounded bg-slate-800 hover:bg-slate-700 text-slate-300 font-semibold cursor-pointer transition" title="Rewind 5s">-5s</button>
+            <button onclick="stepSeconds(5)" class="px-2 py-1 rounded bg-slate-800 hover:bg-blue-600 text-slate-200 hover:text-white font-bold cursor-pointer transition" title="Skip forward 5s">+5s</button>
+            <button onclick="stepSeconds(15)" class="px-2 py-1 rounded bg-slate-800 hover:bg-blue-600 text-slate-200 hover:text-white font-bold cursor-pointer transition" title="Skip forward 15s">+15s</button>
+            <button onclick="stepSeconds(30)" class="px-2 py-1 rounded bg-slate-800 hover:bg-blue-600 text-slate-200 hover:text-white font-bold cursor-pointer transition" title="Skip forward 30s">+30s</button>
           </div>
         </div>
 
@@ -376,7 +388,6 @@
     let pendingShareData = null;
     let activeEditCategory = null, activeEditIndex = null;
 
-    // Safe Storage
     function safeSet(k, v) { try { localStorage.setItem(k, v); } catch(e){} }
     function safeGet(k) { try { return localStorage.getItem(k); } catch(e){ return null; } }
 
@@ -386,7 +397,7 @@
       input.type = (input.type === 'password') ? 'text' : 'password';
     }
 
-    // --- 1. BULLETPROOF AUTH ---
+    // --- 1. AUTHENTICATION & LOGIN ---
     function checkAuth() {
       const storedRole = safeGet("team_role");
       if (storedRole === "coach" || storedRole === "parent") {
@@ -399,8 +410,6 @@
     function handlePasscodeSubmit() {
       const inputEl = document.getElementById('passcode-input');
       const raw = inputEl ? inputEl.value : "";
-      
-      // Strip all spaces, dashes, punctuation, uppercase it
       const clean = String(raw).trim().replace(/[^a-zA-Z0-9]/g, '').toUpperCase();
       const errorMsg = document.getElementById('auth-error');
 
@@ -422,7 +431,6 @@
       }
     }
 
-    // Allow Enter key in passcode input
     document.addEventListener("DOMContentLoaded", () => {
       const passInput = document.getElementById('passcode-input');
       if (passInput) {
@@ -957,8 +965,7 @@
           </button>
         `;
         card.onclick = () => {
-          const select = document.getElementById('game-select');
-          if (select) select.value = g.id;
+          document.getElementById('game-select').value = g.id;
           loadGame(g.id);
           switchViewMode('coaches');
         };
