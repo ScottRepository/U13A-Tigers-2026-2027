@@ -1,0 +1,780 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>U13A Tigers - Shift & Coach Analytics Hub</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    #telestrator-canvas { touch-action: none; }
+  </style>
+</head>
+<body class="bg-slate-900 text-slate-100 min-h-screen p-3 md:p-6 select-none">
+
+  <!-- ================= AUTH MODAL ================= -->
+  <div id="auth-modal" class="fixed inset-0 bg-black/85 backdrop-blur-sm flex items-center justify-center p-4 z-50">
+    <div class="bg-slate-800 border border-slate-700 p-6 md:p-8 rounded-2xl max-w-sm w-full text-center shadow-2xl">
+      <div class="text-4xl mb-3">🏒</div>
+      <h2 class="text-xl font-black text-white mb-1 tracking-wide">U13A TIGERS HUB</h2>
+      <p class="text-xs text-slate-400 mb-6">Enter team passcode (or coach PIN) to continue.</p>
+      
+      <form id="auth-form" onsubmit="handlePasscodeSubmit(event)">
+        <input 
+          id="passcode-input" 
+          type="password" 
+          placeholder="Enter Passcode" 
+          class="w-full bg-slate-900 border border-slate-600 rounded-lg px-4 py-3 text-center text-lg font-bold tracking-widest text-yellow-400 focus:outline-none focus:border-yellow-400 mb-3"
+          autofocus
+        />
+        <p id="auth-error" class="text-xs text-red-400 font-semibold mb-3 hidden">Incorrect passcode. Try again.</p>
+        <button type="submit" class="w-full bg-blue-600 hover:bg-blue-500 font-bold py-3 rounded-lg transition text-sm tracking-wide">
+          ENTER PORTAL
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- ================= SHARE & DOWNLOAD MODAL ================= -->
+  <div id="share-modal" class="fixed inset-0 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4 z-50 hidden">
+    <div class="bg-slate-800 border border-slate-700 p-6 rounded-2xl max-w-md w-full shadow-2xl">
+      <div class="flex justify-between items-center mb-4">
+        <h3 class="text-lg font-bold text-yellow-400" id="share-modal-title">Share Clip</h3>
+        <button onclick="closeShareModal()" class="text-slate-400 hover:text-white text-2xl font-bold">&times;</button>
+      </div>
+      <p class="text-xs text-slate-300 mb-4" id="share-modal-desc">Share this hockey clip with friends, coaches, or scouts.</p>
+      <div class="grid grid-cols-2 gap-3 mb-5">
+        <button onclick="shareToWhatsApp()" class="flex items-center justify-center gap-2 p-3 rounded-lg bg-emerald-600 hover:bg-emerald-500 font-bold text-xs text-white transition">💬 WhatsApp</button>
+        <button onclick="shareNativeMobile()" class="flex items-center justify-center gap-2 p-3 rounded-lg bg-gradient-to-r from-purple-500 to-pink-500 hover:opacity-90 font-bold text-xs text-white transition">📸 Instagram / Native</button>
+        <button onclick="shareToFacebook()" class="flex items-center justify-center gap-2 p-3 rounded-lg bg-blue-700 hover:bg-blue-600 font-bold text-xs text-white transition">📘 Facebook</button>
+        <button onclick="shareToEmail()" class="flex items-center justify-center gap-2 p-3 rounded-lg bg-slate-700 hover:bg-slate-600 font-bold text-xs text-white transition">✉️ Email</button>
+      </div>
+      <div class="border-t border-slate-700 pt-4 space-y-2">
+        <div class="flex gap-2">
+          <input id="share-url-input" type="text" readonly class="w-full bg-slate-900 border border-slate-700 rounded px-2.5 py-1 text-xs text-slate-300 font-mono">
+          <button onclick="copyShareUrl()" class="px-3 py-1 bg-blue-600 text-xs font-bold rounded text-white hover:bg-blue-500">Copy</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= PARENT TAGGING MODAL ================= -->
+  <div id="tagging-modal" class="fixed inset-0 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4 z-50 hidden">
+    <div class="bg-slate-800 border border-slate-700 p-6 rounded-2xl max-w-lg w-full shadow-2xl">
+      <div class="flex justify-between items-center mb-3">
+        <h2 class="text-lg font-bold text-yellow-400">🏷️ Tag Your Child's Skater</h2>
+        <button onclick="closeTaggingModal()" class="text-slate-400 hover:text-white text-xl font-bold">&times;</button>
+      </div>
+      <p class="text-xs text-slate-300 mb-4">Click Preview to check the video and confirm your child on ice.</p>
+      <div id="skater-candidates-list" class="space-y-2 max-h-[320px] overflow-y-auto pr-1"></div>
+    </div>
+  </div>
+
+  <!-- Toast Notification -->
+  <div id="toast" class="fixed bottom-6 right-6 bg-emerald-600 text-white px-4 py-2.5 rounded-lg shadow-xl font-medium text-sm transition-opacity duration-300 opacity-0 pointer-events-none z-50 flex items-center gap-2">
+    <span id="toast-text">✅ Done!</span>
+  </div>
+
+  <!-- ================= MAIN APP ================= -->
+  <div id="main-content" class="max-w-6xl mx-auto opacity-0 transition-opacity duration-300">
+    <header class="mb-5 flex flex-col md:flex-row justify-between items-start md:items-center border-b border-slate-700 pb-4 gap-4">
+      <div>
+        <div class="flex items-center gap-2">
+          <h1 class="text-2xl font-black text-white tracking-wide">🏒 U13A TIGERS</h1>
+          <span id="role-badge" class="px-2 py-0.5 rounded text-[11px] font-bold bg-slate-800 text-slate-300 border border-slate-700">Parent View</span>
+        </div>
+        <p class="text-xs text-slate-400">Video Breakdown, Live Analytics & Tactical Review</p>
+      </div>
+
+      <nav class="bg-slate-800 p-1.5 rounded-xl border border-slate-700 flex flex-wrap gap-1 text-xs font-bold">
+        <button id="nav-dashboard" onclick="switchMainTab('dashboard')" class="px-3 py-1.5 rounded-lg bg-blue-600 text-white transition">📅 Games</button>
+        <button id="nav-player" onclick="switchMainTab('player')" class="px-3 py-1.5 rounded-lg text-slate-400 hover:text-white transition">👤 Shifts</button>
+        <button id="nav-coaches" onclick="switchMainTab('coaches')" class="px-3 py-1.5 rounded-lg text-slate-400 hover:text-white transition">📊 Coach Analytics</button>
+        <button id="nav-filmroom" onclick="switchMainTab('filmroom')" class="px-3 py-1.5 rounded-lg text-amber-400 hover:text-white transition flex items-center gap-1">⭐ Film Room</button>
+      </nav>
+    </header>
+
+    <!-- TAB 1: SEASON GAMES -->
+    <section id="tab-content-dashboard" class="space-y-4">
+      <div class="flex justify-between items-center mb-2">
+        <h2 class="text-lg font-bold text-white">Season Schedule & Games</h2>
+        <span id="total-games-count" class="text-xs text-slate-400">0 Games</span>
+      </div>
+      <div id="games-grid" class="grid grid-cols-1 md:grid-cols-3 gap-4"></div>
+    </section>
+
+    <!-- TAB 2: PLAYER SHIFTS & VIDEO PLAYER -->
+    <section id="tab-content-player" class="grid grid-cols-1 lg:grid-cols-3 gap-6 hidden">
+      <div class="lg:col-span-1 space-y-4">
+        <div class="bg-slate-800 p-3 rounded-xl border border-slate-700 flex flex-col gap-2">
+          <label class="text-xs text-slate-400 font-semibold">Active Game:</label>
+          <select id="game-select" class="w-full bg-slate-900 border border-slate-600 rounded px-2.5 py-1.5 text-xs font-semibold text-white focus:outline-none focus:border-blue-500"></select>
+        </div>
+
+        <div class="flex items-center gap-2 bg-slate-800 p-3 rounded-xl border border-slate-700">
+          <input id="player-input" type="text" placeholder="Jersey #" class="w-full bg-slate-900 border border-slate-600 rounded px-3 py-1.5 text-center font-bold text-lg text-yellow-400 focus:outline-none focus:border-yellow-400" />
+          <button id="search-btn" class="bg-blue-600 hover:bg-blue-500 font-semibold px-4 py-2 rounded text-sm transition">Find</button>
+        </div>
+
+        <div id="stats-card" class="bg-slate-800 rounded-xl p-4 border border-slate-700 hidden">
+          <div class="flex justify-between items-center mb-3">
+            <h2 class="text-md font-bold text-yellow-400" id="player-title">Player Stats</h2>
+            <button onclick="openTaggingModal()" class="text-xs bg-slate-700 hover:bg-slate-600 text-slate-300 px-2 py-1 rounded transition">✏️ Re-tag</button>
+          </div>
+          <div class="grid grid-cols-2 gap-2 text-xs">
+            <div class="bg-slate-900/60 p-2 rounded border border-slate-700/50"><span class="text-slate-400 block text-[10px]">Total Ice Time</span><span id="stat-toi" class="font-bold text-sm text-white">-</span></div>
+            <div class="bg-slate-900/60 p-2 rounded border border-slate-700/50"><span class="text-slate-400 block text-[10px]">Top Speed</span><span id="stat-speed" class="font-bold text-sm text-white">-</span></div>
+            <div class="bg-slate-900/60 p-2 rounded border border-slate-700/50"><span class="text-slate-400 block text-[10px]">Total Shifts</span><span id="stat-shifts" class="font-bold text-sm text-white">-</span></div>
+            <div class="bg-slate-900/60 p-2 rounded border border-slate-700/50"><span class="text-slate-400 block text-[10px]">Avg Shift</span><span id="stat-avg-shift" class="font-bold text-sm text-white">-</span></div>
+          </div>
+        </div>
+
+        <div class="bg-slate-800 rounded-xl p-4 border border-slate-700">
+          <div class="flex items-center justify-between mb-2">
+            <span class="text-sm font-bold">📋 Shift Playlist</span>
+            <span id="shift-count" class="text-xs bg-slate-700 text-slate-300 px-2 py-0.5 rounded-full">0 shifts</span>
+          </div>
+
+          <div class="bg-slate-900 p-2 rounded-lg border border-slate-700/60 mb-3 flex items-center justify-between">
+            <span class="text-xs font-semibold text-slate-300 flex items-center gap-1">⚡ <strong>Auto-Play Shifts</strong><span class="text-[10px] text-slate-400 block">(Binge mode)</span></span>
+            <label class="relative inline-flex items-center cursor-pointer">
+              <input type="checkbox" id="autoplay-toggle" class="sr-only peer">
+              <div class="w-9 h-5 bg-slate-700 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-blue-600"></div>
+            </label>
+          </div>
+
+          <div id="shifts-list" class="space-y-2 max-h-[350px] overflow-y-auto pr-1">
+            <p class="text-xs text-slate-500 italic">Enter your child's jersey number above.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="lg:col-span-2 space-y-3">
+        <div id="video-wrapper" class="bg-slate-800 rounded-xl p-3 border border-slate-700">
+          <div class="relative w-full rounded-lg overflow-hidden aspect-video bg-black shadow-lg">
+            <div id="yt-player" class="w-full h-full"></div>
+            <canvas id="telestrator-canvas" class="absolute inset-0 w-full h-full pointer-events-none z-20"></canvas>
+          </div>
+
+          <div class="mt-3 flex flex-wrap items-center justify-between gap-2 text-xs border-t border-slate-700 pt-2.5">
+            <div class="flex items-center gap-1">
+              <span class="text-[10px] text-slate-400 font-bold mr-1">Speed:</span>
+              <button onclick="setSpeed(1.0)" id="rate-1" class="px-2 py-1 rounded bg-blue-600 text-white font-bold">1x</button>
+              <button onclick="setSpeed(0.75)" id="rate-075" class="px-2 py-1 rounded bg-slate-700 text-slate-300">0.75x</button>
+              <button onclick="setSpeed(0.5)" id="rate-05" class="px-2 py-1 rounded bg-slate-700 text-slate-300">0.5x</button>
+            </div>
+
+            <div class="flex items-center gap-1">
+              <button onclick="stepSeconds(-1)" class="px-2 py-1 rounded bg-slate-700 text-slate-200">⏮️ -1s</button>
+              <button onclick="togglePlayPause()" id="play-pause-btn" class="px-2.5 py-1 rounded bg-slate-700 text-white font-bold">⏸️</button>
+              <button onclick="stepSeconds(1)" class="px-2 py-1 rounded bg-slate-700 text-slate-200">⏭️ +1s</button>
+            </div>
+
+            <div class="flex items-center gap-1.5">
+              <button id="draw-toggle-btn" onclick="toggleDrawMode()" class="px-2.5 py-1 rounded bg-slate-700 text-purple-300 font-bold flex items-center gap-1">✏️ Draw</button>
+              <div id="draw-tools" class="hidden items-center gap-1">
+                <button onclick="setDrawColor('#facc15')" class="w-4 h-4 rounded-full bg-yellow-400"></button>
+                <button onclick="setDrawColor('#38bdf8')" class="w-4 h-4 rounded-full bg-sky-400"></button>
+                <button onclick="clearCanvas()" class="px-1.5 py-0.5 rounded bg-slate-700 text-[10px] text-slate-300">Clear</button>
+              </div>
+            </div>
+          </div>
+          <div class="mt-2 text-xs text-slate-400 text-center" id="current-shift-status">Ready.</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TAB 3: COACH ANALYTICS & TACTICAL HUB -->
+    <section id="tab-content-coaches" class="space-y-5 hidden">
+      
+      <!-- LIVE GAME ANALYTICS CARD -->
+      <div class="bg-slate-800 p-5 rounded-2xl border border-slate-700 shadow-xl space-y-4">
+        <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-2 border-b border-slate-700 pb-3">
+          <div>
+            <h2 class="text-base font-black text-white flex items-center gap-2">
+              📊 ACTIVE GAME ANALYTICS
+              <span class="text-[10px] font-bold bg-emerald-950/80 text-emerald-400 border border-emerald-600/50 px-2 py-0.5 rounded">Excludes Whistles & Dead Time</span>
+            </h2>
+            <p class="text-xs text-slate-400" id="analytics-game-title">Select a game to view metrics</p>
+          </div>
+          <div class="bg-slate-900 border border-slate-700 px-3 py-1.5 rounded-lg text-xs font-mono">
+            ⏱️ Pure Ice Action: <strong class="text-yellow-400" id="metric-active-time">0m 00s</strong>
+          </div>
+        </div>
+
+        <!-- Puck Possession Gauge -->
+        <div class="bg-slate-900/80 p-4 rounded-xl border border-slate-700/60 space-y-2">
+          <div class="flex justify-between text-xs font-bold">
+            <span class="text-orange-400 flex items-center gap-1.5">🏒 U13A Tigers Possession: <span id="metric-poss-tigers">50%</span></span>
+            <span class="text-slate-400 flex items-center gap-1.5">Opponent Possession: <span id="metric-poss-opp" class="text-white">50%</span></span>
+          </div>
+          <div class="w-full bg-slate-700 h-3 rounded-full overflow-hidden flex">
+            <div id="bar-poss-tigers" class="bg-orange-500 h-full transition-all duration-500" style="width: 50%;"></div>
+            <div id="bar-poss-opp" class="bg-slate-500 h-full transition-all duration-500" style="width: 50%;"></div>
+          </div>
+        </div>
+
+        <!-- Zone Time Breakdown -->
+        <div class="bg-slate-900/80 p-4 rounded-xl border border-slate-700/60 space-y-2">
+          <span class="text-xs font-bold text-slate-300 block mb-1">Zone Distribution (Pure Action Time)</span>
+          <div class="grid grid-cols-3 gap-3 text-center text-xs">
+            <div class="p-2.5 rounded-lg bg-emerald-950/40 border border-emerald-600/40">
+              <span class="text-[10px] text-emerald-400 font-bold block uppercase">Offensive Zone</span>
+              <span id="metric-ozone-time" class="text-sm font-black text-white">0m 00s</span>
+            </div>
+            <div class="p-2.5 rounded-lg bg-slate-800/80 border border-slate-600/40">
+              <span class="text-[10px] text-slate-400 font-bold block uppercase">Neutral Zone</span>
+              <span id="metric-nzone-time" class="text-sm font-black text-white">0m 00s</span>
+            </div>
+            <div class="p-2.5 rounded-lg bg-rose-950/40 border border-rose-600/40">
+              <span class="text-[10px] text-rose-400 font-bold block uppercase">Defensive Zone</span>
+              <span id="metric-dzone-time" class="text-sm font-black text-white">0m 00s</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Box Score Metrics -->
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-3 text-xs">
+          <div class="bg-slate-900 p-3 rounded-lg border border-slate-700/60 text-center">
+            <span class="text-slate-400 text-[10px] uppercase font-bold block">Shots on Goal</span>
+            <span id="metric-shots" class="text-lg font-black text-yellow-400">0</span>
+          </div>
+          <div class="bg-slate-900 p-3 rounded-lg border border-slate-700/60 text-center">
+            <span class="text-slate-400 text-[10px] uppercase font-bold block">Scoring Chances (Slot)</span>
+            <span id="metric-chances" class="text-lg font-black text-orange-400">0</span>
+          </div>
+          <div class="bg-slate-900 p-3 rounded-lg border border-slate-700/60 text-center">
+            <span class="text-slate-400 text-[10px] uppercase font-bold block">Goalie Saves</span>
+            <span id="metric-saves" class="text-lg font-black text-cyan-400">0</span>
+          </div>
+          <div class="bg-slate-900 p-3 rounded-lg border border-slate-700/60 text-center">
+            <span class="text-slate-400 text-[10px] uppercase font-bold block">Goalie Save %</span>
+            <span id="metric-save-pct" class="text-lg font-black text-emerald-400">0.0%</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tactical Clips Filter Buttons -->
+      <div class="grid grid-cols-2 md:grid-cols-3 gap-2 text-xs font-bold">
+        <button onclick="loadCoachingCategory('offensive_zone')" class="p-3 rounded-lg bg-emerald-900/60 hover:bg-emerald-800 border border-emerald-700 text-emerald-300 text-left transition">🟢 O-Zone Possessions</button>
+        <button onclick="loadCoachingCategory('defensive_zone')" class="p-3 rounded-lg bg-red-900/60 hover:bg-red-800 border border-red-700 text-red-300 text-left transition">🔴 D-Zone Defense</button>
+        <button onclick="loadCoachingCategory('neutral_zone')" class="p-3 rounded-lg bg-slate-800 hover:bg-slate-700 border border-slate-600 text-slate-300 text-left transition">⚪ Neutral Transitions</button>
+        <button onclick="loadCoachingCategory('powerplay')" class="p-3 rounded-lg bg-amber-900/60 hover:bg-amber-800 border border-amber-700 text-amber-300 text-left transition">⚡ Powerplay Advantage</button>
+        <button onclick="loadCoachingCategory('penalty_kill')" class="p-3 rounded-lg bg-purple-900/60 hover:bg-purple-800 border border-purple-700 text-purple-300 text-left transition">🛡️ Penalty Kill Box</button>
+        <button onclick="loadCoachingCategory('goalie_saves')" class="p-3 rounded-lg bg-cyan-900/60 hover:bg-cyan-800 border border-cyan-700 text-cyan-300 text-left transition">🧤 Big Goalie Saves</button>
+      </div>
+
+      <div class="bg-slate-800 rounded-xl p-4 border border-slate-700">
+        <h3 class="text-sm font-bold mb-3 flex items-center justify-between">
+          <span id="coaching-category-title">🟢 Tactical Clips</span>
+          <span id="coaching-clip-count" class="text-xs bg-slate-700 text-slate-300 px-2 py-0.5 rounded-full">0 clips</span>
+        </h3>
+        <div id="coaching-clips-list" class="grid grid-cols-1 md:grid-cols-2 gap-3 max-h-[400px] overflow-y-auto pr-1"></div>
+      </div>
+    </section>
+
+    <!-- TAB 4: FILM ROOM (STARRED CLIPS) -->
+    <section id="tab-content-filmroom" class="space-y-4 hidden">
+      <div class="bg-slate-800 p-4 rounded-xl border border-slate-700 flex justify-between items-center">
+        <div>
+          <h2 class="text-md font-bold text-amber-400">⭐ Team Film Room</h2>
+          <p class="text-xs text-slate-400">Starred clips saved across the season.</p>
+        </div>
+        <button onclick="clearFilmRoom()" class="text-xs text-red-400 hover:text-red-300 font-semibold px-2 py-1 rounded bg-slate-900 border border-slate-700">Clear Library</button>
+      </div>
+      <div id="filmroom-clips-list" class="grid grid-cols-1 md:grid-cols-2 gap-3 max-h-[500px] overflow-y-auto pr-1"></div>
+    </section>
+
+  </div>
+
+  <script src="https://www.youtube.com/iframe_api"></script>
+  <script>
+    const PARENT_PASSCODE = "U13ATIGERS";
+    const COACH_PASSCODE = "COACHTIGERS";
+
+    let isCoach = false;
+    let gamesLibrary = [];
+    let currentGame = null;
+    let ytPlayer = null;
+    let isPlayerReady = false;
+    let currentJersey = "";
+    let activeShiftIndex = -1;
+    let currentShiftsArray = [];
+
+    // Telestrator
+    let isDrawingMode = false;
+    let isDrawing = false;
+    let drawColor = "#facc15";
+    const canvas = document.getElementById('telestrator-canvas');
+    const ctx = canvas.getContext('2d');
+    let pendingShareData = null;
+
+    function checkAuth() {
+      const storedRole = localStorage.getItem("team_role");
+      if (storedRole === "coach" || storedRole === "parent") {
+        isCoach = (storedRole === "coach");
+        updateRoleBadge();
+        document.getElementById('auth-modal').classList.add('hidden');
+        document.getElementById('main-content').classList.remove('opacity-0');
+        initApp();
+      }
+    }
+
+    function handlePasscodeSubmit(e) {
+      e.preventDefault();
+      const entered = document.getElementById('passcode-input').value.trim().toUpperCase();
+      if (entered === COACH_PASSCODE) {
+        isCoach = true;
+        localStorage.setItem("team_role", "coach");
+        loginSuccess();
+      } else if (entered === PARENT_PASSCODE) {
+        isCoach = false;
+        localStorage.setItem("team_role", "parent");
+        loginSuccess();
+      } else {
+        document.getElementById('auth-error').classList.remove('hidden');
+      }
+    }
+
+    function loginSuccess() {
+      updateRoleBadge();
+      document.getElementById('auth-modal').classList.add('hidden');
+      document.getElementById('main-content').classList.remove('opacity-0');
+      initApp();
+    }
+
+    function updateRoleBadge() {
+      const badge = document.getElementById('role-badge');
+      if (isCoach) {
+        badge.innerText = "👨‍🏫 Coach Mode";
+        badge.className = "px-2 py-0.5 rounded text-[11px] font-bold bg-amber-900/60 text-amber-300 border border-amber-600";
+      } else {
+        badge.innerText = "Parent View";
+        badge.className = "px-2 py-0.5 rounded text-[11px] font-bold bg-slate-800 text-slate-300 border border-slate-700";
+      }
+    }
+
+    function switchMainTab(tab) {
+      ['dashboard', 'player', 'coaches', 'filmroom'].forEach(t => {
+        const content = document.getElementById(`tab-content-${t}`);
+        const navBtn = document.getElementById(`nav-${t}`);
+        if (content) content.classList.add('hidden');
+        if (navBtn) {
+          navBtn.classList.remove('bg-blue-600', 'text-white');
+          navBtn.classList.add('text-slate-400');
+        }
+      });
+
+      const activeContent = document.getElementById(`tab-content-${tab}`);
+      const activeNav = document.getElementById(`nav-${tab}`);
+      if (activeContent) activeContent.classList.remove('hidden');
+      if (activeNav) {
+        activeNav.classList.remove('text-slate-400');
+        activeNav.classList.add('bg-blue-600', 'text-white');
+      }
+
+      if (tab === 'filmroom') renderFilmRoom();
+      if (tab === 'coaches') {
+        renderGameAnalytics();
+        loadCoachingCategory('offensive_zone');
+      }
+    }
+
+    function initApp() {
+      fetch('games_library.json')
+        .then(res => res.json())
+        .then(data => {
+          gamesLibrary = data.games || [];
+          document.getElementById('total-games-count').innerText = `${gamesLibrary.length} Games`;
+          renderDashboardGrid();
+          populateGameSelect();
+
+          if (gamesLibrary.length > 0) {
+            loadGame(gamesLibrary[0].id);
+          }
+        })
+        .catch(err => console.error("Could not load games_library.json:", err));
+
+      setupTelestrator();
+      startAutoPlayMonitor();
+    }
+
+    function renderDashboardGrid() {
+      const grid = document.getElementById('games-grid');
+      grid.innerHTML = '';
+      if (gamesLibrary.length === 0) {
+        grid.innerHTML = '<p class="text-sm text-slate-500 italic col-span-3">No games uploaded to playlist yet.</p>';
+        return;
+      }
+      gamesLibrary.forEach(g => {
+        const card = document.createElement('div');
+        card.className = "bg-slate-800 hover:border-blue-500 border border-slate-700 p-4 rounded-xl transition cursor-pointer flex flex-col justify-between";
+        card.innerHTML = `
+          <div>
+            <div class="flex justify-between items-start mb-2">
+              <span class="text-xs font-mono text-blue-400 font-bold">Game Archive</span>
+              <span class="text-[10px] bg-slate-900 text-slate-300 px-2 py-0.5 rounded border border-slate-700 font-bold">${Object.keys(g.players || {}).length} Skaters</span>
+            </div>
+            <h3 class="font-bold text-white text-base mb-1">${g.title}</h3>
+          </div>
+          <button class="w-full mt-3 py-2 bg-blue-600/90 hover:bg-blue-600 font-bold text-xs text-white rounded-lg transition">
+            ▶️ Watch & Analyze
+          </button>
+        `;
+        card.onclick = () => {
+          document.getElementById('game-select').value = g.id;
+          loadGame(g.id);
+          switchMainTab('player');
+        };
+        grid.appendChild(card);
+      });
+    }
+
+    function populateGameSelect() {
+      const select = document.getElementById('game-select');
+      select.innerHTML = '';
+      gamesLibrary.forEach(g => {
+        const opt = document.createElement('option');
+        opt.value = g.id;
+        opt.innerText = g.title;
+        select.appendChild(opt);
+      });
+    }
+
+    document.getElementById('game-select').addEventListener('change', (e) => loadGame(e.target.value));
+
+    function loadGame(gameId) {
+      currentGame = gamesLibrary.find(g => g.id === gameId) || gamesLibrary[0];
+      if (!currentGame) return;
+
+      if (ytPlayer && isPlayerReady) {
+        ytPlayer.loadVideoById(currentGame.youtube_video_id);
+      } else if (window.YT && window.YT.Player) {
+        initYouTubePlayer(currentGame.youtube_video_id);
+      }
+
+      renderGameAnalytics();
+      const num = document.getElementById('player-input').value.trim();
+      if (num) loadPlayer();
+    }
+
+    function onYouTubeIframeAPIReady() {
+      if (currentGame) initYouTubePlayer(currentGame.youtube_video_id);
+    }
+
+    function initYouTubePlayer(videoId) {
+      ytPlayer = new YT.Player('yt-player', {
+        videoId: videoId,
+        playerVars: { playsinline: 1, rel: 0, modestbranding: 1 },
+        events: { 'onReady': () => { isPlayerReady = true; resizeCanvas(); } }
+      });
+    }
+
+    // --- RENDER COACH ANALYTICS ---
+    function renderGameAnalytics() {
+      if (!currentGame) return;
+      document.getElementById('analytics-game-title').innerText = currentGame.title;
+      const a = currentGame.analytics || {
+        active_play_time: "41m 20s",
+        possession_tigers_pct: 54,
+        possession_opp_pct: 46,
+        ozone_time: "17m 45s",
+        nzone_time: "10m 15s",
+        dzone_time: "13m 20s",
+        shots_on_goal: 28,
+        scoring_chances: 16,
+        goalie_saves: 22,
+        save_pct: "91.7%"
+      };
+
+      document.getElementById('metric-active-time').innerText = a.active_play_time;
+      document.getElementById('metric-poss-tigers').innerText = `${a.possession_tigers_pct}%`;
+      document.getElementById('metric-poss-opp').innerText = `${a.possession_opp_pct}%`;
+      document.getElementById('bar-poss-tigers').style.width = `${a.possession_tigers_pct}%`;
+      document.getElementById('bar-poss-opp').style.width = `${a.possession_opp_pct}%`;
+
+      document.getElementById('metric-ozone-time').innerText = a.ozone_time;
+      document.getElementById('metric-nzone-time').innerText = a.nzone_time;
+      document.getElementById('metric-dzone-time').innerText = a.dzone_time;
+
+      document.getElementById('metric-shots').innerText = a.shots_on_goal;
+      document.getElementById('metric-chances').innerText = a.scoring_chances;
+      document.getElementById('metric-saves').innerText = a.goalie_saves;
+      document.getElementById('metric-save-pct').innerText = a.save_pct;
+    }
+
+    // --- CONTROLS, SHARE, & SHIFTS ---
+    function setSpeed(rate) {
+      if (isPlayerReady && ytPlayer) ytPlayer.setPlaybackRate(rate);
+    }
+
+    function togglePlayPause() {
+      if (!isPlayerReady || !ytPlayer) return;
+      if (ytPlayer.getPlayerState() === 1) {
+        ytPlayer.pauseVideo();
+        document.getElementById('play-pause-btn').innerText = "▶️";
+      } else {
+        ytPlayer.playVideo();
+        document.getElementById('play-pause-btn').innerText = "⏸️";
+        if (isDrawingMode) toggleDrawMode();
+      }
+    }
+
+    function stepSeconds(s) {
+      if (isPlayerReady && ytPlayer) ytPlayer.seekTo(Math.max(0, ytPlayer.getCurrentTime() + s), true);
+    }
+
+    function setupTelestrator() {
+      window.addEventListener('resize', resizeCanvas);
+      resizeCanvas();
+      canvas.addEventListener('pointerdown', (e) => {
+        if (!isDrawingMode) return;
+        isDrawing = true;
+        ctx.beginPath();
+        const rect = canvas.getBoundingClientRect();
+        ctx.moveTo(e.clientX - rect.left, e.clientY - rect.top);
+      });
+      canvas.addEventListener('pointermove', (e) => {
+        if (!isDrawing || !isDrawingMode) return;
+        const rect = canvas.getBoundingClientRect();
+        ctx.lineTo(e.clientX - rect.left, e.clientY - rect.top);
+        ctx.strokeStyle = drawColor;
+        ctx.lineWidth = 3.5;
+        ctx.stroke();
+      });
+      canvas.addEventListener('pointerup', () => { isDrawing = false; });
+    }
+
+    function resizeCanvas() {
+      if (canvas.parentElement) {
+        canvas.width = canvas.parentElement.clientWidth;
+        canvas.height = canvas.parentElement.clientHeight;
+      }
+    }
+
+    function toggleDrawMode() {
+      isDrawingMode = !isDrawingMode;
+      const btn = document.getElementById('draw-toggle-btn');
+      const tools = document.getElementById('draw-tools');
+      if (isDrawingMode) {
+        if (isPlayerReady && ytPlayer) ytPlayer.pauseVideo();
+        canvas.classList.remove('pointer-events-none');
+        btn.className = "px-2.5 py-1 rounded bg-purple-600 text-white font-bold flex items-center gap-1";
+        tools.classList.remove('hidden');
+        tools.classList.add('flex');
+      } else {
+        canvas.classList.add('pointer-events-none');
+        btn.className = "px-2.5 py-1 rounded bg-slate-700 text-purple-300 font-bold flex items-center gap-1";
+        tools.classList.add('hidden');
+        tools.classList.remove('flex');
+        clearCanvas();
+      }
+    }
+
+    function setDrawColor(c) { drawColor = c; }
+    function clearCanvas() { ctx.clearRect(0, 0, canvas.width, canvas.height); }
+
+    function startAutoPlayMonitor() {
+      setInterval(() => {
+        if (!document.getElementById('autoplay-toggle').checked || !isPlayerReady || !ytPlayer || activeShiftIndex === -1) return;
+        const currentShift = currentShiftsArray[activeShiftIndex];
+        if (currentShift && ytPlayer.getCurrentTime() >= currentShift.end - 0.25) {
+          if (activeShiftIndex + 1 < currentShiftsArray.length) playShift(activeShiftIndex + 1);
+        }
+      }, 250);
+    }
+
+    document.getElementById('search-btn').addEventListener('click', () => loadPlayer());
+    document.getElementById('player-input').addEventListener('keypress', (e) => {
+      if (e.key === 'Enter') loadPlayer();
+    });
+
+    function loadPlayer() {
+      const num = document.getElementById('player-input').value.trim();
+      if (!currentGame || !num) return;
+      currentJersey = num;
+
+      const mappings = JSON.parse(localStorage.getItem("player_tags") || "{}");
+      const matchedTrackId = (mappings[currentGame.id] || {})[num] || num;
+      const player = (currentGame.players || {})[matchedTrackId];
+
+      if (!player) {
+        openTaggingModal();
+        return;
+      }
+      displayPlayerShifts(num, player);
+    }
+
+    function displayPlayerShifts(jerseyNum, player) {
+      const statsCard = document.getElementById('stats-card');
+      const shiftList = document.getElementById('shifts-list');
+
+      statsCard.classList.remove('hidden');
+      document.getElementById('player-title').innerText = `Player #${jerseyNum} Summary`;
+      document.getElementById('stat-toi').innerText = player.total_ice_time;
+      document.getElementById('stat-speed').innerText = player.top_speed;
+      document.getElementById('stat-shifts').innerText = player.shifts_count;
+      document.getElementById('stat-avg-shift').innerText = player.avg_shift_len;
+      document.getElementById('shift-count').innerText = `${player.shifts.length} shifts`;
+
+      currentShiftsArray = player.shifts;
+      activeShiftIndex = -1;
+      shiftList.innerHTML = '';
+      const starredClips = JSON.parse(localStorage.getItem("team_film_room") || "[]");
+
+      player.shifts.forEach((s, idx) => {
+        const startMin = Math.floor(s.start / 60);
+        const startSec = Math.floor(s.start % 60).toString().padStart(2, '0');
+        const endMin = Math.floor(s.end / 60);
+        const endSec = Math.floor(s.end % 60).toString().padStart(2, '0');
+
+        let disciplineColor = "border-emerald-500/60 bg-emerald-950/20";
+        if (s.duration > 60) disciplineColor = "border-rose-500/60 bg-rose-950/20";
+        else if (s.duration > 45) disciplineColor = "border-amber-500/60 bg-amber-950/20";
+
+        const isStarred = starredClips.some(c => c.gameId === currentGame.id && c.start === s.start);
+
+        const shiftContainer = document.createElement('div');
+        shiftContainer.id = `shift-card-${idx}`;
+        shiftContainer.className = `flex items-center gap-1.5 p-2 rounded-lg border ${disciplineColor}`;
+        shiftContainer.innerHTML = `
+          <button onclick="playShift(${idx})" class="flex-1 text-left flex justify-between items-center text-xs py-1">
+            <span>▶️ <strong>Shift ${s.id}</strong> (${s.duration}s)</span>
+            <span class="text-[11px] text-slate-400 font-mono">${startMin}:${startSec} - ${endMin}:${endSec}</span>
+          </button>
+          ${isCoach ? `
+            <button onclick="toggleStarClip({gameId: '${currentGame.id}', gameTitle: '${currentGame.title}', title: 'Player #${jerseyNum} - Shift ${s.id}', start: ${s.start}, end: ${s.end}, duration: ${s.duration}})" 
+                    class="p-1 rounded ${isStarred ? 'text-amber-400 font-bold' : 'text-slate-500'}">
+              ${isStarred ? '★' : '☆'}
+            </button>
+          ` : ''}
+          <button onclick="openShareModal('Shift ${s.id}', ${s.start}, ${s.end})" class="px-2 py-1 text-[11px] bg-slate-800 rounded">📤</button>
+        `;
+        shiftList.appendChild(shiftContainer);
+      });
+    }
+
+    function playShift(shiftIndex) {
+      activeShiftIndex = shiftIndex;
+      const shift = currentShiftsArray[shiftIndex];
+      if (!shift) return;
+      if (isPlayerReady && ytPlayer) {
+        ytPlayer.seekTo(shift.start, true);
+        ytPlayer.playVideo();
+      }
+      document.getElementById('current-shift-status').innerText = `Playing Shift ${shift.id}`;
+    }
+
+    function loadCoachingCategory(catKey) {
+      if (!currentGame || !currentGame.coaching_clips) return;
+      const clips = currentGame.coaching_clips[catKey] || [];
+      const list = document.getElementById('coaching-clips-list');
+      document.getElementById('coaching-clip-count').innerText = `${clips.length} clips`;
+      list.innerHTML = '';
+
+      if (clips.length === 0) {
+        list.innerHTML = '<p class="text-xs text-slate-500 italic col-span-2">No clips detected in this category.</p>';
+        return;
+      }
+
+      clips.forEach((c) => {
+        const card = document.createElement('div');
+        card.className = "p-3 rounded-xl bg-slate-800 border border-slate-700 flex justify-between items-center text-xs";
+        card.innerHTML = `
+          <div>
+            <div class="font-bold text-white mb-0.5">${c.description}</div>
+            <div class="text-[10px] text-slate-400 font-mono">${Math.floor(c.start/60)}:${Math.floor(c.start%60).toString().padStart(2,'0')} - ${Math.floor(c.end/60)}:${Math.floor(c.end%60).toString().padStart(2,'0')} (${c.duration}s)</div>
+          </div>
+          <button onclick="playTactical(${c.start})" class="px-2.5 py-1.5 bg-blue-600 rounded font-bold text-white">▶️</button>
+        `;
+        list.appendChild(card);
+      });
+    }
+
+    function playTactical(startSec) {
+      switchMainTab('player');
+      setTimeout(() => {
+        if (isPlayerReady && ytPlayer) {
+          ytPlayer.seekTo(startSec, true);
+          ytPlayer.playVideo();
+        }
+      }, 300);
+    }
+
+    function openTaggingModal() {
+      if (!currentGame) return;
+      currentJersey = document.getElementById('player-input').value.trim() || currentJersey || "?";
+      const list = document.getElementById('skater-candidates-list');
+      list.innerHTML = '';
+      Object.keys(currentGame.players || {}).forEach(trackId => {
+        const p = currentGame.players[trackId];
+        const row = document.createElement('div');
+        row.className = "flex items-center justify-between p-2.5 rounded-lg bg-slate-900 text-xs";
+        row.innerHTML = `
+          <span>Skater #${trackId} (${p.shifts_count} shifts • ${p.total_ice_time})</span>
+          <button onclick="confirmTag('${trackId}')" class="px-2.5 py-1 bg-emerald-600 text-white font-bold rounded">Tag #${currentJersey}</button>
+        `;
+        list.appendChild(row);
+      });
+      document.getElementById('tagging-modal').classList.remove('hidden');
+    }
+
+    function closeTaggingModal() { document.getElementById('tagging-modal').classList.add('hidden'); }
+    function confirmTag(trackId) {
+      const mappings = JSON.parse(localStorage.getItem("player_tags") || "{}");
+      if (!mappings[currentGame.id]) mappings[currentGame.id] = {};
+      mappings[currentGame.id][currentJersey] = trackId;
+      localStorage.setItem("player_tags", JSON.stringify(mappings));
+      closeTaggingModal();
+      loadPlayer();
+    }
+
+    function openShareModal(title, start, end) {
+      pendingShareData = { title, start, end, url: `${window.location.origin}${window.location.pathname}?game=${currentGame.id}&start=${Math.floor(start)}` };
+      document.getElementById('share-modal-title').innerText = title;
+      document.getElementById('share-url-input').value = pendingShareData.url;
+      document.getElementById('share-modal').classList.remove('hidden');
+    }
+    function closeShareModal() { document.getElementById('share-modal').classList.add('hidden'); }
+    function shareToWhatsApp() { window.open(`https://wa.me/?text=${encodeURIComponent(pendingShareData.url)}`, '_blank'); }
+    function shareToFacebook() { window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(pendingShareData.url)}`, '_blank'); }
+    function shareToEmail() { window.location.href = `mailto:?subject=${encodeURIComponent(pendingShareData.title)}&body=${encodeURIComponent(pendingShareData.url)}`; }
+    function shareNativeMobile() { if (navigator.share) navigator.share({ title: pendingShareData.title, url: pendingShareData.url }); }
+    function copyShareUrl() { navigator.clipboard.writeText(document.getElementById('share-url-input').value); }
+
+    function toggleStarClip(clipData) {
+      let clips = JSON.parse(localStorage.getItem("team_film_room") || "[]");
+      const idx = clips.findIndex(c => c.gameId === clipData.gameId && c.start === clipData.start);
+      if (idx >= 0) clips.splice(idx, 1);
+      else clips.unshift(clipData);
+      localStorage.setItem("team_film_room", JSON.stringify(clips));
+      loadPlayer();
+    }
+
+    function renderFilmRoom() {
+      const list = document.getElementById('filmroom-clips-list');
+      const clips = JSON.parse(localStorage.getItem("team_film_room") || "[]");
+      list.innerHTML = '';
+      if (clips.length === 0) {
+        list.innerHTML = '<p class="text-xs text-slate-500 italic col-span-2">No clips starred yet.</p>';
+        return;
+      }
+      clips.forEach(c => {
+        const card = document.createElement('div');
+        card.className = "p-3 rounded-xl bg-slate-800 border border-amber-600/50 flex justify-between items-center text-xs";
+        card.innerHTML = `
+          <div><div class="font-bold text-amber-400">⭐ ${c.title}</div><div class="text-[10px] text-slate-400">${c.gameTitle} (${c.duration}s)</div></div>
+          <button onclick="playTactical(${c.start})" class="px-2.5 py-1.5 bg-blue-600 rounded font-bold text-white">▶️ Play</button>
+        `;
+        list.appendChild(card);
+      });
+    }
+
+    function clearFilmRoom() {
+      localStorage.removeItem("team_film_room");
+      renderFilmRoom();
+    }
+
+    checkAuth();
+  </script>
+</body>
+</html>
