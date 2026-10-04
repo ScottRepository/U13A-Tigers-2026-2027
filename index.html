@@ -3,13 +3,13 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>U13A Tigers - Shift & Coach Analytics Hub</title>
+  <title>U13A Tigers - Video Breakdown & Analytics Hub</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
     #telestrator-canvas { touch-action: none; }
   </style>
 </head>
-<body class="bg-slate-900 text-slate-100 min-h-screen p-3 md:p-6 select-none font-sans">
+<body class="bg-slate-950 text-slate-100 min-h-screen p-2 md:p-6 select-none font-sans">
 
   <!-- ================= AUTH MODAL ================= -->
   <div id="auth-modal" class="fixed inset-0 bg-black/90 backdrop-blur-md flex items-center justify-center p-4 z-50">
@@ -27,11 +27,8 @@
           autofocus
           autocomplete="off"
         />
-        <p id="auth-error" class="text-xs text-red-400 font-semibold mb-3 hidden">Incorrect passcode. Try again.</p>
-        <button 
-          type="submit" 
-          class="w-full bg-blue-600 hover:bg-blue-500 font-bold py-3 rounded-lg transition text-sm tracking-wide text-white cursor-pointer shadow-lg shadow-blue-600/30"
-        >
+        <p id="auth-error" class="text-xs text-red-400 font-semibold mb-3 hidden">Incorrect passcode.</p>
+        <button type="submit" class="w-full bg-blue-600 hover:bg-blue-500 font-bold py-3 rounded-lg transition text-sm tracking-wide text-white cursor-pointer shadow-lg shadow-blue-600/30">
           ENTER PORTAL
         </button>
       </form>
@@ -55,13 +52,17 @@
         </div>
         <div class="grid grid-cols-2 gap-2">
           <div>
-            <label class="block text-slate-400 mb-1">Start Time (sec):</label>
+            <label class="block text-slate-400 mb-1">Start (sec):</label>
             <input id="edit-clip-start" type="number" class="w-full bg-slate-900 border border-slate-600 rounded px-2.5 py-1.5 text-white font-mono">
           </div>
           <div>
-            <label class="block text-slate-400 mb-1">End Time (sec):</label>
+            <label class="block text-slate-400 mb-1">End (sec):</label>
             <input id="edit-clip-end" type="number" class="w-full bg-slate-900 border border-slate-600 rounded px-2.5 py-1.5 text-white font-mono">
           </div>
+        </div>
+        <div class="flex items-center gap-2 pt-1">
+          <input type="checkbox" id="edit-clip-suggested" class="rounded bg-slate-900 border-slate-600 text-amber-500">
+          <label for="edit-clip-suggested" class="text-slate-300">🔥 Tag as Suggested High Action</label>
         </div>
         <div class="flex gap-2 pt-2">
           <button onclick="saveClipEdit()" class="flex-1 py-2 bg-emerald-600 hover:bg-emerald-500 rounded font-bold text-white transition">Save Changes</button>
@@ -71,25 +72,23 @@
     </div>
   </div>
 
-  <!-- ================= SHARE & DOWNLOAD MODAL ================= -->
+  <!-- ================= SHARE MODAL ================= -->
   <div id="share-modal" class="fixed inset-0 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4 z-50 hidden">
     <div class="bg-slate-800 border border-slate-700 p-6 rounded-2xl max-w-md w-full shadow-2xl">
       <div class="flex justify-between items-center mb-4">
         <h3 class="text-lg font-bold text-yellow-400" id="share-modal-title">Share Clip</h3>
         <button onclick="closeShareModal()" class="text-slate-400 hover:text-white text-2xl font-bold">&times;</button>
       </div>
-      <p class="text-xs text-slate-300 mb-4" id="share-modal-desc">Share this hockey clip with friends, coaches, or scouts.</p>
+      <p class="text-xs text-slate-300 mb-4" id="share-modal-desc">Share this hockey moment with coaches, players, or parents.</p>
       <div class="grid grid-cols-2 gap-3 mb-5">
         <button onclick="shareToWhatsApp()" class="flex items-center justify-center gap-2 p-3 rounded-lg bg-emerald-600 hover:bg-emerald-500 font-bold text-xs text-white transition">💬 WhatsApp</button>
-        <button onclick="shareNativeMobile()" class="flex items-center justify-center gap-2 p-3 rounded-lg bg-gradient-to-r from-purple-500 to-pink-500 hover:opacity-90 font-bold text-xs text-white transition">📸 Instagram / Native</button>
+        <button onclick="shareNativeMobile()" class="flex items-center justify-center gap-2 p-3 rounded-lg bg-gradient-to-r from-purple-500 to-pink-500 hover:opacity-90 font-bold text-xs text-white transition">📸 Mobile / Social</button>
         <button onclick="shareToFacebook()" class="flex items-center justify-center gap-2 p-3 rounded-lg bg-blue-700 hover:bg-blue-600 font-bold text-xs text-white transition">📘 Facebook</button>
         <button onclick="shareToEmail()" class="flex items-center justify-center gap-2 p-3 rounded-lg bg-slate-700 hover:bg-slate-600 font-bold text-xs text-white transition">✉️ Email</button>
       </div>
-      <div class="border-t border-slate-700 pt-4 space-y-2">
-        <div class="flex gap-2">
-          <input id="share-url-input" type="text" readonly class="w-full bg-slate-900 border border-slate-700 rounded px-2.5 py-1 text-xs text-slate-300 font-mono">
-          <button onclick="copyShareUrl()" class="px-3 py-1 bg-blue-600 text-xs font-bold rounded text-white hover:bg-blue-500">Copy</button>
-        </div>
+      <div class="border-t border-slate-700 pt-4 flex gap-2">
+        <input id="share-url-input" type="text" readonly class="w-full bg-slate-900 border border-slate-700 rounded px-2.5 py-1 text-xs text-slate-300 font-mono">
+        <button onclick="copyShareUrl()" class="px-3 py-1 bg-blue-600 text-xs font-bold rounded text-white hover:bg-blue-500">Copy</button>
       </div>
     </div>
   </div>
@@ -99,249 +98,240 @@
     <span id="toast-text">✅ Done!</span>
   </div>
 
-  <!-- ================= MAIN APP ================= -->
-  <div id="main-content" class="max-w-6xl mx-auto hidden">
-    <header class="mb-5 flex flex-col md:flex-row justify-between items-start md:items-center border-b border-slate-700 pb-4 gap-4">
-      <div>
-        <div class="flex items-center gap-2">
-          <h1 class="text-2xl font-black text-white tracking-wide">🏒 U13A TIGERS</h1>
-          <span id="role-badge" class="px-2 py-0.5 rounded text-[11px] font-bold bg-slate-800 text-slate-300 border border-slate-700">Parent View</span>
-          <button onclick="promptSwitchRole()" class="text-[11px] bg-slate-800 hover:bg-slate-700 text-blue-400 hover:text-blue-300 px-2.5 py-1 rounded border border-slate-700 font-semibold transition cursor-pointer">
-            🔄 Switch Role / Log Out
-          </button>
-        </div>
-        <p class="text-xs text-slate-400">Video Breakdown, Live Analytics & Tactical Review</p>
-      </div>
-
-      <nav class="bg-slate-800 p-1.5 rounded-xl border border-slate-700 flex flex-wrap gap-1 text-xs font-bold">
-        <button id="nav-dashboard" onclick="switchMainTab('dashboard')" class="px-3 py-1.5 rounded-lg bg-blue-600 text-white transition cursor-pointer">📅 Games</button>
-        <button id="nav-player" onclick="switchMainTab('player')" class="px-3 py-1.5 rounded-lg text-slate-400 hover:text-white transition cursor-pointer">👤 Shifts</button>
-        <button id="nav-coaches" onclick="switchMainTab('coaches')" class="px-3 py-1.5 rounded-lg text-slate-400 hover:text-white transition cursor-pointer">📊 Coach Analytics</button>
-        <button id="nav-filmroom" onclick="switchMainTab('filmroom')" class="px-3 py-1.5 rounded-lg text-amber-400 hover:text-white transition flex items-center gap-1 cursor-pointer">⭐ Film Room</button>
-      </nav>
-    </header>
-
-    <!-- TAB 1: SEASON GAMES -->
-    <section id="tab-content-dashboard" class="space-y-4">
-      <div class="flex justify-between items-center mb-2">
-        <h2 class="text-lg font-bold text-white">Season Schedule & Games</h2>
-        <span id="total-games-count" class="text-xs text-slate-400">0 Games</span>
-      </div>
-      <div id="games-grid" class="grid grid-cols-1 md:grid-cols-3 gap-4"></div>
-    </section>
-
-    <!-- TAB 2: PLAYER SHIFTS & VIDEO PLAYER -->
-    <section id="tab-content-player" class="grid grid-cols-1 lg:grid-cols-3 gap-6 hidden">
-      <div class="lg:col-span-1 space-y-4">
-        <div class="bg-slate-800 p-3 rounded-xl border border-slate-700 flex flex-col gap-2">
-          <label class="text-xs text-slate-400 font-semibold">Active Game:</label>
-          <select id="game-select" class="w-full bg-slate-900 border border-slate-600 rounded px-2.5 py-1.5 text-xs font-semibold text-white focus:outline-none focus:border-blue-500"></select>
-        </div>
-
-        <!-- Roster Quick Select -->
-        <div class="bg-slate-800 p-3 rounded-xl border border-slate-700 space-y-2">
-          <label class="text-xs text-slate-300 font-bold block">👤 Select Player from Roster:</label>
-          <select id="roster-select" onchange="selectFromRoster(this.value)" class="w-full bg-slate-900 border border-slate-600 rounded px-3 py-2 text-xs font-semibold text-yellow-400 focus:outline-none focus:border-yellow-400">
-            <option value="">-- Choose Player --</option>
-            <option value="23">#23 Easton Carpentier</option>
-            <option value="10">#10 Arjun Manjunath</option>
-            <option value="76">#76 Matt Davis</option>
-            <option value="13">#13 Matthew Hart</option>
-            <option value="16">#16 Joshua Liu</option>
-            <option value="21">#21 Caleb Irgengioro-Wu</option>
-            <option value="27">#27 Alen Fazlic</option>
-            <option value="88">#88 Roy Chen</option>
-            <option value="9">#9 Oliver Patterson</option>
-            <option value="7">#7 Maxwell Dey</option>
-            <option value="5">#5 Nathan Zhao</option>
-            <option value="18">#18 Nathan Carinci</option>
-            <option value="11">#11 Andrew Bichay</option>
-            <option value="28">#28 Ross Elley</option>
-            <option value="3">#3 Stewart Dolmage</option>
-            <option value="97">#97 Hudson Millar (G)</option>
-            <option value="98">#98 Hudson Barfitt (G)</option>
-          </select>
-          <div class="flex items-center gap-2 pt-1">
-            <input id="player-input" type="text" placeholder="Or type Jersey #" class="w-full bg-slate-900 border border-slate-600 rounded px-2.5 py-1.5 text-center font-bold text-sm text-yellow-400 focus:outline-none focus:border-yellow-400" />
-            <button id="search-btn" class="bg-blue-600 hover:bg-blue-500 font-semibold px-4 py-1.5 rounded text-xs transition text-white">Find</button>
-          </div>
-        </div>
-
-        <div id="stats-card" class="bg-slate-800 rounded-xl p-4 border border-slate-700 hidden">
-          <div class="flex justify-between items-center mb-3">
-            <h2 class="text-sm font-bold text-yellow-400" id="player-title">Player Stats</h2>
-          </div>
-          <div class="grid grid-cols-2 gap-2 text-xs">
-            <div class="bg-slate-900/60 p-2 rounded border border-slate-700/50"><span class="text-slate-400 block text-[10px]">Total Ice Time</span><span id="stat-toi" class="font-bold text-sm text-white">-</span></div>
-            <div class="bg-slate-900/60 p-2 rounded border border-slate-700/50"><span class="text-slate-400 block text-[10px]">Top Speed</span><span id="stat-speed" class="font-bold text-sm text-white">-</span></div>
-            <div class="bg-slate-900/60 p-2 rounded border border-slate-700/50"><span class="text-slate-400 block text-[10px]">Total Shifts</span><span id="stat-shifts" class="font-bold text-sm text-white">-</span></div>
-            <div class="bg-slate-900/60 p-2 rounded border border-slate-700/50"><span class="text-slate-400 block text-[10px]">Avg Shift</span><span id="stat-avg-shift" class="font-bold text-sm text-white">-</span></div>
-          </div>
-        </div>
-
-        <div class="bg-slate-800 rounded-xl p-4 border border-slate-700">
-          <div class="flex items-center justify-between mb-2">
-            <span class="text-sm font-bold">📋 Shift Playlist</span>
-            <span id="shift-count" class="text-xs bg-slate-700 text-slate-300 px-2 py-0.5 rounded-full">0 shifts</span>
-          </div>
-
-          <div class="bg-slate-900 p-2 rounded-lg border border-slate-700/60 mb-3 flex items-center justify-between">
-            <span class="text-xs font-semibold text-slate-300 flex items-center gap-1">⚡ <strong>Auto-Play Shifts</strong><span class="text-[10px] text-slate-400 block">(Binge mode)</span></span>
-            <label class="relative inline-flex items-center cursor-pointer">
-              <input type="checkbox" id="autoplay-toggle" class="sr-only peer">
-              <div class="w-9 h-5 bg-slate-700 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-blue-600"></div>
-            </label>
-          </div>
-
-          <div id="shifts-list" class="space-y-2 max-h-[350px] overflow-y-auto pr-1">
-            <p class="text-xs text-slate-500 italic">Select a player above to load their shifts.</p>
-          </div>
-        </div>
-      </div>
-
-      <div class="lg:col-span-2 space-y-3">
-        <div id="video-wrapper" class="bg-slate-800 rounded-xl p-3 border border-slate-700">
-          <div class="relative w-full rounded-lg overflow-hidden aspect-video bg-black shadow-lg">
-            <div id="yt-player" class="w-full h-full"></div>
-            <canvas id="telestrator-canvas" class="absolute inset-0 w-full h-full pointer-events-none z-20"></canvas>
-          </div>
-
-          <!-- COACH CHALKBOARD TOOLBAR -->
-          <div id="draw-tools" class="hidden mt-2 p-2 bg-slate-900/90 rounded-lg border border-purple-500/50 flex flex-wrap items-center justify-between gap-2 text-xs">
-            <div class="flex items-center gap-2">
-              <span class="text-purple-400 font-bold text-[11px] uppercase">Board:</span>
-              <button onclick="setTool('pen')" id="tool-pen" class="px-2 py-1 rounded bg-purple-600 text-white font-semibold">✏️ Freehand</button>
-              <button onclick="setTool('arrow')" id="tool-arrow" class="px-2 py-1 rounded bg-slate-800 text-slate-300 hover:text-white font-semibold">➡️ Arrow</button>
-              <button onclick="setTool('marker')" id="tool-marker" class="px-2 py-1 rounded bg-slate-800 text-slate-300 hover:text-white font-semibold">⭕ Player Dot</button>
-              <button onclick="setTool('text')" id="tool-text" class="px-2 py-1 rounded bg-slate-800 text-slate-300 hover:text-white font-semibold">📝 Text</button>
-            </div>
-            <div class="flex items-center gap-1.5">
-              <button onclick="setDrawColor('#facc15')" class="w-5 h-5 rounded-full bg-yellow-400 border-2 border-white"></button>
-              <button onclick="setDrawColor('#38bdf8')" class="w-5 h-5 rounded-full bg-sky-400 border border-slate-600"></button>
-              <button onclick="setDrawColor('#f43f5e')" class="w-5 h-5 rounded-full bg-rose-500 border border-slate-600"></button>
-              <button onclick="undoDraw()" class="px-2 py-1 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded font-semibold ml-1">↩️ Undo</button>
-              <button onclick="clearCanvas()" class="px-2 py-1 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded font-semibold">Clear</button>
+  <!-- ================= MAIN CINEMA APP ================= -->
+  <div id="main-content" class="max-w-7xl mx-auto hidden space-y-4">
+    
+    <!-- TOP SLICK DROPDOWN CONTROL BAR -->
+    <header class="bg-slate-900/95 border border-slate-800 rounded-2xl p-3 shadow-xl backdrop-blur-md">
+      <div class="flex flex-col lg:flex-row items-stretch lg:items-center justify-between gap-3">
+        
+        <!-- Left: Logo & Role -->
+        <div class="flex items-center justify-between lg:justify-start gap-3">
+          <div class="flex items-center gap-2">
+            <span class="text-2xl">🏒</span>
+            <div>
+              <h1 class="text-base font-black text-white tracking-wide leading-none">U13A TIGERS</h1>
+              <span class="text-[10px] text-slate-400 font-mono">Film Breakdown Hub</span>
             </div>
           </div>
-
-          <div class="mt-3 flex flex-wrap items-center justify-between gap-2 text-xs border-t border-slate-700 pt-2.5">
-            <div class="flex items-center gap-1">
-              <span class="text-[10px] text-slate-400 font-bold mr-1">Speed:</span>
-              <button onclick="setSpeed(1.0)" id="rate-1" class="px-2 py-1 rounded bg-blue-600 text-white font-bold">1x</button>
-              <button onclick="setSpeed(0.75)" id="rate-075" class="px-2 py-1 rounded bg-slate-700 text-slate-300">0.75x</button>
-              <button onclick="setSpeed(0.5)" id="rate-05" class="px-2 py-1 rounded bg-slate-700 text-slate-300">0.5x</button>
-            </div>
-
-            <div class="flex items-center gap-1">
-              <button onclick="stepSeconds(-1)" class="px-2 py-1 rounded bg-slate-700 text-slate-200">⏮️ -1s</button>
-              <button onclick="togglePlayPause()" id="play-pause-btn" class="px-2.5 py-1 rounded bg-slate-700 text-white font-bold">⏸️</button>
-              <button onclick="stepSeconds(1)" class="px-2 py-1 rounded bg-slate-700 text-slate-200">⏭️ +1s</button>
-            </div>
-
-            <button id="draw-toggle-btn" onclick="toggleDrawMode()" class="px-3 py-1.5 rounded-lg bg-slate-700 hover:bg-purple-600 text-purple-300 hover:text-white font-bold flex items-center gap-1.5 transition cursor-pointer">
-              🎨 Tactical Board
+          <div class="flex items-center gap-1.5">
+            <span id="role-badge" class="px-2 py-0.5 rounded text-[10px] font-bold bg-slate-800 text-slate-300 border border-slate-700">Parent View</span>
+            <button onclick="promptSwitchRole()" class="text-[10px] bg-slate-800 hover:bg-slate-700 text-blue-400 px-2 py-0.5 rounded border border-slate-700 font-semibold cursor-pointer">
+              🔄 Switch
             </button>
           </div>
-          <div class="mt-2 text-xs text-slate-400 text-center" id="current-shift-status">Ready.</div>
+        </div>
+
+        <!-- Center/Right: Dropdowns Controls Suite -->
+        <div class="flex flex-wrap items-center gap-2 text-xs">
+          <!-- 1. Game Select Dropdown -->
+          <div class="flex items-center gap-1 bg-slate-950 px-2.5 py-1.5 rounded-lg border border-slate-800">
+            <span class="text-slate-400 text-[10px] uppercase font-bold">Game:</span>
+            <select id="game-select" class="bg-transparent text-white font-semibold focus:outline-none cursor-pointer text-xs"></select>
+          </div>
+
+          <!-- 2. View Mode Dropdown -->
+          <div class="flex items-center gap-1 bg-slate-950 px-2.5 py-1.5 rounded-lg border border-slate-800">
+            <span class="text-slate-400 text-[10px] uppercase font-bold">Mode:</span>
+            <select id="view-mode-select" onchange="switchViewMode(this.value)" class="bg-transparent text-yellow-400 font-bold focus:outline-none cursor-pointer text-xs">
+              <option value="coaches">👨‍🏫 Coach Tactical Film</option>
+              <option value="player">👤 Individual Player Shifts</option>
+              <option value="filmroom">⭐ Team Starred Library</option>
+              <option value="dashboard">📅 Season Schedule Grid</option>
+            </select>
+          </div>
+
+          <!-- 3. Coach Tactical Category Dropdown (Visible in Coach Mode) -->
+          <div id="coach-category-wrapper" class="flex items-center gap-1 bg-slate-950 px-2.5 py-1.5 rounded-lg border border-slate-800">
+            <span class="text-slate-400 text-[10px] uppercase font-bold">Play Type:</span>
+            <select id="category-select" onchange="changeTacticalCategory(this.value)" class="bg-transparent text-emerald-400 font-bold focus:outline-none cursor-pointer text-xs">
+              <option value="defensive_zone">🔴 Defensive Zone Sequences</option>
+              <option value="offensive_zone">🟢 Offensive Zone Sequences</option>
+              <option value="neutral_zone">⚪ Neutral Zone Transitions</option>
+              <option value="powerplay">⚡ Powerplay (PP) Advantage</option>
+              <option value="penalty_kill">🛡️ Penalty Kill (PK) Box</option>
+              <option value="goal_highlights">🚨 Goals Scored</option>
+              <option value="goalie_saves">🧤 Goalie Big Saves</option>
+            </select>
+          </div>
+
+          <!-- 4. Roster Select Dropdown (Visible in Player Mode) -->
+          <div id="player-roster-wrapper" class="hidden flex items-center gap-1 bg-slate-950 px-2.5 py-1.5 rounded-lg border border-slate-800">
+            <span class="text-slate-400 text-[10px] uppercase font-bold">Player:</span>
+            <select id="roster-select" onchange="selectFromRoster(this.value)" class="bg-transparent text-yellow-400 font-bold focus:outline-none cursor-pointer text-xs">
+              <option value="">-- Choose Skater --</option>
+              <option value="23">#23 Easton Carpentier</option>
+              <option value="10">#10 Arjun Manjunath</option>
+              <option value="76">#76 Matt Davis</option>
+              <option value="13">#13 Matthew Hart</option>
+              <option value="16">#16 Joshua Liu</option>
+              <option value="21">#21 Caleb Irgengioro-Wu</option>
+              <option value="27">#27 Alen Fazlic</option>
+              <option value="88">#88 Roy Chen</option>
+              <option value="9">#9 Oliver Patterson</option>
+              <option value="7">#7 Maxwell Dey</option>
+              <option value="5">#5 Nathan Zhao</option>
+              <option value="18">#18 Nathan Carinci</option>
+              <option value="11">#11 Andrew Bichay</option>
+              <option value="28">#28 Ross Elley</option>
+              <option value="3">#3 Stewart Dolmage</option>
+              <option value="97">#97 Hudson Millar (G)</option>
+              <option value="98">#98 Hudson Barfitt (G)</option>
+            </select>
+          </div>
+
+          <!-- 5. 🔥 Suggested High Action Filter Toggle -->
+          <button id="suggested-filter-btn" onclick="toggleSuggestedFilter()" class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-amber-950/40 border border-amber-600/70 text-amber-300 font-bold transition hover:bg-amber-900/60 cursor-pointer">
+            <span>🔥 Suggested High-Action</span>
+            <span id="suggested-badge" class="px-1.5 py-0.2 rounded-full text-[9px] bg-amber-500 text-slate-950 font-black">OFF</span>
+          </button>
+        </div>
+
+      </div>
+    </header>
+
+    <!-- ================= THEATER VIDEO SCREEN STAGE ================= -->
+    <div class="bg-slate-900 border border-slate-800 rounded-3xl p-3 md:p-4 shadow-2xl space-y-3">
+      
+      <!-- EXPANDED VIDEO PLAYER + CHALKBOARD CANVAS (MAXIMIZED FOR DRAWING) -->
+      <div class="relative w-full rounded-2xl overflow-hidden aspect-video bg-black shadow-2xl ring-1 ring-slate-800">
+        <div id="yt-player" class="w-full h-full"></div>
+        <canvas id="telestrator-canvas" class="absolute inset-0 w-full h-full pointer-events-none z-20"></canvas>
+      </div>
+
+      <!-- TACTICAL CHALKBOARD TOOLBAR -->
+      <div id="draw-tools" class="hidden p-2.5 bg-slate-950/95 rounded-xl border border-purple-500/60 flex flex-wrap items-center justify-between gap-2 text-xs backdrop-blur-md">
+        <div class="flex items-center gap-1.5">
+          <span class="text-purple-400 font-black text-[11px] uppercase tracking-wider mr-1">Chalkboard:</span>
+          <button onclick="setTool('pen')" id="tool-pen" class="px-2.5 py-1 rounded bg-purple-600 text-white font-bold cursor-pointer">✏️ Freehand</button>
+          <button onclick="setTool('arrow')" id="tool-arrow" class="px-2.5 py-1 rounded bg-slate-800 text-slate-300 hover:text-white font-semibold cursor-pointer">➡️ Skating Arrow</button>
+          <button onclick="setTool('marker')" id="tool-marker" class="px-2.5 py-1 rounded bg-slate-800 text-slate-300 hover:text-white font-semibold cursor-pointer">⭕ Player Dot</button>
+          <button onclick="setTool('text')" id="tool-text" class="px-2.5 py-1 rounded bg-slate-800 text-slate-300 hover:text-white font-semibold cursor-pointer">📝 Coach Text</button>
+        </div>
+        <div class="flex items-center gap-1.5">
+          <span class="text-slate-400 text-[10px]">Color:</span>
+          <button onclick="setDrawColor('#facc15')" class="w-5 h-5 rounded-full bg-yellow-400 border-2 border-white cursor-pointer"></button>
+          <button onclick="setDrawColor('#38bdf8')" class="w-5 h-5 rounded-full bg-sky-400 border border-slate-600 cursor-pointer"></button>
+          <button onclick="setDrawColor('#f43f5e')" class="w-5 h-5 rounded-full bg-rose-500 border border-slate-600 cursor-pointer"></button>
+          <button onclick="undoDraw()" class="px-2 py-1 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded font-semibold ml-1 cursor-pointer">↩️ Undo</button>
+          <button onclick="clearCanvas()" class="px-2 py-1 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded font-semibold cursor-pointer">Clear Board</button>
         </div>
       </div>
-    </section>
 
-    <!-- TAB 3: COACH ANALYTICS & TACTICAL HUB -->
-    <section id="tab-content-coaches" class="space-y-5 hidden">
-      <div class="bg-slate-800 p-5 rounded-2xl border border-slate-700 shadow-xl space-y-4">
-        <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-2 border-b border-slate-700 pb-3">
-          <div>
-            <h2 class="text-base font-black text-white flex items-center gap-2">
-              📊 ACTIVE GAME ANALYTICS
-              <span class="text-[10px] font-bold bg-emerald-950/80 text-emerald-400 border border-emerald-600/50 px-2 py-0.5 rounded">Whistles & Dead Time Removed</span>
-            </h2>
-            <p class="text-xs text-slate-400" id="analytics-game-title">Select a game to view metrics</p>
-          </div>
-          <div class="bg-slate-900 border border-slate-700 px-3 py-1.5 rounded-lg text-xs font-mono">
-            ⏱️ Action Time: <strong class="text-yellow-400" id="metric-active-time">0m 00s</strong>
-          </div>
+      <!-- VIDEO CONTROLS & TIMELINE STATUS -->
+      <div class="flex flex-wrap items-center justify-between gap-3 text-xs border-t border-slate-800/80 pt-2 px-1">
+        <div class="flex items-center gap-1.5">
+          <span class="text-[10px] text-slate-400 font-bold uppercase mr-1">Slow-Mo:</span>
+          <button onclick="setSpeed(1.0)" id="rate-1" class="px-2.5 py-1 rounded bg-blue-600 text-white font-bold cursor-pointer">1x</button>
+          <button onclick="setSpeed(0.75)" id="rate-075" class="px-2.5 py-1 rounded bg-slate-800 text-slate-300 hover:text-white cursor-pointer">0.75x</button>
+          <button onclick="setSpeed(0.5)" id="rate-05" class="px-2.5 py-1 rounded bg-slate-800 text-slate-300 hover:text-white cursor-pointer">0.5x</button>
+          <button onclick="setSpeed(0.25)" id="rate-025" class="px-2.5 py-1 rounded bg-slate-800 text-slate-300 hover:text-white cursor-pointer">0.25x</button>
         </div>
 
-        <div class="bg-slate-900/80 p-4 rounded-xl border border-slate-700/60 space-y-2">
-          <div class="flex justify-between text-xs font-bold">
-            <span class="text-orange-400 flex items-center gap-1.5">🏒 Tigers Possession: <span id="metric-poss-tigers">50%</span></span>
-            <span class="text-slate-400 flex items-center gap-1.5">Opponent Possession: <span id="metric-poss-opp" class="text-white">50%</span></span>
-          </div>
-          <div class="w-full bg-slate-700 h-3 rounded-full overflow-hidden flex">
-            <div id="bar-poss-tigers" class="bg-orange-500 h-full transition-all duration-500" style="width: 50%;"></div>
-            <div id="bar-poss-opp" class="bg-slate-500 h-full transition-all duration-500" style="width: 50%;"></div>
-          </div>
+        <div class="flex items-center gap-1">
+          <button onclick="stepSeconds(-1)" class="px-2.5 py-1 rounded bg-slate-800 hover:bg-slate-700 text-slate-200 cursor-pointer">⏮️ -1s</button>
+          <button onclick="togglePlayPause()" id="play-pause-btn" class="px-3 py-1 rounded bg-slate-800 hover:bg-slate-700 text-white font-bold cursor-pointer">⏸️</button>
+          <button onclick="stepSeconds(1)" class="px-2.5 py-1 rounded bg-slate-800 hover:bg-slate-700 text-slate-200 cursor-pointer">⏭️ +1s</button>
         </div>
 
-        <div class="bg-slate-900/80 p-4 rounded-xl border border-slate-700/60 space-y-2">
-          <span class="text-xs font-bold text-slate-300 block mb-1">Zone Distribution (Pure Action Time)</span>
-          <div class="grid grid-cols-3 gap-3 text-center text-xs">
-            <div class="p-2.5 rounded-lg bg-emerald-950/40 border border-emerald-600/40">
-              <span class="text-[10px] text-emerald-400 font-bold block uppercase">Offensive Zone</span>
-              <span id="metric-ozone-time" class="text-sm font-black text-white">0m 00s</span>
-            </div>
-            <div class="p-2.5 rounded-lg bg-slate-800/80 border border-slate-600/40">
-              <span class="text-[10px] text-slate-400 font-bold block uppercase">Neutral Zone</span>
-              <span id="metric-nzone-time" class="text-sm font-black text-white">0m 00s</span>
-            </div>
-            <div class="p-2.5 rounded-lg bg-rose-950/40 border border-rose-600/40">
-              <span class="text-[10px] text-rose-400 font-bold block uppercase">Defensive Zone</span>
-              <span id="metric-dzone-time" class="text-sm font-black text-white">0m 00s</span>
-            </div>
-          </div>
-        </div>
+        <button id="draw-toggle-btn" onclick="toggleDrawMode()" class="px-3.5 py-1.5 rounded-xl bg-slate-800 hover:bg-purple-600 text-purple-300 hover:text-white font-bold flex items-center gap-1.5 transition cursor-pointer shadow-md">
+          🎨 Draw on Video
+        </button>
+      </div>
 
-        <div class="grid grid-cols-2 md:grid-cols-4 gap-3 text-xs">
-          <div class="bg-slate-900 p-3 rounded-lg border border-slate-700/60 text-center">
-            <span class="text-slate-400 text-[10px] uppercase font-bold block">Shots on Goal</span>
-            <span id="metric-shots" class="text-lg font-black text-yellow-400">0</span>
-          </div>
-          <div class="bg-slate-900 p-3 rounded-lg border border-slate-700/60 text-center">
-            <span class="text-slate-400 text-[10px] uppercase font-bold block">Scoring Chances</span>
-            <span id="metric-chances" class="text-lg font-black text-orange-400">0</span>
-          </div>
-          <div class="bg-slate-900 p-3 rounded-lg border border-slate-700/60 text-center">
-            <span class="text-slate-400 text-[10px] uppercase font-bold block">Goalie Saves</span>
-            <span id="metric-saves" class="text-lg font-black text-cyan-400">0</span>
-          </div>
-          <div class="bg-slate-900 p-3 rounded-lg border border-slate-700/60 text-center">
-            <span class="text-slate-400 text-[10px] uppercase font-bold block">Goalie Save %</span>
-            <span id="metric-save-pct" class="text-lg font-black text-emerald-400">0.0%</span>
-          </div>
+      <div class="text-xs text-slate-400 font-medium text-center" id="current-shift-status">
+        Ready. Select any clip below to jump to that moment.
+      </div>
+    </div>
+
+    <!-- ================= BOTTOM FILM STRIP & ANALYTICS BAR ================= -->
+
+    <!-- COACH ANALYTICS COMPACT DOCK -->
+    <div id="coach-analytics-dock" class="bg-slate-900 border border-slate-800 p-4 rounded-2xl shadow-xl space-y-3">
+      <div class="flex justify-between items-center text-xs">
+        <span class="font-bold text-white flex items-center gap-2">
+          📊 Active Play Metrics <span class="text-[10px] text-slate-400 font-normal">(Whistles excluded)</span>
+        </span>
+        <span class="font-mono text-yellow-400 font-bold" id="metric-active-time">38m 20s Action Time</span>
+      </div>
+
+      <!-- Possession Bar -->
+      <div class="space-y-1">
+        <div class="flex justify-between text-[11px] font-bold">
+          <span class="text-orange-400">Tigers Possession: <span id="metric-poss-tigers">42%</span></span>
+          <span class="text-slate-400">Opponent Possession: <span id="metric-poss-opp">58%</span></span>
+        </div>
+        <div class="w-full bg-slate-800 h-2.5 rounded-full overflow-hidden flex">
+          <div id="bar-poss-tigers" class="bg-orange-500 h-full transition-all duration-500" style="width: 42%;"></div>
+          <div id="bar-poss-opp" class="bg-slate-600 h-full transition-all duration-500" style="width: 58%;"></div>
         </div>
       </div>
 
-      <div class="grid grid-cols-2 md:grid-cols-3 gap-2 text-xs font-bold">
-        <button onclick="loadCoachingCategory('offensive_zone')" class="p-3 rounded-lg bg-emerald-900/60 hover:bg-emerald-800 border border-emerald-700 text-emerald-300 text-left transition cursor-pointer">🟢 O-Zone Possessions</button>
-        <button onclick="loadCoachingCategory('defensive_zone')" class="p-3 rounded-lg bg-red-900/60 hover:bg-red-800 border border-red-700 text-red-300 text-left transition cursor-pointer">🔴 D-Zone Defense</button>
-        <button onclick="loadCoachingCategory('neutral_zone')" class="p-3 rounded-lg bg-slate-800 hover:bg-slate-700 border border-slate-600 text-slate-300 text-left transition cursor-pointer">⚪ Neutral Transitions</button>
-        <button onclick="loadCoachingCategory('powerplay')" class="p-3 rounded-lg bg-amber-900/60 hover:bg-amber-800 border border-amber-700 text-amber-300 text-left transition cursor-pointer">⚡ Powerplay Advantage</button>
-        <button onclick="loadCoachingCategory('penalty_kill')" class="p-3 rounded-lg bg-purple-900/60 hover:bg-purple-800 border border-purple-700 text-purple-300 text-left transition cursor-pointer">🛡️ Penalty Kill Box</button>
-        <button onclick="loadCoachingCategory('goal_highlights')" class="p-3 rounded-lg bg-yellow-900/60 hover:bg-yellow-800 border border-yellow-700 text-yellow-300 text-left transition cursor-pointer">🚨 Goals Scored</button>
-        <button onclick="loadCoachingCategory('goalie_saves')" class="p-3 rounded-lg bg-cyan-900/60 hover:bg-cyan-800 border border-cyan-700 text-cyan-300 text-left transition cursor-pointer">🧤 Big Goalie Saves</button>
-      </div>
-
-      <div class="bg-slate-800 rounded-xl p-4 border border-slate-700">
-        <h3 class="text-sm font-bold mb-3 flex items-center justify-between">
-          <span id="coaching-category-title">🟢 Tactical Clips</span>
-          <span id="coaching-clip-count" class="text-xs bg-slate-700 text-slate-300 px-2 py-0.5 rounded-full">0 clips</span>
-        </h3>
-        <div id="coaching-clips-list" class="grid grid-cols-1 md:grid-cols-2 gap-3 max-h-[400px] overflow-y-auto pr-1"></div>
-      </div>
-    </section>
-
-    <!-- TAB 4: FILM ROOM (STARRED CLIPS) -->
-    <section id="tab-content-filmroom" class="space-y-4 hidden">
-      <div class="bg-slate-800 p-4 rounded-xl border border-slate-700 flex justify-between items-center">
-        <div>
-          <h2 class="text-md font-bold text-amber-400">⭐ Team Film Room</h2>
-          <p class="text-xs text-slate-400">Starred clips saved across the season.</p>
+      <!-- Quick Metrics Counters -->
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-2 text-center text-xs pt-1">
+        <div class="bg-slate-950 p-2 rounded-lg border border-slate-800/80">
+          <span class="text-slate-400 text-[10px] uppercase block">O-Zone Time</span>
+          <span id="metric-ozone-time" class="font-bold text-emerald-400">12m 45s</span>
         </div>
-        <button onclick="clearFilmRoom()" class="text-xs text-red-400 hover:text-red-300 font-semibold px-2 py-1 rounded bg-slate-900 border border-slate-700 cursor-pointer">Clear Library</button>
+        <div class="bg-slate-950 p-2 rounded-lg border border-slate-800/80">
+          <span class="text-slate-400 text-[10px] uppercase block">D-Zone Time</span>
+          <span id="metric-dzone-time" class="font-bold text-rose-400">16m 05s</span>
+        </div>
+        <div class="bg-slate-950 p-2 rounded-lg border border-slate-800/80">
+          <span class="text-slate-400 text-[10px] uppercase block">Shots on Goal</span>
+          <span id="metric-shots" class="font-bold text-yellow-400">18</span>
+        </div>
+        <div class="bg-slate-950 p-2 rounded-lg border border-slate-800/80">
+          <span class="text-slate-400 text-[10px] uppercase block">Goalie Saves</span>
+          <span id="metric-saves" class="font-bold text-cyan-400">28 (70%)</span>
+        </div>
       </div>
-      <div id="filmroom-clips-list" class="grid grid-cols-1 md:grid-cols-2 gap-3 max-h-[500px] overflow-y-auto pr-1"></div>
-    </section>
+    </div>
+
+    <!-- PLAYER STATS BANNER (Visible in Player Mode) -->
+    <div id="player-stats-dock" class="hidden bg-slate-900 border border-slate-800 p-4 rounded-2xl shadow-xl space-y-2">
+      <div class="flex justify-between items-center">
+        <h3 class="text-sm font-bold text-yellow-400" id="player-title">Player Stats</h3>
+        <!-- Auto-Play Binge Toggle -->
+        <div class="flex items-center gap-2 bg-slate-950 px-3 py-1 rounded-lg border border-slate-800">
+          <span class="text-[11px] font-semibold text-slate-300">⚡ Auto-Play All Shifts</span>
+          <label class="relative inline-flex items-center cursor-pointer">
+            <input type="checkbox" id="autoplay-toggle" class="sr-only peer">
+            <div class="w-8 h-4 bg-slate-700 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-3 after:w-3 after:transition-all peer-checked:bg-blue-600"></div>
+          </label>
+        </div>
+      </div>
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-2 text-xs">
+        <div class="bg-slate-950 p-2 rounded-lg border border-slate-800"><span class="text-slate-400 block text-[10px]">Total Ice Time</span><span id="stat-toi" class="font-bold text-white text-sm">-</span></div>
+        <div class="bg-slate-950 p-2 rounded-lg border border-slate-800"><span class="text-slate-400 block text-[10px]">Top Speed</span><span id="stat-speed" class="font-bold text-white text-sm">-</span></div>
+        <div class="bg-slate-950 p-2 rounded-lg border border-slate-800"><span class="text-slate-400 block text-[10px]">Total Shifts</span><span id="stat-shifts" class="font-bold text-white text-sm">-</span></div>
+        <div class="bg-slate-950 p-2 rounded-lg border border-slate-800"><span class="text-slate-400 block text-[10px]">Avg Shift Duration</span><span id="stat-avg-shift" class="font-bold text-white text-sm">-</span></div>
+      </div>
+    </div>
+
+    <!-- DYNAMIC CLIP REEL STRIP -->
+    <div class="bg-slate-900 border border-slate-800 rounded-3xl p-4 shadow-xl space-y-3">
+      <div class="flex justify-between items-center border-b border-slate-800 pb-2">
+        <div class="flex items-center gap-2">
+          <h2 class="text-sm font-black text-white uppercase tracking-wider" id="clip-strip-title">Play Sequences</h2>
+          <span id="clip-strip-count" class="text-[11px] bg-slate-800 text-slate-300 px-2 py-0.5 rounded-full font-bold">0 clips</span>
+        </div>
+        <div class="text-[10px] text-slate-400 flex items-center gap-3">
+          <span class="text-emerald-400 font-bold">● &le;45s Fast</span>
+          <span class="text-amber-400 font-bold">● 46-60s OK</span>
+          <span class="text-rose-400 font-bold">● &gt;60s Long</span>
+        </div>
+      </div>
+
+      <!-- Clips Grid (Expansive 3-Column Responsive Reel) -->
+      <div id="clips-stream-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 max-h-[460px] overflow-y-auto pr-1"></div>
+    </div>
+
+    <!-- SCHEDULE DASHBOARD (Hidden unless selected) -->
+    <div id="schedule-dashboard-wrapper" class="hidden bg-slate-900 border border-slate-800 rounded-3xl p-5 shadow-xl space-y-3">
+      <h2 class="text-base font-bold text-white mb-2">Season Games & Schedule</h2>
+      <div id="games-grid" class="grid grid-cols-1 md:grid-cols-3 gap-4"></div>
+    </div>
 
   </div>
 
@@ -355,11 +345,16 @@
     let currentGame = null;
     let ytPlayer = null;
     let isPlayerReady = false;
-    let currentJersey = "";
-    let activeShiftIndex = -1;
-    let currentShiftsArray = [];
+    let currentMode = "coaches";
+    let activeCategory = "defensive_zone";
+    let isSuggestedOnly = false;
 
-    // Chalkboard State
+    // Player shifts
+    let currentJersey = "23";
+    let currentShiftsArray = [];
+    let activeShiftIndex = -1;
+
+    // Tactical Chalkboard State
     let isDrawingMode = false;
     let isDrawing = false;
     let currentTool = "pen";
@@ -371,7 +366,7 @@
     let pendingShareData = null;
     let activeEditCategory = null, activeEditIndex = null;
 
-    // --- AUTHENTICATION & LOGIN ---
+    // --- 1. AUTHENTICATION & LOGIN ---
     function checkAuth() {
       const storedRole = localStorage.getItem("team_role");
       if (storedRole === "coach" || storedRole === "parent") {
@@ -412,25 +407,23 @@
       const modal = document.getElementById('auth-modal');
       const content = document.getElementById('main-content');
       if (modal) modal.style.display = 'none';
-      if (content) {
-        content.classList.remove('hidden');
-      }
+      if (content) content.classList.remove('hidden');
     }
 
     function updateRoleBadge() {
       const badge = document.getElementById('role-badge');
       if (!badge) return;
       if (isCoach) {
-        badge.innerText = "👨‍🏫 Coach Mode (Editor Unlocked)";
-        badge.className = "px-2 py-0.5 rounded text-[11px] font-bold bg-amber-900/60 text-amber-300 border border-amber-600";
+        badge.innerText = "👨‍🏫 Coach Mode";
+        badge.className = "px-2 py-0.5 rounded text-[10px] font-bold bg-amber-900/60 text-amber-300 border border-amber-600";
       } else {
         badge.innerText = "Parent View";
-        badge.className = "px-2 py-0.5 rounded text-[11px] font-bold bg-slate-800 text-slate-300 border border-slate-700";
+        badge.className = "px-2 py-0.5 rounded text-[10px] font-bold bg-slate-800 text-slate-300 border border-slate-700";
       }
     }
 
     function promptSwitchRole() {
-      const choice = prompt("Enter passcode to switch mode:\n• 'CoachTigers' for Coach Mode\n• 'U13ATigers' for Parent View\n• Type 'LOGOUT' to exit portal:", "");
+      const choice = prompt("Switch role:\n• 'CoachTigers' for Coach Mode\n• 'U13ATigers' for Parent View\n• Type 'LOGOUT' to lock portal:", "");
       if (!choice) return;
 
       const clean = String(choice).replace(/[\s\-_]/g, '').toUpperCase();
@@ -439,105 +432,84 @@
         localStorage.setItem("team_role", "coach");
         updateRoleBadge();
         showToast("👨‍🏫 Switched to Coach Mode!");
-        loadPlayer();
+        renderActiveView();
       } else if (clean === "U13ATIGERS") {
         isCoach = false;
         localStorage.setItem("team_role", "parent");
         updateRoleBadge();
         showToast("👤 Switched to Parent View!");
-        loadPlayer();
+        renderActiveView();
       } else if (clean === "LOGOUT") {
         localStorage.removeItem("team_role");
-        localStorage.removeItem("team_auth");
         window.location.reload();
       } else {
-        alert("Passcode not recognized. Use 'U13ATigers' or 'CoachTigers'");
+        alert("Passcode not recognized.");
       }
     }
 
-    // --- NAVIGATION TABS ---
-    function switchMainTab(tab) {
-      ['dashboard', 'player', 'coaches', 'filmroom'].forEach(t => {
-        const content = document.getElementById(`tab-content-${t}`);
-        const navBtn = document.getElementById(`nav-${t}`);
-        if (content) content.classList.add('hidden');
-        if (navBtn) {
-          navBtn.classList.remove('bg-blue-600', 'text-white');
-          navBtn.classList.add('text-slate-400');
-        }
-      });
+    // --- 2. VIEW SWITCHER ENGINE ---
+    function switchViewMode(mode) {
+      currentMode = mode;
+      const coachWrapper = document.getElementById('coach-category-wrapper');
+      const playerWrapper = document.getElementById('player-roster-wrapper');
+      const suggestedBtn = document.getElementById('suggested-filter-btn');
+      const coachDock = document.getElementById('coach-analytics-dock');
+      const playerDock = document.getElementById('player-stats-dock');
+      const scheduleWrapper = document.getElementById('schedule-dashboard-wrapper');
 
-      const activeContent = document.getElementById(`tab-content-${tab}`);
-      const activeNav = document.getElementById(`nav-${tab}`);
-      if (activeContent) activeContent.classList.remove('hidden');
-      if (activeNav) {
-        activeNav.classList.remove('text-slate-400');
-        activeNav.classList.add('bg-blue-600', 'text-white');
+      // Reset visibility
+      if (mode === 'coaches') {
+        coachWrapper.classList.remove('hidden');
+        playerWrapper.classList.add('hidden');
+        suggestedBtn.classList.remove('hidden');
+        coachDock.classList.remove('hidden');
+        playerDock.classList.add('hidden');
+        scheduleWrapper.classList.add('hidden');
+        loadCoachingClips();
+      } else if (mode === 'player') {
+        coachWrapper.classList.add('hidden');
+        playerWrapper.classList.remove('hidden');
+        suggestedBtn.classList.add('hidden');
+        coachDock.classList.add('hidden');
+        playerDock.classList.remove('hidden');
+        scheduleWrapper.classList.add('hidden');
+        loadPlayerShifts();
+      } else if (mode === 'filmroom') {
+        coachWrapper.classList.add('hidden');
+        playerWrapper.classList.add('hidden');
+        suggestedBtn.classList.add('hidden');
+        coachDock.classList.add('hidden');
+        playerDock.classList.add('hidden');
+        scheduleWrapper.classList.add('hidden');
+        renderFilmRoom();
+      } else if (mode === 'dashboard') {
+        scheduleWrapper.classList.remove('hidden');
       }
 
-      if (tab === 'filmroom') renderFilmRoom();
-      if (tab === 'coaches') {
-        renderGameAnalytics();
-        loadCoachingCategory('offensive_zone');
-      }
-      if (tab === 'player') {
-        resizeCanvas();
-      }
+      resizeCanvas();
     }
 
-    // --- INITIALIZE APPLICATION ---
+    function renderActiveView() {
+      switchViewMode(currentMode);
+    }
+
+    // --- 3. DATA & APP INIT ---
     function initApp() {
       fetch('games_library.json')
         .then(res => res.json())
         .then(data => {
           gamesLibrary = data.games || [];
-          const countEl = document.getElementById('total-games-count');
-          if (countEl) countEl.innerText = `${gamesLibrary.length} Games`;
-          renderDashboardGrid();
           populateGameSelect();
+          renderScheduleDashboard();
 
           if (gamesLibrary.length > 0) {
             loadGame(gamesLibrary[0].id);
           }
         })
-        .catch(err => console.error("Could not load games_library.json:", err));
+        .catch(err => console.error("Error loading games_library.json:", err));
 
       setupTelestrator();
       startAutoPlayMonitor();
-    }
-
-    function renderDashboardGrid() {
-      const grid = document.getElementById('games-grid');
-      if (!grid) return;
-      grid.innerHTML = '';
-      if (gamesLibrary.length === 0) {
-        grid.innerHTML = '<p class="text-sm text-slate-500 italic col-span-3">No games uploaded yet.</p>';
-        return;
-      }
-      gamesLibrary.forEach(g => {
-        const card = document.createElement('div');
-        card.className = "bg-slate-800 hover:border-blue-500 border border-slate-700 p-4 rounded-xl transition cursor-pointer flex flex-col justify-between";
-        card.innerHTML = `
-          <div>
-            <div class="flex justify-between items-start mb-2">
-              <span class="text-xs font-mono text-blue-400 font-bold">${g.date || 'Game Archive'}</span>
-              <span class="text-[10px] bg-slate-900 text-slate-300 px-2 py-0.5 rounded border border-slate-700 font-bold">${Object.keys(g.players || {}).length} Skaters</span>
-            </div>
-            <h3 class="font-bold text-white text-base mb-1">${g.title}</h3>
-            <p class="text-xs text-slate-400 mb-3">${g.opponent ? 'vs ' + g.opponent : 'Hockey Match'}</p>
-          </div>
-          <button class="w-full mt-3 py-2 bg-blue-600/90 hover:bg-blue-600 font-bold text-xs text-white rounded-lg transition">
-            ▶️ Watch & Analyze
-          </button>
-        `;
-        card.onclick = () => {
-          const select = document.getElementById('game-select');
-          if (select) select.value = g.id;
-          loadGame(g.id);
-          switchMainTab('player');
-        };
-        grid.appendChild(card);
-      });
     }
 
     function populateGameSelect() {
@@ -567,10 +539,8 @@
         initYouTubePlayer(currentGame.youtube_video_id);
       }
 
-      renderGameAnalytics();
-      const numInput = document.getElementById('player-input');
-      const num = numInput ? numInput.value.trim() : "";
-      if (num) loadPlayer();
+      renderAnalyticsSummary();
+      renderActiveView();
     }
 
     function onYouTubeIframeAPIReady() {
@@ -585,67 +555,340 @@
       });
     }
 
-    function selectFromRoster(val) {
-      if (!val) return;
-      const input = document.getElementById('player-input');
-      if (input) input.value = val;
-      loadPlayer();
-    }
-
-    function renderGameAnalytics() {
+    function renderAnalyticsSummary() {
       if (!currentGame) return;
-      const titleEl = document.getElementById('analytics-game-title');
-      if (titleEl) titleEl.innerText = currentGame.title;
       const a = currentGame.analytics || {
-        active_play_time: "41m 20s",
-        possession_tigers_pct: 54,
-        possession_opp_pct: 46,
-        ozone_time: "17m 45s",
-        nzone_time: "10m 15s",
-        dzone_time: "13m 20s",
-        shots_on_goal: 28,
-        scoring_chances: 16,
-        goalie_saves: 22,
-        save_pct: "91.7%"
+        active_play_time: "38m 20s",
+        possession_tigers_pct: 42,
+        possession_opp_pct: 58,
+        ozone_time: "12m 45s",
+        dzone_time: "16m 05s",
+        shots_on_goal: 18,
+        goalie_saves: 28,
+        save_pct: "70.0%"
       };
 
-      document.getElementById('metric-active-time').innerText = a.active_play_time;
+      document.getElementById('metric-active-time').innerText = `${a.active_play_time} Action Time`;
       document.getElementById('metric-poss-tigers').innerText = `${a.possession_tigers_pct}%`;
       document.getElementById('metric-poss-opp').innerText = `${a.possession_opp_pct}%`;
       document.getElementById('bar-poss-tigers').style.width = `${a.possession_tigers_pct}%`;
       document.getElementById('bar-poss-opp').style.width = `${a.possession_opp_pct}%`;
-
       document.getElementById('metric-ozone-time').innerText = a.ozone_time;
-      document.getElementById('metric-nzone-time').innerText = a.nzone_time;
       document.getElementById('metric-dzone-time').innerText = a.dzone_time;
-
       document.getElementById('metric-shots').innerText = a.shots_on_goal;
-      document.getElementById('metric-chances').innerText = a.scoring_chances;
-      document.getElementById('metric-saves').innerText = a.goalie_saves;
-      document.getElementById('metric-save-pct').innerText = a.save_pct;
+      document.getElementById('metric-saves').innerText = `${a.goalie_saves} (${a.save_pct})`;
     }
 
-    function setSpeed(rate) {
-      if (isPlayerReady && ytPlayer) ytPlayer.setPlaybackRate(rate);
+    // --- 4. COACH TACTICAL CLIPS (WITH HIGH ACTION "SUGGESTED" FILTER) ---
+    function changeTacticalCategory(cat) {
+      activeCategory = cat;
+      loadCoachingClips();
     }
 
-    function togglePlayPause() {
-      if (!isPlayerReady || !ytPlayer) return;
-      if (ytPlayer.getPlayerState() === 1) {
-        ytPlayer.pauseVideo();
-        document.getElementById('play-pause-btn').innerText = "▶️";
-      } else {
+    function toggleSuggestedFilter() {
+      isSuggestedOnly = !isSuggestedOnly;
+      const badge = document.getElementById('suggested-badge');
+      if (badge) {
+        badge.innerText = isSuggestedOnly ? "ON" : "OFF";
+        badge.className = isSuggestedOnly ? "px-1.5 py-0.2 rounded-full text-[9px] bg-amber-400 text-slate-950 font-black animate-pulse" : "px-1.5 py-0.2 rounded-full text-[9px] bg-slate-700 text-slate-300 font-bold";
+      }
+      loadCoachingClips();
+    }
+
+    function loadCoachingClips() {
+      if (!currentGame || !currentGame.coaching_clips) return;
+      let clips = currentGame.coaching_clips[activeCategory] || [];
+      const container = document.getElementById('clips-stream-container');
+      const countEl = document.getElementById('clip-strip-count');
+      const titleEl = document.getElementById('clip-strip-title');
+
+      const titles = {
+        defensive_zone: "🔴 Defensive Zone Sequences",
+        offensive_zone: "🟢 Offensive Zone Sequences",
+        neutral_zone: "⚪ Neutral Zone Transitions",
+        powerplay: "⚡ Powerplay (PP) Advantage",
+        penalty_kill: "🛡️ Penalty Kill (PK) Box",
+        goal_highlights: "🚨 Goals Scored",
+        goalie_saves: "🧤 Goalie Big Saves"
+      };
+
+      if (titleEl) titleEl.innerText = titles[activeCategory] || "Tactical Plays";
+
+      // Filter by Suggested if toggle is ON
+      if (isSuggestedOnly) {
+        clips = clips.filter(c => c.suggested === true);
+      }
+
+      if (countEl) countEl.innerText = `${clips.length} clips`;
+      container.innerHTML = '';
+
+      if (clips.length === 0) {
+        container.innerHTML = '<p class="text-xs text-slate-500 italic col-span-3 py-4 text-center">No clips found matching this filter.</p>';
+        return;
+      }
+
+      const starredClips = JSON.parse(localStorage.getItem("team_film_room") || "[]");
+
+      clips.forEach((c, idx) => {
+        const startMin = Math.floor(c.start / 60);
+        const startSec = Math.floor(c.start % 60).toString().padStart(2, '0');
+        const endMin = Math.floor(c.end / 60);
+        const endSec = Math.floor(c.end % 60).toString().padStart(2, '0');
+        const isStarred = starredClips.some(s => s.gameId === currentGame.id && s.start === c.start);
+
+        const card = document.createElement('div');
+        const isSuggested = c.suggested === true;
+        card.className = `p-3 rounded-2xl bg-slate-950 border ${isSuggested ? 'border-amber-500/80 shadow-lg shadow-amber-500/10' : 'border-slate-800'} flex flex-col justify-between transition hover:border-blue-500`;
+
+        card.innerHTML = `
+          <div>
+            <div class="flex justify-between items-start gap-1 mb-1">
+              <span class="font-bold text-white text-xs">${c.description}</span>
+              ${isSuggested ? '<span class="px-1.5 py-0.5 rounded text-[9px] font-black bg-amber-500/20 text-amber-300 border border-amber-500/40">🔥 High Action</span>' : ''}
+            </div>
+            <span class="text-[11px] text-slate-400 font-mono">${c.period ? c.period + ' • ' : ''}${startMin}:${startSec} - ${endMin}:${endSec} (${c.duration}s)</span>
+          </div>
+
+          <div class="flex items-center justify-between gap-1.5 mt-3 pt-2 border-t border-slate-800/80">
+            <button onclick="playTimestamp(${c.start}, '${c.description}')" class="flex-1 py-1.5 bg-blue-600 hover:bg-blue-500 text-white font-bold text-xs rounded-lg transition cursor-pointer flex items-center justify-center gap-1">
+              ▶️ Play Sequence
+            </button>
+            ${isCoach ? `
+              <button onclick="toggleStarClip({gameId: '${currentGame.id}', gameTitle: '${currentGame.title}', title: '${c.description}', start: ${c.start}, end: ${c.end}, duration: ${c.duration}})" 
+                      class="px-2 py-1.5 rounded bg-slate-800 hover:bg-slate-700 cursor-pointer ${isStarred ? 'text-amber-400 font-bold' : 'text-slate-400'}">
+                ${isStarred ? '★' : '☆'}
+              </button>
+              <button onclick="openEditClipModal('${activeCategory}', ${idx})" class="px-2 py-1.5 bg-slate-800 hover:bg-slate-700 text-slate-400 hover:text-white rounded cursor-pointer" title="Trim">
+                ✏️
+              </button>
+            ` : ''}
+            <button onclick="openShareModal('${c.description}', ${c.start}, ${c.end})" class="px-2 py-1.5 bg-slate-800 hover:bg-slate-700 text-slate-400 hover:text-white rounded cursor-pointer">
+              📤
+            </button>
+          </div>
+        `;
+        container.appendChild(card);
+      });
+    }
+
+    function playTimestamp(startSec, desc) {
+      if (isDrawingMode) toggleDrawMode();
+      if (isPlayerReady && ytPlayer) {
+        ytPlayer.seekTo(startSec, true);
         ytPlayer.playVideo();
         document.getElementById('play-pause-btn').innerText = "⏸️";
-        if (isDrawingMode) toggleDrawMode();
+        document.getElementById('current-shift-status').innerText = `Playing: ${desc}`;
       }
     }
 
-    function stepSeconds(s) {
-      if (isPlayerReady && ytPlayer) ytPlayer.seekTo(Math.max(0, ytPlayer.getCurrentTime() + s), true);
+    // --- 5. PLAYER SHIFTS VIEW ---
+    function selectFromRoster(val) {
+      if (!val) return;
+      currentJersey = val;
+      loadPlayerShifts();
     }
 
-    // --- TACTICAL CHALKBOARD LOGIC ---
+    function loadPlayerShifts() {
+      if (!currentGame) return;
+      const player = (currentGame.players || {})[currentJersey];
+      const container = document.getElementById('clips-stream-container');
+      const countEl = document.getElementById('clip-strip-count');
+      const titleEl = document.getElementById('clip-strip-title');
+
+      if (!player) {
+        container.innerHTML = `<p class="text-xs text-slate-500 italic col-span-3 py-4 text-center">No shifts recorded for Player #${currentJersey} in this game.</p>`;
+        return;
+      }
+
+      // Populate Player Summary
+      document.getElementById('player-title').innerText = `#${currentJersey} ${player.name || ''} Shift Breakdown`;
+      document.getElementById('stat-toi').innerText = player.total_ice_time;
+      document.getElementById('stat-speed').innerText = player.top_speed;
+      document.getElementById('stat-shifts').innerText = player.shifts_count;
+      document.getElementById('stat-avg-shift').innerText = player.avg_shift_len;
+      if (titleEl) titleEl.innerText = `#${currentJersey} ${player.name || ''} Shifts`;
+
+      currentShiftsArray = player.shifts || [];
+      activeShiftIndex = -1;
+      if (countEl) countEl.innerText = `${currentShiftsArray.length} shifts`;
+      container.innerHTML = '';
+
+      const starredClips = JSON.parse(localStorage.getItem("team_film_room") || "[]");
+
+      currentShiftsArray.forEach((s, idx) => {
+        const startMin = Math.floor(s.start / 60);
+        const startSec = Math.floor(s.start % 60).toString().padStart(2, '0');
+        const endMin = Math.floor(s.end / 60);
+        const endSec = Math.floor(s.end % 60).toString().padStart(2, '0');
+
+        let disciplineColor = "border-emerald-500/60 bg-emerald-950/20";
+        if (s.duration > 60) disciplineColor = "border-rose-500/60 bg-rose-950/20";
+        else if (s.duration > 45) disciplineColor = "border-amber-500/60 bg-amber-950/20";
+
+        const isStarred = starredClips.some(sc => sc.gameId === currentGame.id && sc.start === s.start);
+
+        const card = document.createElement('div');
+        card.id = `shift-card-${idx}`;
+        card.className = `p-3 rounded-2xl border ${disciplineColor} flex flex-col justify-between transition hover:border-blue-400`;
+        card.innerHTML = `
+          <div>
+            <div class="flex justify-between items-center mb-1">
+              <span class="font-bold text-white text-xs">Shift ${s.id}</span>
+              <span class="font-bold text-xs ${s.duration > 60 ? 'text-rose-400' : s.duration > 45 ? 'text-amber-400' : 'text-emerald-400'}">${s.duration}s</span>
+            </div>
+            <span class="text-[11px] text-slate-400 font-mono">${startMin}:${startSec} - ${endMin}:${endSec}</span>
+          </div>
+
+          <div class="flex items-center justify-between gap-1.5 mt-3 pt-2 border-t border-slate-800/80">
+            <button onclick="playPlayerShift(${idx})" class="flex-1 py-1.5 bg-blue-600 hover:bg-blue-500 text-white font-bold text-xs rounded-lg transition cursor-pointer flex items-center justify-center gap-1">
+              ▶️ Play Shift
+            </button>
+            ${isCoach ? `
+              <button onclick="toggleStarClip({gameId: '${currentGame.id}', gameTitle: '${currentGame.title}', title: '#${currentJersey} - Shift ${s.id}', start: ${s.start}, end: ${s.end}, duration: ${s.duration}})" 
+                      class="px-2 py-1.5 rounded bg-slate-800 hover:bg-slate-700 cursor-pointer ${isStarred ? 'text-amber-400 font-bold' : 'text-slate-400'}">
+                ${isStarred ? '★' : '☆'}
+              </button>
+            ` : ''}
+            <button onclick="openShareModal('Shift ${s.id}', ${s.start}, ${s.end})" class="px-2 py-1.5 bg-slate-800 hover:bg-slate-700 text-slate-400 hover:text-white rounded cursor-pointer">
+              📤
+            </button>
+          </div>
+        `;
+        container.appendChild(card);
+      });
+    }
+
+    function playPlayerShift(idx) {
+      activeShiftIndex = idx;
+      const shift = currentShiftsArray[idx];
+      if (!shift) return;
+
+      document.querySelectorAll('[id^="shift-card-"]').forEach(c => c.classList.remove('ring-2', 'ring-blue-500'));
+      const activeCard = document.getElementById(`shift-card-${idx}`);
+      if (activeCard) activeCard.classList.add('ring-2', 'ring-blue-500');
+
+      playTimestamp(shift.start, `Shift ${shift.id} (${shift.duration}s)`);
+    }
+
+    // --- 6. SCHEDULE GRID ---
+    function renderScheduleDashboard() {
+      const grid = document.getElementById('games-grid');
+      if (!grid) return;
+      grid.innerHTML = '';
+      gamesLibrary.forEach(g => {
+        const card = document.createElement('div');
+        card.className = "bg-slate-950 hover:border-blue-500 border border-slate-800 p-4 rounded-2xl transition cursor-pointer flex flex-col justify-between";
+        card.innerHTML = `
+          <div>
+            <div class="flex justify-between items-start mb-2">
+              <span class="text-xs font-mono text-blue-400 font-bold">${g.date || 'Season Match'}</span>
+              <span class="text-[10px] bg-slate-900 text-slate-300 px-2 py-0.5 rounded border border-slate-700 font-bold">${Object.keys(g.players || {}).length} Skaters</span>
+            </div>
+            <h3 class="font-bold text-white text-base mb-1">${g.title}</h3>
+            <p class="text-xs text-slate-400">${g.opponent ? 'vs ' + g.opponent : 'Hockey Game'}</p>
+          </div>
+          <button class="w-full mt-3 py-2 bg-blue-600/90 hover:bg-blue-600 font-bold text-xs text-white rounded-lg transition">
+            ▶️ Open Game Film
+          </button>
+        `;
+        card.onclick = () => {
+          document.getElementById('game-select').value = g.id;
+          loadGame(g.id);
+          switchViewMode('coaches');
+        };
+        grid.appendChild(card);
+      });
+    }
+
+    // --- 7. TEAM FILM ROOM ---
+    function renderFilmRoom() {
+      const container = document.getElementById('clips-stream-container');
+      const countEl = document.getElementById('clip-strip-count');
+      const titleEl = document.getElementById('clip-strip-title');
+      const clips = JSON.parse(localStorage.getItem("team_film_room") || "[]");
+
+      if (titleEl) titleEl.innerText = "⭐ Team Film Room (Starred Plays)";
+      if (countEl) countEl.innerText = `${clips.length} clips`;
+      container.innerHTML = '';
+
+      if (clips.length === 0) {
+        container.innerHTML = '<p class="text-xs text-slate-500 italic col-span-3 py-4 text-center">No plays starred in the film room yet. Coaches can click ⭐ on any clip to pin it here.</p>';
+        return;
+      }
+
+      clips.forEach((c) => {
+        const card = document.createElement('div');
+        card.className = "p-3 rounded-2xl bg-slate-950 border border-amber-600/60 flex flex-col justify-between";
+        card.innerHTML = `
+          <div>
+            <div class="font-bold text-amber-400 text-xs mb-1">⭐ ${c.title}</div>
+            <span class="text-[11px] text-slate-400 font-mono">${c.gameTitle} • (${c.duration}s)</span>
+          </div>
+          <div class="flex items-center gap-2 mt-3 pt-2 border-t border-slate-800">
+            <button onclick="playTimestamp(${c.start}, '${c.title}')" class="flex-1 py-1.5 bg-blue-600 hover:bg-blue-500 rounded font-bold text-white text-xs cursor-pointer">
+              ▶️ Play Clip
+            </button>
+            <button onclick="openShareModal('${c.title}', ${c.start}, ${c.end})" class="px-2.5 py-1.5 bg-slate-800 hover:bg-slate-700 rounded text-slate-300 cursor-pointer">
+              📤
+            </button>
+          </div>
+        `;
+        container.appendChild(card);
+      });
+    }
+
+    function toggleStarClip(clipData) {
+      let clips = JSON.parse(localStorage.getItem("team_film_room") || "[]");
+      const idx = clips.findIndex(c => c.gameId === clipData.gameId && c.start === clipData.start);
+      if (idx >= 0) {
+        clips.splice(idx, 1);
+        showToast("Removed from Film Room");
+      } else {
+        clips.unshift(clipData);
+        showToast("⭐ Added to Team Film Room!");
+      }
+      localStorage.setItem("team_film_room", JSON.stringify(clips));
+      renderActiveView();
+    }
+
+    // --- 8. CLIP EDITING & TRIMMING ---
+    function openEditClipModal(catKey, index) {
+      activeEditCategory = catKey;
+      activeEditIndex = index;
+      const clip = currentGame.coaching_clips[catKey][index];
+
+      document.getElementById('edit-clip-desc').value = clip.description;
+      document.getElementById('edit-clip-start').value = Math.floor(clip.start);
+      document.getElementById('edit-clip-end').value = Math.floor(clip.end);
+      document.getElementById('edit-clip-suggested').checked = clip.suggested === true;
+      document.getElementById('edit-clip-modal').classList.remove('hidden');
+    }
+
+    function closeEditModal() { document.getElementById('edit-clip-modal').classList.add('hidden'); }
+
+    function saveClipEdit() {
+      const clip = currentGame.coaching_clips[activeEditCategory][activeEditIndex];
+      clip.description = document.getElementById('edit-clip-desc').value.trim();
+      clip.start = parseFloat(document.getElementById('edit-clip-start').value);
+      clip.end = parseFloat(document.getElementById('edit-clip-end').value);
+      clip.duration = Math.max(1, clip.end - clip.start);
+      clip.suggested = document.getElementById('edit-clip-suggested').checked;
+
+      closeEditModal();
+      loadCoachingClips();
+      showToast("✅ Clip updated!");
+    }
+
+    function deleteCurrentClip() {
+      if (confirm("Delete this clip?")) {
+        currentGame.coaching_clips[activeEditCategory].splice(activeEditIndex, 1);
+        closeEditModal();
+        loadCoachingClips();
+        showToast("🗑️ Clip deleted");
+      }
+    }
+
+    // --- 9. TACTICAL CHALKBOARD ENGINE ---
     function setupTelestrator() {
       window.addEventListener('resize', resizeCanvas);
       resizeCanvas();
@@ -657,7 +900,7 @@
         startY = e.clientY - rect.top;
 
         if (currentTool === 'text') {
-          const text = prompt("Enter Coach Note to place on screen:");
+          const text = prompt("Coach Instruction Note on screen:");
           if (text) {
             saveCanvasState();
             ctx.fillStyle = drawColor;
@@ -668,18 +911,18 @@
         }
 
         if (currentTool === 'marker') {
-          const markerName = prompt("Player Label (e.g. #10, D1, F1, Net):", "#10");
+          const markerName = prompt("Player Marker (#10, D1, F1, Net):", "#10");
           if (markerName) {
             saveCanvasState();
             ctx.fillStyle = drawColor;
             ctx.beginPath();
-            ctx.arc(startX, startY, 18, 0, Math.PI * 2);
+            ctx.arc(startX, startY, 20, 0, Math.PI * 2);
             ctx.fill();
             ctx.strokeStyle = "#000";
             ctx.lineWidth = 2;
             ctx.stroke();
             ctx.fillStyle = "#000";
-            ctx.font = "bold 12px sans-serif";
+            ctx.font = "bold 13px sans-serif";
             ctx.textAlign = "center";
             ctx.textBaseline = "middle";
             ctx.fillText(markerName, startX, startY);
@@ -704,7 +947,7 @@
         if (currentTool === 'pen') {
           ctx.lineTo(currentX, currentY);
           ctx.strokeStyle = drawColor;
-          ctx.lineWidth = 3.5;
+          ctx.lineWidth = 4;
           ctx.lineCap = "round";
           ctx.stroke();
         }
@@ -724,10 +967,10 @@
     }
 
     function drawArrow(fromx, fromy, tox, toy) {
-      const headlen = 15;
+      const headlen = 16;
       const angle = Math.atan2(toy - fromy, tox - fromx);
       ctx.strokeStyle = drawColor;
-      ctx.lineWidth = 3.5;
+      ctx.lineWidth = 4;
       ctx.lineCap = "round";
 
       ctx.beginPath();
@@ -748,7 +991,7 @@
       currentTool = tool;
       ['pen', 'arrow', 'marker', 'text'].forEach(t => {
         const btn = document.getElementById(`tool-${t}`);
-        if (btn) btn.className = (t === tool) ? "px-2 py-1 rounded bg-purple-600 text-white font-semibold" : "px-2 py-1 rounded bg-slate-800 text-slate-300 hover:text-white font-semibold";
+        if (btn) btn.className = (t === tool) ? "px-2.5 py-1 rounded bg-purple-600 text-white font-bold cursor-pointer" : "px-2.5 py-1 rounded bg-slate-800 text-slate-300 hover:text-white font-semibold cursor-pointer";
       });
     }
 
@@ -758,9 +1001,7 @@
     }
 
     function undoDraw() {
-      if (drawHistory.length > 0) {
-        ctx.putImageData(drawHistory.pop(), 0, 0);
-      }
+      if (drawHistory.length > 0) ctx.putImageData(drawHistory.pop(), 0, 0);
     }
 
     function resizeCanvas() {
@@ -782,231 +1023,33 @@
 
         canvas.classList.remove('pointer-events-none');
         canvas.classList.add('cursor-crosshair');
-        if (btn) btn.className = "px-3 py-1.5 rounded-lg bg-purple-600 text-white font-bold flex items-center gap-1.5 shadow-lg shadow-purple-600/30";
-        if (tools) {
-          tools.classList.remove('hidden');
-          tools.classList.add('flex');
-        }
+        if (btn) btn.className = "px-3.5 py-1.5 rounded-xl bg-purple-600 text-white font-bold flex items-center gap-1.5 shadow-lg shadow-purple-600/30";
+        if (tools) { tools.classList.remove('hidden'); tools.classList.add('flex'); }
       } else {
         canvas.classList.add('pointer-events-none');
         canvas.classList.remove('cursor-crosshair');
-        if (btn) btn.className = "px-3 py-1.5 rounded-lg bg-slate-700 hover:bg-purple-600 text-purple-300 hover:text-white font-bold flex items-center gap-1.5 transition cursor-pointer";
-        if (tools) {
-          tools.classList.add('hidden');
-          tools.classList.remove('flex');
-        }
+        if (btn) btn.className = "px-3.5 py-1.5 rounded-xl bg-slate-800 hover:bg-purple-600 text-purple-300 hover:text-white font-bold flex items-center gap-1.5 transition cursor-pointer shadow-md";
+        if (tools) { tools.classList.add('hidden'); tools.classList.remove('flex'); }
         clearCanvas();
       }
     }
 
     function setDrawColor(c) { drawColor = c; }
-    function clearCanvas() {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      drawHistory = [];
-    }
+    function clearCanvas() { ctx.clearRect(0, 0, canvas.width, canvas.height); drawHistory = []; }
 
+    // --- 10. AUTO-PLAY BINGE ENGINE ---
     function startAutoPlayMonitor() {
       setInterval(() => {
         const toggle = document.getElementById('autoplay-toggle');
         if (!toggle || !toggle.checked || !isPlayerReady || !ytPlayer || activeShiftIndex === -1) return;
         const currentShift = currentShiftsArray[activeShiftIndex];
         if (currentShift && ytPlayer.getCurrentTime() >= currentShift.end - 0.25) {
-          if (activeShiftIndex + 1 < currentShiftsArray.length) playShift(activeShiftIndex + 1);
+          if (activeShiftIndex + 1 < currentShiftsArray.length) playPlayerShift(activeShiftIndex + 1);
         }
       }, 250);
     }
 
-    const searchBtn = document.getElementById('search-btn');
-    if (searchBtn) searchBtn.addEventListener('click', () => loadPlayer());
-    const playerInput = document.getElementById('player-input');
-    if (playerInput) playerInput.addEventListener('keypress', (e) => {
-      if (e.key === 'Enter') loadPlayer();
-    });
-
-    function loadPlayer() {
-      const numInput = document.getElementById('player-input');
-      const num = numInput ? numInput.value.trim() : "";
-      if (!currentGame || !num) return;
-      currentJersey = num;
-
-      const mappings = JSON.parse(localStorage.getItem("player_tags") || "{}");
-      const matchedTrackId = (mappings[currentGame.id] || {})[num] || num;
-      const player = (currentGame.players || {})[matchedTrackId];
-
-      if (!player) {
-        openTaggingModal();
-        return;
-      }
-      displayPlayerShifts(num, player);
-    }
-
-    function displayPlayerShifts(jerseyNum, player) {
-      const statsCard = document.getElementById('stats-card');
-      const shiftList = document.getElementById('shifts-list');
-
-      if (statsCard) statsCard.classList.remove('hidden');
-      const titleEl = document.getElementById('player-title');
-      if (titleEl) titleEl.innerText = player.name ? `#${jerseyNum} ${player.name}` : `Player #${jerseyNum} Summary`;
-      document.getElementById('stat-toi').innerText = player.total_ice_time;
-      document.getElementById('stat-speed').innerText = player.top_speed;
-      document.getElementById('stat-shifts').innerText = player.shifts_count;
-      document.getElementById('stat-avg-shift').innerText = player.avg_shift_len;
-      document.getElementById('shift-count').innerText = `${player.shifts.length} shifts`;
-
-      currentShiftsArray = player.shifts;
-      activeShiftIndex = -1;
-      shiftList.innerHTML = '';
-      const starredClips = JSON.parse(localStorage.getItem("team_film_room") || "[]");
-
-      player.shifts.forEach((s, idx) => {
-        const startMin = Math.floor(s.start / 60);
-        const startSec = Math.floor(s.start % 60).toString().padStart(2, '0');
-        const endMin = Math.floor(s.end / 60);
-        const endSec = Math.floor(s.end % 60).toString().padStart(2, '0');
-
-        let disciplineColor = "border-emerald-500/60 bg-emerald-950/20";
-        if (s.duration > 60) disciplineColor = "border-rose-500/60 bg-rose-950/20";
-        else if (s.duration > 45) disciplineColor = "border-amber-500/60 bg-amber-950/20";
-
-        const isStarred = starredClips.some(c => c.gameId === currentGame.id && c.start === s.start);
-
-        const shiftContainer = document.createElement('div');
-        shiftContainer.id = `shift-card-${idx}`;
-        shiftContainer.className = `flex items-center gap-1.5 p-2 rounded-lg border ${disciplineColor}`;
-        shiftContainer.innerHTML = `
-          <button onclick="playShift(${idx})" class="flex-1 text-left flex justify-between items-center text-xs py-1 cursor-pointer">
-            <span>▶️ <strong>Shift ${s.id}</strong> (${s.duration}s)</span>
-            <span class="text-[11px] text-slate-400 font-mono">${startMin}:${startSec} - ${endMin}:${endSec}</span>
-          </button>
-          ${isCoach ? `
-            <button onclick="toggleStarClip({gameId: '${currentGame.id}', gameTitle: '${currentGame.title}', title: '#${jerseyNum} ${player.name || ''} - Shift ${s.id}', start: ${s.start}, end: ${s.end}, duration: ${s.duration}})" 
-                    class="p-1 rounded cursor-pointer ${isStarred ? 'text-amber-400 font-bold' : 'text-slate-500'}">
-              ${isStarred ? '★' : '☆'}
-            </button>
-          ` : ''}
-          <button onclick="openShareModal('Shift ${s.id}', ${s.start}, ${s.end})" class="px-2 py-1 text-[11px] bg-slate-800 rounded cursor-pointer">📤</button>
-        `;
-        shiftList.appendChild(shiftContainer);
-      });
-    }
-
-    function playShift(shiftIndex) {
-      activeShiftIndex = shiftIndex;
-      const shift = currentShiftsArray[shiftIndex];
-      if (!shift) return;
-      if (isPlayerReady && ytPlayer) {
-        ytPlayer.seekTo(shift.start, true);
-        ytPlayer.playVideo();
-      }
-      document.getElementById('current-shift-status').innerText = `Playing Shift ${shift.id}`;
-    }
-
-    function loadCoachingCategory(catKey) {
-      activeEditCategory = catKey;
-      if (!currentGame || !currentGame.coaching_clips) return;
-      const clips = currentGame.coaching_clips[catKey] || [];
-      const list = document.getElementById('coaching-clips-list');
-      document.getElementById('coaching-clip-count').innerText = `${clips.length} clips`;
-      list.innerHTML = '';
-
-      if (clips.length === 0) {
-        list.innerHTML = '<p class="text-xs text-slate-500 italic col-span-2">No clips in this category.</p>';
-        return;
-      }
-
-      clips.forEach((c, idx) => {
-        const card = document.createElement('div');
-        card.className = "p-3 rounded-xl bg-slate-800 border border-slate-700 flex justify-between items-center text-xs";
-        card.innerHTML = `
-          <div>
-            <div class="font-bold text-white mb-0.5">${c.description}</div>
-            <div class="text-[10px] text-slate-400 font-mono">${Math.floor(c.start/60)}:${Math.floor(c.start%60).toString().padStart(2,'0')} - ${Math.floor(c.end/60)}:${Math.floor(c.end%60).toString().padStart(2,'0')} (${c.duration}s)</div>
-          </div>
-          <div class="flex items-center gap-1.5">
-            <button onclick="playTactical(${c.start})" class="px-2.5 py-1.5 bg-blue-600 hover:bg-blue-500 rounded font-bold text-white cursor-pointer">▶️</button>
-            ${isCoach ? `
-              <button onclick="openEditClipModal('${catKey}', ${idx})" class="px-2 py-1.5 bg-slate-700 hover:bg-slate-600 rounded text-slate-300 cursor-pointer" title="Trim or Edit">✏️</button>
-            ` : ''}
-          </div>
-        `;
-        list.appendChild(card);
-      });
-    }
-
-    function playTactical(startSec) {
-      switchMainTab('player');
-      setTimeout(() => {
-        if (isPlayerReady && ytPlayer) {
-          ytPlayer.seekTo(startSec, true);
-          ytPlayer.playVideo();
-        }
-      }, 300);
-    }
-
-    function openEditClipModal(catKey, index) {
-      activeEditCategory = catKey;
-      activeEditIndex = index;
-      const clip = currentGame.coaching_clips[catKey][index];
-
-      document.getElementById('edit-clip-desc').value = clip.description;
-      document.getElementById('edit-clip-start').value = Math.floor(clip.start);
-      document.getElementById('edit-clip-end').value = Math.floor(clip.end);
-      document.getElementById('edit-clip-modal').classList.remove('hidden');
-    }
-
-    function closeEditModal() { document.getElementById('edit-clip-modal').classList.add('hidden'); }
-
-    function saveClipEdit() {
-      const clip = currentGame.coaching_clips[activeEditCategory][activeEditIndex];
-      clip.description = document.getElementById('edit-clip-desc').value.trim();
-      clip.start = parseFloat(document.getElementById('edit-clip-start').value);
-      clip.end = parseFloat(document.getElementById('edit-clip-end').value);
-      clip.duration = Math.max(1, clip.end - clip.start);
-
-      closeEditModal();
-      loadCoachingCategory(activeEditCategory);
-      showToast("✅ Clip updated!");
-    }
-
-    function deleteCurrentClip() {
-      if (confirm("Delete this clip?")) {
-        currentGame.coaching_clips[activeEditCategory].splice(activeEditIndex, 1);
-        closeEditModal();
-        loadCoachingCategory(activeEditCategory);
-        showToast("🗑️ Clip deleted");
-      }
-    }
-
-    function openTaggingModal() {
-      if (!currentGame) return;
-      const input = document.getElementById('player-input');
-      currentJersey = input ? input.value.trim() : "?";
-      const list = document.getElementById('skater-candidates-list');
-      if (!list) return;
-      list.innerHTML = '';
-      Object.keys(currentGame.players || {}).forEach(trackId => {
-        const p = currentGame.players[trackId];
-        const row = document.createElement('div');
-        row.className = "flex items-center justify-between p-2.5 rounded-lg bg-slate-900 text-xs";
-        row.innerHTML = `
-          <span>#${trackId} ${p.name || ''} (${p.shifts_count} shifts)</span>
-          <button onclick="confirmTag('${trackId}')" class="px-2.5 py-1 bg-emerald-600 text-white font-bold rounded cursor-pointer">Tag #${currentJersey}</button>
-        `;
-        list.appendChild(row);
-      });
-      document.getElementById('tagging-modal').classList.remove('hidden');
-    }
-
-    function closeTaggingModal() { document.getElementById('tagging-modal').classList.add('hidden'); }
-    function confirmTag(trackId) {
-      const mappings = JSON.parse(localStorage.getItem("player_tags") || "{}");
-      if (!mappings[currentGame.id]) mappings[currentGame.id] = {};
-      mappings[currentGame.id][currentJersey] = trackId;
-      localStorage.setItem("player_tags", JSON.stringify(mappings));
-      closeTaggingModal();
-      loadPlayer();
-    }
-
+    // --- 11. SHARING & UTILS ---
     function openShareModal(title, start, end) {
       pendingShareData = { title, start, end, url: `${window.location.origin}${window.location.pathname}?game=${currentGame.id}&start=${Math.floor(start)}` };
       document.getElementById('share-modal-title').innerText = title;
@@ -1018,40 +1061,24 @@
     function shareToFacebook() { window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(pendingShareData.url)}`, '_blank'); }
     function shareToEmail() { window.location.href = `mailto:?subject=${encodeURIComponent(pendingShareData.title)}&body=${encodeURIComponent(pendingShareData.url)}`; }
     function shareNativeMobile() { if (navigator.share) navigator.share({ title: pendingShareData.title, url: pendingShareData.url }); }
-    function copyShareUrl() { navigator.clipboard.writeText(document.getElementById('share-url-input').value); }
+    function copyShareUrl() { navigator.clipboard.writeText(document.getElementById('share-url-input').value); showToast("✅ Link copied!"); }
 
-    function toggleStarClip(clipData) {
-      let clips = JSON.parse(localStorage.getItem("team_film_room") || "[]");
-      const idx = clips.findIndex(c => c.gameId === clipData.gameId && c.start === clipData.start);
-      if (idx >= 0) clips.splice(idx, 1);
-      else clips.unshift(clipData);
-      localStorage.setItem("team_film_room", JSON.stringify(clips));
-      loadPlayer();
+    function setSpeed(rate) {
+      if (isPlayerReady && ytPlayer) ytPlayer.setPlaybackRate(rate);
     }
-
-    function renderFilmRoom() {
-      const list = document.getElementById('filmroom-clips-list');
-      const clips = JSON.parse(localStorage.getItem("team_film_room") || "[]");
-      if (!list) return;
-      list.innerHTML = '';
-      if (clips.length === 0) {
-        list.innerHTML = '<p class="text-xs text-slate-500 italic col-span-2">No clips starred yet.</p>';
-        return;
+    function togglePlayPause() {
+      if (!isPlayerReady || !ytPlayer) return;
+      if (ytPlayer.getPlayerState() === 1) {
+        ytPlayer.pauseVideo();
+        document.getElementById('play-pause-btn').innerText = "▶️";
+      } else {
+        ytPlayer.playVideo();
+        document.getElementById('play-pause-btn').innerText = "⏸️";
+        if (isDrawingMode) toggleDrawMode();
       }
-      clips.forEach(c => {
-        const card = document.createElement('div');
-        card.className = "p-3 rounded-xl bg-slate-800 border border-amber-600/50 flex justify-between items-center text-xs";
-        card.innerHTML = `
-          <div><div class="font-bold text-amber-400">⭐ ${c.title}</div><div class="text-[10px] text-slate-400">${c.gameTitle} (${c.duration}s)</div></div>
-          <button onclick="playTactical(${c.start})" class="px-2.5 py-1.5 bg-blue-600 rounded font-bold text-white cursor-pointer">▶️ Play</button>
-        `;
-        list.appendChild(card);
-      });
     }
-
-    function clearFilmRoom() {
-      localStorage.removeItem("team_film_room");
-      renderFilmRoom();
+    function stepSeconds(s) {
+      if (isPlayerReady && ytPlayer) ytPlayer.seekTo(Math.max(0, ytPlayer.getCurrentTime() + s), true);
     }
 
     function showToast(msg) {
@@ -1064,7 +1091,6 @@
       }
     }
 
-    // Run authentication check on initial load
     checkAuth();
   </script>
 </body>
