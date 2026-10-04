@@ -18,13 +18,21 @@ except Exception:
 
 existing_ids = {g["youtube_video_id"] for g in library.get("games", [])}
 
-ydl_opts = {'extract_flat': True, 'playlist_items': '1-3'}
-new_video = None
+# 1. Fetch Playlist Info
+ydl_opts = {
+    'extract_flat': True,
+    'playlist_items': '1-3',
+    'ignoreerrors': True
+}
 
+new_video = None
 with yt_dlp.YoutubeDL(ydl_opts) as ydl:
     info = ydl.extract_info(source_url, download=False)
-    entries = info.get('entries', [])
+    entries = info.get('entries', []) if info else []
+    
     for entry in entries:
+        if not entry:
+            continue
         vid_id = entry.get('id')
         title = entry.get('title', 'Hockey Game')
         if vid_id and vid_id not in existing_ids:
@@ -35,18 +43,32 @@ if not new_video:
     print("✅ All playlist games are already analyzed. No new videos found.")
     sys.exit(0)
 
-print(f"🎬 Processing New Game: '{new_video['title']}' (ID: {new_video['id']})")
+print(f"🎬 New Game Found: '{new_video['title']}' (ID: {new_video['id']})")
 youtube_url = f"https://www.youtube.com/watch?v={new_video['id']}"
 
-stream_opts = {'format': 'best[height<=480]/best'}
-with yt_dlp.YoutubeDL(stream_opts) as ydl:
-    stream_info = ydl.extract_info(youtube_url, download=False)
-    stream_url = stream_info['url']
+# 2. Download a lightweight local copy for reliable AI tracking
+local_video_file = "temp_game.mp4"
+download_opts = {
+    'format': 'best[height<=480][ext=mp4]/best[height<=480]/best[ext=mp4]/best',
+    'outtmpl': local_video_file,
+    'quiet': False,
+    'no_warnings': True
+}
 
+print(f"⬇️ Downloading video stream for AI processing...")
+with yt_dlp.YoutubeDL(download_opts) as ydl:
+    ydl.download([youtube_url])
+
+if not os.path.exists(local_video_file):
+    print("❌ Error: Video could not be downloaded.")
+    sys.exit(1)
+
+# 3. AI Skater Tracking & Detection
+print("🤖 Initializing AI Model...")
 model = YOLO("yolov8n.pt")
 tracker = sv.ByteTrack(track_thresh=0.25, track_buffer=45)
 
-cap = cv2.VideoCapture(stream_url)
+cap = cv2.VideoCapture(local_video_file)
 fps = cap.get(cv2.CAP_PROP_FPS) or 30.0
 video_width = cap.get(cv2.CAP_PROP_FRAME_WIDTH) or 854.0
 video_height = cap.get(cv2.CAP_PROP_FRAME_HEIGHT) or 480.0
@@ -58,6 +80,7 @@ player_tracks = {}
 frame_analytics = []
 prev_player_positions = {}
 
+print("🏒 Running Computer Vision Analysis on Skaters...")
 while cap.isOpened():
     ret, frame = cap.read()
     if not ret:
@@ -110,6 +133,7 @@ while cap.isOpened():
                 player_tracks[track_id] = []
             player_tracks[track_id].append({"sec": timestamp_sec, "x": foot_x, "y": foot_y})
 
+        # Dead time / Stoppage filter
         avg_speed = np.mean(frame_speeds) if frame_speeds else 0.0
         is_active_play = (len(frame_skaters) >= 6) and (avg_speed > 1.2)
 
@@ -124,6 +148,11 @@ while cap.isOpened():
 
 cap.release()
 
+# Delete temporary downloaded video to keep runner disk clean
+if os.path.exists(local_video_file):
+    os.remove(local_video_file)
+
+# 4. Calculate Player Shifts
 output_players = {}
 for track_id, history in player_tracks.items():
     if len(history) < 15:
@@ -156,17 +185,14 @@ for track_id, history in player_tracks.items():
             "shifts": [{"id": idx + 1, "start": s["start"], "end": s["end"], "duration": s["duration"]} for idx, s in enumerate(shifts)]
         }
 
+# 5. Calculate Advanced Analytics (Active Play Only)
 active_frames = [f for f in frame_analytics if f["is_active"]]
 dt_per_frame = (FRAME_SKIP / fps)
 
 total_active_sec = len(active_frames) * dt_per_frame
-ozone_sec = 0.0
-dzone_sec = 0.0
-nzone_sec = 0.0
-tigers_possession_sec = 0.0
-opp_possession_sec = 0.0
-shot_attempts = 0
-goalie_saves = 0
+ozone_sec, dzone_sec, nzone_sec = 0.0, 0.0, 0.0
+tigers_possession_sec, opp_possession_sec = 0.0, 0.0
+shot_attempts, goalie_saves = 0, 0
 
 coaching_clips = {
     "offensive_zone": [],
@@ -268,4 +294,4 @@ library["games"].insert(0, new_entry)
 with open("games_library.json", "w") as f:
     json.dump(library, f, indent=2)
 
-print(f"🎉 Fully analyzed '{new_video['title']}' with active playing time analytics!")
+print(f"🎉 Fully analyzed '{new_video['title']}'!")
