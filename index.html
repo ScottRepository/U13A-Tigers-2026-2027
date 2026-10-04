@@ -12,29 +12,41 @@
 <body class="bg-slate-950 text-slate-100 min-h-screen p-2 md:p-6 select-none font-sans">
 
   <!-- ================= AUTH MODAL ================= -->
-  <div id="auth-modal" class="fixed inset-0 bg-black/90 backdrop-blur-md flex items-center justify-center p-4 z-50">
+  <div id="auth-modal" class="fixed inset-0 bg-black/95 backdrop-blur-md flex items-center justify-center p-4 z-50">
     <div class="bg-slate-800 border border-slate-700 p-6 md:p-8 rounded-2xl max-w-sm w-full text-center shadow-2xl">
       <div class="text-4xl mb-3">🏒</div>
       <h2 class="text-xl font-black text-white mb-1 tracking-wide">U13A TIGERS HUB</h2>
       <p class="text-xs text-slate-400 mb-5">Enter team passcode to continue.</p>
       
-      <form id="auth-form" onsubmit="handlePasscodeSubmit(event)">
-        <input 
-          id="passcode-input" 
-          type="password" 
-          placeholder="Enter Passcode" 
-          class="w-full bg-slate-900 border border-slate-600 rounded-lg px-4 py-3 text-center text-lg font-bold tracking-widest text-yellow-400 focus:outline-none focus:border-yellow-400 mb-3"
-          autofocus
-          autocomplete="off"
-        />
-        <p id="auth-error" class="text-xs text-red-400 font-semibold mb-3 hidden">Incorrect passcode. Please try again.</p>
+      <div class="space-y-3">
+        <div class="relative">
+          <input 
+            id="passcode-input" 
+            type="password" 
+            placeholder="Enter Passcode" 
+            class="w-full bg-slate-900 border border-slate-600 rounded-lg px-4 py-3 text-center text-lg font-bold tracking-widest text-yellow-400 focus:outline-none focus:border-yellow-400"
+            autofocus
+            autocomplete="off"
+          />
+        </div>
+        
+        <div class="flex justify-end">
+          <button type="button" onclick="togglePasswordVisibility()" class="text-[11px] text-slate-400 hover:text-white cursor-pointer transition">
+            👁️ Show / Hide Passcode
+          </button>
+        </div>
+
+        <p id="auth-error" class="text-xs text-red-400 font-semibold hidden">Incorrect passcode. Please try again.</p>
+        
         <button 
-          type="submit" 
+          type="button" 
+          onclick="handlePasscodeSubmit()" 
           class="w-full bg-blue-600 hover:bg-blue-500 font-bold py-3 rounded-lg transition text-sm tracking-wide text-white cursor-pointer shadow-lg shadow-blue-600/30"
         >
           ENTER PORTAL
         </button>
-      </form>
+      </div>
+
       <div class="mt-4 pt-3 border-t border-slate-700/60 text-[11px] text-slate-500">
         Need access? Contact your team manager for the passcode.
       </div>
@@ -46,7 +58,7 @@
     <div class="bg-slate-800 border border-slate-700 p-6 rounded-2xl max-w-sm w-full shadow-2xl">
       <div class="flex justify-between items-center mb-3">
         <h3 class="text-sm font-bold text-yellow-400">✂️ Edit Clip Timing & Details</h3>
-        <button onclick="closeEditModal()" class="text-slate-400 hover:text-white text-xl font-bold">&times;</button>
+        <button onclick="closeEditModal()" class="text-slate-400 hover:text-white text-xl font-bold cursor-pointer">&times;</button>
       </div>
       <div class="space-y-3 text-xs">
         <div>
@@ -64,12 +76,12 @@
           </div>
         </div>
         <div class="flex items-center gap-2 pt-1">
-          <input type="checkbox" id="edit-clip-suggested" class="rounded bg-slate-900 border-slate-600 text-amber-500">
-          <label for="edit-clip-suggested" class="text-slate-300">🔥 Tag as Suggested High Action</label>
+          <input type="checkbox" id="edit-clip-suggested" class="rounded bg-slate-900 border-slate-600 text-amber-500 cursor-pointer">
+          <label for="edit-clip-suggested" class="text-slate-300 cursor-pointer">🔥 Tag as Suggested High Action</label>
         </div>
         <div class="flex gap-2 pt-2">
-          <button onclick="saveClipEdit()" class="flex-1 py-2 bg-emerald-600 hover:bg-emerald-500 rounded font-bold text-white transition">Save Changes</button>
-          <button onclick="deleteCurrentClip()" class="px-3 py-2 bg-rose-700 hover:bg-rose-600 rounded font-bold text-white transition">Delete</button>
+          <button onclick="saveClipEdit()" class="flex-1 py-2 bg-emerald-600 hover:bg-emerald-500 rounded font-bold text-white transition cursor-pointer">Save Changes</button>
+          <button onclick="deleteCurrentClip()" class="px-3 py-2 bg-rose-700 hover:bg-rose-600 rounded font-bold text-white transition cursor-pointer">Delete</button>
         </div>
       </div>
     </div>
@@ -80,18 +92,18 @@
     <div class="bg-slate-800 border border-slate-700 p-6 rounded-2xl max-w-md w-full shadow-2xl">
       <div class="flex justify-between items-center mb-4">
         <h3 class="text-lg font-bold text-yellow-400" id="share-modal-title">Share Clip</h3>
-        <button onclick="closeShareModal()" class="text-slate-400 hover:text-white text-2xl font-bold">&times;</button>
+        <button onclick="closeShareModal()" class="text-slate-400 hover:text-white text-2xl font-bold cursor-pointer">&times;</button>
       </div>
       <p class="text-xs text-slate-300 mb-4" id="share-modal-desc">Share this hockey moment with coaches, players, or parents.</p>
       <div class="grid grid-cols-2 gap-3 mb-5">
-        <button onclick="shareToWhatsApp()" class="flex items-center justify-center gap-2 p-3 rounded-lg bg-emerald-600 hover:bg-emerald-500 font-bold text-xs text-white transition">💬 WhatsApp</button>
-        <button onclick="shareNativeMobile()" class="flex items-center justify-center gap-2 p-3 rounded-lg bg-gradient-to-r from-purple-500 to-pink-500 hover:opacity-90 font-bold text-xs text-white transition">📸 Mobile / Social</button>
-        <button onclick="shareToFacebook()" class="flex items-center justify-center gap-2 p-3 rounded-lg bg-blue-700 hover:bg-blue-600 font-bold text-xs text-white transition">📘 Facebook</button>
-        <button onclick="shareToEmail()" class="flex items-center justify-center gap-2 p-3 rounded-lg bg-slate-700 hover:bg-slate-600 font-bold text-xs text-white transition">✉️ Email</button>
+        <button onclick="shareToWhatsApp()" class="flex items-center justify-center gap-2 p-3 rounded-lg bg-emerald-600 hover:bg-emerald-500 font-bold text-xs text-white transition cursor-pointer">💬 WhatsApp</button>
+        <button onclick="shareNativeMobile()" class="flex items-center justify-center gap-2 p-3 rounded-lg bg-gradient-to-r from-purple-500 to-pink-500 hover:opacity-90 font-bold text-xs text-white transition cursor-pointer">📸 Mobile / Social</button>
+        <button onclick="shareToFacebook()" class="flex items-center justify-center gap-2 p-3 rounded-lg bg-blue-700 hover:bg-blue-600 font-bold text-xs text-white transition cursor-pointer">📘 Facebook</button>
+        <button onclick="shareToEmail()" class="flex items-center justify-center gap-2 p-3 rounded-lg bg-slate-700 hover:bg-slate-600 font-bold text-xs text-white transition cursor-pointer">✉️ Email</button>
       </div>
       <div class="border-t border-slate-700 pt-4 flex gap-2">
         <input id="share-url-input" type="text" readonly class="w-full bg-slate-900 border border-slate-700 rounded px-2.5 py-1 text-xs text-slate-300 font-mono">
-        <button onclick="copyShareUrl()" class="px-3 py-1 bg-blue-600 text-xs font-bold rounded text-white hover:bg-blue-500">Copy</button>
+        <button onclick="copyShareUrl()" class="px-3 py-1 bg-blue-600 text-xs font-bold rounded text-white hover:bg-blue-500 cursor-pointer">Copy</button>
       </div>
     </div>
   </div>
@@ -101,14 +113,14 @@
     <span id="toast-text">✅ Done!</span>
   </div>
 
-  <!-- ================= MAIN CINEMA APP ================= -->
-  <div id="main-content" class="max-w-7xl mx-auto hidden space-y-4">
+  <!-- ================= MAIN APP ================= -->
+  <div id="main-content" class="max-w-7xl mx-auto space-y-4" style="display: none;">
     
-    <!-- TOP SLICK DROPDOWN CONTROL BAR -->
+    <!-- TOP CONTROL BAR -->
     <header class="bg-slate-900/95 border border-slate-800 rounded-2xl p-3 shadow-xl backdrop-blur-md">
       <div class="flex flex-col lg:flex-row items-stretch lg:items-center justify-between gap-3">
         
-        <!-- Left: Logo & Role -->
+        <!-- Logo & Role -->
         <div class="flex items-center justify-between lg:justify-start gap-3">
           <div class="flex items-center gap-2">
             <span class="text-2xl">🏒</span>
@@ -125,15 +137,15 @@
           </div>
         </div>
 
-        <!-- Center/Right: Dropdowns Suite -->
+        <!-- Dropdowns Suite -->
         <div class="flex flex-wrap items-center gap-2 text-xs">
-          <!-- Game Select Dropdown -->
+          <!-- Game Select -->
           <div class="flex items-center gap-1 bg-slate-950 px-2.5 py-1.5 rounded-lg border border-slate-800">
             <span class="text-slate-400 text-[10px] uppercase font-bold">Game:</span>
             <select id="game-select" class="bg-transparent text-white font-semibold focus:outline-none cursor-pointer text-xs"></select>
           </div>
 
-          <!-- View Mode Dropdown -->
+          <!-- View Mode -->
           <div class="flex items-center gap-1 bg-slate-950 px-2.5 py-1.5 rounded-lg border border-slate-800">
             <span class="text-slate-400 text-[10px] uppercase font-bold">Mode:</span>
             <select id="view-mode-select" onchange="switchViewMode(this.value)" class="bg-transparent text-yellow-400 font-bold focus:outline-none cursor-pointer text-xs">
@@ -144,7 +156,7 @@
             </select>
           </div>
 
-          <!-- Coach Tactical Category Dropdown -->
+          <!-- Coach Tactical Category -->
           <div id="coach-category-wrapper" class="flex items-center gap-1 bg-slate-950 px-2.5 py-1.5 rounded-lg border border-slate-800">
             <span class="text-slate-400 text-[10px] uppercase font-bold">Play Type:</span>
             <select id="category-select" onchange="changeTacticalCategory(this.value)" class="bg-transparent text-emerald-400 font-bold focus:outline-none cursor-pointer text-xs">
@@ -158,7 +170,7 @@
             </select>
           </div>
 
-          <!-- Roster Select Dropdown -->
+          <!-- Roster Select -->
           <div id="player-roster-wrapper" class="hidden flex items-center gap-1 bg-slate-950 px-2.5 py-1.5 rounded-lg border border-slate-800">
             <span class="text-slate-400 text-[10px] uppercase font-bold">Player:</span>
             <select id="roster-select" onchange="selectFromRoster(this.value)" class="bg-transparent text-yellow-400 font-bold focus:outline-none cursor-pointer text-xs">
@@ -185,7 +197,7 @@
 
           <!-- Suggested Filter Toggle -->
           <button id="suggested-filter-btn" onclick="toggleSuggestedFilter()" class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-amber-950/40 border border-amber-600/70 text-amber-300 font-bold transition hover:bg-amber-900/60 cursor-pointer">
-            <span>🔥 Suggested High-Action</span>
+            <span>🔥 High-Action Only</span>
             <span id="suggested-badge" class="px-1.5 py-0.2 rounded-full text-[9px] bg-slate-700 text-slate-300 font-bold">OFF</span>
           </button>
         </div>
@@ -193,18 +205,14 @@
       </div>
     </header>
 
-    <!-- ================= THEATER VIDEO / RINK WHITEBOARD STAGE ================= -->
+    <!-- ================= THEATER VIDEO & WHITEBOARD STAGE ================= -->
     <div class="bg-slate-900 border border-slate-800 rounded-3xl p-3 md:p-4 shadow-2xl space-y-3">
       
-      <!-- STAGE CONTAINER (TOGGLES BETWEEN YOUTUBE AND RINK WHITEBOARD) -->
       <div class="relative w-full rounded-2xl overflow-hidden aspect-video bg-black shadow-2xl ring-1 ring-slate-800">
-        <!-- 1. Video Player Container -->
         <div id="video-container" class="w-full h-full">
           <div id="yt-player" class="w-full h-full"></div>
         </div>
-        <!-- 2. Rink Whiteboard Canvas Layer (Clean 2D Ice Rink) -->
         <canvas id="rink-bg-canvas" class="absolute inset-0 w-full h-full hidden z-10 bg-slate-100"></canvas>
-        <!-- 3. Drawing / Telestrator Canvas Layer -->
         <canvas id="telestrator-canvas" class="absolute inset-0 w-full h-full pointer-events-none z-20"></canvas>
       </div>
 
@@ -221,18 +229,17 @@
         </div>
         <div class="flex items-center gap-1.5">
           <span class="text-slate-400 text-[10px]">Color:</span>
-          <button onclick="setDrawColor('#facc15')" class="w-5 h-5 rounded-full bg-yellow-400 border-2 border-white cursor-pointer" title="Yellow"></button>
-          <button onclick="setDrawColor('#38bdf8')" class="w-5 h-5 rounded-full bg-sky-400 border border-slate-600 cursor-pointer" title="Sky Blue"></button>
-          <button onclick="setDrawColor('#f43f5e')" class="w-5 h-5 rounded-full bg-rose-500 border border-slate-600 cursor-pointer" title="Red"></button>
-          <button onclick="setDrawColor('#000000')" class="w-5 h-5 rounded-full bg-black border border-slate-400 cursor-pointer" title="Black"></button>
+          <button onclick="setDrawColor('#facc15')" class="w-5 h-5 rounded-full bg-yellow-400 border-2 border-white cursor-pointer"></button>
+          <button onclick="setDrawColor('#38bdf8')" class="w-5 h-5 rounded-full bg-sky-400 border border-slate-600 cursor-pointer"></button>
+          <button onclick="setDrawColor('#f43f5e')" class="w-5 h-5 rounded-full bg-rose-500 border border-slate-600 cursor-pointer"></button>
+          <button onclick="setDrawColor('#000000')" class="w-5 h-5 rounded-full bg-black border border-slate-400 cursor-pointer"></button>
           <button onclick="undoDraw()" class="px-2 py-1 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded font-semibold ml-1 cursor-pointer">↩️ Undo</button>
           <button onclick="clearCanvas()" class="px-2 py-1 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded font-semibold cursor-pointer">Clear</button>
         </div>
       </div>
 
-      <!-- VIDEO CONTROLS & STAGE TOGGLE BAR -->
+      <!-- VIDEO CONTROLS BAR -->
       <div class="flex flex-wrap items-center justify-between gap-3 text-xs border-t border-slate-800/80 pt-2 px-1">
-        <!-- Stage Mode Switcher (Video vs 2D Rink Whiteboard) -->
         <div class="flex items-center gap-1.5">
           <button id="stage-video-btn" onclick="setStageMode('video')" class="px-3 py-1.5 rounded-lg bg-blue-600 text-white font-bold cursor-pointer transition shadow">
             🎥 Video Film
@@ -242,7 +249,6 @@
           </button>
         </div>
 
-        <!-- Playback / Slow-Mo (Active in Video Mode) -->
         <div id="video-playback-controls" class="flex items-center gap-2">
           <div class="flex items-center gap-1">
             <span class="text-[10px] text-slate-400 font-bold uppercase mr-1">Speed:</span>
@@ -257,9 +263,8 @@
           </div>
         </div>
 
-        <!-- Draw Button -->
         <button id="draw-toggle-btn" onclick="toggleDrawMode()" class="px-3.5 py-1.5 rounded-xl bg-slate-800 hover:bg-purple-600 text-purple-300 hover:text-white font-bold flex items-center gap-1.5 transition cursor-pointer shadow-md">
-          🎨 Draw on Video
+          🎨 Draw on Screen
         </button>
       </div>
 
@@ -267,8 +272,6 @@
         Ready. Select any sequence below to jump directly to that play.
       </div>
     </div>
-
-    <!-- ================= BOTTOM DOCKS ================= -->
 
     <!-- COACH ANALYTICS COMPACT DOCK -->
     <div id="coach-analytics-dock" class="bg-slate-900 border border-slate-800 p-4 rounded-2xl shadow-xl space-y-3">
@@ -291,22 +294,10 @@
       </div>
 
       <div class="grid grid-cols-2 md:grid-cols-4 gap-2 text-center text-xs pt-1">
-        <div class="bg-slate-950 p-2 rounded-lg border border-slate-800/80">
-          <span class="text-slate-400 text-[10px] uppercase block">O-Zone Time</span>
-          <span id="metric-ozone-time" class="font-bold text-emerald-400">12m 45s</span>
-        </div>
-        <div class="bg-slate-950 p-2 rounded-lg border border-slate-800/80">
-          <span class="text-slate-400 text-[10px] uppercase block">D-Zone Time</span>
-          <span id="metric-dzone-time" class="font-bold text-rose-400">16m 05s</span>
-        </div>
-        <div class="bg-slate-950 p-2 rounded-lg border border-slate-800/80">
-          <span class="text-slate-400 text-[10px] uppercase block">Shots on Goal</span>
-          <span id="metric-shots" class="font-bold text-yellow-400">18</span>
-        </div>
-        <div class="bg-slate-950 p-2 rounded-lg border border-slate-800/80">
-          <span class="text-slate-400 text-[10px] uppercase block">Goalie Saves</span>
-          <span id="metric-saves" class="font-bold text-cyan-400">28 (70%)</span>
-        </div>
+        <div class="bg-slate-950 p-2 rounded-lg border border-slate-800/80"><span class="text-slate-400 text-[10px] uppercase block">O-Zone Time</span><span id="metric-ozone-time" class="font-bold text-emerald-400">12m 45s</span></div>
+        <div class="bg-slate-950 p-2 rounded-lg border border-slate-800/80"><span class="text-slate-400 text-[10px] uppercase block">D-Zone Time</span><span id="metric-dzone-time" class="font-bold text-rose-400">16m 05s</span></div>
+        <div class="bg-slate-950 p-2 rounded-lg border border-slate-800/80"><span class="text-slate-400 text-[10px] uppercase block">Shots on Goal</span><span id="metric-shots" class="font-bold text-yellow-400">18</span></div>
+        <div class="bg-slate-950 p-2 rounded-lg border border-slate-800/80"><span class="text-slate-400 text-[10px] uppercase block">Goalie Saves</span><span id="metric-saves" class="font-bold text-cyan-400">28 (70%)</span></div>
       </div>
     </div>
 
@@ -346,7 +337,7 @@
       <div id="clips-stream-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 max-h-[460px] overflow-y-auto pr-1"></div>
     </div>
 
-    <!-- SCHEDULE DASHBOARD (Hidden unless selected) -->
+    <!-- SCHEDULE DASHBOARD -->
     <div id="schedule-dashboard-wrapper" class="hidden bg-slate-900 border border-slate-800 rounded-3xl p-5 shadow-xl space-y-3">
       <h2 class="text-base font-bold text-white mb-2">Season Games & Schedule</h2>
       <div id="games-grid" class="grid grid-cols-1 md:grid-cols-3 gap-4"></div>
@@ -367,9 +358,8 @@
     let currentMode = "coaches";
     let activeCategory = "defensive_zone";
     let isSuggestedOnly = false;
-    let currentStage = "video"; // "video" or "whiteboard"
+    let currentStage = "video";
 
-    // Player shifts
     let currentJersey = "23";
     let currentShiftsArray = [];
     let activeShiftIndex = -1;
@@ -377,22 +367,28 @@
     // Tactical Chalkboard & Whiteboard State
     let isDrawingMode = false;
     let isDrawing = false;
-    let currentTool = "pen"; // "pen", "arrow", "marker", "opponent", "puck", "text"
+    let currentTool = "pen";
     let drawColor = "#facc15";
     let startX = 0, startY = 0;
     let drawHistory = [];
     
-    const canvas = document.getElementById('telestrator-canvas');
-    const ctx = canvas.getContext('2d');
-    const rinkCanvas = document.getElementById('rink-bg-canvas');
-    const rinkCtx = rinkCanvas.getContext('2d');
-    
+    let canvas, ctx, rinkCanvas, rinkCtx;
     let pendingShareData = null;
     let activeEditCategory = null, activeEditIndex = null;
 
-    // --- 1. AUTHENTICATION & LOGIN ---
+    // Safe Storage
+    function safeSet(k, v) { try { localStorage.setItem(k, v); } catch(e){} }
+    function safeGet(k) { try { return localStorage.getItem(k); } catch(e){ return null; } }
+
+    function togglePasswordVisibility() {
+      const input = document.getElementById('passcode-input');
+      if (!input) return;
+      input.type = (input.type === 'password') ? 'text' : 'password';
+    }
+
+    // --- 1. BULLETPROOF AUTH ---
     function checkAuth() {
-      const storedRole = localStorage.getItem("team_role");
+      const storedRole = safeGet("team_role");
       if (storedRole === "coach" || storedRole === "parent") {
         isCoach = (storedRole === "coach");
         unlockScreen();
@@ -400,21 +396,22 @@
       }
     }
 
-    function handlePasscodeSubmit(e) {
-      if (e) { e.preventDefault(); e.stopPropagation(); }
+    function handlePasscodeSubmit() {
       const inputEl = document.getElementById('passcode-input');
       const raw = inputEl ? inputEl.value : "";
-      const clean = String(raw).replace(/[\s\-_]/g, '').toUpperCase();
+      
+      // Strip all spaces, dashes, punctuation, uppercase it
+      const clean = String(raw).trim().replace(/[^a-zA-Z0-9]/g, '').toUpperCase();
       const errorMsg = document.getElementById('auth-error');
 
-      if (clean === "COACHTIGERS") {
+      if (clean === COACH_PASSCODE) {
         isCoach = true;
-        localStorage.setItem("team_role", "coach");
+        safeSet("team_role", "coach");
         unlockScreen();
         initApp();
-      } else if (clean === "U13ATIGERS") {
+      } else if (clean === PARENT_PASSCODE) {
         isCoach = false;
-        localStorage.setItem("team_role", "parent");
+        safeSet("team_role", "parent");
         unlockScreen();
         initApp();
       } else {
@@ -423,15 +420,27 @@
           errorMsg.classList.remove('hidden');
         }
       }
-      return false;
     }
+
+    // Allow Enter key in passcode input
+    document.addEventListener("DOMContentLoaded", () => {
+      const passInput = document.getElementById('passcode-input');
+      if (passInput) {
+        passInput.addEventListener('keydown', (e) => {
+          if (e.key === 'Enter') {
+            e.preventDefault();
+            handlePasscodeSubmit();
+          }
+        });
+      }
+    });
 
     function unlockScreen() {
       updateRoleBadge();
       const modal = document.getElementById('auth-modal');
       const content = document.getElementById('main-content');
       if (modal) modal.style.display = 'none';
-      if (content) content.classList.remove('hidden');
+      if (content) content.style.display = 'block';
     }
 
     function updateRoleBadge() {
@@ -447,32 +456,31 @@
     }
 
     function promptSwitchRole() {
-      // Disclose NO passwords in prompt
       const choice = prompt("Enter passcode to switch role or type 'LOGOUT' to exit:", "");
       if (!choice) return;
 
-      const clean = String(choice).replace(/[\s\-_]/g, '').toUpperCase();
-      if (clean === "COACHTIGERS") {
+      const clean = String(choice).trim().replace(/[^a-zA-Z0-9]/g, '').toUpperCase();
+      if (clean === COACH_PASSCODE) {
         isCoach = true;
-        localStorage.setItem("team_role", "coach");
+        safeSet("team_role", "coach");
         updateRoleBadge();
         showToast("👨‍🏫 Switched to Coach Mode!");
         renderActiveView();
-      } else if (clean === "U13ATIGERS") {
+      } else if (clean === PARENT_PASSCODE) {
         isCoach = false;
-        localStorage.setItem("team_role", "parent");
+        safeSet("team_role", "parent");
         updateRoleBadge();
         showToast("👤 Switched to Parent View!");
         renderActiveView();
       } else if (clean === "LOGOUT") {
-        localStorage.removeItem("team_role");
+        try { localStorage.removeItem("team_role"); } catch(e){}
         window.location.reload();
       } else {
         alert("Passcode not recognized.");
       }
     }
 
-    // --- 2. STAGE SWITCHER: VIDEO FILM vs RINK WHITEBOARD ---
+    // --- 2. STAGE SWITCHER: VIDEO vs RINK WHITEBOARD ---
     function setStageMode(mode) {
       currentStage = mode;
       const videoBox = document.getElementById('video-container');
@@ -491,11 +499,9 @@
         videoBtn.className = "px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 font-bold cursor-pointer transition";
         boardBtn.className = "px-3 py-1.5 rounded-lg bg-purple-600 text-white font-bold cursor-pointer transition shadow";
         
-        // Auto-enable drawing tools in whiteboard mode
         if (!isDrawingMode) toggleDrawMode();
         drawBtn.innerText = "🎨 Draw on Whiteboard";
         document.getElementById('current-shift-status').innerText = "Tactical Whiteboard Active: Sketch set plays, breakouts, or positioning.";
-        
         renderRinkBackground();
       } else {
         rinkBg.classList.add('hidden');
@@ -504,7 +510,7 @@
         
         videoBtn.className = "px-3 py-1.5 rounded-lg bg-blue-600 text-white font-bold cursor-pointer transition shadow";
         boardBtn.className = "px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 font-bold cursor-pointer transition";
-        drawBtn.innerText = "🎨 Draw on Video";
+        drawBtn.innerText = "🎨 Draw on Screen";
         document.getElementById('current-shift-status').innerText = "Video Film Active. Select any sequence below to play.";
         
         if (isDrawingMode) toggleDrawMode();
@@ -512,25 +518,21 @@
       resizeCanvas();
     }
 
-    // Draw authentic 2D Ice Hockey Rink
     function renderRinkBackground() {
-      if (!rinkCanvas.parentElement) return;
+      if (!rinkCanvas || !rinkCanvas.parentElement) return;
       rinkCanvas.width = rinkCanvas.parentElement.clientWidth;
       rinkCanvas.height = rinkCanvas.parentElement.clientHeight;
 
       const w = rinkCanvas.width;
       const h = rinkCanvas.height;
 
-      // Ice Background
       rinkCtx.fillStyle = "#f8fafc";
       rinkCtx.fillRect(0, 0, w, h);
 
-      // Rink Boards Border (Dark Navy)
       rinkCtx.strokeStyle = "#0f172a";
       rinkCtx.lineWidth = 6;
       rinkCtx.strokeRect(3, 3, w - 6, h - 6);
 
-      // Center Red Line
       rinkCtx.strokeStyle = "#dc2626";
       rinkCtx.lineWidth = 4;
       rinkCtx.beginPath();
@@ -538,7 +540,6 @@
       rinkCtx.lineTo(w / 2, h);
       rinkCtx.stroke();
 
-      // Center Circle & Dot
       rinkCtx.beginPath();
       rinkCtx.arc(w / 2, h / 2, h * 0.18, 0, Math.PI * 2);
       rinkCtx.stroke();
@@ -547,7 +548,6 @@
       rinkCtx.arc(w / 2, h / 2, 5, 0, Math.PI * 2);
       rinkCtx.fill();
 
-      // Blue Lines
       rinkCtx.strokeStyle = "#2563eb";
       rinkCtx.lineWidth = 5;
       rinkCtx.beginPath();
@@ -557,7 +557,6 @@
       rinkCtx.lineTo(w * 0.65, h);
       rinkCtx.stroke();
 
-      // Goal Lines (Thin Red)
       rinkCtx.strokeStyle = "#dc2626";
       rinkCtx.lineWidth = 2;
       rinkCtx.beginPath();
@@ -567,24 +566,20 @@
       rinkCtx.lineTo(w * 0.92, h);
       rinkCtx.stroke();
 
-      // Goal Creases (Light Blue Semicircles)
       rinkCtx.fillStyle = "#bae6fd";
       rinkCtx.strokeStyle = "#dc2626";
       rinkCtx.lineWidth = 2;
       
-      // Left Crease
       rinkCtx.beginPath();
       rinkCtx.arc(w * 0.08, h / 2, h * 0.08, -Math.PI / 2, Math.PI / 2);
       rinkCtx.fill();
       rinkCtx.stroke();
 
-      // Right Crease
       rinkCtx.beginPath();
       rinkCtx.arc(w * 0.92, h / 2, h * 0.08, Math.PI / 2, 3 * Math.PI / 2);
       rinkCtx.fill();
       rinkCtx.stroke();
 
-      // End-Zone Faceoff Circles & Dots
       const drawFaceoffCircle = (cx, cy) => {
         rinkCtx.strokeStyle = "#dc2626";
         rinkCtx.lineWidth = 2;
@@ -602,7 +597,6 @@
       drawFaceoffCircle(w * 0.80, h * 0.28);
       drawFaceoffCircle(w * 0.80, h * 0.72);
 
-      // Neutral Zone Faceoff Dots
       const drawDot = (cx, cy) => {
         rinkCtx.fillStyle = "#dc2626";
         rinkCtx.beginPath();
@@ -615,7 +609,7 @@
       drawDot(w * 0.58, h * 0.72);
     }
 
-    // --- 3. VIEW SWITCHER (DROPDOWN NAVIGATION) ---
+    // --- 3. VIEW SWITCHER ---
     function switchViewMode(mode) {
       currentMode = mode;
       const coachWrapper = document.getElementById('coach-category-wrapper');
@@ -662,6 +656,11 @@
 
     // --- 4. DATA & APP INIT ---
     function initApp() {
+      canvas = document.getElementById('telestrator-canvas');
+      if (canvas) ctx = canvas.getContext('2d');
+      rinkCanvas = document.getElementById('rink-bg-canvas');
+      if (rinkCanvas) rinkCtx = rinkCanvas.getContext('2d');
+
       fetch('games_library.json')
         .then(res => res.json())
         .then(data => {
@@ -746,7 +745,7 @@
       document.getElementById('metric-saves').innerText = `${a.goalie_saves} (${a.save_pct})`;
     }
 
-    // --- 5. COACH TACTICAL CLIPS (WITH SUGGESTED FILTER) ---
+    // --- 5. COACH TACTICAL CLIPS ---
     function changeTacticalCategory(cat) {
       activeCategory = cat;
       loadCoachingClips();
@@ -793,7 +792,7 @@
         return;
       }
 
-      const starredClips = JSON.parse(localStorage.getItem("team_film_room") || "[]");
+      const starredClips = JSON.parse(safeGet("team_film_room") || "[]");
 
       clips.forEach((c, idx) => {
         const startMin = Math.floor(c.start / 60);
@@ -879,7 +878,7 @@
       if (countEl) countEl.innerText = `${currentShiftsArray.length} shifts`;
       container.innerHTML = '';
 
-      const starredClips = JSON.parse(localStorage.getItem("team_film_room") || "[]");
+      const starredClips = JSON.parse(safeGet("team_film_room") || "[]");
 
       currentShiftsArray.forEach((s, idx) => {
         const startMin = Math.floor(s.start / 60);
@@ -958,7 +957,8 @@
           </button>
         `;
         card.onclick = () => {
-          document.getElementById('game-select').value = g.id;
+          const select = document.getElementById('game-select');
+          if (select) select.value = g.id;
           loadGame(g.id);
           switchViewMode('coaches');
         };
@@ -971,7 +971,7 @@
       const container = document.getElementById('clips-stream-container');
       const countEl = document.getElementById('clip-strip-count');
       const titleEl = document.getElementById('clip-strip-title');
-      const clips = JSON.parse(localStorage.getItem("team_film_room") || "[]");
+      const clips = JSON.parse(safeGet("team_film_room") || "[]");
 
       if (titleEl) titleEl.innerText = "⭐ Team Film Room (Starred Plays)";
       if (countEl) countEl.innerText = `${clips.length} clips`;
@@ -1004,7 +1004,7 @@
     }
 
     function toggleStarClip(clipData) {
-      let clips = JSON.parse(localStorage.getItem("team_film_room") || "[]");
+      let clips = JSON.parse(safeGet("team_film_room") || "[]");
       const idx = clips.findIndex(c => c.gameId === clipData.gameId && c.start === clipData.start);
       if (idx >= 0) {
         clips.splice(idx, 1);
@@ -1013,7 +1013,7 @@
         clips.unshift(clipData);
         showToast("⭐ Added to Team Film Room!");
       }
-      localStorage.setItem("team_film_room", JSON.stringify(clips));
+      safeSet("team_film_room", JSON.stringify(clips));
       renderActiveView();
     }
 
@@ -1061,6 +1061,8 @@
         if (currentStage === 'whiteboard') renderRinkBackground();
       });
       resizeCanvas();
+
+      if (!canvas) return;
 
       canvas.addEventListener('pointerdown', (e) => {
         if (!isDrawingMode) return;
@@ -1168,6 +1170,7 @@
     }
 
     function drawArrow(fromx, fromy, tox, toy) {
+      if (!ctx) return;
       const headlen = 16;
       const angle = Math.atan2(toy - fromy, tox - fromx);
       ctx.strokeStyle = drawColor;
@@ -1197,12 +1200,13 @@
     }
 
     function saveCanvasState() {
+      if (!ctx || !canvas) return;
       drawHistory.push(ctx.getImageData(0, 0, canvas.width, canvas.height));
       if (drawHistory.length > 20) drawHistory.shift();
     }
 
     function undoDraw() {
-      if (drawHistory.length > 0) ctx.putImageData(drawHistory.pop(), 0, 0);
+      if (ctx && drawHistory.length > 0) ctx.putImageData(drawHistory.pop(), 0, 0);
     }
 
     function resizeCanvas() {
@@ -1236,7 +1240,10 @@
     }
 
     function setDrawColor(c) { drawColor = c; }
-    function clearCanvas() { ctx.clearRect(0, 0, canvas.width, canvas.height); drawHistory = []; }
+    function clearCanvas() { 
+      if (ctx && canvas) ctx.clearRect(0, 0, canvas.width, canvas.height); 
+      drawHistory = []; 
+    }
 
     // --- 11. AUTO-PLAY BINGE ENGINE ---
     function startAutoPlayMonitor() {
