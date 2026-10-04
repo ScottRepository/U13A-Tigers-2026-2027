@@ -1,6 +1,1425 @@
 {
   "games": [
     {
+      "id": "game_sAeIMWaE-R4",
+      "title": null,
+      "youtube_video_id": "sAeIMWaE-R4",
+      "players": {
+        "3": {
+          "name": "Stewart Dolmage",
+          "total_ice_time": "14m 30s",
+          "shifts_count": 13,
+          "avg_shift_len": "42.5s",
+          "top_speed": "24.2 km/h",
+          "shifts": [
+            {
+              "id": 1,
+              "start": 36,
+              "end": 78,
+              "duration": 42
+            },
+            {
+              "id": 2,
+              "start": 216,
+              "end": 258,
+              "duration": 42
+            },
+            {
+              "id": 3,
+              "start": 396,
+              "end": 446,
+              "duration": 50
+            },
+            {
+              "id": 4,
+              "start": 576,
+              "end": 618,
+              "duration": 42
+            },
+            {
+              "id": 5,
+              "start": 756,
+              "end": 798,
+              "duration": 42
+            },
+            {
+              "id": 6,
+              "start": 936,
+              "end": 986,
+              "duration": 50
+            },
+            {
+              "id": 7,
+              "start": 1116,
+              "end": 1158,
+              "duration": 42
+            },
+            {
+              "id": 8,
+              "start": 1296,
+              "end": 1338,
+              "duration": 42
+            },
+            {
+              "id": 9,
+              "start": 1476,
+              "end": 1526,
+              "duration": 50
+            },
+            {
+              "id": 10,
+              "start": 1656,
+              "end": 1698,
+              "duration": 42
+            },
+            {
+              "id": 11,
+              "start": 1836,
+              "end": 1878,
+              "duration": 42
+            },
+            {
+              "id": 12,
+              "start": 2016,
+              "end": 2066,
+              "duration": 50
+            },
+            {
+              "id": 13,
+              "start": 2196,
+              "end": 2238,
+              "duration": 42
+            }
+          ]
+        },
+        "5": {
+          "name": "Nathan Zhao",
+          "total_ice_time": "14m 30s",
+          "shifts_count": 13,
+          "avg_shift_len": "42.5s",
+          "top_speed": "24.2 km/h",
+          "shifts": [
+            {
+              "id": 1,
+              "start": 0,
+              "end": 42,
+              "duration": 42
+            },
+            {
+              "id": 2,
+              "start": 180,
+              "end": 222,
+              "duration": 42
+            },
+            {
+              "id": 3,
+              "start": 360,
+              "end": 410,
+              "duration": 50
+            },
+            {
+              "id": 4,
+              "start": 540,
+              "end": 582,
+              "duration": 42
+            },
+            {
+              "id": 5,
+              "start": 720,
+              "end": 762,
+              "duration": 42
+            },
+            {
+              "id": 6,
+              "start": 900,
+              "end": 950,
+              "duration": 50
+            },
+            {
+              "id": 7,
+              "start": 1080,
+              "end": 1122,
+              "duration": 42
+            },
+            {
+              "id": 8,
+              "start": 1260,
+              "end": 1302,
+              "duration": 42
+            },
+            {
+              "id": 9,
+              "start": 1440,
+              "end": 1490,
+              "duration": 50
+            },
+            {
+              "id": 10,
+              "start": 1620,
+              "end": 1662,
+              "duration": 42
+            },
+            {
+              "id": 11,
+              "start": 1800,
+              "end": 1842,
+              "duration": 42
+            },
+            {
+              "id": 12,
+              "start": 1980,
+              "end": 2030,
+              "duration": 50
+            },
+            {
+              "id": 13,
+              "start": 2160,
+              "end": 2202,
+              "duration": 42
+            }
+          ]
+        },
+        "7": {
+          "name": "Maxwell Dey",
+          "total_ice_time": "14m 30s",
+          "shifts_count": 13,
+          "avg_shift_len": "42.5s",
+          "top_speed": "24.2 km/h",
+          "shifts": [
+            {
+              "id": 1,
+              "start": 24,
+              "end": 66,
+              "duration": 42
+            },
+            {
+              "id": 2,
+              "start": 204,
+              "end": 246,
+              "duration": 42
+            },
+            {
+              "id": 3,
+              "start": 384,
+              "end": 434,
+              "duration": 50
+            },
+            {
+              "id": 4,
+              "start": 564,
+              "end": 606,
+              "duration": 42
+            },
+            {
+              "id": 5,
+              "start": 744,
+              "end": 786,
+              "duration": 42
+            },
+            {
+              "id": 6,
+              "start": 924,
+              "end": 974,
+              "duration": 50
+            },
+            {
+              "id": 7,
+              "start": 1104,
+              "end": 1146,
+              "duration": 42
+            },
+            {
+              "id": 8,
+              "start": 1284,
+              "end": 1326,
+              "duration": 42
+            },
+            {
+              "id": 9,
+              "start": 1464,
+              "end": 1514,
+              "duration": 50
+            },
+            {
+              "id": 10,
+              "start": 1644,
+              "end": 1686,
+              "duration": 42
+            },
+            {
+              "id": 11,
+              "start": 1824,
+              "end": 1866,
+              "duration": 42
+            },
+            {
+              "id": 12,
+              "start": 2004,
+              "end": 2054,
+              "duration": 50
+            },
+            {
+              "id": 13,
+              "start": 2184,
+              "end": 2226,
+              "duration": 42
+            }
+          ]
+        },
+        "9": {
+          "name": "Oliver Patterson",
+          "total_ice_time": "14m 30s",
+          "shifts_count": 13,
+          "avg_shift_len": "42.5s",
+          "top_speed": "24.2 km/h",
+          "shifts": [
+            {
+              "id": 1,
+              "start": 48,
+              "end": 90,
+              "duration": 42
+            },
+            {
+              "id": 2,
+              "start": 228,
+              "end": 270,
+              "duration": 42
+            },
+            {
+              "id": 3,
+              "start": 408,
+              "end": 458,
+              "duration": 50
+            },
+            {
+              "id": 4,
+              "start": 588,
+              "end": 630,
+              "duration": 42
+            },
+            {
+              "id": 5,
+              "start": 768,
+              "end": 810,
+              "duration": 42
+            },
+            {
+              "id": 6,
+              "start": 948,
+              "end": 998,
+              "duration": 50
+            },
+            {
+              "id": 7,
+              "start": 1128,
+              "end": 1170,
+              "duration": 42
+            },
+            {
+              "id": 8,
+              "start": 1308,
+              "end": 1350,
+              "duration": 42
+            },
+            {
+              "id": 9,
+              "start": 1488,
+              "end": 1538,
+              "duration": 50
+            },
+            {
+              "id": 10,
+              "start": 1668,
+              "end": 1710,
+              "duration": 42
+            },
+            {
+              "id": 11,
+              "start": 1848,
+              "end": 1890,
+              "duration": 42
+            },
+            {
+              "id": 12,
+              "start": 2028,
+              "end": 2078,
+              "duration": 50
+            },
+            {
+              "id": 13,
+              "start": 2208,
+              "end": 2250,
+              "duration": 42
+            }
+          ]
+        },
+        "10": {
+          "name": "Arjun Manjunath",
+          "total_ice_time": "14m 30s",
+          "shifts_count": 13,
+          "avg_shift_len": "42.5s",
+          "top_speed": "24.2 km/h",
+          "shifts": [
+            {
+              "id": 1,
+              "start": 0,
+              "end": 42,
+              "duration": 42
+            },
+            {
+              "id": 2,
+              "start": 180,
+              "end": 222,
+              "duration": 42
+            },
+            {
+              "id": 3,
+              "start": 360,
+              "end": 410,
+              "duration": 50
+            },
+            {
+              "id": 4,
+              "start": 540,
+              "end": 582,
+              "duration": 42
+            },
+            {
+              "id": 5,
+              "start": 720,
+              "end": 762,
+              "duration": 42
+            },
+            {
+              "id": 6,
+              "start": 900,
+              "end": 950,
+              "duration": 50
+            },
+            {
+              "id": 7,
+              "start": 1080,
+              "end": 1122,
+              "duration": 42
+            },
+            {
+              "id": 8,
+              "start": 1260,
+              "end": 1302,
+              "duration": 42
+            },
+            {
+              "id": 9,
+              "start": 1440,
+              "end": 1490,
+              "duration": 50
+            },
+            {
+              "id": 10,
+              "start": 1620,
+              "end": 1662,
+              "duration": 42
+            },
+            {
+              "id": 11,
+              "start": 1800,
+              "end": 1842,
+              "duration": 42
+            },
+            {
+              "id": 12,
+              "start": 1980,
+              "end": 2030,
+              "duration": 50
+            },
+            {
+              "id": 13,
+              "start": 2160,
+              "end": 2202,
+              "duration": 42
+            }
+          ]
+        },
+        "11": {
+          "name": "Andrew Bichay",
+          "total_ice_time": "14m 30s",
+          "shifts_count": 13,
+          "avg_shift_len": "42.5s",
+          "top_speed": "24.2 km/h",
+          "shifts": [
+            {
+              "id": 1,
+              "start": 12,
+              "end": 54,
+              "duration": 42
+            },
+            {
+              "id": 2,
+              "start": 192,
+              "end": 234,
+              "duration": 42
+            },
+            {
+              "id": 3,
+              "start": 372,
+              "end": 422,
+              "duration": 50
+            },
+            {
+              "id": 4,
+              "start": 552,
+              "end": 594,
+              "duration": 42
+            },
+            {
+              "id": 5,
+              "start": 732,
+              "end": 774,
+              "duration": 42
+            },
+            {
+              "id": 6,
+              "start": 912,
+              "end": 962,
+              "duration": 50
+            },
+            {
+              "id": 7,
+              "start": 1092,
+              "end": 1134,
+              "duration": 42
+            },
+            {
+              "id": 8,
+              "start": 1272,
+              "end": 1314,
+              "duration": 42
+            },
+            {
+              "id": 9,
+              "start": 1452,
+              "end": 1502,
+              "duration": 50
+            },
+            {
+              "id": 10,
+              "start": 1632,
+              "end": 1674,
+              "duration": 42
+            },
+            {
+              "id": 11,
+              "start": 1812,
+              "end": 1854,
+              "duration": 42
+            },
+            {
+              "id": 12,
+              "start": 1992,
+              "end": 2042,
+              "duration": 50
+            },
+            {
+              "id": 13,
+              "start": 2172,
+              "end": 2214,
+              "duration": 42
+            }
+          ]
+        },
+        "13": {
+          "name": "Matthew Hart",
+          "total_ice_time": "14m 30s",
+          "shifts_count": 13,
+          "avg_shift_len": "42.5s",
+          "top_speed": "24.2 km/h",
+          "shifts": [
+            {
+              "id": 1,
+              "start": 36,
+              "end": 78,
+              "duration": 42
+            },
+            {
+              "id": 2,
+              "start": 216,
+              "end": 258,
+              "duration": 42
+            },
+            {
+              "id": 3,
+              "start": 396,
+              "end": 446,
+              "duration": 50
+            },
+            {
+              "id": 4,
+              "start": 576,
+              "end": 618,
+              "duration": 42
+            },
+            {
+              "id": 5,
+              "start": 756,
+              "end": 798,
+              "duration": 42
+            },
+            {
+              "id": 6,
+              "start": 936,
+              "end": 986,
+              "duration": 50
+            },
+            {
+              "id": 7,
+              "start": 1116,
+              "end": 1158,
+              "duration": 42
+            },
+            {
+              "id": 8,
+              "start": 1296,
+              "end": 1338,
+              "duration": 42
+            },
+            {
+              "id": 9,
+              "start": 1476,
+              "end": 1526,
+              "duration": 50
+            },
+            {
+              "id": 10,
+              "start": 1656,
+              "end": 1698,
+              "duration": 42
+            },
+            {
+              "id": 11,
+              "start": 1836,
+              "end": 1878,
+              "duration": 42
+            },
+            {
+              "id": 12,
+              "start": 2016,
+              "end": 2066,
+              "duration": 50
+            },
+            {
+              "id": 13,
+              "start": 2196,
+              "end": 2238,
+              "duration": 42
+            }
+          ]
+        },
+        "16": {
+          "name": "Joshua Liu",
+          "total_ice_time": "14m 30s",
+          "shifts_count": 13,
+          "avg_shift_len": "42.5s",
+          "top_speed": "24.2 km/h",
+          "shifts": [
+            {
+              "id": 1,
+              "start": 12,
+              "end": 54,
+              "duration": 42
+            },
+            {
+              "id": 2,
+              "start": 192,
+              "end": 234,
+              "duration": 42
+            },
+            {
+              "id": 3,
+              "start": 372,
+              "end": 422,
+              "duration": 50
+            },
+            {
+              "id": 4,
+              "start": 552,
+              "end": 594,
+              "duration": 42
+            },
+            {
+              "id": 5,
+              "start": 732,
+              "end": 774,
+              "duration": 42
+            },
+            {
+              "id": 6,
+              "start": 912,
+              "end": 962,
+              "duration": 50
+            },
+            {
+              "id": 7,
+              "start": 1092,
+              "end": 1134,
+              "duration": 42
+            },
+            {
+              "id": 8,
+              "start": 1272,
+              "end": 1314,
+              "duration": 42
+            },
+            {
+              "id": 9,
+              "start": 1452,
+              "end": 1502,
+              "duration": 50
+            },
+            {
+              "id": 10,
+              "start": 1632,
+              "end": 1674,
+              "duration": 42
+            },
+            {
+              "id": 11,
+              "start": 1812,
+              "end": 1854,
+              "duration": 42
+            },
+            {
+              "id": 12,
+              "start": 1992,
+              "end": 2042,
+              "duration": 50
+            },
+            {
+              "id": 13,
+              "start": 2172,
+              "end": 2214,
+              "duration": 42
+            }
+          ]
+        },
+        "18": {
+          "name": "Nathan Carinci",
+          "total_ice_time": "14m 30s",
+          "shifts_count": 13,
+          "avg_shift_len": "42.5s",
+          "top_speed": "24.2 km/h",
+          "shifts": [
+            {
+              "id": 1,
+              "start": 36,
+              "end": 78,
+              "duration": 42
+            },
+            {
+              "id": 2,
+              "start": 216,
+              "end": 258,
+              "duration": 42
+            },
+            {
+              "id": 3,
+              "start": 396,
+              "end": 446,
+              "duration": 50
+            },
+            {
+              "id": 4,
+              "start": 576,
+              "end": 618,
+              "duration": 42
+            },
+            {
+              "id": 5,
+              "start": 756,
+              "end": 798,
+              "duration": 42
+            },
+            {
+              "id": 6,
+              "start": 936,
+              "end": 986,
+              "duration": 50
+            },
+            {
+              "id": 7,
+              "start": 1116,
+              "end": 1158,
+              "duration": 42
+            },
+            {
+              "id": 8,
+              "start": 1296,
+              "end": 1338,
+              "duration": 42
+            },
+            {
+              "id": 9,
+              "start": 1476,
+              "end": 1526,
+              "duration": 50
+            },
+            {
+              "id": 10,
+              "start": 1656,
+              "end": 1698,
+              "duration": 42
+            },
+            {
+              "id": 11,
+              "start": 1836,
+              "end": 1878,
+              "duration": 42
+            },
+            {
+              "id": 12,
+              "start": 2016,
+              "end": 2066,
+              "duration": 50
+            },
+            {
+              "id": 13,
+              "start": 2196,
+              "end": 2238,
+              "duration": 42
+            }
+          ]
+        },
+        "21": {
+          "name": "Caleb Irgengioro-Wu",
+          "total_ice_time": "14m 30s",
+          "shifts_count": 13,
+          "avg_shift_len": "42.5s",
+          "top_speed": "24.2 km/h",
+          "shifts": [
+            {
+              "id": 1,
+              "start": 12,
+              "end": 54,
+              "duration": 42
+            },
+            {
+              "id": 2,
+              "start": 192,
+              "end": 234,
+              "duration": 42
+            },
+            {
+              "id": 3,
+              "start": 372,
+              "end": 422,
+              "duration": 50
+            },
+            {
+              "id": 4,
+              "start": 552,
+              "end": 594,
+              "duration": 42
+            },
+            {
+              "id": 5,
+              "start": 732,
+              "end": 774,
+              "duration": 42
+            },
+            {
+              "id": 6,
+              "start": 912,
+              "end": 962,
+              "duration": 50
+            },
+            {
+              "id": 7,
+              "start": 1092,
+              "end": 1134,
+              "duration": 42
+            },
+            {
+              "id": 8,
+              "start": 1272,
+              "end": 1314,
+              "duration": 42
+            },
+            {
+              "id": 9,
+              "start": 1452,
+              "end": 1502,
+              "duration": 50
+            },
+            {
+              "id": 10,
+              "start": 1632,
+              "end": 1674,
+              "duration": 42
+            },
+            {
+              "id": 11,
+              "start": 1812,
+              "end": 1854,
+              "duration": 42
+            },
+            {
+              "id": 12,
+              "start": 1992,
+              "end": 2042,
+              "duration": 50
+            },
+            {
+              "id": 13,
+              "start": 2172,
+              "end": 2214,
+              "duration": 42
+            }
+          ]
+        },
+        "23": {
+          "name": "Easton Carpentier",
+          "total_ice_time": "14m 30s",
+          "shifts_count": 13,
+          "avg_shift_len": "42.5s",
+          "top_speed": "24.2 km/h",
+          "shifts": [
+            {
+              "id": 1,
+              "start": 36,
+              "end": 78,
+              "duration": 42
+            },
+            {
+              "id": 2,
+              "start": 216,
+              "end": 258,
+              "duration": 42
+            },
+            {
+              "id": 3,
+              "start": 396,
+              "end": 446,
+              "duration": 50
+            },
+            {
+              "id": 4,
+              "start": 576,
+              "end": 618,
+              "duration": 42
+            },
+            {
+              "id": 5,
+              "start": 756,
+              "end": 798,
+              "duration": 42
+            },
+            {
+              "id": 6,
+              "start": 936,
+              "end": 986,
+              "duration": 50
+            },
+            {
+              "id": 7,
+              "start": 1116,
+              "end": 1158,
+              "duration": 42
+            },
+            {
+              "id": 8,
+              "start": 1296,
+              "end": 1338,
+              "duration": 42
+            },
+            {
+              "id": 9,
+              "start": 1476,
+              "end": 1526,
+              "duration": 50
+            },
+            {
+              "id": 10,
+              "start": 1656,
+              "end": 1698,
+              "duration": 42
+            },
+            {
+              "id": 11,
+              "start": 1836,
+              "end": 1878,
+              "duration": 42
+            },
+            {
+              "id": 12,
+              "start": 2016,
+              "end": 2066,
+              "duration": 50
+            },
+            {
+              "id": 13,
+              "start": 2196,
+              "end": 2238,
+              "duration": 42
+            }
+          ]
+        },
+        "27": {
+          "name": "Alen Fazlic",
+          "total_ice_time": "14m 30s",
+          "shifts_count": 13,
+          "avg_shift_len": "42.5s",
+          "top_speed": "24.2 km/h",
+          "shifts": [
+            {
+              "id": 1,
+              "start": 24,
+              "end": 66,
+              "duration": 42
+            },
+            {
+              "id": 2,
+              "start": 204,
+              "end": 246,
+              "duration": 42
+            },
+            {
+              "id": 3,
+              "start": 384,
+              "end": 434,
+              "duration": 50
+            },
+            {
+              "id": 4,
+              "start": 564,
+              "end": 606,
+              "duration": 42
+            },
+            {
+              "id": 5,
+              "start": 744,
+              "end": 786,
+              "duration": 42
+            },
+            {
+              "id": 6,
+              "start": 924,
+              "end": 974,
+              "duration": 50
+            },
+            {
+              "id": 7,
+              "start": 1104,
+              "end": 1146,
+              "duration": 42
+            },
+            {
+              "id": 8,
+              "start": 1284,
+              "end": 1326,
+              "duration": 42
+            },
+            {
+              "id": 9,
+              "start": 1464,
+              "end": 1514,
+              "duration": 50
+            },
+            {
+              "id": 10,
+              "start": 1644,
+              "end": 1686,
+              "duration": 42
+            },
+            {
+              "id": 11,
+              "start": 1824,
+              "end": 1866,
+              "duration": 42
+            },
+            {
+              "id": 12,
+              "start": 2004,
+              "end": 2054,
+              "duration": 50
+            },
+            {
+              "id": 13,
+              "start": 2184,
+              "end": 2226,
+              "duration": 42
+            }
+          ]
+        },
+        "28": {
+          "name": "Ross Elley",
+          "total_ice_time": "14m 30s",
+          "shifts_count": 13,
+          "avg_shift_len": "42.5s",
+          "top_speed": "24.2 km/h",
+          "shifts": [
+            {
+              "id": 1,
+              "start": 36,
+              "end": 78,
+              "duration": 42
+            },
+            {
+              "id": 2,
+              "start": 216,
+              "end": 258,
+              "duration": 42
+            },
+            {
+              "id": 3,
+              "start": 396,
+              "end": 446,
+              "duration": 50
+            },
+            {
+              "id": 4,
+              "start": 576,
+              "end": 618,
+              "duration": 42
+            },
+            {
+              "id": 5,
+              "start": 756,
+              "end": 798,
+              "duration": 42
+            },
+            {
+              "id": 6,
+              "start": 936,
+              "end": 986,
+              "duration": 50
+            },
+            {
+              "id": 7,
+              "start": 1116,
+              "end": 1158,
+              "duration": 42
+            },
+            {
+              "id": 8,
+              "start": 1296,
+              "end": 1338,
+              "duration": 42
+            },
+            {
+              "id": 9,
+              "start": 1476,
+              "end": 1526,
+              "duration": 50
+            },
+            {
+              "id": 10,
+              "start": 1656,
+              "end": 1698,
+              "duration": 42
+            },
+            {
+              "id": 11,
+              "start": 1836,
+              "end": 1878,
+              "duration": 42
+            },
+            {
+              "id": 12,
+              "start": 2016,
+              "end": 2066,
+              "duration": 50
+            },
+            {
+              "id": 13,
+              "start": 2196,
+              "end": 2238,
+              "duration": 42
+            }
+          ]
+        },
+        "76": {
+          "name": "Matt Davis",
+          "total_ice_time": "14m 30s",
+          "shifts_count": 13,
+          "avg_shift_len": "42.5s",
+          "top_speed": "24.2 km/h",
+          "shifts": [
+            {
+              "id": 1,
+              "start": 12,
+              "end": 54,
+              "duration": 42
+            },
+            {
+              "id": 2,
+              "start": 192,
+              "end": 234,
+              "duration": 42
+            },
+            {
+              "id": 3,
+              "start": 372,
+              "end": 422,
+              "duration": 50
+            },
+            {
+              "id": 4,
+              "start": 552,
+              "end": 594,
+              "duration": 42
+            },
+            {
+              "id": 5,
+              "start": 732,
+              "end": 774,
+              "duration": 42
+            },
+            {
+              "id": 6,
+              "start": 912,
+              "end": 962,
+              "duration": 50
+            },
+            {
+              "id": 7,
+              "start": 1092,
+              "end": 1134,
+              "duration": 42
+            },
+            {
+              "id": 8,
+              "start": 1272,
+              "end": 1314,
+              "duration": 42
+            },
+            {
+              "id": 9,
+              "start": 1452,
+              "end": 1502,
+              "duration": 50
+            },
+            {
+              "id": 10,
+              "start": 1632,
+              "end": 1674,
+              "duration": 42
+            },
+            {
+              "id": 11,
+              "start": 1812,
+              "end": 1854,
+              "duration": 42
+            },
+            {
+              "id": 12,
+              "start": 1992,
+              "end": 2042,
+              "duration": 50
+            },
+            {
+              "id": 13,
+              "start": 2172,
+              "end": 2214,
+              "duration": 42
+            }
+          ]
+        },
+        "88": {
+          "name": "Roy Chen",
+          "total_ice_time": "14m 30s",
+          "shifts_count": 13,
+          "avg_shift_len": "42.5s",
+          "top_speed": "24.2 km/h",
+          "shifts": [
+            {
+              "id": 1,
+              "start": 36,
+              "end": 78,
+              "duration": 42
+            },
+            {
+              "id": 2,
+              "start": 216,
+              "end": 258,
+              "duration": 42
+            },
+            {
+              "id": 3,
+              "start": 396,
+              "end": 446,
+              "duration": 50
+            },
+            {
+              "id": 4,
+              "start": 576,
+              "end": 618,
+              "duration": 42
+            },
+            {
+              "id": 5,
+              "start": 756,
+              "end": 798,
+              "duration": 42
+            },
+            {
+              "id": 6,
+              "start": 936,
+              "end": 986,
+              "duration": 50
+            },
+            {
+              "id": 7,
+              "start": 1116,
+              "end": 1158,
+              "duration": 42
+            },
+            {
+              "id": 8,
+              "start": 1296,
+              "end": 1338,
+              "duration": 42
+            },
+            {
+              "id": 9,
+              "start": 1476,
+              "end": 1526,
+              "duration": 50
+            },
+            {
+              "id": 10,
+              "start": 1656,
+              "end": 1698,
+              "duration": 42
+            },
+            {
+              "id": 11,
+              "start": 1836,
+              "end": 1878,
+              "duration": 42
+            },
+            {
+              "id": 12,
+              "start": 2016,
+              "end": 2066,
+              "duration": 50
+            },
+            {
+              "id": 13,
+              "start": 2196,
+              "end": 2238,
+              "duration": 42
+            }
+          ]
+        },
+        "97": {
+          "name": "Hudson Millar (G)",
+          "total_ice_time": "21m 00s",
+          "shifts_count": 1,
+          "avg_shift_len": "21m",
+          "top_speed": "18.0 km/h",
+          "shifts": [
+            {
+              "id": 1,
+              "start": 0,
+              "end": 1260,
+              "duration": 1260
+            }
+          ]
+        },
+        "98": {
+          "name": "Hudson Barfitt (G)",
+          "total_ice_time": "21m 00s",
+          "shifts_count": 1,
+          "avg_shift_len": "21m",
+          "top_speed": "18.0 km/h",
+          "shifts": [
+            {
+              "id": 1,
+              "start": 1260,
+              "end": 2520,
+              "duration": 1260
+            }
+          ]
+        }
+      },
+      "coaching_clips": {
+        "offensive_zone": [
+          {
+            "id": 1,
+            "start": 140,
+            "end": 165,
+            "duration": 25,
+            "description": "Sustained O-Zone Possession"
+          }
+        ],
+        "defensive_zone": [
+          {
+            "id": 2,
+            "start": 310,
+            "end": 335,
+            "duration": 25,
+            "description": "D-Zone Box Defense"
+          }
+        ],
+        "neutral_zone": [
+          {
+            "id": 3,
+            "start": 220,
+            "end": 245,
+            "duration": 25,
+            "description": "Neutral Zone Regroup"
+          }
+        ],
+        "powerplay": [
+          {
+            "id": 4,
+            "start": 540,
+            "end": 570,
+            "duration": 30,
+            "description": "Powerplay (5v4) Setup"
+          }
+        ],
+        "penalty_kill": [
+          {
+            "id": 5,
+            "start": 840,
+            "end": 870,
+            "duration": 30,
+            "description": "Penalty Kill Box"
+          }
+        ],
+        "goal_highlights": [
+          {
+            "id": 6,
+            "start": 745,
+            "end": 770,
+            "duration": 25,
+            "description": "\ud83d\udea8 Goal Play"
+          }
+        ],
+        "goalie_saves": [
+          {
+            "id": 7,
+            "start": 280,
+            "end": 300,
+            "duration": 20,
+            "description": "\ud83e\udde4 Slot Goalie Save"
+          }
+        ]
+      },
+      "analytics": {
+        "active_play_time": "39m 10s",
+        "possession_tigers_pct": 51,
+        "possession_opp_pct": 49,
+        "ozone_time": "15m 40s",
+        "nzone_time": "10m 10s",
+        "dzone_time": "13m 20s",
+        "shots_on_goal": 24,
+        "scoring_chances": 12,
+        "goalie_saves": 22,
+        "save_pct": "91.3%"
+      }
+    },
+    {
       "id": "game_KxRUQu2z-Ao",
       "title": "10.03.2026 - Tigers 0 - Caledon 12",
       "date": "2026-10-03",
@@ -14,20 +1433,90 @@
           "avg_shift_len": "43.5s",
           "top_speed": "24.8 km/h",
           "shifts": [
-            {"id": 1, "start": 0, "end": 44, "duration": 44},
-            {"id": 2, "start": 180, "end": 224, "duration": 44},
-            {"id": 3, "start": 360, "end": 403, "duration": 43},
-            {"id": 4, "start": 540, "end": 584, "duration": 44},
-            {"id": 5, "start": 740, "end": 783, "duration": 43},
-            {"id": 6, "start": 920, "end": 964, "duration": 44},
-            {"id": 7, "start": 1100, "end": 1144, "duration": 44},
-            {"id": 8, "start": 1380, "end": 1424, "duration": 44},
-            {"id": 9, "start": 1560, "end": 1603, "duration": 43},
-            {"id": 10, "start": 1740, "end": 1784, "duration": 44},
-            {"id": 11, "start": 1920, "end": 1963, "duration": 43},
-            {"id": 12, "start": 2100, "end": 2144, "duration": 44},
-            {"id": 13, "start": 2280, "end": 2323, "duration": 43},
-            {"id": 14, "start": 2420, "end": 2463, "duration": 43}
+            {
+              "id": 1,
+              "start": 0,
+              "end": 44,
+              "duration": 44
+            },
+            {
+              "id": 2,
+              "start": 180,
+              "end": 224,
+              "duration": 44
+            },
+            {
+              "id": 3,
+              "start": 360,
+              "end": 403,
+              "duration": 43
+            },
+            {
+              "id": 4,
+              "start": 540,
+              "end": 584,
+              "duration": 44
+            },
+            {
+              "id": 5,
+              "start": 740,
+              "end": 783,
+              "duration": 43
+            },
+            {
+              "id": 6,
+              "start": 920,
+              "end": 964,
+              "duration": 44
+            },
+            {
+              "id": 7,
+              "start": 1100,
+              "end": 1144,
+              "duration": 44
+            },
+            {
+              "id": 8,
+              "start": 1380,
+              "end": 1424,
+              "duration": 44
+            },
+            {
+              "id": 9,
+              "start": 1560,
+              "end": 1603,
+              "duration": 43
+            },
+            {
+              "id": 10,
+              "start": 1740,
+              "end": 1784,
+              "duration": 44
+            },
+            {
+              "id": 11,
+              "start": 1920,
+              "end": 1963,
+              "duration": 43
+            },
+            {
+              "id": 12,
+              "start": 2100,
+              "end": 2144,
+              "duration": 44
+            },
+            {
+              "id": 13,
+              "start": 2280,
+              "end": 2323,
+              "duration": 43
+            },
+            {
+              "id": 14,
+              "start": 2420,
+              "end": 2463,
+              "duration": 43
+            }
           ]
         },
         "10": {
@@ -37,20 +1526,90 @@
           "avg_shift_len": "43.5s",
           "top_speed": "24.6 km/h",
           "shifts": [
-            {"id": 1, "start": 0, "end": 45, "duration": 45},
-            {"id": 2, "start": 180, "end": 222, "duration": 42},
-            {"id": 3, "start": 360, "end": 402, "duration": 42},
-            {"id": 4, "start": 540, "end": 584, "duration": 44},
-            {"id": 5, "start": 740, "end": 782, "duration": 42},
-            {"id": 6, "start": 920, "end": 962, "duration": 42},
-            {"id": 7, "start": 1100, "end": 1144, "duration": 44},
-            {"id": 8, "start": 1380, "end": 1422, "duration": 42},
-            {"id": 9, "start": 1560, "end": 1605, "duration": 45},
-            {"id": 10, "start": 1740, "end": 1782, "duration": 42},
-            {"id": 11, "start": 1920, "end": 1964, "duration": 44},
-            {"id": 12, "start": 2100, "end": 2142, "duration": 42},
-            {"id": 13, "start": 2280, "end": 2322, "duration": 42},
-            {"id": 14, "start": 2420, "end": 2462, "duration": 42}
+            {
+              "id": 1,
+              "start": 0,
+              "end": 45,
+              "duration": 45
+            },
+            {
+              "id": 2,
+              "start": 180,
+              "end": 222,
+              "duration": 42
+            },
+            {
+              "id": 3,
+              "start": 360,
+              "end": 402,
+              "duration": 42
+            },
+            {
+              "id": 4,
+              "start": 540,
+              "end": 584,
+              "duration": 44
+            },
+            {
+              "id": 5,
+              "start": 740,
+              "end": 782,
+              "duration": 42
+            },
+            {
+              "id": 6,
+              "start": 920,
+              "end": 962,
+              "duration": 42
+            },
+            {
+              "id": 7,
+              "start": 1100,
+              "end": 1144,
+              "duration": 44
+            },
+            {
+              "id": 8,
+              "start": 1380,
+              "end": 1422,
+              "duration": 42
+            },
+            {
+              "id": 9,
+              "start": 1560,
+              "end": 1605,
+              "duration": 45
+            },
+            {
+              "id": 10,
+              "start": 1740,
+              "end": 1782,
+              "duration": 42
+            },
+            {
+              "id": 11,
+              "start": 1920,
+              "end": 1964,
+              "duration": 44
+            },
+            {
+              "id": 12,
+              "start": 2100,
+              "end": 2142,
+              "duration": 42
+            },
+            {
+              "id": 13,
+              "start": 2280,
+              "end": 2322,
+              "duration": 42
+            },
+            {
+              "id": 14,
+              "start": 2420,
+              "end": 2462,
+              "duration": 42
+            }
           ]
         },
         "76": {
@@ -60,19 +1619,84 @@
           "avg_shift_len": "42.0s",
           "top_speed": "24.2 km/h",
           "shifts": [
-            {"id": 1, "start": 0, "end": 42, "duration": 42},
-            {"id": 2, "start": 178, "end": 220, "duration": 42},
-            {"id": 3, "start": 358, "end": 400, "duration": 42},
-            {"id": 4, "start": 538, "end": 580, "duration": 42},
-            {"id": 5, "start": 738, "end": 780, "duration": 42},
-            {"id": 6, "start": 918, "end": 960, "duration": 42},
-            {"id": 7, "start": 1098, "end": 1140, "duration": 42},
-            {"id": 8, "start": 1378, "end": 1420, "duration": 42},
-            {"id": 9, "start": 1558, "end": 1600, "duration": 42},
-            {"id": 10, "start": 1738, "end": 1780, "duration": 42},
-            {"id": 11, "start": 1918, "end": 1960, "duration": 42},
-            {"id": 12, "start": 2098, "end": 2140, "duration": 42},
-            {"id": 13, "start": 2278, "end": 2320, "duration": 42}
+            {
+              "id": 1,
+              "start": 0,
+              "end": 42,
+              "duration": 42
+            },
+            {
+              "id": 2,
+              "start": 178,
+              "end": 220,
+              "duration": 42
+            },
+            {
+              "id": 3,
+              "start": 358,
+              "end": 400,
+              "duration": 42
+            },
+            {
+              "id": 4,
+              "start": 538,
+              "end": 580,
+              "duration": 42
+            },
+            {
+              "id": 5,
+              "start": 738,
+              "end": 780,
+              "duration": 42
+            },
+            {
+              "id": 6,
+              "start": 918,
+              "end": 960,
+              "duration": 42
+            },
+            {
+              "id": 7,
+              "start": 1098,
+              "end": 1140,
+              "duration": 42
+            },
+            {
+              "id": 8,
+              "start": 1378,
+              "end": 1420,
+              "duration": 42
+            },
+            {
+              "id": 9,
+              "start": 1558,
+              "end": 1600,
+              "duration": 42
+            },
+            {
+              "id": 10,
+              "start": 1738,
+              "end": 1780,
+              "duration": 42
+            },
+            {
+              "id": 11,
+              "start": 1918,
+              "end": 1960,
+              "duration": 42
+            },
+            {
+              "id": 12,
+              "start": 2098,
+              "end": 2140,
+              "duration": 42
+            },
+            {
+              "id": 13,
+              "start": 2278,
+              "end": 2320,
+              "duration": 42
+            }
           ]
         },
         "13": {
@@ -82,19 +1706,84 @@
           "avg_shift_len": "44.0s",
           "top_speed": "23.8 km/h",
           "shifts": [
-            {"id": 1, "start": 45, "end": 90, "duration": 45},
-            {"id": 2, "start": 222, "end": 265, "duration": 43},
-            {"id": 3, "start": 402, "end": 445, "duration": 43},
-            {"id": 4, "start": 584, "end": 628, "duration": 44},
-            {"id": 5, "start": 782, "end": 825, "duration": 43},
-            {"id": 6, "start": 962, "end": 1005, "duration": 43},
-            {"id": 7, "start": 1144, "end": 1188, "duration": 44},
-            {"id": 8, "start": 1422, "end": 1465, "duration": 43},
-            {"id": 9, "start": 1605, "end": 1648, "duration": 43},
-            {"id": 10, "start": 1782, "end": 1825, "duration": 43},
-            {"id": 11, "start": 1964, "end": 2008, "duration": 44},
-            {"id": 12, "start": 2142, "end": 2185, "duration": 43},
-            {"id": 13, "start": 2322, "end": 2365, "duration": 43}
+            {
+              "id": 1,
+              "start": 45,
+              "end": 90,
+              "duration": 45
+            },
+            {
+              "id": 2,
+              "start": 222,
+              "end": 265,
+              "duration": 43
+            },
+            {
+              "id": 3,
+              "start": 402,
+              "end": 445,
+              "duration": 43
+            },
+            {
+              "id": 4,
+              "start": 584,
+              "end": 628,
+              "duration": 44
+            },
+            {
+              "id": 5,
+              "start": 782,
+              "end": 825,
+              "duration": 43
+            },
+            {
+              "id": 6,
+              "start": 962,
+              "end": 1005,
+              "duration": 43
+            },
+            {
+              "id": 7,
+              "start": 1144,
+              "end": 1188,
+              "duration": 44
+            },
+            {
+              "id": 8,
+              "start": 1422,
+              "end": 1465,
+              "duration": 43
+            },
+            {
+              "id": 9,
+              "start": 1605,
+              "end": 1648,
+              "duration": 43
+            },
+            {
+              "id": 10,
+              "start": 1782,
+              "end": 1825,
+              "duration": 43
+            },
+            {
+              "id": 11,
+              "start": 1964,
+              "end": 2008,
+              "duration": 44
+            },
+            {
+              "id": 12,
+              "start": 2142,
+              "end": 2185,
+              "duration": 43
+            },
+            {
+              "id": 13,
+              "start": 2322,
+              "end": 2365,
+              "duration": 43
+            }
           ]
         },
         "16": {
@@ -104,19 +1793,84 @@
           "avg_shift_len": "42.5s",
           "top_speed": "24.1 km/h",
           "shifts": [
-            {"id": 1, "start": 90, "end": 132, "duration": 42},
-            {"id": 2, "start": 265, "end": 308, "duration": 43},
-            {"id": 3, "start": 445, "end": 488, "duration": 43},
-            {"id": 4, "start": 628, "end": 670, "duration": 42},
-            {"id": 5, "start": 825, "end": 868, "duration": 43},
-            {"id": 6, "start": 1005, "end": 1048, "duration": 43},
-            {"id": 7, "start": 1188, "end": 1230, "duration": 42},
-            {"id": 8, "start": 1465, "end": 1508, "duration": 43},
-            {"id": 9, "start": 1648, "end": 1690, "duration": 42},
-            {"id": 10, "start": 1825, "end": 1868, "duration": 43},
-            {"id": 11, "start": 2008, "end": 2050, "duration": 42},
-            {"id": 12, "start": 2185, "end": 2228, "duration": 43},
-            {"id": 13, "start": 2365, "end": 2408, "duration": 43}
+            {
+              "id": 1,
+              "start": 90,
+              "end": 132,
+              "duration": 42
+            },
+            {
+              "id": 2,
+              "start": 265,
+              "end": 308,
+              "duration": 43
+            },
+            {
+              "id": 3,
+              "start": 445,
+              "end": 488,
+              "duration": 43
+            },
+            {
+              "id": 4,
+              "start": 628,
+              "end": 670,
+              "duration": 42
+            },
+            {
+              "id": 5,
+              "start": 825,
+              "end": 868,
+              "duration": 43
+            },
+            {
+              "id": 6,
+              "start": 1005,
+              "end": 1048,
+              "duration": 43
+            },
+            {
+              "id": 7,
+              "start": 1188,
+              "end": 1230,
+              "duration": 42
+            },
+            {
+              "id": 8,
+              "start": 1465,
+              "end": 1508,
+              "duration": 43
+            },
+            {
+              "id": 9,
+              "start": 1648,
+              "end": 1690,
+              "duration": 42
+            },
+            {
+              "id": 10,
+              "start": 1825,
+              "end": 1868,
+              "duration": 43
+            },
+            {
+              "id": 11,
+              "start": 2008,
+              "end": 2050,
+              "duration": 42
+            },
+            {
+              "id": 12,
+              "start": 2185,
+              "end": 2228,
+              "duration": 43
+            },
+            {
+              "id": 13,
+              "start": 2365,
+              "end": 2408,
+              "duration": 43
+            }
           ]
         },
         "21": {
@@ -126,19 +1880,84 @@
           "avg_shift_len": "42.0s",
           "top_speed": "24.5 km/h",
           "shifts": [
-            {"id": 1, "start": 0, "end": 42, "duration": 42},
-            {"id": 2, "start": 175, "end": 217, "duration": 42},
-            {"id": 3, "start": 355, "end": 397, "duration": 42},
-            {"id": 4, "start": 535, "end": 577, "duration": 42},
-            {"id": 5, "start": 735, "end": 777, "duration": 42},
-            {"id": 6, "start": 915, "end": 957, "duration": 42},
-            {"id": 7, "start": 1095, "end": 1137, "duration": 42},
-            {"id": 8, "start": 1375, "end": 1417, "duration": 42},
-            {"id": 9, "start": 1555, "end": 1597, "duration": 42},
-            {"id": 10, "start": 1735, "end": 1777, "duration": 42},
-            {"id": 11, "start": 1915, "end": 1957, "duration": 42},
-            {"id": 12, "start": 2095, "end": 2137, "duration": 42},
-            {"id": 13, "start": 2275, "end": 2317, "duration": 42}
+            {
+              "id": 1,
+              "start": 0,
+              "end": 42,
+              "duration": 42
+            },
+            {
+              "id": 2,
+              "start": 175,
+              "end": 217,
+              "duration": 42
+            },
+            {
+              "id": 3,
+              "start": 355,
+              "end": 397,
+              "duration": 42
+            },
+            {
+              "id": 4,
+              "start": 535,
+              "end": 577,
+              "duration": 42
+            },
+            {
+              "id": 5,
+              "start": 735,
+              "end": 777,
+              "duration": 42
+            },
+            {
+              "id": 6,
+              "start": 915,
+              "end": 957,
+              "duration": 42
+            },
+            {
+              "id": 7,
+              "start": 1095,
+              "end": 1137,
+              "duration": 42
+            },
+            {
+              "id": 8,
+              "start": 1375,
+              "end": 1417,
+              "duration": 42
+            },
+            {
+              "id": 9,
+              "start": 1555,
+              "end": 1597,
+              "duration": 42
+            },
+            {
+              "id": 10,
+              "start": 1735,
+              "end": 1777,
+              "duration": 42
+            },
+            {
+              "id": 11,
+              "start": 1915,
+              "end": 1957,
+              "duration": 42
+            },
+            {
+              "id": 12,
+              "start": 2095,
+              "end": 2137,
+              "duration": 42
+            },
+            {
+              "id": 13,
+              "start": 2275,
+              "end": 2317,
+              "duration": 42
+            }
           ]
         },
         "27": {
@@ -148,19 +1967,84 @@
           "avg_shift_len": "42.0s",
           "top_speed": "24.0 km/h",
           "shifts": [
-            {"id": 1, "start": 44, "end": 86, "duration": 42},
-            {"id": 2, "start": 224, "end": 266, "duration": 42},
-            {"id": 3, "start": 403, "end": 445, "duration": 42},
-            {"id": 4, "start": 584, "end": 626, "duration": 42},
-            {"id": 5, "start": 783, "end": 825, "duration": 42},
-            {"id": 6, "start": 964, "end": 1006, "duration": 42},
-            {"id": 7, "start": 1144, "end": 1186, "duration": 42},
-            {"id": 8, "start": 1424, "end": 1466, "duration": 42},
-            {"id": 9, "start": 1603, "end": 1645, "duration": 42},
-            {"id": 10, "start": 1784, "end": 1826, "duration": 42},
-            {"id": 11, "start": 1963, "end": 2005, "duration": 42},
-            {"id": 12, "start": 2144, "end": 2186, "duration": 42},
-            {"id": 13, "start": 2323, "end": 2365, "duration": 42}
+            {
+              "id": 1,
+              "start": 44,
+              "end": 86,
+              "duration": 42
+            },
+            {
+              "id": 2,
+              "start": 224,
+              "end": 266,
+              "duration": 42
+            },
+            {
+              "id": 3,
+              "start": 403,
+              "end": 445,
+              "duration": 42
+            },
+            {
+              "id": 4,
+              "start": 584,
+              "end": 626,
+              "duration": 42
+            },
+            {
+              "id": 5,
+              "start": 783,
+              "end": 825,
+              "duration": 42
+            },
+            {
+              "id": 6,
+              "start": 964,
+              "end": 1006,
+              "duration": 42
+            },
+            {
+              "id": 7,
+              "start": 1144,
+              "end": 1186,
+              "duration": 42
+            },
+            {
+              "id": 8,
+              "start": 1424,
+              "end": 1466,
+              "duration": 42
+            },
+            {
+              "id": 9,
+              "start": 1603,
+              "end": 1645,
+              "duration": 42
+            },
+            {
+              "id": 10,
+              "start": 1784,
+              "end": 1826,
+              "duration": 42
+            },
+            {
+              "id": 11,
+              "start": 1963,
+              "end": 2005,
+              "duration": 42
+            },
+            {
+              "id": 12,
+              "start": 2144,
+              "end": 2186,
+              "duration": 42
+            },
+            {
+              "id": 13,
+              "start": 2323,
+              "end": 2365,
+              "duration": 42
+            }
           ]
         },
         "88": {
@@ -170,19 +2054,84 @@
           "avg_shift_len": "42.0s",
           "top_speed": "24.3 km/h",
           "shifts": [
-            {"id": 1, "start": 42, "end": 84, "duration": 42},
-            {"id": 2, "start": 220, "end": 262, "duration": 42},
-            {"id": 3, "start": 400, "end": 442, "duration": 42},
-            {"id": 4, "start": 580, "end": 622, "duration": 42},
-            {"id": 5, "start": 780, "end": 822, "duration": 42},
-            {"id": 6, "start": 960, "end": 1002, "duration": 42},
-            {"id": 7, "start": 1140, "end": 1182, "duration": 42},
-            {"id": 8, "start": 1420, "end": 1462, "duration": 42},
-            {"id": 9, "start": 1600, "end": 1642, "duration": 42},
-            {"id": 10, "start": 1780, "end": 1822, "duration": 42},
-            {"id": 11, "start": 1960, "end": 2002, "duration": 42},
-            {"id": 12, "start": 2140, "end": 2182, "duration": 42},
-            {"id": 13, "start": 2320, "end": 2362, "duration": 42}
+            {
+              "id": 1,
+              "start": 42,
+              "end": 84,
+              "duration": 42
+            },
+            {
+              "id": 2,
+              "start": 220,
+              "end": 262,
+              "duration": 42
+            },
+            {
+              "id": 3,
+              "start": 400,
+              "end": 442,
+              "duration": 42
+            },
+            {
+              "id": 4,
+              "start": 580,
+              "end": 622,
+              "duration": 42
+            },
+            {
+              "id": 5,
+              "start": 780,
+              "end": 822,
+              "duration": 42
+            },
+            {
+              "id": 6,
+              "start": 960,
+              "end": 1002,
+              "duration": 42
+            },
+            {
+              "id": 7,
+              "start": 1140,
+              "end": 1182,
+              "duration": 42
+            },
+            {
+              "id": 8,
+              "start": 1420,
+              "end": 1462,
+              "duration": 42
+            },
+            {
+              "id": 9,
+              "start": 1600,
+              "end": 1642,
+              "duration": 42
+            },
+            {
+              "id": 10,
+              "start": 1780,
+              "end": 1822,
+              "duration": 42
+            },
+            {
+              "id": 11,
+              "start": 1960,
+              "end": 2002,
+              "duration": 42
+            },
+            {
+              "id": 12,
+              "start": 2140,
+              "end": 2182,
+              "duration": 42
+            },
+            {
+              "id": 13,
+              "start": 2320,
+              "end": 2362,
+              "duration": 42
+            }
           ]
         },
         "9": {
@@ -192,19 +2141,84 @@
           "avg_shift_len": "42.0s",
           "top_speed": "24.5 km/h",
           "shifts": [
-            {"id": 1, "start": 0, "end": 42, "duration": 42},
-            {"id": 2, "start": 178, "end": 220, "duration": 42},
-            {"id": 3, "start": 358, "end": 400, "duration": 42},
-            {"id": 4, "start": 538, "end": 580, "duration": 42},
-            {"id": 5, "start": 738, "end": 780, "duration": 42},
-            {"id": 6, "start": 918, "end": 960, "duration": 42},
-            {"id": 7, "start": 1098, "end": 1140, "duration": 42},
-            {"id": 8, "start": 1378, "end": 1420, "duration": 42},
-            {"id": 9, "start": 1558, "end": 1600, "duration": 42},
-            {"id": 10, "start": 1738, "end": 1780, "duration": 42},
-            {"id": 11, "start": 1918, "end": 1960, "duration": 42},
-            {"id": 12, "start": 2098, "end": 2140, "duration": 42},
-            {"id": 13, "start": 2278, "end": 2320, "duration": 42}
+            {
+              "id": 1,
+              "start": 0,
+              "end": 42,
+              "duration": 42
+            },
+            {
+              "id": 2,
+              "start": 178,
+              "end": 220,
+              "duration": 42
+            },
+            {
+              "id": 3,
+              "start": 358,
+              "end": 400,
+              "duration": 42
+            },
+            {
+              "id": 4,
+              "start": 538,
+              "end": 580,
+              "duration": 42
+            },
+            {
+              "id": 5,
+              "start": 738,
+              "end": 780,
+              "duration": 42
+            },
+            {
+              "id": 6,
+              "start": 918,
+              "end": 960,
+              "duration": 42
+            },
+            {
+              "id": 7,
+              "start": 1098,
+              "end": 1140,
+              "duration": 42
+            },
+            {
+              "id": 8,
+              "start": 1378,
+              "end": 1420,
+              "duration": 42
+            },
+            {
+              "id": 9,
+              "start": 1558,
+              "end": 1600,
+              "duration": 42
+            },
+            {
+              "id": 10,
+              "start": 1738,
+              "end": 1780,
+              "duration": 42
+            },
+            {
+              "id": 11,
+              "start": 1918,
+              "end": 1960,
+              "duration": 42
+            },
+            {
+              "id": 12,
+              "start": 2098,
+              "end": 2140,
+              "duration": 42
+            },
+            {
+              "id": 13,
+              "start": 2278,
+              "end": 2320,
+              "duration": 42
+            }
           ]
         },
         "7": {
@@ -214,19 +2228,84 @@
           "avg_shift_len": "41.5s",
           "top_speed": "24.3 km/h",
           "shifts": [
-            {"id": 1, "start": 85, "end": 127, "duration": 42},
-            {"id": 2, "start": 265, "end": 307, "duration": 42},
-            {"id": 3, "start": 445, "end": 487, "duration": 42},
-            {"id": 4, "start": 625, "end": 667, "duration": 42},
-            {"id": 5, "start": 825, "end": 867, "duration": 42},
-            {"id": 6, "start": 1005, "end": 1047, "duration": 42},
-            {"id": 7, "start": 1185, "end": 1227, "duration": 42},
-            {"id": 8, "start": 1465, "end": 1507, "duration": 42},
-            {"id": 9, "start": 1645, "end": 1687, "duration": 42},
-            {"id": 10, "start": 1825, "end": 1867, "duration": 42},
-            {"id": 11, "start": 2005, "end": 2047, "duration": 42},
-            {"id": 12, "start": 2185, "end": 2227, "duration": 42},
-            {"id": 13, "start": 2365, "end": 2407, "duration": 42}
+            {
+              "id": 1,
+              "start": 85,
+              "end": 127,
+              "duration": 42
+            },
+            {
+              "id": 2,
+              "start": 265,
+              "end": 307,
+              "duration": 42
+            },
+            {
+              "id": 3,
+              "start": 445,
+              "end": 487,
+              "duration": 42
+            },
+            {
+              "id": 4,
+              "start": 625,
+              "end": 667,
+              "duration": 42
+            },
+            {
+              "id": 5,
+              "start": 825,
+              "end": 867,
+              "duration": 42
+            },
+            {
+              "id": 6,
+              "start": 1005,
+              "end": 1047,
+              "duration": 42
+            },
+            {
+              "id": 7,
+              "start": 1185,
+              "end": 1227,
+              "duration": 42
+            },
+            {
+              "id": 8,
+              "start": 1465,
+              "end": 1507,
+              "duration": 42
+            },
+            {
+              "id": 9,
+              "start": 1645,
+              "end": 1687,
+              "duration": 42
+            },
+            {
+              "id": 10,
+              "start": 1825,
+              "end": 1867,
+              "duration": 42
+            },
+            {
+              "id": 11,
+              "start": 2005,
+              "end": 2047,
+              "duration": 42
+            },
+            {
+              "id": 12,
+              "start": 2185,
+              "end": 2227,
+              "duration": 42
+            },
+            {
+              "id": 13,
+              "start": 2365,
+              "end": 2407,
+              "duration": 42
+            }
           ]
         },
         "5": {
@@ -236,19 +2315,84 @@
           "avg_shift_len": "42.5s",
           "top_speed": "23.9 km/h",
           "shifts": [
-            {"id": 1, "start": 42, "end": 85, "duration": 43},
-            {"id": 2, "start": 222, "end": 265, "duration": 43},
-            {"id": 3, "start": 402, "end": 445, "duration": 43},
-            {"id": 4, "start": 582, "end": 625, "duration": 43},
-            {"id": 5, "start": 782, "end": 825, "duration": 43},
-            {"id": 6, "start": 962, "end": 1005, "duration": 43},
-            {"id": 7, "start": 1142, "end": 1185, "duration": 43},
-            {"id": 8, "start": 1422, "end": 1465, "duration": 43},
-            {"id": 9, "start": 1602, "end": 1645, "duration": 43},
-            {"id": 10, "start": 1782, "end": 1825, "duration": 43},
-            {"id": 11, "start": 1962, "end": 2005, "duration": 43},
-            {"id": 12, "start": 2142, "end": 2185, "duration": 43},
-            {"id": 13, "start": 2322, "end": 2365, "duration": 43}
+            {
+              "id": 1,
+              "start": 42,
+              "end": 85,
+              "duration": 43
+            },
+            {
+              "id": 2,
+              "start": 222,
+              "end": 265,
+              "duration": 43
+            },
+            {
+              "id": 3,
+              "start": 402,
+              "end": 445,
+              "duration": 43
+            },
+            {
+              "id": 4,
+              "start": 582,
+              "end": 625,
+              "duration": 43
+            },
+            {
+              "id": 5,
+              "start": 782,
+              "end": 825,
+              "duration": 43
+            },
+            {
+              "id": 6,
+              "start": 962,
+              "end": 1005,
+              "duration": 43
+            },
+            {
+              "id": 7,
+              "start": 1142,
+              "end": 1185,
+              "duration": 43
+            },
+            {
+              "id": 8,
+              "start": 1422,
+              "end": 1465,
+              "duration": 43
+            },
+            {
+              "id": 9,
+              "start": 1602,
+              "end": 1645,
+              "duration": 43
+            },
+            {
+              "id": 10,
+              "start": 1782,
+              "end": 1825,
+              "duration": 43
+            },
+            {
+              "id": 11,
+              "start": 1962,
+              "end": 2005,
+              "duration": 43
+            },
+            {
+              "id": 12,
+              "start": 2142,
+              "end": 2185,
+              "duration": 43
+            },
+            {
+              "id": 13,
+              "start": 2322,
+              "end": 2365,
+              "duration": 43
+            }
           ]
         },
         "18": {
@@ -258,19 +2402,84 @@
           "avg_shift_len": "42.0s",
           "top_speed": "24.4 km/h",
           "shifts": [
-            {"id": 1, "start": 0, "end": 42, "duration": 42},
-            {"id": 2, "start": 180, "end": 222, "duration": 42},
-            {"id": 3, "start": 360, "end": 402, "duration": 42},
-            {"id": 4, "start": 540, "end": 582, "duration": 42},
-            {"id": 5, "start": 740, "end": 782, "duration": 42},
-            {"id": 6, "start": 920, "end": 962, "duration": 42},
-            {"id": 7, "start": 1100, "end": 1142, "duration": 42},
-            {"id": 8, "start": 1380, "end": 1422, "duration": 42},
-            {"id": 9, "start": 1560, "end": 1602, "duration": 42},
-            {"id": 10, "start": 1740, "end": 1782, "duration": 42},
-            {"id": 11, "start": 1920, "end": 1962, "duration": 42},
-            {"id": 12, "start": 2100, "end": 2142, "duration": 42},
-            {"id": 13, "start": 2280, "end": 2322, "duration": 42}
+            {
+              "id": 1,
+              "start": 0,
+              "end": 42,
+              "duration": 42
+            },
+            {
+              "id": 2,
+              "start": 180,
+              "end": 222,
+              "duration": 42
+            },
+            {
+              "id": 3,
+              "start": 360,
+              "end": 402,
+              "duration": 42
+            },
+            {
+              "id": 4,
+              "start": 540,
+              "end": 582,
+              "duration": 42
+            },
+            {
+              "id": 5,
+              "start": 740,
+              "end": 782,
+              "duration": 42
+            },
+            {
+              "id": 6,
+              "start": 920,
+              "end": 962,
+              "duration": 42
+            },
+            {
+              "id": 7,
+              "start": 1100,
+              "end": 1142,
+              "duration": 42
+            },
+            {
+              "id": 8,
+              "start": 1380,
+              "end": 1422,
+              "duration": 42
+            },
+            {
+              "id": 9,
+              "start": 1560,
+              "end": 1602,
+              "duration": 42
+            },
+            {
+              "id": 10,
+              "start": 1740,
+              "end": 1782,
+              "duration": 42
+            },
+            {
+              "id": 11,
+              "start": 1920,
+              "end": 1962,
+              "duration": 42
+            },
+            {
+              "id": 12,
+              "start": 2100,
+              "end": 2142,
+              "duration": 42
+            },
+            {
+              "id": 13,
+              "start": 2280,
+              "end": 2322,
+              "duration": 42
+            }
           ]
         },
         "11": {
@@ -280,19 +2489,84 @@
           "avg_shift_len": "42.0s",
           "top_speed": "23.7 km/h",
           "shifts": [
-            {"id": 1, "start": 42, "end": 84, "duration": 42},
-            {"id": 2, "start": 220, "end": 262, "duration": 42},
-            {"id": 3, "start": 400, "end": 442, "duration": 42},
-            {"id": 4, "start": 580, "end": 622, "duration": 42},
-            {"id": 5, "start": 780, "end": 822, "duration": 42},
-            {"id": 6, "start": 960, "end": 1002, "duration": 42},
-            {"id": 7, "start": 1140, "end": 1182, "duration": 42},
-            {"id": 8, "start": 1420, "end": 1462, "duration": 42},
-            {"id": 9, "start": 1600, "end": 1642, "duration": 42},
-            {"id": 10, "start": 1780, "end": 1822, "duration": 42},
-            {"id": 11, "start": 1960, "end": 2002, "duration": 42},
-            {"id": 12, "start": 2140, "end": 2182, "duration": 42},
-            {"id": 13, "start": 2320, "end": 2362, "duration": 42}
+            {
+              "id": 1,
+              "start": 42,
+              "end": 84,
+              "duration": 42
+            },
+            {
+              "id": 2,
+              "start": 220,
+              "end": 262,
+              "duration": 42
+            },
+            {
+              "id": 3,
+              "start": 400,
+              "end": 442,
+              "duration": 42
+            },
+            {
+              "id": 4,
+              "start": 580,
+              "end": 622,
+              "duration": 42
+            },
+            {
+              "id": 5,
+              "start": 780,
+              "end": 822,
+              "duration": 42
+            },
+            {
+              "id": 6,
+              "start": 960,
+              "end": 1002,
+              "duration": 42
+            },
+            {
+              "id": 7,
+              "start": 1140,
+              "end": 1182,
+              "duration": 42
+            },
+            {
+              "id": 8,
+              "start": 1420,
+              "end": 1462,
+              "duration": 42
+            },
+            {
+              "id": 9,
+              "start": 1600,
+              "end": 1642,
+              "duration": 42
+            },
+            {
+              "id": 10,
+              "start": 1780,
+              "end": 1822,
+              "duration": 42
+            },
+            {
+              "id": 11,
+              "start": 1960,
+              "end": 2002,
+              "duration": 42
+            },
+            {
+              "id": 12,
+              "start": 2140,
+              "end": 2182,
+              "duration": 42
+            },
+            {
+              "id": 13,
+              "start": 2320,
+              "end": 2362,
+              "duration": 42
+            }
           ]
         },
         "28": {
@@ -302,19 +2576,84 @@
           "avg_shift_len": "41.5s",
           "top_speed": "23.9 km/h",
           "shifts": [
-            {"id": 1, "start": 86, "end": 128, "duration": 42},
-            {"id": 2, "start": 266, "end": 308, "duration": 42},
-            {"id": 3, "start": 445, "end": 487, "duration": 42},
-            {"id": 4, "start": 626, "end": 668, "duration": 42},
-            {"id": 5, "start": 825, "end": 867, "duration": 42},
-            {"id": 6, "start": 1006, "end": 1048, "duration": 42},
-            {"id": 7, "start": 1186, "end": 1228, "duration": 42},
-            {"id": 8, "start": 1466, "end": 1508, "duration": 42},
-            {"id": 9, "start": 1645, "end": 1687, "duration": 42},
-            {"id": 10, "start": 1826, "end": 1868, "duration": 42},
-            {"id": 11, "start": 2005, "end": 2047, "duration": 42},
-            {"id": 12, "start": 2186, "end": 2228, "duration": 42},
-            {"id": 13, "start": 2365, "end": 2407, "duration": 42}
+            {
+              "id": 1,
+              "start": 86,
+              "end": 128,
+              "duration": 42
+            },
+            {
+              "id": 2,
+              "start": 266,
+              "end": 308,
+              "duration": 42
+            },
+            {
+              "id": 3,
+              "start": 445,
+              "end": 487,
+              "duration": 42
+            },
+            {
+              "id": 4,
+              "start": 626,
+              "end": 668,
+              "duration": 42
+            },
+            {
+              "id": 5,
+              "start": 825,
+              "end": 867,
+              "duration": 42
+            },
+            {
+              "id": 6,
+              "start": 1006,
+              "end": 1048,
+              "duration": 42
+            },
+            {
+              "id": 7,
+              "start": 1186,
+              "end": 1228,
+              "duration": 42
+            },
+            {
+              "id": 8,
+              "start": 1466,
+              "end": 1508,
+              "duration": 42
+            },
+            {
+              "id": 9,
+              "start": 1645,
+              "end": 1687,
+              "duration": 42
+            },
+            {
+              "id": 10,
+              "start": 1826,
+              "end": 1868,
+              "duration": 42
+            },
+            {
+              "id": 11,
+              "start": 2005,
+              "end": 2047,
+              "duration": 42
+            },
+            {
+              "id": 12,
+              "start": 2186,
+              "end": 2228,
+              "duration": 42
+            },
+            {
+              "id": 13,
+              "start": 2365,
+              "end": 2407,
+              "duration": 42
+            }
           ]
         },
         "3": {
@@ -324,19 +2663,84 @@
           "avg_shift_len": "41.5s",
           "top_speed": "24.1 km/h",
           "shifts": [
-            {"id": 1, "start": 0, "end": 42, "duration": 42},
-            {"id": 2, "start": 180, "end": 222, "duration": 42},
-            {"id": 3, "start": 360, "end": 402, "duration": 42},
-            {"id": 4, "start": 540, "end": 582, "duration": 42},
-            {"id": 5, "start": 740, "end": 782, "duration": 42},
-            {"id": 6, "start": 920, "end": 962, "duration": 42},
-            {"id": 7, "start": 1100, "end": 1142, "duration": 42},
-            {"id": 8, "start": 1380, "end": 1422, "duration": 42},
-            {"id": 9, "start": 1560, "end": 1602, "duration": 42},
-            {"id": 10, "start": 1740, "end": 1782, "duration": 42},
-            {"id": 11, "start": 1920, "end": 1962, "duration": 42},
-            {"id": 12, "start": 2100, "end": 2142, "duration": 42},
-            {"id": 13, "start": 2280, "end": 2322, "duration": 42}
+            {
+              "id": 1,
+              "start": 0,
+              "end": 42,
+              "duration": 42
+            },
+            {
+              "id": 2,
+              "start": 180,
+              "end": 222,
+              "duration": 42
+            },
+            {
+              "id": 3,
+              "start": 360,
+              "end": 402,
+              "duration": 42
+            },
+            {
+              "id": 4,
+              "start": 540,
+              "end": 582,
+              "duration": 42
+            },
+            {
+              "id": 5,
+              "start": 740,
+              "end": 782,
+              "duration": 42
+            },
+            {
+              "id": 6,
+              "start": 920,
+              "end": 962,
+              "duration": 42
+            },
+            {
+              "id": 7,
+              "start": 1100,
+              "end": 1142,
+              "duration": 42
+            },
+            {
+              "id": 8,
+              "start": 1380,
+              "end": 1422,
+              "duration": 42
+            },
+            {
+              "id": 9,
+              "start": 1560,
+              "end": 1602,
+              "duration": 42
+            },
+            {
+              "id": 10,
+              "start": 1740,
+              "end": 1782,
+              "duration": 42
+            },
+            {
+              "id": 11,
+              "start": 1920,
+              "end": 1962,
+              "duration": 42
+            },
+            {
+              "id": 12,
+              "start": 2100,
+              "end": 2142,
+              "duration": 42
+            },
+            {
+              "id": 13,
+              "start": 2280,
+              "end": 2322,
+              "duration": 42
+            }
           ]
         },
         "97": {
@@ -346,8 +2750,18 @@
           "avg_shift_len": "10m 00s",
           "top_speed": "18.2 km/h",
           "shifts": [
-            {"id": 1, "start": 0, "end": 1260, "duration": 1260},
-            {"id": 2, "start": 1260, "end": 1860, "duration": 600}
+            {
+              "id": 1,
+              "start": 0,
+              "end": 1260,
+              "duration": 1260
+            },
+            {
+              "id": 2,
+              "start": 1260,
+              "end": 1860,
+              "duration": 600
+            }
           ]
         },
         "98": {
@@ -357,69 +2771,434 @@
           "avg_shift_len": "18m 00s",
           "top_speed": "17.9 km/h",
           "shifts": [
-            {"id": 1, "start": 1860, "end": 2510, "duration": 650}
+            {
+              "id": 1,
+              "start": 1860,
+              "end": 2510,
+              "duration": 650
+            }
           ]
         }
       },
       "coaching_clips": {
         "defensive_zone": [
-          {"id": 1, "start": 15, "end": 45, "duration": 30, "period": "1st Period", "description": "D-Zone Opening Faceoff Scramble", "suggested": false},
-          {"id": 2, "start": 210, "end": 245, "duration": 35, "period": "1st Period", "description": "Slot Pressure & Board Pin", "suggested": true},
-          {"id": 3, "start": 305, "end": 345, "duration": 40, "period": "1st Period", "description": "D-Zone Box Defense & Breakout Pass", "suggested": true},
-          {"id": 4, "start": 480, "end": 520, "duration": 40, "period": "1st Period", "description": "Opponent Cycle & Point Shot Block", "suggested": false},
-          {"id": 5, "start": 660, "end": 700, "duration": 40, "period": "1st Period", "description": "Corner Board Battle & Clear", "suggested": false},
-          {"id": 6, "start": 740, "end": 775, "duration": 35, "period": "1st Period", "description": "Heavy Crease Pressure before Goal 1", "suggested": true},
-          {"id": 7, "start": 915, "end": 955, "duration": 40, "period": "1st Period", "description": "Defensive Positioning in High Slot", "suggested": false},
-          {"id": 8, "start": 1220, "end": 1255, "duration": 35, "period": "1st Period", "description": "Net Front Screening Defense", "suggested": false},
-          {"id": 9, "start": 1360, "end": 1395, "duration": 35, "period": "1st Period", "description": "Odd Man Rush Defense before Goal 2", "suggested": true},
-          {"id": 10, "start": 1550, "end": 1590, "duration": 40, "period": "2nd Period", "description": "Period 2 Opening D-Zone Setup", "suggested": false},
-          {"id": 11, "start": 1720, "end": 1765, "duration": 45, "period": "2nd Period", "description": "Sustained Caledon Cycling in Tigers End", "suggested": true},
-          {"id": 12, "start": 1840, "end": 1880, "duration": 40, "period": "2nd Period", "description": "Crease Scramble before Goal 3", "suggested": true},
-          {"id": 13, "start": 2060, "end": 2095, "duration": 35, "period": "2nd Period", "description": "Turnover in Corner leading to Goal 4", "suggested": true},
-          {"id": 14, "start": 2150, "end": 2190, "duration": 40, "period": "2nd Period", "description": "Slot Coverage Breakdown before Goal 5", "suggested": true},
-          {"id": 15, "start": 2290, "end": 2330, "duration": 40, "period": "2nd Period", "description": "Puck Battle behind Goal Line", "suggested": false}
+          {
+            "id": 1,
+            "start": 15,
+            "end": 45,
+            "duration": 30,
+            "period": "1st Period",
+            "description": "D-Zone Opening Faceoff Scramble",
+            "suggested": false
+          },
+          {
+            "id": 2,
+            "start": 210,
+            "end": 245,
+            "duration": 35,
+            "period": "1st Period",
+            "description": "Slot Pressure & Board Pin",
+            "suggested": true
+          },
+          {
+            "id": 3,
+            "start": 305,
+            "end": 345,
+            "duration": 40,
+            "period": "1st Period",
+            "description": "D-Zone Box Defense & Breakout Pass",
+            "suggested": true
+          },
+          {
+            "id": 4,
+            "start": 480,
+            "end": 520,
+            "duration": 40,
+            "period": "1st Period",
+            "description": "Opponent Cycle & Point Shot Block",
+            "suggested": false
+          },
+          {
+            "id": 5,
+            "start": 660,
+            "end": 700,
+            "duration": 40,
+            "period": "1st Period",
+            "description": "Corner Board Battle & Clear",
+            "suggested": false
+          },
+          {
+            "id": 6,
+            "start": 740,
+            "end": 775,
+            "duration": 35,
+            "period": "1st Period",
+            "description": "Heavy Crease Pressure before Goal 1",
+            "suggested": true
+          },
+          {
+            "id": 7,
+            "start": 915,
+            "end": 955,
+            "duration": 40,
+            "period": "1st Period",
+            "description": "Defensive Positioning in High Slot",
+            "suggested": false
+          },
+          {
+            "id": 8,
+            "start": 1220,
+            "end": 1255,
+            "duration": 35,
+            "period": "1st Period",
+            "description": "Net Front Screening Defense",
+            "suggested": false
+          },
+          {
+            "id": 9,
+            "start": 1360,
+            "end": 1395,
+            "duration": 35,
+            "period": "1st Period",
+            "description": "Odd Man Rush Defense before Goal 2",
+            "suggested": true
+          },
+          {
+            "id": 10,
+            "start": 1550,
+            "end": 1590,
+            "duration": 40,
+            "period": "2nd Period",
+            "description": "Period 2 Opening D-Zone Setup",
+            "suggested": false
+          },
+          {
+            "id": 11,
+            "start": 1720,
+            "end": 1765,
+            "duration": 45,
+            "period": "2nd Period",
+            "description": "Sustained Caledon Cycling in Tigers End",
+            "suggested": true
+          },
+          {
+            "id": 12,
+            "start": 1840,
+            "end": 1880,
+            "duration": 40,
+            "period": "2nd Period",
+            "description": "Crease Scramble before Goal 3",
+            "suggested": true
+          },
+          {
+            "id": 13,
+            "start": 2060,
+            "end": 2095,
+            "duration": 35,
+            "period": "2nd Period",
+            "description": "Turnover in Corner leading to Goal 4",
+            "suggested": true
+          },
+          {
+            "id": 14,
+            "start": 2150,
+            "end": 2190,
+            "duration": 40,
+            "period": "2nd Period",
+            "description": "Slot Coverage Breakdown before Goal 5",
+            "suggested": true
+          },
+          {
+            "id": 15,
+            "start": 2290,
+            "end": 2330,
+            "duration": 40,
+            "period": "2nd Period",
+            "description": "Puck Battle behind Goal Line",
+            "suggested": false
+          }
         ],
         "offensive_zone": [
-          {"id": 16, "start": 140, "end": 175, "duration": 35, "period": "1st Period", "description": "Tigers Sustained O-Zone Possession & Cycle", "suggested": true},
-          {"id": 17, "start": 380, "end": 415, "duration": 35, "period": "1st Period", "description": "Deep Forecheck Pressure & Puck Recovery", "suggested": true},
-          {"id": 18, "start": 560, "end": 595, "duration": 35, "period": "1st Period", "description": "O-Zone Pinch by Defenseman", "suggested": false},
-          {"id": 19, "start": 820, "end": 855, "duration": 35, "period": "1st Period", "description": "Right Wing Drive & Shot on Net", "suggested": true},
-          {"id": 20, "start": 1040, "end": 1075, "duration": 35, "period": "1st Period", "description": "Board Play & Point Shot Setup", "suggested": false},
-          {"id": 21, "start": 1480, "end": 1515, "duration": 35, "period": "2nd Period", "description": "Tigers Quick Break-in & Slot Chance", "suggested": true},
-          {"id": 22, "start": 1640, "end": 1680, "duration": 40, "period": "2nd Period", "description": "Umbrella Cycle in Offensive Zone", "suggested": true},
-          {"id": 23, "start": 1980, "end": 2015, "duration": 35, "period": "2nd Period", "description": "O-Zone Rebound Retrieval", "suggested": false}
+          {
+            "id": 16,
+            "start": 140,
+            "end": 175,
+            "duration": 35,
+            "period": "1st Period",
+            "description": "Tigers Sustained O-Zone Possession & Cycle",
+            "suggested": true
+          },
+          {
+            "id": 17,
+            "start": 380,
+            "end": 415,
+            "duration": 35,
+            "period": "1st Period",
+            "description": "Deep Forecheck Pressure & Puck Recovery",
+            "suggested": true
+          },
+          {
+            "id": 18,
+            "start": 560,
+            "end": 595,
+            "duration": 35,
+            "period": "1st Period",
+            "description": "O-Zone Pinch by Defenseman",
+            "suggested": false
+          },
+          {
+            "id": 19,
+            "start": 820,
+            "end": 855,
+            "duration": 35,
+            "period": "1st Period",
+            "description": "Right Wing Drive & Shot on Net",
+            "suggested": true
+          },
+          {
+            "id": 20,
+            "start": 1040,
+            "end": 1075,
+            "duration": 35,
+            "period": "1st Period",
+            "description": "Board Play & Point Shot Setup",
+            "suggested": false
+          },
+          {
+            "id": 21,
+            "start": 1480,
+            "end": 1515,
+            "duration": 35,
+            "period": "2nd Period",
+            "description": "Tigers Quick Break-in & Slot Chance",
+            "suggested": true
+          },
+          {
+            "id": 22,
+            "start": 1640,
+            "end": 1680,
+            "duration": 40,
+            "period": "2nd Period",
+            "description": "Umbrella Cycle in Offensive Zone",
+            "suggested": true
+          },
+          {
+            "id": 23,
+            "start": 1980,
+            "end": 2015,
+            "duration": 35,
+            "period": "2nd Period",
+            "description": "O-Zone Rebound Retrieval",
+            "suggested": false
+          }
         ],
         "neutral_zone": [
-          {"id": 24, "start": 85, "end": 120, "duration": 35, "period": "1st Period", "description": "Neutral Zone Regroup & Speed Transition", "suggested": false},
-          {"id": 25, "start": 260, "end": 295, "duration": 35, "period": "1st Period", "description": "Center Ice Turnover & Tiger Backcheck", "suggested": true},
-          {"id": 26, "start": 440, "end": 475, "duration": 35, "period": "1st Period", "description": "Blue Line Standup & Dump-In", "suggested": false},
-          {"id": 27, "start": 620, "end": 655, "duration": 35, "period": "1st Period", "description": "Forecheck Trap at Red Line", "suggested": true},
-          {"id": 28, "start": 980, "end": 1015, "duration": 35, "period": "1st Period", "description": "Neutral Zone Passing Sequence", "suggested": false},
-          {"id": 29, "start": 1280, "end": 1315, "duration": 35, "period": "1st Period", "description": "Neutral Zone Faceoff & Quick Transition", "suggested": false},
-          {"id": 30, "start": 1780, "end": 1815, "duration": 35, "period": "2nd Period", "description": "Tigers 3-Man Neutral Zone Wall", "suggested": true}
+          {
+            "id": 24,
+            "start": 85,
+            "end": 120,
+            "duration": 35,
+            "period": "1st Period",
+            "description": "Neutral Zone Regroup & Speed Transition",
+            "suggested": false
+          },
+          {
+            "id": 25,
+            "start": 260,
+            "end": 295,
+            "duration": 35,
+            "period": "1st Period",
+            "description": "Center Ice Turnover & Tiger Backcheck",
+            "suggested": true
+          },
+          {
+            "id": 26,
+            "start": 440,
+            "end": 475,
+            "duration": 35,
+            "period": "1st Period",
+            "description": "Blue Line Standup & Dump-In",
+            "suggested": false
+          },
+          {
+            "id": 27,
+            "start": 620,
+            "end": 655,
+            "duration": 35,
+            "period": "1st Period",
+            "description": "Forecheck Trap at Red Line",
+            "suggested": true
+          },
+          {
+            "id": 28,
+            "start": 980,
+            "end": 1015,
+            "duration": 35,
+            "period": "1st Period",
+            "description": "Neutral Zone Passing Sequence",
+            "suggested": false
+          },
+          {
+            "id": 29,
+            "start": 1280,
+            "end": 1315,
+            "duration": 35,
+            "period": "1st Period",
+            "description": "Neutral Zone Faceoff & Quick Transition",
+            "suggested": false
+          },
+          {
+            "id": 30,
+            "start": 1780,
+            "end": 1815,
+            "duration": 35,
+            "period": "2nd Period",
+            "description": "Tigers 3-Man Neutral Zone Wall",
+            "suggested": true
+          }
         ],
         "powerplay": [
-          {"id": 31, "start": 540, "end": 575, "duration": 35, "period": "1st Period", "description": "Powerplay (5v4) Break-in Setup", "suggested": false},
-          {"id": 32, "start": 1420, "end": 1460, "duration": 40, "period": "2nd Period", "description": "Powerplay Umbrella Movement & One-Timer", "suggested": true}
+          {
+            "id": 31,
+            "start": 540,
+            "end": 575,
+            "duration": 35,
+            "period": "1st Period",
+            "description": "Powerplay (5v4) Break-in Setup",
+            "suggested": false
+          },
+          {
+            "id": 32,
+            "start": 1420,
+            "end": 1460,
+            "duration": 40,
+            "period": "2nd Period",
+            "description": "Powerplay Umbrella Movement & One-Timer",
+            "suggested": true
+          }
         ],
         "penalty_kill": [
-          {"id": 33, "start": 840, "end": 880, "duration": 40, "period": "1st Period", "description": "Penalty Kill (4v5) Diamond Box Clear", "suggested": true},
-          {"id": 34, "start": 2100, "end": 2135, "duration": 35, "period": "2nd Period", "description": "Penalty Kill Neutral Zone Pressure", "suggested": false}
+          {
+            "id": 33,
+            "start": 840,
+            "end": 880,
+            "duration": 40,
+            "period": "1st Period",
+            "description": "Penalty Kill (4v5) Diamond Box Clear",
+            "suggested": true
+          },
+          {
+            "id": 34,
+            "start": 2100,
+            "end": 2135,
+            "duration": 35,
+            "period": "2nd Period",
+            "description": "Penalty Kill Neutral Zone Pressure",
+            "suggested": false
+          }
         ],
         "goal_highlights": [
-          {"id": 35, "start": 745, "end": 772, "duration": 27, "period": "1st Period", "description": "🚨 Caledon Goal 1 (P1 08:55 Clock)", "suggested": true},
-          {"id": 36, "start": 1385, "end": 1412, "duration": 27, "period": "1st Period", "description": "🚨 Caledon Goal 2 (P1 07:31 Clock)", "suggested": true},
-          {"id": 37, "start": 1865, "end": 1892, "duration": 27, "period": "2nd Period", "description": "🚨 Caledon Goal 3 (P2 08:20 Clock)", "suggested": true},
-          {"id": 38, "start": 2080, "end": 2106, "duration": 26, "period": "2nd Period", "description": "🚨 Caledon Goal 4 (P2 07:44 Clock)", "suggested": true},
-          {"id": 39, "start": 2175, "end": 2200, "duration": 25, "period": "2nd Period", "description": "🚨 Caledon Goal 5 (P2 05:51 Clock)", "suggested": true},
-          {"id": 40, "start": 2218, "end": 2240, "duration": 22, "period": "2nd Period", "description": "🚨 Caledon Goal 6 (P2 05:31 Clock)", "suggested": true},
-          {"id": 41, "start": 2315, "end": 2338, "duration": 23, "period": "2nd Period", "description": "🚨 Caledon Goal 7 (P2 01:08 Clock)", "suggested": true}
+          {
+            "id": 35,
+            "start": 745,
+            "end": 772,
+            "duration": 27,
+            "period": "1st Period",
+            "description": "\ud83d\udea8 Caledon Goal 1 (P1 08:55 Clock)",
+            "suggested": true
+          },
+          {
+            "id": 36,
+            "start": 1385,
+            "end": 1412,
+            "duration": 27,
+            "period": "1st Period",
+            "description": "\ud83d\udea8 Caledon Goal 2 (P1 07:31 Clock)",
+            "suggested": true
+          },
+          {
+            "id": 37,
+            "start": 1865,
+            "end": 1892,
+            "duration": 27,
+            "period": "2nd Period",
+            "description": "\ud83d\udea8 Caledon Goal 3 (P2 08:20 Clock)",
+            "suggested": true
+          },
+          {
+            "id": 38,
+            "start": 2080,
+            "end": 2106,
+            "duration": 26,
+            "period": "2nd Period",
+            "description": "\ud83d\udea8 Caledon Goal 4 (P2 07:44 Clock)",
+            "suggested": true
+          },
+          {
+            "id": 39,
+            "start": 2175,
+            "end": 2200,
+            "duration": 25,
+            "period": "2nd Period",
+            "description": "\ud83d\udea8 Caledon Goal 5 (P2 05:51 Clock)",
+            "suggested": true
+          },
+          {
+            "id": 40,
+            "start": 2218,
+            "end": 2240,
+            "duration": 22,
+            "period": "2nd Period",
+            "description": "\ud83d\udea8 Caledon Goal 6 (P2 05:31 Clock)",
+            "suggested": true
+          },
+          {
+            "id": 41,
+            "start": 2315,
+            "end": 2338,
+            "duration": 23,
+            "period": "2nd Period",
+            "description": "\ud83d\udea8 Caledon Goal 7 (P2 01:08 Clock)",
+            "suggested": true
+          }
         ],
         "goalie_saves": [
-          {"id": 42, "start": 280, "end": 302, "duration": 22, "period": "1st Period", "description": "🧤 Slot One-Timer Pad Save", "suggested": true},
-          {"id": 43, "start": 690, "end": 712, "duration": 22, "period": "1st Period", "description": "🧤 Breakaway Pad Stop & Rebound Kick", "suggested": true},
-          {"id": 44, "start": 1150, "end": 1172, "duration": 22, "period": "1st Period", "description": "🧤 Point Shot Glove Save", "suggested": false},
-          {"id": 45, "start": 1540, "end": 1565, "duration": 25, "period": "2nd Period", "description": "🧤 Scramble in Crease & Whistle Freeze", "suggested": true}
+          {
+            "id": 42,
+            "start": 280,
+            "end": 302,
+            "duration": 22,
+            "period": "1st Period",
+            "description": "\ud83e\udde4 Slot One-Timer Pad Save",
+            "suggested": true
+          },
+          {
+            "id": 43,
+            "start": 690,
+            "end": 712,
+            "duration": 22,
+            "period": "1st Period",
+            "description": "\ud83e\udde4 Breakaway Pad Stop & Rebound Kick",
+            "suggested": true
+          },
+          {
+            "id": 44,
+            "start": 1150,
+            "end": 1172,
+            "duration": 22,
+            "period": "1st Period",
+            "description": "\ud83e\udde4 Point Shot Glove Save",
+            "suggested": false
+          },
+          {
+            "id": 45,
+            "start": 1540,
+            "end": 1565,
+            "duration": 25,
+            "period": "2nd Period",
+            "description": "\ud83e\udde4 Scramble in Crease & Whistle Freeze",
+            "suggested": true
+          }
         ]
       },
       "analytics": {
