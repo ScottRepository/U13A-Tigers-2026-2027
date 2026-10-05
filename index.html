@@ -19,25 +19,20 @@
       <p class="text-xs text-slate-400 mb-5">Enter team passcode to continue.</p>
       
       <div class="space-y-3">
-        <div class="relative">
-          <input 
-            id="passcode-input" 
-            type="password" 
-            placeholder="Enter Passcode" 
-            class="w-full bg-slate-900 border border-slate-600 rounded-lg px-4 py-3 text-center text-lg font-bold tracking-widest text-yellow-400 focus:outline-none focus:border-yellow-400"
-            autofocus
-            autocomplete="off"
-          />
-        </div>
-        
+        <input 
+          id="passcode-input" 
+          type="password" 
+          placeholder="Enter Passcode" 
+          class="w-full bg-slate-900 border border-slate-600 rounded-lg px-4 py-3 text-center text-lg font-bold tracking-widest text-yellow-400 focus:outline-none focus:border-yellow-400"
+          autofocus
+          autocomplete="off"
+        />
         <div class="flex justify-end">
           <button type="button" onclick="togglePasswordVisibility()" class="text-[11px] text-slate-400 hover:text-white cursor-pointer transition">
             👁️ Show / Hide Passcode
           </button>
         </div>
-
         <p id="auth-error" class="text-xs text-red-400 font-semibold hidden">Incorrect passcode. Please try again.</p>
-        
         <button 
           type="button" 
           onclick="handlePasscodeSubmit()" 
@@ -114,7 +109,7 @@
   </div>
 
   <!-- ================= MAIN APP ================= -->
-  <div id="main-content" class="max-w-7xl mx-auto space-y-4" style="display: none;">
+  <div id="main-content" class="max-w-7xl mx-auto space-y-3" style="display: none;">
     
     <!-- TOP CONTROL BAR -->
     <header class="bg-slate-900/95 border border-slate-800 rounded-2xl p-3 shadow-xl backdrop-blur-md">
@@ -150,7 +145,7 @@
             <span class="text-slate-400 text-[10px] uppercase font-bold">Mode:</span>
             <select id="view-mode-select" onchange="switchViewMode(this.value)" class="bg-transparent text-yellow-400 font-bold focus:outline-none cursor-pointer text-xs">
               <option value="coaches">👨‍🏫 Coach Tactical Film</option>
-              <option value="player">👤 Individual Player Shifts</option>
+              <option value="player">👤 Player Shifts & Spotlight</option>
               <option value="filmroom">⭐ Team Starred Library</option>
               <option value="dashboard">📅 Season Schedule Grid</option>
             </select>
@@ -158,7 +153,7 @@
 
           <!-- Coach Tactical Category -->
           <div id="coach-category-wrapper" class="flex items-center gap-1 bg-slate-950 px-2.5 py-1.5 rounded-lg border border-slate-800">
-            <span class="text-slate-400 text-[10px] uppercase font-bold">Play Type:</span>
+            <span class="text-slate-400 text-[10px] uppercase font-bold">Category:</span>
             <select id="category-select" onchange="changeTacticalCategory(this.value)" class="bg-transparent text-emerald-400 font-bold focus:outline-none cursor-pointer text-xs">
               <option value="defensive_zone">🔴 Defensive Zone Sequences</option>
               <option value="offensive_zone">🟢 Offensive Zone Sequences</option>
@@ -174,36 +169,66 @@
           <div id="player-roster-wrapper" class="hidden flex items-center gap-1 bg-slate-950 px-2.5 py-1.5 rounded-lg border border-slate-800">
             <span class="text-slate-400 text-[10px] uppercase font-bold">Player:</span>
             <select id="roster-select" onchange="selectFromRoster(this.value)" class="bg-transparent text-yellow-400 font-bold focus:outline-none cursor-pointer text-xs">
-              <option value="">-- Choose Skater --</option>
-              <option value="23">#23 Easton Carpentier</option>
-              <option value="10">#10 Arjun Manjunath</option>
-              <option value="76">#76 Matt Davis</option>
-              <option value="13">#13 Matthew Hart</option>
-              <option value="16">#16 Joshua Liu</option>
-              <option value="21">#21 Caleb Irgengioro-Wu</option>
-              <option value="27">#27 Alen Fazlic</option>
-              <option value="88">#88 Roy Chen</option>
-              <option value="9">#9 Oliver Patterson</option>
-              <option value="7">#7 Maxwell Dey</option>
-              <option value="5">#5 Nathan Zhao</option>
-              <option value="18">#18 Nathan Carinci</option>
-              <option value="11">#11 Andrew Bichay</option>
-              <option value="28">#28 Ross Elley</option>
-              <option value="3">#3 Stewart Dolmage</option>
-              <option value="97">#97 Hudson Millar (G)</option>
-              <option value="98">#98 Hudson Barfitt (G)</option>
+              <option value="">-- Choose Player --</option>
+              <option value="23">#23 (C) Easton Carpentier</option>
+              <option value="10">#10 (RW) Arjun Manjunath</option>
+              <option value="76">#76 (LD) Matt Davis</option>
+              <option value="13">#13 (C) Matthew Hart</option>
+              <option value="16">#16 (LW) Joshua Liu</option>
+              <option value="21">#21 (RD) Caleb Irgengioro-Wu</option>
+              <option value="27">#27 (LW) Alen Fazlic</option>
+              <option value="88">#88 (RW) Roy Chen</option>
+              <option value="9">#9 (LD) Oliver Patterson</option>
+              <option value="7">#7 (F) Maxwell Dey</option>
+              <option value="5">#5 (RD) Nathan Zhao</option>
+              <option value="18">#18 (F) Nathan Carinci</option>
+              <option value="11">#11 (F) Andrew Bichay</option>
+              <option value="28">#28 (D) Ross Elley</option>
+              <option value="3">#3 (D) Stewart Dolmage</option>
+              <option value="97">#97 (G) Hudson Millar</option>
+              <option value="98">#98 (G) Hudson Barfitt</option>
+            </select>
+          </div>
+
+          <!-- Standard System Baseline Selector -->
+          <div class="flex items-center gap-1 bg-slate-950 px-2.5 py-1.5 rounded-lg border border-slate-800">
+            <span class="text-slate-400 text-[10px] uppercase font-bold">System:</span>
+            <select id="system-template-select" onchange="changeSystemTemplate(this.value)" class="bg-transparent text-cyan-400 font-bold focus:outline-none cursor-pointer text-xs">
+              <option value="none">Off (No Template)</option>
+              <option value="dzone_breakout">🛡️ D-Zone Breakout</option>
+              <option value="dzone_house">🏠 D-Zone Box-and-One</option>
+              <option value="neutral_122">🏹 Neutral 1-2-2</option>
+              <option value="ozone_cycle">🔺 O-Zone Cycle Triangle</option>
             </select>
           </div>
 
           <!-- Suggested Filter Toggle -->
           <button id="suggested-filter-btn" onclick="toggleSuggestedFilter()" class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-amber-950/40 border border-amber-600/70 text-amber-300 font-bold transition hover:bg-amber-900/60 cursor-pointer">
-            <span>🔥 High-Action Only</span>
+            <span>🔥 High-Action</span>
             <span id="suggested-badge" class="px-1.5 py-0.2 rounded-full text-[9px] bg-slate-700 text-slate-300 font-bold">OFF</span>
           </button>
         </div>
 
       </div>
     </header>
+
+    <!-- COACHING DISCLAIMER BANNER -->
+    <div class="bg-slate-900/70 border border-slate-800/80 rounded-xl px-3 py-1.5 flex items-center justify-between text-[11px] text-slate-400">
+      <div class="flex items-center gap-1.5">
+        <span class="text-blue-400 text-xs">💡</span>
+        <span><strong>Coaching Disclaimer:</strong> Visual positioning lines reflect standard minor hockey baseline models. Coaches may teach custom team playbook adjustments.</span>
+      </div>
+      <div class="flex items-center gap-2">
+        <label class="flex items-center gap-1 cursor-pointer">
+          <input type="checkbox" id="toggle-headtags" onchange="redrawCanvasLayers()" checked class="rounded bg-slate-800 border-slate-700 text-blue-500">
+          <span class="text-slate-300">🎯 Player Tags</span>
+        </label>
+        <label class="flex items-center gap-1 cursor-pointer">
+          <input type="checkbox" id="toggle-ghosts" onchange="redrawCanvasLayers()" checked class="rounded bg-slate-800 border-slate-700 text-emerald-500">
+          <span class="text-slate-300">👻 Target Positions</span>
+        </label>
+      </div>
+    </div>
 
     <!-- ================= THEATER VIDEO & WHITEBOARD STAGE ================= -->
     <div class="bg-slate-900 border border-slate-800 rounded-3xl p-3 md:p-4 shadow-2xl space-y-3">
@@ -232,13 +257,14 @@
           <button onclick="setDrawColor('#facc15')" class="w-5 h-5 rounded-full bg-yellow-400 border-2 border-white cursor-pointer"></button>
           <button onclick="setDrawColor('#38bdf8')" class="w-5 h-5 rounded-full bg-sky-400 border border-slate-600 cursor-pointer"></button>
           <button onclick="setDrawColor('#f43f5e')" class="w-5 h-5 rounded-full bg-rose-500 border border-slate-600 cursor-pointer"></button>
+          <button onclick="setDrawColor('#10b981')" class="w-5 h-5 rounded-full bg-emerald-500 border border-slate-600 cursor-pointer" title="Target Emerald"></button>
           <button onclick="setDrawColor('#000000')" class="w-5 h-5 rounded-full bg-black border border-slate-400 cursor-pointer"></button>
           <button onclick="undoDraw()" class="px-2 py-1 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded font-semibold ml-1 cursor-pointer">↩️ Undo</button>
           <button onclick="clearCanvas()" class="px-2 py-1 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded font-semibold cursor-pointer">Clear</button>
         </div>
       </div>
 
-      <!-- VIDEO CONTROLS & TIMELINE STATUS -->
+      <!-- VIDEO CONTROLS BAR -->
       <div class="flex flex-wrap items-center justify-between gap-3 text-xs border-t border-slate-800/80 pt-2 px-1">
         <div class="flex items-center gap-1.5">
           <button id="stage-video-btn" onclick="setStageMode('video')" class="px-3 py-1.5 rounded-lg bg-blue-600 text-white font-bold cursor-pointer transition shadow">
@@ -362,6 +388,79 @@
     const PARENT_PASSCODE = "U13ATIGERS";
     const COACH_PASSCODE = "COACHTIGERS";
 
+    // Official Position Roster
+    const ROSTER_POSITIONS = {
+      "23": { pos: "C", name: "Easton Carpentier" },
+      "10": { pos: "RW", name: "Arjun Manjunath" },
+      "76": { pos: "LD", name: "Matt Davis" },
+      "13": { pos: "C", name: "Matthew Hart" },
+      "16": { pos: "LW", name: "Joshua Liu" },
+      "21": { pos: "RD", name: "Caleb Irgengioro-Wu" },
+      "27": { pos: "LW", name: "Alen Fazlic" },
+      "88": { pos: "RW", name: "Roy Chen" },
+      "9": { pos: "LD", name: "Oliver Patterson" },
+      "7": { pos: "F", name: "Maxwell Dey" },
+      "5": { pos: "RD", name: "Nathan Zhao" },
+      "18": { pos: "F", name: "Nathan Carinci" },
+      "11": { pos: "F", name: "Andrew Bichay" },
+      "28": { pos: "D", name: "Ross Elley" },
+      "3": { pos: "D", name: "Stewart Dolmage" },
+      "97": { pos: "G", name: "Hudson Millar" },
+      "98": { pos: "G", name: "Hudson Barfitt" }
+    };
+
+    // Standard Minor Hockey Baseline Systems (Normalized Coordinates [0.0 - 1.0])
+    const BASELINE_SYSTEMS = {
+      dzone_breakout: {
+        name: "Standard D-Zone Breakout",
+        description: "Strong side rim / wheel with low center support & half-wall release",
+        positions: {
+          "G":  { x: 0.08, y: 0.50, label: "G (Crease)" },
+          "LD": { x: 0.12, y: 0.28, label: "LD (Wheel/Rim)" },
+          "RD": { x: 0.15, y: 0.65, label: "RD (Net-Front Support)" },
+          "C":  { x: 0.22, y: 0.48, label: "C (Low Support / Outlet)" },
+          "LW": { x: 0.28, y: 0.22, label: "LW (Half-Wall Board)" },
+          "RW": { x: 0.33, y: 0.68, label: "RW (Mid-Ice Stretch)" }
+        }
+      },
+      dzone_house: {
+        name: "D-Zone Box-and-One (House Protection)",
+        description: "Protecting high-danger slot and screening lanes",
+        positions: {
+          "G":  { x: 0.08, y: 0.50, label: "G (Crease)" },
+          "LD": { x: 0.16, y: 0.40, label: "LD (Low House Left)" },
+          "RD": { x: 0.16, y: 0.60, label: "RD (Low House Right)" },
+          "C":  { x: 0.22, y: 0.50, label: "C (Slot Battle / Net-Front)" },
+          "LW": { x: 0.29, y: 0.35, label: "LW (High House Left)" },
+          "RW": { x: 0.29, y: 0.65, label: "RW (High House Right)" }
+        }
+      },
+      neutral_122: {
+        name: "Neutral Zone 1-2-2 Regroup",
+        description: "F1 deep pressure with F2/F3 red line wall & D-partners back",
+        positions: {
+          "G":  { x: 0.08, y: 0.50, label: "G (Crease)" },
+          "C":  { x: 0.52, y: 0.50, label: "C / F1 (Center Pressure)" },
+          "LW": { x: 0.50, y: 0.25, label: "LW / F2 (Left Lane Wall)" },
+          "RW": { x: 0.50, y: 0.75, label: "RW / F3 (Right Lane Wall)" },
+          "LD": { x: 0.38, y: 0.35, label: "LD (Regroup Partner)" },
+          "RD": { x: 0.38, y: 0.65, label: "RD (Regroup Partner)" }
+        }
+      },
+      ozone_cycle: {
+        name: "O-Zone Cycle & Triangle",
+        description: "F1 below goal line, F2 half-wall cycle, F3 high slot trigger",
+        positions: {
+          "G":  { x: 0.08, y: 0.50, label: "G" },
+          "C":  { x: 0.90, y: 0.28, label: "F1/C (Goal Line Cycle)" },
+          "LW": { x: 0.80, y: 0.22, label: "F2/LW (Half-Wall Option)" },
+          "RW": { x: 0.75, y: 0.50, label: "F3/RW (High Slot Trigger)" },
+          "LD": { x: 0.68, y: 0.32, label: "LD (Left Point Pinch)" },
+          "RD": { x: 0.68, y: 0.68, label: "RD (Right Point Safety)" }
+        }
+      }
+    };
+
     let isCoach = false;
     let gamesLibrary = [];
     let currentGame = null;
@@ -371,6 +470,7 @@
     let activeCategory = "defensive_zone";
     let isSuggestedOnly = false;
     let currentStage = "video";
+    let activeSystemTemplate = "none";
 
     let currentJersey = "23";
     let currentShiftsArray = [];
@@ -524,6 +624,7 @@
         if (isDrawingMode) toggleDrawMode();
       }
       resizeCanvas();
+      redrawCanvasLayers();
     }
 
     function renderRinkBackground() {
@@ -617,7 +718,122 @@
       drawDot(w * 0.58, h * 0.72);
     }
 
-    // --- 3. VIEW SWITCHER ---
+    // --- 3. SYSTEM TEMPLATES & GHOST POSITIONING ENGINE ---
+    function changeSystemTemplate(systemKey) {
+      activeSystemTemplate = systemKey;
+      redrawCanvasLayers();
+      const sys = BASELINE_SYSTEMS[systemKey];
+      if (sys) {
+        showToast(`📐 Loaded: ${sys.name}`);
+        document.getElementById('current-shift-status').innerText = `System Active: ${sys.name} - ${sys.description}`;
+      } else {
+        document.getElementById('current-shift-status').innerText = `System template cleared.`;
+      }
+    }
+
+    function redrawCanvasLayers() {
+      if (!ctx || !canvas) return;
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      const showGhosts = document.getElementById('toggle-ghosts')?.checked !== false;
+      const showTags = document.getElementById('toggle-headtags')?.checked !== false;
+      const w = canvas.width;
+      const h = canvas.height;
+
+      // 1. Draw Active System Template Ghost Targets
+      if (showGhosts && activeSystemTemplate !== "none" && BASELINE_SYSTEMS[activeSystemTemplate]) {
+        const sys = BASELINE_SYSTEMS[activeSystemTemplate];
+        const selectedPlayerPos = ROSTER_POSITIONS[currentJersey]?.pos || "C";
+
+        Object.entries(sys.positions).forEach(([roleKey, posData]) => {
+          const px = posData.x * w;
+          const py = posData.y * h;
+          const isPlayerMatch = (roleKey === selectedPlayerPos || (roleKey.startsWith('F') && selectedPlayerPos.includes('F')));
+
+          // Translucent Target Circle
+          ctx.beginPath();
+          ctx.arc(px, py, isPlayerMatch ? 24 : 18, 0, Math.PI * 2);
+          ctx.fillStyle = isPlayerMatch ? "rgba(16, 185, 129, 0.40)" : "rgba(56, 189, 248, 0.20)";
+          ctx.fill();
+
+          // Dashed Target Ring
+          ctx.beginPath();
+          ctx.arc(px, py, isPlayerMatch ? 24 : 18, 0, Math.PI * 2);
+          ctx.setLineDash([4, 4]);
+          ctx.strokeStyle = isPlayerMatch ? "#10b981" : "#38bdf8";
+          ctx.lineWidth = isPlayerMatch ? 3 : 1.5;
+          ctx.stroke();
+          ctx.setLineDash([]);
+
+          // Role Label
+          ctx.fillStyle = isPlayerMatch ? "#10b981" : "#94a3b8";
+          ctx.font = isPlayerMatch ? "bold 12px sans-serif" : "10px sans-serif";
+          ctx.textAlign = "center";
+          ctx.fillText(posData.label, px, py - (isPlayerMatch ? 28 : 22));
+        });
+      }
+
+      // 2. Draw Floating Player Head Badge (Position + Number + Name)
+      if (showTags && currentMode === "player" && ROSTER_POSITIONS[currentJersey]) {
+        const pInfo = ROSTER_POSITIONS[currentJersey];
+        // Dynamic center anchor (or shift focus)
+        const badgeX = w * 0.48;
+        const badgeY = h * 0.40;
+
+        // Glowing Spotlight Ring at feet
+        ctx.beginPath();
+        ctx.ellipse(badgeX, badgeY + 45, 32, 14, 0, 0, Math.PI * 2);
+        ctx.fillStyle = "rgba(250, 204, 21, 0.35)";
+        ctx.fill();
+        ctx.strokeStyle = "#facc15";
+        ctx.lineWidth = 2.5;
+        ctx.stroke();
+
+        // Badge Container over head
+        const labelText = `#${currentJersey} (${pInfo.pos}) ${pInfo.name}`;
+        ctx.font = "bold 13px sans-serif";
+        const textWidth = ctx.measureText(labelText).width;
+        
+        ctx.fillStyle = "rgba(15, 23, 42, 0.85)";
+        ctx.strokeStyle = "#facc15";
+        ctx.lineWidth = 2;
+        ctx.beginPath();
+        ctx.roundRect(badgeX - (textWidth / 2) - 8, badgeY - 26, textWidth + 16, 26, 6);
+        ctx.fill();
+        ctx.stroke();
+
+        // Badge Text
+        ctx.fillStyle = "#facc15";
+        ctx.textAlign = "center";
+        ctx.fillText(labelText, badgeX, badgeY - 9);
+
+        // Arrow linking current player to Ghost Target (if system is on)
+        if (showGhosts && activeSystemTemplate !== "none" && BASELINE_SYSTEMS[activeSystemTemplate]) {
+          const sys = BASELINE_SYSTEMS[activeSystemTemplate];
+          const targetCoord = sys.positions[pInfo.pos] || sys.positions["C"];
+          if (targetCoord) {
+            const tx = targetCoord.x * w;
+            const ty = targetCoord.y * h;
+
+            ctx.beginPath();
+            ctx.setLineDash([5, 5]);
+            ctx.moveTo(badgeX, badgeY + 30);
+            ctx.lineTo(tx, ty);
+            ctx.strokeStyle = "#10b981";
+            ctx.lineWidth = 2;
+            ctx.stroke();
+            ctx.setLineDash([]);
+          }
+        }
+      }
+
+      // Re-apply freehand drawings from history
+      drawHistory.forEach(imgData => {
+        ctx.putImageData(imgData, 0, 0);
+      });
+    }
+
+    // --- 4. VIEW SWITCHER ---
     function switchViewMode(mode) {
       currentMode = mode;
       const coachWrapper = document.getElementById('coach-category-wrapper');
@@ -656,13 +872,14 @@
       }
 
       resizeCanvas();
+      redrawCanvasLayers();
     }
 
     function renderActiveView() {
       switchViewMode(currentMode);
     }
 
-    // --- 4. DATA & APP INIT ---
+    // --- 5. DATA & APP INIT ---
     function initApp() {
       canvas = document.getElementById('telestrator-canvas');
       if (canvas) ctx = canvas.getContext('2d');
@@ -753,7 +970,7 @@
       document.getElementById('metric-saves').innerText = `${a.goalie_saves} (${a.save_pct})`;
     }
 
-    // --- 5. COACH TACTICAL CLIPS ---
+    // --- 6. COACH TACTICAL CLIPS ---
     function changeTacticalCategory(cat) {
       activeCategory = cat;
       loadCoachingClips();
@@ -855,16 +1072,18 @@
       }
     }
 
-    // --- 6. PLAYER SHIFTS VIEW ---
+    // --- 7. PLAYER SHIFTS & SPOTLIGHT VIEW ---
     function selectFromRoster(val) {
       if (!val) return;
       currentJersey = val;
       loadPlayerShifts();
+      redrawCanvasLayers();
     }
 
     function loadPlayerShifts() {
       if (!currentGame) return;
       const player = (currentGame.players || {})[currentJersey];
+      const pRoster = ROSTER_POSITIONS[currentJersey];
       const container = document.getElementById('clips-stream-container');
       const countEl = document.getElementById('clip-strip-count');
       const titleEl = document.getElementById('clip-strip-title');
@@ -874,12 +1093,13 @@
         return;
       }
 
-      document.getElementById('player-title').innerText = `#${currentJersey} ${player.name || ''} Shift Breakdown`;
+      const posLabel = pRoster ? `(${pRoster.pos})` : "";
+      document.getElementById('player-title').innerText = `#${currentJersey} ${posLabel} ${player.name || ''} Shift Breakdown`;
       document.getElementById('stat-toi').innerText = player.total_ice_time;
       document.getElementById('stat-speed').innerText = player.top_speed;
       document.getElementById('stat-shifts').innerText = player.shifts_count;
       document.getElementById('stat-avg-shift').innerText = player.avg_shift_len;
-      if (titleEl) titleEl.innerText = `#${currentJersey} ${player.name || ''} Shifts`;
+      if (titleEl) titleEl.innerText = `#${currentJersey} ${posLabel} ${player.name || ''} Shifts`;
 
       currentShiftsArray = player.shifts || [];
       activeShiftIndex = -1;
@@ -917,7 +1137,7 @@
               ▶️ Play Shift
             </button>
             ${isCoach ? `
-              <button onclick="toggleStarClip({gameId: '${currentGame.id}', gameTitle: '${currentGame.title}', title: '#${currentJersey} - Shift ${s.id}', start: ${s.start}, end: ${s.end}, duration: ${s.duration}})" 
+              <button onclick="toggleStarClip({gameId: '${currentGame.id}', gameTitle: '${currentGame.title}', title: '#${currentJersey} (${posLabel}) - Shift ${s.id}', start: ${s.start}, end: ${s.end}, duration: ${s.duration}})" 
                       class="px-2 py-1.5 rounded bg-slate-800 hover:bg-slate-700 cursor-pointer ${isStarred ? 'text-amber-400 font-bold' : 'text-slate-400'}">
                 ${isStarred ? '★' : '☆'}
               </button>
@@ -929,6 +1149,8 @@
         `;
         container.appendChild(card);
       });
+
+      redrawCanvasLayers();
     }
 
     function playPlayerShift(idx) {
@@ -941,9 +1163,10 @@
       if (activeCard) activeCard.classList.add('ring-2', 'ring-blue-500');
 
       playTimestamp(shift.start, `Shift ${shift.id} (${shift.duration}s)`);
+      redrawCanvasLayers();
     }
 
-    // --- 7. SCHEDULE GRID ---
+    // --- 8. SCHEDULE GRID & FILM ROOM ---
     function renderScheduleDashboard() {
       const grid = document.getElementById('games-grid');
       if (!grid) return;
@@ -965,7 +1188,8 @@
           </button>
         `;
         card.onclick = () => {
-          document.getElementById('game-select').value = g.id;
+          const select = document.getElementById('game-select');
+          if (select) select.value = g.id;
           loadGame(g.id);
           switchViewMode('coaches');
         };
@@ -973,7 +1197,6 @@
       });
     }
 
-    // --- 8. TEAM FILM ROOM ---
     function renderFilmRoom() {
       const container = document.getElementById('clips-stream-container');
       const countEl = document.getElementById('clip-strip-count');
@@ -1024,7 +1247,6 @@
       renderActiveView();
     }
 
-    // --- 9. CLIP EDITING & TRIMMING ---
     function openEditClipModal(catKey, index) {
       activeEditCategory = catKey;
       activeEditIndex = index;
@@ -1061,11 +1283,12 @@
       }
     }
 
-    // --- 10. TACTICAL CHALKBOARD ENGINE ---
+    // --- 9. TACTICAL CHALKBOARD ENGINE ---
     function setupTelestrator() {
       window.addEventListener('resize', () => {
         resizeCanvas();
         if (currentStage === 'whiteboard') renderRinkBackground();
+        redrawCanvasLayers();
       });
       resizeCanvas();
 
@@ -1089,7 +1312,7 @@
         }
 
         if (currentTool === 'marker') {
-          const markerName = prompt("Tigers Player (#23, D1, F1):", "#23");
+          const markerName = prompt("Tigers Player (#23, D1, F1):", `#${currentJersey}`);
           if (markerName) {
             saveCanvasState();
             ctx.fillStyle = drawColor;
@@ -1213,7 +1436,10 @@
     }
 
     function undoDraw() {
-      if (ctx && drawHistory.length > 0) ctx.putImageData(drawHistory.pop(), 0, 0);
+      if (drawHistory.length > 0) {
+        drawHistory.pop();
+        redrawCanvasLayers();
+      }
     }
 
     function resizeCanvas() {
@@ -1248,11 +1474,11 @@
 
     function setDrawColor(c) { drawColor = c; }
     function clearCanvas() { 
-      if (ctx && canvas) ctx.clearRect(0, 0, canvas.width, canvas.height); 
       drawHistory = []; 
+      redrawCanvasLayers();
     }
 
-    // --- 11. AUTO-PLAY BINGE ENGINE ---
+    // --- 10. AUTO-PLAY BINGE ENGINE ---
     function startAutoPlayMonitor() {
       setInterval(() => {
         const toggle = document.getElementById('autoplay-toggle');
@@ -1264,7 +1490,7 @@
       }, 250);
     }
 
-    // --- 12. SHARING & UTILS ---
+    // --- 11. SHARING & UTILS ---
     function openShareModal(title, start, end) {
       pendingShareData = { title, start, end, url: `${window.location.origin}${window.location.pathname}?game=${currentGame.id}&start=${Math.floor(start)}` };
       document.getElementById('share-modal-title').innerText = title;
