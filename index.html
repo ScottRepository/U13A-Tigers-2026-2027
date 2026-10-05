@@ -8,7 +8,7 @@
   <style>
     #telestrator-canvas { touch-action: none; }
     
-    /* Native select fixes: prevent white focus box and ensure readability across all browsers */
+    /* Global Select Dropdown Dark Theme Enforcements */
     select, select:focus, select:active, select:hover {
       background-color: #0f172a !important;
       color: #f8fafc !important;
@@ -70,57 +70,107 @@
     </div>
   </div>
 
-  <!-- ================= CLIP EDIT MODAL ================= -->
-  <div id="edit-clip-modal" class="fixed inset-0 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4 z-50 hidden">
-    <div class="bg-slate-800 border border-slate-700 p-6 rounded-2xl max-w-sm w-full shadow-2xl">
-      <div class="flex justify-between items-center mb-3">
-        <h3 class="text-sm font-bold text-yellow-400">✂️ Edit Clip Timing & Details</h3>
-        <button onclick="closeEditModal()" class="text-slate-400 hover:text-white text-xl font-bold cursor-pointer">&times;</button>
+  <!-- ================= FEATURE OVERVIEW / HELP MODAL ================= -->
+  <div id="overview-modal" class="fixed inset-0 bg-black/85 backdrop-blur-sm flex items-center justify-center p-4 z-50 hidden">
+    <div class="bg-slate-900 border border-slate-700 p-6 rounded-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto shadow-2xl space-y-4">
+      <div class="flex justify-between items-center border-b border-slate-800 pb-3">
+        <h2 class="text-lg font-black text-tigersGold flex items-center gap-2">
+          <span>📖</span> U13A Tigers Coaching Hub Guide
+        </h2>
+        <button onclick="closeOverviewModal()" class="text-slate-400 hover:text-white text-2xl font-bold cursor-pointer">&times;</button>
       </div>
-      <div class="space-y-3 text-xs">
-        <div>
-          <label class="block text-slate-400 mb-1">Description:</label>
-          <input id="edit-clip-desc" type="text" class="w-full bg-slate-900 border border-slate-600 rounded px-2.5 py-1.5 text-white font-semibold">
+
+      <div class="space-y-3 text-xs text-slate-300 leading-relaxed">
+        <div class="bg-slate-950 p-3 rounded-xl border border-slate-800">
+          <h3 class="font-bold text-yellow-400 text-sm mb-1">📽️ 1. Tactical Film & Categorized Clips</h3>
+          <p>Use the <strong class="text-white">Category</strong> dropdown to jump between Defensive Zone breakouts, Offensive Zone setups, Powerplays, and Penalty Kills. Use the <strong class="text-amber-400">🔥 High-Action</strong> toggle to filter down to prime scoring chances and critical defensive stops.</p>
         </div>
-        <div class="grid grid-cols-2 gap-2">
-          <div>
-            <label class="block text-slate-400 mb-1">Start (sec):</label>
-            <input id="edit-clip-start" type="number" class="w-full bg-slate-900 border border-slate-600 rounded px-2.5 py-1.5 text-white font-mono">
-          </div>
-          <div>
-            <label class="block text-slate-400 mb-1">End (sec):</label>
-            <input id="edit-clip-end" type="number" class="w-full bg-slate-900 border border-slate-600 rounded px-2.5 py-1.5 text-white font-mono">
-          </div>
+
+        <div class="bg-slate-950 p-3 rounded-xl border border-slate-800">
+          <h3 class="font-bold text-cyan-400 text-sm mb-1">📐 2. Hockey Canada Baseline Systems & Ghost Targets</h3>
+          <p>Select any playbook model from the <strong class="text-white">System</strong> dropdown (e.g. <em>D-Zone Breakout</em>, <em>Box-and-One House</em>, <em>1-2-2 Left Wing Lock</em>, or <em>1-3-1 Powerplay</em>). Translucent <strong class="text-emerald-400">👻 Target Spots</strong> will appear on the ice to show where players should be positioned during that set play.</p>
         </div>
-        <div class="flex items-center gap-2 pt-1">
-          <input type="checkbox" id="edit-clip-suggested" class="rounded bg-slate-900 border-slate-600 text-amber-500 cursor-pointer">
-          <label for="edit-clip-suggested" class="text-slate-300 cursor-pointer">🔥 Tag as Suggested High Action</label>
+
+        <div class="bg-slate-950 p-3 rounded-xl border border-slate-800">
+          <h3 class="font-bold text-purple-400 text-sm mb-1">🎨 3. Interactive Chalkboard & 2D Whiteboard</h3>
+          <p>Click <strong class="text-purple-300">Draw on Screen</strong> or switch to the <strong class="text-purple-300">Rink Whiteboard</strong> mode. Drawing automatically freezes the video. Click <strong class="text-red-400">❌ Opponent</strong> to instantly place an opposing skater, or <strong class="text-amber-400">⭕ Tigers Dot</strong> to stamp an Aurora player (F1, F2, D1, etc.) on the ice without any popup delays.</p>
         </div>
-        <div class="flex gap-2 pt-2">
-          <button onclick="saveClipEdit()" class="flex-1 py-2 bg-emerald-600 hover:bg-emerald-500 rounded font-bold text-white transition cursor-pointer">Save Changes</button>
-          <button onclick="deleteCurrentClip()" class="px-3 py-2 bg-rose-700 hover:bg-rose-600 rounded font-bold text-white transition cursor-pointer">Delete</button>
+
+        <div class="bg-slate-950 p-3 rounded-xl border border-slate-800">
+          <h3 class="font-bold text-emerald-400 text-sm mb-1">⏱️ 4. Player Shifts & Binge Mode</h3>
+          <p>Switch to <strong class="text-white">Player Mode</strong> and select any jersey number to inspect individual ice time, shift duration discipline (<span class="text-emerald-400">● &le;45s Fast</span>, <span class="text-amber-400">● 46-60s OK</span>, <span class="text-rose-400">● &gt;60s Long</span>), and toggle <strong class="text-blue-400">Auto-Play All Shifts</strong> to binge a player's ice time back-to-back.</p>
         </div>
+
+        <div class="bg-slate-950 p-3 rounded-xl border border-slate-800">
+          <h3 class="font-bold text-blue-400 text-sm mb-1">📅 5. TeamSnap Match Info</h3>
+          <p>Whenever you select a game, the banner beneath the film player displays the official arena, location address with Google Maps directions, start time, home/away status, and jersey color.</p>
+        </div>
+      </div>
+
+      <div class="pt-3 border-t border-slate-800 flex justify-between items-center">
+        <button onclick="openFeedbackModal()" class="text-xs text-yellow-400 hover:underline flex items-center gap-1 font-semibold">
+          💬 Have a suggestion or found a bug? Let us know
+        </button>
+        <button onclick="closeOverviewModal()" class="px-4 py-2 bg-blue-600 hover:bg-blue-500 text-white font-bold rounded-lg text-xs cursor-pointer">
+          Got It, Let's Watch Film
+        </button>
       </div>
     </div>
   </div>
 
-  <!-- ================= SHARE MODAL ================= -->
-  <div id="share-modal" class="fixed inset-0 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4 z-50 hidden">
-    <div class="bg-slate-800 border border-slate-700 p-6 rounded-2xl max-w-md w-full shadow-2xl">
-      <div class="flex justify-between items-center mb-4">
-        <h3 class="text-lg font-bold text-yellow-400" id="share-modal-title">Share Clip</h3>
-        <button onclick="closeShareModal()" class="text-slate-400 hover:text-white text-2xl font-bold cursor-pointer">&times;</button>
+  <!-- ================= SUBMIT FEEDBACK & BUG REPORT MODAL ================= -->
+  <div id="feedback-modal" class="fixed inset-0 bg-black/85 backdrop-blur-sm flex items-center justify-center p-4 z-50 hidden">
+    <div class="bg-slate-900 border border-slate-700 p-6 rounded-2xl max-w-md w-full shadow-2xl space-y-3">
+      <div class="flex justify-between items-center border-b border-slate-800 pb-2">
+        <h3 class="text-sm font-bold text-yellow-400 flex items-center gap-2">
+          <span>💬</span> Submit Note or Report a Bug
+        </h3>
+        <button onclick="closeFeedbackModal()" class="text-slate-400 hover:text-white text-xl font-bold cursor-pointer">&times;</button>
       </div>
-      <p class="text-xs text-slate-300 mb-4" id="share-modal-desc">Share this hockey moment with coaches, players, or parents.</p>
-      <div class="grid grid-cols-2 gap-3 mb-5">
-        <button onclick="shareToWhatsApp()" class="flex items-center justify-center gap-2 p-3 rounded-lg bg-emerald-600 hover:bg-emerald-500 font-bold text-xs text-white transition cursor-pointer">💬 WhatsApp</button>
-        <button onclick="shareNativeMobile()" class="flex items-center justify-center gap-2 p-3 rounded-lg bg-gradient-to-r from-purple-500 to-pink-500 hover:opacity-90 font-bold text-xs text-white transition cursor-pointer">📸 Mobile / Social</button>
-        <button onclick="shareToFacebook()" class="flex items-center justify-center gap-2 p-3 rounded-lg bg-blue-700 hover:bg-blue-600 font-bold text-xs text-white transition cursor-pointer">📘 Facebook</button>
-        <button onclick="shareToEmail()" class="flex items-center justify-center gap-2 p-3 rounded-lg bg-slate-700 hover:bg-slate-600 font-bold text-xs text-white transition cursor-pointer">✉️ Email</button>
-      </div>
-      <div class="border-t border-slate-700 pt-4 flex gap-2">
-        <input id="share-url-input" type="text" readonly class="w-full bg-slate-900 border border-slate-700 rounded px-2.5 py-1 text-xs text-slate-300 font-mono">
-        <button onclick="copyShareUrl()" class="px-3 py-1 bg-blue-600 text-xs font-bold rounded text-white hover:bg-blue-500 cursor-pointer">Copy</button>
+
+      <p class="text-xs text-slate-300">Spot a clip timing issue, a mislabeled play, or have a tactical note for the coaches? Submitting here includes the exact play and timestamp.</p>
+
+      <div class="space-y-2 text-xs">
+        <div>
+          <label class="block text-slate-400 mb-1">Your Name & Role:</label>
+          <input id="feedback-name" type="text" placeholder="e.g. Coach Scott / Parent #23" class="w-full bg-slate-950 border border-slate-700 rounded px-2.5 py-1.5 text-white">
+        </div>
+
+        <div>
+          <label class="block text-slate-400 mb-1">Issue / Note Type:</label>
+          <select id="feedback-type" class="w-full bg-slate-950 border border-slate-700 rounded px-2.5 py-1.5 text-white">
+            <option value="Clip Error / Bad Timestamp">Clip Error / Wrong Timestamp</option>
+            <option value="Mislabeled Play (PP/PK/EV)">Mislabeled Play (PP / PK / Even Strength)</option>
+            <option value="Player Tracking / Shift Time">Player Shift Tracking Note</option>
+            <option value="Video Playback / Site Bug">Site Bug / Playback Issue</option>
+            <option value="Tactical Coaching Idea">Tactical Coaching Idea</option>
+          </select>
+        </div>
+
+        <div class="grid grid-cols-2 gap-2 bg-slate-950 p-2 rounded border border-slate-800 font-mono text-[11px]">
+          <div>
+            <span class="text-slate-500 block">Game:</span>
+            <span id="feedback-game-label" class="text-slate-300 font-bold truncate block">-</span>
+          </div>
+          <div>
+            <span class="text-slate-500 block">Current Timestamp:</span>
+            <span id="feedback-time-label" class="text-amber-400 font-bold block">0:00</span>
+          </div>
+        </div>
+
+        <div>
+          <label class="block text-slate-400 mb-1">Details / What needs fixing:</label>
+          <textarea id="feedback-text" rows="3" placeholder="Describe what you see or what needs adjustment..." class="w-full bg-slate-950 border border-slate-700 rounded px-2.5 py-1.5 text-white"></textarea>
+        </div>
+
+        <div class="flex gap-2 pt-2">
+          <button onclick="sendFeedbackEmail()" class="flex-1 py-2 bg-blue-600 hover:bg-blue-500 font-bold rounded text-white flex items-center justify-center gap-1 cursor-pointer">
+            ✉️ Submit via Email
+          </button>
+          <button onclick="copyFeedbackText()" class="px-3 py-2 bg-slate-800 hover:bg-slate-700 font-bold rounded text-slate-200 cursor-pointer" title="Copy to clipboard for WhatsApp or TeamSnap">
+            📋 Copy
+          </button>
+        </div>
       </div>
     </div>
   </div>
@@ -137,7 +187,7 @@
     <header class="bg-slate-900/95 border border-slate-800 rounded-2xl p-3 shadow-xl backdrop-blur-md">
       <div class="flex flex-col lg:flex-row items-stretch lg:items-center justify-between gap-3">
         
-        <!-- Logo & Role -->
+        <!-- Logo, Overview Guide & Role -->
         <div class="flex items-center justify-between lg:justify-start gap-3">
           <div class="flex items-center gap-2">
             <span class="text-2xl">🏒</span>
@@ -147,6 +197,9 @@
             </div>
           </div>
           <div class="flex items-center gap-1.5">
+            <button onclick="openOverviewModal()" class="text-[10px] bg-slate-800 hover:bg-blue-600 text-yellow-400 hover:text-white px-2.5 py-1 rounded border border-slate-700 font-bold cursor-pointer transition flex items-center gap-1">
+              📖 Hub Guide
+            </button>
             <span id="role-badge" class="px-2 py-0.5 rounded text-[10px] font-bold bg-slate-800 text-slate-300 border border-slate-700">Parent View</span>
             <button onclick="promptSwitchRole()" class="text-[10px] bg-slate-800 hover:bg-slate-700 text-blue-400 px-2.5 py-1 rounded border border-slate-700 font-semibold cursor-pointer transition">
               🔄 Switch Role / Log Out
@@ -154,7 +207,7 @@
           </div>
         </div>
 
-        <!-- Dropdowns Suite (Dark bg styling locked) -->
+        <!-- Dropdowns Suite -->
         <div class="flex flex-wrap items-center gap-2 text-xs">
           <!-- Game Select -->
           <div class="flex items-center gap-1 bg-slate-900 px-2.5 py-1.5 rounded-lg border border-slate-800">
@@ -173,17 +226,23 @@
             </select>
           </div>
 
-          <!-- Coach Tactical Category -->
+          <!-- Category Select (Special Teams separated from 5v5) -->
           <div id="coach-category-wrapper" class="flex items-center gap-1 bg-slate-900 px-2.5 py-1.5 rounded-lg border border-slate-800">
             <span class="text-slate-400 text-[10px] uppercase font-bold">Category:</span>
             <select id="category-select" onchange="changeTacticalCategory(this.value)" class="bg-slate-900 text-emerald-400 font-bold focus:outline-none cursor-pointer text-xs border-0">
-              <option value="powerplay">⚡ Powerplay (PP) Advantage (5v4)</option>
-              <option value="penalty_kill">🛡️ Penalty Kill (PK) Box (4v5)</option>
-              <option value="defensive_zone">🔴 Defensive Zone Sequences (5v5)</option>
-              <option value="offensive_zone">🟢 Offensive Zone Sequences (5v5)</option>
-              <option value="neutral_zone">⚪ Neutral Zone Transitions (5v5)</option>
-              <option value="goal_highlights">🚨 Goals Scored</option>
-              <option value="goalie_saves">🧤 Goalie Big Saves</option>
+              <optgroup label="Special Teams Advantage">
+                <option value="powerplay">⚡ Powerplay (PP) Advantage (5v4)</option>
+                <option value="penalty_kill">🛡️ Penalty Kill (PK) Box (4v5)</option>
+              </optgroup>
+              <optgroup label="Even Strength (5-on-5)">
+                <option value="defensive_zone">🔴 Defensive Zone Sequences</option>
+                <option value="offensive_zone">🟢 Offensive Zone Sequences</option>
+                <option value="neutral_zone">⚪ Neutral Zone Transitions</option>
+              </optgroup>
+              <optgroup label="Game Action Highlights">
+                <option value="goal_highlights">🚨 Goals Scored</option>
+                <option value="goalie_saves">🧤 Goalie Big Saves</option>
+              </optgroup>
             </select>
           </div>
 
@@ -192,27 +251,10 @@
             <span class="text-slate-400 text-[10px] uppercase font-bold">Player:</span>
             <select id="roster-select" onchange="selectFromRoster(this.value)" class="bg-slate-900 text-yellow-400 font-bold focus:outline-none cursor-pointer text-xs border-0">
               <option value="">-- Choose Player --</option>
-              <option value="23">#23 (C) Easton Carpentier</option>
-              <option value="10">#10 (RW) Arjun Manjunath</option>
-              <option value="76">#76 (LD) Matt Davis</option>
-              <option value="13">#13 (C) Matthew Hart</option>
-              <option value="16">#16 (LW) Joshua Liu</option>
-              <option value="21">#21 (RD) Caleb Irgengioro-Wu</option>
-              <option value="27">#27 (LW) Alen Fazlic</option>
-              <option value="88">#88 (RW) Roy Chen</option>
-              <option value="9">#9 (LD) Oliver Patterson</option>
-              <option value="7">#7 (F) Maxwell Dey</option>
-              <option value="5">#5 (RD) Nathan Zhao</option>
-              <option value="18">#18 (F) Nathan Carinci</option>
-              <option value="11">#11 (F) Andrew Bichay</option>
-              <option value="28">#28 (D) Ross Elley</option>
-              <option value="3">#3 (D) Stewart Dolmage</option>
-              <option value="97">#97 (G) Hudson Millar</option>
-              <option value="98">#98 (G) Hudson Barfitt</option>
             </select>
           </div>
 
-          <!-- Hockey Canada System Baseline Selector -->
+          <!-- Hockey Canada Systems -->
           <div class="flex items-center gap-1 bg-slate-900 px-2.5 py-1.5 rounded-lg border border-slate-800">
             <span class="text-slate-400 text-[10px] uppercase font-bold">System:</span>
             <select id="system-template-select" onchange="changeSystemTemplate(this.value)" class="bg-slate-900 text-cyan-400 font-bold focus:outline-none cursor-pointer text-xs border-0">
@@ -248,11 +290,34 @@
       </div>
     </header>
 
+    <!-- TEAMSNAP MATCH INFO BANNER (Populates whenever a game is selected) -->
+    <div id="teamsnap-banner" class="bg-slate-900 border border-slate-800 rounded-xl px-4 py-2 text-xs flex flex-wrap items-center justify-between gap-3 shadow-md">
+      <div class="flex flex-wrap items-center gap-4">
+        <div class="flex items-center gap-1.5">
+          <span class="text-amber-400 font-bold">📅</span>
+          <span id="ts-datetime" class="font-semibold text-slate-200">Saturday, Oct 3, 2026 • 2:15 PM</span>
+        </div>
+        <div class="flex items-center gap-1.5">
+          <span class="text-blue-400 font-bold">📍</span>
+          <a id="ts-arena-link" href="#" target="_blank" class="text-blue-400 hover:underline font-bold flex items-center gap-1">
+            <span id="ts-arena">Caledon East Community Complex</span> ↗
+          </a>
+        </div>
+        <div class="flex items-center gap-2">
+          <span id="ts-homeaway" class="px-2 py-0.5 rounded text-[10px] font-bold bg-slate-800 text-slate-300 border border-slate-700">Away</span>
+          <span id="ts-jersey" class="text-slate-400 text-[11px]">Jersey: <strong>White</strong></span>
+        </div>
+      </div>
+      <button onclick="openFeedbackModal()" class="text-xs text-yellow-400 hover:text-white flex items-center gap-1 font-semibold cursor-pointer">
+        💬 Report Clip Issue / Note
+      </button>
+    </div>
+
     <!-- COACHING DISCLAIMER BANNER -->
     <div class="bg-slate-900/70 border border-slate-800/80 rounded-xl px-3 py-1.5 flex items-center justify-between text-[11px] text-slate-400">
       <div class="flex items-center gap-1.5">
         <span class="text-blue-400 text-xs">💡</span>
-        <span><strong>Coaching Disclaimer:</strong> Visual positioning lines reflect standard Hockey Canada minor hockey models. Coaches may teach custom adjustments.</span>
+        <span><strong>Coaching Disclaimer:</strong> Positioning templates follow Hockey Canada baseline models. Coaches may teach adjustments.</span>
       </div>
       <div class="flex items-center gap-2">
         <label class="flex items-center gap-1 cursor-pointer">
@@ -277,14 +342,14 @@
         <canvas id="telestrator-canvas" class="absolute inset-0 w-full h-full pointer-events-none z-20"></canvas>
       </div>
 
-      <!-- TACTICAL CHALKBOARD TOOLBAR (No Popups!) -->
+      <!-- TACTICAL CHALKBOARD TOOLBAR (Instant Zero-Popup Stamping) -->
       <div id="draw-tools" class="hidden p-2.5 bg-slate-950/95 rounded-xl border border-purple-500/60 flex flex-wrap items-center justify-between gap-2 text-xs backdrop-blur-md">
         <div class="flex flex-wrap items-center gap-1.5">
           <span class="text-purple-400 font-black text-[11px] uppercase tracking-wider mr-1">Chalkboard:</span>
           <button onclick="setTool('pen')" id="tool-pen" class="px-2.5 py-1 rounded bg-purple-600 text-white font-bold cursor-pointer">✏️ Pen</button>
           <button onclick="setTool('arrow')" id="tool-arrow" class="px-2.5 py-1 rounded bg-slate-800 text-slate-300 hover:text-white font-semibold cursor-pointer">➡️ Arrow</button>
           
-          <!-- Instant Tigers Dot with Selector -->
+          <!-- Instant Tigers Dot with Toolbar Selector -->
           <div class="flex items-center rounded border border-slate-700 overflow-hidden bg-slate-800">
             <button onclick="setTool('marker')" id="tool-marker" class="px-2 py-1 text-slate-300 hover:text-white font-semibold cursor-pointer">⭕ Tigers Dot</button>
             <select id="tigers-stamp-label" class="bg-slate-900 text-amber-400 font-bold px-1.5 py-1 border-l border-slate-700 text-xs">
@@ -298,7 +363,7 @@
             </select>
           </div>
 
-          <!-- Instant Opponent X -->
+          <!-- Instant Opponent X Stamp (No Popup!) -->
           <button onclick="setTool('opponent')" id="tool-opponent" class="px-2.5 py-1 rounded bg-slate-800 text-slate-300 hover:text-white font-semibold cursor-pointer">❌ Opponent (X)</button>
           <button onclick="setTool('puck')" id="tool-puck" class="px-2.5 py-1 rounded bg-slate-800 text-slate-300 hover:text-white font-semibold cursor-pointer">🏒 Puck</button>
           <button onclick="setTool('text')" id="tool-text" class="px-2.5 py-1 rounded bg-slate-800 text-slate-300 hover:text-white font-semibold cursor-pointer">📝 Text</button>
@@ -481,7 +546,7 @@
       },
       pk_diamond: {
         name: "Penalty Kill (Diamond / Wedge+1)",
-        description: "4v5 Short-Handed: High pressure on the umbrella point, mid-flank containment, net house locked",
+        description: "4v5 Short-Handed: High pressure on the point, mid-wall flank containment, net-front locked",
         positions: {
           "F1": { x: 0.34, y: 0.50, label: "High Point Pressure" },
           "F2": { x: 0.24, y: 0.30, label: "Left Mid-Wall" },
@@ -515,7 +580,7 @@
       },
       dzone_sagging: {
         name: "D-Zone Sagging Zone Coverage",
-        description: "Overloading the strong puck side while weak side winger sags into the mid-slot house",
+        description: "Overloading puck side while weak side winger sags into the mid-slot house",
         positions: {
           "LD": { x: 0.14, y: 0.80, label: "Strong Corner LD" },
           "C":  { x: 0.18, y: 0.70, label: "Puck Support C" },
@@ -697,6 +762,62 @@
       }
     }
 
+    function openOverviewModal() { document.getElementById('overview-modal').classList.remove('hidden'); }
+    function closeOverviewModal() { document.getElementById('overview-modal').classList.add('hidden'); }
+
+    function openFeedbackModal() {
+      const currTime = (isPlayerReady && ytPlayer && ytPlayer.getCurrentTime) ? Math.floor(ytPlayer.getCurrentTime()) : 0;
+      const min = Math.floor(currTime / 60);
+      const sec = Math.floor(currTime % 60).toString().padStart(2, '0');
+      document.getElementById('feedback-time-label').innerText = `${min}:${sec}`;
+      document.getElementById('feedback-game-label').innerText = currentGame ? currentGame.title : "Active Game";
+      document.getElementById('feedback-text').value = '';
+      document.getElementById('feedback-modal').classList.remove('hidden');
+    }
+
+    function closeFeedbackModal() { document.getElementById('feedback-modal').classList.add('hidden'); }
+
+    function sendFeedbackEmail() {
+      const name = document.getElementById('feedback-name').value.trim() || "Team Member";
+      const type = document.getElementById('feedback-type').value;
+      const note = document.getElementById('feedback-text').value.trim();
+      const time = document.getElementById('feedback-time-label').innerText;
+      const game = document.getElementById('feedback-game-label').innerText;
+
+      if (!note) {
+        alert("Please enter a short description before submitting.");
+        return;
+      }
+
+      const subject = encodeURIComponent(`[U13A Tigers Film Hub] ${type} (${time})`);
+      const body = encodeURIComponent(
+        `From: ${name}\n` +
+        `Game: ${game}\n` +
+        `Timestamp: ${time}\n` +
+        `Category: ${activeCategory}\n` +
+        `Type: ${type}\n\n` +
+        `Notes / Details:\n${note}\n\n` +
+        `-- Sent from U13A Tigers Video Hub`
+      );
+
+      // Opens default email client (Gmail, Apple Mail, Outlook) pre-filled
+      window.location.href = `mailto:scott.carpentier@gmail.com?subject=${subject}&body=${body}`;
+      closeFeedbackModal();
+      showToast("✉️ Opening email client...");
+    }
+
+    function copyFeedbackText() {
+      const name = document.getElementById('feedback-name').value.trim() || "Team Member";
+      const type = document.getElementById('feedback-type').value;
+      const note = document.getElementById('feedback-text').value.trim();
+      const time = document.getElementById('feedback-time-label').innerText;
+      const game = document.getElementById('feedback-game-label').innerText;
+
+      const summary = `🏒 *U13A Tigers Note*\nFrom: ${name}\nGame: ${game}\nTime: ${time}\nIssue: ${type}\nDetails: ${note}`;
+      navigator.clipboard.writeText(summary);
+      showToast("📋 Report copied to clipboard!");
+    }
+
     function setStageMode(mode) {
       currentStage = mode;
       const videoBox = document.getElementById('video-container');
@@ -831,7 +952,7 @@
       redrawCanvasLayers();
       const sys = BASELINE_SYSTEMS[systemKey];
       if (sys) {
-        showToast(`📐 System: ${sys.name}`);
+        showToast(`📐 Loaded: ${sys.name}`);
         document.getElementById('current-shift-status').innerText = `System Active: ${sys.name} - ${sys.description}`;
       } else {
         document.getElementById('current-shift-status').innerText = `System template cleared.`;
@@ -925,7 +1046,6 @@
         }
       }
 
-      // 3. Saved Chalkboard Drawings
       drawSavedChalkboard();
     }
 
@@ -980,6 +1100,8 @@
       rinkCanvas = document.getElementById('rink-bg-canvas');
       if (rinkCanvas) rinkCtx = rinkCanvas.getContext('2d');
 
+      initRosterDropdown();
+
       fetch('games_library.json')
         .then(res => res.json())
         .then(data => {
@@ -992,11 +1114,23 @@
           }
         })
         .catch(err => {
-          console.warn("Loading default game library:", err);
+          console.warn("Using baseline library:", err);
         });
 
       setupTelestrator();
       startAutoPlayMonitor();
+    }
+
+    function initRosterDropdown() {
+      const sel = document.getElementById('roster-select');
+      if (!sel) return;
+      sel.innerHTML = '<option value="">-- Choose Player --</option>';
+      Object.entries(ROSTER_POSITIONS).forEach(([num, p]) => {
+        const opt = document.createElement('option');
+        opt.value = num;
+        opt.innerText = `#${num} (${p.pos}) ${p.name}`;
+        sel.appendChild(opt);
+      });
     }
 
     function populateGameSelect() {
@@ -1026,8 +1160,28 @@
         initYouTubePlayer(currentGame.youtube_video_id);
       }
 
+      renderTeamSnapBanner();
       renderAnalyticsSummary();
       renderActiveView();
+    }
+
+    function renderTeamSnapBanner() {
+      if (!currentGame) return;
+      const ts = currentGame.teamsnap || {
+        date: "Saturday, Oct 3, 2026",
+        time: "2:15 PM EDT",
+        arena: "Caledon East Community Complex - Pad 1",
+        address: "6215 Old Church Rd, Caledon East, ON L7C 1J7",
+        maps_url: "https://maps.google.com/?q=6215+Old+Church+Rd+Caledon+East+ON",
+        home_away: "Away",
+        jersey: "White (Away)"
+      };
+
+      document.getElementById('ts-datetime').innerText = `${ts.date} • ${ts.time}`;
+      document.getElementById('ts-arena').innerText = ts.arena;
+      document.getElementById('ts-arena-link').href = ts.maps_url || `https://maps.google.com/?q=${encodeURIComponent(ts.address || ts.arena)}`;
+      document.getElementById('ts-homeaway').innerText = ts.home_away || "League Game";
+      document.getElementById('ts-jersey').innerHTML = `Jersey: <strong>${ts.jersey || 'White'}</strong>`;
     }
 
     function onYouTubeIframeAPIReady() {
@@ -1401,7 +1555,6 @@
           return;
         }
 
-        // Instant Tigers Dot with Toolbar Role
         if (currentTool === 'marker') {
           const role = document.getElementById('tigers-stamp-label')?.value || "T";
           drawHistory.push([{ tool: 'marker', x: startX, y: startY, label: role, color: drawColor }]);
@@ -1409,14 +1562,12 @@
           return;
         }
 
-        // Instant Opponent Stamp - No Prompt
         if (currentTool === 'opponent') {
           drawHistory.push([{ tool: 'opponent', x: startX, y: startY }]);
           redrawCanvasLayers();
           return;
         }
 
-        // Instant Puck Stamp
         if (currentTool === 'puck') {
           drawHistory.push([{ tool: 'puck', x: startX, y: startY }]);
           redrawCanvasLayers();
