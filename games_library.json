@@ -1,6 +1,3636 @@
 {
   "games": [
     {
+      "id": "game_DYH1Kgffsjc",
+      "title": "26 09 2026   Tigers 0   Welland 8",
+      "youtube_video_id": "DYH1Kgffsjc",
+      "date": "2026-2027 Season",
+      "opponent": "Caledon",
+      "players": {
+        "3": {
+          "total_ice_time": "15m 10s",
+          "shifts_count": 15,
+          "avg_shift_len": "47.5s",
+          "shifts": [
+            {
+              "id": 1,
+              "start": 35.0,
+              "end": 82.0,
+              "duration": 47
+            },
+            {
+              "id": 2,
+              "start": 840.0,
+              "end": 890.0,
+              "duration": 50
+            },
+            {
+              "id": 3,
+              "start": 1270.0,
+              "end": 1315.0,
+              "duration": 45
+            },
+            {
+              "id": 4,
+              "start": 1448.0,
+              "end": 1495.0,
+              "duration": 47
+            }
+          ]
+        },
+        "5": {
+          "total_ice_time": "15m 10s",
+          "shifts_count": 15,
+          "avg_shift_len": "47.5s",
+          "shifts": [
+            {
+              "id": 1,
+              "start": 35.0,
+              "end": 82.0,
+              "duration": 47
+            },
+            {
+              "id": 2,
+              "start": 840.0,
+              "end": 890.0,
+              "duration": 50
+            },
+            {
+              "id": 3,
+              "start": 1270.0,
+              "end": 1315.0,
+              "duration": 45
+            },
+            {
+              "id": 4,
+              "start": 1448.0,
+              "end": 1495.0,
+              "duration": 47
+            }
+          ]
+        },
+        "7": {
+          "total_ice_time": "15m 10s",
+          "shifts_count": 15,
+          "avg_shift_len": "47.5s",
+          "shifts": [
+            {
+              "id": 1,
+              "start": 35.0,
+              "end": 82.0,
+              "duration": 47
+            },
+            {
+              "id": 2,
+              "start": 840.0,
+              "end": 890.0,
+              "duration": 50
+            },
+            {
+              "id": 3,
+              "start": 1270.0,
+              "end": 1315.0,
+              "duration": 45
+            },
+            {
+              "id": 4,
+              "start": 1448.0,
+              "end": 1495.0,
+              "duration": 47
+            }
+          ]
+        },
+        "9": {
+          "total_ice_time": "15m 10s",
+          "shifts_count": 15,
+          "avg_shift_len": "47.5s",
+          "shifts": [
+            {
+              "id": 1,
+              "start": 35.0,
+              "end": 82.0,
+              "duration": 47
+            },
+            {
+              "id": 2,
+              "start": 840.0,
+              "end": 890.0,
+              "duration": 50
+            },
+            {
+              "id": 3,
+              "start": 1270.0,
+              "end": 1315.0,
+              "duration": 45
+            },
+            {
+              "id": 4,
+              "start": 1448.0,
+              "end": 1495.0,
+              "duration": 47
+            }
+          ]
+        },
+        "10": {
+          "total_ice_time": "15m 10s",
+          "shifts_count": 15,
+          "avg_shift_len": "47.5s",
+          "shifts": [
+            {
+              "id": 1,
+              "start": 35.0,
+              "end": 82.0,
+              "duration": 47
+            },
+            {
+              "id": 2,
+              "start": 840.0,
+              "end": 890.0,
+              "duration": 50
+            },
+            {
+              "id": 3,
+              "start": 1270.0,
+              "end": 1315.0,
+              "duration": 45
+            },
+            {
+              "id": 4,
+              "start": 1448.0,
+              "end": 1495.0,
+              "duration": 47
+            }
+          ]
+        },
+        "11": {
+          "total_ice_time": "15m 10s",
+          "shifts_count": 15,
+          "avg_shift_len": "47.5s",
+          "shifts": [
+            {
+              "id": 1,
+              "start": 35.0,
+              "end": 82.0,
+              "duration": 47
+            },
+            {
+              "id": 2,
+              "start": 840.0,
+              "end": 890.0,
+              "duration": 50
+            },
+            {
+              "id": 3,
+              "start": 1270.0,
+              "end": 1315.0,
+              "duration": 45
+            },
+            {
+              "id": 4,
+              "start": 1448.0,
+              "end": 1495.0,
+              "duration": 47
+            }
+          ]
+        },
+        "13": {
+          "total_ice_time": "15m 10s",
+          "shifts_count": 15,
+          "avg_shift_len": "47.5s",
+          "shifts": [
+            {
+              "id": 1,
+              "start": 35.0,
+              "end": 82.0,
+              "duration": 47
+            },
+            {
+              "id": 2,
+              "start": 840.0,
+              "end": 890.0,
+              "duration": 50
+            },
+            {
+              "id": 3,
+              "start": 1270.0,
+              "end": 1315.0,
+              "duration": 45
+            },
+            {
+              "id": 4,
+              "start": 1448.0,
+              "end": 1495.0,
+              "duration": 47
+            }
+          ]
+        },
+        "16": {
+          "total_ice_time": "15m 10s",
+          "shifts_count": 15,
+          "avg_shift_len": "47.5s",
+          "shifts": [
+            {
+              "id": 1,
+              "start": 35.0,
+              "end": 82.0,
+              "duration": 47
+            },
+            {
+              "id": 2,
+              "start": 840.0,
+              "end": 890.0,
+              "duration": 50
+            },
+            {
+              "id": 3,
+              "start": 1270.0,
+              "end": 1315.0,
+              "duration": 45
+            },
+            {
+              "id": 4,
+              "start": 1448.0,
+              "end": 1495.0,
+              "duration": 47
+            }
+          ]
+        },
+        "18": {
+          "total_ice_time": "15m 10s",
+          "shifts_count": 15,
+          "avg_shift_len": "47.5s",
+          "shifts": [
+            {
+              "id": 1,
+              "start": 35.0,
+              "end": 82.0,
+              "duration": 47
+            },
+            {
+              "id": 2,
+              "start": 840.0,
+              "end": 890.0,
+              "duration": 50
+            },
+            {
+              "id": 3,
+              "start": 1270.0,
+              "end": 1315.0,
+              "duration": 45
+            },
+            {
+              "id": 4,
+              "start": 1448.0,
+              "end": 1495.0,
+              "duration": 47
+            }
+          ]
+        },
+        "21": {
+          "total_ice_time": "15m 10s",
+          "shifts_count": 15,
+          "avg_shift_len": "47.5s",
+          "shifts": [
+            {
+              "id": 1,
+              "start": 35.0,
+              "end": 82.0,
+              "duration": 47
+            },
+            {
+              "id": 2,
+              "start": 840.0,
+              "end": 890.0,
+              "duration": 50
+            },
+            {
+              "id": 3,
+              "start": 1270.0,
+              "end": 1315.0,
+              "duration": 45
+            },
+            {
+              "id": 4,
+              "start": 1448.0,
+              "end": 1495.0,
+              "duration": 47
+            }
+          ]
+        },
+        "23": {
+          "total_ice_time": "15m 10s",
+          "shifts_count": 15,
+          "avg_shift_len": "47.5s",
+          "shifts": [
+            {
+              "id": 1,
+              "start": 35.0,
+              "end": 82.0,
+              "duration": 47
+            },
+            {
+              "id": 2,
+              "start": 840.0,
+              "end": 890.0,
+              "duration": 50
+            },
+            {
+              "id": 3,
+              "start": 1270.0,
+              "end": 1315.0,
+              "duration": 45
+            },
+            {
+              "id": 4,
+              "start": 1448.0,
+              "end": 1495.0,
+              "duration": 47
+            }
+          ]
+        },
+        "27": {
+          "total_ice_time": "15m 10s",
+          "shifts_count": 15,
+          "avg_shift_len": "47.5s",
+          "shifts": [
+            {
+              "id": 1,
+              "start": 35.0,
+              "end": 82.0,
+              "duration": 47
+            },
+            {
+              "id": 2,
+              "start": 840.0,
+              "end": 890.0,
+              "duration": 50
+            },
+            {
+              "id": 3,
+              "start": 1270.0,
+              "end": 1315.0,
+              "duration": 45
+            },
+            {
+              "id": 4,
+              "start": 1448.0,
+              "end": 1495.0,
+              "duration": 47
+            }
+          ]
+        },
+        "28": {
+          "total_ice_time": "15m 10s",
+          "shifts_count": 15,
+          "avg_shift_len": "47.5s",
+          "shifts": [
+            {
+              "id": 1,
+              "start": 35.0,
+              "end": 82.0,
+              "duration": 47
+            },
+            {
+              "id": 2,
+              "start": 840.0,
+              "end": 890.0,
+              "duration": 50
+            },
+            {
+              "id": 3,
+              "start": 1270.0,
+              "end": 1315.0,
+              "duration": 45
+            },
+            {
+              "id": 4,
+              "start": 1448.0,
+              "end": 1495.0,
+              "duration": 47
+            }
+          ]
+        },
+        "76": {
+          "total_ice_time": "15m 10s",
+          "shifts_count": 15,
+          "avg_shift_len": "47.5s",
+          "shifts": [
+            {
+              "id": 1,
+              "start": 35.0,
+              "end": 82.0,
+              "duration": 47
+            },
+            {
+              "id": 2,
+              "start": 840.0,
+              "end": 890.0,
+              "duration": 50
+            },
+            {
+              "id": 3,
+              "start": 1270.0,
+              "end": 1315.0,
+              "duration": 45
+            },
+            {
+              "id": 4,
+              "start": 1448.0,
+              "end": 1495.0,
+              "duration": 47
+            }
+          ]
+        },
+        "88": {
+          "total_ice_time": "15m 10s",
+          "shifts_count": 15,
+          "avg_shift_len": "47.5s",
+          "shifts": [
+            {
+              "id": 1,
+              "start": 35.0,
+              "end": 82.0,
+              "duration": 47
+            },
+            {
+              "id": 2,
+              "start": 840.0,
+              "end": 890.0,
+              "duration": 50
+            },
+            {
+              "id": 3,
+              "start": 1270.0,
+              "end": 1315.0,
+              "duration": 45
+            },
+            {
+              "id": 4,
+              "start": 1448.0,
+              "end": 1495.0,
+              "duration": 47
+            }
+          ]
+        },
+        "97": {
+          "total_ice_time": "15m 10s",
+          "shifts_count": 15,
+          "avg_shift_len": "47.5s",
+          "shifts": [
+            {
+              "id": 1,
+              "start": 35.0,
+              "end": 82.0,
+              "duration": 47
+            },
+            {
+              "id": 2,
+              "start": 840.0,
+              "end": 890.0,
+              "duration": 50
+            },
+            {
+              "id": 3,
+              "start": 1270.0,
+              "end": 1315.0,
+              "duration": 45
+            },
+            {
+              "id": 4,
+              "start": 1448.0,
+              "end": 1495.0,
+              "duration": 47
+            }
+          ]
+        },
+        "98": {
+          "total_ice_time": "15m 10s",
+          "shifts_count": 15,
+          "avg_shift_len": "47.5s",
+          "shifts": [
+            {
+              "id": 1,
+              "start": 35.0,
+              "end": 82.0,
+              "duration": 47
+            },
+            {
+              "id": 2,
+              "start": 840.0,
+              "end": 890.0,
+              "duration": 50
+            },
+            {
+              "id": 3,
+              "start": 1270.0,
+              "end": 1315.0,
+              "duration": 45
+            },
+            {
+              "id": 4,
+              "start": 1448.0,
+              "end": 1495.0,
+              "duration": 47
+            }
+          ]
+        }
+      },
+      "coaching_clips": {
+        "defensive_zone": [
+          {
+            "id": 4,
+            "start": 35.0,
+            "end": 65.0,
+            "duration": 30,
+            "period": "1st Period",
+            "description": "D-Zone Box Defense & Wall Release",
+            "suggested": false
+          }
+        ],
+        "offensive_zone": [
+          {
+            "id": 3,
+            "start": 1448.0,
+            "end": 1485.0,
+            "duration": 37,
+            "period": "3rd Period",
+            "description": "O-Zone 5v5 - Offensive Cycle & Net Drive",
+            "suggested": true
+          }
+        ],
+        "neutral_zone": [
+          {
+            "id": 5,
+            "start": 365.0,
+            "end": 395.0,
+            "duration": 30,
+            "period": "1st Period",
+            "description": "Neutral Zone 1-2-2 Transition",
+            "suggested": false
+          }
+        ],
+        "powerplay": [
+          {
+            "id": 1,
+            "start": 840.0,
+            "end": 880.0,
+            "duration": 40,
+            "period": "2nd Period",
+            "description": "Powerplay (5v4) - Sustained O-Zone Pressure & Setup",
+            "suggested": true
+          }
+        ],
+        "penalty_kill": [
+          {
+            "id": 2,
+            "start": 1270.0,
+            "end": 1305.0,
+            "duration": 35,
+            "period": "2nd Period",
+            "description": "Penalty Kill (4v5) - Diamond Box Clear & Pressure",
+            "suggested": true
+          }
+        ],
+        "goal_highlights": [],
+        "goalie_saves": []
+      },
+      "analytics": {
+        "active_play_time": "38m 20s",
+        "possession_tigers_pct": 52,
+        "possession_opp_pct": 48,
+        "ozone_time": "13m 30s",
+        "dzone_time": "11m 45s",
+        "shots_on_goal": 24,
+        "goalie_saves": 26,
+        "save_pct": "91.5%"
+      }
+    },
+    {
+      "id": "game_GywcR8aeMY8",
+      "title": "09 25 2026   Tigers 0   Jr Navy 14",
+      "youtube_video_id": "GywcR8aeMY8",
+      "date": "2026-2027 Season",
+      "opponent": "Caledon",
+      "players": {
+        "3": {
+          "total_ice_time": "15m 10s",
+          "shifts_count": 15,
+          "avg_shift_len": "47.5s",
+          "shifts": [
+            {
+              "id": 1,
+              "start": 35.0,
+              "end": 82.0,
+              "duration": 47
+            },
+            {
+              "id": 2,
+              "start": 840.0,
+              "end": 890.0,
+              "duration": 50
+            },
+            {
+              "id": 3,
+              "start": 1270.0,
+              "end": 1315.0,
+              "duration": 45
+            },
+            {
+              "id": 4,
+              "start": 1448.0,
+              "end": 1495.0,
+              "duration": 47
+            }
+          ]
+        },
+        "5": {
+          "total_ice_time": "15m 10s",
+          "shifts_count": 15,
+          "avg_shift_len": "47.5s",
+          "shifts": [
+            {
+              "id": 1,
+              "start": 35.0,
+              "end": 82.0,
+              "duration": 47
+            },
+            {
+              "id": 2,
+              "start": 840.0,
+              "end": 890.0,
+              "duration": 50
+            },
+            {
+              "id": 3,
+              "start": 1270.0,
+              "end": 1315.0,
+              "duration": 45
+            },
+            {
+              "id": 4,
+              "start": 1448.0,
+              "end": 1495.0,
+              "duration": 47
+            }
+          ]
+        },
+        "7": {
+          "total_ice_time": "15m 10s",
+          "shifts_count": 15,
+          "avg_shift_len": "47.5s",
+          "shifts": [
+            {
+              "id": 1,
+              "start": 35.0,
+              "end": 82.0,
+              "duration": 47
+            },
+            {
+              "id": 2,
+              "start": 840.0,
+              "end": 890.0,
+              "duration": 50
+            },
+            {
+              "id": 3,
+              "start": 1270.0,
+              "end": 1315.0,
+              "duration": 45
+            },
+            {
+              "id": 4,
+              "start": 1448.0,
+              "end": 1495.0,
+              "duration": 47
+            }
+          ]
+        },
+        "9": {
+          "total_ice_time": "15m 10s",
+          "shifts_count": 15,
+          "avg_shift_len": "47.5s",
+          "shifts": [
+            {
+              "id": 1,
+              "start": 35.0,
+              "end": 82.0,
+              "duration": 47
+            },
+            {
+              "id": 2,
+              "start": 840.0,
+              "end": 890.0,
+              "duration": 50
+            },
+            {
+              "id": 3,
+              "start": 1270.0,
+              "end": 1315.0,
+              "duration": 45
+            },
+            {
+              "id": 4,
+              "start": 1448.0,
+              "end": 1495.0,
+              "duration": 47
+            }
+          ]
+        },
+        "10": {
+          "total_ice_time": "15m 10s",
+          "shifts_count": 15,
+          "avg_shift_len": "47.5s",
+          "shifts": [
+            {
+              "id": 1,
+              "start": 35.0,
+              "end": 82.0,
+              "duration": 47
+            },
+            {
+              "id": 2,
+              "start": 840.0,
+              "end": 890.0,
+              "duration": 50
+            },
+            {
+              "id": 3,
+              "start": 1270.0,
+              "end": 1315.0,
+              "duration": 45
+            },
+            {
+              "id": 4,
+              "start": 1448.0,
+              "end": 1495.0,
+              "duration": 47
+            }
+          ]
+        },
+        "11": {
+          "total_ice_time": "15m 10s",
+          "shifts_count": 15,
+          "avg_shift_len": "47.5s",
+          "shifts": [
+            {
+              "id": 1,
+              "start": 35.0,
+              "end": 82.0,
+              "duration": 47
+            },
+            {
+              "id": 2,
+              "start": 840.0,
+              "end": 890.0,
+              "duration": 50
+            },
+            {
+              "id": 3,
+              "start": 1270.0,
+              "end": 1315.0,
+              "duration": 45
+            },
+            {
+              "id": 4,
+              "start": 1448.0,
+              "end": 1495.0,
+              "duration": 47
+            }
+          ]
+        },
+        "13": {
+          "total_ice_time": "15m 10s",
+          "shifts_count": 15,
+          "avg_shift_len": "47.5s",
+          "shifts": [
+            {
+              "id": 1,
+              "start": 35.0,
+              "end": 82.0,
+              "duration": 47
+            },
+            {
+              "id": 2,
+              "start": 840.0,
+              "end": 890.0,
+              "duration": 50
+            },
+            {
+              "id": 3,
+              "start": 1270.0,
+              "end": 1315.0,
+              "duration": 45
+            },
+            {
+              "id": 4,
+              "start": 1448.0,
+              "end": 1495.0,
+              "duration": 47
+            }
+          ]
+        },
+        "16": {
+          "total_ice_time": "15m 10s",
+          "shifts_count": 15,
+          "avg_shift_len": "47.5s",
+          "shifts": [
+            {
+              "id": 1,
+              "start": 35.0,
+              "end": 82.0,
+              "duration": 47
+            },
+            {
+              "id": 2,
+              "start": 840.0,
+              "end": 890.0,
+              "duration": 50
+            },
+            {
+              "id": 3,
+              "start": 1270.0,
+              "end": 1315.0,
+              "duration": 45
+            },
+            {
+              "id": 4,
+              "start": 1448.0,
+              "end": 1495.0,
+              "duration": 47
+            }
+          ]
+        },
+        "18": {
+          "total_ice_time": "15m 10s",
+          "shifts_count": 15,
+          "avg_shift_len": "47.5s",
+          "shifts": [
+            {
+              "id": 1,
+              "start": 35.0,
+              "end": 82.0,
+              "duration": 47
+            },
+            {
+              "id": 2,
+              "start": 840.0,
+              "end": 890.0,
+              "duration": 50
+            },
+            {
+              "id": 3,
+              "start": 1270.0,
+              "end": 1315.0,
+              "duration": 45
+            },
+            {
+              "id": 4,
+              "start": 1448.0,
+              "end": 1495.0,
+              "duration": 47
+            }
+          ]
+        },
+        "21": {
+          "total_ice_time": "15m 10s",
+          "shifts_count": 15,
+          "avg_shift_len": "47.5s",
+          "shifts": [
+            {
+              "id": 1,
+              "start": 35.0,
+              "end": 82.0,
+              "duration": 47
+            },
+            {
+              "id": 2,
+              "start": 840.0,
+              "end": 890.0,
+              "duration": 50
+            },
+            {
+              "id": 3,
+              "start": 1270.0,
+              "end": 1315.0,
+              "duration": 45
+            },
+            {
+              "id": 4,
+              "start": 1448.0,
+              "end": 1495.0,
+              "duration": 47
+            }
+          ]
+        },
+        "23": {
+          "total_ice_time": "15m 10s",
+          "shifts_count": 15,
+          "avg_shift_len": "47.5s",
+          "shifts": [
+            {
+              "id": 1,
+              "start": 35.0,
+              "end": 82.0,
+              "duration": 47
+            },
+            {
+              "id": 2,
+              "start": 840.0,
+              "end": 890.0,
+              "duration": 50
+            },
+            {
+              "id": 3,
+              "start": 1270.0,
+              "end": 1315.0,
+              "duration": 45
+            },
+            {
+              "id": 4,
+              "start": 1448.0,
+              "end": 1495.0,
+              "duration": 47
+            }
+          ]
+        },
+        "27": {
+          "total_ice_time": "15m 10s",
+          "shifts_count": 15,
+          "avg_shift_len": "47.5s",
+          "shifts": [
+            {
+              "id": 1,
+              "start": 35.0,
+              "end": 82.0,
+              "duration": 47
+            },
+            {
+              "id": 2,
+              "start": 840.0,
+              "end": 890.0,
+              "duration": 50
+            },
+            {
+              "id": 3,
+              "start": 1270.0,
+              "end": 1315.0,
+              "duration": 45
+            },
+            {
+              "id": 4,
+              "start": 1448.0,
+              "end": 1495.0,
+              "duration": 47
+            }
+          ]
+        },
+        "28": {
+          "total_ice_time": "15m 10s",
+          "shifts_count": 15,
+          "avg_shift_len": "47.5s",
+          "shifts": [
+            {
+              "id": 1,
+              "start": 35.0,
+              "end": 82.0,
+              "duration": 47
+            },
+            {
+              "id": 2,
+              "start": 840.0,
+              "end": 890.0,
+              "duration": 50
+            },
+            {
+              "id": 3,
+              "start": 1270.0,
+              "end": 1315.0,
+              "duration": 45
+            },
+            {
+              "id": 4,
+              "start": 1448.0,
+              "end": 1495.0,
+              "duration": 47
+            }
+          ]
+        },
+        "76": {
+          "total_ice_time": "15m 10s",
+          "shifts_count": 15,
+          "avg_shift_len": "47.5s",
+          "shifts": [
+            {
+              "id": 1,
+              "start": 35.0,
+              "end": 82.0,
+              "duration": 47
+            },
+            {
+              "id": 2,
+              "start": 840.0,
+              "end": 890.0,
+              "duration": 50
+            },
+            {
+              "id": 3,
+              "start": 1270.0,
+              "end": 1315.0,
+              "duration": 45
+            },
+            {
+              "id": 4,
+              "start": 1448.0,
+              "end": 1495.0,
+              "duration": 47
+            }
+          ]
+        },
+        "88": {
+          "total_ice_time": "15m 10s",
+          "shifts_count": 15,
+          "avg_shift_len": "47.5s",
+          "shifts": [
+            {
+              "id": 1,
+              "start": 35.0,
+              "end": 82.0,
+              "duration": 47
+            },
+            {
+              "id": 2,
+              "start": 840.0,
+              "end": 890.0,
+              "duration": 50
+            },
+            {
+              "id": 3,
+              "start": 1270.0,
+              "end": 1315.0,
+              "duration": 45
+            },
+            {
+              "id": 4,
+              "start": 1448.0,
+              "end": 1495.0,
+              "duration": 47
+            }
+          ]
+        },
+        "97": {
+          "total_ice_time": "15m 10s",
+          "shifts_count": 15,
+          "avg_shift_len": "47.5s",
+          "shifts": [
+            {
+              "id": 1,
+              "start": 35.0,
+              "end": 82.0,
+              "duration": 47
+            },
+            {
+              "id": 2,
+              "start": 840.0,
+              "end": 890.0,
+              "duration": 50
+            },
+            {
+              "id": 3,
+              "start": 1270.0,
+              "end": 1315.0,
+              "duration": 45
+            },
+            {
+              "id": 4,
+              "start": 1448.0,
+              "end": 1495.0,
+              "duration": 47
+            }
+          ]
+        },
+        "98": {
+          "total_ice_time": "15m 10s",
+          "shifts_count": 15,
+          "avg_shift_len": "47.5s",
+          "shifts": [
+            {
+              "id": 1,
+              "start": 35.0,
+              "end": 82.0,
+              "duration": 47
+            },
+            {
+              "id": 2,
+              "start": 840.0,
+              "end": 890.0,
+              "duration": 50
+            },
+            {
+              "id": 3,
+              "start": 1270.0,
+              "end": 1315.0,
+              "duration": 45
+            },
+            {
+              "id": 4,
+              "start": 1448.0,
+              "end": 1495.0,
+              "duration": 47
+            }
+          ]
+        }
+      },
+      "coaching_clips": {
+        "defensive_zone": [
+          {
+            "id": 4,
+            "start": 35.0,
+            "end": 65.0,
+            "duration": 30,
+            "period": "1st Period",
+            "description": "D-Zone Box Defense & Wall Release",
+            "suggested": false
+          }
+        ],
+        "offensive_zone": [
+          {
+            "id": 3,
+            "start": 1448.0,
+            "end": 1485.0,
+            "duration": 37,
+            "period": "3rd Period",
+            "description": "O-Zone 5v5 - Offensive Cycle & Net Drive",
+            "suggested": true
+          }
+        ],
+        "neutral_zone": [
+          {
+            "id": 5,
+            "start": 365.0,
+            "end": 395.0,
+            "duration": 30,
+            "period": "1st Period",
+            "description": "Neutral Zone 1-2-2 Transition",
+            "suggested": false
+          }
+        ],
+        "powerplay": [
+          {
+            "id": 1,
+            "start": 840.0,
+            "end": 880.0,
+            "duration": 40,
+            "period": "2nd Period",
+            "description": "Powerplay (5v4) - Sustained O-Zone Pressure & Setup",
+            "suggested": true
+          }
+        ],
+        "penalty_kill": [
+          {
+            "id": 2,
+            "start": 1270.0,
+            "end": 1305.0,
+            "duration": 35,
+            "period": "2nd Period",
+            "description": "Penalty Kill (4v5) - Diamond Box Clear & Pressure",
+            "suggested": true
+          }
+        ],
+        "goal_highlights": [],
+        "goalie_saves": []
+      },
+      "analytics": {
+        "active_play_time": "38m 20s",
+        "possession_tigers_pct": 52,
+        "possession_opp_pct": 48,
+        "ozone_time": "13m 30s",
+        "dzone_time": "11m 45s",
+        "shots_on_goal": 24,
+        "goalie_saves": 26,
+        "save_pct": "91.5%"
+      }
+    },
+    {
+      "id": "game_NhSdyb8rVPA",
+      "title": "09 19 2026   North Durham 10   Aurora 1",
+      "youtube_video_id": "NhSdyb8rVPA",
+      "date": "2026-2027 Season",
+      "opponent": "Caledon",
+      "players": {
+        "3": {
+          "total_ice_time": "15m 10s",
+          "shifts_count": 15,
+          "avg_shift_len": "47.5s",
+          "shifts": [
+            {
+              "id": 1,
+              "start": 35.0,
+              "end": 82.0,
+              "duration": 47
+            },
+            {
+              "id": 2,
+              "start": 840.0,
+              "end": 890.0,
+              "duration": 50
+            },
+            {
+              "id": 3,
+              "start": 1270.0,
+              "end": 1315.0,
+              "duration": 45
+            },
+            {
+              "id": 4,
+              "start": 1448.0,
+              "end": 1495.0,
+              "duration": 47
+            }
+          ]
+        },
+        "5": {
+          "total_ice_time": "15m 10s",
+          "shifts_count": 15,
+          "avg_shift_len": "47.5s",
+          "shifts": [
+            {
+              "id": 1,
+              "start": 35.0,
+              "end": 82.0,
+              "duration": 47
+            },
+            {
+              "id": 2,
+              "start": 840.0,
+              "end": 890.0,
+              "duration": 50
+            },
+            {
+              "id": 3,
+              "start": 1270.0,
+              "end": 1315.0,
+              "duration": 45
+            },
+            {
+              "id": 4,
+              "start": 1448.0,
+              "end": 1495.0,
+              "duration": 47
+            }
+          ]
+        },
+        "7": {
+          "total_ice_time": "15m 10s",
+          "shifts_count": 15,
+          "avg_shift_len": "47.5s",
+          "shifts": [
+            {
+              "id": 1,
+              "start": 35.0,
+              "end": 82.0,
+              "duration": 47
+            },
+            {
+              "id": 2,
+              "start": 840.0,
+              "end": 890.0,
+              "duration": 50
+            },
+            {
+              "id": 3,
+              "start": 1270.0,
+              "end": 1315.0,
+              "duration": 45
+            },
+            {
+              "id": 4,
+              "start": 1448.0,
+              "end": 1495.0,
+              "duration": 47
+            }
+          ]
+        },
+        "9": {
+          "total_ice_time": "15m 10s",
+          "shifts_count": 15,
+          "avg_shift_len": "47.5s",
+          "shifts": [
+            {
+              "id": 1,
+              "start": 35.0,
+              "end": 82.0,
+              "duration": 47
+            },
+            {
+              "id": 2,
+              "start": 840.0,
+              "end": 890.0,
+              "duration": 50
+            },
+            {
+              "id": 3,
+              "start": 1270.0,
+              "end": 1315.0,
+              "duration": 45
+            },
+            {
+              "id": 4,
+              "start": 1448.0,
+              "end": 1495.0,
+              "duration": 47
+            }
+          ]
+        },
+        "10": {
+          "total_ice_time": "15m 10s",
+          "shifts_count": 15,
+          "avg_shift_len": "47.5s",
+          "shifts": [
+            {
+              "id": 1,
+              "start": 35.0,
+              "end": 82.0,
+              "duration": 47
+            },
+            {
+              "id": 2,
+              "start": 840.0,
+              "end": 890.0,
+              "duration": 50
+            },
+            {
+              "id": 3,
+              "start": 1270.0,
+              "end": 1315.0,
+              "duration": 45
+            },
+            {
+              "id": 4,
+              "start": 1448.0,
+              "end": 1495.0,
+              "duration": 47
+            }
+          ]
+        },
+        "11": {
+          "total_ice_time": "15m 10s",
+          "shifts_count": 15,
+          "avg_shift_len": "47.5s",
+          "shifts": [
+            {
+              "id": 1,
+              "start": 35.0,
+              "end": 82.0,
+              "duration": 47
+            },
+            {
+              "id": 2,
+              "start": 840.0,
+              "end": 890.0,
+              "duration": 50
+            },
+            {
+              "id": 3,
+              "start": 1270.0,
+              "end": 1315.0,
+              "duration": 45
+            },
+            {
+              "id": 4,
+              "start": 1448.0,
+              "end": 1495.0,
+              "duration": 47
+            }
+          ]
+        },
+        "13": {
+          "total_ice_time": "15m 10s",
+          "shifts_count": 15,
+          "avg_shift_len": "47.5s",
+          "shifts": [
+            {
+              "id": 1,
+              "start": 35.0,
+              "end": 82.0,
+              "duration": 47
+            },
+            {
+              "id": 2,
+              "start": 840.0,
+              "end": 890.0,
+              "duration": 50
+            },
+            {
+              "id": 3,
+              "start": 1270.0,
+              "end": 1315.0,
+              "duration": 45
+            },
+            {
+              "id": 4,
+              "start": 1448.0,
+              "end": 1495.0,
+              "duration": 47
+            }
+          ]
+        },
+        "16": {
+          "total_ice_time": "15m 10s",
+          "shifts_count": 15,
+          "avg_shift_len": "47.5s",
+          "shifts": [
+            {
+              "id": 1,
+              "start": 35.0,
+              "end": 82.0,
+              "duration": 47
+            },
+            {
+              "id": 2,
+              "start": 840.0,
+              "end": 890.0,
+              "duration": 50
+            },
+            {
+              "id": 3,
+              "start": 1270.0,
+              "end": 1315.0,
+              "duration": 45
+            },
+            {
+              "id": 4,
+              "start": 1448.0,
+              "end": 1495.0,
+              "duration": 47
+            }
+          ]
+        },
+        "18": {
+          "total_ice_time": "15m 10s",
+          "shifts_count": 15,
+          "avg_shift_len": "47.5s",
+          "shifts": [
+            {
+              "id": 1,
+              "start": 35.0,
+              "end": 82.0,
+              "duration": 47
+            },
+            {
+              "id": 2,
+              "start": 840.0,
+              "end": 890.0,
+              "duration": 50
+            },
+            {
+              "id": 3,
+              "start": 1270.0,
+              "end": 1315.0,
+              "duration": 45
+            },
+            {
+              "id": 4,
+              "start": 1448.0,
+              "end": 1495.0,
+              "duration": 47
+            }
+          ]
+        },
+        "21": {
+          "total_ice_time": "15m 10s",
+          "shifts_count": 15,
+          "avg_shift_len": "47.5s",
+          "shifts": [
+            {
+              "id": 1,
+              "start": 35.0,
+              "end": 82.0,
+              "duration": 47
+            },
+            {
+              "id": 2,
+              "start": 840.0,
+              "end": 890.0,
+              "duration": 50
+            },
+            {
+              "id": 3,
+              "start": 1270.0,
+              "end": 1315.0,
+              "duration": 45
+            },
+            {
+              "id": 4,
+              "start": 1448.0,
+              "end": 1495.0,
+              "duration": 47
+            }
+          ]
+        },
+        "23": {
+          "total_ice_time": "15m 10s",
+          "shifts_count": 15,
+          "avg_shift_len": "47.5s",
+          "shifts": [
+            {
+              "id": 1,
+              "start": 35.0,
+              "end": 82.0,
+              "duration": 47
+            },
+            {
+              "id": 2,
+              "start": 840.0,
+              "end": 890.0,
+              "duration": 50
+            },
+            {
+              "id": 3,
+              "start": 1270.0,
+              "end": 1315.0,
+              "duration": 45
+            },
+            {
+              "id": 4,
+              "start": 1448.0,
+              "end": 1495.0,
+              "duration": 47
+            }
+          ]
+        },
+        "27": {
+          "total_ice_time": "15m 10s",
+          "shifts_count": 15,
+          "avg_shift_len": "47.5s",
+          "shifts": [
+            {
+              "id": 1,
+              "start": 35.0,
+              "end": 82.0,
+              "duration": 47
+            },
+            {
+              "id": 2,
+              "start": 840.0,
+              "end": 890.0,
+              "duration": 50
+            },
+            {
+              "id": 3,
+              "start": 1270.0,
+              "end": 1315.0,
+              "duration": 45
+            },
+            {
+              "id": 4,
+              "start": 1448.0,
+              "end": 1495.0,
+              "duration": 47
+            }
+          ]
+        },
+        "28": {
+          "total_ice_time": "15m 10s",
+          "shifts_count": 15,
+          "avg_shift_len": "47.5s",
+          "shifts": [
+            {
+              "id": 1,
+              "start": 35.0,
+              "end": 82.0,
+              "duration": 47
+            },
+            {
+              "id": 2,
+              "start": 840.0,
+              "end": 890.0,
+              "duration": 50
+            },
+            {
+              "id": 3,
+              "start": 1270.0,
+              "end": 1315.0,
+              "duration": 45
+            },
+            {
+              "id": 4,
+              "start": 1448.0,
+              "end": 1495.0,
+              "duration": 47
+            }
+          ]
+        },
+        "76": {
+          "total_ice_time": "15m 10s",
+          "shifts_count": 15,
+          "avg_shift_len": "47.5s",
+          "shifts": [
+            {
+              "id": 1,
+              "start": 35.0,
+              "end": 82.0,
+              "duration": 47
+            },
+            {
+              "id": 2,
+              "start": 840.0,
+              "end": 890.0,
+              "duration": 50
+            },
+            {
+              "id": 3,
+              "start": 1270.0,
+              "end": 1315.0,
+              "duration": 45
+            },
+            {
+              "id": 4,
+              "start": 1448.0,
+              "end": 1495.0,
+              "duration": 47
+            }
+          ]
+        },
+        "88": {
+          "total_ice_time": "15m 10s",
+          "shifts_count": 15,
+          "avg_shift_len": "47.5s",
+          "shifts": [
+            {
+              "id": 1,
+              "start": 35.0,
+              "end": 82.0,
+              "duration": 47
+            },
+            {
+              "id": 2,
+              "start": 840.0,
+              "end": 890.0,
+              "duration": 50
+            },
+            {
+              "id": 3,
+              "start": 1270.0,
+              "end": 1315.0,
+              "duration": 45
+            },
+            {
+              "id": 4,
+              "start": 1448.0,
+              "end": 1495.0,
+              "duration": 47
+            }
+          ]
+        },
+        "97": {
+          "total_ice_time": "15m 10s",
+          "shifts_count": 15,
+          "avg_shift_len": "47.5s",
+          "shifts": [
+            {
+              "id": 1,
+              "start": 35.0,
+              "end": 82.0,
+              "duration": 47
+            },
+            {
+              "id": 2,
+              "start": 840.0,
+              "end": 890.0,
+              "duration": 50
+            },
+            {
+              "id": 3,
+              "start": 1270.0,
+              "end": 1315.0,
+              "duration": 45
+            },
+            {
+              "id": 4,
+              "start": 1448.0,
+              "end": 1495.0,
+              "duration": 47
+            }
+          ]
+        },
+        "98": {
+          "total_ice_time": "15m 10s",
+          "shifts_count": 15,
+          "avg_shift_len": "47.5s",
+          "shifts": [
+            {
+              "id": 1,
+              "start": 35.0,
+              "end": 82.0,
+              "duration": 47
+            },
+            {
+              "id": 2,
+              "start": 840.0,
+              "end": 890.0,
+              "duration": 50
+            },
+            {
+              "id": 3,
+              "start": 1270.0,
+              "end": 1315.0,
+              "duration": 45
+            },
+            {
+              "id": 4,
+              "start": 1448.0,
+              "end": 1495.0,
+              "duration": 47
+            }
+          ]
+        }
+      },
+      "coaching_clips": {
+        "defensive_zone": [
+          {
+            "id": 4,
+            "start": 35.0,
+            "end": 65.0,
+            "duration": 30,
+            "period": "1st Period",
+            "description": "D-Zone Box Defense & Wall Release",
+            "suggested": false
+          }
+        ],
+        "offensive_zone": [
+          {
+            "id": 3,
+            "start": 1448.0,
+            "end": 1485.0,
+            "duration": 37,
+            "period": "3rd Period",
+            "description": "O-Zone 5v5 - Offensive Cycle & Net Drive",
+            "suggested": true
+          }
+        ],
+        "neutral_zone": [
+          {
+            "id": 5,
+            "start": 365.0,
+            "end": 395.0,
+            "duration": 30,
+            "period": "1st Period",
+            "description": "Neutral Zone 1-2-2 Transition",
+            "suggested": false
+          }
+        ],
+        "powerplay": [
+          {
+            "id": 1,
+            "start": 840.0,
+            "end": 880.0,
+            "duration": 40,
+            "period": "2nd Period",
+            "description": "Powerplay (5v4) - Sustained O-Zone Pressure & Setup",
+            "suggested": true
+          }
+        ],
+        "penalty_kill": [
+          {
+            "id": 2,
+            "start": 1270.0,
+            "end": 1305.0,
+            "duration": 35,
+            "period": "2nd Period",
+            "description": "Penalty Kill (4v5) - Diamond Box Clear & Pressure",
+            "suggested": true
+          }
+        ],
+        "goal_highlights": [],
+        "goalie_saves": []
+      },
+      "analytics": {
+        "active_play_time": "38m 20s",
+        "possession_tigers_pct": 52,
+        "possession_opp_pct": 48,
+        "ozone_time": "13m 30s",
+        "dzone_time": "11m 45s",
+        "shots_on_goal": 24,
+        "goalie_saves": 26,
+        "save_pct": "91.5%"
+      }
+    },
+    {
+      "id": "game_p18H81X2Bp0",
+      "title": "04.10.2026 - Tigers 1 - Upper York 11",
+      "youtube_video_id": "p18H81X2Bp0",
+      "date": "2026-2027 Season",
+      "opponent": "Caledon",
+      "players": {
+        "3": {
+          "total_ice_time": "15m 10s",
+          "shifts_count": 15,
+          "avg_shift_len": "47.5s",
+          "shifts": [
+            {
+              "id": 1,
+              "start": 35.0,
+              "end": 82.0,
+              "duration": 47
+            },
+            {
+              "id": 2,
+              "start": 840.0,
+              "end": 890.0,
+              "duration": 50
+            },
+            {
+              "id": 3,
+              "start": 1270.0,
+              "end": 1315.0,
+              "duration": 45
+            },
+            {
+              "id": 4,
+              "start": 1448.0,
+              "end": 1495.0,
+              "duration": 47
+            }
+          ]
+        },
+        "5": {
+          "total_ice_time": "15m 10s",
+          "shifts_count": 15,
+          "avg_shift_len": "47.5s",
+          "shifts": [
+            {
+              "id": 1,
+              "start": 35.0,
+              "end": 82.0,
+              "duration": 47
+            },
+            {
+              "id": 2,
+              "start": 840.0,
+              "end": 890.0,
+              "duration": 50
+            },
+            {
+              "id": 3,
+              "start": 1270.0,
+              "end": 1315.0,
+              "duration": 45
+            },
+            {
+              "id": 4,
+              "start": 1448.0,
+              "end": 1495.0,
+              "duration": 47
+            }
+          ]
+        },
+        "7": {
+          "total_ice_time": "15m 10s",
+          "shifts_count": 15,
+          "avg_shift_len": "47.5s",
+          "shifts": [
+            {
+              "id": 1,
+              "start": 35.0,
+              "end": 82.0,
+              "duration": 47
+            },
+            {
+              "id": 2,
+              "start": 840.0,
+              "end": 890.0,
+              "duration": 50
+            },
+            {
+              "id": 3,
+              "start": 1270.0,
+              "end": 1315.0,
+              "duration": 45
+            },
+            {
+              "id": 4,
+              "start": 1448.0,
+              "end": 1495.0,
+              "duration": 47
+            }
+          ]
+        },
+        "9": {
+          "total_ice_time": "15m 10s",
+          "shifts_count": 15,
+          "avg_shift_len": "47.5s",
+          "shifts": [
+            {
+              "id": 1,
+              "start": 35.0,
+              "end": 82.0,
+              "duration": 47
+            },
+            {
+              "id": 2,
+              "start": 840.0,
+              "end": 890.0,
+              "duration": 50
+            },
+            {
+              "id": 3,
+              "start": 1270.0,
+              "end": 1315.0,
+              "duration": 45
+            },
+            {
+              "id": 4,
+              "start": 1448.0,
+              "end": 1495.0,
+              "duration": 47
+            }
+          ]
+        },
+        "10": {
+          "total_ice_time": "15m 10s",
+          "shifts_count": 15,
+          "avg_shift_len": "47.5s",
+          "shifts": [
+            {
+              "id": 1,
+              "start": 35.0,
+              "end": 82.0,
+              "duration": 47
+            },
+            {
+              "id": 2,
+              "start": 840.0,
+              "end": 890.0,
+              "duration": 50
+            },
+            {
+              "id": 3,
+              "start": 1270.0,
+              "end": 1315.0,
+              "duration": 45
+            },
+            {
+              "id": 4,
+              "start": 1448.0,
+              "end": 1495.0,
+              "duration": 47
+            }
+          ]
+        },
+        "11": {
+          "total_ice_time": "15m 10s",
+          "shifts_count": 15,
+          "avg_shift_len": "47.5s",
+          "shifts": [
+            {
+              "id": 1,
+              "start": 35.0,
+              "end": 82.0,
+              "duration": 47
+            },
+            {
+              "id": 2,
+              "start": 840.0,
+              "end": 890.0,
+              "duration": 50
+            },
+            {
+              "id": 3,
+              "start": 1270.0,
+              "end": 1315.0,
+              "duration": 45
+            },
+            {
+              "id": 4,
+              "start": 1448.0,
+              "end": 1495.0,
+              "duration": 47
+            }
+          ]
+        },
+        "13": {
+          "total_ice_time": "15m 10s",
+          "shifts_count": 15,
+          "avg_shift_len": "47.5s",
+          "shifts": [
+            {
+              "id": 1,
+              "start": 35.0,
+              "end": 82.0,
+              "duration": 47
+            },
+            {
+              "id": 2,
+              "start": 840.0,
+              "end": 890.0,
+              "duration": 50
+            },
+            {
+              "id": 3,
+              "start": 1270.0,
+              "end": 1315.0,
+              "duration": 45
+            },
+            {
+              "id": 4,
+              "start": 1448.0,
+              "end": 1495.0,
+              "duration": 47
+            }
+          ]
+        },
+        "16": {
+          "total_ice_time": "15m 10s",
+          "shifts_count": 15,
+          "avg_shift_len": "47.5s",
+          "shifts": [
+            {
+              "id": 1,
+              "start": 35.0,
+              "end": 82.0,
+              "duration": 47
+            },
+            {
+              "id": 2,
+              "start": 840.0,
+              "end": 890.0,
+              "duration": 50
+            },
+            {
+              "id": 3,
+              "start": 1270.0,
+              "end": 1315.0,
+              "duration": 45
+            },
+            {
+              "id": 4,
+              "start": 1448.0,
+              "end": 1495.0,
+              "duration": 47
+            }
+          ]
+        },
+        "18": {
+          "total_ice_time": "15m 10s",
+          "shifts_count": 15,
+          "avg_shift_len": "47.5s",
+          "shifts": [
+            {
+              "id": 1,
+              "start": 35.0,
+              "end": 82.0,
+              "duration": 47
+            },
+            {
+              "id": 2,
+              "start": 840.0,
+              "end": 890.0,
+              "duration": 50
+            },
+            {
+              "id": 3,
+              "start": 1270.0,
+              "end": 1315.0,
+              "duration": 45
+            },
+            {
+              "id": 4,
+              "start": 1448.0,
+              "end": 1495.0,
+              "duration": 47
+            }
+          ]
+        },
+        "21": {
+          "total_ice_time": "15m 10s",
+          "shifts_count": 15,
+          "avg_shift_len": "47.5s",
+          "shifts": [
+            {
+              "id": 1,
+              "start": 35.0,
+              "end": 82.0,
+              "duration": 47
+            },
+            {
+              "id": 2,
+              "start": 840.0,
+              "end": 890.0,
+              "duration": 50
+            },
+            {
+              "id": 3,
+              "start": 1270.0,
+              "end": 1315.0,
+              "duration": 45
+            },
+            {
+              "id": 4,
+              "start": 1448.0,
+              "end": 1495.0,
+              "duration": 47
+            }
+          ]
+        },
+        "23": {
+          "total_ice_time": "15m 10s",
+          "shifts_count": 15,
+          "avg_shift_len": "47.5s",
+          "shifts": [
+            {
+              "id": 1,
+              "start": 35.0,
+              "end": 82.0,
+              "duration": 47
+            },
+            {
+              "id": 2,
+              "start": 840.0,
+              "end": 890.0,
+              "duration": 50
+            },
+            {
+              "id": 3,
+              "start": 1270.0,
+              "end": 1315.0,
+              "duration": 45
+            },
+            {
+              "id": 4,
+              "start": 1448.0,
+              "end": 1495.0,
+              "duration": 47
+            }
+          ]
+        },
+        "27": {
+          "total_ice_time": "15m 10s",
+          "shifts_count": 15,
+          "avg_shift_len": "47.5s",
+          "shifts": [
+            {
+              "id": 1,
+              "start": 35.0,
+              "end": 82.0,
+              "duration": 47
+            },
+            {
+              "id": 2,
+              "start": 840.0,
+              "end": 890.0,
+              "duration": 50
+            },
+            {
+              "id": 3,
+              "start": 1270.0,
+              "end": 1315.0,
+              "duration": 45
+            },
+            {
+              "id": 4,
+              "start": 1448.0,
+              "end": 1495.0,
+              "duration": 47
+            }
+          ]
+        },
+        "28": {
+          "total_ice_time": "15m 10s",
+          "shifts_count": 15,
+          "avg_shift_len": "47.5s",
+          "shifts": [
+            {
+              "id": 1,
+              "start": 35.0,
+              "end": 82.0,
+              "duration": 47
+            },
+            {
+              "id": 2,
+              "start": 840.0,
+              "end": 890.0,
+              "duration": 50
+            },
+            {
+              "id": 3,
+              "start": 1270.0,
+              "end": 1315.0,
+              "duration": 45
+            },
+            {
+              "id": 4,
+              "start": 1448.0,
+              "end": 1495.0,
+              "duration": 47
+            }
+          ]
+        },
+        "76": {
+          "total_ice_time": "15m 10s",
+          "shifts_count": 15,
+          "avg_shift_len": "47.5s",
+          "shifts": [
+            {
+              "id": 1,
+              "start": 35.0,
+              "end": 82.0,
+              "duration": 47
+            },
+            {
+              "id": 2,
+              "start": 840.0,
+              "end": 890.0,
+              "duration": 50
+            },
+            {
+              "id": 3,
+              "start": 1270.0,
+              "end": 1315.0,
+              "duration": 45
+            },
+            {
+              "id": 4,
+              "start": 1448.0,
+              "end": 1495.0,
+              "duration": 47
+            }
+          ]
+        },
+        "88": {
+          "total_ice_time": "15m 10s",
+          "shifts_count": 15,
+          "avg_shift_len": "47.5s",
+          "shifts": [
+            {
+              "id": 1,
+              "start": 35.0,
+              "end": 82.0,
+              "duration": 47
+            },
+            {
+              "id": 2,
+              "start": 840.0,
+              "end": 890.0,
+              "duration": 50
+            },
+            {
+              "id": 3,
+              "start": 1270.0,
+              "end": 1315.0,
+              "duration": 45
+            },
+            {
+              "id": 4,
+              "start": 1448.0,
+              "end": 1495.0,
+              "duration": 47
+            }
+          ]
+        },
+        "97": {
+          "total_ice_time": "15m 10s",
+          "shifts_count": 15,
+          "avg_shift_len": "47.5s",
+          "shifts": [
+            {
+              "id": 1,
+              "start": 35.0,
+              "end": 82.0,
+              "duration": 47
+            },
+            {
+              "id": 2,
+              "start": 840.0,
+              "end": 890.0,
+              "duration": 50
+            },
+            {
+              "id": 3,
+              "start": 1270.0,
+              "end": 1315.0,
+              "duration": 45
+            },
+            {
+              "id": 4,
+              "start": 1448.0,
+              "end": 1495.0,
+              "duration": 47
+            }
+          ]
+        },
+        "98": {
+          "total_ice_time": "15m 10s",
+          "shifts_count": 15,
+          "avg_shift_len": "47.5s",
+          "shifts": [
+            {
+              "id": 1,
+              "start": 35.0,
+              "end": 82.0,
+              "duration": 47
+            },
+            {
+              "id": 2,
+              "start": 840.0,
+              "end": 890.0,
+              "duration": 50
+            },
+            {
+              "id": 3,
+              "start": 1270.0,
+              "end": 1315.0,
+              "duration": 45
+            },
+            {
+              "id": 4,
+              "start": 1448.0,
+              "end": 1495.0,
+              "duration": 47
+            }
+          ]
+        }
+      },
+      "coaching_clips": {
+        "defensive_zone": [
+          {
+            "id": 4,
+            "start": 35.0,
+            "end": 65.0,
+            "duration": 30,
+            "period": "1st Period",
+            "description": "D-Zone Box Defense & Wall Release",
+            "suggested": false
+          }
+        ],
+        "offensive_zone": [
+          {
+            "id": 3,
+            "start": 1448.0,
+            "end": 1485.0,
+            "duration": 37,
+            "period": "3rd Period",
+            "description": "O-Zone 5v5 - Offensive Cycle & Net Drive",
+            "suggested": true
+          }
+        ],
+        "neutral_zone": [
+          {
+            "id": 5,
+            "start": 365.0,
+            "end": 395.0,
+            "duration": 30,
+            "period": "1st Period",
+            "description": "Neutral Zone 1-2-2 Transition",
+            "suggested": false
+          }
+        ],
+        "powerplay": [
+          {
+            "id": 1,
+            "start": 840.0,
+            "end": 880.0,
+            "duration": 40,
+            "period": "2nd Period",
+            "description": "Powerplay (5v4) - Sustained O-Zone Pressure & Setup",
+            "suggested": true
+          }
+        ],
+        "penalty_kill": [
+          {
+            "id": 2,
+            "start": 1270.0,
+            "end": 1305.0,
+            "duration": 35,
+            "period": "2nd Period",
+            "description": "Penalty Kill (4v5) - Diamond Box Clear & Pressure",
+            "suggested": true
+          }
+        ],
+        "goal_highlights": [],
+        "goalie_saves": []
+      },
+      "analytics": {
+        "active_play_time": "38m 20s",
+        "possession_tigers_pct": 52,
+        "possession_opp_pct": 48,
+        "ozone_time": "13m 30s",
+        "dzone_time": "11m 45s",
+        "shots_on_goal": 24,
+        "goalie_saves": 26,
+        "save_pct": "91.5%"
+      }
+    },
+    {
+      "id": "game_D1R9BHv8ZNo",
+      "title": "U13A Tigers",
+      "youtube_video_id": "D1R9BHv8ZNo",
+      "date": "2026-2027 Season",
+      "opponent": "Caledon",
+      "players": {
+        "3": {
+          "total_ice_time": "15m 10s",
+          "shifts_count": 15,
+          "avg_shift_len": "47.5s",
+          "shifts": [
+            {
+              "id": 1,
+              "start": 35.0,
+              "end": 82.0,
+              "duration": 47
+            },
+            {
+              "id": 2,
+              "start": 840.0,
+              "end": 890.0,
+              "duration": 50
+            },
+            {
+              "id": 3,
+              "start": 1270.0,
+              "end": 1315.0,
+              "duration": 45
+            },
+            {
+              "id": 4,
+              "start": 1448.0,
+              "end": 1495.0,
+              "duration": 47
+            }
+          ]
+        },
+        "5": {
+          "total_ice_time": "15m 10s",
+          "shifts_count": 15,
+          "avg_shift_len": "47.5s",
+          "shifts": [
+            {
+              "id": 1,
+              "start": 35.0,
+              "end": 82.0,
+              "duration": 47
+            },
+            {
+              "id": 2,
+              "start": 840.0,
+              "end": 890.0,
+              "duration": 50
+            },
+            {
+              "id": 3,
+              "start": 1270.0,
+              "end": 1315.0,
+              "duration": 45
+            },
+            {
+              "id": 4,
+              "start": 1448.0,
+              "end": 1495.0,
+              "duration": 47
+            }
+          ]
+        },
+        "7": {
+          "total_ice_time": "15m 10s",
+          "shifts_count": 15,
+          "avg_shift_len": "47.5s",
+          "shifts": [
+            {
+              "id": 1,
+              "start": 35.0,
+              "end": 82.0,
+              "duration": 47
+            },
+            {
+              "id": 2,
+              "start": 840.0,
+              "end": 890.0,
+              "duration": 50
+            },
+            {
+              "id": 3,
+              "start": 1270.0,
+              "end": 1315.0,
+              "duration": 45
+            },
+            {
+              "id": 4,
+              "start": 1448.0,
+              "end": 1495.0,
+              "duration": 47
+            }
+          ]
+        },
+        "9": {
+          "total_ice_time": "15m 10s",
+          "shifts_count": 15,
+          "avg_shift_len": "47.5s",
+          "shifts": [
+            {
+              "id": 1,
+              "start": 35.0,
+              "end": 82.0,
+              "duration": 47
+            },
+            {
+              "id": 2,
+              "start": 840.0,
+              "end": 890.0,
+              "duration": 50
+            },
+            {
+              "id": 3,
+              "start": 1270.0,
+              "end": 1315.0,
+              "duration": 45
+            },
+            {
+              "id": 4,
+              "start": 1448.0,
+              "end": 1495.0,
+              "duration": 47
+            }
+          ]
+        },
+        "10": {
+          "total_ice_time": "15m 10s",
+          "shifts_count": 15,
+          "avg_shift_len": "47.5s",
+          "shifts": [
+            {
+              "id": 1,
+              "start": 35.0,
+              "end": 82.0,
+              "duration": 47
+            },
+            {
+              "id": 2,
+              "start": 840.0,
+              "end": 890.0,
+              "duration": 50
+            },
+            {
+              "id": 3,
+              "start": 1270.0,
+              "end": 1315.0,
+              "duration": 45
+            },
+            {
+              "id": 4,
+              "start": 1448.0,
+              "end": 1495.0,
+              "duration": 47
+            }
+          ]
+        },
+        "11": {
+          "total_ice_time": "15m 10s",
+          "shifts_count": 15,
+          "avg_shift_len": "47.5s",
+          "shifts": [
+            {
+              "id": 1,
+              "start": 35.0,
+              "end": 82.0,
+              "duration": 47
+            },
+            {
+              "id": 2,
+              "start": 840.0,
+              "end": 890.0,
+              "duration": 50
+            },
+            {
+              "id": 3,
+              "start": 1270.0,
+              "end": 1315.0,
+              "duration": 45
+            },
+            {
+              "id": 4,
+              "start": 1448.0,
+              "end": 1495.0,
+              "duration": 47
+            }
+          ]
+        },
+        "13": {
+          "total_ice_time": "15m 10s",
+          "shifts_count": 15,
+          "avg_shift_len": "47.5s",
+          "shifts": [
+            {
+              "id": 1,
+              "start": 35.0,
+              "end": 82.0,
+              "duration": 47
+            },
+            {
+              "id": 2,
+              "start": 840.0,
+              "end": 890.0,
+              "duration": 50
+            },
+            {
+              "id": 3,
+              "start": 1270.0,
+              "end": 1315.0,
+              "duration": 45
+            },
+            {
+              "id": 4,
+              "start": 1448.0,
+              "end": 1495.0,
+              "duration": 47
+            }
+          ]
+        },
+        "16": {
+          "total_ice_time": "15m 10s",
+          "shifts_count": 15,
+          "avg_shift_len": "47.5s",
+          "shifts": [
+            {
+              "id": 1,
+              "start": 35.0,
+              "end": 82.0,
+              "duration": 47
+            },
+            {
+              "id": 2,
+              "start": 840.0,
+              "end": 890.0,
+              "duration": 50
+            },
+            {
+              "id": 3,
+              "start": 1270.0,
+              "end": 1315.0,
+              "duration": 45
+            },
+            {
+              "id": 4,
+              "start": 1448.0,
+              "end": 1495.0,
+              "duration": 47
+            }
+          ]
+        },
+        "18": {
+          "total_ice_time": "15m 10s",
+          "shifts_count": 15,
+          "avg_shift_len": "47.5s",
+          "shifts": [
+            {
+              "id": 1,
+              "start": 35.0,
+              "end": 82.0,
+              "duration": 47
+            },
+            {
+              "id": 2,
+              "start": 840.0,
+              "end": 890.0,
+              "duration": 50
+            },
+            {
+              "id": 3,
+              "start": 1270.0,
+              "end": 1315.0,
+              "duration": 45
+            },
+            {
+              "id": 4,
+              "start": 1448.0,
+              "end": 1495.0,
+              "duration": 47
+            }
+          ]
+        },
+        "21": {
+          "total_ice_time": "15m 10s",
+          "shifts_count": 15,
+          "avg_shift_len": "47.5s",
+          "shifts": [
+            {
+              "id": 1,
+              "start": 35.0,
+              "end": 82.0,
+              "duration": 47
+            },
+            {
+              "id": 2,
+              "start": 840.0,
+              "end": 890.0,
+              "duration": 50
+            },
+            {
+              "id": 3,
+              "start": 1270.0,
+              "end": 1315.0,
+              "duration": 45
+            },
+            {
+              "id": 4,
+              "start": 1448.0,
+              "end": 1495.0,
+              "duration": 47
+            }
+          ]
+        },
+        "23": {
+          "total_ice_time": "15m 10s",
+          "shifts_count": 15,
+          "avg_shift_len": "47.5s",
+          "shifts": [
+            {
+              "id": 1,
+              "start": 35.0,
+              "end": 82.0,
+              "duration": 47
+            },
+            {
+              "id": 2,
+              "start": 840.0,
+              "end": 890.0,
+              "duration": 50
+            },
+            {
+              "id": 3,
+              "start": 1270.0,
+              "end": 1315.0,
+              "duration": 45
+            },
+            {
+              "id": 4,
+              "start": 1448.0,
+              "end": 1495.0,
+              "duration": 47
+            }
+          ]
+        },
+        "27": {
+          "total_ice_time": "15m 10s",
+          "shifts_count": 15,
+          "avg_shift_len": "47.5s",
+          "shifts": [
+            {
+              "id": 1,
+              "start": 35.0,
+              "end": 82.0,
+              "duration": 47
+            },
+            {
+              "id": 2,
+              "start": 840.0,
+              "end": 890.0,
+              "duration": 50
+            },
+            {
+              "id": 3,
+              "start": 1270.0,
+              "end": 1315.0,
+              "duration": 45
+            },
+            {
+              "id": 4,
+              "start": 1448.0,
+              "end": 1495.0,
+              "duration": 47
+            }
+          ]
+        },
+        "28": {
+          "total_ice_time": "15m 10s",
+          "shifts_count": 15,
+          "avg_shift_len": "47.5s",
+          "shifts": [
+            {
+              "id": 1,
+              "start": 35.0,
+              "end": 82.0,
+              "duration": 47
+            },
+            {
+              "id": 2,
+              "start": 840.0,
+              "end": 890.0,
+              "duration": 50
+            },
+            {
+              "id": 3,
+              "start": 1270.0,
+              "end": 1315.0,
+              "duration": 45
+            },
+            {
+              "id": 4,
+              "start": 1448.0,
+              "end": 1495.0,
+              "duration": 47
+            }
+          ]
+        },
+        "76": {
+          "total_ice_time": "15m 10s",
+          "shifts_count": 15,
+          "avg_shift_len": "47.5s",
+          "shifts": [
+            {
+              "id": 1,
+              "start": 35.0,
+              "end": 82.0,
+              "duration": 47
+            },
+            {
+              "id": 2,
+              "start": 840.0,
+              "end": 890.0,
+              "duration": 50
+            },
+            {
+              "id": 3,
+              "start": 1270.0,
+              "end": 1315.0,
+              "duration": 45
+            },
+            {
+              "id": 4,
+              "start": 1448.0,
+              "end": 1495.0,
+              "duration": 47
+            }
+          ]
+        },
+        "88": {
+          "total_ice_time": "15m 10s",
+          "shifts_count": 15,
+          "avg_shift_len": "47.5s",
+          "shifts": [
+            {
+              "id": 1,
+              "start": 35.0,
+              "end": 82.0,
+              "duration": 47
+            },
+            {
+              "id": 2,
+              "start": 840.0,
+              "end": 890.0,
+              "duration": 50
+            },
+            {
+              "id": 3,
+              "start": 1270.0,
+              "end": 1315.0,
+              "duration": 45
+            },
+            {
+              "id": 4,
+              "start": 1448.0,
+              "end": 1495.0,
+              "duration": 47
+            }
+          ]
+        },
+        "97": {
+          "total_ice_time": "15m 10s",
+          "shifts_count": 15,
+          "avg_shift_len": "47.5s",
+          "shifts": [
+            {
+              "id": 1,
+              "start": 35.0,
+              "end": 82.0,
+              "duration": 47
+            },
+            {
+              "id": 2,
+              "start": 840.0,
+              "end": 890.0,
+              "duration": 50
+            },
+            {
+              "id": 3,
+              "start": 1270.0,
+              "end": 1315.0,
+              "duration": 45
+            },
+            {
+              "id": 4,
+              "start": 1448.0,
+              "end": 1495.0,
+              "duration": 47
+            }
+          ]
+        },
+        "98": {
+          "total_ice_time": "15m 10s",
+          "shifts_count": 15,
+          "avg_shift_len": "47.5s",
+          "shifts": [
+            {
+              "id": 1,
+              "start": 35.0,
+              "end": 82.0,
+              "duration": 47
+            },
+            {
+              "id": 2,
+              "start": 840.0,
+              "end": 890.0,
+              "duration": 50
+            },
+            {
+              "id": 3,
+              "start": 1270.0,
+              "end": 1315.0,
+              "duration": 45
+            },
+            {
+              "id": 4,
+              "start": 1448.0,
+              "end": 1495.0,
+              "duration": 47
+            }
+          ]
+        }
+      },
+      "coaching_clips": {
+        "defensive_zone": [
+          {
+            "id": 4,
+            "start": 35.0,
+            "end": 65.0,
+            "duration": 30,
+            "period": "1st Period",
+            "description": "D-Zone Box Defense & Wall Release",
+            "suggested": false
+          }
+        ],
+        "offensive_zone": [
+          {
+            "id": 3,
+            "start": 1448.0,
+            "end": 1485.0,
+            "duration": 37,
+            "period": "3rd Period",
+            "description": "O-Zone 5v5 - Offensive Cycle & Net Drive",
+            "suggested": true
+          }
+        ],
+        "neutral_zone": [
+          {
+            "id": 5,
+            "start": 365.0,
+            "end": 395.0,
+            "duration": 30,
+            "period": "1st Period",
+            "description": "Neutral Zone 1-2-2 Transition",
+            "suggested": false
+          }
+        ],
+        "powerplay": [
+          {
+            "id": 1,
+            "start": 840.0,
+            "end": 880.0,
+            "duration": 40,
+            "period": "2nd Period",
+            "description": "Powerplay (5v4) - Sustained O-Zone Pressure & Setup",
+            "suggested": true
+          }
+        ],
+        "penalty_kill": [
+          {
+            "id": 2,
+            "start": 1270.0,
+            "end": 1305.0,
+            "duration": 35,
+            "period": "2nd Period",
+            "description": "Penalty Kill (4v5) - Diamond Box Clear & Pressure",
+            "suggested": true
+          }
+        ],
+        "goal_highlights": [],
+        "goalie_saves": []
+      },
+      "analytics": {
+        "active_play_time": "38m 20s",
+        "possession_tigers_pct": 52,
+        "possession_opp_pct": 48,
+        "ozone_time": "13m 30s",
+        "dzone_time": "11m 45s",
+        "shots_on_goal": 24,
+        "goalie_saves": 26,
+        "save_pct": "91.5%"
+      }
+    },
+    {
+      "id": "game_BdvtGEM-Oqg",
+      "title": "U13A Tigers",
+      "youtube_video_id": "BdvtGEM-Oqg",
+      "date": "2026-2027 Season",
+      "opponent": "Caledon",
+      "players": {
+        "3": {
+          "total_ice_time": "15m 10s",
+          "shifts_count": 15,
+          "avg_shift_len": "47.5s",
+          "shifts": [
+            {
+              "id": 1,
+              "start": 35.0,
+              "end": 82.0,
+              "duration": 47
+            },
+            {
+              "id": 2,
+              "start": 840.0,
+              "end": 890.0,
+              "duration": 50
+            },
+            {
+              "id": 3,
+              "start": 1270.0,
+              "end": 1315.0,
+              "duration": 45
+            },
+            {
+              "id": 4,
+              "start": 1448.0,
+              "end": 1495.0,
+              "duration": 47
+            }
+          ]
+        },
+        "5": {
+          "total_ice_time": "15m 10s",
+          "shifts_count": 15,
+          "avg_shift_len": "47.5s",
+          "shifts": [
+            {
+              "id": 1,
+              "start": 35.0,
+              "end": 82.0,
+              "duration": 47
+            },
+            {
+              "id": 2,
+              "start": 840.0,
+              "end": 890.0,
+              "duration": 50
+            },
+            {
+              "id": 3,
+              "start": 1270.0,
+              "end": 1315.0,
+              "duration": 45
+            },
+            {
+              "id": 4,
+              "start": 1448.0,
+              "end": 1495.0,
+              "duration": 47
+            }
+          ]
+        },
+        "7": {
+          "total_ice_time": "15m 10s",
+          "shifts_count": 15,
+          "avg_shift_len": "47.5s",
+          "shifts": [
+            {
+              "id": 1,
+              "start": 35.0,
+              "end": 82.0,
+              "duration": 47
+            },
+            {
+              "id": 2,
+              "start": 840.0,
+              "end": 890.0,
+              "duration": 50
+            },
+            {
+              "id": 3,
+              "start": 1270.0,
+              "end": 1315.0,
+              "duration": 45
+            },
+            {
+              "id": 4,
+              "start": 1448.0,
+              "end": 1495.0,
+              "duration": 47
+            }
+          ]
+        },
+        "9": {
+          "total_ice_time": "15m 10s",
+          "shifts_count": 15,
+          "avg_shift_len": "47.5s",
+          "shifts": [
+            {
+              "id": 1,
+              "start": 35.0,
+              "end": 82.0,
+              "duration": 47
+            },
+            {
+              "id": 2,
+              "start": 840.0,
+              "end": 890.0,
+              "duration": 50
+            },
+            {
+              "id": 3,
+              "start": 1270.0,
+              "end": 1315.0,
+              "duration": 45
+            },
+            {
+              "id": 4,
+              "start": 1448.0,
+              "end": 1495.0,
+              "duration": 47
+            }
+          ]
+        },
+        "10": {
+          "total_ice_time": "15m 10s",
+          "shifts_count": 15,
+          "avg_shift_len": "47.5s",
+          "shifts": [
+            {
+              "id": 1,
+              "start": 35.0,
+              "end": 82.0,
+              "duration": 47
+            },
+            {
+              "id": 2,
+              "start": 840.0,
+              "end": 890.0,
+              "duration": 50
+            },
+            {
+              "id": 3,
+              "start": 1270.0,
+              "end": 1315.0,
+              "duration": 45
+            },
+            {
+              "id": 4,
+              "start": 1448.0,
+              "end": 1495.0,
+              "duration": 47
+            }
+          ]
+        },
+        "11": {
+          "total_ice_time": "15m 10s",
+          "shifts_count": 15,
+          "avg_shift_len": "47.5s",
+          "shifts": [
+            {
+              "id": 1,
+              "start": 35.0,
+              "end": 82.0,
+              "duration": 47
+            },
+            {
+              "id": 2,
+              "start": 840.0,
+              "end": 890.0,
+              "duration": 50
+            },
+            {
+              "id": 3,
+              "start": 1270.0,
+              "end": 1315.0,
+              "duration": 45
+            },
+            {
+              "id": 4,
+              "start": 1448.0,
+              "end": 1495.0,
+              "duration": 47
+            }
+          ]
+        },
+        "13": {
+          "total_ice_time": "15m 10s",
+          "shifts_count": 15,
+          "avg_shift_len": "47.5s",
+          "shifts": [
+            {
+              "id": 1,
+              "start": 35.0,
+              "end": 82.0,
+              "duration": 47
+            },
+            {
+              "id": 2,
+              "start": 840.0,
+              "end": 890.0,
+              "duration": 50
+            },
+            {
+              "id": 3,
+              "start": 1270.0,
+              "end": 1315.0,
+              "duration": 45
+            },
+            {
+              "id": 4,
+              "start": 1448.0,
+              "end": 1495.0,
+              "duration": 47
+            }
+          ]
+        },
+        "16": {
+          "total_ice_time": "15m 10s",
+          "shifts_count": 15,
+          "avg_shift_len": "47.5s",
+          "shifts": [
+            {
+              "id": 1,
+              "start": 35.0,
+              "end": 82.0,
+              "duration": 47
+            },
+            {
+              "id": 2,
+              "start": 840.0,
+              "end": 890.0,
+              "duration": 50
+            },
+            {
+              "id": 3,
+              "start": 1270.0,
+              "end": 1315.0,
+              "duration": 45
+            },
+            {
+              "id": 4,
+              "start": 1448.0,
+              "end": 1495.0,
+              "duration": 47
+            }
+          ]
+        },
+        "18": {
+          "total_ice_time": "15m 10s",
+          "shifts_count": 15,
+          "avg_shift_len": "47.5s",
+          "shifts": [
+            {
+              "id": 1,
+              "start": 35.0,
+              "end": 82.0,
+              "duration": 47
+            },
+            {
+              "id": 2,
+              "start": 840.0,
+              "end": 890.0,
+              "duration": 50
+            },
+            {
+              "id": 3,
+              "start": 1270.0,
+              "end": 1315.0,
+              "duration": 45
+            },
+            {
+              "id": 4,
+              "start": 1448.0,
+              "end": 1495.0,
+              "duration": 47
+            }
+          ]
+        },
+        "21": {
+          "total_ice_time": "15m 10s",
+          "shifts_count": 15,
+          "avg_shift_len": "47.5s",
+          "shifts": [
+            {
+              "id": 1,
+              "start": 35.0,
+              "end": 82.0,
+              "duration": 47
+            },
+            {
+              "id": 2,
+              "start": 840.0,
+              "end": 890.0,
+              "duration": 50
+            },
+            {
+              "id": 3,
+              "start": 1270.0,
+              "end": 1315.0,
+              "duration": 45
+            },
+            {
+              "id": 4,
+              "start": 1448.0,
+              "end": 1495.0,
+              "duration": 47
+            }
+          ]
+        },
+        "23": {
+          "total_ice_time": "15m 10s",
+          "shifts_count": 15,
+          "avg_shift_len": "47.5s",
+          "shifts": [
+            {
+              "id": 1,
+              "start": 35.0,
+              "end": 82.0,
+              "duration": 47
+            },
+            {
+              "id": 2,
+              "start": 840.0,
+              "end": 890.0,
+              "duration": 50
+            },
+            {
+              "id": 3,
+              "start": 1270.0,
+              "end": 1315.0,
+              "duration": 45
+            },
+            {
+              "id": 4,
+              "start": 1448.0,
+              "end": 1495.0,
+              "duration": 47
+            }
+          ]
+        },
+        "27": {
+          "total_ice_time": "15m 10s",
+          "shifts_count": 15,
+          "avg_shift_len": "47.5s",
+          "shifts": [
+            {
+              "id": 1,
+              "start": 35.0,
+              "end": 82.0,
+              "duration": 47
+            },
+            {
+              "id": 2,
+              "start": 840.0,
+              "end": 890.0,
+              "duration": 50
+            },
+            {
+              "id": 3,
+              "start": 1270.0,
+              "end": 1315.0,
+              "duration": 45
+            },
+            {
+              "id": 4,
+              "start": 1448.0,
+              "end": 1495.0,
+              "duration": 47
+            }
+          ]
+        },
+        "28": {
+          "total_ice_time": "15m 10s",
+          "shifts_count": 15,
+          "avg_shift_len": "47.5s",
+          "shifts": [
+            {
+              "id": 1,
+              "start": 35.0,
+              "end": 82.0,
+              "duration": 47
+            },
+            {
+              "id": 2,
+              "start": 840.0,
+              "end": 890.0,
+              "duration": 50
+            },
+            {
+              "id": 3,
+              "start": 1270.0,
+              "end": 1315.0,
+              "duration": 45
+            },
+            {
+              "id": 4,
+              "start": 1448.0,
+              "end": 1495.0,
+              "duration": 47
+            }
+          ]
+        },
+        "76": {
+          "total_ice_time": "15m 10s",
+          "shifts_count": 15,
+          "avg_shift_len": "47.5s",
+          "shifts": [
+            {
+              "id": 1,
+              "start": 35.0,
+              "end": 82.0,
+              "duration": 47
+            },
+            {
+              "id": 2,
+              "start": 840.0,
+              "end": 890.0,
+              "duration": 50
+            },
+            {
+              "id": 3,
+              "start": 1270.0,
+              "end": 1315.0,
+              "duration": 45
+            },
+            {
+              "id": 4,
+              "start": 1448.0,
+              "end": 1495.0,
+              "duration": 47
+            }
+          ]
+        },
+        "88": {
+          "total_ice_time": "15m 10s",
+          "shifts_count": 15,
+          "avg_shift_len": "47.5s",
+          "shifts": [
+            {
+              "id": 1,
+              "start": 35.0,
+              "end": 82.0,
+              "duration": 47
+            },
+            {
+              "id": 2,
+              "start": 840.0,
+              "end": 890.0,
+              "duration": 50
+            },
+            {
+              "id": 3,
+              "start": 1270.0,
+              "end": 1315.0,
+              "duration": 45
+            },
+            {
+              "id": 4,
+              "start": 1448.0,
+              "end": 1495.0,
+              "duration": 47
+            }
+          ]
+        },
+        "97": {
+          "total_ice_time": "15m 10s",
+          "shifts_count": 15,
+          "avg_shift_len": "47.5s",
+          "shifts": [
+            {
+              "id": 1,
+              "start": 35.0,
+              "end": 82.0,
+              "duration": 47
+            },
+            {
+              "id": 2,
+              "start": 840.0,
+              "end": 890.0,
+              "duration": 50
+            },
+            {
+              "id": 3,
+              "start": 1270.0,
+              "end": 1315.0,
+              "duration": 45
+            },
+            {
+              "id": 4,
+              "start": 1448.0,
+              "end": 1495.0,
+              "duration": 47
+            }
+          ]
+        },
+        "98": {
+          "total_ice_time": "15m 10s",
+          "shifts_count": 15,
+          "avg_shift_len": "47.5s",
+          "shifts": [
+            {
+              "id": 1,
+              "start": 35.0,
+              "end": 82.0,
+              "duration": 47
+            },
+            {
+              "id": 2,
+              "start": 840.0,
+              "end": 890.0,
+              "duration": 50
+            },
+            {
+              "id": 3,
+              "start": 1270.0,
+              "end": 1315.0,
+              "duration": 45
+            },
+            {
+              "id": 4,
+              "start": 1448.0,
+              "end": 1495.0,
+              "duration": 47
+            }
+          ]
+        }
+      },
+      "coaching_clips": {
+        "defensive_zone": [
+          {
+            "id": 4,
+            "start": 35.0,
+            "end": 65.0,
+            "duration": 30,
+            "period": "1st Period",
+            "description": "D-Zone Box Defense & Wall Release",
+            "suggested": false
+          }
+        ],
+        "offensive_zone": [
+          {
+            "id": 3,
+            "start": 1448.0,
+            "end": 1485.0,
+            "duration": 37,
+            "period": "3rd Period",
+            "description": "O-Zone 5v5 - Offensive Cycle & Net Drive",
+            "suggested": true
+          }
+        ],
+        "neutral_zone": [
+          {
+            "id": 5,
+            "start": 365.0,
+            "end": 395.0,
+            "duration": 30,
+            "period": "1st Period",
+            "description": "Neutral Zone 1-2-2 Transition",
+            "suggested": false
+          }
+        ],
+        "powerplay": [
+          {
+            "id": 1,
+            "start": 840.0,
+            "end": 880.0,
+            "duration": 40,
+            "period": "2nd Period",
+            "description": "Powerplay (5v4) - Sustained O-Zone Pressure & Setup",
+            "suggested": true
+          }
+        ],
+        "penalty_kill": [
+          {
+            "id": 2,
+            "start": 1270.0,
+            "end": 1305.0,
+            "duration": 35,
+            "period": "2nd Period",
+            "description": "Penalty Kill (4v5) - Diamond Box Clear & Pressure",
+            "suggested": true
+          }
+        ],
+        "goal_highlights": [],
+        "goalie_saves": []
+      },
+      "analytics": {
+        "active_play_time": "38m 20s",
+        "possession_tigers_pct": 52,
+        "possession_opp_pct": 48,
+        "ozone_time": "13m 30s",
+        "dzone_time": "11m 45s",
+        "shots_on_goal": 24,
+        "goalie_saves": 26,
+        "save_pct": "91.5%"
+      }
+    },
+    {
       "id": "game__y0eofIObRI",
       "title": null,
       "youtube_video_id": "_y0eofIObRI",
