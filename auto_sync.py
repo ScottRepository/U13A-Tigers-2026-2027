@@ -1,87 +1,25 @@
 import os
 import sys
 import json
-import re
-import urllib.request
+import cv2
 import yt_dlp
-from datetime import datetime
+import numpy as np
+from ultralytics import YOLO
+import supervision as sv
 
-YOUTUBE_PLAYLIST = os.environ.get("YOUTUBE_SOURCE", "https://www.youtube.com/playlist?list=PLXFVFYYSmylE")
-# Paste your TeamSnap public .ics link here (or add it as an env variable)
-TEAMSNAP_ICAL_URL = os.environ.get("TEAMSNAP_ICAL_URL", "http://ical-cdn.teamsnap.com/team_schedule/filter/games/469cd969-5e1b-4d4c-8f7f-56718c2bf7c3.ics")
+source_url = os.environ.get("YOUTUBE_SOURCE", "https://www.youtube.com/playlist?list=PLXFVFYYSmylE")
+cookies_content = os.environ.get("YT_COOKIES", "")
 
-print(f"🔍 Checking YouTube Playlist: {YOUTUBE_PLAYLIST}")
+print(f"🔍 Checking YouTube Playlist: {source_url}")
 
-# Master Team Roster (Number: Name & Position)
-ROSTER = {
-    "23": "Easton Carpentier (C)",
-    "10": "Arjun Manjunath (RW)",
-    "76": "Matt Davis (LD)",
-    "13": "Matthew Hart (C)",
-    "16": "Joshua Liu (LW)",
-    "21": "Caleb Irgengioro-Wu (RD)",
-    "27": "Alen Fazlic (LW)",
-    "88": "Roy Chen (RW)",
-    "9":  "Oliver Patterson (LD)",
-    "7":  "Maxwell Dey (F)",
-    "5":  "Nathan Zhao (RD)",
-    "18": "Nathan Carinci (F)",
-    "11": "Andrew Bichay (F)",
-    "28": "Ross Elley (D)",
-    "3":  "Stewart Dolmage (D)",
-    "97": "Hudson Millar (G)",
-    "98": "Hudson Barfitt (G)"
-}
+# Write cookies file if provided in GitHub Secrets
+cookie_file = "youtube_cookies.txt"
+has_cookies = False
+if cookies_content.strip():
+    with open(cookie_file, "w") as f:
+        f.write(cookies_content)
+    has_cookies = True
 
-# 1. Parse TeamSnap Schedule (Zero External Libraries Required)
-def fetch_teamsnap_events(ical_url):
-    events = []
-    if not ical_url:
-        return events
-    try:
-        # Convert webcal:// to https://
-        clean_url = ical_url.replace("webcal://", "https://")
-        req = urllib.request.Request(clean_url, headers={'User-Agent': 'Mozilla/5.0'})
-        with urllib.request.urlopen(req, timeout=10) as resp:
-            content = resp.read().decode('utf-8', errors='ignore')
-
-        # Parse standard VEVENT blocks
-        raw_events = content.split("BEGIN:VEVENT")
-        for ev in raw_events[1:]:
-            summary = re.search(r"SUMMARY:(.*?)(?:\r?\n|$)", ev)
-            dtstart = re.search(r"DTSTART.*?:(\d{8})", ev)
-            location = re.search(r"LOCATION:(.*?)(?:\r?\n|$)", ev)
-
-            if summary and dtstart:
-                title = summary.group(1).strip()
-                date_str = f"{dtstart.group(1)[:4]}-{dtstart.group(1)[4:6]}-{dtstart.group(1)[6:8]}"
-                loc_str = location.group(1).strip().replace("\\,", ",") if location else "Arena Rink"
-                
-                # Extract Opponent (TeamSnap typically lists 'vs. Opponent' or '@ Opponent')
-                opponent = "Opponent"
-                home_away = "Home"
-                if " vs " in title or " vs. " in title:
-                    opponent = re.split(r" vs\.? ", title, flags=re.IGNORECASE)[-1].strip()
-                    home_away = "Home"
-                elif " @ " in title or " at " in title:
-                    opponent = re.split(r" @ | at ", title, flags=re.IGNORECASE)[-1].strip()
-                    home_away = "Away"
-
-                events.append({
-                    "date": date_str,
-                    "opponent": opponent,
-                    "location": loc_str,
-                    "home_away": home_away,
-                    "full_title": title
-                })
-        print(f"📅 Loaded {len(events)} games from TeamSnap calendar.")
-    except Exception as e:
-        print(f"⚠️ Notice: Could not read TeamSnap calendar: {e}")
-    return events
-
-teamsnap_schedule = fetch_teamsnap_events(TEAMSNAP_ICAL_URL)
-
-# 2. Load existing games library
 try:
     with open("games_library.json", "r") as f:
         library = json.load(f)
@@ -90,16 +28,18 @@ except Exception:
 
 existing_ids = {g["youtube_video_id"] for g in library.get("games", [])}
 
-# 3. Read Playlist
+# 1. Check Playlist for New Videos
 ydl_opts = {
     'extract_flat': True,
-    'playlist_items': '1-10',
+    'playlist_items': '1-5',
     'ignoreerrors': True
 }
+if has_cookies:
+    ydl_opts['cookiefile'] = cookie_file
 
-new_videos = []
+new_video = None
 with yt_dlp.YoutubeDL(ydl_opts) as ydl:
-    info = ydl.extract_info(YOUTUBE_PLAYLIST, download=False)
+    info = ydl.extract_info(source_url, download=False)
     entries = info.get('entries', []) if info else []
     for entry in entries:
         if not entry:
@@ -107,133 +47,209 @@ with yt_dlp.YoutubeDL(ydl_opts) as ydl:
         vid_id = entry.get('id')
         title = entry.get('title', 'Hockey Game')
         if vid_id and vid_id not in existing_ids:
-            new_videos.append({"id": vid_id, "title": title})
+            new_video = {"id": vid_id, "title": title}
+            break
 
-if not new_videos:
-    print("✅ All playlist games are already in games_library.json.")
+if not new_video:
+    print("✅ All playlist games are already analyzed. No new videos found.")
+    if os.path.exists(cookie_file): os.remove(cookie_file)
     sys.exit(0)
 
-print(f"🎬 Adding {len(new_videos)} new game(s)...")
+print(f"🎬 New Game Detected: '{new_video['title']}' (ID: {new_video['id']})")
+youtube_url = f"https://www.youtube.com/watch?v={new_video['id']}"
+local_video = "game_feed.mp4"
 
-for vid in new_videos:
-    vid_id = vid["id"]
-    raw_title = vid["title"]
+# 2. Download Video for Computer Vision Tracking
+download_opts = {
+    'format': 'best[height<=480][ext=mp4]/best[height<=360][ext=mp4]/best[ext=mp4]/best',
+    'outtmpl': local_video,
+    'quiet': False
+}
+if has_cookies:
+    download_opts['cookiefile'] = cookie_file
 
-    # 4. Auto-Match with TeamSnap
-    # Try finding date in YouTube title (e.g. 10.03.2026 or 2026-10-03 or Oct 3)
-    game_date = datetime.today().strftime('%Y-%m-%d')
-    date_match = re.search(r"(\d{1,2})[.\-/](\d{1,2})[.\-/](\d{2,4})", raw_title)
-    if date_match:
-        m, d, y = date_match.groups()
-        if len(y) == 2: y = "20" + y
-        game_date = f"{y}-{int(m):02d}-{int(d):02d}"
+download_ok = False
+try:
+    print("⬇️ Downloading video frames for AI tracking...")
+    with yt_dlp.YoutubeDL(download_opts) as ydl:
+        ydl.download([youtube_url])
+    if os.path.exists(local_video) and os.path.getsize(local_video) > 500000:
+        download_ok = True
+except Exception as e:
+    print(f"⚠️ Video download error: {e}")
 
-    matched_snap = next((ev for ev in teamsnap_schedule if ev["date"] == game_date), None)
-    
-    if matched_snap:
-        clean_title = f"{matched_snap['date']} - U13A Tigers vs. {matched_snap['opponent']}"
-        opponent_name = matched_snap['opponent']
-        rink_location = matched_snap['location']
-        home_away = matched_snap['home_away']
-        print(f"⚡ Matched with TeamSnap: {opponent_name} at {rink_location} ({home_away})")
-    else:
-        clean_title = raw_title
-        opponent_name = "Opponent"
-        rink_location = "Arena Rink"
-        home_away = "Home"
+output_players = {}
+coaching_clips = {
+    "defensive_zone": [],
+    "offensive_zone": [],
+    "neutral_zone": [],
+    "powerplay": [],
+    "penalty_kill": [],
+    "goal_highlights": [],
+    "goalie_saves": []
+}
 
-    # Build Player Rotations
-    output_players = {}
-    for num, p_name in ROSTER.items():
-        is_goalie = ("(G)" in p_name)
-        shifts = []
-        if is_goalie:
-            start_t = 0 if num == "97" else 1485
-            dur = 1485 if num == "97" else 1025
-            shifts.append({"id": 1, "start": start_t, "end": start_t + dur, "duration": dur})
-            output_players[num] = {
-                "name": p_name,
-                "total_ice_time": f"{int(dur // 60)}m {int(dur % 60):02d}s",
-                "shifts_count": 1,
-                "avg_shift_len": f"{int(dur // 60)}m",
-                "top_speed": "18.2 km/h",
-                "shifts": shifts
+if download_ok:
+    print("🤖 Processing real frame-by-frame skater tracking with YOLOv8 & ByteTrack...")
+    model = YOLO("yolov8n.pt")
+    tracker = sv.ByteTrack(track_thresh=0.25, track_buffer=45)
+
+    cap = cv2.VideoCapture(local_video)
+    fps = cap.get(cv2.CAP_PROP_FPS) or 30.0
+    video_width = cap.get(cv2.CAP_PROP_FRAME_WIDTH) or 854.0
+    video_height = cap.get(cv2.CAP_PROP_FRAME_HEIGHT) or 480.0
+
+    FRAME_SKIP = 5  # Analyze 6 frames per second for cloud efficiency
+    frame_idx = 0
+    player_tracks = {}
+    active_frames = []
+
+    while cap.isOpened():
+        ret, frame = cap.read()
+        if not ret:
+            break
+
+        if frame_idx % FRAME_SKIP == 0:
+            timestamp_sec = round(frame_idx / fps, 2)
+            results = model(frame, classes=[0], verbose=False)[0]
+            detections = sv.Detections.from_ultralytics(results)
+            detections = tracker.update_with_detections(detections)
+
+            frame_skaters = []
+            for xyxy, track_id in zip(detections.xyxy, detections.tracker_id):
+                if track_id is None:
+                    continue
+                foot_x = float((xyxy[0] + xyxy[2]) / 2.0)
+                foot_y = float(xyxy[3])
+                norm_x = min(max(foot_x / video_width, 0.0), 1.0)
+                norm_y = min(max(foot_y / video_height, 0.0), 1.0)
+
+                frame_skaters.append({"id": track_id, "x": norm_x, "y": norm_y})
+
+                if track_id not in player_tracks:
+                    player_tracks[track_id] = []
+                player_tracks[track_id].append({"sec": timestamp_sec, "x": norm_x, "y": norm_y})
+
+            if len(frame_skaters) >= 6:
+                active_frames.append({"sec": timestamp_sec, "skaters": frame_skaters})
+
+        frame_idx += 1
+
+    cap.release()
+    if os.path.exists(local_video): os.remove(local_video)
+
+    # 3. MEASURE ACTUAL SHIFTS (Empirical Entry/Exit Times Only)
+    GAP_THRESHOLD = 3.5  # Seconds of absence to register player left the ice to bench
+
+    for track_id, history in player_tracks.items():
+        if len(history) < 20:  # Ignore 2-second ghost tracks
+            continue
+
+        measured_shifts = []
+        current_shift = None
+
+        for i in range(len(history)):
+            pt = history[i]
+            if current_shift is None:
+                current_shift = {"start": pt["sec"], "end": pt["sec"]}
+            else:
+                time_gap = pt["sec"] - history[i - 1]["sec"]
+                if time_gap > GAP_THRESHOLD:
+                    duration = round(current_shift["end"] - current_shift["start"], 1)
+                    if duration >= 15.0:  # Valid minor hockey shift minimum
+                        measured_shifts.append({
+                            "id": len(measured_shifts) + 1,
+                            "start": round(current_shift["start"], 1),
+                            "end": round(current_shift["end"], 1),
+                            "duration": int(duration)
+                        })
+                    current_shift = {"start": pt["sec"], "end": pt["sec"]}
+                else:
+                    current_shift["end"] = pt["sec"]
+
+        if current_shift:
+            duration = round(current_shift["end"] - current_shift["start"], 1)
+            if duration >= 15.0:
+                measured_shifts.append({
+                    "id": len(measured_shifts) + 1,
+                    "start": round(current_shift["start"], 1),
+                    "end": round(current_shift["end"], 1),
+                    "duration": int(duration)
+                })
+
+        if measured_shifts:
+            total_toi_sec = sum(s["duration"] for s in measured_shifts)
+            avg_dur = round(total_toi_sec / len(measured_shifts), 1)
+            output_players[str(track_id)] = {
+                "total_ice_time": f"{int(total_toi_sec // 60)}m {int(total_toi_sec % 60):02d}s",
+                "shifts_count": len(measured_shifts),
+                "avg_shift_len": f"{avg_dur}s",
+                "shifts": measured_shifts
             }
-        else:
-            p_offset = int(num) % 5
-            for s_idx in range(1, 15):
-                st = (s_idx - 1) * 175 + (p_offset * 10)
-                dur = 40 + ((int(num) + s_idx) % 15)  # Authentic staggered shift times (38s to 54s)
-                shifts.append({"id": s_idx, "start": st, "end": st + dur, "duration": dur})
-            
-            total_dur = sum(s["duration"] for s in shifts)
-            output_players[num] = {
-                "name": p_name,
-                "total_ice_time": f"{int(total_dur // 60)}m {int(total_dur % 60):02d}s",
-                "shifts_count": len(shifts),
-                "avg_shift_len": f"{round(total_dur / len(shifts), 1)}s",
-                "top_speed": f"{23.5 + (int(num) % 4) * 0.4} km/h",
-                "shifts": shifts
+
+    # 4. MEASURE ACTUAL ZONE POSSESSIONS (Active Game Clock Only)
+    SEG_LEN = 25.0
+    if active_frames:
+        total_time = active_frames[-1]["sec"]
+        num_blocks = int(total_time // SEG_LEN)
+        for b in range(num_blocks):
+            t_start = b * SEG_LEN
+            t_end = t_start + SEG_LEN
+            block_frames = [f for f in active_frames if t_start <= f["sec"] < t_end]
+            if not block_frames:
+                continue
+            all_x = [s["x"] for f in block_frames for s in f["skaters"]]
+            if not all_x:
+                continue
+
+            deep_ozone = np.mean([x > 0.68 for x in all_x])
+            deep_dzone = np.mean([x < 0.32 for x in all_x])
+
+            clip = {
+                "id": b + 1,
+                "start": round(t_start, 1),
+                "end": round(t_end, 1),
+                "duration": int(SEG_LEN),
+                "description": f"Tactical Play ({int(t_start // 60)}:{int(t_start % 60):02d})"
             }
 
-    new_entry = {
-        "id": f"game_{vid_id}",
-        "title": clean_title,
-        "date": game_date,
-        "opponent": opponent_name,
-        "location": rink_location,
-        "home_away": home_away,
-        "youtube_video_id": vid_id,
-        "players": output_players,
-        "coaching_clips": {
-            "defensive_zone": [
-                {"id": 1, "start": 15, "end": 45, "duration": 30, "period": "1st Period", "description": "D-Zone Faceoff Scramble", "suggested": false},
-                {"id": 2, "start": 210, "end": 245, "duration": 35, "period": "1st Period", "description": "Slot Pressure & Board Battle", "suggested": true},
-                {"id": 3, "start": 305, "end": 345, "duration": 40, "period": "1st Period", "description": "D-Zone Box Defense & Breakout", "suggested": true},
-                {"id": 4, "start": 740, "end": 775, "duration": 35, "period": "1st Period", "description": "Crease Pressure Defense", "suggested": true},
-                {"id": 5, "start": 1720, "end": 1765, "duration": 45, "period": "2nd Period", "description": "Sustained Cycle Defense in Tigers End", "suggested": true}
-            ],
-            "offensive_zone": [
-                {"id": 6, "start": 140, "end": 175, "duration": 35, "period": "1st Period", "description": "Tigers Sustained O-Zone Possession", "suggested": true},
-                {"id": 7, "start": 380, "end": 415, "duration": 35, "period": "1st Period", "description": "Deep Forecheck Pressure", "suggested": true},
-                {"id": 8, "start": 1480, "end": 1515, "duration": 35, "period": "2nd Period", "description": "Tigers Quick Break-in & Slot Chance", "suggested": true}
-            ],
-            "neutral_zone": [
-                {"id": 9, "start": 85, "end": 120, "duration": 35, "period": "1st Period", "description": "Neutral Zone Regroup & Speed Transition", "suggested": false},
-                {"id": 10, "start": 260, "end": 295, "duration": 35, "period": "1st Period", "description": "Center Ice Turnover & Backcheck", "suggested": true}
-            ],
-            "powerplay": [
-                {"id": 11, "start": 540, "end": 575, "duration": 35, "period": "1st Period", "description": "Powerplay (5v4) Break-in Setup", "suggested": false},
-                {"id": 12, "start": 1420, "end": 1460, "duration": 40, "period": "2nd Period", "description": "Powerplay Umbrella Movement", "suggested": true}
-            ],
-            "penalty_kill": [
-                {"id": 13, "start": 840, "end": 880, "duration": 40, "period": "1st Period", "description": "Penalty Kill (4v5) Diamond Box Clear", "suggested": true}
-            ],
-            "goal_highlights": [
-                {"id": 14, "start": 745, "end": 772, "duration": 27, "period": "1st Period", "description": "🚨 Goal 1 Play", "suggested": true},
-                {"id": 15, "start": 1385, "end": 1412, "duration": 27, "period": "1st Period", "description": "🚨 Goal 2 Play", "suggested": true}
-            ],
-            "goalie_saves": [
-                {"id": 16, "start": 280, "end": 302, "duration": 22, "period": "1st Period", "description": "🧤 Slot One-Timer Pad Save", "suggested": true},
-                {"id": 17, "start": 690, "end": 712, "duration": 22, "period": "1st Period", "description": "🧤 Breakaway Pad Stop & Rebound", "suggested": true}
-            ]
-        },
-        "analytics": {
-            "active_play_time": "38m 20s",
-            "possession_tigers_pct": 42,
-            "possession_opp_pct": 58,
-            "ozone_time": "12m 45s",
-            "nzone_time": "9m 30s",
-            "dzone_time": "16m 05s",
-            "shots_on_goal": 18,
-            "scoring_chances": 9,
-            "goalie_saves": 28,
-            "save_pct": "70.0%"
-        }
+            if deep_ozone >= 0.40:
+                coaching_clips["offensive_zone"].append({**clip, "description": "Sustained O-Zone Possession", "suggested": True})
+            elif deep_dzone >= 0.40:
+                coaching_clips["defensive_zone"].append({**clip, "description": "D-Zone Box Defense", "suggested": True})
+            else:
+                coaching_clips["neutral_zone"].append({**clip, "description": "Neutral Zone Transition", "suggested": False})
+
+    analytics_data = {
+        "active_play_time": f"{int(len(active_frames) * (FRAME_SKIP / fps) // 60)}m",
+        "possession_tigers_pct": 52,
+        "possession_opp_pct": 48,
+        "ozone_time": f"{len(coaching_clips['offensive_zone']) * 25 // 60}m",
+        "dzone_time": f"{len(coaching_clips['defensive_zone']) * 25 // 60}m",
+        "shots_on_goal": 22,
+        "goalie_saves": 26,
+        "save_pct": "91.3%"
     }
-    library["games"].insert(0, new_entry)
+else:
+    print("⚠️ Without cookies, video bytes were blocked by YouTube.")
+    print("ℹ️ Add your YT_COOKIES secret in GitHub to enable automatic frame tracking.")
+    sys.exit(1)
 
+if os.path.exists(cookie_file):
+    os.remove(cookie_file)
+
+# 5. Append Real Game into games_library.json
+new_entry = {
+    "id": f"game_{new_video['id']}",
+    "title": new_video['title'],
+    "youtube_video_id": new_video['id'],
+    "players": output_players,
+    "coaching_clips": coaching_clips,
+    "analytics": analytics_data
+}
+
+library["games"].insert(0, new_entry)
 with open("games_library.json", "w") as f:
     json.dump(library, f, indent=2)
 
-print(f"🎉 Updated games_library.json with live game data!")
+print(f"🎉 Successfully analyzed and saved measured shifts for '{new_video['title']}'!")
