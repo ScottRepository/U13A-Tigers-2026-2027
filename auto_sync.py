@@ -8,7 +8,7 @@ from datetime import datetime
 
 YOUTUBE_PLAYLIST = os.environ.get("YOUTUBE_SOURCE", "https://www.youtube.com/playlist?list=PLXFVFYYSmylE")
 # Paste your TeamSnap public .ics link here (or add it as an env variable)
-TEAMSNAP_ICAL_URL = os.environ.get("TEAMSNAP_ICAL_URL", "")
+TEAMSNAP_ICAL_URL = os.environ.get("TEAMSNAP_ICAL_URL", "http://ical-cdn.teamsnap.com/team_schedule/filter/games/469cd969-5e1b-4d4c-8f7f-56718c2bf7c3.ics")
 
 print(f"🔍 Checking YouTube Playlist: {YOUTUBE_PLAYLIST}")
 
