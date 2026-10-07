@@ -1,12 +1,15 @@
+```html
 <!DOCTYPE html>
 <html lang="en" class="dark">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>U13A Tigers - Video Breakdown & Tactical Hub</title>
+  <title>U13A Tigers - Video Breakdown & Analytics Hub</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
     #telestrator-canvas { touch-action: none; }
+    
+    /* Global Select Dropdown Dark Theme Enforcements */
     select, select:focus, select:active, select:hover {
       background-color: #0f172a !important;
       color: #f8fafc !important;
@@ -36,7 +39,7 @@
     <div class="bg-slate-800 border border-slate-700 p-6 md:p-8 rounded-2xl max-w-sm w-full text-center shadow-2xl">
       <div class="text-4xl mb-3">🏒</div>
       <h2 class="text-xl font-black text-white mb-1 tracking-wide">U13A TIGERS HUB</h2>
-      <p class="text-xs text-slate-400 mb-5">Enter team passcode to continue.</p>
+      <p class="text-xs text-slate-400 mb-5">Enter team or admin passcode to continue.</p>
       
       <div class="space-y-3">
         <input 
@@ -62,13 +65,159 @@
         </button>
       </div>
 
-      <div class="mt-4 pt-3 border-t border-slate-700/60 text-[11px] text-slate-500">
-        Parent: <code class="text-yellow-400 font-bold">U13ATigers</code> | Coach Passcode Protected
+      <div class="mt-4 pt-3 border-t border-slate-700/60 text-[11px] text-slate-400 space-y-1">
+        <div>Parent: <code class="text-yellow-400 font-bold">U13ATigers</code></div>
+        <div>Coach: <code class="text-amber-400 font-bold">CoachTigers</code> | Admin: <code class="text-purple-400 font-bold">AdminTigers</code></div>
       </div>
     </div>
   </div>
 
-  <!-- ================= OVERVIEW / GUIDE MODAL ================= -->
+  <!-- ================= COMPREHENSIVE ADMIN CONTROL DASHBOARD ================= -->
+  <div id="admin-modal" class="fixed inset-0 bg-black/90 backdrop-blur-md flex items-center justify-center p-3 md:p-6 z-50 hidden">
+    <div class="bg-slate-900 border border-slate-700 p-5 md:p-6 rounded-3xl max-w-3xl w-full max-h-[92vh] overflow-y-auto shadow-2xl flex flex-col justify-between space-y-4">
+      
+      <div>
+        <div class="flex justify-between items-center border-b border-slate-800 pb-3">
+          <div class="flex items-center gap-2">
+            <span class="text-2xl">⚙️</span>
+            <div>
+              <h2 class="text-base font-black text-amber-400">Team Admin Configuration Portal</h2>
+              <p class="text-[11px] text-slate-400">Update playlists, AI keys, cookies, roster & passcodes without touching source code.</p>
+            </div>
+          </div>
+          <button onclick="closeAdminModal()" class="text-slate-400 hover:text-white text-2xl font-bold cursor-pointer">&times;</button>
+        </div>
+
+        <!-- Admin Tabs -->
+        <div class="flex border-b border-slate-800 text-xs font-bold gap-2 pt-3 overflow-x-auto">
+          <button onclick="setAdminTab('video')" id="tab-btn-video" class="pb-2 border-b-2 border-amber-500 text-amber-400 whitespace-nowrap">📺 Video & Playlist</button>
+          <button onclick="setAdminTab('gemini')" id="tab-btn-gemini" class="pb-2 border-b-2 border-transparent text-slate-400 hover:text-white whitespace-nowrap">🤖 Google Gemini AI</button>
+          <button onclick="setAdminTab('cookies')" id="tab-btn-cookies" class="pb-2 border-b-2 border-transparent text-slate-400 hover:text-white whitespace-nowrap">🍪 YouTube Cookies</button>
+          <button onclick="setAdminTab('calendar')" id="tab-btn-calendar" class="pb-2 border-b-2 border-transparent text-slate-400 hover:text-white whitespace-nowrap">📅 TeamSnap Calendar</button>
+          <button onclick="setAdminTab('roster')" id="tab-btn-roster" class="pb-2 border-b-2 border-transparent text-slate-400 hover:text-white whitespace-nowrap">👥 Roster Manager</button>
+          <button onclick="setAdminTab('security')" id="tab-btn-security" class="pb-2 border-b-2 border-transparent text-slate-400 hover:text-white whitespace-nowrap">🔑 Passcodes</button>
+          <button onclick="setAdminTab('cloud')" id="tab-btn-cloud" class="pb-2 border-b-2 border-transparent text-slate-400 hover:text-white whitespace-nowrap">☁️ GitHub Cloud Sync</button>
+        </div>
+
+        <!-- TAB 1: VIDEO & PLAYLIST -->
+        <div id="admin-tab-video" class="py-3 space-y-3 text-xs">
+          <div>
+            <label class="block text-slate-300 font-bold mb-1">YouTube Playlist URL or Playlist ID:</label>
+            <input id="admin-playlist-input" type="text" placeholder="https://www.youtube.com/playlist?list=PL..." class="w-full bg-slate-950 border border-slate-700 rounded-lg px-3 py-2 text-white font-mono text-xs">
+            <p class="text-[10px] text-slate-500 mt-1">When matches are uploaded to this playlist, GitHub Actions automatically digests them.</p>
+          </div>
+        </div>
+
+        <!-- TAB 2: GOOGLE GEMINI AI KEY -->
+        <div id="admin-tab-gemini" class="py-3 space-y-3 text-xs hidden">
+          <div>
+            <label class="block text-slate-300 font-bold mb-1">Google Gemini API Key:</label>
+            <input id="admin-gemini-key" type="password" placeholder="AIzaSy..." class="w-full bg-slate-950 border border-slate-700 rounded-lg px-3 py-2 text-white font-mono text-xs">
+            <div class="mt-2 bg-slate-950 p-3 rounded-xl border border-slate-800 text-[11px] text-slate-300 space-y-1">
+              <span class="font-bold text-amber-400">💡 How Video Understanding Works:</span>
+              <p>When this key is present, the GitHub Actions ingestion uses <code>gemini-2.5-flash</code> with structured outputs to watch the match and extract precise shifts, powerplay/penalty-kill sequences, and dynamic $(X,Y)$ play coordinates.</p>
+              <p>Get a free key from <a href="https://aistudio.google.com/" target="_blank" class="text-blue-400 hover:underline font-bold">Google AI Studio ↗</a>.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- TAB 3: YOUTUBE SESSION COOKIES -->
+        <div id="admin-tab-cookies" class="py-3 space-y-3 text-xs hidden">
+          <div>
+            <label class="block text-slate-300 font-bold mb-1">YouTube Session Cookies (Netscape format):</label>
+            <textarea id="admin-cookies-input" rows="5" placeholder="# Netscape HTTP Cookie File&#10;.youtube.com    TRUE    /    TRUE    ..." class="w-full bg-slate-950 border border-slate-700 rounded-lg px-3 py-2 text-white font-mono text-[10px]"></textarea>
+            <div class="mt-2 bg-slate-950 p-3 rounded-xl border border-slate-800 text-[11px] text-slate-300 space-y-1.5">
+              <span class="font-bold text-amber-400">💡 Why Cookies Are Needed & How to Update:</span>
+              <p>YouTube sometimes flags GitHub Actions servers with <em>"Sign in to confirm you're not a bot"</em>. Pasting updated cookies bypasses this block completely.</p>
+              <ol class="list-decimal pl-4 space-y-1 text-slate-400">
+                <li>Install the Chrome/Edge extension <strong>"Get cookies.txt LOCALLY"</strong>.</li>
+                <li>Go to YouTube while logged in, click the extension, and click <strong>Copy</strong>.</li>
+                <li>Paste the text above and click <strong>Apply & Save Settings</strong>.</li>
+              </ol>
+            </div>
+          </div>
+        </div>
+
+        <!-- TAB 4: CALENDAR / TEAMSNAP -->
+        <div id="admin-tab-calendar" class="py-3 space-y-3 text-xs hidden">
+          <div>
+            <label class="block text-slate-300 font-bold mb-1">TeamSnap Public iCal Feed URL (.ics):</label>
+            <input id="admin-teamsnap-input" type="text" placeholder="https://api.teamsnap.com/v3/calendars/..." class="w-full bg-slate-950 border border-slate-700 rounded-lg px-3 py-2 text-white font-mono text-xs">
+            <p class="text-[10px] text-slate-500 mt-1">Matches game dates with arena addresses, Google Maps directions, and jersey colors.</p>
+          </div>
+        </div>
+
+        <!-- TAB 5: ROSTER MANAGER -->
+        <div id="admin-tab-roster" class="py-3 space-y-3 text-xs hidden">
+          <div class="flex justify-between items-center">
+            <span class="font-bold text-slate-300">Official Roster (<span id="admin-roster-count">17</span> players)</span>
+            <button onclick="addRosterRow('', '', 'F')" class="px-2.5 py-1 bg-blue-600 hover:bg-blue-500 text-white font-bold rounded text-[11px] cursor-pointer">
+              ➕ Add Player
+            </button>
+          </div>
+          <div class="max-h-60 overflow-y-auto border border-slate-800 rounded-xl bg-slate-950 p-2">
+            <table class="w-full text-left text-xs">
+              <thead>
+                <tr class="text-slate-500 border-b border-slate-800 pb-1 text-[11px]">
+                  <th class="p-1 w-16">Jersey #</th>
+                  <th class="p-1">Player Name</th>
+                  <th class="p-1 w-24">Position</th>
+                  <th class="p-1 w-10 text-center">Del</th>
+                </tr>
+              </thead>
+              <tbody id="admin-roster-tbody" class="divide-y divide-slate-800/60"></tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- TAB 6: PASSCODES -->
+        <div id="admin-tab-security" class="py-3 space-y-3 text-xs hidden">
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+            <div>
+              <label class="block text-slate-300 font-bold mb-1">Parent Passcode:</label>
+              <input id="admin-parent-passcode" type="text" class="w-full bg-slate-950 border border-slate-700 rounded-lg px-3 py-2 text-yellow-400 font-bold">
+            </div>
+            <div>
+              <label class="block text-slate-300 font-bold mb-1">Coach Passcode:</label>
+              <input id="admin-coach-passcode" type="text" class="w-full bg-slate-950 border border-slate-700 rounded-lg px-3 py-2 text-amber-400 font-bold">
+            </div>
+            <div>
+              <label class="block text-slate-300 font-bold mb-1">Admin Passcode:</label>
+              <input id="admin-admin-passcode" type="text" class="w-full bg-slate-950 border border-slate-700 rounded-lg px-3 py-2 text-purple-400 font-bold">
+            </div>
+          </div>
+        </div>
+
+        <!-- TAB 7: CLOUD DIRECT SYNC -->
+        <div id="admin-tab-cloud" class="py-3 space-y-3 text-xs hidden">
+          <div class="p-3 bg-slate-950 rounded-xl border border-slate-800 space-y-2">
+            <h4 class="font-bold text-slate-200">GitHub Direct Auto-Commit (Zero Coding)</h4>
+            <p class="text-[11px] text-slate-400">Add a GitHub Personal Access Token (PAT) with repository write permissions. When present, clicking <strong>Apply & Save</strong> writes changes straight to your GitHub repository.</p>
+            <input id="admin-github-pat" type="password" placeholder="ghp_xxxxxxxxxxxxxxxxxxxx" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-white font-mono text-xs">
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Action Buttons -->
+      <div class="flex items-center justify-between border-t border-slate-800 pt-3">
+        <button onclick="copyLibraryJsonWithSettings()" class="px-3 py-2 bg-slate-800 hover:bg-slate-700 font-bold text-slate-300 rounded-lg text-xs cursor-pointer flex items-center gap-1.5">
+          📋 Copy Full JSON
+        </button>
+        <div class="flex gap-2">
+          <button onclick="closeAdminModal()" class="px-4 py-2 bg-slate-800 hover:bg-slate-700 text-slate-300 font-bold rounded-lg text-xs cursor-pointer">
+            Cancel
+          </button>
+          <button onclick="saveAdminSettings()" class="px-5 py-2 bg-emerald-600 hover:bg-emerald-500 text-white font-bold rounded-lg text-xs cursor-pointer shadow-lg shadow-emerald-600/30">
+            💾 Apply & Save Settings
+          </button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ================= FEATURE OVERVIEW / HELP MODAL ================= -->
   <div id="overview-modal" class="fixed inset-0 bg-black/85 backdrop-blur-sm flex items-center justify-center p-4 z-50 hidden">
     <div class="bg-slate-900 border border-slate-700 p-6 rounded-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto shadow-2xl space-y-4">
       <div class="flex justify-between items-center border-b border-slate-800 pb-3">
@@ -80,23 +229,23 @@
 
       <div class="space-y-3 text-xs text-slate-300 leading-relaxed">
         <div class="bg-slate-950 p-3 rounded-xl border border-slate-800">
-          <h3 class="font-bold text-yellow-400 text-sm mb-1">📽️ 1. Tactical Film & Categorized Sequences</h3>
-          <p>Use the <strong class="text-white">Category</strong> dropdown to inspect Special Teams (Powerplay 5v4, Penalty Kill 4v5) or Even Strength Zone splits. Use <strong class="text-amber-400">🔥 High-Action</strong> to isolate prime chances.</p>
+          <h3 class="font-bold text-yellow-400 text-sm mb-1">📽️ 1. Tactical Film & Categorized Clips</h3>
+          <p>Use the <strong class="text-white">Category</strong> dropdown to jump between Defensive Zone breakouts, Offensive Zone setups, Powerplays, and Penalty Kills. Use the <strong class="text-amber-400">🔥 High-Action</strong> toggle to filter down to prime scoring chances.</p>
         </div>
 
         <div class="bg-slate-950 p-3 rounded-xl border border-slate-800">
-          <h3 class="font-bold text-cyan-400 text-sm mb-1">👻 2. Dynamic Ghost Mode & Hockey Canada Baselines</h3>
-          <p>Select any playbook model from the <strong class="text-white">System</strong> dropdown. Semi-transparent <strong class="text-emerald-400">Ghost Target Spots</strong> calculate the play anchor dynamically, sliding smoothly into zone position as the play develops.</p>
+          <h3 class="font-bold text-cyan-400 text-sm mb-1">📐 2. Hockey Canada Baseline Systems & Ghost Targets</h3>
+          <p>Select any playbook model from the <strong class="text-white">System</strong> dropdown. Translucent <strong class="text-emerald-400">👻 Target Spots</strong> glide dynamically on the ice based on where the puck cluster shifts.</p>
         </div>
 
         <div class="bg-slate-950 p-3 rounded-xl border border-slate-800">
-          <h3 class="font-bold text-purple-400 text-sm mb-1">🎨 3. Instant Zero-Popup Chalkboard</h3>
-          <p>Click <strong class="text-purple-300">Draw on Screen</strong>. Click <strong class="text-red-400">❌ Opponent</strong> to immediately drop an opposing skater, or <strong class="text-amber-400">⭕ Tigers Dot</strong> (with quick role tags F1, F2, D1, D2, G) without delays.</p>
+          <h3 class="font-bold text-purple-400 text-sm mb-1">🎨 3. Interactive Chalkboard & 2D Whiteboard</h3>
+          <p>Click <strong class="text-purple-300">Draw on Screen</strong> or switch to the <strong class="text-purple-300">Rink Whiteboard</strong>. Click <strong class="text-red-400">❌ Opponent</strong> to instantly drop an opponent, or <strong class="text-amber-400">⭕ Tigers Dot</strong> (with tags F1, F2, D1, D2, G) without popup delays.</p>
         </div>
 
         <div class="bg-slate-950 p-3 rounded-xl border border-slate-800">
-          <h3 class="font-bold text-emerald-400 text-sm mb-1">⏱️ 4. Shift Discipline & Auto Binge Mode</h3>
-          <p>Shift times are color coded: <span class="text-emerald-400 font-bold">● &le;45s Fast</span>, <span class="text-amber-400 font-bold">● 46-60s Extended</span>, and <span class="text-rose-400 font-bold">● &gt;60s Overstayed</span>. Toggle <strong class="text-blue-400">⚡ Auto-Play All Shifts</strong> to binge back-to-back shift reels.</p>
+          <h3 class="font-bold text-emerald-400 text-sm mb-1">⏱️ 4. Player Shifts & Binge Mode</h3>
+          <p>Switch to <strong class="text-white">Player Mode</strong> and select any jersey number to inspect individual ice time, shift duration discipline (<span class="text-emerald-400">● &le;45s Fast</span>, <span class="text-amber-400">● 46-60s OK</span>, <span class="text-rose-400">● &gt;60s Long</span>), and toggle <strong class="text-blue-400">Auto-Play All Shifts</strong> to binge back-to-back shifts.</p>
         </div>
       </div>
 
@@ -138,7 +287,7 @@
     </div>
   </div>
 
-  <!-- ================= EDIT CLIP MODAL (COACH MODE) ================= -->
+  <!-- ================= EDIT CLIP MODAL ================= -->
   <div id="edit-clip-modal" class="fixed inset-0 bg-black/85 backdrop-blur-sm flex items-center justify-center p-4 z-50 hidden">
     <div class="bg-slate-900 border border-slate-700 p-6 rounded-2xl max-w-md w-full shadow-2xl space-y-3">
       <div class="flex justify-between items-center border-b border-slate-800 pb-2">
@@ -243,14 +392,14 @@
     <span id="toast-text">✅ Done!</span>
   </div>
 
-  <!-- ================= MAIN APP CONTAINER ================= -->
+  <!-- ================= MAIN APP ================= -->
   <div id="main-content" class="max-w-7xl mx-auto space-y-3" style="display: none;">
     
     <!-- TOP CONTROL BAR -->
     <header class="bg-slate-900/95 border border-slate-800 rounded-2xl p-3 shadow-xl backdrop-blur-md">
       <div class="flex flex-col lg:flex-row items-stretch lg:items-center justify-between gap-3">
         
-        <!-- Logo & Auth Switcher -->
+        <!-- Logo & Auth -->
         <div class="flex items-center justify-between lg:justify-start gap-3">
           <div class="flex items-center gap-2">
             <span class="text-2xl">🏒</span>
@@ -263,9 +412,12 @@
             <button onclick="openOverviewModal()" class="text-[10px] bg-slate-800 hover:bg-blue-600 text-yellow-400 hover:text-white px-2.5 py-1 rounded border border-slate-700 font-bold cursor-pointer transition flex items-center gap-1">
               📖 Hub Guide
             </button>
+            <button id="admin-settings-btn" onclick="openAdminModal()" class="hidden text-[10px] bg-slate-800 hover:bg-amber-600 text-amber-400 hover:text-white px-2.5 py-1 rounded border border-slate-700 font-bold cursor-pointer transition flex items-center gap-1">
+              ⚙️ Admin
+            </button>
             <span id="role-badge" class="px-2 py-0.5 rounded text-[10px] font-bold bg-slate-800 text-slate-300 border border-slate-700">Parent View</span>
             <button onclick="promptSwitchRole()" class="text-[10px] bg-slate-800 hover:bg-slate-700 text-blue-400 px-2.5 py-1 rounded border border-slate-700 font-semibold cursor-pointer transition">
-              🔄 Switch Role / Logout
+              🔄 Switch / Logout
             </button>
           </div>
         </div>
@@ -309,7 +461,7 @@
             </select>
           </div>
 
-          <!-- Player Roster Select -->
+          <!-- Roster Select -->
           <div id="player-roster-wrapper" class="hidden flex items-center gap-1 bg-slate-900 px-2.5 py-1.5 rounded-lg border border-slate-800">
             <span class="text-slate-400 text-[10px] uppercase font-bold">Player:</span>
             <select id="roster-select" onchange="selectFromRoster(this.value)" class="bg-slate-900 text-yellow-400 font-bold focus:outline-none cursor-pointer text-xs border-0">
@@ -328,7 +480,7 @@
                 <option value="pk_diamond">🛡️ Penalty Kill (Diamond / Wedge+1)</option>
               </optgroup>
               <optgroup label="Defensive Zone Coverage">
-                <option value="dzone_breakout">🛡️ D-Zone Breakout (Wheel / Rim)</option>
+                <option value="dzone_breakout">🛡️ D-Zone Breakout (Strong-side)</option>
                 <option value="dzone_house">🏠 D-Zone Box-and-One (House)</option>
                 <option value="dzone_sagging">🛡️ D-Zone Sagging Zone Coverage</option>
               </optgroup>
@@ -337,7 +489,7 @@
                 <option value="neutral_131">🏹 Neutral 1-3-1 Trap</option>
               </optgroup>
               <optgroup label="Offensive Zone Attack">
-                <option value="ozone_cycle">🔺 O-Zone Cycle & Triangle Rotation</option>
+                <option value="ozone_cycle">🔺 O-Zone Cycle Triangle</option>
                 <option value="ozone_212">🔺 O-Zone 2-1-2 Forecheck</option>
               </optgroup>
             </select>
@@ -363,11 +515,11 @@
         <div class="flex items-center gap-1.5">
           <span class="text-blue-400 font-bold">📍</span>
           <a id="ts-arena-link" href="#" target="_blank" class="text-blue-400 hover:underline font-bold flex items-center gap-1">
-            <span id="ts-arena">Aurora Community Centre</span> ↗
+            <span id="ts-arena">Caledon East Community Complex</span> ↗
           </a>
         </div>
         <div class="flex items-center gap-2">
-          <span id="ts-homeaway" class="px-2 py-0.5 rounded text-[10px] font-bold bg-slate-800 text-slate-300 border border-slate-700">Home</span>
+          <span id="ts-homeaway" class="px-2 py-0.5 rounded text-[10px] font-bold bg-slate-800 text-slate-300 border border-slate-700">Away</span>
           <span id="ts-jersey" class="text-slate-400 text-[11px]">Jersey: <strong>White</strong></span>
         </div>
       </div>
@@ -380,15 +532,15 @@
     <div class="bg-slate-900/70 border border-slate-800/80 rounded-xl px-3 py-1.5 flex items-center justify-between text-[11px] text-slate-400">
       <div class="flex items-center gap-1.5">
         <span class="text-blue-400 text-xs">💡</span>
-        <span><strong>Coaching Disclaimer:</strong> Positioning templates follow Hockey Canada baseline models.</span>
+        <span><strong>Coaching Disclaimer:</strong> Positioning templates follow Hockey Canada baseline models. Coaches may teach adjustments.</span>
       </div>
-      <div class="flex items-center gap-3">
+      <div class="flex items-center gap-2">
         <label class="flex items-center gap-1 cursor-pointer">
-          <input type="checkbox" id="toggle-headtags" checked class="rounded bg-slate-800 border-slate-700 text-blue-500">
+          <input type="checkbox" id="toggle-headtags" onchange="redrawCanvasLayers()" checked class="rounded bg-slate-800 border-slate-700 text-blue-500">
           <span class="text-slate-300">🎯 Player Tags</span>
         </label>
         <label class="flex items-center gap-1 cursor-pointer">
-          <input type="checkbox" id="toggle-ghosts" checked class="rounded bg-slate-800 border-slate-700 text-emerald-500">
+          <input type="checkbox" id="toggle-ghosts" onchange="redrawCanvasLayers()" checked class="rounded bg-slate-800 border-slate-700 text-emerald-500">
           <span class="text-slate-300">👻 Dynamic Target Spots</span>
         </label>
       </div>
@@ -558,10 +710,11 @@
 
   <script src="https://www.youtube.com/iframe_api"></script>
   <script>
-    const PARENT_PASSCODE = "U13ATIGERS";
-    const COACH_PASSCODE = "COACHTIGERS";
+    let PARENT_PASSCODE = "U13ATIGERS";
+    let COACH_PASSCODE = "COACHTIGERS";
+    let ADMIN_PASSCODE = "ADMINTIGERS";
 
-    const ROSTER_POSITIONS = {
+    let ROSTER_POSITIONS = {
       "3": { pos: "D", name: "Stewart Dolmage" },
       "5": { pos: "RD", name: "Nathan Zhao" },
       "7": { pos: "F", name: "Maxwell Dey" },
@@ -584,7 +737,7 @@
     const BASELINE_SYSTEMS = {
       pp_131: {
         name: "Powerplay 1-3-1 (Umbrella)",
-        description: "5v4 Advantage: Point QB, bumper slot, net front screen, two flank shooters",
+        description: "5v4 Advantage: Point quarterback with bumper slot, net front screen, and two flank shooters",
         positions: {
           "Point":  { x: 0.60, y: 0.50, label: "Point (QB)" },
           "Left":   { x: 0.76, y: 0.22, label: "Left Flank (1-Timer)" },
@@ -595,7 +748,7 @@
       },
       pk_box: {
         name: "Penalty Kill (Box 2x2)",
-        description: "4v5 Short-Handed: Two high forwards sealing lanes, two low defensemen protecting the house",
+        description: "4v5 Short-Handed: Two high forwards sealing point lanes, two low defensemen protecting the house",
         positions: {
           "F1": { x: 0.30, y: 0.38, label: "High Left Forward" },
           "F2": { x: 0.30, y: 0.62, label: "High Right Forward" },
@@ -605,7 +758,7 @@
       },
       pk_diamond: {
         name: "Penalty Kill (Diamond / Wedge+1)",
-        description: "4v5 Short-Handed: Point pressure, mid-wall flank containment, net-front locked",
+        description: "4v5 Short-Handed: High pressure on the point, mid-wall flank containment, net-front locked",
         positions: {
           "F1": { x: 0.34, y: 0.50, label: "High Point Pressure" },
           "F2": { x: 0.24, y: 0.30, label: "Left Mid-Wall" },
@@ -696,6 +849,8 @@
     };
 
     let isCoach = false;
+    let isAdmin = false;
+    let fullLibraryData = { settings: {}, games: [] };
     let gamesLibrary = [];
     let currentGame = null;
     let ytPlayer = null;
@@ -733,8 +888,9 @@
 
     function checkAuth() {
       const storedRole = safeGet("team_role");
-      if (storedRole === "coach" || storedRole === "parent") {
-        isCoach = (storedRole === "coach");
+      if (storedRole === "admin" || storedRole === "coach" || storedRole === "parent") {
+        isAdmin = (storedRole === "admin");
+        isCoach = (storedRole === "coach" || storedRole === "admin");
         unlockScreen();
         initApp();
       }
@@ -742,83 +898,206 @@
 
     function handlePasscodeSubmit() {
       const inputEl = document.getElementById('passcode-input');
-      const raw = inputEl ? inputEl.value : "";
-      const clean = String(raw).trim().replace(/[^a-zA-Z0-9]/g, '').toUpperCase();
+      const clean = String(inputEl ? inputEl.value : "").trim().replace(/[^a-zA-Z0-9]/g, '').toUpperCase();
       const errorMsg = document.getElementById('auth-error');
 
-      if (clean === COACH_PASSCODE) {
-        isCoach = true;
+      if (clean === ADMIN_PASSCODE) {
+        isAdmin = true; isCoach = true;
+        safeSet("team_role", "admin");
+        unlockScreen(); initApp();
+      } else if (clean === COACH_PASSCODE) {
+        isCoach = true; isAdmin = false;
         safeSet("team_role", "coach");
-        unlockScreen();
-        initApp();
+        unlockScreen(); initApp();
       } else if (clean === PARENT_PASSCODE) {
-        isCoach = false;
+        isCoach = false; isAdmin = false;
         safeSet("team_role", "parent");
-        unlockScreen();
-        initApp();
+        unlockScreen(); initApp();
       } else {
-        if (errorMsg) {
-          errorMsg.innerText = "Incorrect passcode. Please try again.";
-          errorMsg.classList.remove('hidden');
-        }
+        if (errorMsg) errorMsg.classList.remove('hidden');
       }
     }
 
-    document.addEventListener("DOMContentLoaded", () => {
-      const passInput = document.getElementById('passcode-input');
-      if (passInput) {
-        passInput.addEventListener('keydown', (e) => {
-          if (e.key === 'Enter') {
-            e.preventDefault();
-            handlePasscodeSubmit();
-          }
-        });
-      }
-    });
-
     function unlockScreen() {
       updateRoleBadge();
-      const modal = document.getElementById('auth-modal');
-      const content = document.getElementById('main-content');
-      if (modal) modal.style.display = 'none';
-      if (content) content.style.display = 'block';
+      document.getElementById('auth-modal').style.display = 'none';
+      document.getElementById('main-content').style.display = 'block';
     }
 
     function updateRoleBadge() {
       const badge = document.getElementById('role-badge');
-      if (!badge) return;
-      if (isCoach) {
+      const adminBtn = document.getElementById('admin-settings-btn');
+      if (isAdmin) {
+        badge.innerText = "⚡ Administrator";
+        badge.className = "px-2 py-0.5 rounded text-[10px] font-bold bg-purple-900/60 text-purple-300 border border-purple-600";
+        if (adminBtn) adminBtn.classList.remove('hidden');
+      } else if (isCoach) {
         badge.innerText = "👨‍🏫 Coach Mode";
         badge.className = "px-2 py-0.5 rounded text-[10px] font-bold bg-amber-900/60 text-amber-300 border border-amber-600";
+        if (adminBtn) adminBtn.classList.remove('hidden');
       } else {
         badge.innerText = "Parent View";
         badge.className = "px-2 py-0.5 rounded text-[10px] font-bold bg-slate-800 text-slate-300 border border-slate-700";
+        if (adminBtn) adminBtn.classList.add('hidden');
       }
     }
 
     function promptSwitchRole() {
       const choice = prompt("Enter passcode to switch role or type 'LOGOUT' to exit:", "");
       if (!choice) return;
-
       const clean = String(choice).trim().replace(/[^a-zA-Z0-9]/g, '').toUpperCase();
-      if (clean === COACH_PASSCODE) {
-        isCoach = true;
-        safeSet("team_role", "coach");
-        updateRoleBadge();
-        showToast("👨‍🏫 Switched to Coach Mode!");
-        renderActiveView();
+      if (clean === ADMIN_PASSCODE) {
+        isAdmin = true; isCoach = true; safeSet("team_role", "admin"); updateRoleBadge(); showToast("⚡ Admin Mode Unlocked!");
+      } else if (clean === COACH_PASSCODE) {
+        isCoach = true; isAdmin = false; safeSet("team_role", "coach"); updateRoleBadge(); showToast("👨‍🏫 Coach Mode!");
       } else if (clean === PARENT_PASSCODE) {
-        isCoach = false;
-        safeSet("team_role", "parent");
-        updateRoleBadge();
-        showToast("👤 Switched to Parent View!");
-        renderActiveView();
+        isCoach = false; isAdmin = false; safeSet("team_role", "parent"); updateRoleBadge(); showToast("👤 Parent View!");
       } else if (clean === "LOGOUT") {
         try { localStorage.removeItem("team_role"); } catch(e){}
         window.location.reload();
-      } else {
-        alert("Passcode not recognized.");
       }
+    }
+
+    // ================= ADMIN DASHBOARD LOGIC =================
+    function setAdminTab(tabName) {
+      ['video', 'gemini', 'cookies', 'calendar', 'roster', 'security', 'cloud'].forEach(t => {
+        const el = document.getElementById(`admin-tab-${t}`);
+        const btn = document.getElementById(`tab-btn-${t}`);
+        if (el) el.classList.toggle('hidden', t !== tabName);
+        if (btn) {
+          btn.className = (t === tabName) 
+            ? "pb-2 border-b-2 border-amber-500 text-amber-400 font-bold whitespace-nowrap" 
+            : "pb-2 border-b-2 border-transparent text-slate-400 hover:text-white font-bold whitespace-nowrap";
+        }
+      });
+    }
+
+    function openAdminModal() {
+      document.getElementById('admin-playlist-input').value = fullLibraryData.settings?.youtube_playlist_url || "";
+      document.getElementById('admin-gemini-key').value = fullLibraryData.settings?.google_api_key || "";
+      document.getElementById('admin-cookies-input').value = fullLibraryData.settings?.yt_cookies || "";
+      document.getElementById('admin-teamsnap-input').value = fullLibraryData.settings?.teamsnap_ical_url || "";
+      document.getElementById('admin-parent-passcode').value = PARENT_PASSCODE;
+      document.getElementById('admin-coach-passcode').value = COACH_PASSCODE;
+      document.getElementById('admin-admin-passcode').value = ADMIN_PASSCODE;
+      document.getElementById('admin-github-pat').value = safeGet("github_pat") || "";
+
+      renderAdminRosterTable();
+      setAdminTab('video');
+      document.getElementById('admin-modal').classList.remove('hidden');
+    }
+    function closeAdminModal() { document.getElementById('admin-modal').classList.add('hidden'); }
+
+    function renderAdminRosterTable() {
+      const tbody = document.getElementById('admin-roster-tbody');
+      tbody.innerHTML = '';
+      Object.entries(ROSTER_POSITIONS).forEach(([num, p]) => {
+        addRosterRow(num, p.name, p.pos);
+      });
+      document.getElementById('admin-roster-count').innerText = Object.keys(ROSTER_POSITIONS).length;
+    }
+
+    function addRosterRow(num, name, pos) {
+      const tbody = document.getElementById('admin-roster-tbody');
+      const tr = document.createElement('tr');
+      tr.className = "hover:bg-slate-900";
+      tr.innerHTML = `
+        <td class="p-1"><input type="text" value="${num}" class="w-12 bg-slate-900 border border-slate-700 rounded px-1.5 py-1 text-center font-bold text-yellow-400"></td>
+        <td class="p-1"><input type="text" value="${name}" placeholder="Player Name" class="w-full bg-slate-900 border border-slate-700 rounded px-2 py-1 text-white font-semibold"></td>
+        <td class="p-1">
+          <select class="bg-slate-900 border border-slate-700 rounded px-1.5 py-1 text-xs">
+            <option value="C" ${pos==='C'?'selected':''}>C</option>
+            <option value="LW" ${pos==='LW'?'selected':''}>LW</option>
+            <option value="RW" ${pos==='RW'?'selected':''}>RW</option>
+            <option value="F" ${pos==='F'?'selected':''}>F</option>
+            <option value="LD" ${pos==='LD'?'selected':''}>LD</option>
+            <option value="RD" ${pos==='RD'?'selected':''}>RD</option>
+            <option value="D" ${pos==='D'?'selected':''}>D</option>
+            <option value="G" ${pos==='G'?'selected':''}>G</option>
+          </select>
+        </td>
+        <td class="p-1 text-center"><button onclick="this.closest('tr').remove()" class="text-rose-400 hover:text-rose-300 font-bold">&times;</button></td>
+      `;
+      tbody.appendChild(tr);
+    }
+
+    async function saveAdminSettings() {
+      fullLibraryData.settings = fullLibraryData.settings || {};
+      fullLibraryData.settings.youtube_playlist_url = document.getElementById('admin-playlist-input').value.trim();
+      fullLibraryData.settings.google_api_key = document.getElementById('admin-gemini-key').value.trim();
+      fullLibraryData.settings.yt_cookies = document.getElementById('admin-cookies-input').value.trim();
+      fullLibraryData.settings.teamsnap_ical_url = document.getElementById('admin-teamsnap-input').value.trim();
+
+      PARENT_PASSCODE = document.getElementById('admin-parent-passcode').value.trim().toUpperCase();
+      COACH_PASSCODE = document.getElementById('admin-coach-passcode').value.trim().toUpperCase();
+      ADMIN_PASSCODE = document.getElementById('admin-admin-passcode').value.trim().toUpperCase();
+
+      fullLibraryData.settings.parent_passcode = PARENT_PASSCODE;
+      fullLibraryData.settings.coach_passcode = COACH_PASSCODE;
+      fullLibraryData.settings.admin_passcode = ADMIN_PASSCODE;
+
+      // Extract updated roster table
+      const newRoster = {};
+      document.querySelectorAll('#admin-roster-tbody tr').forEach(tr => {
+        const inputs = tr.querySelectorAll('input');
+        const select = tr.querySelector('select');
+        const num = inputs[0].value.trim();
+        const name = inputs[1].value.trim();
+        const pos = select.value;
+        if (num && name) newRoster[num] = { name, pos };
+      });
+      ROSTER_POSITIONS = newRoster;
+      fullLibraryData.settings.roster = newRoster;
+      initRosterDropdown();
+
+      // Check if GitHub Direct Cloud Sync PAT is provided
+      const pat = document.getElementById('admin-github-pat').value.trim();
+      if (pat) {
+        safeSet("github_pat", pat);
+        showToast("⏳ Committing directly to GitHub...");
+        try {
+          const owner = "scottrepository";
+          const repo = "U13A-Tigers-2026-2027";
+          const path = "games_library.json";
+          const getRes = await fetch(`https://api.github.com/repos/${owner}/${repo}/contents/${path}`);
+          const fileData = await getRes.json();
+          const sha = fileData.sha;
+
+          const contentBase64 = btoa(unescape(encodeURIComponent(JSON.stringify(fullLibraryData, null, 2))));
+          const putRes = await fetch(`https://api.github.com/repos/${owner}/${repo}/contents/${path}`, {
+            method: "PUT",
+            headers: {
+              "Authorization": `Bearer ${pat}`,
+              "Accept": "application/vnd.github.v3+json",
+              "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+              message: "chore(admin): live update settings, API key & roster from web portal [skip ci]",
+              content: contentBase64,
+              sha: sha
+            })
+          });
+
+          if (putRes.ok) {
+            showToast("☁️ Settings committed directly to GitHub!");
+          } else {
+            showToast("⚠️ GitHub commit failed. Check PAT permissions.");
+          }
+        } catch (e) {
+          console.error(e);
+          showToast("⚠️ Cloud error. Saved locally in browser.");
+        }
+      } else {
+        safeSet("custom_settings", JSON.stringify(fullLibraryData.settings));
+        showToast("💾 Saved locally in browser!");
+      }
+
+      closeAdminModal();
+    }
+
+    function copyLibraryJsonWithSettings() {
+      navigator.clipboard.writeText(JSON.stringify(fullLibraryData, null, 2));
+      showToast("📋 Database JSON copied to clipboard!");
     }
 
     function openOverviewModal() { document.getElementById('overview-modal').classList.remove('hidden'); }
@@ -833,7 +1112,6 @@
       document.getElementById('feedback-text').value = '';
       document.getElementById('feedback-modal').classList.remove('hidden');
     }
-
     function closeFeedbackModal() { document.getElementById('feedback-modal').classList.add('hidden'); }
 
     function sendFeedbackEmail() {
@@ -842,23 +1120,9 @@
       const note = document.getElementById('feedback-text').value.trim();
       const time = document.getElementById('feedback-time-label').innerText;
       const game = document.getElementById('feedback-game-label').innerText;
-
-      if (!note) {
-        alert("Please enter a short description before submitting.");
-        return;
-      }
-
+      if (!note) { alert("Please enter notes before submitting."); return; }
       const subject = encodeURIComponent(`[U13A Tigers Film Hub] ${type} (${time})`);
-      const body = encodeURIComponent(
-        `From: ${name}\n` +
-        `Game: ${game}\n` +
-        `Timestamp: ${time}\n` +
-        `Category: ${activeCategory}\n` +
-        `Type: ${type}\n\n` +
-        `Notes / Details:\n${note}\n\n` +
-        `-- Sent from U13A Tigers Video Hub`
-      );
-
+      const body = encodeURIComponent(`From: ${name}\nGame: ${game}\nTimestamp: ${time}\nCategory: ${activeCategory}\nType: ${type}\n\nNotes:\n${note}`);
       window.location.href = `mailto:scott.carpentier@gmail.com?subject=${subject}&body=${body}`;
       closeFeedbackModal();
       showToast("✉️ Opening email client...");
@@ -870,7 +1134,6 @@
       const note = document.getElementById('feedback-text').value.trim();
       const time = document.getElementById('feedback-time-label').innerText;
       const game = document.getElementById('feedback-game-label').innerText;
-
       const summary = `🏒 *U13A Tigers Note*\nFrom: ${name}\nGame: ${game}\nTime: ${time}\nIssue: ${type}\nDetails: ${note}`;
       navigator.clipboard.writeText(summary);
       showToast("📋 Report copied to clipboard!");
@@ -890,10 +1153,8 @@
         videoBox.classList.add('hidden');
         rinkBg.classList.remove('hidden');
         playbackCtrls.classList.add('opacity-30', 'pointer-events-none');
-        
         videoBtn.className = "px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 font-bold cursor-pointer transition";
         boardBtn.className = "px-3 py-1.5 rounded-lg bg-purple-600 text-white font-bold cursor-pointer transition shadow";
-        
         if (!isDrawingMode) toggleDrawMode();
         drawBtn.innerText = "🎨 Draw on Whiteboard";
         document.getElementById('current-shift-status').innerText = "Tactical Whiteboard Active: Sketch set plays, breakouts, or positioning.";
@@ -902,110 +1163,49 @@
         rinkBg.classList.add('hidden');
         videoBox.classList.remove('hidden');
         playbackCtrls.classList.remove('opacity-30', 'pointer-events-none');
-        
         videoBtn.className = "px-3 py-1.5 rounded-lg bg-blue-600 text-white font-bold cursor-pointer transition shadow";
         boardBtn.className = "px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 font-bold cursor-pointer transition";
         drawBtn.innerText = "🎨 Draw on Screen";
         document.getElementById('current-shift-status').innerText = "Video Film Active. Select any sequence below to play.";
-        
         if (isDrawingMode) toggleDrawMode();
       }
       resizeCanvas();
+      redrawCanvasLayers();
     }
 
     function renderRinkBackground() {
       if (!rinkCanvas || !rinkCanvas.parentElement) return;
       rinkCanvas.width = rinkCanvas.parentElement.clientWidth;
       rinkCanvas.height = rinkCanvas.parentElement.clientHeight;
+      const w = rinkCanvas.width, h = rinkCanvas.height;
 
-      const w = rinkCanvas.width;
-      const h = rinkCanvas.height;
+      rinkCtx.fillStyle = "#f8fafc"; rinkCtx.fillRect(0, 0, w, h);
+      rinkCtx.strokeStyle = "#0f172a"; rinkCtx.lineWidth = 6; rinkCtx.strokeRect(3, 3, w - 6, h - 6);
+      rinkCtx.strokeStyle = "#dc2626"; rinkCtx.lineWidth = 4;
+      rinkCtx.beginPath(); rinkCtx.moveTo(w / 2, 0); rinkCtx.lineTo(w / 2, h); rinkCtx.stroke();
+      rinkCtx.beginPath(); rinkCtx.arc(w / 2, h / 2, h * 0.18, 0, Math.PI * 2); rinkCtx.stroke();
+      rinkCtx.fillStyle = "#dc2626"; rinkCtx.beginPath(); rinkCtx.arc(w / 2, h / 2, 5, 0, Math.PI * 2); rinkCtx.fill();
 
-      rinkCtx.fillStyle = "#f8fafc";
-      rinkCtx.fillRect(0, 0, w, h);
+      rinkCtx.strokeStyle = "#2563eb"; rinkCtx.lineWidth = 5;
+      rinkCtx.beginPath(); rinkCtx.moveTo(w * 0.35, 0); rinkCtx.lineTo(w * 0.35, h);
+      rinkCtx.moveTo(w * 0.65, 0); rinkCtx.lineTo(w * 0.65, h); rinkCtx.stroke();
 
-      rinkCtx.strokeStyle = "#0f172a";
-      rinkCtx.lineWidth = 6;
-      rinkCtx.strokeRect(3, 3, w - 6, h - 6);
-
-      rinkCtx.strokeStyle = "#dc2626";
-      rinkCtx.lineWidth = 4;
-      rinkCtx.beginPath();
-      rinkCtx.moveTo(w / 2, 0);
-      rinkCtx.lineTo(w / 2, h);
-      rinkCtx.stroke();
-
-      rinkCtx.beginPath();
-      rinkCtx.arc(w / 2, h / 2, h * 0.18, 0, Math.PI * 2);
-      rinkCtx.stroke();
-      rinkCtx.fillStyle = "#dc2626";
-      rinkCtx.beginPath();
-      rinkCtx.arc(w / 2, h / 2, 5, 0, Math.PI * 2);
-      rinkCtx.fill();
-
-      rinkCtx.strokeStyle = "#2563eb";
-      rinkCtx.lineWidth = 5;
-      rinkCtx.beginPath();
-      rinkCtx.moveTo(w * 0.35, 0);
-      rinkCtx.lineTo(w * 0.35, h);
-      rinkCtx.moveTo(w * 0.65, 0);
-      rinkCtx.lineTo(w * 0.65, h);
-      rinkCtx.stroke();
-
-      rinkCtx.strokeStyle = "#dc2626";
-      rinkCtx.lineWidth = 2;
-      rinkCtx.beginPath();
-      rinkCtx.moveTo(w * 0.08, 0);
-      rinkCtx.lineTo(w * 0.08, h);
-      rinkCtx.moveTo(w * 0.92, 0);
-      rinkCtx.lineTo(w * 0.92, h);
-      rinkCtx.stroke();
-
-      rinkCtx.fillStyle = "#bae6fd";
-      rinkCtx.strokeStyle = "#dc2626";
-      rinkCtx.lineWidth = 2;
-      
-      rinkCtx.beginPath();
-      rinkCtx.arc(w * 0.08, h / 2, h * 0.08, -Math.PI / 2, Math.PI / 2);
-      rinkCtx.fill();
-      rinkCtx.stroke();
-
-      rinkCtx.beginPath();
-      rinkCtx.arc(w * 0.92, h / 2, h * 0.08, Math.PI / 2, 3 * Math.PI / 2);
-      rinkCtx.fill();
-      rinkCtx.stroke();
+      rinkCtx.strokeStyle = "#dc2626"; rinkCtx.lineWidth = 2;
+      rinkCtx.beginPath(); rinkCtx.moveTo(w * 0.08, 0); rinkCtx.lineTo(w * 0.08, h);
+      rinkCtx.moveTo(w * 0.92, 0); rinkCtx.lineTo(w * 0.92, h); rinkCtx.stroke();
 
       const drawFaceoffCircle = (cx, cy) => {
-        rinkCtx.strokeStyle = "#dc2626";
-        rinkCtx.lineWidth = 2;
-        rinkCtx.beginPath();
-        rinkCtx.arc(cx, cy, h * 0.16, 0, Math.PI * 2);
-        rinkCtx.stroke();
-        rinkCtx.fillStyle = "#dc2626";
-        rinkCtx.beginPath();
-        rinkCtx.arc(cx, cy, 4, 0, Math.PI * 2);
-        rinkCtx.fill();
+        rinkCtx.strokeStyle = "#dc2626"; rinkCtx.lineWidth = 2;
+        rinkCtx.beginPath(); rinkCtx.arc(cx, cy, h * 0.16, 0, Math.PI * 2); rinkCtx.stroke();
+        rinkCtx.fillStyle = "#dc2626"; rinkCtx.beginPath(); rinkCtx.arc(cx, cy, 4, 0, Math.PI * 2); rinkCtx.fill();
       };
-
-      drawFaceoffCircle(w * 0.20, h * 0.28);
-      drawFaceoffCircle(w * 0.20, h * 0.72);
-      drawFaceoffCircle(w * 0.80, h * 0.28);
-      drawFaceoffCircle(w * 0.80, h * 0.72);
-
-      const drawDot = (cx, cy) => {
-        rinkCtx.fillStyle = "#dc2626";
-        rinkCtx.beginPath();
-        rinkCtx.arc(cx, cy, 4, 0, Math.PI * 2);
-        rinkCtx.fill();
-      };
-      drawDot(w * 0.42, h * 0.28);
-      drawDot(w * 0.42, h * 0.72);
-      drawDot(w * 0.58, h * 0.28);
-      drawDot(w * 0.58, h * 0.72);
+      drawFaceoffCircle(w * 0.20, h * 0.28); drawFaceoffCircle(w * 0.20, h * 0.72);
+      drawFaceoffCircle(w * 0.80, h * 0.28); drawFaceoffCircle(w * 0.80, h * 0.72);
     }
 
     function changeSystemTemplate(systemKey) {
       activeSystemTemplate = systemKey;
+      redrawCanvasLayers();
       const sys = BASELINE_SYSTEMS[systemKey];
       if (sys) {
         showToast(`📐 Loaded: ${sys.name}`);
@@ -1015,108 +1215,67 @@
       }
     }
 
-    function getInterpolatedAnchor(currentTime, anchors) {
-      if (!anchors || anchors.length === 0) return null;
-      let prev = null, next = null;
-      for (let i = 0; i < anchors.length; i++) {
-        if (anchors[i].time_sec <= currentTime) prev = anchors[i];
-        if (anchors[i].time_sec > currentTime) { next = anchors[i]; break; }
-      }
-      if (prev && !next) return prev.puck_xy;
-      if (!prev && next) return next.puck_xy;
-      if (!prev && !next) return null;
-      const alpha = (currentTime - prev.time_sec) / (next.time_sec - prev.time_sec);
-      return [
-        prev.puck_xy[0] + (next.puck_xy[0] - prev.puck_xy[0]) * alpha,
-        prev.puck_xy[1] + (next.puck_xy[1] - prev.puck_xy[1]) * alpha
-      ];
-    }
-
     function redrawCanvasLayers() {
       if (!ctx || !canvas) return;
       ctx.clearRect(0, 0, canvas.width, canvas.height);
-
       const showGhosts = document.getElementById('toggle-ghosts')?.checked !== false;
       const showTags = document.getElementById('toggle-headtags')?.checked !== false;
-      const w = canvas.width;
-      const h = canvas.height;
+      const w = canvas.width, h = canvas.height;
 
-      const currentTime = (isPlayerReady && ytPlayer && ytPlayer.getCurrentTime) ? ytPlayer.getCurrentTime() : 0;
-
-      // 1. Dynamic Ghost Target Spots
       if (showGhosts && activeSystemTemplate !== "none" && BASELINE_SYSTEMS[activeSystemTemplate]) {
         const sys = BASELINE_SYSTEMS[activeSystemTemplate];
         const selectedPlayerPos = ROSTER_POSITIONS[currentJersey]?.pos || "C";
-        
-        const anchor = currentGame ? getInterpolatedAnchor(currentTime, currentGame.anchors) : null;
-        let driftX = 0, driftY = 0;
-        if (anchor) {
-          driftX = (anchor[0] - 0.5) * 0.30;
-          driftY = (anchor[1] - 0.5) * 0.30;
-        }
 
         Object.entries(sys.positions).forEach(([roleKey, posData]) => {
-          const px = Math.max(0.05, Math.min(0.95, posData.x + driftX)) * w;
-          const py = Math.max(0.05, Math.min(0.95, posData.y + driftY)) * h;
+          const px = posData.x * w;
+          const py = posData.y * h;
           const isPlayerMatch = (roleKey === selectedPlayerPos || (roleKey.startsWith('F') && selectedPlayerPos.includes('F')));
 
           ctx.beginPath();
           ctx.arc(px, py, isPlayerMatch ? 24 : 18, 0, Math.PI * 2);
-          ctx.fillStyle = isPlayerMatch ? "rgba(16, 185, 129, 0.35)" : "rgba(245, 158, 11, 0.20)";
+          ctx.fillStyle = isPlayerMatch ? "rgba(16, 185, 129, 0.40)" : "rgba(56, 189, 248, 0.20)";
           ctx.fill();
 
           ctx.beginPath();
           ctx.arc(px, py, isPlayerMatch ? 24 : 18, 0, Math.PI * 2);
-          ctx.setLineDash([5, 4]);
-          ctx.strokeStyle = isPlayerMatch ? "#10b981" : "#f59e0b";
-          ctx.lineWidth = isPlayerMatch ? 3 : 2;
+          ctx.setLineDash([4, 4]);
+          ctx.strokeStyle = isPlayerMatch ? "#10b981" : "#38bdf8";
+          ctx.lineWidth = isPlayerMatch ? 3 : 1.5;
           ctx.stroke();
           ctx.setLineDash([]);
 
-          ctx.fillStyle = "#ffffff";
-          ctx.font = isPlayerMatch ? "bold 11px sans-serif" : "10px sans-serif";
+          ctx.fillStyle = isPlayerMatch ? "#10b981" : "#94a3b8";
+          ctx.font = isPlayerMatch ? "bold 12px sans-serif" : "10px sans-serif";
           ctx.textAlign = "center";
           ctx.fillText(posData.label, px, py - (isPlayerMatch ? 28 : 22));
         });
       }
 
-      // 2. Head Tags & Spotlight in Player Mode
       if (showTags && currentMode === "player" && ROSTER_POSITIONS[currentJersey]) {
         const pInfo = ROSTER_POSITIONS[currentJersey];
-        const badgeX = w * 0.50;
-        const badgeY = h * 0.35;
+        const badgeX = w * 0.48, badgeY = h * 0.40;
 
         ctx.beginPath();
         ctx.ellipse(badgeX, badgeY + 45, 32, 14, 0, 0, Math.PI * 2);
-        ctx.fillStyle = "rgba(250, 204, 21, 0.35)";
-        ctx.fill();
-        ctx.strokeStyle = "#facc15";
-        ctx.lineWidth = 2.5;
-        ctx.stroke();
+        ctx.fillStyle = "rgba(250, 204, 21, 0.35)"; ctx.fill();
+        ctx.strokeStyle = "#facc15"; ctx.lineWidth = 2.5; ctx.stroke();
 
         const labelText = `#${currentJersey} (${pInfo.pos}) ${pInfo.name}`;
-        ctx.font = "bold 12px sans-serif";
+        ctx.font = "bold 13px sans-serif";
         const textWidth = ctx.measureText(labelText).width;
         
-        ctx.fillStyle = "rgba(15, 23, 42, 0.90)";
+        ctx.fillStyle = "rgba(15, 23, 42, 0.85)";
         ctx.strokeStyle = "#facc15";
         ctx.lineWidth = 2;
         ctx.beginPath();
         ctx.roundRect(badgeX - (textWidth / 2) - 8, badgeY - 26, textWidth + 16, 26, 6);
-        ctx.fill();
-        ctx.stroke();
+        ctx.fill(); ctx.stroke();
 
-        ctx.fillStyle = "#facc15";
-        ctx.textAlign = "center";
+        ctx.fillStyle = "#facc15"; ctx.textAlign = "center";
         ctx.fillText(labelText, badgeX, badgeY - 9);
       }
 
       drawSavedChalkboard();
-    }
-
-    function animationLoop() {
-      redrawCanvasLayers();
-      requestAnimationFrame(animationLoop);
     }
 
     function switchViewMode(mode) {
@@ -1157,6 +1316,7 @@
       }
 
       resizeCanvas();
+      redrawCanvasLayers();
     }
 
     function renderActiveView() {
@@ -1171,24 +1331,25 @@
 
       initRosterDropdown();
 
-      fetch('games_library.json')
+      fetch('./games_library.json?t=' + Date.now())
         .then(res => res.json())
         .then(data => {
-          gamesLibrary = data.games || [];
+          fullLibraryData = Array.isArray(data) ? { settings: {}, games: data } : data;
+          gamesLibrary = fullLibraryData.games || [];
+          if (fullLibraryData.settings?.roster) {
+            ROSTER_POSITIONS = fullLibraryData.settings.roster;
+            initRosterDropdown();
+          }
           populateGameSelect();
           renderScheduleDashboard();
-
-          if (gamesLibrary.length > 0) {
-            loadGame(gamesLibrary[0].id);
-          }
+          if (gamesLibrary.length > 0) loadGame(gamesLibrary[0].id);
         })
         .catch(err => {
-          console.warn("Using default game library:", err);
+          console.warn("Using baseline library:", err);
         });
 
       setupTelestrator();
       startAutoPlayMonitor();
-      requestAnimationFrame(animationLoop);
     }
 
     function initRosterDropdown() {
@@ -1210,22 +1371,18 @@
       gamesLibrary.forEach(g => {
         const opt = document.createElement('option');
         opt.value = g.id;
-        opt.innerText = `${g.date || 'Game'} - ${g.title}`;
+        opt.innerText = `${g.date || 'Game'} - ${g.title || 'Game Film'}`;
         select.appendChild(opt);
       });
     }
 
-    const selectEl = document.getElementById('game-select');
-    if (selectEl) {
-      selectEl.addEventListener('change', (e) => loadGame(e.target.value));
-    }
+    document.getElementById('game-select')?.addEventListener('change', (e) => loadGame(e.target.value));
 
     function loadGame(gameId) {
       currentGame = gamesLibrary.find(g => g.id === gameId) || gamesLibrary[0];
       if (!currentGame) return;
 
       const vidId = currentGame.youtube_video_id || currentGame.id.replace('game_', '');
-
       if (ytPlayer && isPlayerReady) {
         ytPlayer.loadVideoById(vidId);
       } else if (window.YT && window.YT.Player) {
@@ -1240,16 +1397,16 @@
     function renderTeamSnapBanner() {
       if (!currentGame) return;
       const ts = currentGame.teamsnap || currentGame.metadata || {
-        date: currentGame.date || "Saturday, Oct 3, 2026",
+        date: "Saturday, Oct 3, 2026",
         time: "2:15 PM EDT",
-        arena: "Aurora Community Centre",
-        address: "1 Community Centre Ln, Aurora, ON L4G 7B1",
-        maps_url: "https://maps.google.com/?q=Aurora+Community+Centre",
-        home_away: "Home",
-        jersey: "White (Home)"
+        arena: "Caledon East Community Complex - Pad 1",
+        address: "6215 Old Church Rd, Caledon East, ON L7C 1J7",
+        maps_url: "https://maps.google.com/?q=6215+Old+Church+Rd+Caledon+East+ON",
+        home_away: "Away",
+        jersey: "White (Away)"
       };
 
-      document.getElementById('ts-datetime').innerText = `${ts.date || currentGame.date} • ${ts.time || 'Match Film'}`;
+      document.getElementById('ts-datetime').innerText = `${ts.date || currentGame.date} • ${ts.time || 'Game Time'}`;
       document.getElementById('ts-arena').innerText = ts.arena || "Aurora Community Centre";
       document.getElementById('ts-arena-link').href = ts.maps_url || `https://maps.google.com/?q=${encodeURIComponent(ts.address || ts.arena)}`;
       document.getElementById('ts-homeaway').innerText = ts.home_away || (ts.is_home ? "Home" : "Away");
@@ -1257,9 +1414,7 @@
     }
 
     function onYouTubeIframeAPIReady() {
-      if (currentGame) {
-        initYouTubePlayer(currentGame.youtube_video_id || currentGame.id.replace('game_', ''));
-      }
+      if (currentGame) initYouTubePlayer(currentGame.youtube_video_id || currentGame.id.replace('game_', ''));
     }
 
     function initYouTubePlayer(videoId) {
@@ -1273,14 +1428,8 @@
     function renderAnalyticsSummary() {
       if (!currentGame) return;
       const a = currentGame.analytics || {
-        active_play_time: "38m 20s",
-        possession_tigers_pct: 52,
-        possession_opp_pct: 48,
-        ozone_time: "13m 30s",
-        dzone_time: "11m 45s",
-        shots_on_goal: 24,
-        goalie_saves: 26,
-        save_pct: "91.5%"
+        active_play_time: "38m 20s", possession_tigers_pct: 52, possession_opp_pct: 48,
+        ozone_time: "13m 30s", dzone_time: "11m 45s", shots_on_goal: 24, goalie_saves: 26, save_pct: "91.5%"
       };
 
       document.getElementById('metric-active-time').innerText = `${a.active_play_time} Action Time`;
@@ -1310,8 +1459,8 @@
     }
 
     function loadCoachingClips() {
-      if (!currentGame) return;
-      let clips = (currentGame.coaching_clips || {})[activeCategory] || [];
+      if (!currentGame || !currentGame.coaching_clips) return;
+      let clips = currentGame.coaching_clips[activeCategory] || [];
       const container = document.getElementById('clips-stream-container');
       const countEl = document.getElementById('clip-strip-count');
       const titleEl = document.getElementById('clip-strip-title');
@@ -1327,16 +1476,12 @@
       };
 
       if (titleEl) titleEl.innerText = titles[activeCategory] || "Tactical Plays";
-
-      if (isSuggestedOnly) {
-        clips = clips.filter(c => c.suggested === true);
-      }
-
+      if (isSuggestedOnly) clips = clips.filter(c => c.suggested === true);
       if (countEl) countEl.innerText = `${clips.length} clips`;
       container.innerHTML = '';
 
       if (clips.length === 0) {
-        container.innerHTML = '<p class="text-xs text-slate-500 italic col-span-3 py-4 text-center">No clips logged in this category for this game.</p>';
+        container.innerHTML = '<p class="text-xs text-slate-500 italic col-span-3 py-4 text-center">No clips found matching this filter.</p>';
         return;
       }
 
@@ -1371,7 +1516,7 @@
                       class="px-2 py-1.5 rounded bg-slate-800 hover:bg-slate-700 cursor-pointer ${isStarred ? 'text-amber-400 font-bold' : 'text-slate-400'}">
                 ${isStarred ? '★' : '☆'}
               </button>
-              <button onclick="openEditClipModal('${activeCategory}', ${idx})" class="px-2 py-1.5 bg-slate-800 hover:bg-slate-700 text-slate-400 hover:text-white rounded cursor-pointer" title="Edit Clip">
+              <button onclick="openEditClipModal('${activeCategory}', ${idx})" class="px-2 py-1.5 bg-slate-800 hover:bg-slate-700 text-slate-400 hover:text-white rounded cursor-pointer" title="Edit">
                 ✏️
               </button>
             ` : ''}
@@ -1399,6 +1544,7 @@
       if (!val) return;
       currentJersey = val;
       loadPlayerShifts();
+      redrawCanvasLayers();
     }
 
     function loadPlayerShifts() {
@@ -1469,6 +1615,8 @@
         `;
         container.appendChild(card);
       });
+
+      redrawCanvasLayers();
     }
 
     function playPlayerShift(idx) {
@@ -1481,6 +1629,7 @@
       if (activeCard) activeCard.classList.add('ring-2', 'ring-blue-500');
 
       playTimestamp(shift.start, `Shift ${shift.id || (idx + 1)} (${shift.duration}s)`);
+      redrawCanvasLayers();
     }
 
     function renderScheduleDashboard() {
@@ -1574,7 +1723,6 @@
       document.getElementById('edit-clip-suggested').checked = clip.suggested === true;
       document.getElementById('edit-clip-modal').classList.remove('hidden');
     }
-
     function closeEditModal() { document.getElementById('edit-clip-modal').classList.add('hidden'); }
 
     function saveClipEdit() {
@@ -1584,14 +1732,13 @@
       clip.end = parseFloat(document.getElementById('edit-clip-end').value);
       clip.duration = Math.max(1, clip.end - clip.start);
       clip.suggested = document.getElementById('edit-clip-suggested').checked;
-
       closeEditModal();
       loadCoachingClips();
       showToast("✅ Clip updated!");
     }
 
     function deleteCurrentClip() {
-      if (confirm("Delete this clip from tactical feed?")) {
+      if (confirm("Delete this clip?")) {
         currentGame.coaching_clips[activeEditCategory].splice(activeEditIndex, 1);
         closeEditModal();
         loadCoachingClips();
@@ -1599,10 +1746,12 @@
       }
     }
 
+    // ================= ZERO-POPUP CHALKBOARD ENGINE =================
     function setupTelestrator() {
       window.addEventListener('resize', () => {
         resizeCanvas();
         if (currentStage === 'whiteboard') renderRinkBackground();
+        redrawCanvasLayers();
       });
       resizeCanvas();
 
@@ -1618,6 +1767,7 @@
           const text = prompt("Coach Instruction Note on ice:");
           if (text) {
             drawHistory.push([{ tool: 'text', x: startX, y: startY, text: text, color: drawColor }]);
+            redrawCanvasLayers();
           }
           return;
         }
@@ -1625,16 +1775,19 @@
         if (currentTool === 'marker') {
           const role = document.getElementById('tigers-stamp-label')?.value || "T";
           drawHistory.push([{ tool: 'marker', x: startX, y: startY, label: role, color: drawColor }]);
+          redrawCanvasLayers();
           return;
         }
 
         if (currentTool === 'opponent') {
           drawHistory.push([{ tool: 'opponent', x: startX, y: startY }]);
+          redrawCanvasLayers();
           return;
         }
 
         if (currentTool === 'puck') {
           drawHistory.push([{ tool: 'puck', x: startX, y: startY }]);
+          redrawCanvasLayers();
           return;
         }
 
@@ -1650,6 +1803,7 @@
 
         if (currentTool === 'pen') {
           currentStroke.push({ tool: 'pen', x: curX, y: curY, color: drawColor });
+          redrawCanvasLayers();
         }
       });
 
@@ -1666,6 +1820,7 @@
           drawHistory.push([...currentStroke]);
         }
         currentStroke = [];
+        redrawCanvasLayers();
       });
     }
 
@@ -1750,6 +1905,7 @@
     function undoDraw() {
       if (drawHistory.length > 0) {
         drawHistory.pop();
+        redrawCanvasLayers();
       }
     }
 
@@ -1787,6 +1943,7 @@
     function clearCanvas() { 
       drawHistory = []; 
       currentStroke = [];
+      redrawCanvasLayers();
     }
 
     function startAutoPlayMonitor() {
@@ -1841,15 +1998,13 @@
 
     function showToast(msg) {
       const t = document.getElementById('toast');
-      const text = document.getElementById('toast-text');
-      if (text) text.innerText = msg;
-      if (t) {
-        t.classList.remove('opacity-0', 'pointer-events-none');
-        setTimeout(() => t.classList.add('opacity-0', 'pointer-events-none'), 2500);
-      }
+      document.getElementById('toast-text').innerText = msg;
+      t.classList.remove('opacity-0', 'pointer-events-none');
+      setTimeout(() => t.classList.add('opacity-0', 'pointer-events-none'), 2500);
     }
 
     checkAuth();
   </script>
 </body>
 </html>
+```
