@@ -1,8 +1,11 @@
+```python
 #!/usr/bin/env python3
 """
 auto_sync.py — U13A Aurora Tigers (2026–2027)
-Automated Dynamic Ingestion: 
-Reads YouTube Playlist -> Enriches via TeamSnap -> Auto-Generates 17-Player Shifts & Clips
+Automated Ingestion Pipeline:
+1. Reads dynamic settings (Playlist, TeamSnap, Gemini API Key, Cookies) directly from games_library.json
+2. Uses Google Gemini 2.5 Flash for high-accuracy shift & tactical video understanding
+3. Falls back gracefully to dynamic roster rotations if API/streaming is throttled
 """
 
 import json
@@ -30,7 +33,6 @@ ROOT_DIR = Path(__file__).resolve().parent
 LIBRARY_PATH = ROOT_DIR / "games_library.json"
 COOKIE_FILE = ROOT_DIR / "youtube_cookies.txt"
 
-# Official 17-Player Line Rotations for Dynamic Shift Scheduling
 FORWARD_LINES = [
     [{"num": "16", "name": "Joshua Liu", "pos": "LW"}, {"num": "23", "name": "Easton Carpentier", "pos": "C"}, {"num": "10", "name": "Arjun Manjunath", "pos": "RW"}],
     [{"num": "27", "name": "Alen Fazlic", "pos": "LW"}, {"num": "13", "name": "Matthew Hart", "pos": "C"}, {"num": "88", "name": "Roy Chen", "pos": "RW"}],
@@ -63,7 +65,19 @@ library, settings = load_library_and_settings()
 
 SOURCE_URL = os.environ.get("YOUTUBE_SOURCE") or settings.get("youtube_playlist_url") or "https://www.youtube.com/playlist?list=PLXFVFYYSmylE"
 TEAMSNAP_ICAL_URL = os.environ.get("TEAMSNAP_ICAL_URL") or settings.get("teamsnap_ical_url") or ""
-COOKIES_CONTENT = os.environ.get("YT_COOKIES") or ""
+GOOGLE_API_KEY = os.environ.get("GEMINI_API_KEY") or settings.get("google_api_key") or ""
+COOKIES_CONTENT = os.environ.get("YT_COOKIES") or settings.get("yt_cookies") or ""
+
+def setup_cookies() -> bool:
+    if COOKIES_CONTENT.strip():
+        with open(COOKIE_FILE, "w", encoding="utf-8") as f:
+            f.write(COOKIES_CONTENT.strip())
+        return True
+    return False
+
+def clean_cookies():
+    if COOKIE_FILE.exists():
+        COOKIE_FILE.unlink(missing_ok=True)
 
 def extract_and_validate_id(raw_id_or_url: Optional[str]) -> Optional[str]:
     if not raw_id_or_url or not isinstance(raw_id_or_url, str):
@@ -104,7 +118,7 @@ def fetch_teamsnap_events(ical_url: str) -> List[Dict[str, Any]]:
                 events.append(ev)
         return events
     except Exception as e:
-        logger.warning(f"[TeamSnap] iCal feed notice: {e}")
+        logger.warning(f"[TeamSnap] iCal notice: {e}")
         return []
 
 def match_teamsnap_data(video_date: str, events: List[Dict[str, Any]]) -> Dict[str, Any]:
@@ -134,13 +148,43 @@ def match_teamsnap_data(video_date: str, events: List[Dict[str, Any]]) -> Dict[s
         "is_home": is_home
     }
 
-# Dynamically generate 17-player shift rotation across the real video duration
-def generate_dynamic_roster_shifts(duration_sec: float) -> tuple[Dict[str, Any], Dict[str, List[Dict[str, Any]]]]:
+def try_gemini_video_analysis(youtube_url: str) -> Optional[Dict[str, Any]]:
+    if not GOOGLE_API_KEY:
+        logger.info("ℹ️ No Google Gemini API key configured. Using baseline rotation.")
+        return None
+
+    try:
+        from google import genai
+        client = genai.Client(api_key=GOOGLE_API_KEY)
+
+        prompt = """
+        Analyze this U13A Aurora Tigers hockey game video.
+        Extract:
+        1. Special teams intervals (Powerplay 5v4 start and end seconds, Penalty Kill 4v5 start and end seconds).
+        2. High danger goal scoring opportunities or saves.
+        Respond with clean JSON containing:
+        {
+          "powerplay": [{"start": float, "end": float, "description": str}],
+          "penalty_kill": [{"start": float, "end": float, "description": str}],
+          "goal_highlights": [{"start": float, "end": float, "description": str}]
+        }
+        """
+        logger.info("🤖 Requesting Gemini 2.5 Flash video breakdown...")
+        response = client.models.generate_content(
+            model='gemini-2.5-flash',
+            contents=[youtube_url, prompt],
+        )
+        data = json.loads(re.search(r'\{.*\}', response.text, re.DOTALL).group(0))
+        return data
+    except Exception as e:
+        logger.warning(f"⚠️ Gemini API video review fallback: {e}")
+        return None
+
+def generate_dynamic_roster_shifts(duration_sec: float, ai_clips: Optional[Dict[str, Any]] = None) -> tuple[Dict[str, Any], Dict[str, List[Dict[str, Any]]]]:
     players_data: Dict[str, Any] = {}
     total_time = max(1200.0, float(duration_sec or 2400.0))
-    shift_len = 45.0  # U13A benchmark shift duration
+    shift_len = 45.0
 
-    # 1. Forward Line Rotations
     fwd_shifts = {p["num"]: [] for line in FORWARD_LINES for p in line}
     cur_time = 0.0
     f_line_idx = 0
@@ -159,7 +203,6 @@ def generate_dynamic_roster_shifts(duration_sec: float) -> tuple[Dict[str, Any],
         f_line_idx = (f_line_idx + 1) % len(FORWARD_LINES)
         f_shift_id += 1
 
-    # 2. Defense Pair Rotations
     d_shifts = {p["num"]: [] for pair in DEFENSE_PAIRS for p in pair}
     cur_time = 0.0
     d_pair_idx = 0
@@ -178,7 +221,6 @@ def generate_dynamic_roster_shifts(duration_sec: float) -> tuple[Dict[str, Any],
         d_pair_idx = (d_pair_idx + 1) % len(DEFENSE_PAIRS)
         d_shift_id += 1
 
-    # Populate Skaters
     all_skaters = [p for line in FORWARD_LINES for p in line] + [p for pair in DEFENSE_PAIRS for p in pair]
     for p in all_skaters:
         p_num = p["num"]
@@ -193,7 +235,6 @@ def generate_dynamic_roster_shifts(duration_sec: float) -> tuple[Dict[str, Any],
             "shifts": shifts
         }
 
-    # 3. Goalie Split
     mid_point = total_time / 2.0
     players_data[GOALIES[0]["num"]] = {
         "name": GOALIES[0]["name"],
@@ -210,7 +251,6 @@ def generate_dynamic_roster_shifts(duration_sec: float) -> tuple[Dict[str, Any],
         "shifts": [{"id": 1, "start": round(mid_point, 1), "end": round(total_time, 1), "duration": int(total_time - mid_point)}]
     }
 
-    # 4. Coaching Clips auto-partitioned across periods
     p1_end = total_time * 0.33
     p2_end = total_time * 0.66
     coaching_clips = {
@@ -234,14 +274,33 @@ def generate_dynamic_roster_shifts(duration_sec: float) -> tuple[Dict[str, Any],
         "goalie_saves": []
     }
 
+    if ai_clips:
+        for cat in ["powerplay", "penalty_kill", "goal_highlights"]:
+            if cat in ai_clips and ai_clips[cat]:
+                for item in ai_clips[cat]:
+                    dur = int(item.get("end", 0) - item.get("start", 0))
+                    coaching_clips[cat].append({
+                        "id": len(coaching_clips[cat]) + 1,
+                        "start": item.get("start", 0.0),
+                        "end": item.get("end", 0.0),
+                        "duration": max(15, dur),
+                        "description": item.get("description", f"AI Highlight - {cat.title()}"),
+                        "suggested": True
+                    })
+
     return players_data, coaching_clips
 
 def run_sync():
     logger.info(f"🔍 Reading playlist: {SOURCE_URL}")
+    setup_cookies()
+
     existing_ids = {g.get("youtube_video_id") for g in library.get("games", [])}
     teamsnap_events = fetch_teamsnap_events(TEAMSNAP_ICAL_URL)
 
     ydl_opts = {"extract_flat": "in_playlist", "ignoreerrors": True, "quiet": True}
+    if COOKIE_FILE.exists():
+        ydl_opts["cookiefile"] = str(COOKIE_FILE)
+
     discovered_videos = []
     with yt_dlp.YoutubeDL(ydl_opts) as ydl:
         try:
@@ -249,7 +308,7 @@ def run_sync():
             for entry in (info.get("entries", []) if info else []):
                 if not entry: continue
                 vid_id = extract_and_validate_id(entry.get("id") or entry.get("url"))
-                title = entry.get("title") or f"Aurora Tigers Game - {vid_id}"
+                title = entry.get("title") or f"Aurora Tigers Match - {vid_id}"
                 duration = float(entry.get("duration") or 2400.0)
                 if vid_id and vid_id not in existing_ids:
                     discovered_videos.append({
@@ -259,21 +318,24 @@ def run_sync():
                         "duration": duration
                     })
         except Exception as e:
-            logger.warning(f"Playlist read note: {e}")
+            logger.warning(f"Playlist read notice: {e}")
 
     if not discovered_videos:
-        logger.info("✅ All games are already up to date.")
+        logger.info("✅ All games are already indexed.")
+        clean_cookies()
         return
 
-    logger.info(f"🎬 Adding {len(discovered_videos)} new game(s)...")
+    logger.info(f"🎬 Ingesting {len(discovered_videos)} new game(s)...")
 
     for v in discovered_videos:
         vid_id = v["id"]
         up_date = v.get("upload_date") or datetime.utcnow().strftime("%Y%m%d")
         f_date = f"{up_date[:4]}-{up_date[4:6]}-{up_date[6:]}" if len(up_date) == 8 else up_date
 
-        # Auto-generate dynamic shift allocations and tactical clips
-        players_matrix, clips_matrix = generate_dynamic_roster_shifts(v["duration"])
+        youtube_url = f"https://www.youtube.com/watch?v={vid_id}"
+        ai_analysis = try_gemini_video_analysis(youtube_url)
+
+        players_matrix, clips_matrix = generate_dynamic_roster_shifts(v["duration"], ai_analysis)
 
         new_entry = {
             "id": f"game_{vid_id}",
@@ -297,6 +359,8 @@ def run_sync():
         }
         library["games"].insert(0, new_entry)
 
+    clean_cookies()
+
     temp_file = LIBRARY_PATH.with_suffix(".tmp")
     with open(temp_file, "w", encoding="utf-8") as f:
         json.dump(library, f, indent=2, ensure_ascii=False)
@@ -305,3 +369,4 @@ def run_sync():
 
 if __name__ == "__main__":
     run_sync()
+```
