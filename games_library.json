@@ -1,10 +1,10 @@
 {
   "settings": {
     "youtube_playlist_url": "https://www.youtube.com/playlist?list=PLXFVFYYSmylE",
-    "teamsnap_ical_url": "",
+    "teamsnap_ical_url": "http://ical-cdn.teamsnap.com/team_schedule/filter/games/469cd969-5e1b-4d4c-8f7f-56718c2bf7c3.ics",
     "parent_passcode": "U13ATIGERS",
     "coach_passcode": "COACHTIGERS",
-    "google_api_key": ""
+    "admin_passcode": "ADMINTIGERS"
   },
   "games": []
 }
