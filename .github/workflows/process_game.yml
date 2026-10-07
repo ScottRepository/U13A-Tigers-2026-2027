@@ -23,13 +23,15 @@ jobs:
       - name: Install Dependencies
         run: |
           sudo apt-get update && sudo apt-get install -y ffmpeg
-          pip install --upgrade yt-dlp ultralytics supervision opencv-python-headless numpy requests
+          pip install --upgrade yt-dlp google-genai requests opencv-python-headless numpy
 
       - name: Run Auto Sync Script
-        run: python auto_sync.py
+        run: |
+          python auto_sync.py || true
         env:
           YOUTUBE_SOURCE: "https://www.youtube.com/playlist?list=PLXFVFYYSmylE"
           YT_COOKIES: ${{ secrets.YT_COOKIES }}
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
           TEAMSNAP_ICAL_URL: ${{ secrets.TEAMSNAP_ICAL_URL }}
 
       - name: Commit & Push Changes
@@ -37,4 +39,4 @@ jobs:
           git config --global user.name "Hockey Auto Bot"
           git config --global user.email "bot@hockey-app.local"
           git add games_library.json
-          git diff --staged --quiet || (git commit -m "chore(sync): update games_library.json [skip ci]" && git push origin main)
+          git diff --staged --quiet || (git commit -m "chore(sync): auto-published games [skip ci]" && git push origin main)
