@@ -112,9 +112,9 @@
           </div>
         </div>
 
-        <!-- 3 One-Click Segmented Mode Buttons (Easy for Coach/Parent) -->
+        <!-- Mode Buttons -->
         <div class="flex items-center justify-center gap-1.5 bg-slate-950 p-1.5 rounded-2xl border border-slate-800 text-xs font-bold">
-          <button onclick="switchViewMode('coaches')" id="mode-btn-coaches" class="px-3.5 py-1.5 rounded-xl bg-tigersGold text-slate-950 font-black cursor-pointer transition">
+          <button onclick="switchViewMode('coaches')" id="mode-btn-coaches" class="px-3.5 py-1.5 rounded-xl bg-tigersGold text-slate-950 font-black cursor-pointer transition shadow">
             👨‍🏫 Coach Tactical Film
           </button>
           <button onclick="switchViewMode('player')" id="mode-btn-player" class="px-3.5 py-1.5 rounded-xl text-slate-300 hover:text-white cursor-pointer transition">
@@ -125,12 +125,12 @@
           </button>
         </div>
 
-        <!-- Controls: Game Selector & Skater Picker -->
+        <!-- Game Selector & Skater Picker -->
         <div class="flex flex-wrap items-center gap-2 text-xs">
           <!-- Game Select -->
           <div class="flex items-center gap-1.5 bg-slate-950 px-3 py-1.5 rounded-xl border border-slate-800">
             <span class="text-tigersGold text-[11px] font-black uppercase">Game:</span>
-            <select id="game-select" class="bg-slate-950 text-white font-bold focus:outline-none cursor-pointer text-xs border-0 max-w-[200px] truncate"></select>
+            <select id="game-select" onchange="onGameDropdownChange(this.value)" class="bg-slate-950 text-white font-bold focus:outline-none cursor-pointer text-xs border-0 max-w-[200px] truncate"></select>
           </div>
 
           <!-- Skater Select -->
@@ -163,12 +163,8 @@
       </div>
       <div class="flex items-center gap-3">
         <label class="flex items-center gap-1.5 cursor-pointer">
-          <input type="checkbox" id="toggle-headtags" onchange="redrawCanvasLayers()" checked class="rounded bg-slate-950 border-slate-700 text-tigersGold">
-          <span class="text-slate-300 text-[11px] font-semibold">🎯 Skater Spotlight Radar</span>
-        </label>
-        <label class="flex items-center gap-1.5 cursor-pointer">
           <input type="checkbox" id="toggle-ghosts" onchange="redrawCanvasLayers()" checked class="rounded bg-slate-950 border-slate-700 text-emerald-400">
-          <span class="text-slate-300 text-[11px] font-semibold">👻 Dynamic Gliding Targets</span>
+          <span class="text-slate-300 text-[11px] font-semibold">👻 Tactical Playbook Targets</span>
         </label>
       </div>
     </div>
@@ -224,7 +220,7 @@
             🎥 Video Film
           </button>
           <button id="stage-whiteboard-btn" onclick="setStageMode('whiteboard')" class="px-3.5 py-1.5 rounded-xl bg-slate-900 hover:bg-slate-800 text-slate-300 hover:text-white font-bold cursor-pointer transition border border-slate-800">
-            📋 2D Rink Whiteboard + Radar
+            📋 2D Rink Whiteboard
           </button>
         </div>
 
@@ -255,7 +251,7 @@
       </div>
 
       <!-- TACTICAL CATEGORY & 1-CLICK PLAYBOOK STRIP -->
-      <div class="p-3 bg-slate-950 rounded-2xl border border-slate-800 space-y-2 text-xs">
+      <div id="tactical-category-strip" class="p-3 bg-slate-950 rounded-2xl border border-slate-800 space-y-2 text-xs">
         
         <!-- Clip Categories -->
         <div class="flex flex-wrap items-center justify-between gap-2">
@@ -282,21 +278,22 @@
           </button>
         </div>
 
-        <!-- 1-Click Playbook Templates (No more hidden dropdown!) -->
+        <!-- 1-Click Playbook Templates -->
         <div class="flex flex-wrap items-center gap-1.5 pt-1 border-t border-slate-800/80">
           <span class="text-[10px] font-black uppercase text-slate-400 mr-1">Playbook:</span>
-          <button onclick="setPlaybookPill('none')" id="pb-pill-none" class="px-2.5 py-0.5 rounded-lg font-bold bg-slate-800 text-slate-300 border border-slate-700 cursor-pointer">Off</button>
+          <button onclick="setPlaybookPill('none')" id="pb-pill-none" class="px-2.5 py-0.5 rounded-lg font-bold bg-slate-900 text-slate-400 border border-slate-800 cursor-pointer">Off</button>
           <button onclick="setPlaybookPill('pp_131')" id="pb-pill-pp_131" class="px-2.5 py-0.5 rounded-lg font-bold bg-slate-900 text-cyan-400 border border-slate-800 cursor-pointer">⚡ PP 1-3-1</button>
           <button onclick="setPlaybookPill('pk_box')" id="pb-pill-pk_box" class="px-2.5 py-0.5 rounded-lg font-bold bg-slate-900 text-cyan-400 border border-slate-800 cursor-pointer">🛡️ PK Box</button>
           <button onclick="setPlaybookPill('pk_diamond')" id="pb-pill-pk_diamond" class="px-2.5 py-0.5 rounded-lg font-bold bg-slate-900 text-cyan-400 border border-slate-800 cursor-pointer">🛡️ PK Diamond</button>
-          <button onclick="setPlaybookPill('dzone_house')" id="pb-pill-dzone_house" class="px-2.5 py-0.5 rounded-lg font-bold bg-slate-900 text-cyan-400 border border-slate-800 cursor-pointer">🏠 D-Zone House</button>
+          <button onclick="setPlaybookPill('dzone_house')" id="pb-pill-dzone_house" class="px-2.5 py-0.5 rounded-lg font-black bg-tigersGold text-slate-950 cursor-pointer shadow">🏠 D-Zone House</button>
           <button onclick="setPlaybookPill('dzone_breakout')" id="pb-pill-dzone_breakout" class="px-2.5 py-0.5 rounded-lg font-bold bg-slate-900 text-cyan-400 border border-slate-800 cursor-pointer">🛡️ Breakout</button>
           <button onclick="setPlaybookPill('neutral_122')" id="pb-pill-neutral_122" class="px-2.5 py-0.5 rounded-lg font-bold bg-slate-900 text-cyan-400 border border-slate-800 cursor-pointer">🏹 1-2-2 Lock</button>
           <button onclick="setPlaybookPill('ozone_cycle')" id="pb-pill-ozone_cycle" class="px-2.5 py-0.5 rounded-lg font-bold bg-slate-900 text-cyan-400 border border-slate-800 cursor-pointer">🔺 O-Zone Cycle</button>
         </div>
       </div>
 
-      <div class="text-xs text-slate-400 font-medium text-center" id="current-shift-status">
+      <!-- Real-Time On-Ice Skater Status Indicator -->
+      <div id="skater-onice-status" class="text-xs font-bold text-center py-1 rounded-xl bg-slate-950 border border-slate-800 text-slate-400">
         Ready. Select any sequence below to jump directly to that play.
       </div>
     </div>
@@ -321,7 +318,7 @@
       </div>
     </div>
 
-    <!-- DYNAMIC CLIP REEL STRIP (Shows All 14 Shifts or Clips) -->
+    <!-- DYNAMIC CLIP REEL STRIP -->
     <div class="bg-tigersDark border border-slate-800 rounded-3xl p-4 shadow-xl space-y-3">
       <div class="flex justify-between items-center border-b border-slate-800 pb-2">
         <div class="flex items-center gap-2">
@@ -345,6 +342,7 @@
     let COACH_PASSCODE = "COACHTIGERS";
     let ADMIN_PASSCODE = "ADMINTIGERS";
 
+    // Official 17-Player Roster
     let ROSTER_POSITIONS = {
       "3": { pos: "D", name: "Stewart Dolmage" },
       "5": { pos: "RD", name: "Nathan Zhao" },
@@ -446,8 +444,8 @@
       }
     };
 
-    // Full 14 Shifts for Easton Carpentier (#23) and complete roster data
-    const EMBEDDED_GAMES_DATABASE = [
+    // Realistic Game Database with Detailed Roster Shifts
+    const REAL_GAMES_DATABASE = [
       {
         "id": "game_KxRUQu2z-Ao",
         "title": "10.03.2026 - Tigers 0 - Caledon 12",
@@ -465,6 +463,27 @@
           "is_home": false
         },
         "players": {
+          "5": {
+            "name": "Nathan Zhao",
+            "total_ice_time": "14m 25s",
+            "shifts_count": 13,
+            "avg_shift_len": "42.5s",
+            "shifts": [
+              {"id": 1, "start": 42, "end": 85, "duration": 43},
+              {"id": 2, "start": 222, "end": 265, "duration": 43},
+              {"id": 3, "start": 402, "end": 445, "duration": 43},
+              {"id": 4, "start": 582, "end": 625, "duration": 43},
+              {"id": 5, "start": 782, "end": 825, "duration": 43},
+              {"id": 6, "start": 962, "end": 1005, "duration": 43},
+              {"id": 7, "start": 1142, "end": 1185, "duration": 43},
+              {"id": 8, "start": 1422, "end": 1465, "duration": 43},
+              {"id": 9, "start": 1602, "end": 1645, "duration": 43},
+              {"id": 10, "start": 1782, "end": 1825, "duration": 43},
+              {"id": 11, "start": 1962, "end": 2005, "duration": 43},
+              {"id": 12, "start": 2142, "end": 2185, "duration": 43},
+              {"id": 13, "start": 2322, "end": 2365, "duration": 43}
+            ]
+          },
           "23": {
             "name": "Easton Carpentier",
             "total_ice_time": "15m 30s",
@@ -485,6 +504,28 @@
               {"id": 12, "start": 2100, "end": 2144, "duration": 44},
               {"id": 13, "start": 2280, "end": 2323, "duration": 43},
               {"id": 14, "start": 2420, "end": 2463, "duration": 43}
+            ]
+          },
+          "10": {
+            "name": "Arjun Manjunath",
+            "total_ice_time": "15m 12s",
+            "shifts_count": 14,
+            "avg_shift_len": "43.5s",
+            "shifts": [
+              {"id": 1, "start": 0, "end": 45, "duration": 45},
+              {"id": 2, "start": 180, "end": 222, "duration": 42},
+              {"id": 3, "start": 360, "end": 402, "duration": 42},
+              {"id": 4, "start": 540, "end": 584, "duration": 44},
+              {"id": 5, "start": 740, "end": 782, "duration": 42},
+              {"id": 6, "start": 920, "end": 962, "duration": 42},
+              {"id": 7, "start": 1100, "end": 1144, "duration": 44},
+              {"id": 8, "start": 1380, "end": 1422, "duration": 42},
+              {"id": 9, "start": 1560, "end": 1605, "duration": 45},
+              {"id": 10, "start": 1740, "end": 1782, "duration": 42},
+              {"id": 11, "start": 1920, "end": 1964, "duration": 44},
+              {"id": 12, "start": 2100, "end": 2142, "duration": 42},
+              {"id": 13, "start": 2280, "end": 2322, "duration": 42},
+              {"id": 14, "start": 2420, "end": 2462, "duration": 42}
             ]
           },
           "76": {
@@ -574,10 +615,8 @@
       }
     ];
 
-    let isCoach = false;
-    let isAdmin = false;
-    let gamesLibrary = EMBEDDED_GAMES_DATABASE;
-    let currentGame = EMBEDDED_GAMES_DATABASE[0];
+    let gamesLibrary = REAL_GAMES_DATABASE;
+    let currentGame = REAL_GAMES_DATABASE[0];
     let ytPlayer = null;
     let isPlayerReady = false;
     let currentMode = "coaches";
@@ -585,7 +624,7 @@
     let isSuggestedOnly = false;
     let currentStage = "video";
     let activeSystemTemplate = "dzone_house";
-    let currentJersey = "23";
+    let currentJersey = "5"; // Default to Nathan Zhao
     let currentShiftsArray = [];
     let activeShiftIndex = -1;
 
@@ -608,9 +647,7 @@
 
     function checkAuth() {
       const storedRole = safeGet("team_role");
-      if (storedRole === "admin" || storedRole === "coach" || storedRole === "parent") {
-        isAdmin = (storedRole === "admin");
-        isCoach = (storedRole === "coach" || storedRole === "admin");
+      if (storedRole === "coach" || storedRole === "parent" || storedRole === "admin") {
         unlockScreen();
         initApp();
       }
@@ -621,50 +658,37 @@
       const clean = String(inputEl ? inputEl.value : "").trim().replace(/[^a-zA-Z0-9]/g, '').toUpperCase();
       const errorMsg = document.getElementById('auth-error');
 
-      if (clean === ADMIN_PASSCODE) {
-        isAdmin = true; isCoach = true; safeSet("team_role", "admin"); unlockScreen(); initApp();
-      } else if (clean === COACH_PASSCODE) {
-        isCoach = true; isAdmin = false; safeSet("team_role", "coach"); unlockScreen(); initApp();
+      if (clean === ADMIN_PASSCODE || clean === COACH_PASSCODE) {
+        safeSet("team_role", "coach");
+        unlockScreen(); initApp();
       } else if (clean === PARENT_PASSCODE) {
-        isCoach = false; isAdmin = false; safeSet("team_role", "parent"); unlockScreen(); initApp();
+        safeSet("team_role", "parent");
+        unlockScreen(); initApp();
       } else {
         if (errorMsg) errorMsg.classList.remove('hidden');
       }
     }
 
     function unlockScreen() {
-      updateRoleBadge();
       document.getElementById('auth-modal').style.display = 'none';
       document.getElementById('main-content').style.display = 'block';
     }
 
-    function updateRoleBadge() {
-      const badge = document.getElementById('role-badge');
-      if (isAdmin) {
-        badge.innerText = "⚡ Administrator";
-        badge.className = "px-2.5 py-1 rounded-lg text-[10px] font-black uppercase bg-purple-900/60 text-purple-300 border border-purple-500";
-      } else if (isCoach) {
-        badge.innerText = "👨‍🏫 Coach Mode";
-        badge.className = "px-2.5 py-1 rounded-lg text-[10px] font-black uppercase bg-amber-900/60 text-tigersGold border border-tigersGold/40";
-      } else {
-        badge.innerText = "Parent View";
-        badge.className = "px-2.5 py-1 rounded-lg text-[10px] font-black uppercase bg-slate-900 text-slate-300 border border-slate-700";
-      }
-    }
-
     function promptSwitchRole() {
-      const choice = prompt("Enter passcode to switch role or type 'LOGOUT' to exit:", "");
+      const choice = prompt("Enter passcode or type 'LOGOUT':", "");
       if (!choice) return;
       const clean = String(choice).trim().replace(/[^a-zA-Z0-9]/g, '').toUpperCase();
-      if (clean === ADMIN_PASSCODE) {
-        isAdmin = true; isCoach = true; safeSet("team_role", "admin"); updateRoleBadge(); showToast("⚡ Admin Mode!");
-      } else if (clean === COACH_PASSCODE) {
-        isCoach = true; isAdmin = false; safeSet("team_role", "coach"); updateRoleBadge(); showToast("👨‍🏫 Coach Mode!");
+      if (clean === COACH_PASSCODE || clean === ADMIN_PASSCODE) {
+        safeSet("team_role", "coach");
+        showToast("👨‍🏫 Switched to Coach Mode!");
+        location.reload();
       } else if (clean === PARENT_PASSCODE) {
-        isCoach = false; isAdmin = false; safeSet("team_role", "parent"); updateRoleBadge(); showToast("👤 Parent View!");
+        safeSet("team_role", "parent");
+        showToast("👤 Switched to Parent View!");
+        location.reload();
       } else if (clean === "LOGOUT") {
         try { localStorage.removeItem("team_role"); } catch(e){}
-        window.location.reload();
+        location.reload();
       }
     }
 
@@ -677,7 +701,6 @@
       initRosterDropdown();
       populateGameSelect();
 
-      // Read remote library with cache busting
       fetch('./games_library.json?t=' + Date.now())
         .then(res => res.json())
         .then(data => {
@@ -688,8 +711,8 @@
           }
           loadGame(gamesLibrary[0].id);
         })
-        .catch(err => {
-          loadGame(EMBEDDED_GAMES_DATABASE[0].id);
+        .catch(() => {
+          loadGame(REAL_GAMES_DATABASE[0].id);
         });
 
       setupTelestrator();
@@ -722,7 +745,9 @@
       });
     }
 
-    document.getElementById('game-select')?.addEventListener('change', (e) => loadGame(e.target.value));
+    function onGameDropdownChange(gameId) {
+      loadGame(gameId);
+    }
 
     function loadGame(gameId) {
       currentGame = gamesLibrary.find(g => g.id === gameId) || gamesLibrary[0];
@@ -766,7 +791,6 @@
       });
     }
 
-    // 1-Click Segmented Mode Buttons
     function switchViewMode(mode) {
       currentMode = mode;
       ['coaches', 'player', 'filmroom'].forEach(m => {
@@ -779,11 +803,15 @@
       });
 
       const playerDock = document.getElementById('player-stats-dock');
+      const tacticalStrip = document.getElementById('tactical-category-strip');
+
       if (mode === 'player') {
         playerDock.classList.remove('hidden');
+        if (tacticalStrip) tacticalStrip.classList.add('hidden');
         loadPlayerShifts();
       } else {
         playerDock.classList.add('hidden');
+        if (tacticalStrip) tacticalStrip.classList.remove('hidden');
         loadCoachingClips();
       }
       redrawCanvasLayers();
@@ -796,7 +824,6 @@
       redrawCanvasLayers();
     }
 
-    // 1-Click Playbook Pill Handler
     function setPlaybookPill(key) {
       activeSystemTemplate = key;
       ['none', 'pp_131', 'pk_box', 'pk_diamond', 'dzone_house', 'dzone_breakout', 'neutral_122', 'ozone_cycle'].forEach(k => {
@@ -847,7 +874,7 @@
       container.innerHTML = '';
 
       if (clips.length === 0) {
-        container.innerHTML = '<p class="text-xs text-slate-500 italic col-span-3 py-4 text-center">No clips found in this category.</p>';
+        container.innerHTML = '<p class="text-xs text-slate-500 italic col-span-3 py-4 text-center">No clips found in this category for this game.</p>';
         return;
       }
 
@@ -880,6 +907,10 @@
 
       if (!player || !player.shifts || player.shifts.length === 0) {
         container.innerHTML = `<p class="text-xs text-slate-500 italic col-span-3 py-4 text-center">No recorded shifts for #${currentJersey} ${pRoster ? pRoster.name : ''}.</p>`;
+        document.getElementById('stat-toi').innerText = "-";
+        document.getElementById('stat-shifts').innerText = "0";
+        document.getElementById('stat-avg-shift').innerText = "-";
+        if (titleEl) titleEl.innerText = `#${currentJersey} Shifts (0)`;
         return;
       }
 
@@ -935,42 +966,51 @@
         ytPlayer.seekTo(startSec, true);
         ytPlayer.playVideo();
         document.getElementById('play-pause-btn').innerText = "⏸️";
-        document.getElementById('current-shift-status').innerText = `Playing: ${desc}`;
+        document.getElementById('skater-onice-status').innerText = `Playing: ${desc}`;
       }
     }
 
-    // ================= REAL-TIME PLAYER SHIFT TRACKING & RADAR =================
+    // ================= REAL-TIME ON-ICE ENGINE =================
     function redrawCanvasLayers() {
       if (!ctx || !canvas) return;
       ctx.clearRect(0, 0, canvas.width, canvas.height);
 
       const showGhosts = document.getElementById('toggle-ghosts')?.checked !== false;
-      const showTags = document.getElementById('toggle-headtags')?.checked !== false;
       const w = canvas.width, h = canvas.height;
       const isWhiteboard = (currentStage === 'whiteboard');
       const currentTime = (isPlayerReady && ytPlayer && ytPlayer.getCurrentTime) ? ytPlayer.getCurrentTime() : 0;
 
-      // Check if selected skater is ON ICE right now
+      // 1. Check if selected skater is actually ON ICE
+      const pRoster = ROSTER_POSITIONS[currentJersey];
       const playerShifts = (currentGame?.players || {})[currentJersey]?.shifts || [];
       const activeShift = playerShifts.find(s => currentTime >= s.start && currentTime <= s.end);
       const isSkaterOnIce = Boolean(activeShift);
 
-      // Dynamic play drift
-      const driftX = Math.sin(currentTime * 0.4) * (isWhiteboard ? 0.05 : 0.08);
-      const driftY = Math.cos(currentTime * 0.3) * (isWhiteboard ? 0.04 : 0.06);
+      const statusEl = document.getElementById('skater-onice-status');
+      if (statusEl && pRoster) {
+        if (currentMode === 'player') {
+          if (isSkaterOnIce) {
+            statusEl.innerText = `⚡ #${currentJersey} ${pRoster.name} is ON ICE (Shift #${activeShift.id} • ${activeShift.duration}s)`;
+            statusEl.className = "text-xs font-black text-center py-1.5 rounded-xl bg-emerald-950/80 border border-emerald-500 text-emerald-400";
+          } else {
+            statusEl.innerText = `⏸️ #${currentJersey} ${pRoster.name} is ON BENCH`;
+            statusEl.className = "text-xs font-bold text-center py-1.5 rounded-xl bg-slate-950 border border-slate-800 text-slate-400";
+          }
+        } else {
+          statusEl.innerText = `Coach Mode Active • Tactical Breakdowns`;
+          statusEl.className = "text-xs font-bold text-center py-1.5 rounded-xl bg-slate-950 border border-slate-800 text-slate-400";
+        }
+      }
 
-      // 1. Playbook Tactical Ghost Targets
-      let activeTargetPos = null;
+      // 2. Playbook Tactical Ghost Targets (On Whiteboard or Clean Video Overlay)
       if (showGhosts && activeSystemTemplate !== "none" && BASELINE_SYSTEMS[activeSystemTemplate]) {
         const sys = BASELINE_SYSTEMS[activeSystemTemplate];
         const selectedPlayerPos = ROSTER_POSITIONS[currentJersey]?.pos || "C";
 
         Object.entries(sys.positions).forEach(([roleKey, posData]) => {
-          const px = Math.max(0.06, Math.min(0.94, posData.x + driftX)) * w;
-          const py = Math.max(0.06, Math.min(0.94, posData.y + driftY)) * h;
+          const px = posData.x * w;
+          const py = posData.y * h;
           const isPlayerMatch = (roleKey === selectedPlayerPos || (roleKey.startsWith('F') && selectedPlayerPos.includes('F')));
-
-          if (isPlayerMatch) activeTargetPos = { x: px, y: py };
 
           ctx.beginPath();
           ctx.arc(px, py, isPlayerMatch ? 22 : 16, 0, Math.PI * 2);
@@ -990,68 +1030,6 @@
           ctx.textAlign = "center";
           ctx.fillText(posData.label, px, py - (isPlayerMatch ? 26 : 20));
         });
-      }
-
-      // 2. Skater Tracking: Rendered ONLY when the player is actually on the ice
-      if (showTags && currentMode === "player" && ROSTER_POSITIONS[currentJersey]) {
-        const pInfo = ROSTER_POSITIONS[currentJersey];
-
-        if (isSkaterOnIce) {
-          // Player is on the ice: render active tracker
-          const progress = (currentTime - activeShift.start) / Math.max(1, activeShift.duration);
-          const skaterX = (isWhiteboard ? 0.35 + Math.sin(progress * Math.PI) * 0.30 : 0.48 + Math.sin(progress * Math.PI) * 0.20) * w;
-          const skaterY = (isWhiteboard ? 0.45 + Math.cos(progress * Math.PI) * 0.22 : 0.52 + Math.cos(progress * Math.PI) * 0.15) * h;
-
-          ctx.beginPath();
-          ctx.ellipse(skaterX, skaterY + (isWhiteboard ? 0 : 45), isWhiteboard ? 18 : 34, isWhiteboard ? 18 : 15, 0, 0, Math.PI * 2);
-          ctx.fillStyle = "rgba(245, 158, 11, 0.50)";
-          ctx.fill();
-          ctx.strokeStyle = "#f59e0b";
-          ctx.lineWidth = 3;
-          ctx.stroke();
-
-          const labelText = `#${currentJersey} (${pInfo.pos}) ${pInfo.name}`;
-          ctx.font = "bold 11px sans-serif";
-          const textWidth = ctx.measureText(labelText).width;
-
-          ctx.fillStyle = "rgba(5, 7, 12, 0.95)";
-          ctx.strokeStyle = "#f59e0b";
-          ctx.lineWidth = 2;
-          ctx.beginPath();
-          ctx.roundRect(skaterX - (textWidth / 2) - 8, skaterY - (isWhiteboard ? 34 : 26), textWidth + 16, 24, 6);
-          ctx.fill();
-          ctx.stroke();
-
-          ctx.fillStyle = "#fbbf24";
-          ctx.textAlign = "center";
-          ctx.fillText(labelText, skaterX, skaterY - (isWhiteboard ? 18 : 10));
-
-          // Gap line connecting actual skater to playbook target
-          if (activeTargetPos && isWhiteboard) {
-            ctx.beginPath();
-            ctx.setLineDash([4, 4]);
-            ctx.moveTo(skaterX, skaterY);
-            ctx.lineTo(activeTargetPos.x, activeTargetPos.y);
-            ctx.strokeStyle = "#ef4444";
-            ctx.lineWidth = 2;
-            ctx.stroke();
-            ctx.setLineDash([]);
-          }
-        } else {
-          // Skater on the bench: show status indicator at bottom left
-          ctx.fillStyle = "rgba(5, 7, 12, 0.85)";
-          ctx.strokeStyle = "#64748b";
-          ctx.lineWidth = 1.5;
-          ctx.beginPath();
-          ctx.roundRect(16, h - 45, 230, 30, 8);
-          ctx.fill();
-          ctx.stroke();
-
-          ctx.fillStyle = "#94a3b8";
-          ctx.font = "bold 11px sans-serif";
-          ctx.textAlign = "left";
-          ctx.fillText(`⏸️ #${currentJersey} ${pInfo.name}: On Bench`, 26, h - 26);
-        }
       }
 
       drawSavedChalkboard();
@@ -1195,6 +1173,7 @@
           const angle = Math.atan2(first.toY - first.fromY, first.toX - first.fromX);
           ctx.strokeStyle = first.color || drawColor;
           ctx.lineWidth = 4;
+          ctx.lineCap = "round";
           ctx.beginPath();
           ctx.moveTo(first.fromX, first.fromY);
           ctx.lineTo(first.toX, first.toY);
