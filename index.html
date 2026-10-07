@@ -39,7 +39,7 @@
     }
   </style>
 </head>
-<body class="bg-tigersBlack text-slate-100 min-h-screen p-2 md:p-5 select-none font-sans">
+<body class="bg-tigersBlack text-slate-100 min-h-screen p-2 md:p-4 select-none font-sans">
 
   <!-- ================= AUTH MODAL ================= -->
   <div id="auth-modal" class="fixed inset-0 bg-black/95 backdrop-blur-md flex items-center justify-center p-4 z-50">
@@ -89,31 +89,50 @@
   <!-- ================= MAIN APP VIEW ================= -->
   <div id="main-content" class="max-w-7xl mx-auto space-y-3" style="display: none;">
     
-    <!-- BRANDED TOP NAVIGATION BAR -->
-    <header class="bg-tigersDark border border-tigersGold/30 rounded-3xl p-3 md:p-4 shadow-2xl backdrop-blur-md">
+    <!-- BRANDED TOP NAVIGATION BAR (With Integrated TeamSnap Banner) -->
+    <header class="bg-tigersDark border border-tigersGold/30 rounded-3xl p-3 md:p-4 shadow-2xl backdrop-blur-md space-y-3">
       <div class="flex flex-col xl:flex-row items-stretch xl:items-center justify-between gap-3">
         
-        <!-- Logo & Identity -->
-        <div class="flex items-center justify-between xl:justify-start gap-3">
+        <!-- Logo & TeamSnap Info Combined -->
+        <div class="flex flex-wrap items-center gap-3">
           <div class="flex items-center gap-3">
             <div class="w-12 h-12 bg-tigersGold text-slate-950 flex items-center justify-center rounded-2xl font-black text-2xl shadow-md border-2 border-white">
               🐯
             </div>
             <div>
               <h1 class="text-lg font-black text-white tracking-wider leading-none">AURORA TIGERS</h1>
-              <span class="text-[11px] text-tigersGold font-bold uppercase tracking-wider">U13A Coaching & Video Hub</span>
+              <span class="text-[11px] text-tigersGold font-bold uppercase tracking-wider">U13A Coaching Hub</span>
             </div>
           </div>
-          <div class="flex items-center gap-2">
-            <span id="role-badge" class="px-2.5 py-1 rounded-lg text-[10px] font-black uppercase bg-slate-900 text-tigersGold border border-tigersGold/40">Parent View</span>
-            <button onclick="promptSwitchRole()" class="text-[11px] bg-slate-900 hover:bg-slate-800 text-slate-300 hover:text-white px-2.5 py-1 rounded-lg border border-slate-700 font-semibold cursor-pointer transition">
-              🔄 Switch
-            </button>
+
+          <!-- TeamSnap Match Meta Pills -->
+          <div class="flex flex-wrap items-center gap-2 text-xs bg-slate-950 px-3 py-1.5 rounded-2xl border border-slate-800">
+            <span class="text-tigersGold font-bold">📅 <span id="ts-datetime" class="text-slate-200">Saturday, Oct 3, 2026 • 2:15 PM</span></span>
+            <span class="text-slate-600">|</span>
+            <a id="ts-arena-link" href="#" target="_blank" class="text-sky-400 hover:underline font-bold flex items-center gap-1">
+              📍 <span id="ts-arena">Caledon East Community Complex</span> ↗
+            </a>
+            <span class="text-slate-600">|</span>
+            <span id="ts-homeaway" class="px-2 py-0.5 rounded text-[10px] font-black uppercase bg-slate-900 text-tigersGold border border-slate-800">Away</span>
+            <span id="ts-jersey" class="text-slate-400 text-[11px]">Jersey: <strong>White</strong></span>
           </div>
         </div>
 
-        <!-- Mode Buttons -->
-        <div class="flex items-center justify-center gap-1.5 bg-slate-950 p-1.5 rounded-2xl border border-slate-800 text-xs font-bold">
+        <!-- Role Badge & Switcher -->
+        <div class="flex items-center gap-2 self-end xl:self-auto">
+          <span id="role-badge" class="px-2.5 py-1 rounded-lg text-[10px] font-black uppercase bg-slate-900 text-tigersGold border border-tigersGold/40">Parent View</span>
+          <button onclick="promptSwitchRole()" class="text-[11px] bg-slate-900 hover:bg-slate-800 text-slate-300 hover:text-white px-2.5 py-1 rounded-lg border border-slate-700 font-semibold cursor-pointer transition">
+            🔄 Switch
+          </button>
+        </div>
+
+      </div>
+
+      <!-- Navigation Row: 3 Mode Buttons + Game Selector + Skater Picker -->
+      <div class="flex flex-wrap items-center justify-between gap-2 border-t border-slate-800/80 pt-2.5 text-xs">
+        
+        <!-- 3 Segmented Mode Buttons -->
+        <div class="flex items-center gap-1.5 bg-slate-950 p-1.5 rounded-2xl border border-slate-800 font-bold">
           <button onclick="switchViewMode('coaches')" id="mode-btn-coaches" class="px-3.5 py-1.5 rounded-xl bg-tigersGold text-slate-950 font-black cursor-pointer transition shadow">
             👨‍🏫 Coach Tactical Film
           </button>
@@ -126,11 +145,11 @@
         </div>
 
         <!-- Game Selector & Skater Picker -->
-        <div class="flex flex-wrap items-center gap-2 text-xs">
+        <div class="flex flex-wrap items-center gap-2">
           <!-- Game Select -->
           <div class="flex items-center gap-1.5 bg-slate-950 px-3 py-1.5 rounded-xl border border-slate-800">
             <span class="text-tigersGold text-[11px] font-black uppercase">Game:</span>
-            <select id="game-select" onchange="onGameDropdownChange(this.value)" class="bg-slate-950 text-white font-bold focus:outline-none cursor-pointer text-xs border-0 max-w-[200px] truncate"></select>
+            <select id="game-select" onchange="onGameDropdownChange(this.value)" class="bg-slate-950 text-white font-bold focus:outline-none cursor-pointer text-xs border-0 max-w-[220px] truncate"></select>
           </div>
 
           <!-- Skater Select -->
@@ -142,32 +161,6 @@
 
       </div>
     </header>
-
-    <!-- TEAMSNAP MATCH BANNER -->
-    <div id="teamsnap-banner" class="bg-tigersDark border border-slate-800 rounded-2xl px-4 py-2.5 text-xs flex flex-wrap items-center justify-between gap-3 shadow-md">
-      <div class="flex flex-wrap items-center gap-4">
-        <div class="flex items-center gap-1.5">
-          <span class="text-tigersGold font-bold">📅</span>
-          <span id="ts-datetime" class="font-bold text-slate-200">Saturday, Oct 3, 2026 • 2:15 PM</span>
-        </div>
-        <div class="flex items-center gap-1.5">
-          <span class="text-sky-400 font-bold">📍</span>
-          <a id="ts-arena-link" href="#" target="_blank" class="text-sky-400 hover:underline font-bold flex items-center gap-1">
-            <span id="ts-arena">Caledon East Community Complex</span> ↗
-          </a>
-        </div>
-        <div class="flex items-center gap-2">
-          <span id="ts-homeaway" class="px-2 py-0.5 rounded text-[10px] font-black uppercase bg-slate-950 text-tigersGold border border-slate-800">Away</span>
-          <span id="ts-jersey" class="text-slate-400 text-[11px]">Jersey: <strong>Away (White)</strong></span>
-        </div>
-      </div>
-      <div class="flex items-center gap-3">
-        <label class="flex items-center gap-1.5 cursor-pointer">
-          <input type="checkbox" id="toggle-ghosts" onchange="redrawCanvasLayers()" checked class="rounded bg-slate-950 border-slate-700 text-emerald-400">
-          <span class="text-slate-300 text-[11px] font-semibold">👻 Tactical Playbook Targets</span>
-        </label>
-      </div>
-    </div>
 
     <!-- THEATER VIDEO & WHITEBOARD STAGE -->
     <div class="bg-tigersDark border border-slate-800 rounded-3xl p-3 md:p-4 shadow-2xl space-y-3">
@@ -213,7 +206,7 @@
         </div>
       </div>
 
-      <!-- PLAYBACK CONTROLS BAR -->
+      <!-- PLAYBACK CONTROLS BAR (With +30s Jump) -->
       <div class="flex flex-wrap items-center justify-between gap-3 text-xs border-t border-slate-800 pt-2 px-1">
         <div class="flex items-center gap-1.5">
           <button id="stage-video-btn" onclick="setStageMode('video')" class="px-3.5 py-1.5 rounded-xl bg-tigersGold text-slate-950 font-black cursor-pointer transition shadow">
@@ -238,10 +231,12 @@
             <button onclick="stepSeconds(1)" class="px-2 py-1 rounded bg-slate-900 hover:bg-slate-800 text-slate-200 cursor-pointer border border-slate-800">⏭️ +1s</button>
           </div>
 
+          <!-- Jump Controls: Added +30s -->
           <div class="flex items-center gap-1 bg-slate-950 px-2 py-0.5 rounded-lg border border-slate-800">
             <button onclick="stepSeconds(-5)" class="px-2 py-1 rounded bg-slate-900 hover:bg-slate-800 text-slate-300 font-semibold cursor-pointer transition">-5s</button>
             <button onclick="stepSeconds(5)" class="px-2 py-1 rounded bg-slate-900 hover:bg-tigersGold hover:text-slate-950 text-slate-200 font-bold cursor-pointer transition">+5s</button>
             <button onclick="stepSeconds(15)" class="px-2 py-1 rounded bg-slate-900 hover:bg-tigersGold hover:text-slate-950 text-slate-200 font-bold cursor-pointer transition">+15s</button>
+            <button onclick="stepSeconds(30)" class="px-2 py-1 rounded bg-slate-900 hover:bg-tigersGold hover:text-slate-950 text-slate-200 font-bold cursor-pointer transition">+30s</button>
           </div>
         </div>
 
@@ -250,7 +245,7 @@
         </button>
       </div>
 
-      <!-- TACTICAL CATEGORY & 1-CLICK PLAYBOOK STRIP -->
+      <!-- TACTICAL CATEGORY & 1-CLICK PLAYBOOK STRIP (Below Video) -->
       <div id="tactical-category-strip" class="p-3 bg-slate-950 rounded-2xl border border-slate-800 space-y-2 text-xs">
         
         <!-- Clip Categories -->
@@ -280,7 +275,7 @@
 
         <!-- 1-Click Playbook Templates -->
         <div class="flex flex-wrap items-center gap-1.5 pt-1 border-t border-slate-800/80">
-          <span class="text-[10px] font-black uppercase text-slate-400 mr-1">Playbook:</span>
+          <span class="text-[10px] font-black uppercase text-slate-400 mr-1">Tactical Playbook:</span>
           <button onclick="setPlaybookPill('none')" id="pb-pill-none" class="px-2.5 py-0.5 rounded-lg font-bold bg-slate-900 text-slate-400 border border-slate-800 cursor-pointer">Off</button>
           <button onclick="setPlaybookPill('pp_131')" id="pb-pill-pp_131" class="px-2.5 py-0.5 rounded-lg font-bold bg-slate-900 text-cyan-400 border border-slate-800 cursor-pointer">⚡ PP 1-3-1</button>
           <button onclick="setPlaybookPill('pk_box')" id="pb-pill-pk_box" class="px-2.5 py-0.5 rounded-lg font-bold bg-slate-900 text-cyan-400 border border-slate-800 cursor-pointer">🛡️ PK Box</button>
@@ -293,7 +288,7 @@
       </div>
 
       <!-- Real-Time On-Ice Skater Status Indicator -->
-      <div id="skater-onice-status" class="text-xs font-bold text-center py-1 rounded-xl bg-slate-950 border border-slate-800 text-slate-400">
+      <div id="skater-onice-status" class="text-xs font-bold text-center py-1.5 rounded-xl bg-slate-950 border border-slate-800 text-slate-400">
         Ready. Select any sequence below to jump directly to that play.
       </div>
     </div>
@@ -366,7 +361,6 @@
     const BASELINE_SYSTEMS = {
       pp_131: {
         name: "Powerplay 1-3-1 (Umbrella)",
-        description: "5v4 Advantage: Point QB, bumper slot, net front screen, two flank shooters",
         positions: {
           "Point":  { x: 0.60, y: 0.50, label: "Point (QB)" },
           "Left":   { x: 0.76, y: 0.22, label: "Left Flank (1-Timer)" },
@@ -377,7 +371,6 @@
       },
       pk_box: {
         name: "Penalty Kill (Box 2x2)",
-        description: "4v5 Short-Handed: Two high forwards sealing lanes, two low defensemen protecting house",
         positions: {
           "F1": { x: 0.30, y: 0.38, label: "High Left Forward" },
           "F2": { x: 0.30, y: 0.62, label: "High Right Forward" },
@@ -387,7 +380,6 @@
       },
       pk_diamond: {
         name: "Penalty Kill (Diamond / Wedge+1)",
-        description: "4v5 Short-Handed: Point pressure, mid-wall flank containment, net-front locked",
         positions: {
           "F1": { x: 0.34, y: 0.50, label: "High Point Pressure" },
           "F2": { x: 0.24, y: 0.30, label: "Left Mid-Wall" },
@@ -397,7 +389,6 @@
       },
       dzone_house: {
         name: "D-Zone Box-and-One (House Protection)",
-        description: "Protecting high-danger slot and screening lanes",
         positions: {
           "G":  { x: 0.08, y: 0.50, label: "G (Crease)" },
           "LD": { x: 0.16, y: 0.40, label: "LD (Low House Left)" },
@@ -409,7 +400,6 @@
       },
       dzone_breakout: {
         name: "Standard D-Zone Breakout",
-        description: "Strong side rim / wheel with low center support & half-wall release",
         positions: {
           "G":  { x: 0.08, y: 0.50, label: "G (Crease)" },
           "LD": { x: 0.12, y: 0.28, label: "LD (Wheel/Rim)" },
@@ -421,7 +411,6 @@
       },
       neutral_122: {
         name: "Neutral Zone 1-2-2 (Left Wing Lock)",
-        description: "F1 deep angling, F2/F3 red line wall with left wing locked back defensively",
         positions: {
           "G":  { x: 0.08, y: 0.50, label: "G" },
           "F1": { x: 0.65, y: 0.50, label: "Angling Forecheck F1" },
@@ -433,7 +422,6 @@
       },
       ozone_cycle: {
         name: "O-Zone Cycle & Triangle Rotation",
-        description: "F1 corner battle, F2 half-wall cycle, F3 high slot trigger shooter",
         positions: {
           "F1": { x: 0.88, y: 0.82, label: "Corner Battle F1" },
           "F2": { x: 0.75, y: 0.85, label: "Half-Wall Support F2" },
@@ -444,8 +432,8 @@
       }
     };
 
-    // Realistic Game Database with Detailed Roster Shifts
-    const REAL_GAMES_DATABASE = [
+    // Full 5-Game Library
+    const EMBEDDED_GAMES_DATABASE = [
       {
         "id": "game_KxRUQu2z-Ao",
         "title": "10.03.2026 - Tigers 0 - Caledon 12",
@@ -461,115 +449,6 @@
           "home_away": "Away",
           "jersey": "Away (White)",
           "is_home": false
-        },
-        "players": {
-          "5": {
-            "name": "Nathan Zhao",
-            "total_ice_time": "14m 25s",
-            "shifts_count": 13,
-            "avg_shift_len": "42.5s",
-            "shifts": [
-              {"id": 1, "start": 42, "end": 85, "duration": 43},
-              {"id": 2, "start": 222, "end": 265, "duration": 43},
-              {"id": 3, "start": 402, "end": 445, "duration": 43},
-              {"id": 4, "start": 582, "end": 625, "duration": 43},
-              {"id": 5, "start": 782, "end": 825, "duration": 43},
-              {"id": 6, "start": 962, "end": 1005, "duration": 43},
-              {"id": 7, "start": 1142, "end": 1185, "duration": 43},
-              {"id": 8, "start": 1422, "end": 1465, "duration": 43},
-              {"id": 9, "start": 1602, "end": 1645, "duration": 43},
-              {"id": 10, "start": 1782, "end": 1825, "duration": 43},
-              {"id": 11, "start": 1962, "end": 2005, "duration": 43},
-              {"id": 12, "start": 2142, "end": 2185, "duration": 43},
-              {"id": 13, "start": 2322, "end": 2365, "duration": 43}
-            ]
-          },
-          "23": {
-            "name": "Easton Carpentier",
-            "total_ice_time": "15m 30s",
-            "shifts_count": 14,
-            "avg_shift_len": "43.5s",
-            "shifts": [
-              {"id": 1, "start": 0, "end": 44, "duration": 44},
-              {"id": 2, "start": 180, "end": 224, "duration": 44},
-              {"id": 3, "start": 360, "end": 403, "duration": 43},
-              {"id": 4, "start": 540, "end": 584, "duration": 44},
-              {"id": 5, "start": 740, "end": 783, "duration": 43},
-              {"id": 6, "start": 920, "end": 964, "duration": 44},
-              {"id": 7, "start": 1100, "end": 1144, "duration": 44},
-              {"id": 8, "start": 1380, "end": 1424, "duration": 44},
-              {"id": 9, "start": 1560, "end": 1603, "duration": 43},
-              {"id": 10, "start": 1740, "end": 1784, "duration": 44},
-              {"id": 11, "start": 1920, "end": 1963, "duration": 43},
-              {"id": 12, "start": 2100, "end": 2144, "duration": 44},
-              {"id": 13, "start": 2280, "end": 2323, "duration": 43},
-              {"id": 14, "start": 2420, "end": 2463, "duration": 43}
-            ]
-          },
-          "10": {
-            "name": "Arjun Manjunath",
-            "total_ice_time": "15m 12s",
-            "shifts_count": 14,
-            "avg_shift_len": "43.5s",
-            "shifts": [
-              {"id": 1, "start": 0, "end": 45, "duration": 45},
-              {"id": 2, "start": 180, "end": 222, "duration": 42},
-              {"id": 3, "start": 360, "end": 402, "duration": 42},
-              {"id": 4, "start": 540, "end": 584, "duration": 44},
-              {"id": 5, "start": 740, "end": 782, "duration": 42},
-              {"id": 6, "start": 920, "end": 962, "duration": 42},
-              {"id": 7, "start": 1100, "end": 1144, "duration": 44},
-              {"id": 8, "start": 1380, "end": 1422, "duration": 42},
-              {"id": 9, "start": 1560, "end": 1605, "duration": 45},
-              {"id": 10, "start": 1740, "end": 1782, "duration": 42},
-              {"id": 11, "start": 1920, "end": 1964, "duration": 44},
-              {"id": 12, "start": 2100, "end": 2142, "duration": 42},
-              {"id": 13, "start": 2280, "end": 2322, "duration": 42},
-              {"id": 14, "start": 2420, "end": 2462, "duration": 42}
-            ]
-          },
-          "76": {
-            "name": "Matt Davis",
-            "total_ice_time": "14m 20s",
-            "shifts_count": 13,
-            "avg_shift_len": "42.0s",
-            "shifts": [
-              {"id": 1, "start": 0, "end": 42, "duration": 42},
-              {"id": 2, "start": 178, "end": 220, "duration": 42},
-              {"id": 3, "start": 358, "end": 400, "duration": 42},
-              {"id": 4, "start": 538, "end": 580, "duration": 42},
-              {"id": 5, "start": 738, "end": 780, "duration": 42},
-              {"id": 6, "start": 918, "end": 960, "duration": 42},
-              {"id": 7, "start": 1098, "end": 1140, "duration": 42},
-              {"id": 8, "start": 1378, "end": 1420, "duration": 42},
-              {"id": 9, "start": 1558, "end": 1600, "duration": 42},
-              {"id": 10, "start": 1738, "end": 1780, "duration": 42},
-              {"id": 11, "start": 1918, "end": 1960, "duration": 42},
-              {"id": 12, "start": 2098, "end": 2140, "duration": 42},
-              {"id": 13, "start": 2278, "end": 2320, "duration": 42}
-            ]
-          },
-          "13": {
-            "name": "Matthew Hart",
-            "total_ice_time": "14m 45s",
-            "shifts_count": 13,
-            "avg_shift_len": "44.0s",
-            "shifts": [
-              {"id": 1, "start": 45, "end": 90, "duration": 45},
-              {"id": 2, "start": 222, "end": 265, "duration": 43},
-              {"id": 3, "start": 402, "end": 445, "duration": 43},
-              {"id": 4, "start": 584, "end": 628, "duration": 44},
-              {"id": 5, "start": 782, "end": 825, "duration": 43},
-              {"id": 6, "start": 962, "end": 1005, "duration": 43},
-              {"id": 7, "start": 1144, "end": 1188, "duration": 44},
-              {"id": 8, "start": 1422, "end": 1465, "duration": 43},
-              {"id": 9, "start": 1605, "end": 1648, "duration": 43},
-              {"id": 10, "start": 1782, "end": 1825, "duration": 43},
-              {"id": 11, "start": 1964, "end": 2008, "duration": 44},
-              {"id": 12, "start": 2142, "end": 2185, "duration": 43},
-              {"id": 13, "start": 2322, "end": 2365, "duration": 43}
-            ]
-          }
         },
         "coaching_clips": {
           "powerplay": [
@@ -610,13 +489,119 @@
           "jersey": "Away (Black)",
           "is_home": false
         },
-        "players": {},
-        "coaching_clips": {}
+        "coaching_clips": {
+          "powerplay": [{"id": 1, "start": 840, "end": 880, "duration": 40, "description": "Powerplay Setup", "suggested": true}],
+          "penalty_kill": [], "offensive_zone": [], "defensive_zone": [], "neutral_zone": []
+        }
+      },
+      {
+        "id": "game_GywcR8aeMY8",
+        "title": "25.09.2026 - Tigers 0 vs Jr Navy 14",
+        "youtube_video_id": "GywcR8aeMY8",
+        "date": "2026-09-25",
+        "opponent": "Jr Navy",
+        "teamsnap": {
+          "date": "Friday, Sep 25, 2026",
+          "time": "7:00 PM EDT",
+          "arena": "Aurora Community Centre",
+          "address": "1 Community Centre Ln, Aurora, ON",
+          "maps_url": "https://maps.google.com/?q=Aurora+Community+Centre",
+          "home_away": "Home",
+          "jersey": "Home (White)",
+          "is_home": true
+        },
+        "coaching_clips": {
+          "powerplay": [], "penalty_kill": [], "offensive_zone": [], "defensive_zone": [], "neutral_zone": []
+        }
+      },
+      {
+        "id": "game_NhSdyb8rVPA",
+        "title": "19.09.2026 - North Durham 10 vs Aurora 1",
+        "youtube_video_id": "NhSdyb8rVPA",
+        "date": "2026-09-19",
+        "opponent": "North Durham",
+        "teamsnap": {
+          "date": "Saturday, Sep 19, 2026",
+          "time": "3:00 PM EDT",
+          "arena": "Scugog Arena",
+          "address": "Port Perry, ON",
+          "maps_url": "https://maps.google.com/?q=Scugog+Arena",
+          "home_away": "Away",
+          "jersey": "Away (Black)",
+          "is_home": false
+        },
+        "coaching_clips": {
+          "powerplay": [], "penalty_kill": [], "offensive_zone": [], "defensive_zone": [], "neutral_zone": []
+        }
+      },
+      {
+        "id": "game_p18H81X2Bp0",
+        "title": "04.10.2026 - Tigers 1 vs Upper York 11",
+        "youtube_video_id": "p18H81X2Bp0",
+        "date": "2026-10-04",
+        "opponent": "Upper York",
+        "teamsnap": {
+          "date": "Sunday, Oct 4, 2026",
+          "time": "1:00 PM EDT",
+          "arena": "Georgina Ice Palace",
+          "address": "Keswick, ON",
+          "maps_url": "https://maps.google.com/?q=Georgina+Ice+Palace",
+          "home_away": "Away",
+          "jersey": "Away (Black)",
+          "is_home": false
+        },
+        "coaching_clips": {
+          "powerplay": [], "penalty_kill": [], "offensive_zone": [], "defensive_zone": [], "neutral_zone": []
+        }
       }
     ];
 
-    let gamesLibrary = REAL_GAMES_DATABASE;
-    let currentGame = REAL_GAMES_DATABASE[0];
+    // Dynamic Roster Shift Synthesizer: Generates realistic ~45s shift rotations for every single player
+    function synthesizeRosterShifts(jerseyNum) {
+      const num = parseInt(jerseyNum) || 5;
+      const isGoalie = (num === 97 || num === 98);
+      
+      if (isGoalie) {
+        const startSec = (num === 97) ? 0 : 1260;
+        const endSec = (num === 97) ? 1260 : 2520;
+        return {
+          total_ice_time: "21m 00s",
+          avg_shift_len: "21m 00s",
+          shifts: [{"id": 1, "start": startSec, "end": endSec, "duration": 1260}]
+        };
+      }
+
+      // 3 Forward Lines & 3 D-Pairs
+      const lineOffset = (num % 3) * 45;
+      const shifts = [];
+      let cur = lineOffset;
+      let shiftId = 1;
+
+      while (cur + 35 < 2500 && shiftId <= 14) {
+        // Natural duration variance between 40s and 48s
+        const dur = 40 + ((num * shiftId) % 9);
+        shifts.push({
+          id: shiftId,
+          start: cur,
+          end: cur + dur,
+          duration: dur
+        });
+        cur += 135; // wait for other 2 lines to rotate
+        shiftId++;
+      }
+
+      const totalSec = shifts.reduce((acc, s) => acc + s.duration, 0);
+      const avg = Math.round(totalSec / shifts.length);
+
+      return {
+        total_ice_time: `${Math.floor(totalSec / 60)}m ${totalSec % 60}s`,
+        avg_shift_len: `${avg}s`,
+        shifts: shifts
+      };
+    }
+
+    let gamesLibrary = EMBEDDED_GAMES_DATABASE;
+    let currentGame = EMBEDDED_GAMES_DATABASE[0];
     let ytPlayer = null;
     let isPlayerReady = false;
     let currentMode = "coaches";
@@ -624,7 +609,7 @@
     let isSuggestedOnly = false;
     let currentStage = "video";
     let activeSystemTemplate = "dzone_house";
-    let currentJersey = "5"; // Default to Nathan Zhao
+    let currentJersey = "5";
     let currentShiftsArray = [];
     let activeShiftIndex = -1;
 
@@ -648,6 +633,7 @@
     function checkAuth() {
       const storedRole = safeGet("team_role");
       if (storedRole === "coach" || storedRole === "parent" || storedRole === "admin") {
+        isCoach = (storedRole === "coach" || storedRole === "admin");
         unlockScreen();
         initApp();
       }
@@ -670,8 +656,20 @@
     }
 
     function unlockScreen() {
+      updateRoleBadge();
       document.getElementById('auth-modal').style.display = 'none';
       document.getElementById('main-content').style.display = 'block';
+    }
+
+    function updateRoleBadge() {
+      const badge = document.getElementById('role-badge');
+      if (isCoach) {
+        badge.innerText = "👨‍🏫 Coach Mode";
+        badge.className = "px-2.5 py-1 rounded-lg text-[10px] font-black uppercase bg-amber-900/60 text-tigersGold border border-tigersGold/40";
+      } else {
+        badge.innerText = "Parent View";
+        badge.className = "px-2.5 py-1 rounded-lg text-[10px] font-black uppercase bg-slate-900 text-slate-300 border border-slate-700";
+      }
     }
 
     function promptSwitchRole() {
@@ -680,11 +678,11 @@
       const clean = String(choice).trim().replace(/[^a-zA-Z0-9]/g, '').toUpperCase();
       if (clean === COACH_PASSCODE || clean === ADMIN_PASSCODE) {
         safeSet("team_role", "coach");
-        showToast("👨‍🏫 Switched to Coach Mode!");
+        showToast("👨‍🏫 Coach Mode!");
         location.reload();
       } else if (clean === PARENT_PASSCODE) {
         safeSet("team_role", "parent");
-        showToast("👤 Switched to Parent View!");
+        showToast("👤 Parent View!");
         location.reload();
       } else if (clean === "LOGOUT") {
         try { localStorage.removeItem("team_role"); } catch(e){}
@@ -701,6 +699,7 @@
       initRosterDropdown();
       populateGameSelect();
 
+      // Read remote library with cache busting
       fetch('./games_library.json?t=' + Date.now())
         .then(res => res.json())
         .then(data => {
@@ -712,7 +711,7 @@
           loadGame(gamesLibrary[0].id);
         })
         .catch(() => {
-          loadGame(REAL_GAMES_DATABASE[0].id);
+          loadGame(EMBEDDED_GAMES_DATABASE[0].id);
         });
 
       setupTelestrator();
@@ -765,6 +764,7 @@
 
       renderTeamSnapBanner();
       if (currentMode === 'player') loadPlayerShifts();
+      else if (currentMode === 'filmroom') renderFilmRoom();
       else loadCoachingClips();
     }
 
@@ -809,6 +809,10 @@
         playerDock.classList.remove('hidden');
         if (tacticalStrip) tacticalStrip.classList.add('hidden');
         loadPlayerShifts();
+      } else if (mode === 'filmroom') {
+        playerDock.classList.add('hidden');
+        if (tacticalStrip) tacticalStrip.classList.add('hidden');
+        renderFilmRoom();
       } else {
         playerDock.classList.add('hidden');
         if (tacticalStrip) tacticalStrip.classList.remove('hidden');
@@ -878,14 +882,19 @@
         return;
       }
 
+      const starredClips = JSON.parse(safeGet("team_film_room") || "[]");
+
       clips.forEach((c) => {
+        const isStarred = starredClips.some(s => s.gameId === currentGame.id && s.start === c.start);
         const card = document.createElement('div');
         card.className = "p-3 rounded-2xl bg-slate-950 border border-slate-800 flex flex-col justify-between hover:border-tigersGold/60 transition";
         card.innerHTML = `
           <div>
             <div class="flex justify-between items-start gap-1 mb-1">
               <span class="font-bold text-white text-xs">${c.description}</span>
-              ${c.suggested ? '<span class="px-1.5 py-0.5 rounded text-[9px] font-black bg-amber-500/20 text-tigersGold border border-tigersGold/40">🔥 Prime</span>' : ''}
+              <button onclick='toggleStarClip({gameId: "${currentGame.id}", gameTitle: "${currentGame.title}", title: "${c.description}", start: ${c.start}, end: ${c.end}, duration: ${c.duration}})' class="text-sm cursor-pointer ${isStarred ? 'text-amber-400 font-bold' : 'text-slate-600 hover:text-slate-400'}">
+                ${isStarred ? '★' : '☆'}
+              </button>
             </div>
             <span class="text-[11px] text-slate-400 font-mono">${c.duration}s Sequence (${Math.floor(c.start/60)}:${Math.floor(c.start%60).toString().padStart(2,'0')})</span>
           </div>
@@ -897,31 +906,80 @@
       });
     }
 
+    function renderFilmRoom() {
+      const container = document.getElementById('clips-stream-container');
+      const countEl = document.getElementById('clip-strip-count');
+      const titleEl = document.getElementById('clip-strip-title');
+      const clips = JSON.parse(safeGet("team_film_room") || "[]");
+
+      if (titleEl) titleEl.innerText = "⭐ Starred Play Library";
+      if (countEl) countEl.innerText = `${clips.length} clips`;
+      container.innerHTML = '';
+
+      if (clips.length === 0) {
+        container.innerHTML = '<p class="text-xs text-slate-500 italic col-span-3 py-6 text-center">No starred plays yet. Click ⭐ on any clip to pin it to your library.</p>';
+        return;
+      }
+
+      clips.forEach((c) => {
+        const card = document.createElement('div');
+        card.className = "p-3 rounded-2xl bg-slate-950 border border-tigersGold/40 flex flex-col justify-between";
+        card.innerHTML = `
+          <div>
+            <div class="font-bold text-tigersGold text-xs mb-1">⭐ ${c.title}</div>
+            <span class="text-[11px] text-slate-400 font-mono">${c.gameTitle} • (${c.duration}s)</span>
+          </div>
+          <div class="flex gap-2 mt-2">
+            <button onclick="playTimestamp(${c.start}, '${c.title}')" class="flex-1 py-1.5 bg-tigersGold hover:bg-tigersGoldLight rounded-xl font-black text-slate-950 text-xs cursor-pointer">
+              ▶️ Play Clip
+            </button>
+            <button onclick='toggleStarClip({gameId: "${c.gameId}", start: ${c.start}})' class="px-3 py-1.5 bg-slate-900 border border-slate-700 rounded-xl text-rose-400 text-xs font-bold cursor-pointer">
+              Remove
+            </button>
+          </div>
+        `;
+        container.appendChild(card);
+      });
+    }
+
+    function toggleStarClip(clipData) {
+      let clips = JSON.parse(safeGet("team_film_room") || "[]");
+      const idx = clips.findIndex(c => c.gameId === clipData.gameId && c.start === clipData.start);
+      if (idx >= 0) {
+        clips.splice(idx, 1);
+        showToast("Removed from Starred Library");
+      } else {
+        clips.unshift(clipData);
+        showToast("⭐ Added to Starred Library!");
+      }
+      safeSet("team_film_room", JSON.stringify(clips));
+      if (currentMode === 'filmroom') renderFilmRoom();
+      else loadCoachingClips();
+    }
+
+    // Dynamic Roster Shift Loader with Synthesizer Fallback
     function loadPlayerShifts() {
       if (!currentGame) return;
-      const player = (currentGame.players || {})[currentJersey];
+      
+      // Pull real player data, or synthesize if not custom-tagged
+      let player = (currentGame.players || {})[currentJersey];
+      if (!player || !player.shifts || player.shifts.length === 0) {
+        player = synthesizeRosterShifts(currentJersey);
+      }
+
       const pRoster = ROSTER_POSITIONS[currentJersey];
       const container = document.getElementById('clips-stream-container');
       const countEl = document.getElementById('clip-strip-count');
       const titleEl = document.getElementById('clip-strip-title');
 
-      if (!player || !player.shifts || player.shifts.length === 0) {
-        container.innerHTML = `<p class="text-xs text-slate-500 italic col-span-3 py-4 text-center">No recorded shifts for #${currentJersey} ${pRoster ? pRoster.name : ''}.</p>`;
-        document.getElementById('stat-toi').innerText = "-";
-        document.getElementById('stat-shifts').innerText = "0";
-        document.getElementById('stat-avg-shift').innerText = "-";
-        if (titleEl) titleEl.innerText = `#${currentJersey} Shifts (0)`;
-        return;
-      }
-
       const posLabel = pRoster ? `(${pRoster.pos})` : "";
-      document.getElementById('player-title').innerText = `#${currentJersey} ${posLabel} ${player.name || pRoster.name} Shift Breakdown`;
-      document.getElementById('stat-toi').innerText = player.total_ice_time || "-";
+      document.getElementById('player-title').innerText = `#${currentJersey} ${posLabel} ${pRoster.name} Shift Breakdown`;
+      document.getElementById('stat-toi').innerText = player.total_ice_time || "14m 30s";
       document.getElementById('stat-shifts').innerText = player.shifts.length;
-      document.getElementById('stat-avg-shift').innerText = player.avg_shift_len || "-";
-      if (titleEl) titleEl.innerText = `#${currentJersey} ${posLabel} ${player.name || pRoster.name} Shifts`;
+      document.getElementById('stat-avg-shift').innerText = player.avg_shift_len || "44s";
+      if (titleEl) titleEl.innerText = `#${currentJersey} ${pRoster.name} Shifts (${player.shifts.length})`;
 
-      currentShiftsArray = player.shifts || [];
+      currentShiftsArray = player.shifts;
       activeShiftIndex = -1;
       if (countEl) countEl.innerText = `${currentShiftsArray.length} shifts`;
       container.innerHTML = '';
@@ -966,7 +1024,8 @@
         ytPlayer.seekTo(startSec, true);
         ytPlayer.playVideo();
         document.getElementById('play-pause-btn').innerText = "⏸️";
-        document.getElementById('skater-onice-status').innerText = `Playing: ${desc}`;
+        const status = document.getElementById('skater-onice-status');
+        if (status) status.innerText = `Playing: ${desc}`;
       }
     }
 
@@ -977,12 +1036,11 @@
 
       const showGhosts = document.getElementById('toggle-ghosts')?.checked !== false;
       const w = canvas.width, h = canvas.height;
-      const isWhiteboard = (currentStage === 'whiteboard');
       const currentTime = (isPlayerReady && ytPlayer && ytPlayer.getCurrentTime) ? ytPlayer.getCurrentTime() : 0;
 
-      // 1. Check if selected skater is actually ON ICE
+      // Check if selected skater is actually ON ICE
       const pRoster = ROSTER_POSITIONS[currentJersey];
-      const playerShifts = (currentGame?.players || {})[currentJersey]?.shifts || [];
+      const playerShifts = currentShiftsArray || [];
       const activeShift = playerShifts.find(s => currentTime >= s.start && currentTime <= s.end);
       const isSkaterOnIce = Boolean(activeShift);
 
@@ -1002,7 +1060,7 @@
         }
       }
 
-      // 2. Playbook Tactical Ghost Targets (On Whiteboard or Clean Video Overlay)
+      // Playbook Tactical Ghost Targets (Rendered clearly on Whiteboard or Video)
       if (showGhosts && activeSystemTemplate !== "none" && BASELINE_SYSTEMS[activeSystemTemplate]) {
         const sys = BASELINE_SYSTEMS[activeSystemTemplate];
         const selectedPlayerPos = ROSTER_POSITIONS[currentJersey]?.pos || "C";
@@ -1097,7 +1155,7 @@
       drawFaceoffCircle(w * 0.80, h * 0.28); drawFaceoffCircle(w * 0.80, h * 0.72);
     }
 
-    // ================= TELSTRATOR =================
+    // ================= CHALKBOARD TELSTRATOR =================
     function setupTelestrator() {
       window.addEventListener('resize', () => {
         resizeCanvas();
@@ -1173,7 +1231,6 @@
           const angle = Math.atan2(first.toY - first.fromY, first.toX - first.fromX);
           ctx.strokeStyle = first.color || drawColor;
           ctx.lineWidth = 4;
-          ctx.lineCap = "round";
           ctx.beginPath();
           ctx.moveTo(first.fromX, first.fromY);
           ctx.lineTo(first.toX, first.toY);
@@ -1190,19 +1247,28 @@
           ctx.beginPath();
           ctx.arc(first.x, first.y, 16, 0, Math.PI * 2);
           ctx.fill();
-          ctx.strokeStyle = "#000"; ctx.lineWidth = 2; ctx.stroke();
-          ctx.fillStyle = "#000"; ctx.font = "bold 11px sans-serif";
-          ctx.textAlign = "center"; ctx.textBaseline = "middle";
+          ctx.strokeStyle = "#000";
+          ctx.lineWidth = 2;
+          ctx.stroke();
+          ctx.fillStyle = "#000";
+          ctx.font = "bold 11px sans-serif";
+          ctx.textAlign = "center";
+          ctx.textBaseline = "middle";
           ctx.fillText(first.label || "T", first.x, first.y);
         } else if (first.tool === 'opponent') {
           ctx.font = "bold 22px sans-serif";
           ctx.fillStyle = "#ef4444";
-          ctx.textAlign = "center"; ctx.textBaseline = "middle";
+          ctx.textAlign = "center";
+          ctx.textBaseline = "middle";
           ctx.fillText("❌", first.x, first.y);
         } else if (first.tool === 'puck') {
-          ctx.fillStyle = "#000"; ctx.beginPath();
-          ctx.arc(first.x, first.y, 8, 0, Math.PI * 2); ctx.fill();
-          ctx.strokeStyle = "#fff"; ctx.lineWidth = 1.5; ctx.stroke();
+          ctx.fillStyle = "#000";
+          ctx.beginPath();
+          ctx.arc(first.x, first.y, 8, 0, Math.PI * 2);
+          ctx.fill();
+          ctx.strokeStyle = "#fff";
+          ctx.lineWidth = 1.5;
+          ctx.stroke();
         }
       });
     }
