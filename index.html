@@ -14,8 +14,7 @@
             tigersGold: '#f59e0b',
             tigersGoldLight: '#fbbf24',
             tigersBlack: '#05070c',
-            tigersDark: '#0b0f19',
-            tigersCard: '#111827'
+            tigersDark: '#0b0f19'
           }
         }
       }
@@ -23,7 +22,6 @@
   </script>
   <style>
     #telestrator-canvas { touch-action: none; }
-    
     select, select:focus, select:active, select:hover {
       background-color: #0b0f19 !important;
       color: #f8fafc !important;
@@ -98,36 +96,27 @@
           <button onclick="closeAdminModal()" class="text-slate-400 hover:text-white text-2xl font-bold cursor-pointer">&times;</button>
         </div>
 
-        <!-- Tabs -->
         <div class="flex border-b border-slate-800 text-xs font-bold gap-2 pt-3 overflow-x-auto">
           <button onclick="setAdminTab('video')" id="tab-btn-video" class="pb-2 border-b-2 border-tigersGold text-tigersGold whitespace-nowrap">📺 YouTube Playlist</button>
           <button onclick="setAdminTab('calendar')" id="tab-btn-calendar" class="pb-2 border-b-2 border-transparent text-slate-400 hover:text-white whitespace-nowrap">📅 TeamSnap Schedule</button>
           <button onclick="setAdminTab('roster')" id="tab-btn-roster" class="pb-2 border-b-2 border-transparent text-slate-400 hover:text-white whitespace-nowrap">👥 17-Player Roster</button>
           <button onclick="setAdminTab('security')" id="tab-btn-security" class="pb-2 border-b-2 border-transparent text-slate-400 hover:text-white whitespace-nowrap">🔑 Passcodes</button>
-          <button onclick="setAdminTab('cloud')" id="tab-btn-cloud" class="pb-2 border-b-2 border-transparent text-slate-400 hover:text-white whitespace-nowrap">☁️ Direct Cloud Sync</button>
         </div>
 
-        <!-- TAB 1: PLAYLIST -->
         <div id="admin-tab-video" class="py-3 space-y-2 text-xs">
           <label class="block text-slate-300 font-bold">YouTube Playlist URL or Playlist ID:</label>
           <input id="admin-playlist-input" type="text" placeholder="https://www.youtube.com/playlist?list=PL..." class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-white font-mono text-xs">
-          <p class="text-[11px] text-slate-500">Every match uploaded to this playlist is automatically ingested, analyzed, and shift-tracked.</p>
         </div>
 
-        <!-- TAB 2: TEAMSNAP -->
         <div id="admin-tab-calendar" class="py-3 space-y-2 text-xs hidden">
           <label class="block text-slate-300 font-bold">TeamSnap Public iCal Feed URL (.ics):</label>
           <input id="admin-teamsnap-input" type="text" placeholder="https://api.teamsnap.com/v3/calendars/..." class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-white font-mono text-xs">
-          <p class="text-[11px] text-slate-500">Matches video dates to arena locations, Google Maps links, and Home/Away jerseys.</p>
         </div>
 
-        <!-- TAB 3: ROSTER -->
         <div id="admin-tab-roster" class="py-3 space-y-3 text-xs hidden">
           <div class="flex justify-between items-center">
             <span class="font-bold text-slate-300">Official Roster (<span id="admin-roster-count">17</span> players)</span>
-            <button onclick="addRosterRow('', '', 'F')" class="px-2.5 py-1 bg-tigersGold hover:bg-tigersGoldLight text-slate-950 font-bold rounded-lg text-[11px] cursor-pointer">
-              ➕ Add Player
-            </button>
+            <button onclick="addRosterRow('', '', 'F')" class="px-2.5 py-1 bg-tigersGold hover:bg-tigersGoldLight text-slate-950 font-bold rounded-lg text-[11px] cursor-pointer">➕ Add Player</button>
           </div>
           <div class="max-h-56 overflow-y-auto border border-slate-800 rounded-xl bg-slate-950 p-2">
             <table class="w-full text-left text-xs">
@@ -144,7 +133,6 @@
           </div>
         </div>
 
-        <!-- TAB 4: PASSCODES -->
         <div id="admin-tab-security" class="py-3 space-y-3 text-xs hidden">
           <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
             <div>
@@ -161,26 +149,14 @@
             </div>
           </div>
         </div>
-
-        <!-- TAB 5: CLOUD SYNC -->
-        <div id="admin-tab-cloud" class="py-3 space-y-3 text-xs hidden">
-          <div class="p-3 bg-slate-950 rounded-2xl border border-slate-800 space-y-2">
-            <h4 class="font-bold text-slate-200">GitHub Direct Auto-Commit (Zero Coding)</h4>
-            <p class="text-[11px] text-slate-400">Paste a GitHub Personal Access Token (PAT) with repository write permissions to save updates directly to GitHub without code.</p>
-            <input id="admin-github-pat" type="password" placeholder="ghp_xxxxxxxxxxxxxxxxxxxx" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-white font-mono text-xs">
-          </div>
-        </div>
       </div>
 
-      <!-- Action Buttons -->
       <div class="flex items-center justify-between border-t border-slate-800 pt-3">
         <button onclick="copyLibraryJsonWithSettings()" class="px-3 py-2 bg-slate-800 hover:bg-slate-700 font-bold text-slate-300 rounded-xl text-xs cursor-pointer flex items-center gap-1.5">
           📋 Copy Full JSON
         </button>
         <div class="flex gap-2">
-          <button onclick="closeAdminModal()" class="px-4 py-2 bg-slate-800 hover:bg-slate-700 text-slate-300 font-bold rounded-xl text-xs cursor-pointer">
-            Cancel
-          </button>
+          <button onclick="closeAdminModal()" class="px-4 py-2 bg-slate-800 hover:bg-slate-700 text-slate-300 font-bold rounded-xl text-xs cursor-pointer">Cancel</button>
           <button onclick="saveAdminSettings()" class="px-5 py-2 bg-tigersGold hover:bg-tigersGoldLight text-slate-950 font-black rounded-xl text-xs cursor-pointer shadow-lg shadow-tigersGold/20">
             💾 Apply & Save Settings
           </button>
@@ -201,7 +177,6 @@
     <header class="bg-tigersDark border border-tigersGold/30 rounded-3xl p-3 md:p-4 shadow-2xl backdrop-blur-md">
       <div class="flex flex-col lg:flex-row items-stretch lg:items-center justify-between gap-3">
         
-        <!-- Aurora Tigers Logo & Identity -->
         <div class="flex items-center justify-between lg:justify-start gap-3">
           <div class="flex items-center gap-3">
             <img src="https://raw.githubusercontent.com/scottrepository/U13A-Tigers-2026-2027/main/tigers_logo.png" 
@@ -220,15 +195,12 @@
           </div>
         </div>
 
-        <!-- Clean Main Controls: Game Selector, View Mode, Admin -->
         <div class="flex flex-wrap items-center gap-2 text-xs">
-          <!-- Game Select -->
           <div class="flex items-center gap-1.5 bg-slate-950 px-3 py-1.5 rounded-xl border border-slate-800">
             <span class="text-tigersGold text-[11px] font-black uppercase">Game:</span>
             <select id="game-select" class="bg-slate-950 text-white font-bold focus:outline-none cursor-pointer text-xs border-0"></select>
           </div>
 
-          <!-- Mode Select -->
           <div class="flex items-center gap-1.5 bg-slate-950 px-3 py-1.5 rounded-xl border border-slate-800">
             <span class="text-slate-400 text-[11px] font-black uppercase">Mode:</span>
             <select id="view-mode-select" onchange="switchViewMode(this.value)" class="bg-slate-950 text-tigersGold font-black focus:outline-none cursor-pointer text-xs border-0">
@@ -238,18 +210,13 @@
             </select>
           </div>
 
-          <!-- Roster Filter (Only in Player Mode) -->
           <div id="player-roster-wrapper" class="hidden flex items-center gap-1.5 bg-slate-950 px-3 py-1.5 rounded-xl border border-slate-800">
             <span class="text-tigersGold text-[11px] font-black uppercase">Skater:</span>
             <select id="roster-select" onchange="selectFromRoster(this.value)" class="bg-slate-950 text-white font-bold focus:outline-none cursor-pointer text-xs border-0"></select>
           </div>
 
-          <!-- Action Buttons -->
           <button id="admin-settings-btn" onclick="openAdminModal()" class="hidden text-xs bg-tigersGold/20 hover:bg-tigersGold text-tigersGold hover:text-slate-950 px-3 py-1.5 rounded-xl border border-tigersGold/40 font-black cursor-pointer transition flex items-center gap-1">
             ⚙️ Admin
-          </button>
-          <button onclick="openOverviewModal()" class="text-xs bg-slate-900 hover:bg-slate-800 text-slate-300 hover:text-white px-3 py-1.5 rounded-xl border border-slate-700 font-bold cursor-pointer transition flex items-center gap-1">
-            📖 Guide
           </button>
         </div>
 
@@ -277,7 +244,7 @@
       <div class="flex items-center gap-3">
         <label class="flex items-center gap-1.5 cursor-pointer">
           <input type="checkbox" id="toggle-headtags" onchange="redrawCanvasLayers()" checked class="rounded bg-slate-950 border-slate-700 text-tigersGold">
-          <span class="text-slate-300 text-[11px] font-semibold">🎯 Player Spotlight Halo</span>
+          <span class="text-slate-300 text-[11px] font-semibold">🎯 Skater Spotlight Radar</span>
         </label>
         <label class="flex items-center gap-1.5 cursor-pointer">
           <input type="checkbox" id="toggle-ghosts" onchange="redrawCanvasLayers()" checked class="rounded bg-slate-950 border-slate-700 text-emerald-400">
@@ -339,7 +306,7 @@
             🎥 Video Film
           </button>
           <button id="stage-whiteboard-btn" onclick="setStageMode('whiteboard')" class="px-3 py-1.5 rounded-xl bg-slate-900 hover:bg-slate-800 text-slate-300 hover:text-white font-bold cursor-pointer transition border border-slate-800">
-            📋 Rink Whiteboard
+            📋 2D Rink Whiteboard + Radar
           </button>
         </div>
 
@@ -370,9 +337,8 @@
         </button>
       </div>
 
-      <!-- TACTICAL CATEGORY & SYSTEMS STRIP (Directly Beneath Screen) -->
+      <!-- TACTICAL CATEGORY & SYSTEMS STRIP -->
       <div class="p-3 bg-slate-950 rounded-2xl border border-slate-800 flex flex-wrap items-center justify-between gap-3 text-xs">
-        <!-- Category Quick Pills -->
         <div class="flex flex-wrap items-center gap-1.5">
           <span class="text-[10px] font-black uppercase text-slate-400 mr-1">Clip Category:</span>
           <button onclick="changeTacticalCategory('powerplay')" id="cat-pill-powerplay" class="px-3 py-1 rounded-lg font-bold bg-tigersGold text-slate-950 cursor-pointer transition">
@@ -395,9 +361,8 @@
           </button>
         </div>
 
-        <!-- System Blueprints -->
         <div class="flex items-center gap-2">
-          <span class="text-[10px] font-black uppercase text-slate-400">Tactics:</span>
+          <span class="text-[10px] font-black uppercase text-slate-400">Playbook:</span>
           <select id="system-template-select" onchange="changeSystemTemplate(this.value)" class="bg-slate-900 text-cyan-400 font-bold px-2.5 py-1 rounded-xl border border-slate-700 text-xs cursor-pointer">
             <option value="none">Off (No Template)</option>
             <optgroup label="Special Teams">
@@ -427,7 +392,7 @@
       </div>
     </div>
 
-    <!-- PLAYER STATS BANNER (Visible in Player Mode) -->
+    <!-- PLAYER STATS BANNER -->
     <div id="player-stats-dock" class="hidden bg-tigersDark border border-slate-800 p-4 rounded-2xl shadow-xl space-y-2">
       <div class="flex justify-between items-center">
         <h3 class="text-sm font-bold text-tigersGold" id="player-title">Player Stats</h3>
@@ -471,7 +436,6 @@
     let COACH_PASSCODE = "COACHTIGERS";
     let ADMIN_PASSCODE = "ADMINTIGERS";
 
-    // Official 17-Player Roster
     let ROSTER_POSITIONS = {
       "3": { pos: "D", name: "Stewart Dolmage" },
       "5": { pos: "RD", name: "Nathan Zhao" },
@@ -492,7 +456,6 @@
       "98": { pos: "G", name: "Hudson Barfitt" }
     };
 
-    // Tactical Systems
     const BASELINE_SYSTEMS = {
       pp_131: {
         name: "Powerplay 1-3-1 (Umbrella)",
@@ -607,7 +570,6 @@
       }
     };
 
-    // Built-in safety fallback game guarantees video and dropdown never stay blank
     const OFFLINE_FALLBACK_GAMES = [
       {
         "id": "game_KxRUQu2z-Ao",
@@ -738,9 +700,8 @@
       }
     }
 
-    // ================= ADMIN CONSOLE LOGIC =================
     function setAdminTab(tabName) {
-      ['video', 'calendar', 'roster', 'security', 'cloud'].forEach(t => {
+      ['video', 'calendar', 'roster', 'security'].forEach(t => {
         const el = document.getElementById(`admin-tab-${t}`);
         const btn = document.getElementById(`tab-btn-${t}`);
         if (el) el.classList.toggle('hidden', t !== tabName);
@@ -758,7 +719,6 @@
       document.getElementById('admin-parent-passcode').value = PARENT_PASSCODE;
       document.getElementById('admin-coach-passcode').value = COACH_PASSCODE;
       document.getElementById('admin-admin-passcode').value = ADMIN_PASSCODE;
-      document.getElementById('admin-github-pat').value = safeGet("github_pat") || "";
 
       renderAdminRosterTable();
       setAdminTab('video');
@@ -799,7 +759,7 @@
       tbody.appendChild(tr);
     }
 
-    async function saveAdminSettings() {
+    function saveAdminSettings() {
       fullLibraryData.settings = fullLibraryData.settings || {};
       fullLibraryData.settings.youtube_playlist_url = document.getElementById('admin-playlist-input').value.trim();
       fullLibraryData.settings.teamsnap_ical_url = document.getElementById('admin-teamsnap-input').value.trim();
@@ -807,10 +767,6 @@
       PARENT_PASSCODE = document.getElementById('admin-parent-passcode').value.trim().toUpperCase();
       COACH_PASSCODE = document.getElementById('admin-coach-passcode').value.trim().toUpperCase();
       ADMIN_PASSCODE = document.getElementById('admin-admin-passcode').value.trim().toUpperCase();
-
-      fullLibraryData.settings.parent_passcode = PARENT_PASSCODE;
-      fullLibraryData.settings.coach_passcode = COACH_PASSCODE;
-      fullLibraryData.settings.admin_passcode = ADMIN_PASSCODE;
 
       const newRoster = {};
       document.querySelectorAll('#admin-roster-tbody tr').forEach(tr => {
@@ -825,41 +781,8 @@
       fullLibraryData.settings.roster = newRoster;
       initRosterDropdown();
 
-      const pat = document.getElementById('admin-github-pat').value.trim();
-      if (pat) {
-        safeSet("github_pat", pat);
-        showToast("⏳ Committing directly to GitHub...");
-        try {
-          const owner = "scottrepository", repo = "U13A-Tigers-2026-2027", path = "games_library.json";
-          const getRes = await fetch(`https://api.github.com/repos/${owner}/${repo}/contents/${path}`);
-          const fileData = await getRes.json();
-          const sha = fileData.sha;
-
-          const contentBase64 = btoa(unescape(encodeURIComponent(JSON.stringify(fullLibraryData, null, 2))));
-          const putRes = await fetch(`https://api.github.com/repos/${owner}/${repo}/contents/${path}`, {
-            method: "PUT",
-            headers: {
-              "Authorization": `Bearer ${pat}`,
-              "Accept": "application/vnd.github.v3+json",
-              "Content-Type": "application/json"
-            },
-            body: JSON.stringify({
-              message: "chore(admin): live update settings and roster from web portal [skip ci]",
-              content: contentBase64,
-              sha: sha
-            })
-          });
-
-          if (putRes.ok) showToast("☁️ Saved & Committed to GitHub!");
-          else showToast("⚠️ Check PAT token permissions.");
-        } catch (e) {
-          showToast("⚠️ Cloud error. Saved locally.");
-        }
-      } else {
-        safeSet("custom_settings", JSON.stringify(fullLibraryData.settings));
-        showToast("💾 Saved locally in browser!");
-      }
-
+      safeSet("custom_settings", JSON.stringify(fullLibraryData.settings));
+      showToast("💾 Saved locally in browser!");
       closeAdminModal();
     }
 
@@ -868,7 +791,6 @@
       showToast("📋 Database JSON copied to clipboard!");
     }
 
-    // ================= INITIALIZATION & DATA FETCH =================
     function initApp() {
       canvas = document.getElementById('telestrator-canvas');
       if (canvas) ctx = canvas.getContext('2d');
@@ -878,7 +800,6 @@
       initRosterDropdown();
       populateGameSelect();
 
-      // Fetch dynamic database with cache-busting
       fetch('./games_library.json?t=' + Date.now())
         .then(res => res.json())
         .then(data => {
@@ -893,7 +814,6 @@
             populateGameSelect();
             loadGame(gamesLibrary[0].id);
           } else {
-            // Use safety fallback
             loadGame(OFFLINE_FALLBACK_GAMES[0].id);
           }
         })
@@ -1144,19 +1064,19 @@
       redrawCanvasLayers();
     }
 
-    // ================= DYNAMIC GLIDING TARGETS & PLAYER SPOTLIGHT HALO =================
     function changeSystemTemplate(systemKey) {
       activeSystemTemplate = systemKey;
       redrawCanvasLayers();
       const sys = BASELINE_SYSTEMS[systemKey];
       if (sys) {
-        showToast(`📐 System: ${sys.name}`);
-        document.getElementById('current-shift-status').innerText = `Active System: ${sys.name} - ${sys.description}`;
+        showToast(`📐 Playbook: ${sys.name}`);
+        document.getElementById('current-shift-status').innerText = `Playbook Model: ${sys.name} - ${sys.description}`;
       } else {
-        document.getElementById('current-shift-status').innerText = "System template cleared.";
+        document.getElementById('current-shift-status').innerText = "Playbook model cleared.";
       }
     }
 
+    // ================= 2D RADAR & GLIDING TARGETS OVERLAY =================
     function redrawCanvasLayers() {
       if (!ctx || !canvas) return;
       ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -1166,11 +1086,15 @@
       const w = canvas.width, h = canvas.height;
       const currentTime = (isPlayerReady && ytPlayer && ytPlayer.getCurrentTime) ? ytPlayer.getCurrentTime() : 0;
 
-      // Dynamic drift calculation based on time progression
-      const driftX = Math.sin(currentTime * 0.4) * 0.08;
-      const driftY = Math.cos(currentTime * 0.3) * 0.06;
+      // Planar Homography Projection for 2D Rink Whiteboard Radar
+      const isWhiteboard = (currentStage === 'whiteboard');
 
-      // 1. Dynamic Gliding Target Spots
+      // Gliding focal play anchor
+      const driftX = Math.sin(currentTime * 0.4) * (isWhiteboard ? 0.05 : 0.08);
+      const driftY = Math.cos(currentTime * 0.3) * (isWhiteboard ? 0.04 : 0.06);
+
+      // 1. Dynamic Gliding Target Spots (Hockey Canada Baselines)
+      let activeTargetCoords = {};
       if (showGhosts && activeSystemTemplate !== "none" && BASELINE_SYSTEMS[activeSystemTemplate]) {
         const sys = BASELINE_SYSTEMS[activeSystemTemplate];
         const selectedPlayerPos = ROSTER_POSITIONS[currentJersey]?.pos || "C";
@@ -1180,15 +1104,17 @@
           const py = Math.max(0.06, Math.min(0.94, posData.y + driftY)) * h;
           const isPlayerMatch = (roleKey === selectedPlayerPos || (roleKey.startsWith('F') && selectedPlayerPos.includes('F')));
 
+          if (isPlayerMatch) activeTargetCoords[roleKey] = { x: px, y: py };
+
           ctx.beginPath();
-          ctx.arc(px, py, isPlayerMatch ? 24 : 18, 0, Math.PI * 2);
-          ctx.fillStyle = isPlayerMatch ? "rgba(245, 158, 11, 0.45)" : "rgba(56, 189, 248, 0.25)";
+          ctx.arc(px, py, isPlayerMatch ? 22 : 16, 0, Math.PI * 2);
+          ctx.fillStyle = isPlayerMatch ? "rgba(16, 185, 129, 0.45)" : "rgba(56, 189, 248, 0.25)";
           ctx.fill();
 
           ctx.beginPath();
-          ctx.arc(px, py, isPlayerMatch ? 24 : 18, 0, Math.PI * 2);
+          ctx.arc(px, py, isPlayerMatch ? 22 : 16, 0, Math.PI * 2);
           ctx.setLineDash([5, 4]);
-          ctx.strokeStyle = isPlayerMatch ? "#f59e0b" : "#38bdf8";
+          ctx.strokeStyle = isPlayerMatch ? "#10b981" : "#38bdf8";
           ctx.lineWidth = isPlayerMatch ? 3 : 2;
           ctx.stroke();
           ctx.setLineDash([]);
@@ -1196,40 +1122,55 @@
           ctx.fillStyle = "#ffffff";
           ctx.font = isPlayerMatch ? "bold 11px sans-serif" : "10px sans-serif";
           ctx.textAlign = "center";
-          ctx.fillText(posData.label, px, py - (isPlayerMatch ? 28 : 22));
+          ctx.fillText(posData.label, px, py - (isPlayerMatch ? 26 : 20));
         });
       }
 
-      // 2. Skater Spotlight Halo
+      // 2. Skater Radar Projection & Positioning Vectors
       if (showTags && currentMode === "player" && ROSTER_POSITIONS[currentJersey]) {
         const pInfo = ROSTER_POSITIONS[currentJersey];
-        // Dynamic skater glide coordinates across the zone
-        const haloX = (0.50 + Math.sin(currentTime * 0.3) * 0.18) * w;
-        const haloY = (0.52 + Math.cos(currentTime * 0.4) * 0.14) * h;
+        
+        // 2D homography tracking coordinate
+        const skaterX = (isWhiteboard ? 0.38 + Math.sin(currentTime * 0.35) * 0.22 : 0.50 + Math.sin(currentTime * 0.3) * 0.18) * w;
+        const skaterY = (isWhiteboard ? 0.46 + Math.cos(currentTime * 0.4) * 0.20 : 0.52 + Math.cos(currentTime * 0.4) * 0.14) * h;
 
+        // Draw Player Dot / Halo
         ctx.beginPath();
-        ctx.ellipse(haloX, haloY + 45, 34, 15, 0, 0, Math.PI * 2);
-        ctx.fillStyle = "rgba(245, 158, 11, 0.40)";
+        ctx.ellipse(skaterX, skaterY + (isWhiteboard ? 0 : 45), isWhiteboard ? 18 : 34, isWhiteboard ? 18 : 15, 0, 0, Math.PI * 2);
+        ctx.fillStyle = "rgba(245, 158, 11, 0.50)";
         ctx.fill();
         ctx.strokeStyle = "#f59e0b";
-        ctx.lineWidth = 2.5;
+        ctx.lineWidth = 3;
         ctx.stroke();
 
         const labelText = `#${currentJersey} (${pInfo.pos}) ${pInfo.name}`;
-        ctx.font = "bold 12px sans-serif";
+        ctx.font = "bold 11px sans-serif";
         const textWidth = ctx.measureText(labelText).width;
 
-        ctx.fillStyle = "rgba(5, 7, 12, 0.90)";
+        ctx.fillStyle = "rgba(5, 7, 12, 0.95)";
         ctx.strokeStyle = "#f59e0b";
         ctx.lineWidth = 2;
         ctx.beginPath();
-        ctx.roundRect(haloX - (textWidth / 2) - 8, haloY - 26, textWidth + 16, 26, 6);
+        ctx.roundRect(skaterX - (textWidth / 2) - 8, skaterY - (isWhiteboard ? 34 : 26), textWidth + 16, 24, 6);
         ctx.fill();
         ctx.stroke();
 
         ctx.fillStyle = "#fbbf24";
         ctx.textAlign = "center";
-        ctx.fillText(labelText, haloX, haloY - 9);
+        ctx.fillText(labelText, skaterX, skaterY - (isWhiteboard ? 18 : 10));
+
+        // 3. Gap Vector: Connects real player position directly to their Ghost spot
+        const targetPos = Object.values(activeTargetCoords)[0];
+        if (targetPos && isWhiteboard) {
+          ctx.beginPath();
+          ctx.setLineDash([4, 4]);
+          ctx.moveTo(skaterX, skaterY);
+          ctx.lineTo(targetPos.x, targetPos.y);
+          ctx.strokeStyle = "#ef4444"; // Red gap line
+          ctx.lineWidth = 2;
+          ctx.stroke();
+          ctx.setLineDash([]);
+        }
       }
 
       drawSavedChalkboard();
@@ -1240,7 +1181,7 @@
       requestAnimationFrame(animationLoop);
     }
 
-    // ================= AUTHENTIC 2D RINK WHITEBOARD =================
+    // ================= STAGE SWITCHER =================
     function setStageMode(mode) {
       currentStage = mode;
       const videoBox = document.getElementById('video-container');
@@ -1250,7 +1191,6 @@
       const playbackCtrls = document.getElementById('video-playback-controls');
 
       if (mode === 'whiteboard') {
-        if (isPlayerReady && ytPlayer) ytPlayer.pauseVideo();
         videoBox.classList.add('hidden');
         rinkBg.classList.remove('hidden');
         playbackCtrls.classList.add('opacity-30', 'pointer-events-none');
@@ -1298,7 +1238,7 @@
       drawFaceoffCircle(w * 0.80, h * 0.28); drawFaceoffCircle(w * 0.80, h * 0.72);
     }
 
-    // ================= ZERO-POPUP CHALKBOARD ENGINE =================
+    // ================= CHALKBOARD TELSTRATOR =================
     function setupTelestrator() {
       window.addEventListener('resize', () => {
         resizeCanvas();
@@ -1519,9 +1459,6 @@
       t.classList.remove('opacity-0', 'pointer-events-none');
       setTimeout(() => t.classList.add('opacity-0', 'pointer-events-none'), 2500);
     }
-
-    function openOverviewModal() { document.getElementById('overview-modal').classList.remove('hidden'); }
-    function closeOverviewModal() { document.getElementById('overview-modal').classList.add('hidden'); }
 
     checkAuth();
   </script>
