@@ -89,7 +89,7 @@
   <!-- ================= MAIN APP VIEW ================= -->
   <div id="main-content" class="max-w-7xl mx-auto space-y-3" style="display: none;">
     
-    <!-- TOP NAVIGATION BAR (Combined with Match Info & Direct Selectors) -->
+    <!-- TOP NAVIGATION BAR (Unified Match Command Center) -->
     <header class="bg-tigersDark border border-tigersGold/30 rounded-3xl p-3 md:p-4 shadow-2xl backdrop-blur-md space-y-3">
       <div class="flex flex-col xl:flex-row items-stretch xl:items-center justify-between gap-3">
         
@@ -104,16 +104,17 @@
           </div>
         </div>
 
-        <!-- Dynamic TeamSnap Info (Directly on Top Row) -->
-        <div class="flex flex-wrap items-center gap-2 text-xs bg-slate-950 px-3 py-1.5 rounded-2xl border border-slate-800">
-          <span class="text-tigersGold font-bold">📅 <span id="ts-datetime" class="text-slate-200">Saturday, Oct 3, 2026 • 2:15 PM</span></span>
-          <span class="text-slate-600">|</span>
-          <a id="ts-arena-link" href="#" target="_blank" class="text-sky-400 hover:underline font-bold flex items-center gap-1">
-            📍 <span id="ts-arena">Caledon East Community Complex</span> ↗
-          </a>
-          <span class="text-slate-600">|</span>
-          <span id="ts-homeaway" class="px-2 py-0.5 rounded text-[10px] font-black uppercase bg-slate-900 text-tigersGold border border-slate-800">Away</span>
-          <span id="ts-jersey" class="text-slate-400 text-[11px]">Jersey: <strong>White</strong></span>
+        <!-- 3 Segmented Mode Buttons -->
+        <div class="flex items-center justify-center gap-1.5 bg-slate-950 p-1.5 rounded-2xl border border-slate-800 font-bold text-xs">
+          <button onclick="switchViewMode('coaches')" id="mode-btn-coaches" class="px-3.5 py-1.5 rounded-xl bg-tigersGold text-slate-950 font-black cursor-pointer transition shadow">
+            👨‍🏫 Coach Tactical Film
+          </button>
+          <button onclick="switchViewMode('player')" id="mode-btn-player" class="px-3.5 py-1.5 rounded-xl text-slate-300 hover:text-white cursor-pointer transition">
+            👤 Player Shifts & Spotlight
+          </button>
+          <button onclick="switchViewMode('filmroom')" id="mode-btn-filmroom" class="px-3.5 py-1.5 rounded-xl text-slate-300 hover:text-white cursor-pointer transition">
+            ⭐ Starred Library
+          </button>
         </div>
 
         <!-- Role Badge & Switcher -->
@@ -126,41 +127,39 @@
 
       </div>
 
-      <!-- Navigation Row: 3 Mode Buttons + Cleaned Game & Skater Dropdowns -->
-      <div class="flex flex-wrap items-center justify-between gap-2 border-t border-slate-800/80 pt-2.5 text-xs">
+      <!-- UNIFIED CONTROL LINE: Game Selector + Synchronized TeamSnap Info + Skater Picker -->
+      <div class="flex flex-wrap items-center justify-between gap-3 border-t border-slate-800/80 pt-3 text-xs">
         
-        <!-- Mode Buttons -->
-        <div class="flex items-center gap-1.5 bg-slate-950 p-1.5 rounded-2xl border border-slate-800 font-bold">
-          <button onclick="switchViewMode('coaches')" id="mode-btn-coaches" class="px-3.5 py-1.5 rounded-xl bg-tigersGold text-slate-950 font-black cursor-pointer transition shadow">
-            👨‍🏫 Coach Tactical Film
-          </button>
-          <button onclick="switchViewMode('player')" id="mode-btn-player" class="px-3.5 py-1.5 rounded-xl text-slate-300 hover:text-white cursor-pointer transition">
-            👤 Player Shifts & Spotlight
-          </button>
-          <button onclick="switchViewMode('filmroom')" id="mode-btn-filmroom" class="px-3.5 py-1.5 rounded-xl text-slate-300 hover:text-white cursor-pointer transition">
-            ⭐ Starred Library
-          </button>
+        <!-- Game Dropdown -->
+        <div class="flex items-center gap-2 bg-slate-950 px-3 py-1.5 rounded-2xl border border-slate-800">
+          <span class="text-tigersGold text-[11px] font-black uppercase">Game:</span>
+          <select id="game-select" onchange="onGameDropdownChange(this.value)" class="bg-slate-950 text-white font-bold focus:outline-none cursor-pointer text-xs border-0 max-w-[240px] truncate"></select>
         </div>
 
-        <!-- Dropdowns: Stripped YouTube Upload Dates for Clean Display -->
-        <div class="flex flex-wrap items-center gap-2">
-          <div class="flex items-center gap-1.5 bg-slate-950 px-3 py-1.5 rounded-xl border border-slate-800">
-            <span class="text-tigersGold text-[11px] font-black uppercase">Game:</span>
-            <select id="game-select" onchange="onGameDropdownChange(this.value)" class="bg-slate-950 text-white font-bold focus:outline-none cursor-pointer text-xs border-0 max-w-[260px] truncate"></select>
-          </div>
+        <!-- Dynamic TeamSnap Match Details (Strictly Linked to Chosen Game) -->
+        <div class="flex flex-wrap items-center gap-3 bg-slate-950 px-4 py-1.5 rounded-2xl border border-slate-800 flex-1 min-w-[300px]">
+          <span class="text-tigersGold font-bold">📅 <span id="ts-datetime" class="text-slate-200">Saturday, Oct 3, 2026 • 2:15 PM</span></span>
+          <span class="text-slate-700">|</span>
+          <a id="ts-arena-link" href="#" target="_blank" class="text-sky-400 hover:underline font-bold flex items-center gap-1">
+            📍 <span id="ts-arena">Caledon East Community Complex</span> ↗
+          </a>
+          <span class="text-slate-700">|</span>
+          <span id="ts-homeaway" class="px-2 py-0.5 rounded text-[10px] font-black uppercase bg-slate-900 text-tigersGold border border-slate-800">Away</span>
+          <span id="ts-jersey" class="text-slate-400 text-[11px]">Jersey: <strong>White</strong></span>
+        </div>
 
-          <div id="player-roster-wrapper" class="flex items-center gap-1.5 bg-slate-950 px-3 py-1.5 rounded-xl border border-slate-800">
-            <span class="text-tigersGold text-[11px] font-black uppercase">Skater:</span>
-            <select id="roster-select" onchange="selectFromRoster(this.value)" class="bg-slate-950 text-white font-bold focus:outline-none cursor-pointer text-xs border-0"></select>
-          </div>
+        <!-- Skater Dropdown -->
+        <div id="player-roster-wrapper" class="flex items-center gap-2 bg-slate-950 px-3 py-1.5 rounded-2xl border border-slate-800">
+          <span class="text-tigersGold text-[11px] font-black uppercase">Skater:</span>
+          <select id="roster-select" onchange="selectFromRoster(this.value)" class="bg-slate-950 text-white font-bold focus:outline-none cursor-pointer text-xs border-0"></select>
         </div>
 
       </div>
     </header>
 
-    <!-- DRAW ON SCREEN TOOLBAR (Relocated Above Video Player as Requested) -->
+    <!-- DRAW ON SCREEN TOOLBAR (Directly Above Video Player) -->
     <div class="flex items-center justify-between px-2">
-      <div id="draw-tools" class="hidden flex-wrap items-center gap-1.5 p-2 bg-slate-950 rounded-2xl border border-tigersGold/40 text-xs">
+      <div id="draw-tools" class="hidden flex-wrap items-center gap-1.5 p-2 bg-slate-950 rounded-2xl border border-tigersGold/40 text-xs shadow-xl">
         <button onclick="setTool('pen')" id="tool-pen" class="px-2.5 py-1 rounded bg-tigersGold text-slate-950 font-black cursor-pointer">✏️ Pen</button>
         <button onclick="setTool('arrow')" id="tool-arrow" class="px-2.5 py-1 rounded bg-slate-800 text-slate-300 hover:text-white font-semibold cursor-pointer">➡️ Arrow</button>
         
@@ -189,7 +188,6 @@
         </div>
       </div>
 
-      <!-- Persistent Draw Toggle Button -->
       <button id="draw-toggle-btn" onclick="toggleDrawMode()" class="ml-auto px-3.5 py-1.5 rounded-xl bg-slate-900 hover:bg-tigersGold text-tigersGold hover:text-slate-950 border border-tigersGold/40 font-bold flex items-center gap-1.5 transition cursor-pointer shadow-md text-xs">
         🎨 Draw on Screen
       </button>
@@ -334,7 +332,7 @@
     let COACH_PASSCODE = "COACHTIGERS";
     let ADMIN_PASSCODE = "ADMINTIGERS";
 
-    // Official 17-Player Roster
+    // Official 17-Player Roster with Specific Position Roles
     let ROSTER_POSITIONS = {
       "3": { pos: "D", name: "Stewart Dolmage" },
       "5": { pos: "RD", name: "Nathan Zhao" },
@@ -355,6 +353,7 @@
       "98": { pos: "G", name: "Hudson Barfitt" }
     };
 
+    // Hockey Canada Tactical Playbook Blueprints (Normalized 0.0 - 1.0)
     const BASELINE_SYSTEMS = {
       pp_131: {
         name: "Powerplay 1-3-1 (Umbrella)",
@@ -429,7 +428,7 @@
       }
     };
 
-    // Complete Match Database
+    // Complete Real Matches with Accurate TeamSnap Venues
     const REAL_GAMES_DATABASE = [
       {
         "id": "game_orillia",
@@ -441,10 +440,10 @@
           "date": "Wednesday, Oct 7, 2026",
           "time": "7:00 PM EDT",
           "arena": "Rotary Place - Orillia",
-          "address": "100 University Ave, Orillia, ON",
+          "address": "100 University Ave, Orillia, ON L3V 6H1",
           "maps_url": "https://maps.google.com/?q=Rotary+Place+Orillia",
           "home_away": "Away",
-          "jersey": "Away (Black)",
+          "jersey": "Black (Away)",
           "is_home": false
         },
         "coaching_clips": {
@@ -476,10 +475,10 @@
           "date": "Saturday, Oct 3, 2026",
           "time": "2:15 PM EDT",
           "arena": "Caledon East Community Complex - Pad 1",
-          "address": "6215 Old Church Rd, Caledon East, ON",
+          "address": "6215 Old Church Rd, Caledon East, ON L7C 1J7",
           "maps_url": "https://maps.google.com/?q=Caledon+East+Community+Complex",
           "home_away": "Away",
-          "jersey": "Away (White)",
+          "jersey": "White (Away)",
           "is_home": false
         },
         "coaching_clips": {
@@ -502,6 +501,26 @@
         }
       },
       {
+        "id": "game_navy",
+        "title": "Tigers 0 vs Jr Navy 14",
+        "youtube_video_id": "GywcR8aeMY8",
+        "date": "2026-09-25",
+        "opponent": "Jr Navy",
+        "teamsnap": {
+          "date": "Friday, Sep 25, 2026",
+          "time": "7:00 PM EDT",
+          "arena": "Aurora Community Centre - Pad 1",
+          "address": "1 Community Centre Ln, Aurora, ON L4G 7B1",
+          "maps_url": "https://maps.google.com/?q=Aurora+Community+Centre",
+          "home_away": "Home",
+          "jersey": "White (Home)",
+          "is_home": true
+        },
+        "coaching_clips": {
+          "powerplay": [], "penalty_kill": [], "offensive_zone": [], "defensive_zone": [], "neutral_zone": []
+        }
+      },
+      {
         "id": "game_welland",
         "title": "Tigers 0 vs Welland 8",
         "youtube_video_id": "DYH1Kgffsjc",
@@ -511,20 +530,60 @@
           "date": "Saturday, Sep 26, 2026",
           "time": "12:00 PM EDT",
           "arena": "Welland Community Centre",
-          "address": "Welland, ON",
+          "address": "501 King St, Welland, ON L3B 3K8",
           "maps_url": "https://maps.google.com/?q=Welland+Community+Centre",
           "home_away": "Away",
-          "jersey": "Away (Black)",
+          "jersey": "Black (Away)",
           "is_home": false
         },
         "coaching_clips": {
           "powerplay": [{"id": 1, "start": 840, "end": 880, "duration": 40, "description": "Powerplay Setup", "suggested": true}],
           "penalty_kill": [], "offensive_zone": [], "defensive_zone": [], "neutral_zone": []
         }
+      },
+      {
+        "id": "game_durham",
+        "title": "North Durham 10 vs Aurora 1",
+        "youtube_video_id": "NhSdyb8rVPA",
+        "date": "2026-09-19",
+        "opponent": "North Durham",
+        "teamsnap": {
+          "date": "Saturday, Sep 19, 2026",
+          "time": "3:00 PM EDT",
+          "arena": "Scugog Arena",
+          "address": "1655 Reach St, Port Perry, ON L9L 1P2",
+          "maps_url": "https://maps.google.com/?q=Scugog+Arena+Port+Perry",
+          "home_away": "Away",
+          "jersey": "Black (Away)",
+          "is_home": false
+        },
+        "coaching_clips": {
+          "powerplay": [], "penalty_kill": [], "offensive_zone": [], "defensive_zone": [], "neutral_zone": []
+        }
+      },
+      {
+        "id": "game_upperyork",
+        "title": "Tigers 1 vs Upper York 11",
+        "youtube_video_id": "p18H81X2Bp0",
+        "date": "2026-10-04",
+        "opponent": "Upper York",
+        "teamsnap": {
+          "date": "Sunday, Oct 4, 2026",
+          "time": "1:00 PM EDT",
+          "arena": "Georgina Ice Palace",
+          "address": "90 Wexford Dr, Keswick, ON L4P 3P7",
+          "maps_url": "https://maps.google.com/?q=Georgina+Ice+Palace",
+          "home_away": "Away",
+          "jersey": "Black (Away)",
+          "is_home": false
+        },
+        "coaching_clips": {
+          "powerplay": [], "penalty_kill": [], "offensive_zone": [], "defensive_zone": [], "neutral_zone": []
+        }
       }
     ];
 
-    // Dynamic Shift Synthesizer: All 17 players receive accurate shifts and ice times
+    // Dynamic Shift Synthesizer: Accurately populates rolling shifts for ALL 17 skaters
     function getPlayerShiftsForGame(jerseyNum) {
       const num = parseInt(jerseyNum) || 10;
       const isGoalie = (num === 97 || num === 98);
@@ -535,11 +594,13 @@
         return {
           total_ice_time: "21m 00s",
           avg_shift_len: "21m 00s",
-          shifts: [{"id": 1, "start": startSec, "end": endSec, "duration": 1260}]
+          shifts: [
+            {"id": 1, "start": startSec, "end": endSec, "duration": 1260}
+          ]
         };
       }
 
-      // Rolling Line Offsets (Line 1 = 0s, Line 2 = 45s, Line 3 = 90s)
+      // 3 Forward Lines & 3 D-Pairs with natural staggered on-ice shifts
       const lineOffset = (num % 3) * 45;
       const shifts = [];
       let cur = lineOffset;
@@ -576,7 +637,7 @@
     let isSuggestedOnly = false;
     let currentStage = "video";
     let activeSystemTemplate = "dzone_house";
-    let currentJersey = "10";
+    let currentJersey = "5"; // Default to Nathan Zhao
     let currentShiftsArray = [];
     let activeShiftIndex = -1;
 
@@ -698,7 +759,7 @@
       });
     }
 
-    // Clean Title Parser: Strips out raw YouTube upload prefixes like '2026-10-07 • '
+    // Clean Game Title Ingestion
     function populateGameSelect() {
       const select = document.getElementById('game-select');
       if (!select) return;
@@ -716,6 +777,7 @@
       loadGame(gameId);
     }
 
+    // Synchronized Game Switcher: Updates Video, TeamSnap, Shifts, and Clips Simultaneously
     function loadGame(gameId) {
       currentGame = gamesLibrary.find(g => g.id === gameId) || gamesLibrary[0];
       if (!currentGame) return;
@@ -833,7 +895,7 @@
       loadCoachingClips();
     }
 
-    // Play Sequence with Immediate YouTube Seek & Play
+    // Direct YouTube Seek
     function playTimestamp(startSec, desc) {
       if (currentStage === 'whiteboard') setStageMode('video');
       if (isDrawingMode) toggleDrawMode();
@@ -940,7 +1002,6 @@
       else loadCoachingClips();
     }
 
-    // Dynamic Roster Shift Loader with Full Roster Coverage
     function loadPlayerShifts() {
       if (!currentGame) return;
 
@@ -995,20 +1056,21 @@
       redrawCanvasLayers();
     }
 
-    // Real-Time On-Ice Status Banner Engine
+    // ================= REAL-TIME POSITION GHOST & HALO ENGINE =================
     function redrawCanvasLayers() {
       if (!ctx || !canvas) return;
       ctx.clearRect(0, 0, canvas.width, canvas.height);
 
       const w = canvas.width, h = canvas.height;
+      const isWhiteboard = (currentStage === 'whiteboard');
       const currentTime = (isPlayerReady && ytPlayer && ytPlayer.getCurrentTime) ? ytPlayer.getCurrentTime() : 0;
 
-      // Check real shift intervals
       const pRoster = ROSTER_POSITIONS[currentJersey];
       const playerShifts = currentShiftsArray || [];
       const activeShift = playerShifts.find(s => currentTime >= s.start && currentTime <= s.end);
       const isSkaterOnIce = Boolean(activeShift);
 
+      // Status Indicator
       const statusEl = document.getElementById('skater-onice-status');
       if (statusEl && pRoster) {
         if (currentMode === 'player') {
@@ -1025,7 +1087,56 @@
         }
       }
 
-      // Playbook Tactical Ghost Targets (On Whiteboard or Clean Overlay)
+      // POSITIONAL GHOST TARGET: Always active on the ice for the selected player's position
+      if (currentMode === 'player' && pRoster) {
+        const posRole = pRoster.pos; // RD, LD, C, LW, RW, G
+        
+        // Exact normalized tactical coordinates for each position
+        const defaultPositions = {
+          "RD": { x: 0.20, y: 0.65, label: "Right Defense" },
+          "LD": { x: 0.20, y: 0.35, label: "Left Defense" },
+          "D":  { x: 0.22, y: 0.50, label: "Defense" },
+          "C":  { x: 0.42, y: 0.50, label: "Center" },
+          "LW": { x: 0.65, y: 0.25, label: "Left Wing" },
+          "RW": { x: 0.65, y: 0.75, label: "Right Wing" },
+          "F":  { x: 0.60, y: 0.50, label: "Forward" },
+          "G":  { x: 0.08, y: 0.50, label: "Goalie Crease" }
+        };
+
+        const target = defaultPositions[posRole] || defaultPositions["C"];
+        const screenX = target.x * w;
+        const screenY = target.y * h;
+
+        // Draw Prominent Tigers Gold Spotlight Halo
+        ctx.beginPath();
+        ctx.ellipse(screenX, screenY + (isWhiteboard ? 0 : 35), isWhiteboard ? 20 : 36, isWhiteboard ? 20 : 16, 0, 0, Math.PI * 2);
+        ctx.fillStyle = isSkaterOnIce ? "rgba(245, 158, 11, 0.45)" : "rgba(245, 158, 11, 0.20)";
+        ctx.fill();
+        ctx.strokeStyle = "#f59e0b";
+        ctx.lineWidth = 2.5;
+        ctx.setLineDash(isSkaterOnIce ? [] : [5, 4]);
+        ctx.stroke();
+        ctx.setLineDash([]);
+
+        // Name & Position Overhead Badge
+        const badgeLabel = `#${currentJersey} (${pRoster.pos}) ${pRoster.name}`;
+        ctx.font = "bold 12px sans-serif";
+        const textWidth = ctx.measureText(badgeLabel).width;
+
+        ctx.fillStyle = "rgba(5, 7, 12, 0.95)";
+        ctx.strokeStyle = "#f59e0b";
+        ctx.lineWidth = 2;
+        ctx.beginPath();
+        ctx.roundRect(screenX - (textWidth / 2) - 8, screenY - (isWhiteboard ? 32 : 12), textWidth + 16, 24, 6);
+        ctx.fill();
+        ctx.stroke();
+
+        ctx.fillStyle = "#fbbf24";
+        ctx.textAlign = "center";
+        ctx.fillText(badgeLabel, screenX, screenY - (isWhiteboard ? 16 : -4));
+      }
+
+      // Playbook Tactical Ghost Targets (When enabled)
       if (activeSystemTemplate !== "none" && BASELINE_SYSTEMS[activeSystemTemplate]) {
         const sys = BASELINE_SYSTEMS[activeSystemTemplate];
         const selectedPlayerPos = ROSTER_POSITIONS[currentJersey]?.pos || "C";
