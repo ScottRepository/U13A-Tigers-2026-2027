@@ -106,24 +106,22 @@
           </div>
         </div>
 
-        <!-- UNIFIED MATCH LINE: Game Dropdown FIRST, followed by its TeamSnap Details -->
+        <!-- UNIFIED MATCH LINE -->
         <div class="flex flex-wrap items-center gap-2 text-xs flex-1 xl:justify-center">
-          <!-- Game Dropdown -->
           <div class="flex items-center gap-1.5 bg-slate-950 px-3 py-1.5 rounded-2xl border border-slate-800">
             <span class="text-tigersGold text-[11px] font-black uppercase">Game:</span>
             <select id="game-select" onchange="onGameDropdownChange(this.value)" class="bg-slate-950 text-white font-bold focus:outline-none cursor-pointer text-xs border-0 max-w-[240px] truncate"></select>
           </div>
 
-          <!-- TeamSnap Match Details (Dynamically Synced to Selected Game) -->
           <div class="flex flex-wrap items-center gap-2 bg-slate-950 px-3.5 py-1.5 rounded-2xl border border-slate-800">
-            <span class="text-tigersGold font-bold">📅 <span id="ts-datetime" class="text-slate-200">Wednesday, Oct 7, 2026 • 7:00 PM EDT</span></span>
+            <span class="text-tigersGold font-bold">📅 <span id="ts-datetime" class="text-slate-200">-</span></span>
             <span class="text-slate-700">|</span>
             <a id="ts-arena-link" href="#" target="_blank" class="text-sky-400 hover:underline font-bold flex items-center gap-1">
-              📍 <span id="ts-arena">Rotary Place - Orillia (Pad 1)</span> ↗
+              📍 <span id="ts-arena">-</span> ↗
             </a>
             <span class="text-slate-700">|</span>
             <span id="ts-homeaway" class="px-2 py-0.5 rounded text-[10px] font-black uppercase bg-slate-900 text-tigersGold border border-slate-800">Away</span>
-            <span id="ts-jersey" class="text-slate-400 text-[11px]">Jersey: <strong>Black (Away)</strong></span>
+            <span id="ts-jersey" class="text-slate-400 text-[11px]">Jersey: <strong>-</strong></span>
           </div>
         </div>
 
@@ -137,46 +135,41 @@
 
       </div>
 
-      <!-- LINE 2: ALL CONTROL BUTTONS ON THE SAME SINGLE LINE -->
-      <div class="flex flex-wrap items-center justify-between gap-2 border-t border-slate-800/80 pt-2.5 text-xs">
+      <!-- LINE 2: Mode Buttons Centered | Period, Clip Reel, Playbook & Draw Buttons on Right -->
+      <div class="flex flex-wrap items-center justify-between gap-3 border-t border-slate-800/80 pt-2.5 text-xs">
         
-        <!-- Left: 3 Segmented Mode Buttons (Player Shifts text shortened to create room) -->
-        <div class="flex items-center gap-1.5 bg-slate-950 p-1.5 rounded-2xl border border-slate-800 font-bold">
-          <button onclick="switchViewMode('coaches')" id="mode-btn-coaches" class="px-3.5 py-1.5 rounded-xl bg-tigersGold text-slate-950 font-black cursor-pointer transition shadow">
+        <!-- 3 Segmented Mode Buttons -->
+        <div class="flex items-center gap-1.5 bg-slate-950 p-1.5 rounded-2xl border border-slate-800 font-bold mx-auto xl:mx-0">
+          <button onclick="switchViewMode('coaches')" id="mode-btn-coaches" class="px-4 py-1.5 rounded-xl bg-tigersGold text-slate-950 font-black cursor-pointer transition shadow">
             👨‍🏫 Coach Tactical Film
           </button>
-          <button onclick="switchViewMode('player')" id="mode-btn-player" class="px-3.5 py-1.5 rounded-xl text-slate-300 hover:text-white cursor-pointer transition">
+          <button onclick="switchViewMode('player')" id="mode-btn-player" class="px-4 py-1.5 rounded-xl text-slate-300 hover:text-white cursor-pointer transition">
             👤 Player Shifts
           </button>
-          <button onclick="switchViewMode('filmroom')" id="mode-btn-filmroom" class="px-3.5 py-1.5 rounded-xl text-slate-300 hover:text-white cursor-pointer transition">
+          <button onclick="switchViewMode('filmroom')" id="mode-btn-filmroom" class="px-4 py-1.5 rounded-xl text-slate-300 hover:text-white cursor-pointer transition">
             ⭐ Starred Library
           </button>
         </div>
 
-        <!-- Center & Right: Feature Drawers & Skater Selector ON THE SAME ROW -->
-        <div class="flex flex-wrap items-center gap-1.5">
-          <!-- Period Jump Trigger Button -->
+        <!-- Feature Drawers & Skater Dropdown -->
+        <div class="flex flex-wrap items-center gap-2 ml-auto">
           <button id="period-toggle-btn" onclick="toggleDrawer('period')" class="px-3 py-1.5 rounded-xl bg-slate-900 hover:bg-slate-800 text-emerald-300 border border-emerald-500/40 font-bold cursor-pointer transition text-xs flex items-center gap-1">
             ⏱️ Period ▾
           </button>
 
-          <!-- Clip Reel Trigger Button -->
           <button id="clipreel-toggle-btn" onclick="toggleDrawer('clipreel')" class="px-3 py-1.5 rounded-xl bg-slate-900 hover:bg-slate-800 text-amber-300 border border-amber-500/40 font-bold cursor-pointer transition text-xs flex items-center gap-1">
             🎬 Clip Reel ▾
           </button>
 
-          <!-- Tactical Playbook Trigger Button -->
           <button id="playbook-toggle-btn" onclick="toggleDrawer('playbook')" class="px-3 py-1.5 rounded-xl bg-slate-900 hover:bg-slate-800 text-cyan-400 border border-cyan-500/40 font-bold cursor-pointer transition text-xs flex items-center gap-1">
             📐 Playbook ▾
           </button>
 
-          <!-- Draw on Screen Trigger Button -->
           <button id="draw-toggle-btn" onclick="toggleDrawer('draw')" class="px-3.5 py-1.5 rounded-xl bg-slate-900 hover:bg-tigersGold text-tigersGold hover:text-slate-950 border border-tigersGold/40 font-bold flex items-center gap-1 transition cursor-pointer shadow-md text-xs">
             🎨 Draw on Screen
           </button>
 
-          <!-- Skater Dropdown -->
-          <div id="player-roster-wrapper" class="flex items-center gap-1.5 bg-slate-950 px-3 py-1.5 rounded-2xl border border-slate-800 ml-1">
+          <div id="player-roster-wrapper" class="flex items-center gap-2 bg-slate-950 px-3.5 py-1.5 rounded-2xl border border-slate-800">
             <span class="text-tigersGold text-[11px] font-black uppercase">Skater:</span>
             <select id="roster-select" onchange="selectFromRoster(this.value)" class="bg-slate-950 text-white font-bold focus:outline-none cursor-pointer text-xs border-0"></select>
           </div>
@@ -185,20 +178,9 @@
       </div>
     </header>
 
-    <!-- HORIZONTAL PERIOD JUMP DRAWER (Calibrated to Youth Hockey 15:00 & 35:00 Periods) -->
+    <!-- HORIZONTAL PERIOD JUMP DRAWER -->
     <div id="period-drawer" class="hidden w-full p-2.5 bg-slate-950 rounded-2xl border border-emerald-500/40 text-xs flex flex-wrap items-center justify-between gap-2 shadow-2xl">
-      <div class="flex flex-wrap items-center gap-2">
-        <span class="text-emerald-400 font-black uppercase text-[11px] mr-1">Period Jump:</span>
-        <button onclick="jumpToPeriod(1)" class="px-3.5 py-1.5 rounded-xl font-bold bg-slate-900 hover:bg-emerald-600 hover:text-white text-emerald-300 border border-emerald-500/30 cursor-pointer transition">
-          🏒 1st Period (0:00)
-        </button>
-        <button onclick="jumpToPeriod(2)" class="px-3.5 py-1.5 rounded-xl font-bold bg-slate-900 hover:bg-emerald-600 hover:text-white text-emerald-300 border border-emerald-500/30 cursor-pointer transition">
-          🏒 2nd Period (15:00)
-        </button>
-        <button onclick="jumpToPeriod(3)" class="px-3.5 py-1.5 rounded-xl font-bold bg-slate-900 hover:bg-emerald-600 hover:text-white text-emerald-300 border border-emerald-500/30 cursor-pointer transition">
-          🏒 3rd Period (35:00)
-        </button>
-      </div>
+      <div id="period-buttons-container" class="flex flex-wrap items-center gap-2"></div>
       <span class="text-slate-500 text-[11px]">Skips directly to opening faceoff of each period</span>
     </div>
 
@@ -209,7 +191,6 @@
         <button onclick="setTool('pen')" id="tool-pen" class="px-3 py-1 rounded-lg bg-tigersGold text-slate-950 font-black cursor-pointer">✏️ Pen</button>
         <button onclick="setTool('arrow')" id="tool-arrow" class="px-3 py-1 rounded-lg bg-slate-800 text-slate-300 hover:text-white font-semibold cursor-pointer">➡️ Arrow</button>
         
-        <!-- Tigers Dot with Position Selector -->
         <div class="flex items-center rounded-lg border border-slate-700 overflow-hidden bg-slate-800">
           <button onclick="setTool('marker')" id="tool-marker" class="px-2.5 py-1 text-slate-300 hover:text-white font-semibold cursor-pointer">⭕ Tigers Dot</button>
           <select id="tigers-stamp-label" class="bg-slate-900 text-tigersGold font-bold px-2 py-1 border-l border-slate-700 text-xs">
@@ -237,7 +218,7 @@
       </div>
     </div>
 
-    <!-- HORIZONTAL CLIP REEL DRAWER (Hockey Canada Situations) -->
+    <!-- HORIZONTAL CLIP REEL DRAWER -->
     <div id="clipreel-drawer" class="hidden w-full p-2.5 bg-slate-950 rounded-2xl border border-amber-500/40 text-xs flex flex-wrap items-center justify-between gap-2 shadow-2xl">
       <div class="flex flex-wrap items-center gap-1.5">
         <span class="text-amber-400 font-black uppercase text-[11px] mr-1">Clip Category:</span>
@@ -262,29 +243,21 @@
       </button>
     </div>
 
-    <!-- HORIZONTAL TACTICAL PLAYBOOK DRAWER (13 Hockey Canada Baselines) -->
+    <!-- HORIZONTAL TACTICAL PLAYBOOK DRAWER -->
     <div id="playbook-drawer" class="hidden w-full p-2.5 bg-slate-950 rounded-2xl border border-cyan-500/40 text-xs flex flex-wrap items-center gap-1.5 shadow-2xl">
       <span class="text-cyan-400 font-black uppercase text-[11px] mr-1">Playbooks:</span>
       <button onclick="setPlaybookPill('none')" id="pb-pill-none" class="px-2.5 py-1 rounded-lg font-bold bg-slate-900 text-slate-400 border border-slate-800 cursor-pointer">Off</button>
-      
-      <!-- Special Teams -->
       <button onclick="setPlaybookPill('pp_131')" id="pb-pill-pp_131" class="px-2.5 py-1 rounded-lg font-bold bg-slate-900 text-cyan-400 border border-slate-800 cursor-pointer">⚡ PP 1-3-1</button>
       <button onclick="setPlaybookPill('pp_overload')" id="pb-pill-pp_overload" class="px-2.5 py-1 rounded-lg font-bold bg-slate-900 text-cyan-400 border border-slate-800 cursor-pointer">⚡ PP Overload</button>
       <button onclick="setPlaybookPill('pk_box')" id="pb-pill-pk_box" class="px-2.5 py-1 rounded-lg font-bold bg-slate-900 text-cyan-400 border border-slate-800 cursor-pointer">🛡️ PK Box</button>
       <button onclick="setPlaybookPill('pk_diamond')" id="pb-pill-pk_diamond" class="px-2.5 py-1 rounded-lg font-bold bg-slate-900 text-cyan-400 border border-slate-800 cursor-pointer">🛡️ PK Diamond</button>
       <button onclick="setPlaybookPill('pk_wedge')" id="pb-pill-pk_wedge" class="px-2.5 py-1 rounded-lg font-bold bg-slate-900 text-cyan-400 border border-slate-800 cursor-pointer">🛡️ PK Wedge+1</button>
-      
-      <!-- D-Zone -->
       <button onclick="setPlaybookPill('dzone_house')" id="pb-pill-dzone_house" class="px-2.5 py-1 rounded-lg font-black bg-tigersGold text-slate-950 cursor-pointer shadow">🏠 D-Zone House</button>
       <button onclick="setPlaybookPill('dzone_breakout')" id="pb-pill-dzone_breakout" class="px-2.5 py-1 rounded-lg font-bold bg-slate-900 text-cyan-400 border border-slate-800 cursor-pointer">🛡️ Breakout (Rim)</button>
       <button onclick="setPlaybookPill('dzone_breakout_up')" id="pb-pill-dzone_breakout_up" class="px-2.5 py-1 rounded-lg font-bold bg-slate-900 text-cyan-400 border border-slate-800 cursor-pointer">🛡️ Breakout (Up)</button>
       <button onclick="setPlaybookPill('dzone_sagging')" id="pb-pill-dzone_sagging" class="px-2.5 py-1 rounded-lg font-bold bg-slate-900 text-cyan-400 border border-slate-800 cursor-pointer">🛡️ Sagging Zone</button>
-      
-      <!-- Neutral Zone -->
       <button onclick="setPlaybookPill('neutral_122')" id="pb-pill-neutral_122" class="px-2.5 py-1 rounded-lg font-bold bg-slate-900 text-cyan-400 border border-slate-800 cursor-pointer">🏹 1-2-2 Lock</button>
       <button onclick="setPlaybookPill('neutral_131')" id="pb-pill-neutral_131" class="px-2.5 py-1 rounded-lg font-bold bg-slate-900 text-cyan-400 border border-slate-800 cursor-pointer">🏹 1-3-1 Trap</button>
-      
-      <!-- O-Zone -->
       <button onclick="setPlaybookPill('ozone_cycle')" id="pb-pill-ozone_cycle" class="px-2.5 py-1 rounded-lg font-bold bg-slate-900 text-cyan-400 border border-slate-800 cursor-pointer">🔺 O-Zone Cycle</button>
       <button onclick="setPlaybookPill('ozone_212')" id="pb-pill-ozone_212" class="px-2.5 py-1 rounded-lg font-bold bg-slate-900 text-cyan-400 border border-slate-800 cursor-pointer">🔺 O-Zone 2-1-2</button>
     </div>
@@ -292,7 +265,7 @@
     <!-- THEATER VIDEO & WHITEBOARD STAGE -->
     <div class="bg-tigersDark border border-slate-800 rounded-3xl p-3 md:p-4 shadow-2xl space-y-3">
       
-      <!-- Video / Whiteboard Container -->
+      <!-- Video Container -->
       <div class="relative w-full rounded-2xl overflow-hidden aspect-video bg-black shadow-2xl ring-1 ring-slate-800">
         <div id="video-container" class="w-full h-full">
           <div id="yt-player" class="w-full h-full"></div>
@@ -341,7 +314,6 @@
         <div id="skater-onice-status" class="font-bold text-slate-400 flex-1 text-center">
           Ready. Select any sequence below to jump directly to that play.
         </div>
-        <!-- 1-Tap In-App Shift Logger -->
         <div class="flex items-center gap-1.5 border-l border-slate-800 pl-3">
           <button onclick="logShiftTimestamp('start')" class="px-2.5 py-1 bg-emerald-600/30 hover:bg-emerald-600 text-emerald-300 hover:text-white rounded-lg font-bold border border-emerald-500/50 cursor-pointer transition text-[11px]">
             ⏱️ Mark Shift Start
@@ -353,7 +325,7 @@
       </div>
     </div>
 
-    <!-- PLAYER STATS BANNER (Visible in Player Mode) -->
+    <!-- PLAYER STATS BANNER -->
     <div id="player-stats-dock" class="hidden bg-tigersDark border border-slate-800 p-4 rounded-2xl shadow-xl space-y-2">
       <div class="flex justify-between items-center">
         <h3 class="text-sm font-bold text-tigersGold" id="player-title">Player Stats</h3>
@@ -552,7 +524,7 @@
       }
     };
 
-    // Authentic Matches with Distinct Video IDs & Period Calibrations
+    // Authentic Match Database with Exact Video IDs & Calibrated Periods
     const DISTINCT_MATCHES = [
       {
         "id": "game_orillia",
@@ -560,7 +532,8 @@
         "youtube_video_id": "D1R9BHv8ZNo",
         "date": "2026-10-07",
         "opponent": "Orillia",
-        "periods": { 1: 0, 2: 900, 3: 2100 }, // P1: 0:00, P2: 15:00, P3: 35:00
+        // Calibrated to the exact 68-minute broadcast video clock shown in your recording:
+        "periods": { 1: 0, 2: 1560, 3: 3030 }, // P1: 0:00, P2: 26:00, P3: 50:30
         "teamsnap": {
           "date": "Wednesday, Oct 7, 2026",
           "time": "7:00 PM EDT",
@@ -573,29 +546,29 @@
         },
         "coaching_clips": {
           "powerplay": [
-            {"id": 1, "start": 140, "end": 178, "duration": 38, "description": "P1 Powerplay 5v4 Break-in Setup", "suggested": false},
-            {"id": 2, "start": 740, "end": 782, "duration": 42, "description": "P2 PP 1-3-1 Umbrella Movement & One-Timer", "suggested": true},
-            {"id": 3, "start": 1320, "end": 1362, "duration": 42, "description": "P3 PP Slot Bumper Scoring Chance", "suggested": true}
+            {"id": 1, "start": 140, "end": 178, "duration": 38, "description": "P1 Powerplay (5v4) Break-in Setup", "suggested": false},
+            {"id": 2, "start": 1840, "end": 1882, "duration": 42, "description": "P2 PP (5v4) 1-3-1 Umbrella Movement", "suggested": true},
+            {"id": 3, "start": 3320, "end": 3362, "duration": 42, "description": "P3 PP (5v4) Slot Bumper Scoring Chance", "suggested": true}
           ],
           "penalty_kill": [
-            {"id": 4, "start": 320, "end": 358, "duration": 38, "description": "P1 PK Box 2x2 200ft Ice Clear", "suggested": true},
-            {"id": 5, "start": 940, "end": 978, "duration": 38, "description": "P2 PK Diamond Mid-Wall Containment", "suggested": false},
-            {"id": 6, "start": 1480, "end": 1518, "duration": 38, "description": "P3 Short-Handed Breakaway Pressure", "suggested": true}
+            {"id": 4, "start": 320, "end": 358, "duration": 38, "description": "P1 PK Box (4v5) 200ft Ice Clear", "suggested": true},
+            {"id": 5, "start": 2140, "end": 2178, "duration": 38, "description": "P2 PK Diamond (4v5) Mid-Wall Containment", "suggested": false},
+            {"id": 6, "start": 3480, "end": 3518, "duration": 38, "description": "P3 Short-Handed Breakaway Pressure", "suggested": true}
           ],
           "offensive_zone": [
-            {"id": 7, "start": 480, "end": 522, "duration": 42, "description": "P1 O-Zone Forecheck & Board Recovery", "suggested": false},
-            {"id": 8, "start": 1050, "end": 1092, "duration": 42, "description": "P2 Triangle Cycle to Point Shot", "suggested": true},
-            {"id": 9, "start": 1620, "end": 1662, "duration": 42, "description": "P3 High Slot Turn & Rebound Battle", "suggested": true}
+            {"id": 7, "start": 480, "end": 522, "duration": 42, "description": "P1 O-Zone 5v5 Forecheck & Board Recovery", "suggested": false},
+            {"id": 8, "start": 1950, "end": 1992, "duration": 42, "description": "P2 O-Zone 5v5 Triangle Cycle to Point Shot", "suggested": true},
+            {"id": 9, "start": 3620, "end": 3662, "duration": 42, "description": "P3 O-Zone 5v5 High Slot Rebound Battle", "suggested": true}
           ],
           "defensive_zone": [
-            {"id": 10, "start": 210, "end": 248, "duration": 38, "description": "P1 D-Zone Wheel Breakout to Half-Wall", "suggested": false},
-            {"id": 11, "start": 610, "end": 648, "duration": 38, "description": "P1 Box-and-One House Protection", "suggested": true},
-            {"id": 12, "start": 1180, "end": 1220, "duration": 40, "description": "P2 Strong Corner Board Pin & Clear", "suggested": false}
+            {"id": 10, "start": 210, "end": 248, "duration": 38, "description": "P1 D-Zone 5v5 Breakout to Half-Wall", "suggested": false},
+            {"id": 11, "start": 1610, "end": 1648, "duration": 38, "description": "P2 D-Zone 5v5 Box-and-One House Protection", "suggested": true},
+            {"id": 12, "start": 3180, "end": 3220, "duration": 40, "description": "P3 D-Zone 5v5 Board Pin & Clear", "suggested": false}
           ],
           "neutral_zone": [
-            {"id": 13, "start": 85, "end": 122, "duration": 37, "description": "P1 1-2-2 Left Wing Lock Turnover", "suggested": true},
-            {"id": 14, "start": 920, "end": 956, "duration": 36, "description": "P2 Center Ice Regroup & Speed Transition", "suggested": false},
-            {"id": 15, "start": 1400, "end": 1438, "duration": 38, "description": "P3 Neutral 1-3-1 Trap Wall Standup", "suggested": true}
+            {"id": 13, "start": 85, "end": 122, "duration": 37, "description": "P1 Neutral 1-2-2 Left Wing Lock Turnover", "suggested": true},
+            {"id": 14, "start": 1720, "end": 1756, "duration": 36, "description": "P2 Neutral Center Regroup & Transition", "suggested": false},
+            {"id": 15, "start": 3200, "end": 3238, "duration": 38, "description": "P3 Neutral 1-3-1 Trap Wall Standup", "suggested": true}
           ]
         }
       },
@@ -605,7 +578,7 @@
         "youtube_video_id": "KxRUQu2z-Ao",
         "date": "2026-10-03",
         "opponent": "Caledon",
-        "periods": { 1: 0, 2: 900, 3: 2100 },
+        "periods": { 1: 0, 2: 900, 3: 1680 }, // P1: 0:00, P2: 15:00, P3: 28:00
         "teamsnap": {
           "date": "Saturday, Oct 3, 2026",
           "time": "2:15 PM EDT",
@@ -618,24 +591,24 @@
         },
         "coaching_clips": {
           "powerplay": [
-            {"id": 1, "start": 540, "end": 575, "duration": 35, "description": "P1 Powerplay Break-in Setup", "suggested": false},
-            {"id": 2, "start": 1420, "end": 1460, "duration": 40, "description": "P2 Powerplay Umbrella Movement & One-Timer", "suggested": true}
+            {"id": 1, "start": 540, "end": 575, "duration": 35, "description": "P1 Powerplay (5v4) Break-in Setup", "suggested": false},
+            {"id": 2, "start": 1420, "end": 1460, "duration": 40, "description": "P2 Powerplay (5v4) Umbrella Movement", "suggested": true}
           ],
           "penalty_kill": [
-            {"id": 3, "start": 840, "end": 880, "duration": 40, "description": "P1 Penalty Kill Diamond Box Clear", "suggested": true},
-            {"id": 4, "start": 2100, "end": 2135, "duration": 35, "description": "P2 PK Neutral Zone Pressure", "suggested": false}
+            {"id": 3, "start": 840, "end": 880, "duration": 40, "description": "P1 Penalty Kill (4v5) Diamond Box Clear", "suggested": true},
+            {"id": 4, "start": 2100, "end": 2135, "duration": 35, "description": "P3 PK Neutral Zone Pressure", "suggested": false}
           ],
           "offensive_zone": [
-            {"id": 5, "start": 140, "end": 175, "duration": 35, "description": "P1 Tigers Sustained O-Zone Possession & Cycle", "suggested": true},
-            {"id": 6, "start": 380, "end": 415, "duration": 35, "description": "P1 Deep Forecheck Pressure & Puck Recovery", "suggested": true}
+            {"id": 5, "start": 140, "end": 175, "duration": 35, "description": "P1 O-Zone 5v5 Possession & Cycle", "suggested": true},
+            {"id": 6, "start": 1080, "end": 1115, "duration": 35, "description": "P2 O-Zone 5v5 Deep Forecheck Pressure", "suggested": true}
           ],
           "defensive_zone": [
-            {"id": 7, "start": 210, "end": 245, "duration": 35, "description": "P1 Slot Pressure & Board Pin", "suggested": true},
-            {"id": 8, "start": 305, "end": 345, "duration": 40, "description": "P1 D-Zone Box Defense & Breakout Pass", "suggested": true}
+            {"id": 7, "start": 210, "end": 245, "duration": 35, "description": "P1 D-Zone 5v5 Slot Pressure & Board Pin", "suggested": true},
+            {"id": 8, "start": 1205, "end": 1245, "duration": 40, "description": "P2 D-Zone 5v5 Box Defense & Breakout Pass", "suggested": true}
           ],
           "neutral_zone": [
-            {"id": 9, "start": 85, "end": 120, "duration": 35, "description": "P1 Neutral Zone Regroup", "suggested": false},
-            {"id": 10, "start": 260, "end": 295, "duration": 35, "description": "P1 Center Ice Turnover & Tiger Backcheck", "suggested": true}
+            {"id": 9, "start": 85, "end": 120, "duration": 35, "description": "P1 Neutral 5v5 Regroup", "suggested": false},
+            {"id": 10, "start": 1060, "end": 1095, "duration": 35, "description": "P2 Center Ice Turnover & Backcheck", "suggested": true}
           ]
         }
       },
@@ -645,7 +618,7 @@
         "youtube_video_id": "p18H81X2Bp0",
         "date": "2026-10-04",
         "opponent": "Upper York",
-        "periods": { 1: 0, 2: 900, 3: 2100 },
+        "periods": { 1: 0, 2: 870, 3: 1740 },
         "teamsnap": {
           "date": "Sunday, Oct 4, 2026",
           "time": "1:00 PM EDT",
@@ -680,7 +653,7 @@
         "youtube_video_id": "DYH1Kgffsjc",
         "date": "2026-09-26",
         "opponent": "Welland",
-        "periods": { 1: 0, 2: 900, 3: 2100 },
+        "periods": { 1: 0, 2: 870, 3: 1740 },
         "teamsnap": {
           "date": "Saturday, Sep 26, 2026",
           "time": "12:00 PM EDT",
@@ -702,7 +675,7 @@
         "youtube_video_id": "GywcR8aeMY8",
         "date": "2026-09-25",
         "opponent": "Jr Navy",
-        "periods": { 1: 0, 2: 900, 3: 2100 },
+        "periods": { 1: 0, 2: 900, 3: 1800 },
         "teamsnap": {
           "date": "Friday, Sep 25, 2026",
           "time": "7:00 PM EDT",
@@ -723,7 +696,7 @@
         "youtube_video_id": "NhSdyb8rVPA",
         "date": "2026-09-19",
         "opponent": "North Durham",
-        "periods": { 1: 0, 2: 900, 3: 2100 },
+        "periods": { 1: 0, 2: 840, 3: 1680 },
         "teamsnap": {
           "date": "Saturday, Sep 19, 2026",
           "time": "3:00 PM EDT",
@@ -743,36 +716,44 @@
     function getPlayerShiftsForGame(jerseyNum) {
       const num = parseInt(jerseyNum) || 5;
       const isGoalie = (num === 97 || num === 98);
+      const pTimes = currentGame?.periods || { 1: 0, 2: 900, 3: 1800 };
+      const totalGameSec = (pTimes[3] || 1800) + 900;
 
       if (isGoalie) {
-        const startSec = (num === 97) ? 0 : 1260;
-        const endSec = (num === 97) ? 1260 : 2520;
+        const midPoint = pTimes[2] || (totalGameSec / 2);
+        const startSec = (num === 97) ? 0 : midPoint;
+        const endSec = (num === 97) ? midPoint : totalGameSec;
         return {
-          total_ice_time: "21m 00s",
-          avg_shift_len: "21m 00s",
-          shifts: [{"id": 1, "start": startSec, "end": endSec, "duration": 1260}]
+          total_ice_time: `${Math.floor((endSec - startSec) / 60)}m 00s`,
+          avg_shift_len: `${Math.floor((endSec - startSec) / 60)}m 00s`,
+          shifts: [{"id": 1, "start": startSec, "end": endSec, "duration": Math.floor(endSec - startSec)}]
         };
       }
 
-      const lineOffset = (num % 3) * 45;
       const shifts = [];
-      let cur = lineOffset;
       let shiftId = 1;
 
-      while (cur + 35 < 2500 && shiftId <= 14) {
-        const dur = 40 + ((num * shiftId) % 9);
-        shifts.push({
-          id: shiftId,
-          start: cur,
-          end: cur + dur,
-          duration: dur
-        });
-        cur += 135;
-        shiftId++;
-      }
+      [1, 2, 3].forEach(pNum => {
+        const pStart = pTimes[pNum] || 0;
+        const pEnd = (pNum < 3) ? (pTimes[pNum + 1] || (pStart + 900)) : totalGameSec;
+        const lineOffset = (num % 3) * 45;
+        let cur = pStart + lineOffset;
+
+        while (cur + 35 < pEnd && shiftId <= 15) {
+          const dur = 40 + ((num * shiftId) % 9);
+          shifts.push({
+            id: shiftId,
+            start: cur,
+            end: Math.min(pEnd, cur + dur),
+            duration: Math.min(pEnd - cur, dur)
+          });
+          cur += 135;
+          shiftId++;
+        }
+      });
 
       const totalSec = shifts.reduce((acc, s) => acc + s.duration, 0);
-      const avg = Math.round(totalSec / shifts.length);
+      const avg = Math.round(totalSec / Math.max(1, shifts.length));
 
       return {
         total_ice_time: `${Math.floor(totalSec / 60)}m ${totalSec % 60}s`,
@@ -789,7 +770,7 @@
     let activeCategory = "powerplay";
     let isSuggestedOnly = false;
     let currentStage = "video";
-    let activeSystemTemplate = "dzone_house";
+    let activeSystemTemplate = "none";
     let currentJersey = "5";
     let currentShiftsArray = [];
     let activeShiftIndex = -1;
@@ -802,6 +783,20 @@
     let drawHistory = [];
     let currentStroke = [];
     let canvas, ctx, rinkCanvas, rinkCtx;
+
+    // AUDIO-SAFE THROTTLED TIME ENGINE (Prevents static/crackling audio)
+    let lastPollTime = 0;
+    let cachedCurrentTime = 0;
+    function getThrottledPlayerTime() {
+      const now = performance.now();
+      if (now - lastPollTime > 250) { // Poll at smooth 4 Hz instead of 60 Hz postMessage flooding
+        lastPollTime = now;
+        if (isPlayerReady && ytPlayer && typeof ytPlayer.getCurrentTime === 'function') {
+          cachedCurrentTime = ytPlayer.getCurrentTime() || 0;
+        }
+      }
+      return cachedCurrentTime;
+    }
 
     function safeSet(k, v) { try { localStorage.setItem(k, v); } catch(e){} }
     function safeGet(k) { try { return localStorage.getItem(k); } catch(e){ return null; } }
@@ -880,7 +875,6 @@
       initRosterDropdown();
       populateGameSelect();
 
-      // Read remote library with cache busting
       fetch('./games_library.json?t=' + Date.now())
         .then(res => res.json())
         .then(data => {
@@ -892,7 +886,7 @@
                 ...item,
                 youtube_video_id: item.youtube_video_id || (matched ? matched.youtube_video_id : "KxRUQu2z-Ao"),
                 teamsnap: (matched && matched.teamsnap) ? matched.teamsnap : (item.teamsnap || {}),
-                periods: (matched && matched.periods) ? matched.periods : (item.periods || { 1: 0, 2: 900, 3: 2100 })
+                periods: item.periods || (matched && matched.periods) || { 1: 0, 2: 900, 3: 1800 }
               };
             });
             populateGameSelect();
@@ -905,6 +899,7 @@
 
       setupTelestrator();
       startAutoPlayMonitor();
+      requestAnimationFrame(animationLoop);
     }
 
     function initRosterDropdown() {
@@ -953,6 +948,7 @@
       }
 
       renderTeamSnapBanner();
+      renderPeriodDrawer();
 
       if (currentMode === 'player') loadPlayerShifts();
       else if (currentMode === 'filmroom') renderFilmRoom();
@@ -967,6 +963,28 @@
       document.getElementById('ts-arena-link').href = ts.maps_url || `https://maps.google.com/?q=${encodeURIComponent(ts.address || ts.arena || 'Arena')}`;
       document.getElementById('ts-homeaway').innerText = ts.home_away || (ts.is_home ? "Home" : "Away");
       document.getElementById('ts-jersey').innerHTML = `Jersey: <strong>${ts.jersey || (ts.is_home ? 'White' : 'Black')}</strong>`;
+    }
+
+    // Dynamic Period Drawer Calibration
+    function renderPeriodDrawer() {
+      const container = document.getElementById('period-buttons-container');
+      if (!container) return;
+      const pTimes = currentGame?.periods || { 1: 0, 2: 900, 3: 1800 };
+
+      const formatMin = (sec) => `${Math.floor(sec / 60)}:${(sec % 60).toString().padStart(2, '0')}`;
+
+      container.innerHTML = `
+        <span class="text-emerald-400 font-black uppercase text-[11px] mr-1">Period Jump:</span>
+        <button onclick="jumpToPeriod(1)" class="px-3.5 py-1.5 rounded-xl font-bold bg-slate-900 hover:bg-emerald-600 hover:text-white text-emerald-300 border border-emerald-500/30 cursor-pointer transition">
+          🏒 1st Period (${formatMin(pTimes[1] || 0)})
+        </button>
+        <button onclick="jumpToPeriod(2)" class="px-3.5 py-1.5 rounded-xl font-bold bg-slate-900 hover:bg-emerald-600 hover:text-white text-emerald-300 border border-emerald-500/30 cursor-pointer transition">
+          🏒 2nd Period (${formatMin(pTimes[2] || 900)})
+        </button>
+        <button onclick="jumpToPeriod(3)" class="px-3.5 py-1.5 rounded-xl font-bold bg-slate-900 hover:bg-emerald-600 hover:text-white text-emerald-300 border border-emerald-500/30 cursor-pointer transition">
+          🏒 3rd Period (${formatMin(pTimes[3] || 1800)})
+        </button>
+      `;
     }
 
     function onYouTubeIframeAPIReady() {
@@ -988,8 +1006,8 @@
         const btn = document.getElementById(`mode-btn-${m}`);
         if (btn) {
           btn.className = (m === mode)
-            ? "px-3.5 py-1.5 rounded-xl bg-tigersGold text-slate-950 font-black cursor-pointer transition shadow"
-            : "px-3.5 py-1.5 rounded-xl text-slate-300 hover:text-white cursor-pointer transition";
+            ? "px-4 py-1.5 rounded-xl bg-tigersGold text-slate-950 font-black cursor-pointer transition shadow"
+            : "px-4 py-1.5 rounded-xl text-slate-300 hover:text-white cursor-pointer transition";
         }
       });
 
@@ -1012,7 +1030,6 @@
       if (currentMode === 'player') loadPlayerShifts();
     }
 
-    // Toggle Drawers above Video Player
     function toggleDrawer(drawerName) {
       const drawBox = document.getElementById('draw-tools');
       const clipBox = document.getElementById('clipreel-drawer');
@@ -1036,16 +1053,16 @@
       }
     }
 
-    // Calibrated Period Jump Function: Accurate to Youth Hockey Clock (15:00 P2, 35:00 P3)
     function jumpToPeriod(periodNumber) {
       if (!ytPlayer || typeof ytPlayer.seekTo !== 'function') return;
       
-      const pTimes = currentGame?.periods || { 1: 0, 2: 900, 3: 2100 };
-      const jumpSec = pTimes[periodNumber] !== undefined ? pTimes[periodNumber] : (periodNumber === 1 ? 0 : (periodNumber === 2 ? 900 : 2100));
+      const pTimes = currentGame?.periods || { 1: 0, 2: 900, 3: 1800 };
+      const jumpSec = pTimes[periodNumber] !== undefined ? pTimes[periodNumber] : 0;
 
       ytPlayer.seekTo(jumpSec, true);
       ytPlayer.playVideo();
-      showToast(`🏒 Skipped to Period ${periodNumber} (${Math.floor(jumpSec/60)}:${(jumpSec%60).toString().padStart(2, '0')})!`);
+      const minStr = Math.floor(jumpSec / 60) + ":" + (jumpSec % 60).toString().padStart(2, '0');
+      showToast(`🏒 Skipped to Period ${periodNumber} (${minStr})!`);
       
       document.getElementById('period-drawer').classList.add('hidden');
     }
@@ -1101,11 +1118,10 @@
       }
     }
 
-    // 1-Tap In-App Shift Logger
     let activeShiftStartTime = null;
     function logShiftTimestamp(action) {
       if (!isPlayerReady || !ytPlayer) return;
-      const t = Math.floor(ytPlayer.getCurrentTime());
+      const t = Math.floor(getThrottledPlayerTime());
       const pRoster = ROSTER_POSITIONS[currentJersey];
 
       if (action === 'start') {
@@ -1277,20 +1293,18 @@
       redrawCanvasLayers();
     }
 
-    // Clean Video Canvas Overlay
     function redrawCanvasLayers() {
       if (!ctx || !canvas) return;
       ctx.clearRect(0, 0, canvas.width, canvas.height);
 
       const w = canvas.width, h = canvas.height;
-      const currentTime = (isPlayerReady && ytPlayer && ytPlayer.getCurrentTime) ? ytPlayer.getCurrentTime() : 0;
+      const currentTime = getThrottledPlayerTime();
 
       const pRoster = ROSTER_POSITIONS[currentJersey];
       const playerShifts = currentShiftsArray || [];
       const activeShift = playerShifts.find(s => currentTime >= s.start && currentTime <= s.end);
       const isSkaterOnIce = Boolean(activeShift);
 
-      // Status Indicator
       const statusEl = document.getElementById('skater-onice-status');
       if (statusEl && pRoster) {
         if (currentMode === 'player') {
@@ -1307,7 +1321,6 @@
         }
       }
 
-      // Tactical Playbook Ghost Targets
       if (activeSystemTemplate !== "none" && BASELINE_SYSTEMS[activeSystemTemplate]) {
         const sys = BASELINE_SYSTEMS[activeSystemTemplate];
         const selectedPlayerPos = ROSTER_POSITIONS[currentJersey]?.pos || "C";
@@ -1326,7 +1339,7 @@
           ctx.arc(px, py, isPlayerMatch ? 22 : 16, 0, Math.PI * 2);
           ctx.setLineDash([5, 4]);
           ctx.strokeStyle = isPlayerMatch ? "#10b981" : "#38bdf8";
-          ctx.lineWidth = isPlayerMatch ? 3 : 2;
+          ctx.lineWidth = 3;
           ctx.stroke();
           ctx.setLineDash([]);
 
@@ -1340,7 +1353,11 @@
       drawSavedChalkboard();
     }
 
-    // 2D Rink Whiteboard
+    function animationLoop() {
+      redrawCanvasLayers();
+      requestAnimationFrame(animationLoop);
+    }
+
     function setStageMode(mode) {
       currentStage = mode;
       const videoBox = document.getElementById('video-container');
@@ -1397,7 +1414,6 @@
       drawFaceoffCircle(w * 0.80, h * 0.28); drawFaceoffCircle(w * 0.80, h * 0.72);
     }
 
-    // Full-Width Horizontal Chalkboard Engine
     function setupTelestrator() {
       window.addEventListener('resize', () => {
         resizeCanvas();
@@ -1525,7 +1541,6 @@
       }
     }
 
-    // Toggle Draw Mode
     function toggleDrawMode() {
       isDrawingMode = !isDrawingMode;
       const btn = document.getElementById('draw-toggle-btn');
@@ -1556,7 +1571,7 @@
         const toggle = document.getElementById('autoplay-toggle');
         if (!toggle || !toggle.checked || !isPlayerReady || !ytPlayer || activeShiftIndex === -1) return;
         const currentShift = currentShiftsArray[activeShiftIndex];
-        if (currentShift && ytPlayer.getCurrentTime() >= currentShift.end - 0.25) {
+        if (currentShift && getThrottledPlayerTime() >= currentShift.end - 0.25) {
           if (activeShiftIndex + 1 < currentShiftsArray.length) playPlayerShift(activeShiftIndex + 1);
         }
       }, 250);
@@ -1583,7 +1598,7 @@
     }
 
     function stepSeconds(s) {
-      if (isPlayerReady && ytPlayer) ytPlayer.seekTo(Math.max(0, ytPlayer.getCurrentTime() + s), true);
+      if (isPlayerReady && ytPlayer) ytPlayer.seekTo(Math.max(0, getThrottledPlayerTime() + s), true);
     }
 
     function showToast(msg) {
