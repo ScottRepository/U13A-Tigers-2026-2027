@@ -92,10 +92,10 @@
     <!-- TOP NAVIGATION CONTAINER -->
     <header class="bg-tigersDark border border-tigersGold/30 rounded-3xl p-3 md:p-4 shadow-2xl backdrop-blur-md space-y-3">
       
-      <!-- ROW 1 (TOP): Logo + Game Dropdown + TeamSnap Match Info + Switch -->
+      <!-- LINE 1 (TOP): Logo + Game Selector Dropdown + TeamSnap Info ON THE SAME LINE -->
       <div class="flex flex-col xl:flex-row items-stretch xl:items-center justify-between gap-3">
         
-        <!-- Logo & Branding -->
+        <!-- Logo & Team Identity -->
         <div class="flex items-center gap-3">
           <div class="w-11 h-11 bg-tigersGold text-slate-950 flex items-center justify-center rounded-2xl font-black text-2xl shadow-md border-2 border-white">
             🐯
@@ -106,7 +106,7 @@
           </div>
         </div>
 
-        <!-- Game Selector Dropdown & Dynamic TeamSnap Info (Unified on Top Row) -->
+        <!-- UNIFIED SAME-LINE MATCH CONTROL: Game Selector + Synchronized TeamSnap Info -->
         <div class="flex flex-wrap items-center gap-2 text-xs flex-1 xl:justify-center">
           <!-- Game Dropdown -->
           <div class="flex items-center gap-1.5 bg-slate-950 px-3 py-1.5 rounded-2xl border border-slate-800">
@@ -114,7 +114,7 @@
             <select id="game-select" onchange="onGameDropdownChange(this.value)" class="bg-slate-950 text-white font-bold focus:outline-none cursor-pointer text-xs border-0 max-w-[260px] truncate"></select>
           </div>
 
-          <!-- TeamSnap Match Info (Synchronized to Selected Game) -->
+          <!-- Dynamic TeamSnap Info (Updates immediately when game changes) -->
           <div class="flex flex-wrap items-center gap-2 bg-slate-950 px-3.5 py-1.5 rounded-2xl border border-slate-800">
             <span class="text-tigersGold font-bold">📅 <span id="ts-datetime" class="text-slate-200">Saturday, Oct 3, 2026 • 2:15 PM</span></span>
             <span class="text-slate-700">|</span>
@@ -127,7 +127,7 @@
           </div>
         </div>
 
-        <!-- Role Badge & Switch Button -->
+        <!-- Role Badge & Switcher -->
         <div class="flex items-center gap-2 self-end xl:self-auto">
           <span id="role-badge" class="px-2.5 py-1 rounded-lg text-[10px] font-black uppercase bg-slate-900 text-tigersGold border border-tigersGold/40">Parent View</span>
           <button onclick="promptSwitchRole()" class="text-[11px] bg-slate-900 hover:bg-slate-800 text-slate-300 hover:text-white px-2.5 py-1 rounded-lg border border-slate-700 font-semibold cursor-pointer transition">
@@ -137,11 +137,13 @@
 
       </div>
 
-      <!-- ROW 2: Mode Buttons (Centered) + Skater Picker (Right) -->
-      <div class="flex flex-wrap items-center justify-between gap-2 border-t border-slate-800/80 pt-2.5 text-xs">
+      <!-- LINE 2 (MIDDLE & RIGHT): Mode Buttons in the Middle | Draw on Screen & Skater on Right -->
+      <div class="flex flex-wrap items-center justify-between gap-3 border-t border-slate-800/80 pt-2.5 text-xs">
         
-        <!-- 3 Segmented Mode Buttons -->
-        <div class="flex items-center gap-1.5 bg-slate-950 p-1.5 rounded-2xl border border-slate-800 font-bold mx-auto xl:mx-0">
+        <div class="hidden xl:block w-20"></div><!-- Balance Spacer -->
+
+        <!-- 3 Segmented Mode Buttons in the Middle -->
+        <div class="flex items-center gap-1.5 bg-slate-950 p-1.5 rounded-2xl border border-slate-800 font-bold mx-auto">
           <button onclick="switchViewMode('coaches')" id="mode-btn-coaches" class="px-4 py-1.5 rounded-xl bg-tigersGold text-slate-950 font-black cursor-pointer transition shadow">
             👨‍🏫 Coach Tactical Film
           </button>
@@ -153,50 +155,54 @@
           </button>
         </div>
 
-        <!-- Skater Picker (Always accessible on Row 2) -->
-        <div id="player-roster-wrapper" class="flex items-center gap-2 bg-slate-950 px-3.5 py-1.5 rounded-2xl border border-slate-800 ml-auto">
-          <span class="text-tigersGold text-[11px] font-black uppercase">Skater:</span>
-          <select id="roster-select" onchange="selectFromRoster(this.value)" class="bg-slate-950 text-white font-bold focus:outline-none cursor-pointer text-xs border-0"></select>
+        <!-- Right Side: Draw on Screen Toggle + Skater Dropdown -->
+        <div class="flex items-center gap-2 ml-auto xl:ml-0">
+          <button id="draw-toggle-btn" onclick="toggleDrawMode()" class="px-3.5 py-1.5 rounded-xl bg-slate-900 hover:bg-tigersGold text-tigersGold hover:text-slate-950 border border-tigersGold/40 font-bold flex items-center gap-1.5 transition cursor-pointer shadow-md text-xs">
+            🎨 Draw on Screen
+          </button>
+
+          <div id="player-roster-wrapper" class="flex items-center gap-2 bg-slate-950 px-3.5 py-1.5 rounded-2xl border border-slate-800">
+            <span class="text-tigersGold text-[11px] font-black uppercase">Skater:</span>
+            <select id="roster-select" onchange="selectFromRoster(this.value)" class="bg-slate-950 text-white font-bold focus:outline-none cursor-pointer text-xs border-0"></select>
+          </div>
         </div>
 
       </div>
     </header>
 
-    <!-- DRAW ON SCREEN TOOLBAR (Positioned Directly Above Video Player) -->
-    <div class="flex items-center justify-between px-2 gap-2">
-      <div id="draw-tools" class="hidden flex-wrap items-center gap-1.5 p-2 bg-slate-950 rounded-2xl border border-tigersGold/50 text-xs shadow-2xl z-30">
-        <button onclick="setTool('pen')" id="tool-pen" class="px-2.5 py-1 rounded-lg bg-tigersGold text-slate-950 font-black cursor-pointer">✏️ Pen</button>
-        <button onclick="setTool('arrow')" id="tool-arrow" class="px-2.5 py-1 rounded-lg bg-slate-800 text-slate-300 hover:text-white font-semibold cursor-pointer">➡️ Arrow</button>
+    <!-- FULL HORIZONTAL DRAW ON SCREEN TOOLBAR (Appears across below header when active) -->
+    <div id="draw-tools" class="hidden p-2.5 bg-slate-950 rounded-2xl border border-tigersGold/50 text-xs shadow-2xl flex flex-wrap items-center justify-between gap-2">
+      <div class="flex flex-wrap items-center gap-2">
+        <span class="text-tigersGold font-black uppercase text-[11px] mr-1">Chalkboard:</span>
+        <button onclick="setTool('pen')" id="tool-pen" class="px-3 py-1 rounded-lg bg-tigersGold text-slate-950 font-black cursor-pointer">✏️ Pen</button>
+        <button onclick="setTool('arrow')" id="tool-arrow" class="px-3 py-1 rounded-lg bg-slate-800 text-slate-300 hover:text-white font-semibold cursor-pointer">➡️ Arrow</button>
         
+        <!-- Tigers Dot with Position Selector -->
         <div class="flex items-center rounded-lg border border-slate-700 overflow-hidden bg-slate-800">
-          <button onclick="setTool('marker')" id="tool-marker" class="px-2 py-1 text-slate-300 hover:text-white font-semibold cursor-pointer">⭕ Tigers Dot</button>
-          <select id="tigers-stamp-label" class="bg-slate-900 text-tigersGold font-bold px-1.5 py-1 border-l border-slate-700 text-xs">
-            <option value="T">T</option>
-            <option value="F1">F1</option>
-            <option value="F2">F2</option>
-            <option value="F3">F3</option>
-            <option value="D1">D1</option>
-            <option value="D2">D2</option>
+          <button onclick="setTool('marker')" id="tool-marker" class="px-2.5 py-1 text-slate-300 hover:text-white font-semibold cursor-pointer">⭕ Tigers Dot</button>
+          <select id="tigers-stamp-label" class="bg-slate-900 text-tigersGold font-bold px-2 py-1 border-l border-slate-700 text-xs">
+            <option value="RD">RD</option>
+            <option value="LD">LD</option>
+            <option value="C">C</option>
+            <option value="RW">RW</option>
+            <option value="LW">LW</option>
             <option value="G">G</option>
+            <option value="T">T</option>
           </select>
         </div>
 
-        <button onclick="setTool('opponent')" id="tool-opponent" class="px-2.5 py-1 rounded-lg bg-slate-800 text-slate-300 hover:text-white font-semibold cursor-pointer">❌ Opponent (X)</button>
-        <button onclick="setTool('puck')" id="tool-puck" class="px-2.5 py-1 rounded-lg bg-slate-800 text-slate-300 hover:text-white font-semibold cursor-pointer">🏒 Puck</button>
-
-        <div class="flex items-center gap-1.5 pl-2 border-l border-slate-800">
-          <button onclick="setDrawColor('#f59e0b')" class="w-5 h-5 rounded-full bg-amber-500 border-2 border-white cursor-pointer"></button>
-          <button onclick="setDrawColor('#38bdf8')" class="w-5 h-5 rounded-full bg-sky-400 border border-slate-600 cursor-pointer"></button>
-          <button onclick="setDrawColor('#f43f5e')" class="w-5 h-5 rounded-full bg-rose-500 border border-slate-600 cursor-pointer"></button>
-          <button onclick="undoDraw()" class="px-2 py-1 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded font-semibold ml-1 cursor-pointer">↩️ Undo</button>
-          <button onclick="clearCanvas()" class="px-2 py-1 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded font-semibold cursor-pointer">Clear</button>
-        </div>
+        <button onclick="setTool('opponent')" id="tool-opponent" class="px-3 py-1 rounded-lg bg-slate-800 text-slate-300 hover:text-white font-semibold cursor-pointer">❌ Opponent (X)</button>
+        <button onclick="setTool('puck')" id="tool-puck" class="px-3 py-1 rounded-lg bg-slate-800 text-slate-300 hover:text-white font-semibold cursor-pointer">🏒 Puck</button>
       </div>
 
-      <!-- Persistent Toggle Button -->
-      <button id="draw-toggle-btn" onclick="toggleDrawMode()" class="ml-auto px-3.5 py-1.5 rounded-xl bg-slate-900 hover:bg-tigersGold text-tigersGold hover:text-slate-950 border border-tigersGold/40 font-bold flex items-center gap-1.5 transition cursor-pointer shadow-md text-xs">
-        🎨 Draw on Screen
-      </button>
+      <div class="flex items-center gap-2">
+        <span class="text-slate-400 text-[11px]">Color:</span>
+        <button onclick="setDrawColor('#f59e0b')" class="w-6 h-6 rounded-full bg-amber-500 border-2 border-white cursor-pointer"></button>
+        <button onclick="setDrawColor('#38bdf8')" class="w-6 h-6 rounded-full bg-sky-400 border border-slate-600 cursor-pointer"></button>
+        <button onclick="setDrawColor('#f43f5e')" class="w-6 h-6 rounded-full bg-rose-500 border border-slate-600 cursor-pointer"></button>
+        <button onclick="undoDraw()" class="px-3 py-1 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded-lg font-semibold ml-1 cursor-pointer">↩️ Undo</button>
+        <button onclick="clearCanvas()" class="px-3 py-1 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded-lg font-semibold cursor-pointer">Clear</button>
+      </div>
     </div>
 
     <!-- THEATER VIDEO & WHITEBOARD STAGE -->
@@ -302,7 +308,7 @@
           <span class="text-[11px] font-semibold text-slate-300">⚡ Auto-Play All Shifts</span>
           <label class="relative inline-flex items-center cursor-pointer">
             <input type="checkbox" id="autoplay-toggle" class="sr-only peer">
-            <div class="w-8 h-4 bg-slate-700 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-3 after:w-3 after:transition-all peer-checked:bg-tigersGold"></div>
+            <div class="w-8 h-4 bg-slate-700 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-3 after:w-3 after:transition-all peer-checked:bg-tigersGold"></div>
           </label>
         </div>
       </div>
@@ -433,7 +439,7 @@
       }
     };
 
-    // Authentic Match Database with Exact Venue Details
+    // Authentic Match Database with Exact Venue Details & Synchronized TeamSnap Info
     const REAL_GAMES_DATABASE = [
       {
         "id": "game_orillia",
@@ -444,7 +450,7 @@
         "teamsnap": {
           "date": "Wednesday, Oct 7, 2026",
           "time": "7:00 PM EDT",
-          "arena": "Rotary Place - Orillia",
+          "arena": "Rotary Place - Orillia (Pad 1)",
           "address": "100 University Ave, Orillia, ON L3V 6H1",
           "maps_url": "https://maps.google.com/?q=Rotary+Place+Orillia",
           "home_away": "Away",
@@ -483,7 +489,7 @@
           "address": "6215 Old Church Rd, Caledon East, ON L7C 1J7",
           "maps_url": "https://maps.google.com/?q=Caledon+East+Community+Complex",
           "home_away": "Away",
-          "jersey": "Away (White)",
+          "jersey": "White (Away)",
           "is_home": false
         },
         "coaching_clips": {
@@ -518,7 +524,7 @@
           "address": "1 Community Centre Ln, Aurora, ON L4G 7B1",
           "maps_url": "https://maps.google.com/?q=Aurora+Community+Centre",
           "home_away": "Home",
-          "jersey": "Home (White)",
+          "jersey": "White (Home)",
           "is_home": true
         },
         "coaching_clips": {
@@ -588,7 +594,7 @@
       }
     ];
 
-    // Dynamic Shift Synthesizer: All 17 players receive accurate shifts and ice times
+    // Dynamic Shift Synthesizer: Accurately populates rolling shifts for ALL 17 skaters
     function getPlayerShiftsForGame(jerseyNum) {
       const num = parseInt(jerseyNum) || 5;
       const isGoalie = (num === 97 || num === 98);
@@ -605,7 +611,7 @@
         };
       }
 
-      // 3 Forward Lines & 3 D-Pairs with natural staggered on-ice shifts
+      // Rolling Line Offsets (Line 1 = 0s, Line 2 = 45s, Line 3 = 90s)
       const lineOffset = (num % 3) * 45;
       const shifts = [];
       let cur = lineOffset;
@@ -732,12 +738,24 @@
       initRosterDropdown();
       populateGameSelect();
 
+      // Fetch dynamic database with cache-busting
       fetch('./games_library.json?t=' + Date.now())
         .then(res => res.json())
         .then(data => {
           let list = Array.isArray(data) ? data : (data.games || []);
           if (list.length > 0) {
-            gamesLibrary = list;
+            // Reconcile games with accurate metadata
+            gamesLibrary = list.map(remoteGame => {
+              const matchedReal = REAL_GAMES_DATABASE.find(rg => 
+                (remoteGame.youtube_video_id && remoteGame.youtube_video_id === rg.youtube_video_id) ||
+                (remoteGame.id && remoteGame.id.includes(rg.id)) ||
+                (remoteGame.title && rg.title && remoteGame.title.includes(rg.opponent))
+              );
+              return {
+                ...remoteGame,
+                teamsnap: (matchedReal && matchedReal.teamsnap) ? matchedReal.teamsnap : remoteGame.teamsnap
+              };
+            });
             populateGameSelect();
           }
           loadGame(gamesLibrary[0].id);
@@ -764,7 +782,6 @@
       });
     }
 
-    // Clean Game Title Parser (Removes raw date prefixes)
     function populateGameSelect() {
       const select = document.getElementById('game-select');
       if (!select) return;
@@ -782,6 +799,7 @@
       loadGame(gameId);
     }
 
+    // Synchronized Game Switcher: Updates Video, TeamSnap, Shifts, and Clips Simultaneously
     function loadGame(gameId) {
       currentGame = gamesLibrary.find(g => g.id === gameId) || gamesLibrary[0];
       if (!currentGame) return;
@@ -1059,13 +1077,12 @@
       redrawCanvasLayers();
     }
 
-    // ================= REAL-TIME MOVING SKATER TRACKER & WHITEBOARD RADAR =================
+    // Clean Canvas Renderer: Clean Video Overlay without Floating Halos
     function redrawCanvasLayers() {
       if (!ctx || !canvas) return;
       ctx.clearRect(0, 0, canvas.width, canvas.height);
 
       const w = canvas.width, h = canvas.height;
-      const isWhiteboard = (currentStage === 'whiteboard');
       const currentTime = (isPlayerReady && ytPlayer && ytPlayer.getCurrentTime) ? ytPlayer.getCurrentTime() : 0;
 
       const pRoster = ROSTER_POSITIONS[currentJersey];
@@ -1088,78 +1105,6 @@
           statusEl.innerText = `Coach Mode Active • Tactical Playbook Overlays`;
           statusEl.className = "text-xs font-bold text-center py-1.5 rounded-xl bg-slate-950 border border-slate-800 text-slate-400";
         }
-      }
-
-      // DYNAMIC MOVING SKATER HALO (Follows the skater across the ice on Video and Whiteboard)
-      if (currentMode === 'player' && pRoster) {
-        let posX, posY;
-
-        if (isSkaterOnIce) {
-          // Progress through the active shift (0.0 to 1.0)
-          const shiftProgress = (currentTime - activeShift.start) / Math.max(1, activeShift.duration);
-          
-          // Position kinematic path based on skater's assigned position
-          if (pRoster.pos === 'RD' || pRoster.pos === 'D') {
-            // Right Defense path: patrols blue line down to right corner and net front
-            posX = 0.22 + Math.sin(shiftProgress * Math.PI * 2) * 0.14;
-            posY = 0.65 + Math.cos(shiftProgress * Math.PI) * 0.18;
-          } else if (pRoster.pos === 'LD') {
-            // Left Defense path: patrols left side boards and net front
-            posX = 0.22 + Math.sin(shiftProgress * Math.PI * 2) * 0.14;
-            posY = 0.35 - Math.cos(shiftProgress * Math.PI) * 0.18;
-          } else if (pRoster.pos === 'C') {
-            // Center path: high-to-low slot support
-            posX = 0.38 + Math.sin(shiftProgress * Math.PI * 3) * 0.20;
-            posY = 0.50 + Math.sin(shiftProgress * Math.PI * 2) * 0.22;
-          } else if (pRoster.pos === 'LW') {
-            // Left Wing path: half-wall to high slot
-            posX = 0.55 + Math.cos(shiftProgress * Math.PI * 2) * 0.18;
-            posY = 0.28 + Math.sin(shiftProgress * Math.PI) * 0.16;
-          } else if (pRoster.pos === 'RW') {
-            // Right Wing path: right wall drive to net front
-            posX = 0.55 + Math.cos(shiftProgress * Math.PI * 2) * 0.18;
-            posY = 0.72 - Math.sin(shiftProgress * Math.PI) * 0.16;
-          } else {
-            // Goalie
-            posX = 0.08;
-            posY = 0.50;
-          }
-        } else {
-          // Player on Bench: positioned along players bench boards
-          posX = 0.44;
-          posY = 0.12;
-        }
-
-        const screenX = posX * w;
-        const screenY = posY * h;
-
-        // Draw Moving Tigers Gold Spotlight Halo Under Skater
-        ctx.beginPath();
-        ctx.ellipse(screenX, screenY + (isWhiteboard ? 0 : 36), isWhiteboard ? 20 : 38, isWhiteboard ? 20 : 16, 0, 0, Math.PI * 2);
-        ctx.fillStyle = isSkaterOnIce ? "rgba(245, 158, 11, 0.55)" : "rgba(100, 116, 139, 0.25)";
-        ctx.fill();
-        ctx.strokeStyle = isSkaterOnIce ? "#f59e0b" : "#64748b";
-        ctx.lineWidth = 3;
-        ctx.setLineDash(isSkaterOnIce ? [] : [5, 4]);
-        ctx.stroke();
-        ctx.setLineDash([]);
-
-        // Overhead Player Badge
-        const badgeLabel = isSkaterOnIce ? `#${currentJersey} (${pRoster.pos}) ${pRoster.name}` : `#${currentJersey} ${pRoster.name} (Bench)`;
-        ctx.font = "bold 12px sans-serif";
-        const textWidth = ctx.measureText(badgeLabel).width;
-
-        ctx.fillStyle = "rgba(5, 7, 12, 0.95)";
-        ctx.strokeStyle = isSkaterOnIce ? "#f59e0b" : "#64748b";
-        ctx.lineWidth = 2;
-        ctx.beginPath();
-        ctx.roundRect(screenX - (textWidth / 2) - 8, screenY - (isWhiteboard ? 32 : 14), textWidth + 16, 24, 6);
-        ctx.fill();
-        ctx.stroke();
-
-        ctx.fillStyle = isSkaterOnIce ? "#fbbf24" : "#cbd5e1";
-        ctx.textAlign = "center";
-        ctx.fillText(badgeLabel, screenX, screenY - (isWhiteboard ? 16 : -2));
       }
 
       // Tactical Playbook Ghost Targets
@@ -1200,7 +1145,7 @@
       requestAnimationFrame(animationLoop);
     }
 
-    // ================= 2D RINK WHITEBOARD =================
+    // 2D Rink Whiteboard
     function setStageMode(mode) {
       currentStage = mode;
       const videoBox = document.getElementById('video-container');
@@ -1257,7 +1202,7 @@
       drawFaceoffCircle(w * 0.80, h * 0.28); drawFaceoffCircle(w * 0.80, h * 0.72);
     }
 
-    // ================= TELSTRATOR & DRAWING ENGINE =================
+    // Full Horizontal Chalkboard Toolbar Engine
     function setupTelestrator() {
       window.addEventListener('resize', () => {
         resizeCanvas();
@@ -1273,7 +1218,7 @@
         startX = e.clientX - rect.left; startY = e.clientY - rect.top;
 
         if (currentTool === 'marker') {
-          const role = document.getElementById('tigers-stamp-label')?.value || "T";
+          const role = document.getElementById('tigers-stamp-label')?.value || "RD";
           drawHistory.push([{ tool: 'marker', x: startX, y: startY, label: role, color: drawColor }]);
           redrawCanvasLayers();
           return;
@@ -1333,7 +1278,6 @@
           const angle = Math.atan2(first.toY - first.fromY, first.toX - first.fromX);
           ctx.strokeStyle = first.color || drawColor;
           ctx.lineWidth = 4;
-          ctx.lineCap = "round";
           ctx.beginPath();
           ctx.moveTo(first.fromX, first.fromY);
           ctx.lineTo(first.toX, first.toY);
@@ -1353,7 +1297,7 @@
           ctx.strokeStyle = "#000"; ctx.lineWidth = 2; ctx.stroke();
           ctx.fillStyle = "#000"; ctx.font = "bold 11px sans-serif";
           ctx.textAlign = "center"; ctx.textBaseline = "middle";
-          ctx.fillText(first.label || "T", first.x, first.y);
+          ctx.fillText(first.label || "RD", first.x, first.y);
         } else if (first.tool === 'opponent') {
           ctx.font = "bold 22px sans-serif";
           ctx.fillStyle = "#ef4444";
@@ -1371,7 +1315,7 @@
       currentTool = tool;
       ['pen', 'arrow', 'marker', 'opponent', 'puck'].forEach(t => {
         const btn = document.getElementById(`tool-${t}`);
-        if (btn) btn.className = (t === tool) ? "px-2.5 py-1 rounded bg-tigersGold text-slate-950 font-black cursor-pointer" : "px-2.5 py-1 rounded bg-slate-800 text-slate-300 hover:text-white font-semibold cursor-pointer";
+        if (btn) btn.className = (t === tool) ? "px-3 py-1 rounded-lg bg-tigersGold text-slate-950 font-black cursor-pointer" : "px-3 py-1 rounded-lg bg-slate-800 text-slate-300 hover:text-white font-semibold cursor-pointer";
       });
     }
 
@@ -1386,7 +1330,7 @@
       }
     }
 
-    // Toggle Draw Mode (Unlocks Overlay and Reveals Toolbar Above Video)
+    // Toggle Draw Mode (Shows Full Horizontal Bar Across Screen)
     function toggleDrawMode() {
       isDrawingMode = !isDrawingMode;
       const btn = document.getElementById('draw-toggle-btn');
@@ -1398,12 +1342,12 @@
         }
         canvas.classList.remove('pointer-events-none');
         canvas.classList.add('cursor-crosshair');
-        if (btn) btn.className = "ml-auto px-3.5 py-1.5 rounded-xl bg-tigersGold text-slate-950 font-black flex items-center gap-1.5 shadow-lg shadow-tigersGold/30 text-xs";
+        if (btn) btn.className = "px-3.5 py-1.5 rounded-xl bg-tigersGold text-slate-950 font-black flex items-center gap-1.5 shadow-lg shadow-tigersGold/30 text-xs";
         if (tools) tools.classList.remove('hidden');
       } else {
         canvas.classList.add('pointer-events-none');
         canvas.classList.remove('cursor-crosshair');
-        if (btn) btn.className = "ml-auto px-3.5 py-1.5 rounded-xl bg-slate-900 hover:bg-tigersGold text-tigersGold hover:text-slate-950 border border-tigersGold/40 font-bold flex items-center gap-1.5 transition cursor-pointer shadow-md text-xs";
+        if (btn) btn.className = "px-3.5 py-1.5 rounded-xl bg-slate-900 hover:bg-tigersGold text-tigersGold hover:text-slate-950 border border-tigersGold/40 font-bold flex items-center gap-1.5 transition cursor-pointer shadow-md text-xs";
         if (tools) tools.classList.add('hidden');
         clearCanvas();
       }
