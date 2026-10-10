@@ -92,10 +92,10 @@
     <!-- TOP NAVIGATION CONTAINER -->
     <header class="bg-tigersDark border border-tigersGold/30 rounded-3xl p-3 md:p-4 shadow-2xl backdrop-blur-md space-y-3">
       
-      <!-- LINE 1 (TOP): Logo + Game Selector Dropdown + TeamSnap Info ON THE EXACT SAME LINE -->
+      <!-- LINE 1 (TOP): Logo | GAME DROPDOWN | TEAMSNAP INFO ON THE SAME LINE | Role Switcher -->
       <div class="flex flex-col xl:flex-row items-stretch xl:items-center justify-between gap-3">
         
-        <!-- Logo & Team Identity -->
+        <!-- Logo & Title -->
         <div class="flex items-center gap-3">
           <div class="w-11 h-11 bg-tigersGold text-slate-950 flex items-center justify-center rounded-2xl font-black text-2xl shadow-md border-2 border-white">
             🐯
@@ -106,7 +106,7 @@
           </div>
         </div>
 
-        <!-- SAME-LINE GAME SELECTOR + DYNAMIC TEAMSNAP INFO -->
+        <!-- UNIFIED MATCH LINE: Game Dropdown FIRST, followed by its TeamSnap Details -->
         <div class="flex flex-wrap items-center gap-2 text-xs flex-1 xl:justify-center">
           <!-- Game Dropdown -->
           <div class="flex items-center gap-1.5 bg-slate-950 px-3 py-1.5 rounded-2xl border border-slate-800">
@@ -114,12 +114,12 @@
             <select id="game-select" onchange="onGameDropdownChange(this.value)" class="bg-slate-950 text-white font-bold focus:outline-none cursor-pointer text-xs border-0 max-w-[240px] truncate"></select>
           </div>
 
-          <!-- Dynamic TeamSnap Info (Updates immediately when game changes) -->
+          <!-- TeamSnap Match Details (Dynamically Synced to Selected Game) -->
           <div class="flex flex-wrap items-center gap-2 bg-slate-950 px-3.5 py-1.5 rounded-2xl border border-slate-800">
-            <span class="text-tigersGold font-bold">📅 <span id="ts-datetime" class="text-slate-200">Wednesday, Oct 7, 2026 • 7:00 PM</span></span>
+            <span class="text-tigersGold font-bold">📅 <span id="ts-datetime" class="text-slate-200">Wednesday, Oct 7, 2026 • 7:00 PM EDT</span></span>
             <span class="text-slate-700">|</span>
             <a id="ts-arena-link" href="#" target="_blank" class="text-sky-400 hover:underline font-bold flex items-center gap-1">
-              📍 <span id="ts-arena">Rotary Place - Orillia</span> ↗
+              📍 <span id="ts-arena">Rotary Place - Orillia (Pad 1)</span> ↗
             </a>
             <span class="text-slate-700">|</span>
             <span id="ts-homeaway" class="px-2 py-0.5 rounded text-[10px] font-black uppercase bg-slate-900 text-tigersGold border border-slate-800">Away</span>
@@ -137,7 +137,7 @@
 
       </div>
 
-      <!-- LINE 2: Mode Buttons Centered + Draw/Clip/Playbook Buttons + Skater Dropdown -->
+      <!-- LINE 2: Mode Buttons Centered | Draw, Clip Reel, Playbook & Skater Dropdown on Right -->
       <div class="flex flex-wrap items-center justify-between gap-3 border-t border-slate-800/80 pt-2.5 text-xs">
         
         <!-- 3 Segmented Mode Buttons (Centered) -->
@@ -176,8 +176,8 @@
       </div>
     </header>
 
-    <!-- FULL HORIZONTAL DRAW ON SCREEN TOOLBAR (Spans Across Above Video) -->
-    <div id="draw-tools" class="hidden p-2.5 bg-slate-950 rounded-2xl border border-tigersGold/50 text-xs shadow-2xl flex flex-wrap items-center justify-between gap-2">
+    <!-- FULL-WIDTH HORIZONTAL DRAW ON SCREEN TOOLBAR (Spans All the Way Across) -->
+    <div id="draw-tools" class="hidden w-full p-2.5 bg-slate-950 rounded-2xl border border-tigersGold/50 text-xs shadow-2xl flex flex-wrap items-center justify-between gap-2">
       <div class="flex flex-wrap items-center gap-2">
         <span class="text-tigersGold font-black uppercase text-[11px] mr-1">Chalkboard:</span>
         <button onclick="setTool('pen')" id="tool-pen" class="px-3 py-1 rounded-lg bg-tigersGold text-slate-950 font-black cursor-pointer">✏️ Pen</button>
@@ -211,8 +211,8 @@
       </div>
     </div>
 
-    <!-- HORIZONTAL CLIP REEL DRAWER (Pop-down Bar Above Video) -->
-    <div id="clipreel-drawer" class="hidden p-2.5 bg-slate-950 rounded-2xl border border-amber-500/40 text-xs flex flex-wrap items-center justify-between gap-2 shadow-2xl">
+    <!-- HORIZONTAL CLIP REEL DRAWER -->
+    <div id="clipreel-drawer" class="hidden w-full p-2.5 bg-slate-950 rounded-2xl border border-amber-500/40 text-xs flex flex-wrap items-center justify-between gap-2 shadow-2xl">
       <div class="flex flex-wrap items-center gap-1.5">
         <span class="text-amber-400 font-black uppercase text-[11px] mr-1">Clip Category:</span>
         <button onclick="changeTacticalCategory('powerplay')" id="cat-pill-powerplay" class="px-3 py-1 rounded-lg font-bold bg-tigersGold text-slate-950 cursor-pointer transition">
@@ -236,9 +236,9 @@
       </button>
     </div>
 
-    <!-- HORIZONTAL TACTICAL PLAYBOOK DRAWER (Pop-down Bar Above Video) -->
-    <div id="playbook-drawer" class="hidden p-2.5 bg-slate-950 rounded-2xl border border-cyan-500/40 text-xs flex flex-wrap items-center gap-1.5 shadow-2xl">
-      <span class="text-cyan-400 font-black uppercase text-[11px] mr-1">Playbook Models:</span>
+    <!-- HORIZONTAL TACTICAL PLAYBOOK DRAWER -->
+    <div id="playbook-drawer" class="hidden w-full p-2.5 bg-slate-950 rounded-2xl border border-cyan-500/40 text-xs flex flex-wrap items-center gap-1.5 shadow-2xl">
+      <span class="text-cyan-400 font-black uppercase text-[11px] mr-1">Tactical Playbooks:</span>
       <button onclick="setPlaybookPill('none')" id="pb-pill-none" class="px-2.5 py-1 rounded-lg font-bold bg-slate-900 text-slate-400 border border-slate-800 cursor-pointer">Off</button>
       <button onclick="setPlaybookPill('pp_131')" id="pb-pill-pp_131" class="px-2.5 py-1 rounded-lg font-bold bg-slate-900 text-cyan-400 border border-slate-800 cursor-pointer">⚡ PP 1-3-1</button>
       <button onclick="setPlaybookPill('pk_box')" id="pb-pill-pk_box" class="px-2.5 py-1 rounded-lg font-bold bg-slate-900 text-cyan-400 border border-slate-800 cursor-pointer">🛡️ PK Box</button>
@@ -261,7 +261,7 @@
         <canvas id="telestrator-canvas" class="absolute inset-0 w-full h-full pointer-events-none z-20"></canvas>
       </div>
 
-      <!-- PLAYBACK CONTROLS BAR (Video Film, Whiteboard & Playback Controls in place) -->
+      <!-- PLAYBACK CONTROLS BAR -->
       <div class="flex flex-wrap items-center justify-between gap-3 text-xs border-t border-slate-800 pt-2 px-1">
         <div class="flex items-center gap-1.5">
           <button id="stage-video-btn" onclick="setStageMode('video')" class="px-3.5 py-1.5 rounded-xl bg-tigersGold text-slate-950 font-black cursor-pointer transition shadow">
@@ -296,9 +296,20 @@
         </div>
       </div>
 
-      <!-- Real-Time On-Ice Status Banner -->
-      <div id="skater-onice-status" class="text-xs font-bold text-center py-1.5 rounded-xl bg-slate-950 border border-slate-800 text-slate-400">
-        Ready. Select any sequence below to jump directly to that play.
+      <!-- Real-Time On-Ice Status Banner with 1-Tap Coach Clipper -->
+      <div class="flex items-center justify-between gap-3 p-2 rounded-xl bg-slate-950 border border-slate-800 text-xs">
+        <div id="skater-onice-status" class="font-bold text-slate-400 flex-1 text-center">
+          Ready. Select any shift or sequence below to jump directly to that play.
+        </div>
+        <!-- 1-Tap In-App Shift Logger -->
+        <div class="flex items-center gap-1.5 border-l border-slate-800 pl-3">
+          <button onclick="logShiftTimestamp('start')" class="px-2.5 py-1 bg-emerald-600/30 hover:bg-emerald-600 text-emerald-300 hover:text-white rounded-lg font-bold border border-emerald-500/50 cursor-pointer transition text-[11px]">
+            ⏱️ Mark Shift Start
+          </button>
+          <button onclick="logShiftTimestamp('end')" class="px-2.5 py-1 bg-rose-600/30 hover:bg-rose-600 text-rose-300 hover:text-white rounded-lg font-bold border border-rose-500/50 cursor-pointer transition text-[11px]">
+            ⏹️ Mark Shift End
+          </button>
+        </div>
       </div>
     </div>
 
@@ -346,23 +357,23 @@
     let COACH_PASSCODE = "COACHTIGERS";
     let ADMIN_PASSCODE = "ADMINTIGERS";
 
-    // Official 17-Player Roster
+    // Official 17-Player Roster with Correct Positions as stated in your video
     let ROSTER_POSITIONS = {
-      "3": { pos: "D", name: "Stewart Dolmage" },
-      "5": { pos: "RD", name: "Nathan Zhao" },
+      "3": { pos: "F", name: "Stewart Dolmage" },
+      "5": { pos: "F", name: "Nathan Zhao" },
       "7": { pos: "F", name: "Maxwell Dey" },
-      "9": { pos: "LD", name: "Oliver Patterson" },
-      "10": { pos: "RW", name: "Arjun Manjunath" },
-      "11": { pos: "F", name: "Andrew Bichay" },
+      "9": { pos: "F", name: "Oliver Patterson" },
+      "10": { pos: "F", name: "Arjun Manjunath" },
+      "11": { pos: "D", name: "Andrew Bichay" },
       "13": { pos: "C", name: "Matthew Hart" },
-      "16": { pos: "LW", name: "Joshua Liu" },
+      "16": { pos: "F", name: "Joshua Liu" },
       "18": { pos: "F", name: "Nathan Carinci" },
-      "21": { pos: "RD", name: "Caleb Irgengioro-Wu" },
+      "21": { pos: "D", name: "Caleb Irgengioro-Wu" },
       "23": { pos: "C", name: "Easton Carpentier" },
-      "27": { pos: "LW", name: "Alen Fazlic" },
+      "27": { pos: "F", name: "Alen Fazlic" },
       "28": { pos: "D", name: "Ross Elley" },
-      "76": { pos: "LD", name: "Matt Davis" },
-      "88": { pos: "RW", name: "Roy Chen" },
+      "76": { pos: "D", name: "Matt Davis" },
+      "88": { pos: "F", name: "Roy Chen" },
       "97": { pos: "G", name: "Hudson Millar" },
       "98": { pos: "G", name: "Hudson Barfitt" }
     };
@@ -441,12 +452,12 @@
       }
     };
 
-    // Authentic Matches with Distinct YouTube Video IDs & True TeamSnap Metadata
-    const ACCURATE_MATCHES = [
+    // Authentic Matches with Distinct Video IDs & Accurate TeamSnap Metadata
+    const DISTINCT_MATCHES = [
       {
         "id": "game_orillia",
         "title": "07.10.2026 - U13A Tigers 1 - Orillia 12",
-        "youtube_video_id": "p18H81X2Bp0", // Distinct match video ID
+        "youtube_video_id": "D1R9BHv8ZNo", // Correct distinct video ID for Orillia
         "date": "2026-10-07",
         "opponent": "Orillia",
         "teamsnap": {
@@ -474,6 +485,23 @@
           "maps_url": "https://maps.google.com/?q=Caledon+East+Community+Complex",
           "home_away": "Away",
           "jersey": "White (Away)",
+          "is_home": false
+        }
+      },
+      {
+        "id": "game_upperyork",
+        "title": "04.10.2026 - Tigers 1 - Upper York 11",
+        "youtube_video_id": "p18H81X2Bp0", // Upper York Georgina Blaze game
+        "date": "2026-10-04",
+        "opponent": "Upper York",
+        "teamsnap": {
+          "date": "Sunday, Oct 4, 2026",
+          "time": "1:00 PM EDT",
+          "arena": "Georgina Ice Palace",
+          "address": "90 Wexford Dr, Keswick, ON L4P 3P7",
+          "maps_url": "https://maps.google.com/?q=Georgina+Ice+Palace",
+          "home_away": "Away",
+          "jersey": "Black (Away)",
           "is_home": false
         }
       },
@@ -530,7 +558,6 @@
       }
     ];
 
-    // Accurate Shift Engine: Generates exact shifts for every player on every game
     function getPlayerShiftsForGame(jerseyNum) {
       const num = parseInt(jerseyNum) || 5;
       const isGoalie = (num === 97 || num === 98);
@@ -572,8 +599,8 @@
       };
     }
 
-    let gamesLibrary = ACCURATE_MATCHES;
-    let currentGame = ACCURATE_MATCHES[0];
+    let gamesLibrary = DISTINCT_MATCHES;
+    let currentGame = DISTINCT_MATCHES[0];
     let ytPlayer = null;
     let isPlayerReady = false;
     let currentMode = "coaches";
@@ -678,10 +705,10 @@
           let list = Array.isArray(data) ? data : (data.games || []);
           if (list.length > 0) {
             gamesLibrary = list.map(item => {
-              const matched = ACCURATE_MATCHES.find(m => m.id === item.id || (item.title && item.title.includes(m.opponent)));
+              const matched = DISTINCT_MATCHES.find(m => m.id === item.id || (item.title && item.title.includes(m.opponent)));
               return {
                 ...item,
-                youtube_video_id: (matched && matched.youtube_video_id) ? matched.youtube_video_id : (item.youtube_video_id || "KxRUQu2z-Ao"),
+                youtube_video_id: item.youtube_video_id || (matched ? matched.youtube_video_id : "KxRUQu2z-Ao"),
                 teamsnap: (matched && matched.teamsnap) ? matched.teamsnap : (item.teamsnap || {})
               };
             });
@@ -690,7 +717,7 @@
           loadGame(gamesLibrary[0].id);
         })
         .catch(() => {
-          loadGame(ACCURATE_MATCHES[0].id);
+          loadGame(DISTINCT_MATCHES[0].id);
         });
 
       setupTelestrator();
@@ -727,7 +754,7 @@
       loadGame(gameId);
     }
 
-    // Direct Synchronized Game Switcher: Instantly Loads Video, Banner, and Shifts
+    // Direct Synchronized Game Switcher
     function loadGame(gameId) {
       currentGame = gamesLibrary.find(g => g.id === gameId) || gamesLibrary[0];
       if (!currentGame) return;
@@ -735,17 +762,14 @@
       const select = document.getElementById('game-select');
       if (select) select.value = currentGame.id;
 
-      // Extract real video ID
       const vidId = currentGame.youtube_video_id || currentGame.id.replace('game_', '');
       
-      // Update YouTube player directly
       if (ytPlayer && typeof ytPlayer.loadVideoById === 'function') {
         ytPlayer.loadVideoById(vidId);
       } else {
         initYouTubePlayer(vidId);
       }
 
-      // Update TeamSnap Info immediately
       renderTeamSnapBanner();
 
       if (currentMode === 'player') loadPlayerShifts();
@@ -757,14 +781,14 @@
       if (!currentGame) return;
       const ts = currentGame.teamsnap || {};
       document.getElementById('ts-datetime').innerText = `${ts.date || currentGame.date || 'Game Day'} • ${ts.time || 'Game Time'}`;
-      document.getElementById('ts-arena').innerText = ts.arena || "Aurora Community Centre";
+      document.getElementById('ts-arena').innerText = ts.arena || "Community Centre";
       document.getElementById('ts-arena-link').href = ts.maps_url || `https://maps.google.com/?q=${encodeURIComponent(ts.address || ts.arena || 'Arena')}`;
       document.getElementById('ts-homeaway').innerText = ts.home_away || (ts.is_home ? "Home" : "Away");
       document.getElementById('ts-jersey').innerHTML = `Jersey: <strong>${ts.jersey || (ts.is_home ? 'White' : 'Black')}</strong>`;
     }
 
     function onYouTubeIframeAPIReady() {
-      const vidId = currentGame?.youtube_video_id || "KxRUQu2z-Ao";
+      const vidId = currentGame?.youtube_video_id || "D1R9BHv8ZNo";
       initYouTubePlayer(vidId);
     }
 
@@ -788,32 +812,24 @@
       });
 
       const playerDock = document.getElementById('player-stats-dock');
-      const tacticalStrip = document.getElementById('tactical-category-strip');
-
       if (mode === 'player') {
         playerDock.classList.remove('hidden');
-        if (tacticalStrip) tacticalStrip.classList.add('hidden');
         loadPlayerShifts();
       } else if (mode === 'filmroom') {
         playerDock.classList.add('hidden');
-        if (tacticalStrip) tacticalStrip.classList.add('hidden');
         renderFilmRoom();
       } else {
         playerDock.classList.add('hidden');
-        if (tacticalStrip) tacticalStrip.classList.remove('hidden');
         loadCoachingClips();
       }
-      redrawCanvasLayers();
     }
 
     function selectFromRoster(val) {
       if (!val) return;
       currentJersey = val;
       if (currentMode === 'player') loadPlayerShifts();
-      redrawCanvasLayers();
     }
 
-    // Toggle Drawers above Video Player
     function toggleDrawer(drawerName) {
       const drawBox = document.getElementById('draw-tools');
       const clipBox = document.getElementById('clipreel-drawer');
@@ -867,7 +883,6 @@
       loadCoachingClips();
     }
 
-    // Direct Seek & Play Execution
     function playTimestamp(startSec, desc) {
       if (currentStage === 'whiteboard') setStageMode('video');
       if (isDrawingMode) toggleDrawMode();
@@ -879,6 +894,36 @@
         if (ppBtn) ppBtn.innerText = "⏸️";
         const status = document.getElementById('skater-onice-status');
         if (status) status.innerText = `Playing: ${desc}`;
+      }
+    }
+
+    // 1-Tap In-App Shift Clipper: Allows recording real shift intervals on the fly
+    let activeShiftStartTime = null;
+    function logShiftTimestamp(action) {
+      if (!isPlayerReady || !ytPlayer) return;
+      const t = Math.floor(ytPlayer.getCurrentTime());
+      const pRoster = ROSTER_POSITIONS[currentJersey];
+
+      if (action === 'start') {
+        activeShiftStartTime = t;
+        showToast(`⏱️ Shift started at ${Math.floor(t/60)}:${(t%60).toString().padStart(2,'0')} for #${currentJersey} ${pRoster.name}`);
+      } else if (action === 'end') {
+        if (activeShiftStartTime === null) {
+          showToast("⚠️ Mark start first!");
+          return;
+        }
+        const dur = Math.max(15, t - activeShiftStartTime);
+        const newShift = {
+          id: currentShiftsArray.length + 1,
+          start: activeShiftStartTime,
+          end: t,
+          duration: dur
+        };
+        currentShiftsArray.push(newShift);
+        currentShiftsArray.sort((a,b) => a.start - b.start);
+        activeShiftStartTime = null;
+        showToast(`✅ Saved ${dur}s shift for #${currentJersey}!`);
+        loadPlayerShifts();
       }
     }
 
@@ -1028,7 +1073,6 @@
       redrawCanvasLayers();
     }
 
-    // Clean Video Canvas Overlay
     function redrawCanvasLayers() {
       if (!ctx || !canvas) return;
       ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -1041,24 +1085,24 @@
       const activeShift = playerShifts.find(s => currentTime >= s.start && currentTime <= s.end);
       const isSkaterOnIce = Boolean(activeShift);
 
-      // Status Indicator
+      // Clean on-ice status HUD
       const statusEl = document.getElementById('skater-onice-status');
       if (statusEl && pRoster) {
         if (currentMode === 'player') {
           if (isSkaterOnIce) {
             statusEl.innerText = `⚡ #${currentJersey} ${pRoster.name} is ON ICE (Shift #${activeShift.id} • ${activeShift.duration}s)`;
-            statusEl.className = "text-xs font-black text-center py-1.5 rounded-xl bg-emerald-950/80 border border-emerald-500 text-emerald-400 shadow-md shadow-emerald-500/10";
+            statusEl.className = "text-xs font-black text-center py-1.5 rounded-xl bg-emerald-950/80 border border-emerald-500 text-emerald-400 shadow-md shadow-emerald-500/10 flex-1";
           } else {
             statusEl.innerText = `⏸️ #${currentJersey} ${pRoster.name} is ON BENCH`;
-            statusEl.className = "text-xs font-bold text-center py-1.5 rounded-xl bg-slate-950 border border-slate-800 text-slate-400";
+            statusEl.className = "text-xs font-bold text-center py-1.5 rounded-xl bg-slate-950 border border-slate-800 text-slate-400 flex-1";
           }
         } else {
-          statusEl.innerText = `Coach Mode Active • Tactical Playbook Overlays`;
-          statusEl.className = "text-xs font-bold text-center py-1.5 rounded-xl bg-slate-950 border border-slate-800 text-slate-400";
+          statusEl.innerText = `Coach Mode Active • Tactical Breakdowns`;
+          statusEl.className = "text-xs font-bold text-center py-1.5 rounded-xl bg-slate-950 border border-slate-800 text-slate-400 flex-1";
         }
       }
 
-      // Tactical Playbook Ghost Targets
+      // Playbook Tactical Ghost Targets (Rendered only when playbook is chosen)
       if (activeSystemTemplate !== "none" && BASELINE_SYSTEMS[activeSystemTemplate]) {
         const sys = BASELINE_SYSTEMS[activeSystemTemplate];
         const selectedPlayerPos = ROSTER_POSITIONS[currentJersey]?.pos || "C";
@@ -1148,7 +1192,7 @@
       drawFaceoffCircle(w * 0.80, h * 0.28); drawFaceoffCircle(w * 0.80, h * 0.72);
     }
 
-    // Full Horizontal Chalkboard Engine
+    // Full-Width Horizontal Chalkboard Engine
     function setupTelestrator() {
       window.addEventListener('resize', () => {
         resizeCanvas();
@@ -1224,6 +1268,7 @@
           const angle = Math.atan2(first.toY - first.fromY, first.toX - first.fromX);
           ctx.strokeStyle = first.color || drawColor;
           ctx.lineWidth = 4;
+          ctx.lineCap = "round";
           ctx.beginPath();
           ctx.moveTo(first.fromX, first.fromY);
           ctx.lineTo(first.toX, first.toY);
@@ -1276,7 +1321,6 @@
       }
     }
 
-    // Toggle Draw Mode (Displays Full-Width Horizontal Toolbar)
     function toggleDrawMode() {
       isDrawingMode = !isDrawingMode;
       const btn = document.getElementById('draw-toggle-btn');
