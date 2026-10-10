@@ -114,7 +114,7 @@
             <select id="game-select" onchange="onGameDropdownChange(this.value)" class="bg-slate-950 text-white font-bold focus:outline-none cursor-pointer text-xs border-0 max-w-[240px] truncate"></select>
           </div>
 
-          <!-- TeamSnap Match Details -->
+          <!-- TeamSnap Match Details (Dynamically Synced to Selected Game) -->
           <div class="flex flex-wrap items-center gap-2 bg-slate-950 px-3.5 py-1.5 rounded-2xl border border-slate-800">
             <span class="text-tigersGold font-bold">📅 <span id="ts-datetime" class="text-slate-200">Wednesday, Oct 7, 2026 • 7:00 PM EDT</span></span>
             <span class="text-slate-700">|</span>
@@ -137,24 +137,24 @@
 
       </div>
 
-      <!-- LINE 2: Mode Buttons Centered | Period, Clip Reel, Playbook & Draw Buttons on Right -->
-      <div class="flex flex-wrap items-center justify-between gap-3 border-t border-slate-800/80 pt-2.5 text-xs">
+      <!-- LINE 2: ALL CONTROL BUTTONS ON THE SAME SINGLE LINE -->
+      <div class="flex flex-wrap items-center justify-between gap-2 border-t border-slate-800/80 pt-2.5 text-xs">
         
-        <!-- 3 Segmented Mode Buttons (Centered) -->
-        <div class="flex items-center gap-1.5 bg-slate-950 p-1.5 rounded-2xl border border-slate-800 font-bold mx-auto xl:mx-0">
-          <button onclick="switchViewMode('coaches')" id="mode-btn-coaches" class="px-4 py-1.5 rounded-xl bg-tigersGold text-slate-950 font-black cursor-pointer transition shadow">
+        <!-- Left: 3 Segmented Mode Buttons (Player Shifts text shortened to create room) -->
+        <div class="flex items-center gap-1.5 bg-slate-950 p-1.5 rounded-2xl border border-slate-800 font-bold">
+          <button onclick="switchViewMode('coaches')" id="mode-btn-coaches" class="px-3.5 py-1.5 rounded-xl bg-tigersGold text-slate-950 font-black cursor-pointer transition shadow">
             👨‍🏫 Coach Tactical Film
           </button>
-          <button onclick="switchViewMode('player')" id="mode-btn-player" class="px-4 py-1.5 rounded-xl text-slate-300 hover:text-white cursor-pointer transition">
-            👤 Player Shifts & Spotlight
+          <button onclick="switchViewMode('player')" id="mode-btn-player" class="px-3.5 py-1.5 rounded-xl text-slate-300 hover:text-white cursor-pointer transition">
+            👤 Player Shifts
           </button>
-          <button onclick="switchViewMode('filmroom')" id="mode-btn-filmroom" class="px-4 py-1.5 rounded-xl text-slate-300 hover:text-white cursor-pointer transition">
+          <button onclick="switchViewMode('filmroom')" id="mode-btn-filmroom" class="px-3.5 py-1.5 rounded-xl text-slate-300 hover:text-white cursor-pointer transition">
             ⭐ Starred Library
           </button>
         </div>
 
-        <!-- Pop-Down Feature Triggers on Row 2 -->
-        <div class="flex flex-wrap items-center gap-2 ml-auto">
+        <!-- Center & Right: Feature Drawers & Skater Selector ON THE SAME ROW -->
+        <div class="flex flex-wrap items-center gap-1.5">
           <!-- Period Jump Trigger Button -->
           <button id="period-toggle-btn" onclick="toggleDrawer('period')" class="px-3 py-1.5 rounded-xl bg-slate-900 hover:bg-slate-800 text-emerald-300 border border-emerald-500/40 font-bold cursor-pointer transition text-xs flex items-center gap-1">
             ⏱️ Period ▾
@@ -176,7 +176,7 @@
           </button>
 
           <!-- Skater Dropdown -->
-          <div id="player-roster-wrapper" class="flex items-center gap-2 bg-slate-950 px-3.5 py-1.5 rounded-2xl border border-slate-800">
+          <div id="player-roster-wrapper" class="flex items-center gap-1.5 bg-slate-950 px-3 py-1.5 rounded-2xl border border-slate-800 ml-1">
             <span class="text-tigersGold text-[11px] font-black uppercase">Skater:</span>
             <select id="roster-select" onchange="selectFromRoster(this.value)" class="bg-slate-950 text-white font-bold focus:outline-none cursor-pointer text-xs border-0"></select>
           </div>
@@ -185,7 +185,7 @@
       </div>
     </header>
 
-    <!-- HORIZONTAL PERIOD JUMP DRAWER -->
+    <!-- HORIZONTAL PERIOD JUMP DRAWER (Calibrated to Youth Hockey 15:00 & 35:00 Periods) -->
     <div id="period-drawer" class="hidden w-full p-2.5 bg-slate-950 rounded-2xl border border-emerald-500/40 text-xs flex flex-wrap items-center justify-between gap-2 shadow-2xl">
       <div class="flex flex-wrap items-center gap-2">
         <span class="text-emerald-400 font-black uppercase text-[11px] mr-1">Period Jump:</span>
@@ -193,13 +193,13 @@
           🏒 1st Period (0:00)
         </button>
         <button onclick="jumpToPeriod(2)" class="px-3.5 py-1.5 rounded-xl font-bold bg-slate-900 hover:bg-emerald-600 hover:text-white text-emerald-300 border border-emerald-500/30 cursor-pointer transition">
-          🏒 2nd Period (20:00)
+          🏒 2nd Period (15:00)
         </button>
         <button onclick="jumpToPeriod(3)" class="px-3.5 py-1.5 rounded-xl font-bold bg-slate-900 hover:bg-emerald-600 hover:text-white text-emerald-300 border border-emerald-500/30 cursor-pointer transition">
-          🏒 3rd Period (40:00)
+          🏒 3rd Period (35:00)
         </button>
       </div>
-      <span class="text-slate-500 text-[11px]">Clicking any period skips directly to opening faceoff</span>
+      <span class="text-slate-500 text-[11px]">Skips directly to opening faceoff of each period</span>
     </div>
 
     <!-- FULL-WIDTH HORIZONTAL DRAW ON SCREEN TOOLBAR -->
@@ -264,7 +264,7 @@
 
     <!-- HORIZONTAL TACTICAL PLAYBOOK DRAWER (13 Hockey Canada Baselines) -->
     <div id="playbook-drawer" class="hidden w-full p-2.5 bg-slate-950 rounded-2xl border border-cyan-500/40 text-xs flex flex-wrap items-center gap-1.5 shadow-2xl">
-      <span class="text-cyan-400 font-black uppercase text-[11px] mr-1">Playbooks (13 Systems):</span>
+      <span class="text-cyan-400 font-black uppercase text-[11px] mr-1">Playbooks:</span>
       <button onclick="setPlaybookPill('none')" id="pb-pill-none" class="px-2.5 py-1 rounded-lg font-bold bg-slate-900 text-slate-400 border border-slate-800 cursor-pointer">Off</button>
       
       <!-- Special Teams -->
@@ -397,7 +397,7 @@
     let COACH_PASSCODE = "COACHTIGERS";
     let ADMIN_PASSCODE = "ADMINTIGERS";
 
-    // Official 17-Player Roster with exact forward/defense positions
+    // Official 17-Player Roster
     let ROSTER_POSITIONS = {
       "3": { pos: "F", name: "Stewart Dolmage" },
       "5": { pos: "F", name: "Nathan Zhao" },
@@ -552,7 +552,7 @@
       }
     };
 
-    // Authentic Matches with Distinct Video IDs & Multi-Period Clip Reels
+    // Authentic Matches with Distinct Video IDs & Period Calibrations
     const DISTINCT_MATCHES = [
       {
         "id": "game_orillia",
@@ -560,6 +560,7 @@
         "youtube_video_id": "D1R9BHv8ZNo",
         "date": "2026-10-07",
         "opponent": "Orillia",
+        "periods": { 1: 0, 2: 900, 3: 2100 }, // P1: 0:00, P2: 15:00, P3: 35:00
         "teamsnap": {
           "date": "Wednesday, Oct 7, 2026",
           "time": "7:00 PM EDT",
@@ -604,6 +605,7 @@
         "youtube_video_id": "KxRUQu2z-Ao",
         "date": "2026-10-03",
         "opponent": "Caledon",
+        "periods": { 1: 0, 2: 900, 3: 2100 },
         "teamsnap": {
           "date": "Saturday, Oct 3, 2026",
           "time": "2:15 PM EDT",
@@ -643,6 +645,7 @@
         "youtube_video_id": "p18H81X2Bp0",
         "date": "2026-10-04",
         "opponent": "Upper York",
+        "periods": { 1: 0, 2: 900, 3: 2100 },
         "teamsnap": {
           "date": "Sunday, Oct 4, 2026",
           "time": "1:00 PM EDT",
@@ -677,6 +680,7 @@
         "youtube_video_id": "DYH1Kgffsjc",
         "date": "2026-09-26",
         "opponent": "Welland",
+        "periods": { 1: 0, 2: 900, 3: 2100 },
         "teamsnap": {
           "date": "Saturday, Sep 26, 2026",
           "time": "12:00 PM EDT",
@@ -698,6 +702,7 @@
         "youtube_video_id": "GywcR8aeMY8",
         "date": "2026-09-25",
         "opponent": "Jr Navy",
+        "periods": { 1: 0, 2: 900, 3: 2100 },
         "teamsnap": {
           "date": "Friday, Sep 25, 2026",
           "time": "7:00 PM EDT",
@@ -718,6 +723,7 @@
         "youtube_video_id": "NhSdyb8rVPA",
         "date": "2026-09-19",
         "opponent": "North Durham",
+        "periods": { 1: 0, 2: 900, 3: 2100 },
         "teamsnap": {
           "date": "Saturday, Sep 19, 2026",
           "time": "3:00 PM EDT",
@@ -734,7 +740,6 @@
       }
     ];
 
-    // Shift Synthesizer: All 17 players receive accurate shifts and ice times
     function getPlayerShiftsForGame(jerseyNum) {
       const num = parseInt(jerseyNum) || 5;
       const isGoalie = (num === 97 || num === 98);
@@ -875,6 +880,7 @@
       initRosterDropdown();
       populateGameSelect();
 
+      // Read remote library with cache busting
       fetch('./games_library.json?t=' + Date.now())
         .then(res => res.json())
         .then(data => {
@@ -885,7 +891,8 @@
               return {
                 ...item,
                 youtube_video_id: item.youtube_video_id || (matched ? matched.youtube_video_id : "KxRUQu2z-Ao"),
-                teamsnap: (matched && matched.teamsnap) ? matched.teamsnap : (item.teamsnap || {})
+                teamsnap: (matched && matched.teamsnap) ? matched.teamsnap : (item.teamsnap || {}),
+                periods: (matched && matched.periods) ? matched.periods : (item.periods || { 1: 0, 2: 900, 3: 2100 })
               };
             });
             populateGameSelect();
@@ -981,8 +988,8 @@
         const btn = document.getElementById(`mode-btn-${m}`);
         if (btn) {
           btn.className = (m === mode)
-            ? "px-4 py-1.5 rounded-xl bg-tigersGold text-slate-950 font-black cursor-pointer transition shadow"
-            : "px-4 py-1.5 rounded-xl text-slate-300 hover:text-white cursor-pointer transition";
+            ? "px-3.5 py-1.5 rounded-xl bg-tigersGold text-slate-950 font-black cursor-pointer transition shadow"
+            : "px-3.5 py-1.5 rounded-xl text-slate-300 hover:text-white cursor-pointer transition";
         }
       });
 
@@ -1029,20 +1036,17 @@
       }
     }
 
-    // Instant 1-Click Period Jump Function
+    // Calibrated Period Jump Function: Accurate to Youth Hockey Clock (15:00 P2, 35:00 P3)
     function jumpToPeriod(periodNumber) {
       if (!ytPlayer || typeof ytPlayer.seekTo !== 'function') return;
       
-      let jumpSec = 0;
-      if (periodNumber === 1) jumpSec = 0;
-      else if (periodNumber === 2) jumpSec = 1200; // 20:00
-      else if (periodNumber === 3) jumpSec = 2400; // 40:00
+      const pTimes = currentGame?.periods || { 1: 0, 2: 900, 3: 2100 };
+      const jumpSec = pTimes[periodNumber] !== undefined ? pTimes[periodNumber] : (periodNumber === 1 ? 0 : (periodNumber === 2 ? 900 : 2100));
 
       ytPlayer.seekTo(jumpSec, true);
       ytPlayer.playVideo();
-      showToast(`🏒 Skipped to Period ${periodNumber}!`);
+      showToast(`🏒 Skipped to Period ${periodNumber} (${Math.floor(jumpSec/60)}:${(jumpSec%60).toString().padStart(2, '0')})!`);
       
-      // Close period drawer
       document.getElementById('period-drawer').classList.add('hidden');
     }
 
@@ -1083,7 +1087,6 @@
       loadCoachingClips();
     }
 
-    // Direct Seek & Play Execution
     function playTimestamp(startSec, desc) {
       if (currentStage === 'whiteboard') setStageMode('video');
       if (isDrawingMode) toggleDrawMode();
@@ -1098,7 +1101,7 @@
       }
     }
 
-    // 1-Tap In-App Shift Clipper
+    // 1-Tap In-App Shift Logger
     let activeShiftStartTime = null;
     function logShiftTimestamp(action) {
       if (!isPlayerReady || !ytPlayer) return;
@@ -1274,6 +1277,7 @@
       redrawCanvasLayers();
     }
 
+    // Clean Video Canvas Overlay
     function redrawCanvasLayers() {
       if (!ctx || !canvas) return;
       ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -1521,6 +1525,7 @@
       }
     }
 
+    // Toggle Draw Mode
     function toggleDrawMode() {
       isDrawingMode = !isDrawingMode;
       const btn = document.getElementById('draw-toggle-btn');
