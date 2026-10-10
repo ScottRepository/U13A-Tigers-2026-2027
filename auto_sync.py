@@ -1,12 +1,3 @@
-#!/usr/bin/env python3
-"""
-auto_sync.py — U13A Aurora Tigers (2026–2027)
-Automated Ingestion Pipeline:
-- Downloads video stream with cookies
-- Uploads to Google Gemini 2.5 Flash File API
-- Automatically reads scoreboard to extract exact period start times (1st, 2nd, 3rd)
-- Extracts player shift timestamps and tactical clips
-"""
 
 import json
 import logging
