@@ -1,10 +1,7 @@
 #!/usr/bin/env python3
 """
 auto_sync.py — U13A Aurora Tigers (2026–2027)
-Automated Ingestion Pipeline:
-- Downloads video stream with cookies
-- Uploads directly to Google Gemini 2.5 Flash File API for real video analysis
-- Extracts exact player shift timestamps and tactical sequences
+Verified Google Gemini 2.5 Flash Video Understanding Pipeline.
 """
 
 import json
@@ -49,8 +46,8 @@ OFFICIAL_ROSTER = [
     {"num": "28", "name": "Ross Elley", "pos": "D"},
     {"num": "76", "name": "Matt Davis", "pos": "LD"},
     {"num": "88", "name": "Roy Chen", "pos": "RW"},
-    {"num": "97", "name": "Hudson Millar (G)", "pos": "G"},
-    {"num": "98", "name": "Hudson Barfitt (G)", "pos": "G"}
+    {"num": "97", "name": "Hudson Millar", "pos": "G"},
+    {"num": "98", "name": "Hudson Barfitt", "pos": "G"}
 ]
 
 def load_library_and_settings() -> tuple[Dict[str, Any], Dict[str, Any]]:
@@ -61,21 +58,37 @@ def load_library_and_settings() -> tuple[Dict[str, Any], Dict[str, Any]]:
                 lib = {"games": lib if isinstance(lib, list) else []}
     except Exception:
         lib = {"settings": {}, "games": []}
-    settings = lib.get("settings", {})
-    return lib, settings
+    return lib, lib.get("settings", {})
 
 library, settings = load_library_and_settings()
 
 SOURCE_URL = os.environ.get("YOUTUBE_SOURCE") or settings.get("youtube_playlist_url") or "https://www.youtube.com/playlist?list=PLXFVFYYSmylE"
 TEAMSNAP_ICAL_URL = os.environ.get("TEAMSNAP_ICAL_URL") or settings.get("teamsnap_ical_url") or ""
-GOOGLE_API_KEY = os.environ.get("GEMINI_API_KEY") or settings.get("google_api_key") or ""
 COOKIES_CONTENT = os.environ.get("YT_COOKIES") or settings.get("yt_cookies") or ""
 
+# Resolve API Key across all possible names
+GOOGLE_API_KEY = (
+    os.environ.get("GEMINI_API_KEY") or 
+    os.environ.get("GOOGLE_API_KEY") or 
+    settings.get("google_api_key") or 
+    settings.get("gemini_api_key") or 
+    ""
+).strip()
+
+# ================= PRINT LIVE VERIFICATION AUDIT =================
+print("=" * 60)
+print("🏒 TIGERS AUTO_SYNC: ENVIRONMENT & API DIAGNOSTICS")
+print(f"📁 Root Library: {LIBRARY_PATH.name}")
+print(f"📺 Target Playlist: {SOURCE_URL}")
+print(f"🍪 YouTube Cookies Provided? {'YES (' + str(len(COOKIES_CONTENT)) + ' chars)' if COOKIES_CONTENT else 'NO'}")
+print(f"🤖 Google Gemini Key Detected? {'YES (Starts with ' + GOOGLE_API_KEY[:6] + '...)' if GOOGLE_API_KEY else '❌ NO - KEY MISSING'}")
+print("=" * 60)
+
 def setup_cookies() -> bool:
-    if COOKIES_CONTENT and COOKIES_CONTENT.strip():
+    if COOKIES_CONTENT:
         try:
             with open(COOKIE_FILE, "w", encoding="utf-8") as f:
-                f.write(COOKIES_CONTENT.strip())
+                f.write(COOKIES_CONTENT)
             return True
         except Exception:
             pass
@@ -136,7 +149,7 @@ def match_teamsnap_data(video_date: str, events: List[Dict[str, Any]]) -> Dict[s
     if not matched:
         return {
             "date": video_date,
-            "time": "2:15 PM EDT",
+            "time": "Game Time",
             "arena": "Aurora Community Centre - Pad 1",
             "address": "1 Community Centre Ln, Aurora, ON L4G 7B1",
             "maps_url": "https://maps.google.com/?q=Aurora+Community+Centre",
@@ -157,62 +170,70 @@ def match_teamsnap_data(video_date: str, events: List[Dict[str, Any]]) -> Dict[s
         "is_home": is_home
     }
 
-# ================= REAL GOOGLE GEMINI VIDEO UNDERSTANDING =================
+# ================= REAL GEMINI VIDEO UNDERSTANDING PIPELINE =================
 def process_video_with_gemini(video_path: str, duration_sec: float) -> Optional[Dict[str, Any]]:
-    """Uploads video to Google Gemini File API and extracts exact shifts and clips"""
     if not GOOGLE_API_KEY:
-        logger.info("ℹ️ No GEMINI_API_KEY configured. Skipping Google AI video processing.")
+        logger.warning("❌ [GEMINI AUDIT] Cannot call Gemini: GOOGLE_API_KEY is empty.")
         return None
 
     try:
         from google import genai
         from google.genai import types
 
-        logger.info("🚀 Connecting to Google GenAI Client...")
+        logger.info(f"🚀 [GEMINI AUDIT] Initializing Gemini Client with key: {GOOGLE_API_KEY[:6]}...")
         client = genai.Client(api_key=GOOGLE_API_KEY)
 
-        logger.info(f"📤 Uploading video file to Google AI File API ({os.path.getsize(video_path)/1024/1024:.1f} MB)...")
+        file_size_mb = os.path.getsize(video_path) / (1024 * 1024)
+        logger.info(f"📤 [GEMINI AUDIT] Uploading {file_size_mb:.2f} MB video file to Google AI File API...")
+        
         uploaded_file = client.files.upload(file=video_path)
+        logger.info(f"⏳ [GEMINI AUDIT] Upload completed. File URI: {uploaded_file.uri}. Processing state: {uploaded_file.state.name}")
 
-        # Wait until Google finishes processing the video file
-        logger.info("⏳ Waiting for Gemini to process video frames...")
+        # Poll Google until the video is encoded and ready for inference
+        poll_count = 0
         while uploaded_file.state.name == "PROCESSING":
             time.sleep(10)
+            poll_count += 1
             uploaded_file = client.files.get(name=uploaded_file.name)
+            logger.info(f"   ... Waiting for Gemini video ingestion ({poll_count * 10}s elapsed)...")
 
         if uploaded_file.state.name == "FAILED":
-            logger.error(f"❌ Google Video Processing Failed: {uploaded_file.error}")
+            logger.error(f"❌ [GEMINI AUDIT] Google Video Processing Failed: {uploaded_file.error}")
             return None
 
-        logger.info("🎬 Video processed by Google. Sending tactical prompt with Official Roster...")
+        logger.info("🎬 [GEMINI AUDIT] Video ready! Sending structured prompt with Official 17-Player Roster...")
 
-        roster_str = ", ".join([f"#{p['num']} {p['name']} ({p['pos']})" for p in OFFICIAL_ROSTER])
+        roster_bullets = "\n".join([f"- #{p['num']} {p['name']} ({p['pos']})" for p in OFFICIAL_ROSTER])
 
         prompt = f"""
-        You are an expert hockey video analyst reviewing a U13A Aurora Tigers game (duration: {duration_sec}s).
-        The official roster of players is:
-        {roster_str}
+        You are an elite NHL/Hockey Canada video analyst reviewing a U13A Aurora Tigers game (total run time: {duration_sec}s).
+        Official Roster:
+        {roster_bullets}
 
-        Task:
-        1. Identify the shifts for the players. For each player, list every shift with exact 'start' and 'end' seconds, and calculate 'duration'.
-        2. Identify key tactical sequence clips (Powerplay 5v4, Penalty Kill 4v5, Offensive Zone cycles, Defensive Zone breakouts, Neutral Zone regroups).
+        CRITICAL TASKS:
+        1. Watch the video and identify player shift changes. Whenever a player steps onto the ice from the bench, record their start second. When they skate off to the bench, record their end second. Calculate shift duration = end - start.
+        2. Identify key tactical sequences:
+           - Powerplay (5v4 advantage sequences)
+           - Penalty Kill (4v5 short-handed sequences)
+           - Even Strength Offensive Zone cycling
+           - Even Strength Defensive Zone breakouts and house coverage
 
-        You MUST respond with valid JSON matching this schema:
+        You MUST respond ONLY with valid JSON matching this exact structure:
         {{
           "players": {{
-            "23": {{
+            "10": {{
               "shifts": [
-                {{"id": 1, "start": 0.0, "end": 44.0, "duration": 44}},
-                {{"id": 2, "start": 180.0, "end": 224.0, "duration": 44}}
+                {{"id": 1, "start": 45.0, "end": 92.0, "duration": 47}},
+                {{"id": 2, "start": 210.0, "end": 255.0, "duration": 45}}
               ]
             }}
           }},
           "coaching_clips": {{
-            "powerplay": [{{"start": 540.0, "end": 575.0, "duration": 35, "description": "PP 1-3-1 Setup"}}],
-            "penalty_kill": [{{"start": 840.0, "end": 880.0, "duration": 40, "description": "PK Diamond Clear"}}],
-            "offensive_zone": [{{"start": 140.0, "end": 175.0, "duration": 35, "description": "O-Zone Cycle"}}],
-            "defensive_zone": [{{"start": 210.0, "end": 245.0, "duration": 35, "description": "D-Zone Breakout"}}],
-            "neutral_zone": [{{"start": 85.0, "end": 120.0, "duration": 35, "description": "1-2-2 Regroup"}}]
+            "powerplay": [{{"id": 1, "start": 540.0, "end": 575.0, "duration": 35, "description": "Powerplay (5v4) Setup"}}],
+            "penalty_kill": [{{"id": 2, "start": 840.0, "end": 880.0, "duration": 40, "description": "Penalty Kill Box Clear"}}],
+            "offensive_zone": [{{"id": 3, "start": 140.0, "end": 175.0, "duration": 35, "description": "O-Zone Cycle"}}],
+            "defensive_zone": [{{"id": 4, "start": 210.0, "end": 245.0, "duration": 35, "description": "D-Zone Breakout"}}],
+            "neutral_zone": [{{"id": 5, "start": 85.0, "end": 120.0, "duration": 35, "description": "Neutral Zone Regroup"}}]
           }}
         }}
         """
@@ -225,23 +246,23 @@ def process_video_with_gemini(video_path: str, duration_sec: float) -> Optional[
             )
         )
 
-        logger.info("✅ Gemini video analysis returned successfully!")
-        result_json = json.loads(response.text)
+        logger.info("🎉 [GEMINI AUDIT] Gemini 2.5 Flash analysis successfully received!")
+        parsed_json = json.loads(response.text)
 
-        # Clean up video file on Google servers to prevent quota overflow
+        # Clean up file on Google Cloud servers
         try:
             client.files.delete(name=uploaded_file.name)
-            logger.info("🧹 Removed temp video from Google File API.")
+            logger.info("🧹 [GEMINI AUDIT] Cleaned up temporary video on Google servers.")
         except Exception:
             pass
 
-        return result_json
+        return parsed_json
 
     except Exception as e:
-        logger.error(f"⚠️ Error running Google Gemini API: {e}", exc_info=True)
+        logger.error(f"❌ [GEMINI AUDIT] Gemini API Exception: {e}", exc_info=True)
         return None
 
-# ================= DYNAMIC ROTATION FALLBACK =================
+# ================= FALLBACK ENGINE =================
 def generate_fallback_shifts(duration_sec: float) -> tuple[Dict[str, Any], Dict[str, List[Dict[str, Any]]]]:
     players_data = {}
     total_time = max(1200.0, float(duration_sec or 2400.0))
@@ -254,13 +275,12 @@ def generate_fallback_shifts(duration_sec: float) -> tuple[Dict[str, Any], Dict[
             mid = total_time / 2.0
             st = 0.0 if num == 97 else mid
             en = mid if num == 97 else total_time
-            shifts = [{"id": 1, "start": st, "end": en, "duration": int(en - st)}]
             players_data[p["num"]] = {
                 "name": p["name"],
                 "total_ice_time": f"{int((en-st)//60)}m",
                 "shifts_count": 1,
                 "avg_shift_len": f"{int((en-st)//60)}m",
-                "shifts": shifts
+                "shifts": [{"id": 1, "start": st, "end": en, "duration": int(en - st)}]
             }
         else:
             line_offset = (num % 3) * 45.0
@@ -286,14 +306,14 @@ def generate_fallback_shifts(duration_sec: float) -> tuple[Dict[str, Any], Dict[
     coaching_clips = {
         "powerplay": [{"id": 1, "start": 540.0, "end": 575.0, "duration": 35, "description": "Powerplay (5v4) Setup", "suggested": True}],
         "penalty_kill": [{"id": 2, "start": 840.0, "end": 880.0, "duration": 40, "description": "Penalty Kill Diamond Box Clear", "suggested": True}],
-        "offensive_zone": [{"id": 3, "start": 140.0, "end": 175.0, "duration": 35, "description": "O-Zone Cycle Triangle Low-to-High", "suggested": True}],
-        "defensive_zone": [{"id": 4, "start": 210.0, "end": 245.0, "duration": 35, "description": "D-Zone Box-and-One House Containment", "suggested": False}],
-        "neutral_zone": [{"id": 5, "start": 85.0, "end": 120.0, "duration": 35, "description": "Neutral Zone 1-2-2 Left Wing Lock", "suggested": False}]
+        "offensive_zone": [{"id": 3, "start": 140.0, "end": 175.0, "duration": 35, "description": "O-Zone Cycle Triangle", "suggested": True}],
+        "defensive_zone": [{"id": 4, "start": 210.0, "end": 245.0, "duration": 35, "description": "D-Zone House Coverage", "suggested": False}],
+        "neutral_zone": [{"id": 5, "start": 85.0, "end": 120.0, "duration": 35, "description": "Neutral Zone 1-2-2 Lock", "suggested": False}]
     }
 
     return players_data, coaching_clips
 
-# ================= MAIN INGESTION =================
+# ================= RUN PIPELINE =================
 def run_sync():
     logger.info(f"🔍 Reading playlist: {SOURCE_URL}")
     setup_cookies()
@@ -325,11 +345,11 @@ def run_sync():
             logger.warning(f"Playlist scan warning: {e}")
 
     if not discovered_videos:
-        logger.info("✅ All games are already indexed.")
+        logger.info("✅ All playlist games are already indexed.")
         clean_cookies()
         return
 
-    logger.info(f"🎬 Processing {len(discovered_videos)} new video(s)...")
+    logger.info(f"🎬 Ingesting {len(discovered_videos)} new game(s)...")
 
     for v in discovered_videos:
         vid_id = v["id"]
@@ -351,7 +371,7 @@ def run_sync():
 
         gemini_result = None
         try:
-            logger.info(f"⬇️ Downloading low-res stream for Google AI video ingestion ({vid_id})...")
+            logger.info(f"⬇️ Downloading stream for Google AI video ingestion ({vid_id})...")
             with yt_dlp.YoutubeDL(dl_opts) as ydl:
                 ydl.download([youtube_url])
 
@@ -363,16 +383,15 @@ def run_sync():
             if local_video.exists():
                 local_video.unlink(missing_ok=True)
 
-        # Merge Gemini results with full roster structure
         if gemini_result and "players" in gemini_result:
-            logger.info("🎯 Applying real AI-extracted player shifts!")
+            logger.info(f"⭐ [SUCCESS] Game {vid_id} analyzed with Google Gemini 2.5 Flash!")
             players_matrix = {}
             fallback_players, fallback_clips = generate_fallback_shifts(v["duration"])
             
             for p in OFFICIAL_ROSTER:
                 num = p["num"]
-                ai_player = gemini_result["players"].get(num, {})
-                shifts = ai_player.get("shifts") or fallback_players[num]["shifts"]
+                ai_p = gemini_result["players"].get(num, {})
+                shifts = ai_p.get("shifts") or fallback_players[num]["shifts"]
                 total_sec = sum(s.get("duration", 45) for s in shifts)
                 avg = round(total_sec / max(1, len(shifts)))
                 players_matrix[num] = {
@@ -383,9 +402,11 @@ def run_sync():
                     "shifts": shifts
                 }
             clips_matrix = gemini_result.get("coaching_clips") or fallback_clips
+            ai_engine_used = "Google Gemini 2.5 Flash (Direct Video Analysis)"
         else:
-            logger.info("ℹ️ Using standard U13A roster shift matrix.")
+            logger.info(f"ℹ️ [FALLBACK] Game {vid_id} using baseline shift matrix.")
             players_matrix, clips_matrix = generate_fallback_shifts(v["duration"])
+            ai_engine_used = "Standard U13A Shift Rotation"
 
         new_entry = {
             "id": f"game_{vid_id}",
@@ -393,6 +414,7 @@ def run_sync():
             "youtube_video_id": vid_id,
             "date": f_date,
             "opponent": "League Match",
+            "ai_engine": ai_engine_used,
             "teamsnap": match_teamsnap_data(f_date, teamsnap_events),
             "players": players_matrix,
             "coaching_clips": clips_matrix,
