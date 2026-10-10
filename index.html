@@ -106,22 +106,24 @@
           </div>
         </div>
 
-        <!-- UNIFIED MATCH LINE -->
+        <!-- UNIFIED MATCH LINE: Game Dropdown FIRST, followed by its TeamSnap Details -->
         <div class="flex flex-wrap items-center gap-2 text-xs flex-1 xl:justify-center">
+          <!-- Game Dropdown -->
           <div class="flex items-center gap-1.5 bg-slate-950 px-3 py-1.5 rounded-2xl border border-slate-800">
             <span class="text-tigersGold text-[11px] font-black uppercase">Game:</span>
             <select id="game-select" onchange="onGameDropdownChange(this.value)" class="bg-slate-950 text-white font-bold focus:outline-none cursor-pointer text-xs border-0 max-w-[240px] truncate"></select>
           </div>
 
+          <!-- TeamSnap Match Details -->
           <div class="flex flex-wrap items-center gap-2 bg-slate-950 px-3.5 py-1.5 rounded-2xl border border-slate-800">
-            <span class="text-tigersGold font-bold">📅 <span id="ts-datetime" class="text-slate-200">-</span></span>
+            <span class="text-tigersGold font-bold">📅 <span id="ts-datetime" class="text-slate-200">Wednesday, Oct 7, 2026 • 7:00 PM EDT</span></span>
             <span class="text-slate-700">|</span>
             <a id="ts-arena-link" href="#" target="_blank" class="text-sky-400 hover:underline font-bold flex items-center gap-1">
-              📍 <span id="ts-arena">-</span> ↗
+              📍 <span id="ts-arena">Rotary Place - Orillia (Pad 1)</span> ↗
             </a>
             <span class="text-slate-700">|</span>
             <span id="ts-homeaway" class="px-2 py-0.5 rounded text-[10px] font-black uppercase bg-slate-900 text-tigersGold border border-slate-800">Away</span>
-            <span id="ts-jersey" class="text-slate-400 text-[11px]">Jersey: <strong>-</strong></span>
+            <span id="ts-jersey" class="text-slate-400 text-[11px]">Jersey: <strong>Black (Away)</strong></span>
           </div>
         </div>
 
@@ -135,7 +137,7 @@
 
       </div>
 
-      <!-- LINE 2: Mode Buttons Centered | Period, Clip Reel, Playbook & Draw Buttons on Right -->
+      <!-- LINE 2: Mode Buttons Centered | Draw, Clip Reel, Playbook & Player Dropdown on Right -->
       <div class="flex flex-wrap items-center justify-between gap-3 border-t border-slate-800/80 pt-2.5 text-xs">
         
         <!-- 3 Segmented Mode Buttons -->
@@ -143,15 +145,15 @@
           <button onclick="switchViewMode('coaches')" id="mode-btn-coaches" class="px-4 py-1.5 rounded-xl bg-tigersGold text-slate-950 font-black cursor-pointer transition shadow">
             👨‍🏫 Coach Tactical Film
           </button>
-          <button onclick="switchViewMode('player')" id="mode-btn-player" class="px-4 py-1.5 rounded-xl text-slate-300 hover:text-white cursor-pointer transition">
-            👤 Player Shifts
+          <button onclick="switchViewMode('roster')" id="mode-btn-roster" class="px-4 py-1.5 rounded-xl text-slate-300 hover:text-white cursor-pointer transition">
+            👥 Team Roster
           </button>
           <button onclick="switchViewMode('filmroom')" id="mode-btn-filmroom" class="px-4 py-1.5 rounded-xl text-slate-300 hover:text-white cursor-pointer transition">
             ⭐ Starred Library
           </button>
         </div>
 
-        <!-- Feature Drawers & Skater Dropdown -->
+        <!-- Pop-Down Feature Triggers on Row 2 -->
         <div class="flex flex-wrap items-center gap-2 ml-auto">
           <button id="period-toggle-btn" onclick="toggleDrawer('period')" class="px-3 py-1.5 rounded-xl bg-slate-900 hover:bg-slate-800 text-emerald-300 border border-emerald-500/40 font-bold cursor-pointer transition text-xs flex items-center gap-1">
             ⏱️ Period ▾
@@ -169,9 +171,10 @@
             🎨 Draw on Screen
           </button>
 
-          <div id="player-roster-wrapper" class="flex items-center gap-2 bg-slate-950 px-3.5 py-1.5 rounded-2xl border border-slate-800">
-            <span class="text-tigersGold text-[11px] font-black uppercase">Skater:</span>
-            <select id="roster-select" onchange="selectFromRoster(this.value)" class="bg-slate-950 text-white font-bold focus:outline-none cursor-pointer text-xs border-0"></select>
+          <!-- Renamed to Player Dropdown -->
+          <div class="flex items-center gap-2 bg-slate-950 px-3.5 py-1.5 rounded-2xl border border-slate-800">
+            <span class="text-tigersGold text-[11px] font-black uppercase">Player:</span>
+            <select id="player-select" onchange="selectPlayer(this.value)" class="bg-slate-950 text-white font-bold focus:outline-none cursor-pointer text-xs border-0"></select>
           </div>
         </div>
 
@@ -184,35 +187,42 @@
       <span class="text-slate-500 text-[11px]">Skips directly to opening faceoff of each period</span>
     </div>
 
-    <!-- FULL-WIDTH HORIZONTAL DRAW ON SCREEN TOOLBAR -->
+    <!-- NEW FULL-WIDTH CHALKBOARD TOOLBAR (NO DROPDOWNS — 1-CLICK POSITION BUTTONS) -->
     <div id="draw-tools" class="hidden w-full p-2.5 bg-slate-950 rounded-2xl border border-tigersGold/50 text-xs shadow-2xl flex flex-wrap items-center justify-between gap-2">
       <div class="flex flex-wrap items-center gap-2">
         <span class="text-tigersGold font-black uppercase text-[11px] mr-1">Chalkboard:</span>
         <button onclick="setTool('pen')" id="tool-pen" class="px-3 py-1 rounded-lg bg-tigersGold text-slate-950 font-black cursor-pointer">✏️ Pen</button>
         <button onclick="setTool('arrow')" id="tool-arrow" class="px-3 py-1 rounded-lg bg-slate-800 text-slate-300 hover:text-white font-semibold cursor-pointer">➡️ Arrow</button>
-        
-        <div class="flex items-center rounded-lg border border-slate-700 overflow-hidden bg-slate-800">
-          <button onclick="setTool('marker')" id="tool-marker" class="px-2.5 py-1 text-slate-300 hover:text-white font-semibold cursor-pointer">⭕ Tigers Dot</button>
-          <select id="tigers-stamp-label" class="bg-slate-900 text-tigersGold font-bold px-2 py-1 border-l border-slate-700 text-xs">
-            <option value="RD">RD</option>
-            <option value="LD">LD</option>
-            <option value="C">C</option>
-            <option value="RW">RW</option>
-            <option value="LW">LW</option>
-            <option value="G">G</option>
-            <option value="T">T</option>
-          </select>
+        <button onclick="setTool('puck')" id="tool-puck" class="px-3 py-1 rounded-lg bg-slate-800 text-slate-300 hover:text-white font-semibold cursor-pointer">🏒 Puck</button>
+
+        <!-- 1-Click Tigers Position Stamp Buttons (Gold) -->
+        <div class="flex items-center gap-1 bg-slate-900 border border-amber-500/40 rounded-xl px-2 py-0.5">
+          <span class="text-tigersGold font-black text-[10px] uppercase mr-1">🐯 Tigers:</span>
+          <button onclick="setPosMarker('tigers', 'C')" id="mark-tigers-C" class="px-2 py-0.5 rounded font-black bg-amber-500/20 text-tigersGold hover:bg-tigersGold hover:text-slate-950 cursor-pointer">C</button>
+          <button onclick="setPosMarker('tigers', 'LW')" id="mark-tigers-LW" class="px-2 py-0.5 rounded font-black bg-amber-500/20 text-tigersGold hover:bg-tigersGold hover:text-slate-950 cursor-pointer">LW</button>
+          <button onclick="setPosMarker('tigers', 'RW')" id="mark-tigers-RW" class="px-2 py-0.5 rounded font-black bg-amber-500/20 text-tigersGold hover:bg-tigersGold hover:text-slate-950 cursor-pointer">RW</button>
+          <button onclick="setPosMarker('tigers', 'LD')" id="mark-tigers-LD" class="px-2 py-0.5 rounded font-black bg-amber-500/20 text-tigersGold hover:bg-tigersGold hover:text-slate-950 cursor-pointer">LD</button>
+          <button onclick="setPosMarker('tigers', 'RD')" id="mark-tigers-RD" class="px-2 py-0.5 rounded font-black bg-amber-500/20 text-tigersGold hover:bg-tigersGold hover:text-slate-950 cursor-pointer">RD</button>
+          <button onclick="setPosMarker('tigers', 'G')" id="mark-tigers-G" class="px-2 py-0.5 rounded font-black bg-amber-500/20 text-tigersGold hover:bg-tigersGold hover:text-slate-950 cursor-pointer">G</button>
         </div>
 
-        <button onclick="setTool('opponent')" id="tool-opponent" class="px-3 py-1 rounded-lg bg-slate-800 text-slate-300 hover:text-white font-semibold cursor-pointer">❌ Opponent (X)</button>
-        <button onclick="setTool('puck')" id="tool-puck" class="px-3 py-1 rounded-lg bg-slate-800 text-slate-300 hover:text-white font-semibold cursor-pointer">🏒 Puck</button>
+        <!-- 1-Click Opponent Position Stamp Buttons (Red) -->
+        <div class="flex items-center gap-1 bg-slate-900 border border-rose-500/40 rounded-xl px-2 py-0.5">
+          <span class="text-rose-400 font-black text-[10px] uppercase mr-1">🔴 Opponent:</span>
+          <button onclick="setPosMarker('opponent', 'C')" id="mark-opp-C" class="px-2 py-0.5 rounded font-black bg-rose-500/20 text-rose-300 hover:bg-rose-600 hover:text-white cursor-pointer">C</button>
+          <button onclick="setPosMarker('opponent', 'LW')" id="mark-opp-LW" class="px-2 py-0.5 rounded font-black bg-rose-500/20 text-rose-300 hover:bg-rose-600 hover:text-white cursor-pointer">LW</button>
+          <button onclick="setPosMarker('opponent', 'RW')" id="mark-opp-RW" class="px-2 py-0.5 rounded font-black bg-rose-500/20 text-rose-300 hover:bg-rose-600 hover:text-white cursor-pointer">RW</button>
+          <button onclick="setPosMarker('opponent', 'LD')" id="mark-opp-LD" class="px-2 py-0.5 rounded font-black bg-rose-500/20 text-rose-300 hover:bg-rose-600 hover:text-white cursor-pointer">LD</button>
+          <button onclick="setPosMarker('opponent', 'RD')" id="mark-opp-RD" class="px-2 py-0.5 rounded font-black bg-rose-500/20 text-rose-300 hover:bg-rose-600 hover:text-white cursor-pointer">RD</button>
+          <button onclick="setPosMarker('opponent', 'G')" id="mark-opp-G" class="px-2 py-0.5 rounded font-black bg-rose-500/20 text-rose-300 hover:bg-rose-600 hover:text-white cursor-pointer">G</button>
+        </div>
       </div>
 
       <div class="flex items-center gap-2">
         <span class="text-slate-400 text-[11px]">Color:</span>
-        <button onclick="setDrawColor('#f59e0b')" class="w-6 h-6 rounded-full bg-amber-500 border-2 border-white cursor-pointer"></button>
-        <button onclick="setDrawColor('#38bdf8')" class="w-6 h-6 rounded-full bg-sky-400 border border-slate-600 cursor-pointer"></button>
-        <button onclick="setDrawColor('#f43f5e')" class="w-6 h-6 rounded-full bg-rose-500 border border-slate-600 cursor-pointer"></button>
+        <button onclick="setDrawColor('#f59e0b')" class="w-5 h-5 rounded-full bg-amber-500 border-2 border-white cursor-pointer"></button>
+        <button onclick="setDrawColor('#38bdf8')" class="w-5 h-5 rounded-full bg-sky-400 border border-slate-600 cursor-pointer"></button>
+        <button onclick="setDrawColor('#f43f5e')" class="w-5 h-5 rounded-full bg-rose-500 border border-slate-600 cursor-pointer"></button>
         <button onclick="undoDraw()" class="px-3 py-1 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded-lg font-semibold ml-1 cursor-pointer">↩️ Undo</button>
         <button onclick="clearCanvas()" class="px-3 py-1 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded-lg font-semibold cursor-pointer">Clear</button>
       </div>
@@ -299,7 +309,6 @@
             <button onclick="stepSeconds(1)" class="px-2 py-1 rounded bg-slate-900 hover:bg-slate-800 text-slate-200 cursor-pointer border border-slate-800">⏭️ +1s</button>
           </div>
 
-          <!-- Quick Jump Buttons with +30s -->
           <div class="flex items-center gap-1 bg-slate-950 px-2 py-0.5 rounded-lg border border-slate-800">
             <button onclick="stepSeconds(-5)" class="px-2 py-1 rounded bg-slate-900 hover:bg-slate-800 text-slate-300 font-semibold cursor-pointer transition">-5s</button>
             <button onclick="stepSeconds(5)" class="px-2 py-1 rounded bg-slate-900 hover:bg-tigersGold hover:text-slate-950 text-slate-200 font-bold cursor-pointer transition">+5s</button>
@@ -308,55 +317,30 @@
           </div>
         </div>
       </div>
-
-      <!-- Real-Time On-Ice Status Banner with 1-Tap Coach Clipper -->
-      <div class="flex items-center justify-between gap-3 p-2 rounded-xl bg-slate-950 border border-slate-800 text-xs">
-        <div id="skater-onice-status" class="font-bold text-slate-400 flex-1 text-center">
-          Ready. Select any sequence below to jump directly to that play.
-        </div>
-        <div class="flex items-center gap-1.5 border-l border-slate-800 pl-3">
-          <button onclick="logShiftTimestamp('start')" class="px-2.5 py-1 bg-emerald-600/30 hover:bg-emerald-600 text-emerald-300 hover:text-white rounded-lg font-bold border border-emerald-500/50 cursor-pointer transition text-[11px]">
-            ⏱️ Mark Shift Start
-          </button>
-          <button onclick="logShiftTimestamp('end')" class="px-2.5 py-1 bg-rose-600/30 hover:bg-rose-600 text-rose-300 hover:text-white rounded-lg font-bold border border-rose-500/50 cursor-pointer transition text-[11px]">
-            ⏹️ Mark Shift End
-          </button>
-        </div>
-      </div>
     </div>
 
-    <!-- PLAYER STATS BANNER -->
-    <div id="player-stats-dock" class="hidden bg-tigersDark border border-slate-800 p-4 rounded-2xl shadow-xl space-y-2">
-      <div class="flex justify-between items-center">
-        <h3 class="text-sm font-bold text-tigersGold" id="player-title">Player Stats</h3>
-        <div class="flex items-center gap-2 bg-slate-950 px-3 py-1 rounded-lg border border-slate-800">
-          <span class="text-[11px] font-semibold text-slate-300">⚡ Auto-Play All Shifts</span>
-          <label class="relative inline-flex items-center cursor-pointer">
-            <input type="checkbox" id="autoplay-toggle" class="sr-only peer">
-            <div class="w-8 h-4 bg-slate-700 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-3 after:w-3 after:transition-all peer-checked:bg-tigersGold"></div>
-          </label>
-        </div>
+    <!-- CLEAN ROSTER DIRECTORY (Replaces Broken Placeholder Shift Cards) -->
+    <div id="roster-view-section" class="bg-tigersDark border border-slate-800 rounded-3xl p-4 shadow-xl space-y-3">
+      <div class="flex justify-between items-center border-b border-slate-800 pb-2">
+        <h2 class="text-sm font-black text-white uppercase tracking-wider flex items-center gap-2">
+          <span>👥</span> Official U13A Tigers Team Roster
+        </h2>
+        <span class="text-xs text-tigersGold font-bold">17 Active Players (15 Skaters • 2 Goalies)</span>
       </div>
-      <div class="grid grid-cols-2 md:grid-cols-4 gap-2 text-xs">
-        <div class="bg-slate-950 p-2 rounded-lg border border-slate-800"><span class="text-slate-400 block text-[10px]">Total Ice Time</span><span id="stat-toi" class="font-bold text-white text-sm">-</span></div>
-        <div class="bg-slate-950 p-2 rounded-lg border border-slate-800"><span class="text-slate-400 block text-[10px]">Shift Discipline (&le;45s)</span><span id="stat-discipline" class="font-bold text-emerald-400 text-sm">Active</span></div>
-        <div class="bg-slate-950 p-2 rounded-lg border border-slate-800"><span class="text-slate-400 block text-[10px]">Total Shifts</span><span id="stat-shifts" class="font-bold text-white text-sm">-</span></div>
-        <div class="bg-slate-950 p-2 rounded-lg border border-slate-800"><span class="text-slate-400 block text-[10px]">Avg Shift Duration</span><span id="stat-avg-shift" class="font-bold text-white text-sm">-</span></div>
+      
+      <div id="roster-cards-grid" class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-2.5">
+        <!-- Roster cards populated dynamically by renderRosterGrid() -->
       </div>
     </div>
 
     <!-- DYNAMIC CLIP REEL STRIP -->
-    <div class="bg-tigersDark border border-slate-800 rounded-3xl p-4 shadow-xl space-y-3">
+    <div id="clips-view-section" class="bg-tigersDark border border-slate-800 rounded-3xl p-4 shadow-xl space-y-3">
       <div class="flex justify-between items-center border-b border-slate-800 pb-2">
         <div class="flex items-center gap-2">
           <h2 class="text-sm font-black text-white uppercase tracking-wider" id="clip-strip-title">Play Sequences</h2>
           <span id="clip-strip-count" class="text-[11px] bg-slate-950 text-tigersGold px-2.5 py-0.5 rounded-full font-bold border border-slate-800">0 clips</span>
         </div>
-        <div class="text-[10px] text-slate-400 flex items-center gap-3">
-          <span class="text-emerald-400 font-bold">● &le;45s Fast</span>
-          <span class="text-amber-400 font-bold">● 46-60s OK</span>
-          <span class="text-rose-400 font-bold">● &gt;60s Long</span>
-        </div>
+        <div class="text-[10px] text-slate-400">Click any sequence below to jump directly to that play</div>
       </div>
       <div id="clips-stream-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 max-h-[460px] overflow-y-auto pr-1"></div>
     </div>
@@ -390,7 +374,6 @@
       "98": { pos: "G", name: "Hudson Barfitt" }
     };
 
-    // Full 13 Hockey Canada System Baselines
     const BASELINE_SYSTEMS = {
       pp_131: {
         name: "Powerplay 1-3-1 (Umbrella)",
@@ -524,7 +507,7 @@
       }
     };
 
-    // Authentic Match Database with Exact Video IDs & Calibrated Periods
+    // Database with Correct YouTube Video IDs and Period Timestamps
     const DISTINCT_MATCHES = [
       {
         "id": "game_orillia",
@@ -532,7 +515,6 @@
         "youtube_video_id": "D1R9BHv8ZNo",
         "date": "2026-10-07",
         "opponent": "Orillia",
-        // Calibrated to the exact 68-minute broadcast video clock shown in your recording:
         "periods": { 1: 0, 2: 1560, 3: 3030 }, // P1: 0:00, P2: 26:00, P3: 50:30
         "teamsnap": {
           "date": "Wednesday, Oct 7, 2026",
@@ -713,55 +695,6 @@
       }
     ];
 
-    function getPlayerShiftsForGame(jerseyNum) {
-      const num = parseInt(jerseyNum) || 5;
-      const isGoalie = (num === 97 || num === 98);
-      const pTimes = currentGame?.periods || { 1: 0, 2: 900, 3: 1800 };
-      const totalGameSec = (pTimes[3] || 1800) + 900;
-
-      if (isGoalie) {
-        const midPoint = pTimes[2] || (totalGameSec / 2);
-        const startSec = (num === 97) ? 0 : midPoint;
-        const endSec = (num === 97) ? midPoint : totalGameSec;
-        return {
-          total_ice_time: `${Math.floor((endSec - startSec) / 60)}m 00s`,
-          avg_shift_len: `${Math.floor((endSec - startSec) / 60)}m 00s`,
-          shifts: [{"id": 1, "start": startSec, "end": endSec, "duration": Math.floor(endSec - startSec)}]
-        };
-      }
-
-      const shifts = [];
-      let shiftId = 1;
-
-      [1, 2, 3].forEach(pNum => {
-        const pStart = pTimes[pNum] || 0;
-        const pEnd = (pNum < 3) ? (pTimes[pNum + 1] || (pStart + 900)) : totalGameSec;
-        const lineOffset = (num % 3) * 45;
-        let cur = pStart + lineOffset;
-
-        while (cur + 35 < pEnd && shiftId <= 15) {
-          const dur = 40 + ((num * shiftId) % 9);
-          shifts.push({
-            id: shiftId,
-            start: cur,
-            end: Math.min(pEnd, cur + dur),
-            duration: Math.min(pEnd - cur, dur)
-          });
-          cur += 135;
-          shiftId++;
-        }
-      });
-
-      const totalSec = shifts.reduce((acc, s) => acc + s.duration, 0);
-      const avg = Math.round(totalSec / Math.max(1, shifts.length));
-
-      return {
-        total_ice_time: `${Math.floor(totalSec / 60)}m ${totalSec % 60}s`,
-        avg_shift_len: `${avg}s`,
-        shifts: shifts
-      };
-    }
-
     let gamesLibrary = DISTINCT_MATCHES;
     let currentGame = DISTINCT_MATCHES[0];
     let ytPlayer = null;
@@ -771,9 +704,7 @@
     let isSuggestedOnly = false;
     let currentStage = "video";
     let activeSystemTemplate = "none";
-    let currentJersey = "5";
-    let currentShiftsArray = [];
-    let activeShiftIndex = -1;
+    let currentJersey = "10";
 
     let isDrawingMode = false;
     let isDrawing = false;
@@ -782,14 +713,15 @@
     let startX = 0, startY = 0;
     let drawHistory = [];
     let currentStroke = [];
+    let activePosMarker = null; // Stores { team: 'tigers'|'opponent', pos: 'C'|'LW'|... }
     let canvas, ctx, rinkCanvas, rinkCtx;
 
-    // AUDIO-SAFE THROTTLED TIME ENGINE (Prevents static/crackling audio)
+    // AUDIO-SAFE THROTTLED CLOCK
     let lastPollTime = 0;
     let cachedCurrentTime = 0;
     function getThrottledPlayerTime() {
       const now = performance.now();
-      if (now - lastPollTime > 250) { // Poll at smooth 4 Hz instead of 60 Hz postMessage flooding
+      if (now - lastPollTime > 250) {
         lastPollTime = now;
         if (isPlayerReady && ytPlayer && typeof ytPlayer.getCurrentTime === 'function') {
           cachedCurrentTime = ytPlayer.getCurrentTime() || 0;
@@ -872,8 +804,9 @@
       rinkCanvas = document.getElementById('rink-bg-canvas');
       if (rinkCanvas) rinkCtx = rinkCanvas.getContext('2d');
 
-      initRosterDropdown();
+      initPlayerDropdown();
       populateGameSelect();
+      renderRosterGrid();
 
       fetch('./games_library.json?t=' + Date.now())
         .then(res => res.json())
@@ -898,12 +831,10 @@
         });
 
       setupTelestrator();
-      startAutoPlayMonitor();
-      requestAnimationFrame(animationLoop);
     }
 
-    function initRosterDropdown() {
-      const sel = document.getElementById('roster-select');
+    function initPlayerDropdown() {
+      const sel = document.getElementById('player-select');
       if (!sel) return;
       sel.innerHTML = '';
       Object.entries(ROSTER_POSITIONS).forEach(([num, p]) => {
@@ -949,10 +880,7 @@
 
       renderTeamSnapBanner();
       renderPeriodDrawer();
-
-      if (currentMode === 'player') loadPlayerShifts();
-      else if (currentMode === 'filmroom') renderFilmRoom();
-      else loadCoachingClips();
+      loadCoachingClips();
     }
 
     function renderTeamSnapBanner() {
@@ -965,12 +893,10 @@
       document.getElementById('ts-jersey').innerHTML = `Jersey: <strong>${ts.jersey || (ts.is_home ? 'White' : 'Black')}</strong>`;
     }
 
-    // Dynamic Period Drawer Calibration
     function renderPeriodDrawer() {
       const container = document.getElementById('period-buttons-container');
       if (!container) return;
       const pTimes = currentGame?.periods || { 1: 0, 2: 900, 3: 1800 };
-
       const formatMin = (sec) => `${Math.floor(sec / 60)}:${(sec % 60).toString().padStart(2, '0')}`;
 
       container.innerHTML = `
@@ -1002,7 +928,7 @@
 
     function switchViewMode(mode) {
       currentMode = mode;
-      ['coaches', 'player', 'filmroom'].forEach(m => {
+      ['coaches', 'roster', 'filmroom'].forEach(m => {
         const btn = document.getElementById(`mode-btn-${m}`);
         if (btn) {
           btn.className = (m === mode)
@@ -1011,23 +937,49 @@
         }
       });
 
-      const playerDock = document.getElementById('player-stats-dock');
-      if (mode === 'player') {
-        playerDock.classList.remove('hidden');
-        loadPlayerShifts();
+      const rosterSection = document.getElementById('roster-view-section');
+      const clipsSection = document.getElementById('clips-view-section');
+
+      if (mode === 'roster') {
+        rosterSection.classList.remove('hidden');
+        clipsSection.classList.add('hidden');
       } else if (mode === 'filmroom') {
-        playerDock.classList.add('hidden');
+        rosterSection.classList.add('hidden');
+        clipsSection.classList.remove('hidden');
         renderFilmRoom();
       } else {
-        playerDock.classList.add('hidden');
+        rosterSection.classList.add('hidden');
+        clipsSection.classList.remove('hidden');
         loadCoachingClips();
       }
     }
 
-    function selectFromRoster(val) {
-      if (!val) return;
-      currentJersey = val;
-      if (currentMode === 'player') loadPlayerShifts();
+    function renderRosterGrid() {
+      const grid = document.getElementById('roster-cards-grid');
+      if (!grid) return;
+      grid.innerHTML = '';
+      Object.entries(ROSTER_POSITIONS).forEach(([num, p]) => {
+        const card = document.createElement('div');
+        const isGoalie = (p.pos === 'G');
+        card.className = `p-3 rounded-2xl bg-slate-950 border ${num === currentJersey ? 'border-tigersGold ring-1 ring-tigersGold/50' : 'border-slate-800'} hover:border-tigersGold transition cursor-pointer flex flex-col justify-between`;
+        card.onclick = () => selectPlayer(num);
+        card.innerHTML = `
+          <div class="flex items-center justify-between mb-1">
+            <span class="text-xs font-black text-tigersGold">#${num}</span>
+            <span class="px-1.5 py-0.5 rounded text-[9px] font-black uppercase ${isGoalie ? 'bg-cyan-900/60 text-cyan-300 border border-cyan-700' : 'bg-slate-900 text-slate-300 border border-slate-700'}">${p.pos}</span>
+          </div>
+          <div class="font-bold text-white text-xs truncate">${p.name}</div>
+        `;
+        grid.appendChild(card);
+      });
+    }
+
+    function selectPlayer(num) {
+      currentJersey = num;
+      const sel = document.getElementById('player-select');
+      if (sel) sel.value = num;
+      renderRosterGrid();
+      showToast(`👤 Selected #${num} ${ROSTER_POSITIONS[num].name}`);
     }
 
     function toggleDrawer(drawerName) {
@@ -1055,15 +1007,12 @@
 
     function jumpToPeriod(periodNumber) {
       if (!ytPlayer || typeof ytPlayer.seekTo !== 'function') return;
-      
       const pTimes = currentGame?.periods || { 1: 0, 2: 900, 3: 1800 };
       const jumpSec = pTimes[periodNumber] !== undefined ? pTimes[periodNumber] : 0;
-
       ytPlayer.seekTo(jumpSec, true);
       ytPlayer.playVideo();
       const minStr = Math.floor(jumpSec / 60) + ":" + (jumpSec % 60).toString().padStart(2, '0');
       showToast(`🏒 Skipped to Period ${periodNumber} (${minStr})!`);
-      
       document.getElementById('period-drawer').classList.add('hidden');
     }
 
@@ -1113,37 +1062,7 @@
         ytPlayer.playVideo();
         const ppBtn = document.getElementById('play-pause-btn');
         if (ppBtn) ppBtn.innerText = "⏸️";
-        const status = document.getElementById('skater-onice-status');
-        if (status) status.innerText = `Playing: ${desc}`;
-      }
-    }
-
-    let activeShiftStartTime = null;
-    function logShiftTimestamp(action) {
-      if (!isPlayerReady || !ytPlayer) return;
-      const t = Math.floor(getThrottledPlayerTime());
-      const pRoster = ROSTER_POSITIONS[currentJersey];
-
-      if (action === 'start') {
-        activeShiftStartTime = t;
-        showToast(`⏱️ Shift started at ${Math.floor(t/60)}:${(t%60).toString().padStart(2,'0')} for #${currentJersey} ${pRoster.name}`);
-      } else if (action === 'end') {
-        if (activeShiftStartTime === null) {
-          showToast("⚠️ Mark start first!");
-          return;
-        }
-        const dur = Math.max(15, t - activeShiftStartTime);
-        const newShift = {
-          id: currentShiftsArray.length + 1,
-          start: activeShiftStartTime,
-          end: t,
-          duration: dur
-        };
-        currentShiftsArray.push(newShift);
-        currentShiftsArray.sort((a,b) => a.start - b.start);
-        activeShiftStartTime = null;
-        showToast(`✅ Saved ${dur}s shift for #${currentJersey}!`);
-        loadPlayerShifts();
+        showToast(`▶️ Playing: ${desc}`);
       }
     }
 
@@ -1239,125 +1158,246 @@
       else loadCoachingClips();
     }
 
-    function loadPlayerShifts() {
-      if (!currentGame) return;
-
-      const player = getPlayerShiftsForGame(currentJersey);
-      const pRoster = ROSTER_POSITIONS[currentJersey];
-      const container = document.getElementById('clips-stream-container');
-      const countEl = document.getElementById('clip-strip-count');
-      const titleEl = document.getElementById('clip-strip-title');
-
-      const posLabel = pRoster ? `(${pRoster.pos})` : "";
-      document.getElementById('player-title').innerText = `#${currentJersey} ${posLabel} ${pRoster.name} Shift Breakdown`;
-      document.getElementById('stat-toi').innerText = player.total_ice_time || "14m 30s";
-      document.getElementById('stat-shifts').innerText = player.shifts.length;
-      document.getElementById('stat-avg-shift').innerText = player.avg_shift_len || "44s";
-      if (titleEl) titleEl.innerText = `#${currentJersey} ${pRoster.name} Shifts (${player.shifts.length})`;
-
-      currentShiftsArray = player.shifts;
-      activeShiftIndex = -1;
-      if (countEl) countEl.innerText = `${currentShiftsArray.length} shifts`;
-      container.innerHTML = '';
-
-      currentShiftsArray.forEach((s, idx) => {
-        let disciplineColor = "border-emerald-500/60 bg-emerald-950/20";
-        if (s.duration > 60) disciplineColor = "border-rose-500/60 bg-rose-950/20";
-        else if (s.duration > 45) disciplineColor = "border-amber-500/60 bg-amber-950/20";
-
-        const card = document.createElement('div');
-        card.id = `shift-card-${idx}`;
-        card.className = `p-3 rounded-2xl border ${disciplineColor} flex flex-col justify-between transition hover:border-tigersGold`;
-        card.innerHTML = `
-          <div>
-            <div class="flex justify-between items-center mb-1">
-              <span class="font-bold text-white text-xs">Shift ${s.id || (idx + 1)}</span>
-              <span class="font-bold text-xs ${s.duration > 60 ? 'text-rose-400' : s.duration > 45 ? 'text-amber-400' : 'text-emerald-400'}">${s.duration}s</span>
-            </div>
-            <span class="text-[11px] text-slate-400 font-mono">${Math.floor(s.start/60)}:${Math.floor(s.start%60).toString().padStart(2,'0')} - ${Math.floor(s.end/60)}:${Math.floor(s.end%60).toString().padStart(2,'0')}</span>
-          </div>
-          <button onclick="playPlayerShift(${idx})" class="mt-2 py-1.5 bg-tigersGold hover:bg-tigersGoldLight text-slate-950 font-black text-xs rounded-xl transition cursor-pointer shadow">
-            ▶️ Play Shift
-          </button>
-        `;
-        container.appendChild(card);
+    // ================= CHALKBOARD TELSTRATOR WITH DIRECT POSITION STAMPS =================
+    function setupTelestrator() {
+      window.addEventListener('resize', () => {
+        resizeCanvas();
+        if (currentStage === 'whiteboard') renderRinkBackground();
+        redrawCanvasLayers();
       });
-      redrawCanvasLayers();
+      resizeCanvas();
+      if (!canvas) return;
+
+      canvas.addEventListener('pointerdown', (e) => {
+        if (!isDrawingMode) return;
+        const rect = canvas.getBoundingClientRect();
+        startX = e.clientX - rect.left; startY = e.clientY - rect.top;
+
+        if (currentTool === 'position' && activePosMarker) {
+          drawHistory.push([{ 
+            tool: 'position', 
+            team: activePosMarker.team, 
+            pos: activePosMarker.pos, 
+            x: startX, 
+            y: startY 
+          }]);
+          redrawCanvasLayers();
+          return;
+        }
+
+        if (currentTool === 'puck') {
+          drawHistory.push([{ tool: 'puck', x: startX, y: startY }]);
+          redrawCanvasLayers();
+          return;
+        }
+
+        isDrawing = true;
+        currentStroke = [{ tool: currentTool, x: startX, y: startY, color: drawColor }];
+      });
+
+      canvas.addEventListener('pointermove', (e) => {
+        if (!isDrawing || !isDrawingMode) return;
+        const rect = canvas.getBoundingClientRect();
+        currentStroke.push({ tool: 'pen', x: e.clientX - rect.left, y: e.clientY - rect.top, color: drawColor });
+        redrawCanvasLayers();
+      });
+
+      canvas.addEventListener('pointerup', (e) => {
+        if (!isDrawing || !isDrawingMode) return;
+        isDrawing = false;
+        const rect = canvas.getBoundingClientRect();
+        if (currentTool === 'arrow') {
+          drawHistory.push([{ tool: 'arrow', fromX: startX, fromY: startY, toX: e.clientX - rect.left, toY: e.clientY - rect.top, color: drawColor }]);
+        } else if (currentTool === 'pen' && currentStroke.length > 0) {
+          drawHistory.push([...currentStroke]);
+        }
+        currentStroke = [];
+        redrawCanvasLayers();
+      });
     }
 
-    function playPlayerShift(idx) {
-      activeShiftIndex = idx;
-      const shift = currentShiftsArray[idx];
-      if (!shift) return;
-      playTimestamp(shift.start, `Shift ${shift.id || (idx + 1)} (${shift.duration}s)`);
-      redrawCanvasLayers();
+    function setTool(tool) {
+      currentTool = tool;
+      activePosMarker = null;
+      ['pen', 'arrow', 'puck'].forEach(t => {
+        const btn = document.getElementById(`tool-${t}`);
+        if (btn) btn.className = (t === tool) 
+          ? "px-3 py-1 rounded-lg bg-tigersGold text-slate-950 font-black cursor-pointer" 
+          : "px-3 py-1 rounded-lg bg-slate-800 text-slate-300 hover:text-white font-semibold cursor-pointer";
+      });
+      // Deselect position stamp buttons
+      document.querySelectorAll('[id^="mark-"]').forEach(b => b.classList.remove('ring-2', 'ring-white'));
     }
 
+    function setPosMarker(team, pos) {
+      currentTool = 'position';
+      activePosMarker = { team, pos };
+      ['pen', 'arrow', 'puck'].forEach(t => {
+        const btn = document.getElementById(`tool-${t}`);
+        if (btn) btn.className = "px-3 py-1 rounded-lg bg-slate-800 text-slate-300 hover:text-white font-semibold cursor-pointer";
+      });
+      document.querySelectorAll('[id^="mark-"]').forEach(b => b.classList.remove('ring-2', 'ring-white'));
+      const activeBtn = document.getElementById(team === 'tigers' ? `mark-tigers-${pos}` : `mark-opp-${pos}`);
+      if (activeBtn) activeBtn.classList.add('ring-2', 'ring-white');
+    }
+
+    function drawSavedChalkboard() {
+      const all = [...drawHistory, ...(isDrawing ? [currentStroke] : [])];
+      all.forEach(stroke => {
+        if (!stroke || stroke.length === 0) return;
+        const first = stroke[0];
+
+        if (first.tool === 'pen') {
+          ctx.beginPath();
+          ctx.strokeStyle = first.color || drawColor;
+          ctx.lineWidth = 4;
+          ctx.lineCap = "round";
+          ctx.moveTo(first.x, first.y);
+          for (let i = 1; i < stroke.length; i++) ctx.lineTo(stroke[i].x, stroke[i].y);
+          ctx.stroke();
+        } else if (first.tool === 'arrow') {
+          const headlen = 16;
+          const angle = Math.atan2(first.toY - first.fromY, first.toX - first.fromX);
+          ctx.strokeStyle = first.color || drawColor;
+          ctx.lineWidth = 4;
+          ctx.beginPath();
+          ctx.moveTo(first.fromX, first.fromY);
+          ctx.lineTo(first.toX, first.toY);
+          ctx.stroke();
+          ctx.beginPath();
+          ctx.fillStyle = first.color || drawColor;
+          ctx.moveTo(first.toX, first.toY);
+          ctx.lineTo(first.toX - headlen * Math.cos(angle - Math.PI / 6), first.toY - headlen * Math.sin(angle - Math.PI / 6));
+          ctx.lineTo(first.toX - headlen * Math.cos(angle + Math.PI / 6), first.toY - headlen * Math.sin(angle + Math.PI / 6));
+          ctx.closePath();
+          ctx.fill();
+        } else if (first.tool === 'position') {
+          // 1-Click Position Stamp Renderer (Tigers = Gold Circle, Opponent = Red Circle)
+          const isTigers = (first.team === 'tigers');
+          ctx.beginPath();
+          ctx.arc(first.x, first.y, 16, 0, Math.PI * 2);
+          ctx.fillStyle = isTigers ? "#f59e0b" : "#ef4444";
+          ctx.fill();
+          ctx.strokeStyle = "#ffffff";
+          ctx.lineWidth = 2;
+          ctx.stroke();
+
+          ctx.fillStyle = isTigers ? "#05070c" : "#ffffff";
+          ctx.font = "black 11px sans-serif";
+          ctx.textAlign = "center";
+          ctx.textBaseline = "middle";
+          ctx.fillText(first.pos, first.x, first.y);
+        } else if (first.tool === 'puck') {
+          ctx.fillStyle = "#000"; ctx.beginPath();
+          ctx.arc(first.x, first.y, 8, 0, Math.PI * 2); ctx.fill();
+          ctx.strokeStyle = "#fff"; ctx.lineWidth = 1.5; ctx.stroke();
+        }
+      });
+    }
+
+    function undoDraw() {
+      if (drawHistory.length > 0) { drawHistory.pop(); redrawCanvasLayers(); }
+    }
+
+    function resizeCanvas() {
+      if (canvas && canvas.parentElement && canvas.parentElement.clientWidth > 0) {
+        canvas.width = canvas.parentElement.clientWidth;
+        canvas.height = canvas.parentElement.clientHeight;
+      }
+    }
+
+    function toggleDrawMode() {
+      isDrawingMode = !isDrawingMode;
+      const btn = document.getElementById('draw-toggle-btn');
+      const tools = document.getElementById('draw-tools');
+
+      if (isDrawingMode) {
+        if (currentStage === 'video' && isPlayerReady && ytPlayer && typeof ytPlayer.pauseVideo === 'function') {
+          ytPlayer.pauseVideo();
+        }
+        canvas.classList.remove('pointer-events-none');
+        canvas.classList.add('cursor-crosshair');
+        if (btn) btn.className = "px-3.5 py-1.5 rounded-xl bg-tigersGold text-slate-950 font-black flex items-center gap-1 shadow-lg shadow-tigersGold/30 text-xs";
+        if (tools) tools.classList.remove('hidden');
+      } else {
+        canvas.classList.add('pointer-events-none');
+        canvas.classList.remove('cursor-crosshair');
+        if (btn) btn.className = "px-3.5 py-1.5 rounded-xl bg-slate-900 hover:bg-tigersGold text-tigersGold hover:text-slate-950 border border-tigersGold/40 font-bold flex items-center gap-1 transition cursor-pointer shadow-md text-xs";
+        if (tools) tools.classList.add('hidden');
+        clearCanvas();
+      }
+    }
+
+    function setDrawColor(c) { drawColor = c; }
+    function clearCanvas() { drawHistory = []; currentStroke = []; redrawCanvasLayers(); }
+
+    function setSpeed(rate) {
+      if (isPlayerReady && ytPlayer) ytPlayer.setPlaybackRate(rate);
+      ['1', '075', '05'].forEach(r => {
+        const b = document.getElementById(`rate-${r}`);
+        if (b) b.className = (parseFloat(r.replace('075', '0.75').replace('05', '0.5')) === rate) ? "px-2 py-1 rounded bg-tigersGold text-slate-950 font-black cursor-pointer" : "px-2 py-1 rounded bg-slate-900 text-slate-300 hover:text-white cursor-pointer border border-slate-800";
+      });
+    }
+
+    function togglePlayPause() {
+      if (!isPlayerReady || !ytPlayer) return;
+      if (ytPlayer.getPlayerState() === 1) {
+        ytPlayer.pauseVideo();
+        document.getElementById('play-pause-btn').innerText = "▶️";
+      } else {
+        ytPlayer.playVideo();
+        document.getElementById('play-pause-btn').innerText = "⏸️";
+        if (isDrawingMode) toggleDrawMode();
+      }
+    }
+
+    function stepSeconds(s) {
+      if (isPlayerReady && ytPlayer) ytPlayer.seekTo(Math.max(0, getThrottledPlayerTime() + s), true);
+    }
+
+    function showToast(msg) {
+      const t = document.getElementById('toast');
+      document.getElementById('toast-text').innerText = msg;
+      t.classList.remove('opacity-0', 'pointer-events-none');
+      setTimeout(() => t.classList.add('opacity-0', 'pointer-events-none'), 2500);
+    }
+
+    // Canvas Redraw Loop (Tactical Playbooks & Whiteboard Markers)
     function redrawCanvasLayers() {
       if (!ctx || !canvas) return;
       ctx.clearRect(0, 0, canvas.width, canvas.height);
-
       const w = canvas.width, h = canvas.height;
-      const currentTime = getThrottledPlayerTime();
-
-      const pRoster = ROSTER_POSITIONS[currentJersey];
-      const playerShifts = currentShiftsArray || [];
-      const activeShift = playerShifts.find(s => currentTime >= s.start && currentTime <= s.end);
-      const isSkaterOnIce = Boolean(activeShift);
-
-      const statusEl = document.getElementById('skater-onice-status');
-      if (statusEl && pRoster) {
-        if (currentMode === 'player') {
-          if (isSkaterOnIce) {
-            statusEl.innerText = `⚡ #${currentJersey} ${pRoster.name} is ON ICE (Shift #${activeShift.id} • ${activeShift.duration}s)`;
-            statusEl.className = "text-xs font-black text-center py-1.5 rounded-xl bg-emerald-950/80 border border-emerald-500 text-emerald-400 shadow-md shadow-emerald-500/10 flex-1";
-          } else {
-            statusEl.innerText = `⏸️ #${currentJersey} ${pRoster.name} is ON BENCH`;
-            statusEl.className = "text-xs font-bold text-center py-1.5 rounded-xl bg-slate-950 border border-slate-800 text-slate-400 flex-1";
-          }
-        } else {
-          statusEl.innerText = `Coach Mode Active • Tactical Breakdowns`;
-          statusEl.className = "text-xs font-bold text-center py-1.5 rounded-xl bg-slate-950 border border-slate-800 text-slate-400 flex-1";
-        }
-      }
 
       if (activeSystemTemplate !== "none" && BASELINE_SYSTEMS[activeSystemTemplate]) {
         const sys = BASELINE_SYSTEMS[activeSystemTemplate];
-        const selectedPlayerPos = ROSTER_POSITIONS[currentJersey]?.pos || "C";
-
         Object.entries(sys.positions).forEach(([roleKey, posData]) => {
           const px = posData.x * w;
           const py = posData.y * h;
-          const isPlayerMatch = (roleKey === selectedPlayerPos || (roleKey.startsWith('F') && selectedPlayerPos.includes('F')));
 
           ctx.beginPath();
-          ctx.arc(px, py, isPlayerMatch ? 22 : 16, 0, Math.PI * 2);
-          ctx.fillStyle = isPlayerMatch ? "rgba(16, 185, 129, 0.45)" : "rgba(56, 189, 248, 0.25)";
+          ctx.arc(px, py, 22, 0, Math.PI * 2);
+          ctx.fillStyle = "rgba(16, 185, 129, 0.40)";
           ctx.fill();
 
           ctx.beginPath();
-          ctx.arc(px, py, isPlayerMatch ? 22 : 16, 0, Math.PI * 2);
+          ctx.arc(px, py, 22, 0, Math.PI * 2);
           ctx.setLineDash([5, 4]);
-          ctx.strokeStyle = isPlayerMatch ? "#10b981" : "#38bdf8";
-          ctx.lineWidth = 3;
+          ctx.strokeStyle = "#10b981";
+          ctx.lineWidth = 2.5;
           ctx.stroke();
           ctx.setLineDash([]);
 
           ctx.fillStyle = "#ffffff";
-          ctx.font = isPlayerMatch ? "bold 11px sans-serif" : "10px sans-serif";
+          ctx.font = "bold 11px sans-serif";
           ctx.textAlign = "center";
-          ctx.fillText(posData.label, px, py - (isPlayerMatch ? 26 : 20));
+          ctx.fillText(posData.label, px, py - 26);
         });
       }
 
       drawSavedChalkboard();
     }
 
-    function animationLoop() {
-      redrawCanvasLayers();
-      requestAnimationFrame(animationLoop);
-    }
-
+    // 2D Rink Whiteboard
     function setStageMode(mode) {
       currentStage = mode;
       const videoBox = document.getElementById('video-container');
@@ -1412,200 +1452,6 @@
       };
       drawFaceoffCircle(w * 0.20, h * 0.28); drawFaceoffCircle(w * 0.20, h * 0.72);
       drawFaceoffCircle(w * 0.80, h * 0.28); drawFaceoffCircle(w * 0.80, h * 0.72);
-    }
-
-    function setupTelestrator() {
-      window.addEventListener('resize', () => {
-        resizeCanvas();
-        if (currentStage === 'whiteboard') renderRinkBackground();
-        redrawCanvasLayers();
-      });
-      resizeCanvas();
-      if (!canvas) return;
-
-      canvas.addEventListener('pointerdown', (e) => {
-        if (!isDrawingMode) return;
-        const rect = canvas.getBoundingClientRect();
-        startX = e.clientX - rect.left; startY = e.clientY - rect.top;
-
-        if (currentTool === 'marker') {
-          const role = document.getElementById('tigers-stamp-label')?.value || "RD";
-          drawHistory.push([{ tool: 'marker', x: startX, y: startY, label: role, color: drawColor }]);
-          redrawCanvasLayers();
-          return;
-        }
-        if (currentTool === 'opponent') {
-          drawHistory.push([{ tool: 'opponent', x: startX, y: startY }]);
-          redrawCanvasLayers();
-          return;
-        }
-        if (currentTool === 'puck') {
-          drawHistory.push([{ tool: 'puck', x: startX, y: startY }]);
-          redrawCanvasLayers();
-          return;
-        }
-
-        isDrawing = true;
-        currentStroke = [{ tool: currentTool, x: startX, y: startY, color: drawColor }];
-      });
-
-      canvas.addEventListener('pointermove', (e) => {
-        if (!isDrawing || !isDrawingMode) return;
-        const rect = canvas.getBoundingClientRect();
-        currentStroke.push({ tool: 'pen', x: e.clientX - rect.left, y: e.clientY - rect.top, color: drawColor });
-        redrawCanvasLayers();
-      });
-
-      canvas.addEventListener('pointerup', (e) => {
-        if (!isDrawing || !isDrawingMode) return;
-        isDrawing = false;
-        const rect = canvas.getBoundingClientRect();
-        if (currentTool === 'arrow') {
-          drawHistory.push([{ tool: 'arrow', fromX: startX, fromY: startY, toX: e.clientX - rect.left, toY: e.clientY - rect.top, color: drawColor }]);
-        } else if (currentTool === 'pen' && currentStroke.length > 0) {
-          drawHistory.push([...currentStroke]);
-        }
-        currentStroke = [];
-        redrawCanvasLayers();
-      });
-    }
-
-    function drawSavedChalkboard() {
-      const all = [...drawHistory, ...(isDrawing ? [currentStroke] : [])];
-      all.forEach(stroke => {
-        if (!stroke || stroke.length === 0) return;
-        const first = stroke[0];
-
-        if (first.tool === 'pen') {
-          ctx.beginPath();
-          ctx.strokeStyle = first.color || drawColor;
-          ctx.lineWidth = 4;
-          ctx.lineCap = "round";
-          ctx.moveTo(first.x, first.y);
-          for (let i = 1; i < stroke.length; i++) ctx.lineTo(stroke[i].x, stroke[i].y);
-          ctx.stroke();
-        } else if (first.tool === 'arrow') {
-          const headlen = 16;
-          const angle = Math.atan2(first.toY - first.fromY, first.toX - first.fromX);
-          ctx.strokeStyle = first.color || drawColor;
-          ctx.lineWidth = 4;
-          ctx.beginPath();
-          ctx.moveTo(first.fromX, first.fromY);
-          ctx.lineTo(first.toX, first.toY);
-          ctx.stroke();
-          ctx.beginPath();
-          ctx.fillStyle = first.color || drawColor;
-          ctx.moveTo(first.toX, first.toY);
-          ctx.lineTo(first.toX - headlen * Math.cos(angle - Math.PI / 6), first.toY - headlen * Math.sin(angle - Math.PI / 6));
-          ctx.lineTo(first.toX - headlen * Math.cos(angle + Math.PI / 6), first.toY - headlen * Math.sin(angle + Math.PI / 6));
-          ctx.closePath();
-          ctx.fill();
-        } else if (first.tool === 'marker') {
-          ctx.fillStyle = first.color || drawColor;
-          ctx.beginPath();
-          ctx.arc(first.x, first.y, 16, 0, Math.PI * 2);
-          ctx.fill();
-          ctx.strokeStyle = "#000"; ctx.lineWidth = 2; ctx.stroke();
-          ctx.fillStyle = "#000"; ctx.font = "bold 11px sans-serif";
-          ctx.textAlign = "center"; ctx.textBaseline = "middle";
-          ctx.fillText(first.label || "RD", first.x, first.y);
-        } else if (first.tool === 'opponent') {
-          ctx.font = "bold 22px sans-serif";
-          ctx.fillStyle = "#ef4444";
-          ctx.textAlign = "center"; ctx.textBaseline = "middle";
-          ctx.fillText("❌", first.x, first.y);
-        } else if (first.tool === 'puck') {
-          ctx.fillStyle = "#000"; ctx.beginPath();
-          ctx.arc(first.x, first.y, 8, 0, Math.PI * 2); ctx.fill();
-          ctx.strokeStyle = "#fff"; ctx.lineWidth = 1.5; ctx.stroke();
-        }
-      });
-    }
-
-    function setTool(tool) {
-      currentTool = tool;
-      ['pen', 'arrow', 'marker', 'opponent', 'puck'].forEach(t => {
-        const btn = document.getElementById(`tool-${t}`);
-        if (btn) btn.className = (t === tool) ? "px-3 py-1 rounded-lg bg-tigersGold text-slate-950 font-black cursor-pointer" : "px-3 py-1 rounded-lg bg-slate-800 text-slate-300 hover:text-white font-semibold cursor-pointer";
-      });
-    }
-
-    function undoDraw() {
-      if (drawHistory.length > 0) { drawHistory.pop(); redrawCanvasLayers(); }
-    }
-
-    function resizeCanvas() {
-      if (canvas && canvas.parentElement && canvas.parentElement.clientWidth > 0) {
-        canvas.width = canvas.parentElement.clientWidth;
-        canvas.height = canvas.parentElement.clientHeight;
-      }
-    }
-
-    function toggleDrawMode() {
-      isDrawingMode = !isDrawingMode;
-      const btn = document.getElementById('draw-toggle-btn');
-      const tools = document.getElementById('draw-tools');
-
-      if (isDrawingMode) {
-        if (currentStage === 'video' && isPlayerReady && ytPlayer && typeof ytPlayer.pauseVideo === 'function') {
-          ytPlayer.pauseVideo();
-        }
-        canvas.classList.remove('pointer-events-none');
-        canvas.classList.add('cursor-crosshair');
-        if (btn) btn.className = "px-3.5 py-1.5 rounded-xl bg-tigersGold text-slate-950 font-black flex items-center gap-1 shadow-lg shadow-tigersGold/30 text-xs";
-        if (tools) tools.classList.remove('hidden');
-      } else {
-        canvas.classList.add('pointer-events-none');
-        canvas.classList.remove('cursor-crosshair');
-        if (btn) btn.className = "px-3.5 py-1.5 rounded-xl bg-slate-900 hover:bg-tigersGold text-tigersGold hover:text-slate-950 border border-tigersGold/40 font-bold flex items-center gap-1 transition cursor-pointer shadow-md text-xs";
-        if (tools) tools.classList.add('hidden');
-        clearCanvas();
-      }
-    }
-
-    function setDrawColor(c) { drawColor = c; }
-    function clearCanvas() { drawHistory = []; currentStroke = []; redrawCanvasLayers(); }
-
-    function startAutoPlayMonitor() {
-      setInterval(() => {
-        const toggle = document.getElementById('autoplay-toggle');
-        if (!toggle || !toggle.checked || !isPlayerReady || !ytPlayer || activeShiftIndex === -1) return;
-        const currentShift = currentShiftsArray[activeShiftIndex];
-        if (currentShift && getThrottledPlayerTime() >= currentShift.end - 0.25) {
-          if (activeShiftIndex + 1 < currentShiftsArray.length) playPlayerShift(activeShiftIndex + 1);
-        }
-      }, 250);
-    }
-
-    function setSpeed(rate) {
-      if (isPlayerReady && ytPlayer) ytPlayer.setPlaybackRate(rate);
-      ['1', '075', '05'].forEach(r => {
-        const b = document.getElementById(`rate-${r}`);
-        if (b) b.className = (parseFloat(r.replace('075', '0.75').replace('05', '0.5')) === rate) ? "px-2 py-1 rounded bg-tigersGold text-slate-950 font-black cursor-pointer" : "px-2 py-1 rounded bg-slate-900 text-slate-300 hover:text-white cursor-pointer border border-slate-800";
-      });
-    }
-
-    function togglePlayPause() {
-      if (!isPlayerReady || !ytPlayer) return;
-      if (ytPlayer.getPlayerState() === 1) {
-        ytPlayer.pauseVideo();
-        document.getElementById('play-pause-btn').innerText = "▶️";
-      } else {
-        ytPlayer.playVideo();
-        document.getElementById('play-pause-btn').innerText = "⏸️";
-        if (isDrawingMode) toggleDrawMode();
-      }
-    }
-
-    function stepSeconds(s) {
-      if (isPlayerReady && ytPlayer) ytPlayer.seekTo(Math.max(0, getThrottledPlayerTime() + s), true);
-    }
-
-    function showToast(msg) {
-      const t = document.getElementById('toast');
-      document.getElementById('toast-text').innerText = msg;
-      t.classList.remove('opacity-0', 'pointer-events-none');
-      setTimeout(() => t.classList.add('opacity-0', 'pointer-events-none'), 2500);
     }
 
     checkAuth();
