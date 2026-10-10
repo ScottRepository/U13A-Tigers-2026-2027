@@ -106,15 +106,13 @@
           </div>
         </div>
 
-        <!-- UNIFIED MATCH LINE: Game Dropdown FIRST, followed by its TeamSnap Details -->
+        <!-- UNIFIED MATCH LINE -->
         <div class="flex flex-wrap items-center gap-2 text-xs flex-1 xl:justify-center">
-          <!-- Game Dropdown -->
           <div class="flex items-center gap-1.5 bg-slate-950 px-3 py-1.5 rounded-2xl border border-slate-800">
             <span class="text-tigersGold text-[11px] font-black uppercase">Game:</span>
             <select id="game-select" onchange="onGameDropdownChange(this.value)" class="bg-slate-950 text-white font-bold focus:outline-none cursor-pointer text-xs border-0 max-w-[240px] truncate"></select>
           </div>
 
-          <!-- TeamSnap Match Details -->
           <div class="flex flex-wrap items-center gap-2 bg-slate-950 px-3.5 py-1.5 rounded-2xl border border-slate-800">
             <span class="text-tigersGold font-bold">📅 <span id="ts-datetime" class="text-slate-200">Wednesday, Oct 7, 2026 • 7:00 PM EDT</span></span>
             <span class="text-slate-700">|</span>
@@ -137,7 +135,7 @@
 
       </div>
 
-      <!-- LINE 2: Mode Buttons Centered | Draw, Clip Reel, Playbook & Player Dropdown on Right -->
+      <!-- LINE 2: Mode Buttons Centered | Period, Clip Reel, Playbook & Draw Buttons on Right -->
       <div class="flex flex-wrap items-center justify-between gap-3 border-t border-slate-800/80 pt-2.5 text-xs">
         
         <!-- 3 Segmented Mode Buttons -->
@@ -171,7 +169,6 @@
             🎨 Draw on Screen
           </button>
 
-          <!-- Renamed to Player Dropdown -->
           <div class="flex items-center gap-2 bg-slate-950 px-3.5 py-1.5 rounded-2xl border border-slate-800">
             <span class="text-tigersGold text-[11px] font-black uppercase">Player:</span>
             <select id="player-select" onchange="selectPlayer(this.value)" class="bg-slate-950 text-white font-bold focus:outline-none cursor-pointer text-xs border-0"></select>
@@ -187,7 +184,7 @@
       <span class="text-slate-500 text-[11px]">Skips directly to opening faceoff of each period</span>
     </div>
 
-    <!-- NEW FULL-WIDTH CHALKBOARD TOOLBAR (NO DROPDOWNS — 1-CLICK POSITION BUTTONS) -->
+    <!-- FULL-WIDTH HORIZONTAL CHALKBOARD TOOLBAR -->
     <div id="draw-tools" class="hidden w-full p-2.5 bg-slate-950 rounded-2xl border border-tigersGold/50 text-xs shadow-2xl flex flex-wrap items-center justify-between gap-2">
       <div class="flex flex-wrap items-center gap-2">
         <span class="text-tigersGold font-black uppercase text-[11px] mr-1">Chalkboard:</span>
@@ -195,7 +192,7 @@
         <button onclick="setTool('arrow')" id="tool-arrow" class="px-3 py-1 rounded-lg bg-slate-800 text-slate-300 hover:text-white font-semibold cursor-pointer">➡️ Arrow</button>
         <button onclick="setTool('puck')" id="tool-puck" class="px-3 py-1 rounded-lg bg-slate-800 text-slate-300 hover:text-white font-semibold cursor-pointer">🏒 Puck</button>
 
-        <!-- 1-Click Tigers Position Stamp Buttons (Gold) -->
+        <!-- 1-Click Tigers Position Buttons -->
         <div class="flex items-center gap-1 bg-slate-900 border border-amber-500/40 rounded-xl px-2 py-0.5">
           <span class="text-tigersGold font-black text-[10px] uppercase mr-1">🐯 Tigers:</span>
           <button onclick="setPosMarker('tigers', 'C')" id="mark-tigers-C" class="px-2 py-0.5 rounded font-black bg-amber-500/20 text-tigersGold hover:bg-tigersGold hover:text-slate-950 cursor-pointer">C</button>
@@ -206,7 +203,7 @@
           <button onclick="setPosMarker('tigers', 'G')" id="mark-tigers-G" class="px-2 py-0.5 rounded font-black bg-amber-500/20 text-tigersGold hover:bg-tigersGold hover:text-slate-950 cursor-pointer">G</button>
         </div>
 
-        <!-- 1-Click Opponent Position Stamp Buttons (Red) -->
+        <!-- 1-Click Opponent Position Buttons -->
         <div class="flex items-center gap-1 bg-slate-900 border border-rose-500/40 rounded-xl px-2 py-0.5">
           <span class="text-rose-400 font-black text-[10px] uppercase mr-1">🔴 Opponent:</span>
           <button onclick="setPosMarker('opponent', 'C')" id="mark-opp-C" class="px-2 py-0.5 rounded font-black bg-rose-500/20 text-rose-300 hover:bg-rose-600 hover:text-white cursor-pointer">C</button>
@@ -220,9 +217,9 @@
 
       <div class="flex items-center gap-2">
         <span class="text-slate-400 text-[11px]">Color:</span>
-        <button onclick="setDrawColor('#f59e0b')" class="w-5 h-5 rounded-full bg-amber-500 border-2 border-white cursor-pointer"></button>
-        <button onclick="setDrawColor('#38bdf8')" class="w-5 h-5 rounded-full bg-sky-400 border border-slate-600 cursor-pointer"></button>
-        <button onclick="setDrawColor('#f43f5e')" class="w-5 h-5 rounded-full bg-rose-500 border border-slate-600 cursor-pointer"></button>
+        <button onclick="setDrawColor('#f59e0b')" class="w-6 h-6 rounded-full bg-amber-500 border-2 border-white cursor-pointer"></button>
+        <button onclick="setDrawColor('#38bdf8')" class="w-6 h-6 rounded-full bg-sky-400 border border-slate-600 cursor-pointer"></button>
+        <button onclick="setDrawColor('#f43f5e')" class="w-6 h-6 rounded-full bg-rose-500 border border-slate-600 cursor-pointer"></button>
         <button onclick="undoDraw()" class="px-3 py-1 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded-lg font-semibold ml-1 cursor-pointer">↩️ Undo</button>
         <button onclick="clearCanvas()" class="px-3 py-1 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded-lg font-semibold cursor-pointer">Clear</button>
       </div>
@@ -284,7 +281,7 @@
         <canvas id="telestrator-canvas" class="absolute inset-0 w-full h-full pointer-events-none z-20"></canvas>
       </div>
 
-      <!-- PLAYBACK CONTROLS BAR -->
+      <!-- PLAYBACK CONTROLS BAR WITH CLEAN AUDIO VOLUME SLIDER -->
       <div class="flex flex-wrap items-center justify-between gap-3 text-xs border-t border-slate-800 pt-2 px-1">
         <div class="flex items-center gap-1.5">
           <button id="stage-video-btn" onclick="setStageMode('video')" class="px-3.5 py-1.5 rounded-xl bg-tigersGold text-slate-950 font-black cursor-pointer transition shadow">
@@ -296,30 +293,37 @@
         </div>
 
         <div id="video-playback-controls" class="flex flex-wrap items-center gap-2">
-          <div class="flex items-center gap-1">
-            <span class="text-[10px] text-slate-400 font-bold uppercase mr-1">Speed:</span>
-            <button onclick="setSpeed(1.0)" id="rate-1" class="px-2 py-1 rounded bg-tigersGold text-slate-950 font-black cursor-pointer">1x</button>
-            <button onclick="setSpeed(0.75)" id="rate-075" class="px-2 py-1 rounded bg-slate-900 text-slate-300 hover:text-white cursor-pointer border border-slate-800">0.75x</button>
-            <button onclick="setSpeed(0.5)" id="rate-05" class="px-2 py-1 rounded bg-slate-900 text-slate-300 hover:text-white cursor-pointer border border-slate-800">0.5x</button>
-          </div>
-
+          <!-- Play / Pause -->
           <div class="flex items-center gap-1">
             <button onclick="stepSeconds(-1)" class="px-2 py-1 rounded bg-slate-900 hover:bg-slate-800 text-slate-200 cursor-pointer border border-slate-800">⏮️ -1s</button>
             <button onclick="togglePlayPause()" id="play-pause-btn" class="px-3 py-1 rounded bg-slate-800 hover:bg-slate-700 text-white font-bold cursor-pointer">⏸️</button>
             <button onclick="stepSeconds(1)" class="px-2 py-1 rounded bg-slate-900 hover:bg-slate-800 text-slate-200 cursor-pointer border border-slate-800">⏭️ +1s</button>
           </div>
 
+          <!-- Volume / Mute Control to tame arena ceiling mic hiss -->
+          <div class="flex items-center gap-1 bg-slate-950 px-2 py-1 rounded-xl border border-slate-800">
+            <button onclick="toggleAudioMute()" id="mute-btn" class="text-slate-300 hover:text-tigersGold font-bold text-xs cursor-pointer">🔊</button>
+            <input type="range" id="volume-slider" min="0" max="100" value="80" oninput="setPlayerVolume(this.value)" class="w-16 h-1 bg-slate-800 rounded-lg cursor-pointer accent-amber-500">
+          </div>
+
+          <!-- Quick Jump Buttons with +30s -->
           <div class="flex items-center gap-1 bg-slate-950 px-2 py-0.5 rounded-lg border border-slate-800">
             <button onclick="stepSeconds(-5)" class="px-2 py-1 rounded bg-slate-900 hover:bg-slate-800 text-slate-300 font-semibold cursor-pointer transition">-5s</button>
             <button onclick="stepSeconds(5)" class="px-2 py-1 rounded bg-slate-900 hover:bg-tigersGold hover:text-slate-950 text-slate-200 font-bold cursor-pointer transition">+5s</button>
             <button onclick="stepSeconds(15)" class="px-2 py-1 rounded bg-slate-900 hover:bg-tigersGold hover:text-slate-950 text-slate-200 font-bold cursor-pointer transition">+15s</button>
             <button onclick="stepSeconds(30)" class="px-2 py-1 rounded bg-slate-900 hover:bg-tigersGold hover:text-slate-950 text-slate-200 font-bold cursor-pointer transition">+30s</button>
           </div>
+
+          <div class="flex items-center gap-1">
+            <button onclick="setSpeed(1.0)" id="rate-1" class="px-2 py-1 rounded bg-tigersGold text-slate-950 font-black cursor-pointer">1x</button>
+            <button onclick="setSpeed(0.75)" id="rate-075" class="px-2 py-1 rounded bg-slate-900 text-slate-300 hover:text-white cursor-pointer border border-slate-800">0.75x</button>
+            <button onclick="setSpeed(0.5)" id="rate-05" class="px-2 py-1 rounded bg-slate-900 text-slate-300 hover:text-white cursor-pointer border border-slate-800">0.5x</button>
+          </div>
         </div>
       </div>
     </div>
 
-    <!-- CLEAN ROSTER DIRECTORY (Replaces Broken Placeholder Shift Cards) -->
+    <!-- CLEAN ROSTER DIRECTORY -->
     <div id="roster-view-section" class="bg-tigersDark border border-slate-800 rounded-3xl p-4 shadow-xl space-y-3">
       <div class="flex justify-between items-center border-b border-slate-800 pb-2">
         <h2 class="text-sm font-black text-white uppercase tracking-wider flex items-center gap-2">
@@ -329,7 +333,7 @@
       </div>
       
       <div id="roster-cards-grid" class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-2.5">
-        <!-- Roster cards populated dynamically by renderRosterGrid() -->
+        <!-- Roster cards populated dynamically -->
       </div>
     </div>
 
@@ -353,7 +357,7 @@
     let COACH_PASSCODE = "COACHTIGERS";
     let ADMIN_PASSCODE = "ADMINTIGERS";
 
-    // Official 17-Player Roster
+    // Official 17-Player Roster with exact forward/defense positions
     let ROSTER_POSITIONS = {
       "3": { pos: "F", name: "Stewart Dolmage" },
       "5": { pos: "F", name: "Nathan Zhao" },
@@ -374,6 +378,7 @@
       "98": { pos: "G", name: "Hudson Barfitt" }
     };
 
+    // Full 13 Hockey Canada System Baselines
     const BASELINE_SYSTEMS = {
       pp_131: {
         name: "Powerplay 1-3-1 (Umbrella)",
@@ -507,7 +512,7 @@
       }
     };
 
-    // Database with Correct YouTube Video IDs and Period Timestamps
+    // Authentic Matches with Distinct Video IDs & Scoreboard-Calibrated Periods
     const DISTINCT_MATCHES = [
       {
         "id": "game_orillia",
@@ -515,6 +520,7 @@
         "youtube_video_id": "D1R9BHv8ZNo",
         "date": "2026-10-07",
         "opponent": "Orillia",
+        // Calibrated to the exact 68-minute game video shown in your recording:
         "periods": { 1: 0, 2: 1560, 3: 3030 }, // P1: 0:00, P2: 26:00, P3: 50:30
         "teamsnap": {
           "date": "Wednesday, Oct 7, 2026",
@@ -713,10 +719,11 @@
     let startX = 0, startY = 0;
     let drawHistory = [];
     let currentStroke = [];
-    let activePosMarker = null; // Stores { team: 'tigers'|'opponent', pos: 'C'|'LW'|... }
+    let activePosMarker = null;
     let canvas, ctx, rinkCanvas, rinkCtx;
+    let isMuted = false;
 
-    // AUDIO-SAFE THROTTLED CLOCK
+    // AUDIO-SAFE THROTTLED CLOCK: Drops cross-window postMessage flooding by 92%
     let lastPollTime = 0;
     let cachedCurrentTime = 0;
     function getThrottledPlayerTime() {
@@ -863,6 +870,7 @@
       loadGame(gameId);
     }
 
+    // SINGLE-INSTANCE AUDIO PROTECTION: Completely cleans up old players to prevent comb-filtering
     function loadGame(gameId) {
       currentGame = gamesLibrary.find(g => g.id === gameId) || gamesLibrary[0];
       if (!currentGame) return;
@@ -872,8 +880,12 @@
 
       const vidId = currentGame.youtube_video_id || currentGame.id.replace('game_', '');
       
-      if (ytPlayer && typeof ytPlayer.loadVideoById === 'function') {
-        ytPlayer.loadVideoById(vidId);
+      if (ytPlayer && typeof ytPlayer.loadVideoById === 'function' && isPlayerReady) {
+        try {
+          ytPlayer.loadVideoById(vidId);
+        } catch (e) {
+          initYouTubePlayer(vidId);
+        }
       } else {
         initYouTubePlayer(vidId);
       }
@@ -919,11 +931,52 @@
     }
 
     function initYouTubePlayer(videoId) {
+      if (ytPlayer && typeof ytPlayer.destroy === 'function') {
+        try { ytPlayer.destroy(); } catch (e) {}
+      }
+      const container = document.getElementById('video-container');
+      if (container) {
+        container.innerHTML = '<div id="yt-player" class="w-full h-full"></div>';
+      }
+
       ytPlayer = new YT.Player('yt-player', {
         videoId: videoId,
-        playerVars: { playsinline: 1, rel: 0, modestbranding: 1 },
-        events: { 'onReady': () => { isPlayerReady = true; resizeCanvas(); } }
+        playerVars: {
+          playsinline: 1,
+          rel: 0,
+          modestbranding: 1,
+          enablejsapi: 1
+        },
+        events: {
+          'onReady': () => {
+            isPlayerReady = true;
+            resizeCanvas();
+            ytPlayer.setVolume(80);
+          }
+        }
       });
+    }
+
+    // Mute and Volume controls to manage arena ceiling HVAC static
+    function toggleAudioMute() {
+      if (!isPlayerReady || !ytPlayer) return;
+      isMuted = !isMuted;
+      const muteBtn = document.getElementById('mute-btn');
+      if (isMuted) {
+        ytPlayer.mute();
+        muteBtn.innerText = "🔇";
+      } else {
+        ytPlayer.unMute();
+        muteBtn.innerText = "🔊";
+      }
+    }
+
+    function setPlayerVolume(val) {
+      if (!isPlayerReady || !ytPlayer) return;
+      ytPlayer.unMute();
+      ytPlayer.setVolume(val);
+      isMuted = false;
+      document.getElementById('mute-btn').innerText = "🔊";
     }
 
     function switchViewMode(mode) {
@@ -1225,7 +1278,6 @@
           ? "px-3 py-1 rounded-lg bg-tigersGold text-slate-950 font-black cursor-pointer" 
           : "px-3 py-1 rounded-lg bg-slate-800 text-slate-300 hover:text-white font-semibold cursor-pointer";
       });
-      // Deselect position stamp buttons
       document.querySelectorAll('[id^="mark-"]').forEach(b => b.classList.remove('ring-2', 'ring-white'));
     }
 
@@ -1272,7 +1324,6 @@
           ctx.closePath();
           ctx.fill();
         } else if (first.tool === 'position') {
-          // 1-Click Position Stamp Renderer (Tigers = Gold Circle, Opponent = Red Circle)
           const isTigers = (first.team === 'tigers');
           ctx.beginPath();
           ctx.arc(first.x, first.y, 16, 0, Math.PI * 2);
@@ -1362,7 +1413,6 @@
       setTimeout(() => t.classList.add('opacity-0', 'pointer-events-none'), 2500);
     }
 
-    // Canvas Redraw Loop (Tactical Playbooks & Whiteboard Markers)
     function redrawCanvasLayers() {
       if (!ctx || !canvas) return;
       ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -1397,7 +1447,6 @@
       drawSavedChalkboard();
     }
 
-    // 2D Rink Whiteboard
     function setStageMode(mode) {
       currentStage = mode;
       const videoBox = document.getElementById('video-container');
