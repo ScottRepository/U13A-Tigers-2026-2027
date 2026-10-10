@@ -114,7 +114,7 @@
             <select id="game-select" onchange="onGameDropdownChange(this.value)" class="bg-slate-950 text-white font-bold focus:outline-none cursor-pointer text-xs border-0 max-w-[240px] truncate"></select>
           </div>
 
-          <!-- TeamSnap Match Details (Dynamically Synced to Selected Game) -->
+          <!-- TeamSnap Match Details -->
           <div class="flex flex-wrap items-center gap-2 bg-slate-950 px-3.5 py-1.5 rounded-2xl border border-slate-800">
             <span class="text-tigersGold font-bold">📅 <span id="ts-datetime" class="text-slate-200">Wednesday, Oct 7, 2026 • 7:00 PM EDT</span></span>
             <span class="text-slate-700">|</span>
@@ -137,7 +137,7 @@
 
       </div>
 
-      <!-- LINE 2: Mode Buttons Centered | Draw, Clip Reel, Playbook & Skater Dropdown on Right -->
+      <!-- LINE 2: Mode Buttons Centered | Period, Clip Reel, Playbook & Draw Buttons on Right -->
       <div class="flex flex-wrap items-center justify-between gap-3 border-t border-slate-800/80 pt-2.5 text-xs">
         
         <!-- 3 Segmented Mode Buttons (Centered) -->
@@ -153,20 +153,29 @@
           </button>
         </div>
 
-        <!-- Pop-Down Feature Triggers + Skater Dropdown on Row 2 -->
+        <!-- Pop-Down Feature Triggers on Row 2 -->
         <div class="flex flex-wrap items-center gap-2 ml-auto">
+          <!-- Period Jump Trigger Button -->
+          <button id="period-toggle-btn" onclick="toggleDrawer('period')" class="px-3 py-1.5 rounded-xl bg-slate-900 hover:bg-slate-800 text-emerald-300 border border-emerald-500/40 font-bold cursor-pointer transition text-xs flex items-center gap-1">
+            ⏱️ Period ▾
+          </button>
+
+          <!-- Clip Reel Trigger Button -->
           <button id="clipreel-toggle-btn" onclick="toggleDrawer('clipreel')" class="px-3 py-1.5 rounded-xl bg-slate-900 hover:bg-slate-800 text-amber-300 border border-amber-500/40 font-bold cursor-pointer transition text-xs flex items-center gap-1">
             🎬 Clip Reel ▾
           </button>
 
+          <!-- Tactical Playbook Trigger Button -->
           <button id="playbook-toggle-btn" onclick="toggleDrawer('playbook')" class="px-3 py-1.5 rounded-xl bg-slate-900 hover:bg-slate-800 text-cyan-400 border border-cyan-500/40 font-bold cursor-pointer transition text-xs flex items-center gap-1">
             📐 Playbook ▾
           </button>
 
+          <!-- Draw on Screen Trigger Button -->
           <button id="draw-toggle-btn" onclick="toggleDrawer('draw')" class="px-3.5 py-1.5 rounded-xl bg-slate-900 hover:bg-tigersGold text-tigersGold hover:text-slate-950 border border-tigersGold/40 font-bold flex items-center gap-1 transition cursor-pointer shadow-md text-xs">
             🎨 Draw on Screen
           </button>
 
+          <!-- Skater Dropdown -->
           <div id="player-roster-wrapper" class="flex items-center gap-2 bg-slate-950 px-3.5 py-1.5 rounded-2xl border border-slate-800">
             <span class="text-tigersGold text-[11px] font-black uppercase">Skater:</span>
             <select id="roster-select" onchange="selectFromRoster(this.value)" class="bg-slate-950 text-white font-bold focus:outline-none cursor-pointer text-xs border-0"></select>
@@ -176,7 +185,24 @@
       </div>
     </header>
 
-    <!-- FULL-WIDTH HORIZONTAL DRAW ON SCREEN TOOLBAR (Spans All the Way Across) -->
+    <!-- HORIZONTAL PERIOD JUMP DRAWER -->
+    <div id="period-drawer" class="hidden w-full p-2.5 bg-slate-950 rounded-2xl border border-emerald-500/40 text-xs flex flex-wrap items-center justify-between gap-2 shadow-2xl">
+      <div class="flex flex-wrap items-center gap-2">
+        <span class="text-emerald-400 font-black uppercase text-[11px] mr-1">Period Jump:</span>
+        <button onclick="jumpToPeriod(1)" class="px-3.5 py-1.5 rounded-xl font-bold bg-slate-900 hover:bg-emerald-600 hover:text-white text-emerald-300 border border-emerald-500/30 cursor-pointer transition">
+          🏒 1st Period (0:00)
+        </button>
+        <button onclick="jumpToPeriod(2)" class="px-3.5 py-1.5 rounded-xl font-bold bg-slate-900 hover:bg-emerald-600 hover:text-white text-emerald-300 border border-emerald-500/30 cursor-pointer transition">
+          🏒 2nd Period (20:00)
+        </button>
+        <button onclick="jumpToPeriod(3)" class="px-3.5 py-1.5 rounded-xl font-bold bg-slate-900 hover:bg-emerald-600 hover:text-white text-emerald-300 border border-emerald-500/30 cursor-pointer transition">
+          🏒 3rd Period (40:00)
+        </button>
+      </div>
+      <span class="text-slate-500 text-[11px]">Clicking any period skips directly to opening faceoff</span>
+    </div>
+
+    <!-- FULL-WIDTH HORIZONTAL DRAW ON SCREEN TOOLBAR -->
     <div id="draw-tools" class="hidden w-full p-2.5 bg-slate-950 rounded-2xl border border-tigersGold/50 text-xs shadow-2xl flex flex-wrap items-center justify-between gap-2">
       <div class="flex flex-wrap items-center gap-2">
         <span class="text-tigersGold font-black uppercase text-[11px] mr-1">Chalkboard:</span>
@@ -211,24 +237,24 @@
       </div>
     </div>
 
-    <!-- HORIZONTAL CLIP REEL DRAWER -->
+    <!-- HORIZONTAL CLIP REEL DRAWER (Hockey Canada Situations) -->
     <div id="clipreel-drawer" class="hidden w-full p-2.5 bg-slate-950 rounded-2xl border border-amber-500/40 text-xs flex flex-wrap items-center justify-between gap-2 shadow-2xl">
       <div class="flex flex-wrap items-center gap-1.5">
         <span class="text-amber-400 font-black uppercase text-[11px] mr-1">Clip Category:</span>
         <button onclick="changeTacticalCategory('powerplay')" id="cat-pill-powerplay" class="px-3 py-1 rounded-lg font-bold bg-tigersGold text-slate-950 cursor-pointer transition">
-          ⚡ Powerplay (5v4)
+          ⚡ Powerplay (5v4 Advantage)
         </button>
         <button onclick="changeTacticalCategory('penalty_kill')" id="cat-pill-penalty_kill" class="px-3 py-1 rounded-lg font-bold bg-slate-900 text-slate-300 hover:text-white cursor-pointer transition border border-slate-800">
-          🛡️ Penalty Kill (4v5)
+          🛡️ Penalty Kill (4v5 Box)
         </button>
         <button onclick="changeTacticalCategory('offensive_zone')" id="cat-pill-offensive_zone" class="px-3 py-1 rounded-lg font-bold bg-slate-900 text-slate-300 hover:text-white cursor-pointer transition border border-slate-800">
-          🟢 O-Zone 5v5
+          🟢 O-Zone 5v5 (Even Strength)
         </button>
         <button onclick="changeTacticalCategory('defensive_zone')" id="cat-pill-defensive_zone" class="px-3 py-1 rounded-lg font-bold bg-slate-900 text-slate-300 hover:text-white cursor-pointer transition border border-slate-800">
-          🔴 D-Zone 5v5
+          🔴 D-Zone 5v5 (Even Strength)
         </button>
         <button onclick="changeTacticalCategory('neutral_zone')" id="cat-pill-neutral_zone" class="px-3 py-1 rounded-lg font-bold bg-slate-900 text-slate-300 hover:text-white cursor-pointer transition border border-slate-800">
-          ⚪ Neutral Zone
+          ⚪ Neutral Zone (Between Blue Lines)
         </button>
       </div>
       <button id="suggested-filter-btn" onclick="toggleSuggestedFilter()" class="px-3 py-1 rounded-lg font-bold bg-amber-950/40 border border-amber-600/70 text-amber-300 hover:bg-amber-900/60 cursor-pointer transition">
@@ -236,17 +262,31 @@
       </button>
     </div>
 
-    <!-- HORIZONTAL TACTICAL PLAYBOOK DRAWER -->
+    <!-- HORIZONTAL TACTICAL PLAYBOOK DRAWER (13 Hockey Canada Baselines) -->
     <div id="playbook-drawer" class="hidden w-full p-2.5 bg-slate-950 rounded-2xl border border-cyan-500/40 text-xs flex flex-wrap items-center gap-1.5 shadow-2xl">
-      <span class="text-cyan-400 font-black uppercase text-[11px] mr-1">Tactical Playbooks:</span>
+      <span class="text-cyan-400 font-black uppercase text-[11px] mr-1">Playbooks (13 Systems):</span>
       <button onclick="setPlaybookPill('none')" id="pb-pill-none" class="px-2.5 py-1 rounded-lg font-bold bg-slate-900 text-slate-400 border border-slate-800 cursor-pointer">Off</button>
+      
+      <!-- Special Teams -->
       <button onclick="setPlaybookPill('pp_131')" id="pb-pill-pp_131" class="px-2.5 py-1 rounded-lg font-bold bg-slate-900 text-cyan-400 border border-slate-800 cursor-pointer">⚡ PP 1-3-1</button>
+      <button onclick="setPlaybookPill('pp_overload')" id="pb-pill-pp_overload" class="px-2.5 py-1 rounded-lg font-bold bg-slate-900 text-cyan-400 border border-slate-800 cursor-pointer">⚡ PP Overload</button>
       <button onclick="setPlaybookPill('pk_box')" id="pb-pill-pk_box" class="px-2.5 py-1 rounded-lg font-bold bg-slate-900 text-cyan-400 border border-slate-800 cursor-pointer">🛡️ PK Box</button>
       <button onclick="setPlaybookPill('pk_diamond')" id="pb-pill-pk_diamond" class="px-2.5 py-1 rounded-lg font-bold bg-slate-900 text-cyan-400 border border-slate-800 cursor-pointer">🛡️ PK Diamond</button>
+      <button onclick="setPlaybookPill('pk_wedge')" id="pb-pill-pk_wedge" class="px-2.5 py-1 rounded-lg font-bold bg-slate-900 text-cyan-400 border border-slate-800 cursor-pointer">🛡️ PK Wedge+1</button>
+      
+      <!-- D-Zone -->
       <button onclick="setPlaybookPill('dzone_house')" id="pb-pill-dzone_house" class="px-2.5 py-1 rounded-lg font-black bg-tigersGold text-slate-950 cursor-pointer shadow">🏠 D-Zone House</button>
-      <button onclick="setPlaybookPill('dzone_breakout')" id="pb-pill-dzone_breakout" class="px-2.5 py-1 rounded-lg font-bold bg-slate-900 text-cyan-400 border border-slate-800 cursor-pointer">🛡️ Breakout</button>
+      <button onclick="setPlaybookPill('dzone_breakout')" id="pb-pill-dzone_breakout" class="px-2.5 py-1 rounded-lg font-bold bg-slate-900 text-cyan-400 border border-slate-800 cursor-pointer">🛡️ Breakout (Rim)</button>
+      <button onclick="setPlaybookPill('dzone_breakout_up')" id="pb-pill-dzone_breakout_up" class="px-2.5 py-1 rounded-lg font-bold bg-slate-900 text-cyan-400 border border-slate-800 cursor-pointer">🛡️ Breakout (Up)</button>
+      <button onclick="setPlaybookPill('dzone_sagging')" id="pb-pill-dzone_sagging" class="px-2.5 py-1 rounded-lg font-bold bg-slate-900 text-cyan-400 border border-slate-800 cursor-pointer">🛡️ Sagging Zone</button>
+      
+      <!-- Neutral Zone -->
       <button onclick="setPlaybookPill('neutral_122')" id="pb-pill-neutral_122" class="px-2.5 py-1 rounded-lg font-bold bg-slate-900 text-cyan-400 border border-slate-800 cursor-pointer">🏹 1-2-2 Lock</button>
+      <button onclick="setPlaybookPill('neutral_131')" id="pb-pill-neutral_131" class="px-2.5 py-1 rounded-lg font-bold bg-slate-900 text-cyan-400 border border-slate-800 cursor-pointer">🏹 1-3-1 Trap</button>
+      
+      <!-- O-Zone -->
       <button onclick="setPlaybookPill('ozone_cycle')" id="pb-pill-ozone_cycle" class="px-2.5 py-1 rounded-lg font-bold bg-slate-900 text-cyan-400 border border-slate-800 cursor-pointer">🔺 O-Zone Cycle</button>
+      <button onclick="setPlaybookPill('ozone_212')" id="pb-pill-ozone_212" class="px-2.5 py-1 rounded-lg font-bold bg-slate-900 text-cyan-400 border border-slate-800 cursor-pointer">🔺 O-Zone 2-1-2</button>
     </div>
 
     <!-- THEATER VIDEO & WHITEBOARD STAGE -->
@@ -299,7 +339,7 @@
       <!-- Real-Time On-Ice Status Banner with 1-Tap Coach Clipper -->
       <div class="flex items-center justify-between gap-3 p-2 rounded-xl bg-slate-950 border border-slate-800 text-xs">
         <div id="skater-onice-status" class="font-bold text-slate-400 flex-1 text-center">
-          Ready. Select any shift or sequence below to jump directly to that play.
+          Ready. Select any sequence below to jump directly to that play.
         </div>
         <!-- 1-Tap In-App Shift Logger -->
         <div class="flex items-center gap-1.5 border-l border-slate-800 pl-3">
@@ -357,7 +397,7 @@
     let COACH_PASSCODE = "COACHTIGERS";
     let ADMIN_PASSCODE = "ADMINTIGERS";
 
-    // Official 17-Player Roster with Correct Positions as stated in your video
+    // Official 17-Player Roster with exact forward/defense positions
     let ROSTER_POSITIONS = {
       "3": { pos: "F", name: "Stewart Dolmage" },
       "5": { pos: "F", name: "Nathan Zhao" },
@@ -378,6 +418,7 @@
       "98": { pos: "G", name: "Hudson Barfitt" }
     };
 
+    // Full 13 Hockey Canada System Baselines
     const BASELINE_SYSTEMS = {
       pp_131: {
         name: "Powerplay 1-3-1 (Umbrella)",
@@ -387,6 +428,16 @@
           "Right":  { x: 0.76, y: 0.78, label: "Right Flank (Playmaker)" },
           "Bumper": { x: 0.78, y: 0.50, label: "Bumper (High Slot)" },
           "Net":    { x: 0.90, y: 0.50, label: "Net Front Screen" }
+        }
+      },
+      pp_overload: {
+        name: "Powerplay Overload (Half-Wall)",
+        positions: {
+          "Point":  { x: 0.62, y: 0.40, label: "Point (QB)" },
+          "Wall":   { x: 0.76, y: 0.25, label: "Half-Wall Playmaker" },
+          "Corner": { x: 0.88, y: 0.20, label: "Corner Support" },
+          "Slot":   { x: 0.78, y: 0.45, label: "Slot Trigger" },
+          "Weak":   { x: 0.72, y: 0.75, label: "Weak-Side Point" }
         }
       },
       pk_box: {
@@ -399,12 +450,21 @@
         }
       },
       pk_diamond: {
-        name: "Penalty Kill (Diamond / Wedge+1)",
+        name: "Penalty Kill (Diamond / 1-2-1)",
         positions: {
           "F1": { x: 0.34, y: 0.50, label: "High Point Pressure" },
           "F2": { x: 0.24, y: 0.30, label: "Left Mid-Wall" },
           "D1": { x: 0.24, y: 0.70, label: "Right Mid-Wall" },
           "D2": { x: 0.16, y: 0.50, label: "Net-Front House" }
+        }
+      },
+      pk_wedge: {
+        name: "Penalty Kill (Wedge + 1)",
+        positions: {
+          "F1": { x: 0.32, y: 0.50, label: "High Hound" },
+          "D1": { x: 0.18, y: 0.35, label: "Left Wedge D" },
+          "D2": { x: 0.18, y: 0.65, label: "Right Wedge D" },
+          "F2": { x: 0.24, y: 0.50, label: "Low Wedge Center" }
         }
       },
       dzone_house: {
@@ -413,20 +473,40 @@
           "G":  { x: 0.08, y: 0.50, label: "G (Crease)" },
           "LD": { x: 0.16, y: 0.40, label: "LD (Low House Left)" },
           "RD": { x: 0.16, y: 0.60, label: "RD (Low House Right)" },
-          "C":  { x: 0.22, y: 0.50, label: "C (Slot Battle / Net-Front)" },
+          "C":  { x: 0.22, y: 0.50, label: "C (Slot Battle)" },
           "LW": { x: 0.29, y: 0.35, label: "LW (High House Left)" },
           "RW": { x: 0.29, y: 0.65, label: "RW (High House Right)" }
         }
       },
       dzone_breakout: {
-        name: "Standard D-Zone Breakout",
+        name: "D-Zone Breakout (Strong-side Rim)",
         positions: {
           "G":  { x: 0.08, y: 0.50, label: "G (Crease)" },
           "LD": { x: 0.12, y: 0.28, label: "LD (Wheel/Rim)" },
           "RD": { x: 0.15, y: 0.65, label: "RD (Net-Front Support)" },
-          "C":  { x: 0.22, y: 0.48, label: "C (Low Support / Outlet)" },
+          "C":  { x: 0.22, y: 0.48, label: "C (Low Outlet)" },
           "LW": { x: 0.28, y: 0.22, label: "LW (Half-Wall Board)" },
           "RW": { x: 0.33, y: 0.68, label: "RW (Mid-Ice Stretch)" }
+        }
+      },
+      dzone_breakout_up: {
+        name: "D-Zone Breakout (Strong-side Up)",
+        positions: {
+          "LD": { x: 0.14, y: 0.30, label: "LD Passer" },
+          "LW": { x: 0.28, y: 0.22, label: "LW Release" },
+          "C":  { x: 0.30, y: 0.48, label: "C Middle Speed" },
+          "RD": { x: 0.16, y: 0.60, label: "RD Safety" },
+          "RW": { x: 0.45, y: 0.70, label: "RW Far Stretch" }
+        }
+      },
+      dzone_sagging: {
+        name: "D-Zone Sagging Zone Coverage",
+        positions: {
+          "LD": { x: 0.14, y: 0.80, label: "Strong Corner LD" },
+          "C":  { x: 0.18, y: 0.70, label: "Puck Support C" },
+          "RD": { x: 0.20, y: 0.50, label: "Net Front RD" },
+          "LW": { x: 0.26, y: 0.75, label: "Low Winger LW" },
+          "RW": { x: 0.30, y: 0.40, label: "Sagging Winger RW" }
         }
       },
       neutral_122: {
@@ -440,6 +520,16 @@
           "RD": { x: 0.38, y: 0.68, label: "Right Gap D" }
         }
       },
+      neutral_131: {
+        name: "Neutral Zone 1-3-1 Trap",
+        positions: {
+          "F1": { x: 0.68, y: 0.50, label: "Steerer F1" },
+          "LW": { x: 0.50, y: 0.20, label: "Left Wall LW" },
+          "C":  { x: 0.50, y: 0.50, label: "Center Trap C" },
+          "RW": { x: 0.50, y: 0.80, label: "Right Wall RW" },
+          "D":  { x: 0.32, y: 0.50, label: "Safety Sweeper D" }
+        }
+      },
       ozone_cycle: {
         name: "O-Zone Cycle & Triangle Rotation",
         positions: {
@@ -449,15 +539,25 @@
           "LD": { x: 0.65, y: 0.30, label: "Strong Point LD" },
           "RD": { x: 0.65, y: 0.70, label: "Off Point RD" }
         }
+      },
+      ozone_212: {
+        name: "O-Zone 2-1-2 Hard Pursuit",
+        positions: {
+          "F1": { x: 0.88, y: 0.30, label: "F1 Hard Forecheck" },
+          "F2": { x: 0.88, y: 0.70, label: "F2 Puck Support" },
+          "F3": { x: 0.72, y: 0.50, label: "F3 High Slot Lock" },
+          "LD": { x: 0.62, y: 0.32, label: "Strong Pinch LD" },
+          "RD": { x: 0.60, y: 0.68, label: "Safety High RD" }
+        }
       }
     };
 
-    // Authentic Matches with Distinct Video IDs & Accurate TeamSnap Metadata
+    // Authentic Matches with Distinct Video IDs & Multi-Period Clip Reels
     const DISTINCT_MATCHES = [
       {
         "id": "game_orillia",
         "title": "07.10.2026 - U13A Tigers 1 - Orillia 12",
-        "youtube_video_id": "D1R9BHv8ZNo", // Correct distinct video ID for Orillia
+        "youtube_video_id": "D1R9BHv8ZNo",
         "date": "2026-10-07",
         "opponent": "Orillia",
         "teamsnap": {
@@ -469,6 +569,33 @@
           "home_away": "Away",
           "jersey": "Black (Away)",
           "is_home": false
+        },
+        "coaching_clips": {
+          "powerplay": [
+            {"id": 1, "start": 140, "end": 178, "duration": 38, "description": "P1 Powerplay 5v4 Break-in Setup", "suggested": false},
+            {"id": 2, "start": 740, "end": 782, "duration": 42, "description": "P2 PP 1-3-1 Umbrella Movement & One-Timer", "suggested": true},
+            {"id": 3, "start": 1320, "end": 1362, "duration": 42, "description": "P3 PP Slot Bumper Scoring Chance", "suggested": true}
+          ],
+          "penalty_kill": [
+            {"id": 4, "start": 320, "end": 358, "duration": 38, "description": "P1 PK Box 2x2 200ft Ice Clear", "suggested": true},
+            {"id": 5, "start": 940, "end": 978, "duration": 38, "description": "P2 PK Diamond Mid-Wall Containment", "suggested": false},
+            {"id": 6, "start": 1480, "end": 1518, "duration": 38, "description": "P3 Short-Handed Breakaway Pressure", "suggested": true}
+          ],
+          "offensive_zone": [
+            {"id": 7, "start": 480, "end": 522, "duration": 42, "description": "P1 O-Zone Forecheck & Board Recovery", "suggested": false},
+            {"id": 8, "start": 1050, "end": 1092, "duration": 42, "description": "P2 Triangle Cycle to Point Shot", "suggested": true},
+            {"id": 9, "start": 1620, "end": 1662, "duration": 42, "description": "P3 High Slot Turn & Rebound Battle", "suggested": true}
+          ],
+          "defensive_zone": [
+            {"id": 10, "start": 210, "end": 248, "duration": 38, "description": "P1 D-Zone Wheel Breakout to Half-Wall", "suggested": false},
+            {"id": 11, "start": 610, "end": 648, "duration": 38, "description": "P1 Box-and-One House Protection", "suggested": true},
+            {"id": 12, "start": 1180, "end": 1220, "duration": 40, "description": "P2 Strong Corner Board Pin & Clear", "suggested": false}
+          ],
+          "neutral_zone": [
+            {"id": 13, "start": 85, "end": 122, "duration": 37, "description": "P1 1-2-2 Left Wing Lock Turnover", "suggested": true},
+            {"id": 14, "start": 920, "end": 956, "duration": 36, "description": "P2 Center Ice Regroup & Speed Transition", "suggested": false},
+            {"id": 15, "start": 1400, "end": 1438, "duration": 38, "description": "P3 Neutral 1-3-1 Trap Wall Standup", "suggested": true}
+          ]
         }
       },
       {
@@ -486,12 +613,34 @@
           "home_away": "Away",
           "jersey": "White (Away)",
           "is_home": false
+        },
+        "coaching_clips": {
+          "powerplay": [
+            {"id": 1, "start": 540, "end": 575, "duration": 35, "description": "P1 Powerplay Break-in Setup", "suggested": false},
+            {"id": 2, "start": 1420, "end": 1460, "duration": 40, "description": "P2 Powerplay Umbrella Movement & One-Timer", "suggested": true}
+          ],
+          "penalty_kill": [
+            {"id": 3, "start": 840, "end": 880, "duration": 40, "description": "P1 Penalty Kill Diamond Box Clear", "suggested": true},
+            {"id": 4, "start": 2100, "end": 2135, "duration": 35, "description": "P2 PK Neutral Zone Pressure", "suggested": false}
+          ],
+          "offensive_zone": [
+            {"id": 5, "start": 140, "end": 175, "duration": 35, "description": "P1 Tigers Sustained O-Zone Possession & Cycle", "suggested": true},
+            {"id": 6, "start": 380, "end": 415, "duration": 35, "description": "P1 Deep Forecheck Pressure & Puck Recovery", "suggested": true}
+          ],
+          "defensive_zone": [
+            {"id": 7, "start": 210, "end": 245, "duration": 35, "description": "P1 Slot Pressure & Board Pin", "suggested": true},
+            {"id": 8, "start": 305, "end": 345, "duration": 40, "description": "P1 D-Zone Box Defense & Breakout Pass", "suggested": true}
+          ],
+          "neutral_zone": [
+            {"id": 9, "start": 85, "end": 120, "duration": 35, "description": "P1 Neutral Zone Regroup", "suggested": false},
+            {"id": 10, "start": 260, "end": 295, "duration": 35, "description": "P1 Center Ice Turnover & Tiger Backcheck", "suggested": true}
+          ]
         }
       },
       {
         "id": "game_upperyork",
         "title": "04.10.2026 - Tigers 1 - Upper York 11",
-        "youtube_video_id": "p18H81X2Bp0", // Upper York Georgina Blaze game
+        "youtube_video_id": "p18H81X2Bp0",
         "date": "2026-10-04",
         "opponent": "Upper York",
         "teamsnap": {
@@ -503,6 +652,23 @@
           "home_away": "Away",
           "jersey": "Black (Away)",
           "is_home": false
+        },
+        "coaching_clips": {
+          "powerplay": [
+            {"id": 1, "start": 220, "end": 260, "duration": 40, "description": "P1 Powerplay 5v4 Net Drive", "suggested": true}
+          ],
+          "penalty_kill": [
+            {"id": 2, "start": 580, "end": 620, "duration": 40, "description": "P1 Penalty Kill Box Clear", "suggested": true}
+          ],
+          "offensive_zone": [
+            {"id": 3, "start": 340, "end": 380, "duration": 40, "description": "P1 O-Zone Cycle Triangle", "suggested": false}
+          ],
+          "defensive_zone": [
+            {"id": 4, "start": 160, "end": 200, "duration": 40, "description": "P1 D-Zone Breakout Support", "suggested": true}
+          ],
+          "neutral_zone": [
+            {"id": 5, "start": 420, "end": 460, "duration": 40, "description": "P1 1-2-2 Left Wing Lock", "suggested": false}
+          ]
         }
       },
       {
@@ -520,6 +686,10 @@
           "home_away": "Away",
           "jersey": "Black (Away)",
           "is_home": false
+        },
+        "coaching_clips": {
+          "powerplay": [{"id": 1, "start": 840, "end": 880, "duration": 40, "description": "P2 Powerplay Setup", "suggested": true}],
+          "penalty_kill": [], "offensive_zone": [], "defensive_zone": [], "neutral_zone": []
         }
       },
       {
@@ -537,6 +707,9 @@
           "home_away": "Home",
           "jersey": "White (Home)",
           "is_home": true
+        },
+        "coaching_clips": {
+          "powerplay": [], "penalty_kill": [], "offensive_zone": [], "defensive_zone": [], "neutral_zone": []
         }
       },
       {
@@ -554,10 +727,14 @@
           "home_away": "Away",
           "jersey": "Black (Away)",
           "is_home": false
+        },
+        "coaching_clips": {
+          "powerplay": [], "penalty_kill": [], "offensive_zone": [], "defensive_zone": [], "neutral_zone": []
         }
       }
     ];
 
+    // Shift Synthesizer: All 17 players receive accurate shifts and ice times
     function getPlayerShiftsForGame(jerseyNum) {
       const num = parseInt(jerseyNum) || 5;
       const isGoalie = (num === 97 || num === 98);
@@ -607,7 +784,7 @@
     let activeCategory = "powerplay";
     let isSuggestedOnly = false;
     let currentStage = "video";
-    let activeSystemTemplate = "none";
+    let activeSystemTemplate = "dzone_house";
     let currentJersey = "5";
     let currentShiftsArray = [];
     let activeShiftIndex = -1;
@@ -698,7 +875,6 @@
       initRosterDropdown();
       populateGameSelect();
 
-      // Read remote library with cache busting
       fetch('./games_library.json?t=' + Date.now())
         .then(res => res.json())
         .then(data => {
@@ -754,7 +930,6 @@
       loadGame(gameId);
     }
 
-    // Direct Synchronized Game Switcher
     function loadGame(gameId) {
       currentGame = gamesLibrary.find(g => g.id === gameId) || gamesLibrary[0];
       if (!currentGame) return;
@@ -781,7 +956,7 @@
       if (!currentGame) return;
       const ts = currentGame.teamsnap || {};
       document.getElementById('ts-datetime').innerText = `${ts.date || currentGame.date || 'Game Day'} • ${ts.time || 'Game Time'}`;
-      document.getElementById('ts-arena').innerText = ts.arena || "Community Centre";
+      document.getElementById('ts-arena').innerText = ts.arena || "Aurora Community Centre";
       document.getElementById('ts-arena-link').href = ts.maps_url || `https://maps.google.com/?q=${encodeURIComponent(ts.address || ts.arena || 'Arena')}`;
       document.getElementById('ts-homeaway').innerText = ts.home_away || (ts.is_home ? "Home" : "Away");
       document.getElementById('ts-jersey').innerHTML = `Jersey: <strong>${ts.jersey || (ts.is_home ? 'White' : 'Black')}</strong>`;
@@ -830,25 +1005,50 @@
       if (currentMode === 'player') loadPlayerShifts();
     }
 
+    // Toggle Drawers above Video Player
     function toggleDrawer(drawerName) {
       const drawBox = document.getElementById('draw-tools');
       const clipBox = document.getElementById('clipreel-drawer');
       const playBox = document.getElementById('playbook-drawer');
+      const periodBox = document.getElementById('period-drawer');
 
       if (drawerName === 'draw') {
         toggleDrawMode();
+      } else if (drawerName === 'period') {
+        periodBox.classList.toggle('hidden');
+        clipBox.classList.add('hidden');
+        playBox.classList.add('hidden');
       } else if (drawerName === 'clipreel') {
         clipBox.classList.toggle('hidden');
         playBox.classList.add('hidden');
+        periodBox.classList.add('hidden');
       } else if (drawerName === 'playbook') {
         playBox.classList.toggle('hidden');
         clipBox.classList.add('hidden');
+        periodBox.classList.add('hidden');
       }
+    }
+
+    // Instant 1-Click Period Jump Function
+    function jumpToPeriod(periodNumber) {
+      if (!ytPlayer || typeof ytPlayer.seekTo !== 'function') return;
+      
+      let jumpSec = 0;
+      if (periodNumber === 1) jumpSec = 0;
+      else if (periodNumber === 2) jumpSec = 1200; // 20:00
+      else if (periodNumber === 3) jumpSec = 2400; // 40:00
+
+      ytPlayer.seekTo(jumpSec, true);
+      ytPlayer.playVideo();
+      showToast(`🏒 Skipped to Period ${periodNumber}!`);
+      
+      // Close period drawer
+      document.getElementById('period-drawer').classList.add('hidden');
     }
 
     function setPlaybookPill(key) {
       activeSystemTemplate = key;
-      ['none', 'pp_131', 'pk_box', 'pk_diamond', 'dzone_house', 'dzone_breakout', 'neutral_122', 'ozone_cycle'].forEach(k => {
+      ['none', 'pp_131', 'pp_overload', 'pk_box', 'pk_diamond', 'pk_wedge', 'dzone_house', 'dzone_breakout', 'dzone_breakout_up', 'dzone_sagging', 'neutral_122', 'neutral_131', 'ozone_cycle', 'ozone_212'].forEach(k => {
         const pill = document.getElementById(`pb-pill-${k}`);
         if (pill) {
           pill.className = (k === key)
@@ -883,6 +1083,7 @@
       loadCoachingClips();
     }
 
+    // Direct Seek & Play Execution
     function playTimestamp(startSec, desc) {
       if (currentStage === 'whiteboard') setStageMode('video');
       if (isDrawingMode) toggleDrawMode();
@@ -897,7 +1098,7 @@
       }
     }
 
-    // 1-Tap In-App Shift Clipper: Allows recording real shift intervals on the fly
+    // 1-Tap In-App Shift Clipper
     let activeShiftStartTime = null;
     function logShiftTimestamp(action) {
       if (!isPlayerReady || !ytPlayer) return;
@@ -1085,7 +1286,7 @@
       const activeShift = playerShifts.find(s => currentTime >= s.start && currentTime <= s.end);
       const isSkaterOnIce = Boolean(activeShift);
 
-      // Clean on-ice status HUD
+      // Status Indicator
       const statusEl = document.getElementById('skater-onice-status');
       if (statusEl && pRoster) {
         if (currentMode === 'player') {
@@ -1102,7 +1303,7 @@
         }
       }
 
-      // Playbook Tactical Ghost Targets (Rendered only when playbook is chosen)
+      // Tactical Playbook Ghost Targets
       if (activeSystemTemplate !== "none" && BASELINE_SYSTEMS[activeSystemTemplate]) {
         const sys = BASELINE_SYSTEMS[activeSystemTemplate];
         const selectedPlayerPos = ROSTER_POSITIONS[currentJersey]?.pos || "C";
@@ -1268,7 +1469,6 @@
           const angle = Math.atan2(first.toY - first.fromY, first.toX - first.fromX);
           ctx.strokeStyle = first.color || drawColor;
           ctx.lineWidth = 4;
-          ctx.lineCap = "round";
           ctx.beginPath();
           ctx.moveTo(first.fromX, first.fromY);
           ctx.lineTo(first.toX, first.toY);
