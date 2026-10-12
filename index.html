@@ -321,32 +321,29 @@
         <h2 class="text-sm font-black text-white uppercase tracking-wider flex items-center gap-2">
           <span>🏒</span> D-Zone Breakout Execution & Turnover Heatmap
         </h2>
-        <span id="breakout-rate-badge" class="text-xs bg-emerald-950 border border-emerald-500 text-emerald-300 px-3 py-1 rounded-full font-black">68.2% Clean Exits</span>
+        <span id="breakout-rate-badge" class="text-xs bg-emerald-950 border border-emerald-500 text-emerald-300 px-3 py-1 rounded-full font-black">0% Clean Exits</span>
       </div>
 
       <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
         <div class="bg-slate-950 p-3 rounded-2xl border border-slate-800">
           <div class="text-[11px] text-slate-400 font-bold uppercase mb-1">Breakout Attempts & Success</div>
-          <div class="text-xl font-black text-tigersGold" id="bo-attempts-count">22 Attempts • 15 Clean</div>
+          <div class="text-xl font-black text-tigersGold" id="bo-attempts-count">0 Attempts • 0 Clean</div>
           <div class="w-full bg-slate-800 h-2 rounded-full mt-2 overflow-hidden">
-            <div id="bo-progress-bar" class="bg-emerald-400 h-full" style="width: 68%;"></div>
+            <div id="bo-progress-bar" class="bg-emerald-400 h-full" style="width: 0%;"></div>
           </div>
         </div>
 
         <div class="bg-slate-950 p-3 rounded-2xl border border-slate-800">
           <div class="text-[11px] text-slate-400 font-bold uppercase mb-1">Exit Strategy Breakdown</div>
           <div class="text-xs space-y-1 text-slate-300" id="bo-types-list">
-            <div>Rim: <strong class="text-white">8</strong> | D-to-D: <strong class="text-white">6</strong></div>
-            <div>Wheel: <strong class="text-white">4</strong> | Glass Chip: <strong class="text-white">4</strong></div>
+            <div>No breakout events recorded.</div>
           </div>
         </div>
 
         <div class="bg-slate-950 p-3 rounded-2xl border border-rose-900/40">
           <div class="text-[11px] text-rose-400 font-bold uppercase mb-1">Turnover Danger Spots</div>
           <div class="text-xs space-y-1 text-slate-300" id="bo-turnover-list">
-            <div>Half-Wall: <strong class="text-rose-400">3 turnovers</strong></div>
-            <div>Blue Line: <strong class="text-rose-400">2 turnovers</strong></div>
-            <div>Behind Net: <strong class="text-rose-400">2 turnovers</strong></div>
+            <div>No turnovers recorded.</div>
           </div>
         </div>
       </div>
@@ -370,7 +367,7 @@
           <h2 class="text-sm font-black text-white uppercase tracking-wider" id="clip-strip-title">Play Sequences</h2>
           <span id="clip-strip-count" class="text-[11px] bg-slate-950 text-tigersGold px-2.5 py-0.5 rounded-full font-bold border border-slate-800">0 clips</span>
         </div>
-        <div class="text-[10px] text-slate-400">Click any sequence below to jump directly to that play</div>
+        <div class="text-[10px] text-slate-400">Click any shift or sequence below to play</div>
       </div>
       <div id="clips-stream-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 max-h-[460px] overflow-y-auto pr-1"></div>
     </div>
@@ -403,6 +400,15 @@
       "88": { pos: "F", name: "Roy Chen", hand: "R", tag: "" },
       "97": { pos: "D", name: "Hudson Millar", hand: "L", tag: "" },
       "98": { pos: "G", name: "Hudson Barfitt", hand: "L", tag: "🔴 Red Pads" }
+    };
+
+    // Preset Line Units for Quick 1-Click Coach Override (Approach B)
+    const LINE_PRESETS = {
+      "Line 1": [10, 7, 11, 21, 27],
+      "Line 2": [23, 9, 3, 28, 76],
+      "Line 3": [18, 5, 16, 97, 28],
+      "PP 1":   [10, 23, 11, 21, 88],
+      "PK 1":   [9, 18, 27, 76]
     };
 
     const BASELINE_SYSTEMS = {
@@ -498,7 +504,8 @@
     let isBreakoutOnly = false;
     let currentStage = "video";
     let activeSystemTemplate = "none";
-    let currentJersey = "9";
+    let currentJersey = "10";
+    let shiftStopTimer = null;
 
     let isDrawingMode = false;
     let isDrawing = false;
@@ -620,7 +627,7 @@
     function initPlayerDropdown() {
       const sel = document.getElementById('player-select');
       if (!sel) return;
-      sel.innerHTML = '';
+      sel.innerHTML = '<option value="all">⭐ All Players</option>';
       Object.entries(ROSTER_POSITIONS).forEach(([num, p]) => {
         const opt = document.createElement('option');
         opt.value = num;
@@ -635,9 +642,9 @@
       if (!select) return;
       select.innerHTML = '';
       gamesLibrary.forEach(g => {
-        const cleanTitle = (g.title || 'Match').replace(/^\d{4}[-.]\d{2}[-.]\d{2}\s*[-•]\s*/, '');
+        const cleanTitle = (g.title || g.game_title || 'Match').replace(/^\d{4}[-.]\d{2}[-.]\d{2}\s*[-•]\s*/, '');
         const opt = document.createElement('option');
-        opt.value = g.id;
+        opt.value = g.id || g.youtube_video_id;
         opt.innerText = cleanTitle;
         select.appendChild(opt);
       });
@@ -648,13 +655,13 @@
     }
 
     function loadGame(gameId) {
-      currentGame = gamesLibrary.find(g => g.id === gameId) || gamesLibrary[0];
+      currentGame = gamesLibrary.find(g => (g.id === gameId || g.youtube_video_id === gameId)) || gamesLibrary[0];
       if (!currentGame) return;
 
       const select = document.getElementById('game-select');
-      if (select) select.value = currentGame.id;
+      if (select) select.value = currentGame.id || currentGame.youtube_video_id;
 
-      const vidId = currentGame.youtube_video_id || currentGame.id.replace('game_', '');
+      const vidId = currentGame.youtube_video_id || (currentGame.id ? currentGame.id.replace('game_', '') : '');
       
       if (ytPlayer && typeof ytPlayer.loadVideoById === 'function' && isPlayerReady) {
         try { ytPlayer.loadVideoById(vidId); } catch(e) { initYouTubePlayer(vidId); }
@@ -699,30 +706,46 @@
     }
 
     function renderBreakoutPanel() {
-      const bo = currentGame?.analytics?.breakouts;
-      if (!bo) return;
+      // Calculate dynamic breakout analytics from shifts
+      let attempts = 0, successes = 0;
+      let typesCount = {}, turnoverCount = {};
+      const shifts = currentGame?.shifts || [];
 
+      shifts.forEach(s => {
+        if (s.breakout && s.breakout.attempted) {
+          attempts++;
+          if (s.breakout.successful) successes++;
+          const t = s.breakout.breakout_type || "Other";
+          typesCount[t] = (typesCount[t] || 0) + 1;
+          if (!s.breakout.successful && s.breakout.turnover_location && s.breakout.turnover_location !== "None") {
+            const loc = s.breakout.turnover_location;
+            turnoverCount[loc] = (turnoverCount[loc] || 0) + 1;
+          }
+        }
+      });
+
+      const pct = attempts > 0 ? Math.round((successes / attempts) * 100) : 0;
       const rateBadge = document.getElementById('breakout-rate-badge');
-      if (rateBadge) rateBadge.innerText = `${bo.success_pct || '0%'} Clean Exits`;
+      if (rateBadge) rateBadge.innerText = `${pct}% Clean Exits`;
 
       const attemptsCount = document.getElementById('bo-attempts-count');
-      if (attemptsCount) attemptsCount.innerText = `${bo.attempts || 0} Attempts • ${bo.successes || 0} Clean`;
+      if (attemptsCount) attemptsCount.innerText = `${attempts} Attempts • ${successes} Clean`;
 
       const progBar = document.getElementById('bo-progress-bar');
-      if (progBar) progBar.style.width = bo.success_pct || '0%';
+      if (progBar) progBar.style.width = `${pct}%`;
 
       const typesList = document.getElementById('bo-types-list');
-      if (typesList && bo.breakout_types) {
-        typesList.innerHTML = Object.entries(bo.breakout_types)
-          .map(([t, c]) => `<div>${t}: <strong class="text-white">${c}</strong></div>`)
-          .join('');
+      if (typesList) {
+        typesList.innerHTML = Object.entries(typesCount).length > 0 
+          ? Object.entries(typesCount).map(([t, c]) => `<div>${t}: <strong class="text-white">${c}</strong></div>`).join('')
+          : '<div>No breakout attempts recorded.</div>';
       }
 
       const turnList = document.getElementById('bo-turnover-list');
-      if (turnList && bo.turnover_locations) {
-        turnList.innerHTML = Object.entries(bo.turnover_locations)
-          .map(([loc, count]) => `<div>${loc}: <strong class="text-rose-400">${count} turnovers</strong></div>`)
-          .join('');
+      if (turnList) {
+        turnList.innerHTML = Object.entries(turnoverCount).length > 0
+          ? Object.entries(turnoverCount).map(([loc, count]) => `<div>${loc}: <strong class="text-rose-400">${count} turnovers</strong></div>`).join('')
+          : '<div>No turnovers recorded in D-zone.</div>';
       }
     }
 
@@ -835,7 +858,8 @@
       const sel = document.getElementById('player-select');
       if (sel) sel.value = num;
       renderRosterGrid();
-      showToast(`👤 Selected #${num} ${ROSTER_POSITIONS[num].name}`);
+      loadCoachingClips();
+      showToast(num === 'all' ? `⭐ Showing All Shifts` : `👤 Showing Shifts for #${num} ${ROSTER_POSITIONS[num]?.name || ''}`);
     }
 
     function toggleDrawer(drawerName) {
@@ -918,76 +942,173 @@
       loadCoachingClips();
     }
 
-    function playTimestamp(startSec, desc) {
+    // Playback and Auto-Stop Handler
+    function playShiftClip(startSec, endSec, desc) {
       if (currentStage === 'whiteboard') setStageMode('video');
       if (isDrawingMode) toggleDrawMode();
 
       if (ytPlayer && typeof ytPlayer.seekTo === 'function') {
+        if (shiftStopTimer) clearInterval(shiftStopTimer);
+
         ytPlayer.seekTo(startSec, true);
         ytPlayer.playVideo();
+        
         const ppBtn = document.getElementById('play-pause-btn');
         if (ppBtn) ppBtn.innerText = "⏸️";
         
         const noteText = document.getElementById('active-note-text');
         const noteTime = document.getElementById('active-note-time');
         if (noteText) noteText.innerText = desc;
-        if (noteTime) noteTime.innerText = `${Math.floor(startSec/60)}:${Math.floor(startSec%60).toString().padStart(2,'0')}`;
+        if (noteTime) noteTime.innerText = `${Math.floor(startSec/60)}:${Math.floor(startSec%60).toString().padStart(2,'0')} - ${Math.floor(endSec/60)}:${Math.floor(endSec%60).toString().padStart(2,'0')}`;
         
-        showToast(`▶️ Playing: ${desc}`);
+        showToast(`▶️ Playing Shift (${Math.floor(startSec/60)}:${Math.floor(startSec%60).toString().padStart(2,'0')})`);
+
+        // Monitor playback and automatically pause when shift ends
+        shiftStopTimer = setInterval(() => {
+          if (isPlayerReady && ytPlayer && typeof ytPlayer.getCurrentTime === 'function') {
+            const cur = ytPlayer.getCurrentTime();
+            if (cur >= endSec) {
+              ytPlayer.pauseVideo();
+              if (ppBtn) ppBtn.innerText = "▶️";
+              clearInterval(shiftStopTimer);
+              showToast(`⏹️ End of shift reached.`);
+            }
+          }
+        }, 350);
       }
+    }
+
+    // Coach Line Override (Approach B)
+    function overrideShiftLine(shiftId, lineName) {
+      if (!lineName || !LINE_PRESETS[lineName]) return;
+      const assignedPlayers = LINE_PRESETS[lineName];
+      
+      const overrideData = {
+        player_ids: assignedPlayers,
+        line_label: lineName
+      };
+
+      safeSet(`shift_override_${currentGame.id}_${shiftId}`, JSON.stringify(overrideData));
+      showToast(`✅ Assigned Shift #${shiftId} to ${lineName}`);
+      loadCoachingClips();
     }
 
     function loadCoachingClips() {
       if (!currentGame) return;
-      let clips = [];
       
-      if (isBreakoutOnly) {
-        // Collect breakouts across all categories
-        Object.values(currentGame.coaching_clips || {}).forEach(arr => {
-          clips.push(...arr.filter(c => c.breakout && c.breakout.attempted));
-        });
+      let rawClips = [];
+      if (Array.isArray(currentGame.shifts)) {
+        rawClips = currentGame.shifts;
       } else {
-        clips = (currentGame.coaching_clips || {})[activeCategory] || [];
+        Object.values(currentGame.coaching_clips || {}).forEach(arr => rawClips.push(...arr));
+      }
+
+      // Check for saved coach overrides
+      const shifts = rawClips.map(s => {
+        const savedOverride = safeGet(`shift_override_${currentGame.id}_${s.shift_id}`);
+        if (savedOverride) {
+          try { return { ...s, ...JSON.parse(savedOverride) }; } catch(e){}
+        }
+        return s;
+      });
+
+      // Filter by selected player
+      let filtered = shifts;
+      if (currentJersey !== "all") {
+        const jerseyNumInt = parseInt(currentJersey, 10);
+        filtered = filtered.filter(s => {
+          const pIds = s.player_ids || s.players || [];
+          return pIds.includes(jerseyNumInt);
+        });
+      }
+
+      // Filter by Breakouts only
+      if (isBreakoutOnly) {
+        filtered = filtered.filter(s => s.breakout && s.breakout.attempted);
+      }
+
+      // Filter by High Action
+      if (isSuggestedOnly) {
+        filtered = filtered.filter(s => s.suggested === true);
       }
 
       const container = document.getElementById('clips-stream-container');
       const countEl = document.getElementById('clip-strip-count');
       const titleEl = document.getElementById('clip-strip-title');
 
-      if (titleEl) titleEl.innerText = isBreakoutOnly ? "Breakout Transitions" : `${activeCategory.replace('_', ' ').toUpperCase()} Sequences`;
-      if (isSuggestedOnly) clips = clips.filter(c => c.suggested === true);
-      if (countEl) countEl.innerText = `${clips.length} clips`;
+      const pName = currentJersey === "all" ? "All Skaters" : (ROSTER_POSITIONS[currentJersey]?.name || `#${currentJersey}`);
+      if (titleEl) {
+        titleEl.innerText = isBreakoutOnly 
+          ? `Breakouts (${pName})` 
+          : `Shifts & Sequences (${pName})`;
+      }
+      if (countEl) countEl.innerText = `${filtered.length} clips`;
       container.innerHTML = '';
 
-      if (clips.length === 0) {
-        container.innerHTML = '<p class="text-xs text-slate-500 italic col-span-3 py-4 text-center">No clips found in this category.</p>';
+      if (filtered.length === 0) {
+        container.innerHTML = `
+          <div class="col-span-3 py-6 text-center text-xs text-slate-500">
+            No shifts logged for <strong>${pName}</strong> in this filter view.
+          </div>
+        `;
         return;
       }
 
       const starredClips = JSON.parse(safeGet("team_film_room") || "[]");
 
-      clips.forEach((c) => {
-        const isStarred = starredClips.some(s => s.gameId === currentGame.id && s.start === c.start);
-        const card = document.createElement('div');
+      filtered.forEach((c) => {
+        const startSec = c.start_seconds !== undefined ? c.start_seconds : c.start;
+        const endSec = c.end_seconds !== undefined ? c.end_seconds : (c.end || startSec + (c.duration || 35));
+        const duration = c.duration || (endSec - startSec);
+        const desc = c.coach_notes || c.description || `Shift ${c.shift_id}`;
+        const isStarred = starredClips.some(s => s.gameId === currentGame.id && s.start === startSec);
+        
         const bo = c.breakout;
         const hasBreakout = bo && bo.attempted;
+        const lineLabel = c.line_label || `Players: ${(c.player_ids || []).map(n => '#' + n).join(', ')}`;
 
+        const card = document.createElement('div');
         card.className = `p-3 rounded-2xl bg-slate-950 border ${hasBreakout && !bo.successful ? 'border-rose-900/60' : 'border-slate-800'} flex flex-col justify-between hover:border-tigersGold/60 transition`;
         card.innerHTML = `
           <div>
             <div class="flex justify-between items-start gap-1 mb-1">
-              <span class="font-bold text-white text-xs">${c.description}</span>
-              <button onclick='toggleStarClip({gameId: "${currentGame.id}", gameTitle: "${currentGame.title}", title: "${c.description}", start: ${c.start}, end: ${c.end}, duration: ${c.duration}})' class="text-sm cursor-pointer ${isStarred ? 'text-amber-400 font-bold' : 'text-slate-600 hover:text-slate-400'}">
+              <span class="font-bold text-white text-xs truncate max-w-[200px]">${desc}</span>
+              <button onclick='toggleStarClip({gameId: "${currentGame.id}", gameTitle: "${currentGame.title}", title: "${desc}", start: ${startSec}, end: ${endSec}, duration: ${duration}})' class="text-sm cursor-pointer ${isStarred ? 'text-amber-400 font-bold' : 'text-slate-600 hover:text-slate-400'}">
                 ${isStarred ? '★' : '☆'}
               </button>
             </div>
-            <div class="flex items-center gap-1.5 mt-1">
-              <span class="text-[11px] text-slate-400 font-mono">${c.duration}s (${Math.floor(c.start/60)}:${Math.floor(c.start%60).toString().padStart(2,'0')})</span>
-              ${hasBreakout ? `<span class="px-1.5 py-0.5 rounded text-[9px] font-black uppercase ${bo.successful ? 'bg-emerald-950 text-emerald-300 border border-emerald-700' : 'bg-rose-950 text-rose-300 border border-rose-700'}">${bo.breakout_type} (${bo.successful ? 'Clean' : 'Turnover'})</span>` : ''}
+            
+            <div class="flex flex-wrap items-center gap-1.5 mt-1">
+              <span class="text-[11px] text-slate-400 font-mono">${duration}s (${Math.floor(startSec/60)}:${Math.floor(startSec%60).toString().padStart(2,'0')})</span>
+              <span class="px-1.5 py-0.5 rounded text-[9px] font-black uppercase bg-slate-900 text-tigersGold border border-slate-800">
+                ${c.strength_state || '5v5'}
+              </span>
+              ${hasBreakout ? `
+                <span class="px-1.5 py-0.5 rounded text-[9px] font-black uppercase ${bo.successful ? 'bg-emerald-950 text-emerald-300 border border-emerald-700' : 'bg-rose-950 text-rose-300 border border-rose-700'}">
+                  ${bo.breakout_type \vert{}\vert{} 'Exit'} (${bo.successful ? 'Clean' : 'Turnover'})
+                </span>
+              ` : ''}
+            </div>
+
+            <div class="mt-2 pt-2 border-t border-slate-900 flex items-center justify-between text-[10px]">
+              <span class="text-slate-400 truncate max-w-[150px]" title="${lineLabel}">
+                🏒 ${lineLabel}
+              </span>
+              ${isCoach ? `
+                <select onchange="overrideShiftLine(${c.shift_id}, this.value)" class="text-[9px] py-0.5 px-1 bg-slate-900 border border-slate-700 rounded text-amber-300 focus:outline-none">
+                  <option value="">Edit Line...</option>
+                  <option value="Line 1">Set Line 1</option>
+                  <option value="Line 2">Set Line 2</option>
+                  <option value="Line 3">Set Line 3</option>
+                  <option value="PP 1">Set PP 1</option>
+                  <option value="PK 1">Set PK 1</option>
+                </select>
+              ` : ''}
             </div>
           </div>
-          <button onclick="playTimestamp(${c.start}, '${c.description.replace(/'/g, "\\'")}')" class="mt-2 py-1.5 bg-tigersGold hover:bg-tigersGoldLight text-slate-950 font-black text-xs rounded-xl transition cursor-pointer shadow">
-            ▶️ Play Sequence
+          
+          <button onclick="playShiftClip(${startSec}, ${endSec}, '${desc.replace(/'/g, "\\'")}')" class="mt-2.5 py-1.5 bg-tigersGold hover:bg-tigersGoldLight text-slate-950 font-black text-xs rounded-xl transition cursor-pointer shadow">
+            ▶️ Play Shift (${duration}s)
           </button>
         `;
         container.appendChild(card);
@@ -1005,7 +1126,7 @@
       container.innerHTML = '';
 
       if (clips.length === 0) {
-        container.innerHTML = '<p class="text-xs text-slate-500 italic col-span-3 py-6 text-center">No starred plays yet. Click ⭐ on any clip to pin it to your library.</p>';
+        container.innerHTML = '<p class="text-xs text-slate-500 italic col-span-3 py-6 text-center">No starred plays yet. Click ★ on any clip to pin it to your library.</p>';
         return;
       }
 
@@ -1018,7 +1139,7 @@
             <span class="text-[11px] text-slate-400 font-mono">${c.gameTitle} • (${c.duration}s)</span>
           </div>
           <div class="flex gap-2 mt-2">
-            <button onclick="playTimestamp(${c.start}, '${c.title.replace(/'/g, "\\'")}')" class="flex-1 py-1.5 bg-tigersGold hover:bg-tigersGoldLight rounded-xl font-black text-slate-950 text-xs cursor-pointer">
+            <button onclick="playShiftClip(${c.start}, ${c.end || c.start + 40}, '${c.title.replace(/'/g, "\\'")}')" class="flex-1 py-1.5 bg-tigersGold hover:bg-tigersGoldLight rounded-xl font-black text-slate-950 text-xs cursor-pointer">
               ▶️ Play Clip
             </button>
             <button onclick='toggleStarClip({gameId: "${c.gameId}", start: ${c.start}})' class="px-3 py-1.5 bg-slate-900 border border-slate-700 rounded-xl text-rose-400 text-xs font-bold cursor-pointer">
