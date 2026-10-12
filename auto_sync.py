@@ -496,7 +496,7 @@ def estimate_periods_and_shifts(duration_sec: float) -> tuple[Dict[int, int], Li
                     dur = 40 + ((num * s_id) % 9)
                     sh_item = {"id": s_id, "start": cur, "end": min(pEnd, cur + dur), "duration": min(int(pEnd - cur), dur)}
                     shifts.append(sh_item)
-                    if num == 10:  # Use #10 as anchor for sample shifts
+                    if num == 10:  # Anchor shifts for default view
                         raw_shifts.append({
                             "shift_id": shift_counter,
                             "period": pNum,
@@ -660,7 +660,7 @@ def run_sync():
             "periods": periods_detected,
             "ai_engine": ai_engine_used,
             "teamsnap": match_teamsnap_data(f_date, teamsnap_events),
-            "shifts": shifts_list,  # CRITICAL: Powers the new player-filter & auto-stop player in index.html
+            "shifts": shifts_list,
             "players": players_matrix,
             "coaching_clips": clips_matrix,
             "analytics": analytics_matrix
