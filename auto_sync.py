@@ -26,23 +26,23 @@ COOKIE_FILE = ROOT_DIR / "youtube_cookies.txt"
 
 # Canonical U13A Aurora Tigers Roster with Visual Anchoring Attributes
 OFFICIAL_ROSTER = [
-    {"num": "3", "name": "Stewart Dolmage", "pos": "F", "hand": "L"},
-    {"num": "5", "name": "Nathan Zhao", "pos": "F", "hand": "R", "notes": "wears glasses"},
-    {"num": "7", "name": "Maxwell Dey", "pos": "F", "hand": "R"},
-    {"num": "9", "name": "Oliver Patterson", "pos": "C", "hand": "L"},
-    {"num": "10", "name": "Arjun Manjunath", "pos": "F", "hand": "R"},
-    {"num": "11", "name": "Andrew Bichay", "pos": "F", "hand": "R"},
-    {"num": "13", "name": "Matthew Hart", "pos": "G", "hand": "L", "pads": "Yellow and White"},
-    {"num": "16", "name": "Joshua Liu", "pos": "F", "hand": "R"},
-    {"num": "18", "name": "Nathan Carinci", "pos": "C", "hand": "R"},
-    {"num": "21", "name": "Caleb Irgengioro-Wu", "pos": "D", "hand": "R"},
-    {"num": "23", "name": "Easton Carpentier", "pos": "C", "hand": "L"},
-    {"num": "27", "name": "Alen Fazlic", "pos": "D", "hand": "R"},
-    {"num": "28", "name": "Ross Elley", "pos": "D", "hand": "L"},
-    {"num": "76", "name": "Matt Davis", "pos": "D", "hand": "L"},
-    {"num": "88", "name": "Roy Chen", "pos": "F", "hand": "R"},
-    {"num": "97", "name": "Hudson Millar", "pos": "D", "hand": "L"},
-    {"num": "98", "name": "Hudson Barfitt", "pos": "G", "hand": "L", "pads": "Red and White"}
+    {"num": 3, "name": "Stewart Dolmage", "pos": "F", "hand": "L", "notes": ""},
+    {"num": 5, "name": "Nathan Zhao", "pos": "F", "hand": "R", "notes": "wears glasses"},
+    {"num": 7, "name": "Maxwell Dey", "pos": "F", "hand": "R", "notes": ""},
+    {"num": 9, "name": "Oliver Patterson", "pos": "C", "hand": "L", "notes": "Faceoff C"},
+    {"num": 10, "name": "Arjun Manjunath", "pos": "F", "hand": "R", "notes": ""},
+    {"num": 11, "name": "Andrew Bichay", "pos": "F", "hand": "R", "notes": ""},
+    {"num": 13, "name": "Matthew Hart", "pos": "G", "hand": "L", "notes": "Goalie (Yellow/White pads)"},
+    {"num": 16, "name": "Joshua Liu", "pos": "F", "hand": "R", "notes": ""},
+    {"num": 18, "name": "Nathan Carinci", "pos": "C", "hand": "R", "notes": "Faceoff C"},
+    {"num": 21, "name": "Caleb Irgengioro-Wu", "pos": "D", "hand": "R", "notes": ""},
+    {"num": 23, "name": "Easton Carpentier", "pos": "C", "hand": "L", "notes": "Faceoff C"},
+    {"num": 27, "name": "Alen Fazlic", "pos": "D", "hand": "R", "notes": ""},
+    {"num": 28, "name": "Ross Elley", "pos": "D", "hand": "L", "notes": ""},
+    {"num": 76, "name": "Matt Davis", "pos": "D", "hand": "L", "notes": ""},
+    {"num": 88, "name": "Roy Chen", "pos": "F", "hand": "R", "notes": ""},
+    {"num": 97, "name": "Hudson Millar", "pos": "D", "hand": "L", "notes": ""},
+    {"num": 98, "name": "Hudson Barfitt", "pos": "G", "hand": "L", "notes": "Goalie (Red/White pads)"}
 ]
 
 def load_library_and_settings() -> tuple[Dict[str, Any], Dict[str, Any]]:
@@ -233,7 +233,7 @@ def process_video_with_gemini(video_path: str, duration_sec: float) -> Optional[
         client = genai.Client(api_key=GOOGLE_API_KEY)
 
         file_size_mb = os.path.getsize(video_path) / (1024 * 1024)
-        logger.info(f"📤 Uploading {file_size_mb:.2f} MB video file to Google AI File API...")
+        logger.info(f"📤 Uploading {file_size_mb:.2f} MB high-definition video to Google AI File API...")
         
         uploaded_file = client.files.upload(file=video_path)
         logger.info(f"⏳ Upload complete. Processing state: {uploaded_file.state.name}")
@@ -327,7 +327,7 @@ Return strictly valid JSON adhering to the configured schema.
 def transform_gemini_to_library_schema(
     gemini_data: Dict[str, Any],
     duration_sec: float
-) -> tuple[Dict[int, int], Dict[str, Any], Dict[str, List[Dict[str, Any]]], Dict[str, Any]]:
+) -> tuple[Dict[int, int], List[Dict[str, Any]], Dict[str, Any], Dict[str, List[Dict[str, Any]]], Dict[str, Any]]:
     shifts = gemini_data.get("shifts", [])
 
     # 1. Periods Detection
@@ -338,10 +338,10 @@ def transform_gemini_to_library_schema(
     periods_clean = {1: p1, 2: p2, 3: p3}
 
     # 2. Player Matrix Construction
-    player_shifts_map: Dict[str, List[Dict[str, Any]]] = {p["num"]: [] for p in OFFICIAL_ROSTER}
+    player_shifts_map: Dict[int, List[Dict[str, Any]]] = {p["num"]: [] for p in OFFICIAL_ROSTER}
 
     for s in shifts:
-        p_ids = [str(x) for x in s.get("player_ids", [])]
+        p_ids = [int(x) for x in s.get("player_ids", []) if str(x).isdigit()]
         start_s = float(s.get("start_seconds", 0))
         end_s = float(s.get("end_seconds", start_s + 40))
         dur = max(1, int(end_s - start_s))
@@ -362,7 +362,7 @@ def transform_gemini_to_library_schema(
         total_sec = sum(sh["duration"] for sh in p_shifts)
         shift_count = len(p_shifts)
         avg = round(total_sec / max(1, shift_count)) if shift_count > 0 else 0
-        players_dict[num] = {
+        players_dict[str(num)] = {
             "name": p["name"],
             "total_ice_time": f"{int(total_sec // 60)}m {int(total_sec % 60):02d}s",
             "shifts_count": shift_count,
@@ -407,14 +407,21 @@ def transform_gemini_to_library_schema(
 
         clip_item = {
             "id": idx,
+            "shift_id": idx,
             "start": st,
+            "start_seconds": st,
             "end": en,
+            "end_seconds": en,
             "duration": dur,
             "description": note,
+            "coach_notes": note,
             "suggested": (state != "5v5" or (bo.get("attempted") and not bo.get("successful"))),
             "breakout": bo,
             "strength": state,
+            "strength_state": state,
             "zone": zone,
+            "primary_zone": zone,
+            "player_ids": s.get("player_ids", []),
             "center_id": s.get("center_id")
         }
 
@@ -449,19 +456,22 @@ def transform_gemini_to_library_schema(
         }
     }
 
-    return periods_clean, players_dict, coaching_clips, analytics_dict
+    return periods_clean, shifts, players_dict, coaching_clips, analytics_dict
 
 # ================= DYNAMIC ESTIMATION FALLBACK =================
-def estimate_periods_and_shifts(duration_sec: float) -> tuple[Dict[int, int], Dict[str, Any], Dict[str, List[Dict[str, Any]]], Dict[str, Any]]:
+def estimate_periods_and_shifts(duration_sec: float) -> tuple[Dict[int, int], List[Dict[str, Any]], Dict[str, Any], Dict[str, List[Dict[str, Any]]], Dict[str, Any]]:
     total_time = max(1200.0, float(duration_sec or 2400.0))
     p1 = 0
     p2 = int(total_time * 0.38)
     p3 = int(total_time * 0.74)
     periods = {1: p1, 2: p2, 3: p3}
 
+    raw_shifts = []
     players_data = {}
+    shift_counter = 1
+
     for p in OFFICIAL_ROSTER:
-        num = int(p["num"]) if p["num"].isdigit() else 5
+        num = p["num"]
         is_goalie = (p["pos"] == "G")
 
         if is_goalie:
@@ -469,7 +479,7 @@ def estimate_periods_and_shifts(duration_sec: float) -> tuple[Dict[int, int], Di
             st = 0.0 if num == 13 else mid
             en = mid if num == 13 else total_time
             shifts = [{"id": 1, "start": st, "end": en, "duration": int(en - st)}]
-            players_data[p["num"]] = {
+            players_data[str(num)] = {
                 "name": p["name"],
                 "total_ice_time": f"{int((en-st)//60)}m",
                 "shifts_count": 1,
@@ -478,19 +488,34 @@ def estimate_periods_and_shifts(duration_sec: float) -> tuple[Dict[int, int], Di
             }
         else:
             shifts = []
-            shift_id = 1
+            s_id = 1
             for pNum, pStart in [(1, p1), (2, p2), (3, p3)]:
                 pEnd = (p2 if pNum == 1 else (p3 if pNum == 2 else total_time))
                 cur = pStart + ((num % 3) * 45.0)
-                while cur + 35.0 < pEnd and shift_id <= 14:
-                    dur = 40 + ((num * shift_id) % 9)
-                    shifts.append({"id": shift_id, "start": cur, "end": min(pEnd, cur + dur), "duration": min(int(pEnd - cur), dur)})
+                while cur + 35.0 < pEnd and s_id <= 14:
+                    dur = 40 + ((num * s_id) % 9)
+                    sh_item = {"id": s_id, "start": cur, "end": min(pEnd, cur + dur), "duration": min(int(pEnd - cur), dur)}
+                    shifts.append(sh_item)
+                    if num == 10:  # Use #10 as anchor for sample shifts
+                        raw_shifts.append({
+                            "shift_id": shift_counter,
+                            "period": pNum,
+                            "start_seconds": int(cur),
+                            "end_seconds": int(cur + dur),
+                            "display_time": f"{int(cur//60)}:{int(cur%60):02d}",
+                            "player_ids": [10, 7, 11, 21, 27],
+                            "strength_state": "5v5",
+                            "primary_zone": "Neutral Zone",
+                            "breakout": {"attempted": True, "successful": True, "breakout_type": "D-to-D", "turnover_location": "None"},
+                            "coach_notes": f"Shift {shift_counter}: Controlled neutral zone transition"
+                        })
+                        shift_counter += 1
                     cur += 135.0
-                    shift_id += 1
+                    s_id += 1
 
             total_sec = sum(s["duration"] for s in shifts)
             avg = round(total_sec / max(1, len(shifts)))
-            players_data[p["num"]] = {
+            players_data[str(num)] = {
                 "name": p["name"],
                 "total_ice_time": f"{int(total_sec // 60)}m {int(total_sec % 60):02d}s",
                 "shifts_count": len(shifts),
@@ -500,24 +525,24 @@ def estimate_periods_and_shifts(duration_sec: float) -> tuple[Dict[int, int], Di
 
     coaching_clips = {
         "powerplay": [
-            {"id": 1, "start": p1 + 140, "end": p1 + 175, "duration": 35, "description": "P1 Powerplay (5v4) Setup", "suggested": True, "breakout": {"attempted": False, "successful": False, "breakout_type": "None", "turnover_location": "None"}},
-            {"id": 2, "start": p2 + 200, "end": p2 + 240, "duration": 40, "description": "P2 Powerplay (5v4) Umbrella Movement", "suggested": True, "breakout": {"attempted": False, "successful": False, "breakout_type": "None", "turnover_location": "None"}}
+            {"id": 1, "shift_id": 1, "start": p1 + 140, "start_seconds": p1 + 140, "end": p1 + 175, "end_seconds": p1 + 175, "duration": 35, "description": "P1 Powerplay (5v4) Setup", "player_ids": [10, 23, 11, 21, 88], "breakout": {"attempted": False, "successful": False, "breakout_type": "None", "turnover_location": "None"}},
+            {"id": 2, "shift_id": 2, "start": p2 + 200, "start_seconds": p2 + 200, "end": p2 + 240, "end_seconds": p2 + 240, "duration": 40, "description": "P2 Powerplay (5v4) Umbrella Movement", "player_ids": [10, 23, 11, 21, 88], "breakout": {"attempted": False, "successful": False, "breakout_type": "None", "turnover_location": "None"}}
         ],
         "penalty_kill": [
-            {"id": 3, "start": p1 + 320, "end": p1 + 360, "duration": 40, "description": "P1 Penalty Kill (4v5) Box Clear", "suggested": True, "breakout": {"attempted": True, "successful": True, "breakout_type": "Chip Off Glass", "turnover_location": "None"}},
-            {"id": 4, "start": p3 + 120, "end": p3 + 155, "duration": 35, "description": "P3 Penalty Kill Pressure", "suggested": False, "breakout": {"attempted": False, "successful": False, "breakout_type": "None", "turnover_location": "None"}}
+            {"id": 3, "shift_id": 3, "start": p1 + 320, "start_seconds": p1 + 320, "end": p1 + 360, "end_seconds": p1 + 360, "duration": 40, "description": "P1 Penalty Kill (4v5) Box Clear", "player_ids": [9, 18, 27, 76], "breakout": {"attempted": True, "successful": True, "breakout_type": "Chip Off Glass", "turnover_location": "None"}},
+            {"id": 4, "shift_id": 4, "start": p3 + 120, "start_seconds": p3 + 120, "end": p3 + 155, "end_seconds": p3 + 155, "duration": 35, "description": "P3 Penalty Kill Pressure", "player_ids": [9, 18, 27, 76], "breakout": {"attempted": False, "successful": False, "breakout_type": "None", "turnover_location": "None"}}
         ],
         "offensive_zone": [
-            {"id": 5, "start": p1 + 140, "end": p1 + 175, "duration": 35, "description": "P1 O-Zone 5v5 Possession & Cycle", "suggested": True, "breakout": {"attempted": False, "successful": False, "breakout_type": "None", "turnover_location": "None"}},
-            {"id": 6, "start": p2 + 100, "end": p2 + 140, "duration": 40, "description": "P2 O-Zone 5v5 Triangle Rotation", "suggested": True, "breakout": {"attempted": False, "successful": False, "breakout_type": "None", "turnover_location": "None"}}
+            {"id": 5, "shift_id": 5, "start": p1 + 140, "start_seconds": p1 + 140, "end": p1 + 175, "end_seconds": p1 + 175, "duration": 35, "description": "P1 O-Zone 5v5 Possession & Cycle", "player_ids": [10, 7, 11, 21, 27], "breakout": {"attempted": False, "successful": False, "breakout_type": "None", "turnover_location": "None"}},
+            {"id": 6, "shift_id": 6, "start": p2 + 100, "start_seconds": p2 + 100, "end": p2 + 140, "end_seconds": p2 + 140, "duration": 40, "description": "P2 O-Zone 5v5 Triangle Rotation", "player_ids": [10, 7, 11, 21, 27], "breakout": {"attempted": False, "successful": False, "breakout_type": "None", "turnover_location": "None"}}
         ],
         "defensive_zone": [
-            {"id": 7, "start": p1 + 210, "end": p1 + 245, "duration": 35, "description": "P1 D-Zone 5v5 Rim Breakout", "suggested": False, "breakout": {"attempted": True, "successful": True, "breakout_type": "Rim", "turnover_location": "None"}},
-            {"id": 8, "start": p2 + 300, "end": p2 + 340, "duration": 40, "description": "P2 D-Zone 5v5 Half-Wall Turnover", "suggested": True, "breakout": {"attempted": True, "successful": False, "breakout_type": "D-to-D", "turnover_location": "Half-Wall"}}
+            {"id": 7, "shift_id": 7, "start": p1 + 210, "start_seconds": p1 + 210, "end": p1 + 245, "end_seconds": p1 + 245, "duration": 35, "description": "P1 D-Zone 5v5 Rim Breakout", "player_ids": [23, 9, 3, 28, 76], "breakout": {"attempted": True, "successful": True, "breakout_type": "Rim", "turnover_location": "None"}},
+            {"id": 8, "shift_id": 8, "start": p2 + 300, "start_seconds": p2 + 300, "end": p2 + 340, "end_seconds": p2 + 340, "duration": 40, "description": "P2 D-Zone 5v5 Half-Wall Turnover", "player_ids": [23, 9, 3, 28, 76], "breakout": {"attempted": True, "successful": False, "breakout_type": "D-to-D", "turnover_location": "Half-Wall"}}
         ],
         "neutral_zone": [
-            {"id": 9, "start": p1 + 85, "end": p1 + 120, "duration": 35, "description": "P1 Neutral 1-2-2 Left Wing Lock", "suggested": False, "breakout": {"attempted": False, "successful": False, "breakout_type": "None", "turnover_location": "None"}},
-            {"id": 10, "start": p2 + 180, "end": p2 + 215, "duration": 35, "description": "P2 Center Ice Turnover & Backcheck", "suggested": True, "breakout": {"attempted": False, "successful": False, "breakout_type": "None", "turnover_location": "None"}}
+            {"id": 9, "shift_id": 9, "start": p1 + 85, "start_seconds": p1 + 85, "end": p1 + 120, "end_seconds": p1 + 120, "duration": 35, "description": "P1 Neutral 1-2-2 Left Wing Lock", "player_ids": [18, 5, 16, 97, 28], "breakout": {"attempted": False, "successful": False, "breakout_type": "None", "turnover_location": "None"}},
+            {"id": 10, "shift_id": 10, "start": p2 + 180, "start_seconds": p2 + 180, "end": p2 + 215, "end_seconds": p2 + 215, "duration": 35, "description": "P2 Center Ice Turnover & Backcheck", "player_ids": [18, 5, 16, 97, 28], "breakout": {"attempted": False, "successful": False, "breakout_type": "None", "turnover_location": "None"}}
         ]
     }
 
@@ -539,7 +564,7 @@ def estimate_periods_and_shifts(duration_sec: float) -> tuple[Dict[int, int], Di
         }
     }
 
-    return periods, players_data, coaching_clips, analytics
+    return periods, raw_shifts, players_data, coaching_clips, analytics
 
 # ================= RUN PIPELINE =================
 def run_sync():
@@ -587,18 +612,20 @@ def run_sync():
         youtube_url = f"https://www.youtube.com/watch?v={vid_id}"
         local_video = ROOT_DIR / f"temp_{vid_id}.mp4"
 
+        # TARGET CRISP 1080p WITH 720p FALLBACK (AVOID 360p BLUR)
         dl_opts = {
-            "format": "worst[ext=mp4]/best[height<=360][ext=mp4]/best",
+            "format": "bestvideo[height<=1080][ext=mp4]+bestaudio[ext=m4a]/bestvideo[height<=1080]+bestaudio/best[height<=1080]/best",
+            "merge_output_format": "mp4",
             "outtmpl": str(local_video),
             "quiet": True,
-            "socket_timeout": 45
+            "socket_timeout": 60
         }
         if COOKIE_FILE.exists():
             dl_opts["cookiefile"] = str(COOKIE_FILE)
 
         gemini_result = None
         try:
-            logger.info(f"⬇️ Downloading stream for Google AI video ingestion ({vid_id})...")
+            logger.info(f"⬇️ Downloading high-definition stream for Google AI video ingestion ({vid_id})...")
             with yt_dlp.YoutubeDL(dl_opts) as ydl:
                 ydl.download([youtube_url])
 
@@ -610,14 +637,15 @@ def run_sync():
             if local_video.exists():
                 local_video.unlink(missing_ok=True)
 
-        fallback_periods, fallback_players, fallback_clips, fallback_analytics = estimate_periods_and_shifts(v["duration"])
+        fallback_periods, fallback_shifts, fallback_players, fallback_clips, fallback_analytics = estimate_periods_and_shifts(v["duration"])
 
         if gemini_result and "shifts" in gemini_result:
-            periods_detected, players_matrix, clips_matrix, analytics_matrix = transform_gemini_to_library_schema(gemini_result, v["duration"])
+            periods_detected, shifts_list, players_matrix, clips_matrix, analytics_matrix = transform_gemini_to_library_schema(gemini_result, v["duration"])
             ai_engine_used = "Google Gemini 2.5 Flash (Visual Anchored)"
-            logger.info(f"🎯 Successfully parsed {len(gemini_result.get('shifts', []))} shifts via Gemini!")
+            logger.info(f"🎯 Successfully parsed {len(shifts_list)} shifts via Gemini!")
         else:
             periods_detected = fallback_periods
+            shifts_list = fallback_shifts
             players_matrix = fallback_players
             clips_matrix = fallback_clips
             analytics_matrix = fallback_analytics
@@ -632,6 +660,7 @@ def run_sync():
             "periods": periods_detected,
             "ai_engine": ai_engine_used,
             "teamsnap": match_teamsnap_data(f_date, teamsnap_events),
+            "shifts": shifts_list,  # CRITICAL: Powers the new player-filter & auto-stop player in index.html
             "players": players_matrix,
             "coaching_clips": clips_matrix,
             "analytics": analytics_matrix
