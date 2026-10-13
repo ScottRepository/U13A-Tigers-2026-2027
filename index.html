@@ -67,16 +67,12 @@
         <p id="auth-error" class="text-xs text-rose-400 font-semibold hidden">Incorrect passcode. Please try again.</p>
         <button 
           type="button" 
+          id="enter-portal-btn"
           onclick="handlePasscodeSubmit()" 
-          class="w-full bg-tigersGold hover:bg-tigersGoldLight font-black py-3 rounded-xl transition text-sm tracking-wider text-slate-950 cursor-pointer shadow-lg shadow-tigersGold/20"
+          class="w-full bg-tigersGold hover:bg-tigersGoldLight font-black py-3 rounded-xl transition text-sm tracking-wider text-slate-950 cursor-pointer shadow-lg shadow-tigersGold/20 active:scale-95"
         >
           ENTER PORTAL
         </button>
-      </div>
-
-      <div class="mt-4 pt-3 border-t border-slate-800 text-[11px] text-slate-400 space-y-1">
-        <div>Parent: <code class="text-tigersGold font-bold">U13ATigers</code></div>
-        <div>Coach: <code class="text-tigersGold font-bold">CoachTigers</code> | Admin: <code class="text-purple-400 font-bold">AdminTigers</code></div>
       </div>
     </div>
   </div>
@@ -544,7 +540,7 @@
       if (storedRole === "coach" || storedRole === "parent" || storedRole === "admin") {
         isCoach = (storedRole === "coach" || storedRole === "admin");
         unlockScreen();
-        initApp();
+        try { initApp(); } catch(e) { console.error("Init Error:", e); }
       }
     }
 
@@ -556,24 +552,31 @@
       if (clean === ADMIN_PASSCODE || clean === COACH_PASSCODE) {
         safeSet("team_role", "coach");
         isCoach = true;
-        unlockScreen(); initApp();
+        if (errorMsg) errorMsg.classList.add('hidden');
+        unlockScreen();
+        try { initApp(); } catch(e) { console.error("Init Error:", e); }
       } else if (clean === PARENT_PASSCODE) {
         safeSet("team_role", "parent");
         isCoach = false;
-        unlockScreen(); initApp();
+        if (errorMsg) errorMsg.classList.add('hidden');
+        unlockScreen();
+        try { initApp(); } catch(e) { console.error("Init Error:", e); }
       } else {
         if (errorMsg) errorMsg.classList.remove('hidden');
       }
     }
 
     function unlockScreen() {
+      const modal = document.getElementById('auth-modal');
+      const main = document.getElementById('main-content');
+      if (modal) modal.style.display = 'none';
+      if (main) main.style.display = 'block';
       updateRoleBadge();
-      document.getElementById('auth-modal').style.display = 'none';
-      document.getElementById('main-content').style.display = 'block';
     }
 
     function updateRoleBadge() {
       const badge = document.getElementById('role-badge');
+      if (!badge) return;
       if (isCoach) {
         badge.innerText = "👨‍🏫 Coach Mode";
         badge.className = "px-2.5 py-1 rounded-lg text-[10px] font-black uppercase bg-amber-900/60 text-tigersGold border border-tigersGold/40";
@@ -596,6 +599,8 @@
       } else if (clean === "LOGOUT") {
         try { localStorage.removeItem("team_role"); } catch(e){}
         location.reload();
+      } else {
+        alert("Incorrect passcode.");
       }
     }
 
@@ -678,11 +683,17 @@
     function renderTeamSnapBanner() {
       if (!currentGame) return;
       const ts = currentGame.teamsnap || {};
-      document.getElementById('ts-datetime').innerText = `${ts.date || currentGame.date || 'Game Day'} • ${ts.time || 'Game Time'}`;
-      document.getElementById('ts-arena').innerText = ts.arena || "Aurora Community Centre";
-      document.getElementById('ts-arena-link').href = ts.maps_url || `https://maps.google.com/?q=${encodeURIComponent(ts.address || ts.arena || 'Arena')}`;
-      document.getElementById('ts-homeaway').innerText = ts.home_away || (ts.is_home ? "Home" : "Away");
-      document.getElementById('ts-jersey').innerHTML = `Jersey: <strong>${ts.jersey || (ts.is_home ? 'White' : 'Black')}</strong>`;
+      const dtEl = document.getElementById('ts-datetime');
+      const arEl = document.getElementById('ts-arena');
+      const arLink = document.getElementById('ts-arena-link');
+      const haEl = document.getElementById('ts-homeaway');
+      const jsEl = document.getElementById('ts-jersey');
+
+      if (dtEl) dtEl.innerText = `${ts.date || currentGame.date || 'Game Day'} • ${ts.time || 'Game Time'}`;
+      if (arEl) arEl.innerText = ts.arena || "Aurora Community Centre";
+      if (arLink) arLink.href = ts.maps_url || `https://maps.google.com/?q=${encodeURIComponent(ts.address || ts.arena || 'Arena')}`;
+      if (haEl) haEl.innerText = ts.home_away || (ts.is_home ? "Home" : "Away");
+      if (jsEl) jsEl.innerHTML = `Jersey: <strong>${ts.jersey || (ts.is_home ? 'White' : 'Black')}</strong>`;
     }
 
     function renderPeriodDrawer() {
@@ -941,7 +952,6 @@
       loadCoachingClips();
     }
 
-    // Playback and Auto-Stop Handler
     function playShiftClip(startSec, endSec, desc) {
       if (currentStage === 'whiteboard') setStageMode('video');
       if (isDrawingMode) toggleDrawMode();
@@ -962,7 +972,6 @@
         
         showToast(`▶️ Playing Shift (${Math.floor(startSec/60)}:${Math.floor(startSec%60).toString().padStart(2,'0')})`);
 
-        // Monitor playback and automatically pause when shift ends
         shiftStopTimer = setInterval(() => {
           if (isPlayerReady && ytPlayer && typeof ytPlayer.getCurrentTime === 'function') {
             const cur = ytPlayer.getCurrentTime();
@@ -977,7 +986,6 @@
       }
     }
 
-    // Coach Line Override (Approach B)
     function overrideShiftLine(shiftId, lineName) {
       if (!lineName || !LINE_PRESETS[lineName]) return;
       const assignedPlayers = LINE_PRESETS[lineName];
@@ -1002,7 +1010,6 @@
         Object.values(currentGame.coaching_clips || {}).forEach(arr => rawClips.push(...arr));
       }
 
-      // Check for saved coach overrides
       const shifts = rawClips.map(s => {
         const savedOverride = safeGet(`shift_override_${currentGame.id}_${s.shift_id}`);
         if (savedOverride) {
@@ -1011,7 +1018,6 @@
         return s;
       });
 
-      // Filter by selected player
       let filtered = shifts;
       if (currentJersey !== "all") {
         const jerseyNumInt = parseInt(currentJersey, 10);
@@ -1021,12 +1027,10 @@
         });
       }
 
-      // Filter by Breakouts only
       if (isBreakoutOnly) {
         filtered = filtered.filter(s => s.breakout && s.breakout.attempted);
       }
 
-      // Filter by High Action
       if (isSuggestedOnly) {
         filtered = filtered.filter(s => s.suggested === true);
       }
@@ -1357,11 +1361,12 @@
     }
 
     function stepSeconds(s) {
-      if (isPlayerReady && ytPlayer) ytPlayer.seekTo(Math.max(0, getThrottledPlayerTime() + s), true);
+      if (isPlayerReady && ytPlayer) ytPlayer.seekTo(Math.max(0, getThrottdropTime = getThrottledPlayerTime() + s), true);
     }
 
     function showToast(msg) {
       const t = document.getElementById('toast');
+      if (!t) return;
       document.getElementById('toast-text').innerText = msg;
       t.classList.remove('opacity-0', 'pointer-events-none');
       setTimeout(() => t.classList.add('opacity-0', 'pointer-events-none'), 2500);
@@ -1456,6 +1461,19 @@
       drawFaceoffCircle(w * 0.20, h * 0.28); drawFaceoffCircle(w * 0.20, h * 0.72);
       drawFaceoffCircle(w * 0.80, h * 0.28); drawFaceoffCircle(w * 0.80, h * 0.72);
     }
+
+    // Attach Keyboard Enter Listener safely
+    document.addEventListener("DOMContentLoaded", () => {
+      const passInput = document.getElementById('passcode-input');
+      if (passInput) {
+        passInput.addEventListener('keydown', (e) => {
+          if (e.key === 'Enter') {
+            e.preventDefault();
+            handlePasscodeSubmit();
+          }
+        });
+      }
+    });
 
     checkAuth();
   </script>
