@@ -372,13 +372,13 @@
 
   <script src="https://www.youtube.com/iframe_api"></script>
   <script>
-    let PARENT_PASSCODE = "U13ATIGERS";
-    let COACH_PASSCODE = "COACHTIGERS";
-    let ADMIN_PASSCODE = "ADMINTIGERS";
+    const PARENT_PASSCODE = "U13ATIGERS";
+    const COACH_PASSCODE = "COACHTIGERS";
+    const ADMIN_PASSCODE = "ADMINTIGERS";
     let isCoach = false;
 
     // Canonical Roster with Handedness & Visual Attributes
-    let ROSTER_POSITIONS = {
+    const ROSTER_POSITIONS = {
       "3": { pos: "F", name: "Stewart Dolmage", hand: "L", tag: "" },
       "5": { pos: "F", name: "Nathan Zhao", hand: "R", tag: "👓 Glasses" },
       "7": { pos: "F", name: "Maxwell Dey", hand: "R", tag: "" },
@@ -398,7 +398,7 @@
       "98": { pos: "G", name: "Hudson Barfitt", hand: "L", tag: "🔴 Red Pads" }
     };
 
-    // Preset Line Units for Quick 1-Click Coach Override (Approach B)
+    // Preset Line Units for Quick 1-Click Coach Override
     const LINE_PRESETS = {
       "Line 1": [10, 7, 11, 21, 27],
       "Line 2": [23, 9, 3, 28, 76],
@@ -1361,7 +1361,10 @@
     }
 
     function stepSeconds(s) {
-      if (isPlayerReady && ytPlayer) ytPlayer.seekTo(Math.max(0, getThrottdropTime = getThrottledPlayerTime() + s), true);
+      if (isPlayerReady && ytPlayer) {
+        const cur = getThrottledPlayerTime();
+        ytPlayer.seekTo(Math.max(0, cur + s), true);
+      }
     }
 
     function showToast(msg) {
