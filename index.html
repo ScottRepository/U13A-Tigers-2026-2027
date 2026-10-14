@@ -41,13 +41,50 @@
 </head>
 <body class="bg-tigersBlack text-slate-100 min-h-screen p-2 md:p-4 select-none font-sans">
 
+  <!-- ================= AUTH MODAL (PROTECTED & CLEAN) ================= -->
+  <div id="auth-modal" class="fixed inset-0 bg-black/95 backdrop-blur-md flex items-center justify-center p-4 z-50">
+    <div class="bg-tigersDark border-2 border-tigersGold/40 p-6 md:p-8 rounded-3xl max-w-sm w-full text-center shadow-2xl shadow-tigersGold/10">
+      <div class="w-20 h-20 mx-auto mb-2 flex items-center justify-center bg-tigersGold text-slate-950 rounded-2xl font-black text-3xl shadow-lg border-2 border-white">
+        🐯
+      </div>
+      <h2 class="text-xl font-black text-white mb-0.5 tracking-wider">U13A AURORA TIGERS</h2>
+      <p class="text-xs text-tigersGold font-semibold uppercase tracking-widest mb-4">Video Breakdown & Analytics</p>
+      
+      <form id="auth-form" onsubmit="return handlePasscodeSubmit(event)" class="space-y-3">
+        <input 
+          id="passcode-input" 
+          type="password" 
+          placeholder="Enter Passcode" 
+          class="w-full bg-slate-950 border border-slate-700 rounded-xl px-4 py-3 text-center text-lg font-bold tracking-widest text-tigersGoldLight focus:outline-none focus:border-tigersGold transition"
+          autofocus
+          autocomplete="off"
+        />
+        <div class="flex justify-end items-center text-[11px] text-slate-400 px-1">
+          <button type="button" onclick="togglePasswordVisibility()" class="hover:text-white cursor-pointer transition">
+            👁️ Show / Hide Passcode
+          </button>
+        </div>
+        
+        <p id="auth-error" class="text-xs text-rose-400 font-semibold hidden">Incorrect passcode. Please try again.</p>
+        
+        <button 
+          type="submit" 
+          id="enter-portal-btn"
+          class="w-full bg-tigersGold hover:bg-tigersGoldLight font-black py-3 rounded-xl transition text-sm tracking-wider text-slate-950 cursor-pointer shadow-lg shadow-tigersGold/20 active:scale-95"
+        >
+          ENTER PORTAL
+        </button>
+      </form>
+    </div>
+  </div>
+
   <!-- Toast Notification -->
   <div id="toast" class="fixed bottom-6 right-6 bg-tigersGold text-slate-950 px-4 py-2.5 rounded-xl shadow-2xl font-black text-sm transition-opacity duration-300 opacity-0 pointer-events-none z-50 flex items-center gap-2">
     <span id="toast-text">✅ Done!</span>
   </div>
 
   <!-- ================= MAIN APP VIEW ================= -->
-  <div id="main-content" class="max-w-7xl mx-auto space-y-3">
+  <div id="main-content" class="max-w-7xl mx-auto space-y-3" style="display: none;">
     
     <!-- TOP NAVIGATION CONTAINER -->
     <header class="bg-tigersDark border border-tigersGold/30 rounded-3xl p-3 md:p-4 shadow-2xl backdrop-blur-md space-y-3">
@@ -82,9 +119,9 @@
         </div>
 
         <div class="flex items-center gap-2 self-end xl:self-auto">
-          <span id="role-badge" class="px-2.5 py-1 rounded-lg text-[10px] font-black uppercase bg-amber-900/60 text-tigersGold border border-tigersGold/40">👨‍🏫 Coach Mode</span>
-          <button onclick="toggleCoachParentRole()" id="role-toggle-btn" class="text-[11px] bg-slate-900 hover:bg-slate-800 text-slate-300 hover:text-white px-2.5 py-1 rounded-lg border border-slate-700 font-semibold cursor-pointer transition">
-            Switch View
+          <span id="role-badge" class="px-2.5 py-1 rounded-lg text-[10px] font-black uppercase bg-slate-900 text-tigersGold border border-tigersGold/40">Parent View</span>
+          <button onclick="promptSwitchRole()" class="text-[11px] bg-slate-900 hover:bg-slate-800 text-slate-300 hover:text-white px-2.5 py-1 rounded-lg border border-slate-700 font-semibold cursor-pointer transition">
+            🔄 Switch
           </button>
         </div>
       </div>
@@ -333,7 +370,10 @@
   </div>
 
   <script>
-    let isCoach = true; // Defaults directly to coach view
+    const PARENT_PASSCODE = "U13ATIGERS";
+    const COACH_PASSCODE = "COACHTIGERS";
+    const ADMIN_PASSCODE = "ADMINTIGERS";
+    let isCoach = false;
 
     const ROSTER_POSITIONS = {
       "3": { pos: "F", name: "Stewart Dolmage", hand: "L", tag: "" },
@@ -450,6 +490,7 @@
     let currentGame = null;
     let ytPlayer = null;
     let isPlayerReady = false;
+    let isYouTubeApiLoaded = false;
     let pendingVideoId = null;
 
     let currentMode = "coaches";
@@ -485,19 +526,86 @@
       return cachedCurrentTime;
     }
 
-    function toggleCoachParentRole() {
-      isCoach = !isCoach;
-      const badge = document.getElementById('role-badge');
-      if (badge) {
-        badge.innerText = isCoach ? "👨‍🏫 Coach Mode" : "Parent View";
-        badge.className = isCoach 
-          ? "px-2.5 py-1 rounded-lg text-[10px] font-black uppercase bg-amber-900/60 text-tigersGold border border-tigersGold/40"
-          : "px-2.5 py-1 rounded-lg text-[10px] font-black uppercase bg-slate-900 text-slate-300 border border-slate-700";
-      }
-      loadCoachingClips();
+    function safeSet(k, v) { try { localStorage.setItem(k, v); } catch(e){} }
+    function safeGet(k) { try { return localStorage.getItem(k); } catch(e){ return null; } }
+
+    function togglePasswordVisibility() {
+      const input = document.getElementById('passcode-input');
+      if (input) input.type = (input.type === 'password') ? 'text' : 'password';
     }
 
-    function initApp() {
+    function checkAuth() {
+      const storedRole = safeGet("team_role");
+      if (storedRole === "coach" || storedRole === "parent") {
+        isCoach = (storedRole === "coach");
+        unlockScreen();
+      }
+    }
+
+    function handlePasscodeSubmit(e) {
+      if (e) e.preventDefault();
+      
+      const inputEl = document.getElementById('passcode-input');
+      const val = inputEl ? inputEl.value : "";
+      const clean = String(val).trim().replace(/[^a-zA-Z0-9]/g, '').toUpperCase();
+      const errorMsg = document.getElementById('auth-error');
+
+      if (clean === ADMIN_PASSCODE || clean === COACH_PASSCODE) {
+        safeSet("team_role", "coach");
+        isCoach = true;
+        if (errorMsg) errorMsg.classList.add('hidden');
+        unlockScreen();
+      } else if (clean === PARENT_PASSCODE) {
+        safeSet("team_role", "parent");
+        isCoach = false;
+        if (errorMsg) errorMsg.classList.add('hidden');
+        unlockScreen();
+      } else {
+        if (errorMsg) errorMsg.classList.remove('hidden');
+      }
+      return false;
+    }
+
+    function unlockScreen() {
+      const modal = document.getElementById('auth-modal');
+      const main = document.getElementById('main-content');
+      if (modal) modal.style.display = 'none';
+      if (main) main.style.display = 'block';
+      updateRoleBadge();
+      initAppSafe();
+    }
+
+    function updateRoleBadge() {
+      const badge = document.getElementById('role-badge');
+      if (!badge) return;
+      if (isCoach) {
+        badge.innerText = "👨‍🏫 Coach Mode";
+        badge.className = "px-2.5 py-1 rounded-lg text-[10px] font-black uppercase bg-amber-900/60 text-tigersGold border border-tigersGold/40";
+      } else {
+        badge.innerText = "Parent View";
+        badge.className = "px-2.5 py-1 rounded-lg text-[10px] font-black uppercase bg-slate-900 text-slate-300 border border-slate-700";
+      }
+    }
+
+    function promptSwitchRole() {
+      const choice = prompt("Enter passcode or type 'LOGOUT':", "");
+      if (!choice) return;
+      const clean = String(choice).trim().replace(/[^a-zA-Z0-9]/g, '').toUpperCase();
+      if (clean === COACH_PASSCODE || clean === ADMIN_PASSCODE) {
+        safeSet("team_role", "coach");
+        location.reload();
+      } else if (clean === PARENT_PASSCODE) {
+        safeSet("team_role", "parent");
+        location.reload();
+      } else if (clean === "LOGOUT") {
+        try { localStorage.removeItem("team_role"); } catch(e){}
+        location.reload();
+      } else {
+        alert("Incorrect passcode.");
+      }
+    }
+
+    function initAppSafe() {
       try {
         canvas = document.getElementById('telestrator-canvas');
         if (canvas) ctx = canvas.getContext('2d');
@@ -508,26 +616,39 @@
         renderRosterGrid();
         setupTelestrator();
 
-        // Safely load YouTube iframe API in the background
-        const tag = document.createElement('script');
-        tag.src = "https://www.youtube.com/iframe_api";
-        document.body.appendChild(tag);
+        // Lazy-load YouTube API in background safely
+        if (!window.YT && !isYouTubeApiLoaded) {
+          isYouTubeApiLoaded = true;
+          const tag = document.createElement('script');
+          tag.src = "https://www.youtube.com/iframe_api";
+          document.body.appendChild(tag);
+        }
 
+        // Resilient games_library loader
         fetch('./games_library.json?t=' + Date.now())
-          .then(res => res.json())
+          .then(res => {
+            if (!res.ok) throw new Error("Network error loading games");
+            return res.json();
+          })
           .then(data => {
-            let list = Array.isArray(data) ? data : (data.games || []);
+            let list = [];
+            if (Array.isArray(data)) list = data;
+            else if (data && Array.isArray(data.games)) list = data.games;
+            
             if (list.length > 0) {
               gamesLibrary = list;
               populateGameSelect();
               loadGame(gamesLibrary[0].id || gamesLibrary[0].youtube_video_id);
+            } else {
+              showToast("No games found in games_library.json");
             }
           })
-          .catch(() => {
-            showToast("⚠️ Loaded local cache.");
+          .catch(err => {
+            console.warn("Fetch error, checking local fallback:", err);
+            showToast("⚠️ Checking cached match library.");
           });
       } catch (err) {
-        console.error("Init Notice:", err);
+        console.error("App init notice:", err);
       }
     }
 
@@ -918,7 +1039,7 @@
       if (!currentGame) return;
       
       let rawClips = [];
-      if (Array.isArray(currentGame.shifts)) {
+      if (Array.isArray(currentGame.shifts) && currentGame.shifts.length > 0) {
         rawClips = currentGame.shifts;
       } else {
         Object.values(currentGame.coaching_clips || {}).forEach(arr => rawClips.push(...arr));
@@ -970,6 +1091,8 @@
         `;
         return;
       }
+
+      const starredClips = JSON.parse(safeGet("team_film_room") || "[]");
 
       filtered.forEach((c) => {
         const startSec = c.start_seconds !== undefined ? c.start_seconds : c.start;
@@ -1330,10 +1453,8 @@
       drawFaceoffCircle(w * 0.80, h * 0.28); drawFaceoffCircle(w * 0.80, h * 0.72);
     }
 
-    // Auto-launch immediately
-    window.addEventListener('DOMContentLoaded', () => {
-      initApp();
-    });
+    // Initialize authentication check on load
+    checkAuth();
   </script>
 </body>
 </html>
