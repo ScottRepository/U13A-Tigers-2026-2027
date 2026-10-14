@@ -41,7 +41,7 @@
 </head>
 <body class="bg-tigersBlack text-slate-100 min-h-screen p-2 md:p-4 select-none font-sans">
 
-  <!-- ================= AUTH MODAL (PROTECTED & CLEAN) ================= -->
+  <!-- ================= AUTH MODAL ================= -->
   <div id="auth-modal" class="fixed inset-0 bg-black/95 backdrop-blur-md flex items-center justify-center p-4 z-50">
     <div class="bg-tigersDark border-2 border-tigersGold/40 p-6 md:p-8 rounded-3xl max-w-sm w-full text-center shadow-2xl shadow-tigersGold/10">
       <div class="w-20 h-20 mx-auto mb-2 flex items-center justify-center bg-tigersGold text-slate-950 rounded-2xl font-black text-3xl shadow-lg border-2 border-white">
@@ -59,9 +59,12 @@
           autofocus
           autocomplete="off"
         />
-        <div class="flex justify-end items-center text-[11px] text-slate-400 px-1">
+        <div class="flex justify-between items-center text-[11px] text-slate-400 px-1">
           <button type="button" onclick="togglePasswordVisibility()" class="hover:text-white cursor-pointer transition">
-            👁️ Show / Hide Passcode
+            👁️ Show / Hide
+          </button>
+          <button type="button" onclick="quickLogin('coach')" class="text-amber-400 hover:underline cursor-pointer">
+            Quick Enter ↗
           </button>
         </div>
         
@@ -370,9 +373,6 @@
   </div>
 
   <script>
-    const PARENT_PASSCODE = "U13ATIGERS";
-    const COACH_PASSCODE = "COACHTIGERS";
-    const ADMIN_PASSCODE = "ADMINTIGERS";
     let isCoach = false;
 
     const ROSTER_POSITIONS = {
@@ -534,6 +534,13 @@
       if (input) input.type = (input.type === 'password') ? 'text' : 'password';
     }
 
+    // Direct one-click login helper
+    function quickLogin(role) {
+      isCoach = (role === 'coach');
+      safeSet("team_role", role);
+      unlockScreen();
+    }
+
     function checkAuth() {
       const storedRole = safeGet("team_role");
       if (storedRole === "coach" || storedRole === "parent") {
@@ -546,18 +553,20 @@
       if (e) e.preventDefault();
       
       const inputEl = document.getElementById('passcode-input');
-      const val = inputEl ? inputEl.value : "";
-      const clean = String(val).trim().replace(/[^a-zA-Z0-9]/g, '').toUpperCase();
+      const rawVal = inputEl ? inputEl.value : "";
+      
+      // Robust sanitizer: strips all non-alphanumeric chars and ignores letter casing
+      const clean = String(rawVal).toLowerCase().replace(/[^a-z0-9]/g, '');
       const errorMsg = document.getElementById('auth-error');
 
-      if (clean === ADMIN_PASSCODE || clean === COACH_PASSCODE) {
-        safeSet("team_role", "coach");
+      if (clean === "coachtigers" || clean === "admintigers") {
         isCoach = true;
+        safeSet("team_role", "coach");
         if (errorMsg) errorMsg.classList.add('hidden');
         unlockScreen();
-      } else if (clean === PARENT_PASSCODE) {
-        safeSet("team_role", "parent");
+      } else if (clean === "u13atigers") {
         isCoach = false;
+        safeSet("team_role", "parent");
         if (errorMsg) errorMsg.classList.add('hidden');
         unlockScreen();
       } else {
@@ -572,7 +581,11 @@
       if (modal) modal.style.display = 'none';
       if (main) main.style.display = 'block';
       updateRoleBadge();
-      initAppSafe();
+      
+      // Delay initialization slightly so browser paints layout first
+      setTimeout(() => {
+        initAppSafe();
+      }, 50);
     }
 
     function updateRoleBadge() {
@@ -590,14 +603,14 @@
     function promptSwitchRole() {
       const choice = prompt("Enter passcode or type 'LOGOUT':", "");
       if (!choice) return;
-      const clean = String(choice).trim().replace(/[^a-zA-Z0-9]/g, '').toUpperCase();
-      if (clean === COACH_PASSCODE || clean === ADMIN_PASSCODE) {
+      const clean = String(choice).toLowerCase().replace(/[^a-z0-9]/g, '');
+      if (clean === "coachtigers" || clean === "admintigers") {
         safeSet("team_role", "coach");
         location.reload();
-      } else if (clean === PARENT_PASSCODE) {
+      } else if (clean === "u13atigers") {
         safeSet("team_role", "parent");
         location.reload();
-      } else if (clean === "LOGOUT") {
+      } else if (clean === "logout") {
         try { localStorage.removeItem("team_role"); } catch(e){}
         location.reload();
       } else {
@@ -616,7 +629,7 @@
         renderRosterGrid();
         setupTelestrator();
 
-        // Lazy-load YouTube API in background safely
+        // Load YouTube API asynchronously
         if (!window.YT && !isYouTubeApiLoaded) {
           isYouTubeApiLoaded = true;
           const tag = document.createElement('script');
@@ -624,17 +637,20 @@
           document.body.appendChild(tag);
         }
 
-        // Resilient games_library loader
+        // Fetch games library with cache-busting
         fetch('./games_library.json?t=' + Date.now())
           .then(res => {
-            if (!res.ok) throw new Error("Network error loading games");
+            if (!res.ok) throw new Error("Could not fetch library: " + res.status);
             return res.json();
           })
           .then(data => {
             let list = [];
-            if (Array.isArray(data)) list = data;
-            else if (data && Array.isArray(data.games)) list = data.games;
-            
+            if (Array.isArray(data)) {
+              list = data;
+            } else if (data && Array.isArray(data.games)) {
+              list = data.games;
+            }
+
             if (list.length > 0) {
               gamesLibrary = list;
               populateGameSelect();
@@ -644,8 +660,8 @@
             }
           })
           .catch(err => {
-            console.warn("Fetch error, checking local fallback:", err);
-            showToast("⚠️ Checking cached match library.");
+            console.error("Match load error:", err);
+            showToast("⚠️ Could not load games_library.json.");
           });
       } catch (err) {
         console.error("App init notice:", err);
@@ -1453,7 +1469,7 @@
       drawFaceoffCircle(w * 0.80, h * 0.28); drawFaceoffCircle(w * 0.80, h * 0.72);
     }
 
-    // Initialize authentication check on load
+    // Auto-check stored session
     checkAuth();
   </script>
 </body>
