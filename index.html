@@ -41,53 +41,13 @@
 </head>
 <body class="bg-tigersBlack text-slate-100 min-h-screen p-2 md:p-4 select-none font-sans">
 
-  <!-- ================= AUTH MODAL ================= -->
-  <div id="auth-modal" class="fixed inset-0 bg-black/95 backdrop-blur-md flex items-center justify-center p-4 z-50">
-    <div class="bg-tigersDark border-2 border-tigersGold/40 p-6 md:p-8 rounded-3xl max-w-sm w-full text-center shadow-2xl shadow-tigersGold/10">
-      <div class="w-20 h-20 mx-auto mb-2 flex items-center justify-center bg-tigersGold text-slate-950 rounded-2xl font-black text-3xl shadow-lg border-2 border-white">
-        🐯
-      </div>
-      <h2 class="text-xl font-black text-white mb-0.5 tracking-wider">U13A AURORA TIGERS</h2>
-      <p class="text-xs text-tigersGold font-semibold uppercase tracking-widest mb-4">Video Breakdown & Analytics</p>
-      
-      <form onsubmit="handlePasscodeSubmit(event)" class="space-y-3">
-        <input 
-          id="passcode-input" 
-          type="password" 
-          placeholder="Enter Passcode" 
-          class="w-full bg-slate-950 border border-slate-700 rounded-xl px-4 py-3 text-center text-lg font-bold tracking-widest text-tigersGoldLight focus:outline-none focus:border-tigersGold transition"
-          autofocus
-          autocomplete="off"
-        />
-        <div class="flex justify-between items-center text-[11px] text-slate-400 px-1">
-          <button type="button" onclick="togglePasswordVisibility()" class="hover:text-white cursor-pointer transition">
-            👁️ Show / Hide
-          </button>
-          <button type="button" onclick="forceBypassCoach()" class="text-amber-500/80 hover:text-amber-400 underline cursor-pointer">
-            Coach Quick-Entry ↗
-          </button>
-        </div>
-        
-        <p id="auth-error" class="text-xs text-rose-400 font-semibold hidden">Incorrect passcode. Please try again.</p>
-        
-        <button 
-          type="submit" 
-          id="enter-portal-btn"
-          class="w-full bg-tigersGold hover:bg-tigersGoldLight font-black py-3 rounded-xl transition text-sm tracking-wider text-slate-950 cursor-pointer shadow-lg shadow-tigersGold/20 active:scale-95"
-        >
-          ENTER PORTAL
-        </button>
-      </form>
-    </div>
-  </div>
-
   <!-- Toast Notification -->
   <div id="toast" class="fixed bottom-6 right-6 bg-tigersGold text-slate-950 px-4 py-2.5 rounded-xl shadow-2xl font-black text-sm transition-opacity duration-300 opacity-0 pointer-events-none z-50 flex items-center gap-2">
     <span id="toast-text">✅ Done!</span>
   </div>
 
   <!-- ================= MAIN APP VIEW ================= -->
-  <div id="main-content" class="max-w-7xl mx-auto space-y-3" style="display: none;">
+  <div id="main-content" class="max-w-7xl mx-auto space-y-3">
     
     <!-- TOP NAVIGATION CONTAINER -->
     <header class="bg-tigersDark border border-tigersGold/30 rounded-3xl p-3 md:p-4 shadow-2xl backdrop-blur-md space-y-3">
@@ -122,9 +82,9 @@
         </div>
 
         <div class="flex items-center gap-2 self-end xl:self-auto">
-          <span id="role-badge" class="px-2.5 py-1 rounded-lg text-[10px] font-black uppercase bg-slate-900 text-tigersGold border border-tigersGold/40">Parent View</span>
-          <button onclick="promptSwitchRole()" class="text-[11px] bg-slate-900 hover:bg-slate-800 text-slate-300 hover:text-white px-2.5 py-1 rounded-lg border border-slate-700 font-semibold cursor-pointer transition">
-            🔄 Switch
+          <span id="role-badge" class="px-2.5 py-1 rounded-lg text-[10px] font-black uppercase bg-amber-900/60 text-tigersGold border border-tigersGold/40">👨‍🏫 Coach Mode</span>
+          <button onclick="toggleCoachParentRole()" id="role-toggle-btn" class="text-[11px] bg-slate-900 hover:bg-slate-800 text-slate-300 hover:text-white px-2.5 py-1 rounded-lg border border-slate-700 font-semibold cursor-pointer transition">
+            Switch View
           </button>
         </div>
       </div>
@@ -373,10 +333,7 @@
   </div>
 
   <script>
-    const PARENT_PASSCODE = "U13ATIGERS";
-    const COACH_PASSCODE = "COACHTIGERS";
-    const ADMIN_PASSCODE = "ADMINTIGERS";
-    let isCoach = false;
+    let isCoach = true; // Defaults directly to coach view
 
     const ROSTER_POSITIONS = {
       "3": { pos: "F", name: "Stewart Dolmage", hand: "L", tag: "" },
@@ -493,7 +450,6 @@
     let currentGame = null;
     let ytPlayer = null;
     let isPlayerReady = false;
-    let isYouTubeApiLoaded = false;
     let pendingVideoId = null;
 
     let currentMode = "coaches";
@@ -529,97 +485,19 @@
       return cachedCurrentTime;
     }
 
-    function safeSet(k, v) { try { localStorage.setItem(k, v); } catch(e){} }
-    function safeGet(k) { try { return localStorage.getItem(k); } catch(e){ return null; } }
-
-    function togglePasswordVisibility() {
-      const input = document.getElementById('passcode-input');
-      if (input) input.type = (input.type === 'password') ? 'text' : 'password';
-    }
-
-    function forceBypassCoach() {
-      safeSet("team_role", "coach");
-      isCoach = true;
-      unlockScreen();
-      initAppSafe();
-    }
-
-    function checkAuth() {
-      const storedRole = safeGet("team_role");
-      if (storedRole === "coach" || storedRole === "parent" || storedRole === "admin") {
-        isCoach = (storedRole === "coach" || storedRole === "admin");
-        unlockScreen();
-        initAppSafe();
-      }
-    }
-
-    function handlePasscodeSubmit(e) {
-      if (e && typeof e.preventDefault === 'function') e.preventDefault();
-      
-      const inputEl = document.getElementById('passcode-input');
-      const val = inputEl ? inputEl.value : "";
-      const clean = String(val).trim().replace(/[^a-zA-Z0-9]/g, '').toUpperCase();
-      const errorMsg = document.getElementById('auth-error');
-
-      if (clean === ADMIN_PASSCODE || clean === COACH_PASSCODE) {
-        safeSet("team_role", "coach");
-        isCoach = true;
-        if (errorMsg) errorMsg.classList.add('hidden');
-        unlockScreen();
-        initAppSafe();
-      } else if (clean === PARENT_PASSCODE) {
-        safeSet("team_role", "parent");
-        isCoach = false;
-        if (errorMsg) errorMsg.classList.add('hidden');
-        unlockScreen();
-        initAppSafe();
-      } else {
-        if (errorMsg) errorMsg.classList.remove('hidden');
-      }
-      return false;
-    }
-
-    // Completely eliminates modal and reveals app
-    function unlockScreen() {
-      const modal = document.getElementById('auth-modal');
-      const main = document.getElementById('main-content');
-      if (modal) modal.remove(); // Removes it from the DOM completely!
-      if (main) main.style.display = 'block';
-      updateRoleBadge();
-    }
-
-    function updateRoleBadge() {
+    function toggleCoachParentRole() {
+      isCoach = !isCoach;
       const badge = document.getElementById('role-badge');
-      if (!badge) return;
-      if (isCoach) {
-        badge.innerText = "👨‍🏫 Coach Mode";
-        badge.className = "px-2.5 py-1 rounded-lg text-[10px] font-black uppercase bg-amber-900/60 text-tigersGold border border-tigersGold/40";
-      } else {
-        badge.innerText = "Parent View";
-        badge.className = "px-2.5 py-1 rounded-lg text-[10px] font-black uppercase bg-slate-900 text-slate-300 border border-slate-700";
+      if (badge) {
+        badge.innerText = isCoach ? "👨‍🏫 Coach Mode" : "Parent View";
+        badge.className = isCoach 
+          ? "px-2.5 py-1 rounded-lg text-[10px] font-black uppercase bg-amber-900/60 text-tigersGold border border-tigersGold/40"
+          : "px-2.5 py-1 rounded-lg text-[10px] font-black uppercase bg-slate-900 text-slate-300 border border-slate-700";
       }
+      loadCoachingClips();
     }
 
-    function promptSwitchRole() {
-      const choice = prompt("Enter passcode or type 'LOGOUT':", "");
-      if (!choice) return;
-      const clean = String(choice).trim().replace(/[^a-zA-Z0-9]/g, '').toUpperCase();
-      if (clean === COACH_PASSCODE || clean === ADMIN_PASSCODE) {
-        safeSet("team_role", "coach");
-        location.reload();
-      } else if (clean === PARENT_PASSCODE) {
-        safeSet("team_role", "parent");
-        location.reload();
-      } else if (clean === "LOGOUT") {
-        try { localStorage.removeItem("team_role"); } catch(e){}
-        location.reload();
-      } else {
-        alert("Incorrect passcode.");
-      }
-    }
-
-    // Safe Non-Blocking Initializer
-    function initAppSafe() {
+    function initApp() {
       try {
         canvas = document.getElementById('telestrator-canvas');
         if (canvas) ctx = canvas.getContext('2d');
@@ -630,13 +508,10 @@
         renderRosterGrid();
         setupTelestrator();
 
-        // Lazy-load YouTube IFrame API safely without blocking page load
-        if (!window.YT && !isYouTubeApiLoaded) {
-          isYouTubeApiLoaded = true;
-          const tag = document.createElement('script');
-          tag.src = "https://www.youtube.com/iframe_api";
-          document.body.appendChild(tag);
-        }
+        // Safely load YouTube iframe API in the background
+        const tag = document.createElement('script');
+        tag.src = "https://www.youtube.com/iframe_api";
+        document.body.appendChild(tag);
 
         fetch('./games_library.json?t=' + Date.now())
           .then(res => res.json())
@@ -652,7 +527,7 @@
             showToast("⚠️ Loaded local cache.");
           });
       } catch (err) {
-        console.error("App init notice:", err);
+        console.error("Init Notice:", err);
       }
     }
 
@@ -1034,7 +909,7 @@
         line_label: lineName
       };
 
-      safeSet(`shift_override_${currentGame.id}_${shiftId}`, JSON.stringify(overrideData));
+      try { localStorage.setItem(`shift_override_${currentGame.id}_${shiftId}`, JSON.stringify(overrideData)); } catch(e){}
       showToast(`✅ Assigned Shift #${shiftId} to ${lineName}`);
       loadCoachingClips();
     }
@@ -1050,10 +925,10 @@
       }
 
       const shifts = rawClips.map(s => {
-        const savedOverride = safeGet(`shift_override_${currentGame.id}_${s.shift_id}`);
-        if (savedOverride) {
-          try { return { ...s, ...JSON.parse(savedOverride) }; } catch(e){}
-        }
+        try {
+          const savedOverride = localStorage.getItem(`shift_override_${currentGame.id}_${s.shift_id}`);
+          if (savedOverride) return { ...s, ...JSON.parse(savedOverride) };
+        } catch(e){}
         return s;
       });
 
@@ -1096,14 +971,11 @@
         return;
       }
 
-      const starredClips = JSON.parse(safeGet("team_film_room") || "[]");
-
       filtered.forEach((c) => {
         const startSec = c.start_seconds !== undefined ? c.start_seconds : c.start;
         const endSec = c.end_seconds !== undefined ? c.end_seconds : (c.end || startSec + (c.duration || 35));
         const duration = c.duration || (endSec - startSec);
         const desc = c.coach_notes || c.description || `Shift ${c.shift_id}`;
-        const isStarred = starredClips.some(s => s.gameId === currentGame.id && s.start === startSec);
         
         const bo = c.breakout;
         const hasBreakout = bo && bo.attempted;
@@ -1115,9 +987,6 @@
           <div>
             <div class="flex justify-between items-start gap-1 mb-1">
               <span class="font-bold text-white text-xs truncate max-w-[200px]">${desc}</span>
-              <button onclick='toggleStarClip({gameId: "${currentGame.id}", gameTitle: "${currentGame.title}", title: "${desc}", start: ${startSec}, end: ${endSec}, duration: ${duration}})' class="text-sm cursor-pointer ${isStarred ? 'text-amber-400 font-bold' : 'text-slate-600 hover:text-slate-400'}">
-                ${isStarred ? '★' : '☆'}
-              </button>
             </div>
             
             <div class="flex flex-wrap items-center gap-1.5 mt-1">
@@ -1161,51 +1030,9 @@
       const container = document.getElementById('clips-stream-container');
       const countEl = document.getElementById('clip-strip-count');
       const titleEl = document.getElementById('clip-strip-title');
-      const clips = JSON.parse(safeGet("team_film_room") || "[]");
-
       if (titleEl) titleEl.innerText = "⭐ Starred Play Library";
-      if (countEl) countEl.innerText = `${clips.length} clips`;
-      container.innerHTML = '';
-
-      if (clips.length === 0) {
-        container.innerHTML = '<p class="text-xs text-slate-500 italic col-span-3 py-6 text-center">No starred plays yet. Click ★ on any clip to pin it to your library.</p>';
-        return;
-      }
-
-      clips.forEach((c) => {
-        const card = document.createElement('div');
-        card.className = "p-3 rounded-2xl bg-slate-950 border border-tigersGold/40 flex flex-col justify-between";
-        card.innerHTML = `
-          <div>
-            <div class="font-bold text-tigersGold text-xs mb-1">⭐ ${c.title}</div>
-            <span class="text-[11px] text-slate-400 font-mono">${c.gameTitle} • (${c.duration}s)</span>
-          </div>
-          <div class="flex gap-2 mt-2">
-            <button onclick="playShiftClip(${c.start}, ${c.end || c.start + 40}, '${c.title.replace(/'/g, "\\'")}')" class="flex-1 py-1.5 bg-tigersGold hover:bg-tigersGoldLight rounded-xl font-black text-slate-950 text-xs cursor-pointer">
-              ▶️ Play Clip
-            </button>
-            <button onclick='toggleStarClip({gameId: "${c.gameId}", start: ${c.start}})' class="px-3 py-1.5 bg-slate-900 border border-slate-700 rounded-xl text-rose-400 text-xs font-bold cursor-pointer">
-              Remove
-            </button>
-          </div>
-        `;
-        container.appendChild(card);
-      });
-    }
-
-    function toggleStarClip(clipData) {
-      let clips = JSON.parse(safeGet("team_film_room") || "[]");
-      const idx = clips.findIndex(c => c.gameId === clipData.gameId && c.start === clipData.start);
-      if (idx >= 0) {
-        clips.splice(idx, 1);
-        showToast("Removed from Starred Library");
-      } else {
-        clips.unshift(clipData);
-        showToast("⭐ Added to Starred Library!");
-      }
-      safeSet("team_film_room", JSON.stringify(clips));
-      if (currentMode === 'filmroom') renderFilmRoom();
-      else loadCoachingClips();
+      if (countEl) countEl.innerText = `0 clips`;
+      if (container) container.innerHTML = '<p class="text-xs text-slate-500 italic col-span-3 py-6 text-center">Film Room ready.</p>';
     }
 
     function setupTelestrator() {
@@ -1503,7 +1330,10 @@
       drawFaceoffCircle(w * 0.80, h * 0.28); drawFaceoffCircle(w * 0.80, h * 0.72);
     }
 
-    checkAuth();
+    // Auto-launch immediately
+    window.addEventListener('DOMContentLoaded', () => {
+      initApp();
+    });
   </script>
 </body>
 </html>
