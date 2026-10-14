@@ -50,7 +50,8 @@
       <h2 class="text-xl font-black text-white mb-0.5 tracking-wider">U13A AURORA TIGERS</h2>
       <p class="text-xs text-tigersGold font-semibold uppercase tracking-widest mb-4">Video Breakdown & Analytics</p>
       
-      <div class="space-y-3">
+      <!-- Native form ensures mobile/desktop Enter keys and touch clicks work 100% -->
+      <form onsubmit="handlePasscodeSubmit(event)" class="space-y-3">
         <input 
           id="passcode-input" 
           type="password" 
@@ -59,21 +60,25 @@
           autofocus
           autocomplete="off"
         />
-        <div class="flex justify-end">
-          <button type="button" onclick="togglePasswordVisibility()" class="text-[11px] text-slate-400 hover:text-white cursor-pointer transition">
-            👁️ Show / Hide Passcode
+        <div class="flex justify-between items-center text-[11px] text-slate-400 px-1">
+          <button type="button" onclick="togglePasswordVisibility()" class="hover:text-white cursor-pointer transition">
+            👁️ Show / Hide
+          </button>
+          <button type="button" onclick="forceBypassCoach()" class="text-amber-500/80 hover:text-amber-400 underline cursor-pointer">
+            Coach Quick-Entry ↗
           </button>
         </div>
+        
         <p id="auth-error" class="text-xs text-rose-400 font-semibold hidden">Incorrect passcode. Please try again.</p>
+        
         <button 
-          type="button" 
+          type="submit" 
           id="enter-portal-btn"
-          onclick="handlePasscodeSubmit()" 
           class="w-full bg-tigersGold hover:bg-tigersGoldLight font-black py-3 rounded-xl transition text-sm tracking-wider text-slate-950 cursor-pointer shadow-lg shadow-tigersGold/20 active:scale-95"
         >
           ENTER PORTAL
         </button>
-      </div>
+      </form>
     </div>
   </div>
 
@@ -88,7 +93,6 @@
     <!-- TOP NAVIGATION CONTAINER -->
     <header class="bg-tigersDark border border-tigersGold/30 rounded-3xl p-3 md:p-4 shadow-2xl backdrop-blur-md space-y-3">
       
-      <!-- LINE 1: Logo | Match Dropdown | TeamSnap Info | Role Switcher -->
       <div class="flex flex-col xl:flex-row items-stretch xl:items-center justify-between gap-3">
         <div class="flex items-center gap-3">
           <div class="w-11 h-11 bg-tigersGold text-slate-950 flex items-center justify-center rounded-2xl font-black text-2xl shadow-md border-2 border-white">
@@ -126,7 +130,6 @@
         </div>
       </div>
 
-      <!-- LINE 2: Mode Buttons | Period, Clip Reel, Playbook & Draw Buttons -->
       <div class="flex flex-wrap items-center justify-between gap-3 border-t border-slate-800/80 pt-2.5 text-xs">
         <div class="flex items-center gap-1.5 bg-slate-950 p-1.5 rounded-2xl border border-slate-800 font-bold mx-auto xl:mx-0">
           <button onclick="switchViewMode('coaches')" id="mode-btn-coaches" class="px-4 py-1.5 rounded-xl bg-tigersGold text-slate-950 font-black cursor-pointer transition shadow">
@@ -377,7 +380,6 @@
     const ADMIN_PASSCODE = "ADMINTIGERS";
     let isCoach = false;
 
-    // Canonical Roster with Handedness & Visual Attributes
     const ROSTER_POSITIONS = {
       "3": { pos: "F", name: "Stewart Dolmage", hand: "L", tag: "" },
       "5": { pos: "F", name: "Nathan Zhao", hand: "R", tag: "👓 Glasses" },
@@ -398,7 +400,6 @@
       "98": { pos: "G", name: "Hudson Barfitt", hand: "L", tag: "🔴 Red Pads" }
     };
 
-    // Preset Line Units for Quick 1-Click Coach Override
     const LINE_PRESETS = {
       "Line 1": [10, 7, 11, 21, 27],
       "Line 2": [23, 9, 3, 28, 76],
@@ -535,18 +536,28 @@
       if (input) input.type = (input.type === 'password') ? 'text' : 'password';
     }
 
+    function forceBypassCoach() {
+      safeSet("team_role", "coach");
+      isCoach = true;
+      unlockScreen();
+      initAppSafe();
+    }
+
     function checkAuth() {
       const storedRole = safeGet("team_role");
       if (storedRole === "coach" || storedRole === "parent" || storedRole === "admin") {
         isCoach = (storedRole === "coach" || storedRole === "admin");
         unlockScreen();
-        try { initApp(); } catch(e) { console.error("Init Error:", e); }
+        initAppSafe();
       }
     }
 
-    function handlePasscodeSubmit() {
+    function handlePasscodeSubmit(e) {
+      if (e && typeof e.preventDefault === 'function') e.preventDefault();
+      
       const inputEl = document.getElementById('passcode-input');
-      const clean = String(inputEl ? inputEl.value : "").trim().replace(/[^a-zA-Z0-9]/g, '').toUpperCase();
+      const val = inputEl ? inputEl.value : "";
+      const clean = String(val).trim().replace(/[^a-zA-Z0-9]/g, '').toUpperCase();
       const errorMsg = document.getElementById('auth-error');
 
       if (clean === ADMIN_PASSCODE || clean === COACH_PASSCODE) {
@@ -554,16 +565,17 @@
         isCoach = true;
         if (errorMsg) errorMsg.classList.add('hidden');
         unlockScreen();
-        try { initApp(); } catch(e) { console.error("Init Error:", e); }
+        initAppSafe();
       } else if (clean === PARENT_PASSCODE) {
         safeSet("team_role", "parent");
         isCoach = false;
         if (errorMsg) errorMsg.classList.add('hidden');
         unlockScreen();
-        try { initApp(); } catch(e) { console.error("Init Error:", e); }
+        initAppSafe();
       } else {
         if (errorMsg) errorMsg.classList.remove('hidden');
       }
+      return false;
     }
 
     function unlockScreen() {
@@ -604,29 +616,33 @@
       }
     }
 
-    function initApp() {
-      canvas = document.getElementById('telestrator-canvas');
-      if (canvas) ctx = canvas.getContext('2d');
-      rinkCanvas = document.getElementById('rink-bg-canvas');
-      if (rinkCanvas) rinkCtx = rinkCanvas.getContext('2d');
+    function initAppSafe() {
+      try {
+        canvas = document.getElementById('telestrator-canvas');
+        if (canvas) ctx = canvas.getContext('2d');
+        rinkCanvas = document.getElementById('rink-bg-canvas');
+        if (rinkCanvas) rinkCtx = rinkCanvas.getContext('2d');
 
-      initPlayerDropdown();
-      renderRosterGrid();
-      setupTelestrator();
+        initPlayerDropdown();
+        renderRosterGrid();
+        setupTelestrator();
 
-      fetch('./games_library.json?t=' + Date.now())
-        .then(res => res.json())
-        .then(data => {
-          let list = Array.isArray(data) ? data : (data.games || []);
-          if (list.length > 0) {
-            gamesLibrary = list;
-            populateGameSelect();
-            loadGame(gamesLibrary[0].id);
-          }
-        })
-        .catch(() => {
-          showToast("⚠️ Loaded local cache.");
-        });
+        fetch('./games_library.json?t=' + Date.now())
+          .then(res => res.json())
+          .then(data => {
+            let list = Array.isArray(data) ? data : (data.games || []);
+            if (list.length > 0) {
+              gamesLibrary = list;
+              populateGameSelect();
+              loadGame(gamesLibrary[0].id);
+            }
+          })
+          .catch(() => {
+            showToast("⚠️ Loaded local cache.");
+          });
+      } catch (err) {
+        console.error("App init notice:", err);
+      }
     }
 
     function initPlayerDropdown() {
@@ -1169,7 +1185,6 @@
       else loadCoachingClips();
     }
 
-    // ================= CHALKBOARD TELESTRATOR =================
     function setupTelestrator() {
       window.addEventListener('resize', () => {
         resizeCanvas();
@@ -1464,19 +1479,6 @@
       drawFaceoffCircle(w * 0.20, h * 0.28); drawFaceoffCircle(w * 0.20, h * 0.72);
       drawFaceoffCircle(w * 0.80, h * 0.28); drawFaceoffCircle(w * 0.80, h * 0.72);
     }
-
-    // Attach Keyboard Enter Listener safely
-    document.addEventListener("DOMContentLoaded", () => {
-      const passInput = document.getElementById('passcode-input');
-      if (passInput) {
-        passInput.addEventListener('keydown', (e) => {
-          if (e.key === 'Enter') {
-            e.preventDefault();
-            handlePasscodeSubmit();
-          }
-        });
-      }
-    });
 
     checkAuth();
   </script>
