@@ -50,7 +50,6 @@
       <h2 class="text-xl font-black text-white mb-0.5 tracking-wider">U13A AURORA TIGERS</h2>
       <p class="text-xs text-tigersGold font-semibold uppercase tracking-widest mb-4">Video Breakdown & Analytics</p>
       
-      <!-- Native form ensures mobile/desktop Enter keys and touch clicks work 100% -->
       <form onsubmit="handlePasscodeSubmit(event)" class="space-y-3">
         <input 
           id="passcode-input" 
@@ -260,7 +259,7 @@
     <div class="bg-tigersDark border border-slate-800 rounded-3xl p-3 md:p-4 shadow-2xl space-y-3">
       <div class="relative w-full rounded-2xl overflow-hidden aspect-video bg-black shadow-2xl ring-1 ring-slate-800">
         <div id="video-container" class="w-full h-full">
-          <div id="yt-player" class="w-full h-full"></div>
+          <div id="yt-player" class="w-full h-full flex items-center justify-center text-xs text-slate-500">Video Loading...</div>
         </div>
         <canvas id="rink-bg-canvas" class="absolute inset-0 w-full h-full hidden z-10 bg-slate-100"></canvas>
         <canvas id="telestrator-canvas" class="absolute inset-0 w-full h-full pointer-events-none z-20"></canvas>
@@ -373,7 +372,6 @@
 
   </div>
 
-  <script src="https://www.youtube.com/iframe_api"></script>
   <script>
     const PARENT_PASSCODE = "U13ATIGERS";
     const COACH_PASSCODE = "COACHTIGERS";
@@ -495,6 +493,9 @@
     let currentGame = null;
     let ytPlayer = null;
     let isPlayerReady = false;
+    let isYouTubeApiLoaded = false;
+    let pendingVideoId = null;
+
     let currentMode = "coaches";
     let activeCategory = "powerplay";
     let isSuggestedOnly = false;
@@ -578,10 +579,11 @@
       return false;
     }
 
+    // Completely eliminates modal and reveals app
     function unlockScreen() {
       const modal = document.getElementById('auth-modal');
       const main = document.getElementById('main-content');
-      if (modal) modal.style.display = 'none';
+      if (modal) modal.remove(); // Removes it from the DOM completely!
       if (main) main.style.display = 'block';
       updateRoleBadge();
     }
@@ -616,6 +618,7 @@
       }
     }
 
+    // Safe Non-Blocking Initializer
     function initAppSafe() {
       try {
         canvas = document.getElementById('telestrator-canvas');
@@ -627,6 +630,14 @@
         renderRosterGrid();
         setupTelestrator();
 
+        // Lazy-load YouTube IFrame API safely without blocking page load
+        if (!window.YT && !isYouTubeApiLoaded) {
+          isYouTubeApiLoaded = true;
+          const tag = document.createElement('script');
+          tag.src = "https://www.youtube.com/iframe_api";
+          document.body.appendChild(tag);
+        }
+
         fetch('./games_library.json?t=' + Date.now())
           .then(res => res.json())
           .then(data => {
@@ -634,7 +645,7 @@
             if (list.length > 0) {
               gamesLibrary = list;
               populateGameSelect();
-              loadGame(gamesLibrary[0].id);
+              loadGame(gamesLibrary[0].id || gamesLibrary[0].youtube_video_id);
             }
           })
           .catch(() => {
@@ -687,6 +698,7 @@
       if (ytPlayer && typeof ytPlayer.loadVideoById === 'function' && isPlayerReady) {
         try { ytPlayer.loadVideoById(vidId); } catch(e) { initYouTubePlayer(vidId); }
       } else {
+        pendingVideoId = vidId;
         initYouTubePlayer(vidId);
       }
 
@@ -775,30 +787,40 @@
       }
     }
 
-    function onYouTubeIframeAPIReady() {
-      initYouTubePlayer("D1R9BHv8ZNo");
-    }
+    window.onYouTubeIframeAPIReady = function() {
+      if (pendingVideoId) {
+        initYouTubePlayer(pendingVideoId);
+      }
+    };
 
     function initYouTubePlayer(videoId) {
-      if (ytPlayer && typeof ytPlayer.destroy === 'function') {
-        try { ytPlayer.destroy(); } catch (e) {}
+      if (!window.YT || !window.YT.Player) {
+        pendingVideoId = videoId;
+        return;
       }
-      const container = document.getElementById('video-container');
-      if (container) {
-        container.innerHTML = '<div id="yt-player" class="w-full h-full"></div>';
-      }
-
-      ytPlayer = new YT.Player('yt-player', {
-        videoId: videoId,
-        playerVars: { playsinline: 1, rel: 0, modestbranding: 1, enablejsapi: 1 },
-        events: {
-          'onReady': () => {
-            isPlayerReady = true;
-            resizeCanvas();
-            ytPlayer.setVolume(80);
-          }
+      try {
+        if (ytPlayer && typeof ytPlayer.destroy === 'function') {
+          ytPlayer.destroy();
         }
-      });
+        const container = document.getElementById('video-container');
+        if (container) {
+          container.innerHTML = '<div id="yt-player" class="w-full h-full"></div>';
+        }
+
+        ytPlayer = new YT.Player('yt-player', {
+          videoId: videoId,
+          playerVars: { playsinline: 1, rel: 0, modestbranding: 1, enablejsapi: 1 },
+          events: {
+            'onReady': () => {
+              isPlayerReady = true;
+              resizeCanvas();
+              ytPlayer.setVolume(80);
+            }
+          }
+        });
+      } catch (err) {
+        console.error("YouTube init error:", err);
+      }
     }
 
     function toggleAudioMute() {
@@ -916,7 +938,8 @@
       ytPlayer.playVideo();
       const minStr = Math.floor(jumpSec / 60) + ":" + (jumpSec % 60).toString().padStart(2, '0');
       showToast(`🏒 Skipped to Period ${periodNumber} (${minStr})!`);
-      document.getElementById('period-drawer').classList.add('hidden');
+      const pBox = document.getElementById('period-drawer');
+      if (pBox) pBox.classList.add('hidden');
     }
 
     function setPlaybookPill(key) {
