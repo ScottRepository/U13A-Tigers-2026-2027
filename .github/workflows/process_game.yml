@@ -23,9 +23,9 @@ jobs:
       - name: Install Dependencies
         run: |
           sudo apt-get update && sudo apt-get install -y ffmpeg
-          pip install --upgrade yt-dlp google-genai requests opencv-python-headless numpy
+          pip install --upgrade yt-dlp google-genai requests opencv-python-headless numpy ultralytics
 
-      - name: Run Auto Sync Script
+      - name: Run Auto Sync Script (Gemini Shift & Zone Breakdown)
         run: python auto_sync.py
         env:
           YOUTUBE_SOURCE: "https://www.youtube.com/playlist?list=PLXFVFYYSmylE"
@@ -34,9 +34,12 @@ jobs:
           GOOGLE_API_KEY: ${{ secrets.GEMINI_API_KEY }}
           TEAMSNAP_ICAL_URL: ${{ secrets.TEAMSNAP_ICAL_URL }}
 
+      - name: Run Zero-Token Computer Vision Tracker (YOLOv8 + ByteTrack + Rink Homography)
+        run: python cv_tracker.py --library games_library.json --out-dir tracking
+
       - name: Commit & Push Changes
         run: |
           git config --global user.name "Hockey Auto Bot"
           git config --global user.email "bot@hockey-app.local"
-          git add games_library.json
-          git diff --staged --quiet || (git commit -m "chore(sync): updated video analytics via Google Gemini [skip ci]" && git push origin main)
+          git add games_library.json tracking/
+          git diff --staged --quiet || (git commit -m "chore(sync): updated Gemini shift analytics and YOLOv8 CV tracking [skip ci]" && git pull --rebase origin main && git push origin main)
