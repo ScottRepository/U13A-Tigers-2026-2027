@@ -36,6 +36,8 @@ jobs:
 
       - name: Run Zero-Token Computer Vision Tracker (YOLOv8 + ByteTrack + Rink Homography)
         run: python cv_tracker.py --library games_library.json --out-dir tracking
+        env:
+          YT_COOKIES: ${{ secrets.YT_COOKIES }}
 
       - name: Commit & Push Changes
         run: |

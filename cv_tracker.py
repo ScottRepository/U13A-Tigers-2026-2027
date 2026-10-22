@@ -191,23 +191,54 @@ def classify_skater_team(frame_bgr: Any, x1: int, y1: int, x2: int, y2: int, tig
 
 def download_youtube_video_lowres(video_id: str, out_path: str) -> bool:
     """
-    Downloads a fast 480p/720p MP4 stream of the YouTube broadcast for CV tracking.
+    Downloads a fast 360p/480p/720p MP4 stream of the YouTube broadcast for CV tracking.
+    Uses YT_COOKIES if available and tries multiple player clients.
     """
+    import yt_dlp
+
     url = f"https://www.youtube.com/watch?v={video_id}"
-    cmd = [
-        sys.executable, "-m", "yt_dlp",
-        "-f", "bestvideo[height<=720][ext=mp4]/best[height<=720][ext=mp4]/best[height<=720]",
-        "--no-playlist",
-        "--quiet",
-        "-o", out_path,
-        url
+    cookie_path = os.path.join(os.path.dirname(out_path), "yt_cookies.txt")
+    raw_cookies = (os.environ.get("YT_COOKIES") or "").strip()
+    has_cookies = False
+    if raw_cookies and ("youtube.com" in raw_cookies or "Netscape" in raw_cookies):
+        try:
+            with open(cookie_path, "w", encoding="utf-8") as cf:
+                cf.write(raw_cookies)
+            has_cookies = True
+        except Exception:
+            has_cookies = False
+
+    client_attempts = [
+        (["ios", "web"], has_cookies),
+        (["mweb", "tv", "web"], False),
+        (["android_vr", "web"], False),
     ]
-    try:
-        res = subprocess.run(cmd, check=False, stdout=subprocess.PIPE, stderr=subprocess.PIPE, timeout=600)
-        return os.path.exists(out_path) and os.path.getsize(out_path) > 100_000
-    except Exception as exc:
-        print(f"[cv_tracker] yt-dlp download error for {video_id}: {exc}")
-        return False
+
+    for clients, use_c in client_attempts:
+        if os.path.exists(out_path):
+            try:
+                os.remove(out_path)
+            except Exception:
+                pass
+        ydl_opts: Dict[str, Any] = {
+            "format": "best[height<=720][ext=mp4]/bestvideo[height<=720][ext=mp4]/best[height<=720]/best",
+            "outtmpl": out_path,
+            "noplaylist": True,
+            "quiet": True,
+            "no_warnings": True,
+            "extractor_args": {"youtube": {"player_client": clients}},
+        }
+        if use_c and has_cookies:
+            ydl_opts["cookiefile"] = cookie_path
+        try:
+            with yt_dlp.YoutubeDL(ydl_opts) as ydl:
+                ydl.download([url])
+            if os.path.exists(out_path) and os.path.getsize(out_path) > 100_000:
+                return True
+        except Exception as exc:
+            print(f"[cv_tracker] yt-dlp notice ({clients}, cookies={use_c}) for {video_id}: {exc}", flush=True)
+
+    return False
 
 
 def track_game_video(game: Dict[str, Any], out_dir: str, sample_fps: float = 4.0) -> Optional[str]:

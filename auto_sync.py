@@ -894,8 +894,14 @@ def discover_playlist_entries(source_url: str) -> List[Dict[str, Any]]:
                     if not vid_id:
                         continue
                     title = entry.get("title")
+                    if title in ("[Deleted video]", "[Private video]"):
+                        continue
+                    oembed_t = fetch_oembed_title(vid_id)
+                    if not oembed_t:
+                        logger.info(f"⏭️ Skipping unavailable/deleted playlist video: {vid_id}")
+                        continue
                     if not title or title.startswith("Aurora Tigers Match -"):
-                        title = fetch_oembed_title(vid_id) or title or f"Aurora Tigers Match - {vid_id}"
+                        title = oembed_t
                     entries_by_id[vid_id] = {
                         "id": vid_id,
                         "title": title,
