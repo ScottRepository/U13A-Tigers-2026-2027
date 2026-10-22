@@ -373,6 +373,9 @@
   </div>
 
   <script>
+    const PARENT_PASSCODE = "U13ATIGERS";
+    const COACH_PASSCODE = "COACHTIGERS";
+    const ADMIN_PASSCODE = "ADMINTIGERS";
     let isCoach = false;
 
     const ROSTER_POSITIONS = {
@@ -534,7 +537,6 @@
       if (input) input.type = (input.type === 'password') ? 'text' : 'password';
     }
 
-    // Direct one-click login helper
     function quickLogin(role) {
       isCoach = (role === 'coach');
       safeSet("team_role", role);
@@ -550,12 +552,10 @@
     }
 
     function handlePasscodeSubmit(e) {
-      if (e) e.preventDefault();
+      if (e && typeof e.preventDefault === 'function') e.preventDefault();
       
       const inputEl = document.getElementById('passcode-input');
       const rawVal = inputEl ? inputEl.value : "";
-      
-      // Robust sanitizer: strips all non-alphanumeric chars and ignores letter casing
       const clean = String(rawVal).toLowerCase().replace(/[^a-z0-9]/g, '');
       const errorMsg = document.getElementById('auth-error');
 
@@ -581,11 +581,7 @@
       if (modal) modal.style.display = 'none';
       if (main) main.style.display = 'block';
       updateRoleBadge();
-      
-      // Delay initialization slightly so browser paints layout first
-      setTimeout(() => {
-        initAppSafe();
-      }, 50);
+      initAppSafe();
     }
 
     function updateRoleBadge() {
@@ -629,7 +625,6 @@
         renderRosterGrid();
         setupTelestrator();
 
-        // Load YouTube API asynchronously
         if (!window.YT && !isYouTubeApiLoaded) {
           isYouTubeApiLoaded = true;
           const tag = document.createElement('script');
@@ -637,7 +632,6 @@
           document.body.appendChild(tag);
         }
 
-        // Fetch games library with cache-busting
         fetch('./games_library.json?t=' + Date.now())
           .then(res => {
             if (!res.ok) throw new Error("Could not fetch library: " + res.status);
@@ -1108,8 +1102,6 @@
         return;
       }
 
-      const starredClips = JSON.parse(safeGet("team_film_room") || "[]");
-
       filtered.forEach((c) => {
         const startSec = c.start_seconds !== undefined ? c.start_seconds : c.start;
         const endSec = c.end_seconds !== undefined ? c.end_seconds : (c.end || startSec + (c.duration || 35));
@@ -1135,7 +1127,7 @@
               </span>
               ${hasBreakout ? `
                 <span class="px-1.5 py-0.5 rounded text-[9px] font-black uppercase ${bo.successful ? 'bg-emerald-950 text-emerald-300 border border-emerald-700' : 'bg-rose-950 text-rose-300 border border-rose-700'}">
-                  ${bo.breakout_type \vert{}\vert{} 'Exit'} (${bo.successful ? 'Clean' : 'Turnover'})
+                  ${bo.breakout_type || 'Exit'} (${bo.successful ? 'Clean' : 'Turnover'})
                 </span>
               ` : ''}
             </div>
@@ -1469,7 +1461,6 @@
       drawFaceoffCircle(w * 0.80, h * 0.28); drawFaceoffCircle(w * 0.80, h * 0.72);
     }
 
-    // Auto-check stored session
     checkAuth();
   </script>
 </body>
