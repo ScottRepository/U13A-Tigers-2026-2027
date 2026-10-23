@@ -116,7 +116,7 @@
   </div>
 
   <!-- ================= SAVE TO FILM TRAY MODAL ================= -->
-  <div id="save-tray-modal" class="fixed inset-0 bg-slate-950/75 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
+  <div id="save-tray-modal" onclick="if(event.target === this) closeSaveToTrayModal()" class="fixed inset-0 bg-slate-950/80 backdrop-blur-md z-[9999] flex items-center justify-center p-4 hidden" style="display: none;">
     <div class="bg-white rounded-2xl max-w-md w-full border border-slate-200 shadow-2xl overflow-hidden animate-in fade-in zoom-in-95 duration-150">
       <div class="p-3.5 bg-slate-900 text-white flex items-center justify-between">
         <div class="flex items-center gap-2">
@@ -1044,6 +1044,11 @@
     const COACH_PASSCODE = "COACHTIGERS";
     const ADMIN_PASSCODE = "ADMINTIGERS";
     let isCoach = false;
+
+    function formatMinSec(sec) {
+      const s = Math.max(0, Math.round(Number(sec) || 0));
+      return `${Math.floor(s / 60)}:${(s % 60).toString().padStart(2, '0')}`;
+    }
 
     // Preload Official Aurora Tigers Crest for the 2D Center-Ice Rink Canvas
     const centerIceLogo = new Image();
@@ -2928,12 +2933,16 @@
         if (notesInput) notesInput.value = "";
       }
 
+      modal.style.display = 'flex';
       modal.classList.remove('hidden');
     }
 
     function closeSaveToTrayModal() {
       const modal = document.getElementById('save-tray-modal');
-      if (modal) modal.classList.add('hidden');
+      if (modal) {
+        modal.style.display = 'none';
+        modal.classList.add('hidden');
+      }
     }
 
     function parseTimeStr(val) {
