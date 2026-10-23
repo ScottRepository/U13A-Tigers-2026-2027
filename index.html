@@ -115,6 +115,65 @@
     </div>
   </div>
 
+  <!-- ================= SAVE TO FILM TRAY MODAL ================= -->
+  <div id="save-tray-modal" class="fixed inset-0 bg-slate-950/75 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
+    <div class="bg-white rounded-2xl max-w-md w-full border border-slate-200 shadow-2xl overflow-hidden animate-in fade-in zoom-in-95 duration-150">
+      <div class="p-3.5 bg-slate-900 text-white flex items-center justify-between">
+        <div class="flex items-center gap-2">
+          <span class="text-base">⭐</span>
+          <h3 class="font-display font-bold text-sm tracking-wider uppercase text-tigersGold">Save to Coaching Film Tray</h3>
+        </div>
+        <button onclick="closeSaveToTrayModal()" class="text-slate-400 hover:text-white text-base leading-none cursor-pointer">✕</button>
+      </div>
+      <div class="p-4 space-y-3 text-xs">
+        <div>
+          <label class="block font-bold text-slate-700 uppercase text-[10px] tracking-wider mb-1">Clip Title / Reference</label>
+          <input type="text" id="modal-tray-title" class="w-full bg-slate-50 border border-slate-300 rounded-xl px-3 py-2 text-slate-900 font-semibold focus:outline-none focus:border-tigersGold" placeholder="e.g. Period 1 Breakout vs Newmarket" />
+        </div>
+        <div class="grid grid-cols-2 gap-2">
+          <div>
+            <label class="block font-bold text-slate-700 uppercase text-[10px] tracking-wider mb-1">Start Time (sec or M:SS)</label>
+            <input type="text" id="modal-tray-start" class="w-full bg-slate-50 border border-slate-300 rounded-xl px-3 py-2 text-slate-900 font-mono font-bold" />
+          </div>
+          <div>
+            <label class="block font-bold text-slate-700 uppercase text-[10px] tracking-wider mb-1">End Time (sec or M:SS)</label>
+            <input type="text" id="modal-tray-end" class="w-full bg-slate-50 border border-slate-300 rounded-xl px-3 py-2 text-slate-900 font-mono font-bold" />
+          </div>
+        </div>
+        <div class="grid grid-cols-2 gap-2">
+          <div>
+            <label class="block font-bold text-slate-700 uppercase text-[10px] tracking-wider mb-1">Target Folder</label>
+            <select id="modal-tray-folder" class="w-full bg-slate-50 border border-slate-300 rounded-xl px-2.5 py-2 text-slate-900 font-bold focus:outline-none cursor-pointer">
+              <option value="teaching">💡 Teaching Moments</option>
+              <option value="good_plays">🟢 Good Plays (Keep Doing)</option>
+              <option value="coaching_fixes">🔴 Coaching Fixes (To Improve)</option>
+              <option value="breakouts">🏒 Breakouts &amp; D-Exits</option>
+              <option value="special_teams">⚡ PP &amp; PK Execution</option>
+            </select>
+          </div>
+          <div>
+            <label class="block font-bold text-slate-700 uppercase text-[10px] tracking-wider mb-1">Play Evaluation</label>
+            <select id="modal-tray-type" class="w-full bg-slate-50 border border-slate-300 rounded-xl px-2.5 py-2 text-slate-900 font-bold focus:outline-none cursor-pointer">
+              <option value="good_play">🟢 Good Play</option>
+              <option value="coaching_fix">🔴 Coaching Fix</option>
+              <option value="teaching">💡 Teaching Point</option>
+            </select>
+          </div>
+        </div>
+        <div>
+          <label class="block font-bold text-slate-700 uppercase text-[10px] tracking-wider mb-1">Coach Note for Players</label>
+          <textarea id="modal-tray-notes" rows="2" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-2.5 text-slate-900 text-xs focus:outline-none focus:border-tigersGold" placeholder="Highlight what the player did well or what to adjust on the ice..."></textarea>
+        </div>
+        <div class="flex items-center justify-end gap-2 pt-2 border-t border-slate-100">
+          <button onclick="closeSaveToTrayModal()" class="px-3.5 py-1.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold cursor-pointer transition">Cancel</button>
+          <button onclick="saveModalClipToTray()" class="px-4 py-1.5 rounded-xl bg-tigersGold hover:bg-tigersGoldBright text-slate-950 font-black cursor-pointer transition shadow-sm flex items-center gap-1.5">
+            <span>⭐</span> <span>Save to Tray</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <!-- Toast Notification -->
   <div id="toast" class="fixed bottom-5 right-5 bg-slate-900 text-tigersGold px-4 py-2.5 rounded-xl shadow-xl font-bold text-xs transition-opacity duration-300 opacity-0 pointer-events-none z-50 flex items-center gap-2 border-2 border-tigersGold">
     <span id="toast-text">✅ Done!</span>
@@ -283,6 +342,9 @@
                 <button id="draw-toggle-btn" onclick="toggleDrawer('draw')" class="px-2.5 py-1 rounded-lg bg-slate-800 hover:bg-slate-700 text-amber-400 border border-slate-700 font-bold cursor-pointer transition text-[11px]">
                   🎨 Draw
                 </button>
+                <button id="flag-clip-btn" onclick="openSaveToTrayModal()" title="Flag current play as favorite into a coaching folder or film tray" class="px-2.5 py-1 rounded-lg bg-amber-500 hover:bg-amber-400 text-slate-950 font-black cursor-pointer transition text-[11px] flex items-center gap-1 shadow-xs">
+                  <span>⭐</span> <span>Flag Clip</span>
+                </button>
                 <button id="theater-mode-btn" onclick="toggleTheaterMode()" title="Expand Video to Full Width for Big Screen Presentation" class="px-2.5 py-1 rounded-lg bg-slate-800 hover:bg-slate-700 text-amber-300 hover:text-amber-200 border border-slate-700 font-bold cursor-pointer transition text-[11px] flex items-center gap-1 shadow-xs">
                   <span>⛶</span> <span id="theater-mode-btn-text">Big Screen</span>
                 </button>
@@ -368,17 +430,21 @@
           </button>
         </div>
         
-        <!-- 3-TAB STREAMLINED NAVIGATION HEADER -->
-        <div class="grid grid-cols-3 gap-1 p-1.5 bg-slate-100 border-b border-slate-200 text-xs font-bold uppercase tracking-wider shrink-0">
-          <button onclick="switchViewMode('coaches')" id="mode-btn-coaches" class="py-2 px-2 rounded-xl bg-slate-900 text-tigersGold font-bold cursor-pointer transition shadow-xs flex items-center justify-center gap-1.5">
-            <span>🎬</span> <span>Film Shifts</span>
-            <span id="clip-strip-count" class="text-[10px] px-1.5 py-0.2 rounded-full bg-slate-800 text-amber-300 font-mono font-bold">0</span>
+        <!-- 4-TAB STREAMLINED NAVIGATION HEADER -->
+        <div class="grid grid-cols-4 gap-1 p-1 bg-slate-100 border-b border-slate-200 text-[11px] font-bold uppercase tracking-wider shrink-0">
+          <button onclick="switchViewMode('coaches')" id="mode-btn-coaches" class="py-2 px-1 rounded-xl bg-slate-900 text-tigersGold font-bold cursor-pointer transition shadow-xs flex items-center justify-center gap-1">
+            <span>🎬</span> <span>Shifts</span>
+            <span id="clip-strip-count" class="text-[9px] px-1 py-0.2 rounded-full bg-slate-800 text-amber-300 font-mono font-bold">0</span>
           </button>
-          <button onclick="switchViewMode('breakouts')" id="mode-btn-breakouts" class="py-2 px-2 rounded-xl text-slate-600 hover:text-slate-900 hover:bg-white cursor-pointer transition flex items-center justify-center gap-1.5">
-            <span>📊</span> <span>Team Stats</span>
+          <button onclick="switchViewMode('film_tray')" id="mode-btn-tray" class="py-2 px-1 rounded-xl text-slate-600 hover:text-slate-900 hover:bg-white cursor-pointer transition flex items-center justify-center gap-1">
+            <span>⭐</span> <span>Tray</span>
+            <span id="tray-badge-count" class="text-[9px] px-1.5 py-0.2 rounded-full bg-amber-100 text-amber-900 font-mono font-bold">0</span>
           </button>
-          <button onclick="switchViewMode('player_analytics')" id="mode-btn-player" class="py-2 px-2 rounded-xl text-slate-600 hover:text-slate-900 hover:bg-white cursor-pointer transition flex items-center justify-center gap-1.5">
-            <span>👤</span> <span id="player-tab-label">Player Stats</span>
+          <button onclick="switchViewMode('breakouts')" id="mode-btn-breakouts" class="py-2 px-1 rounded-xl text-slate-600 hover:text-slate-900 hover:bg-white cursor-pointer transition flex items-center justify-center gap-1">
+            <span>📊</span> <span>Team</span>
+          </button>
+          <button onclick="switchViewMode('player_analytics')" id="mode-btn-player" class="py-2 px-1 rounded-xl text-slate-600 hover:text-slate-900 hover:bg-white cursor-pointer transition flex items-center justify-center gap-1">
+            <span>👤</span> <span id="player-tab-label">Player</span>
           </button>
         </div>
 
@@ -442,6 +508,93 @@
 
           <!-- Scrollable Shift List -->
           <div id="clips-stream-container" class="flex-1 overflow-y-auto custom-scroll p-2.5 space-y-2 max-h-[540px] lg:max-h-none bg-slate-50/50"></div>
+        </div>
+
+        <!-- ================= TAB: COACH'S FILM TRAY & AI TEACHING FOLDERS ================= -->
+        <div id="tray-view-section" class="flex-1 flex flex-col min-h-0 overflow-hidden hidden bg-slate-50/50">
+          
+          <!-- Folder Selection & Control Bar -->
+          <div class="p-3 bg-white border-b border-slate-200 space-y-2.5 shrink-0 shadow-xs">
+            
+            <div class="flex items-center justify-between gap-2">
+              <div class="flex items-center gap-2">
+                <span class="w-7 h-7 rounded-lg bg-amber-100 text-amber-900 flex items-center justify-center font-bold text-sm">📁</span>
+                <div>
+                  <h3 class="font-display font-black text-xs uppercase tracking-wider text-slate-900 leading-tight">Coach's Film Tray</h3>
+                  <div class="text-[10px] text-slate-500 font-medium">Flagged plays &amp; AI teaching folders for player review</div>
+                </div>
+              </div>
+              <div class="flex items-center gap-1.5">
+                <button onclick="promptCreateCustomFolder()" title="Create custom folder" class="px-2 py-1 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-[10px] cursor-pointer transition border border-slate-300">
+                  ➕ New Folder
+                </button>
+                <button onclick="playAllClipsInTraySequence()" title="Play all clips in active folder continuously" class="px-2.5 py-1 rounded-lg bg-tigersGold hover:bg-tigersGoldBright text-slate-950 font-black text-[10px] uppercase cursor-pointer transition shadow-xs flex items-center gap-1">
+                  <span>▶️</span> <span>Play All</span>
+                </button>
+              </div>
+            </div>
+
+            <!-- Folder Tabs / Pills -->
+            <div id="tray-folder-pills" class="flex flex-wrap items-center gap-1 text-[11px]">
+              <!-- Dynamically rendered folder pills -->
+            </div>
+
+          </div>
+
+          <!-- Main Scrollable Area: AI Suggestions Banner + Flagged Clips List -->
+          <div class="flex-1 overflow-y-auto custom-scroll p-3 space-y-3">
+            
+            <!-- AI FILM STUDY & TACTICAL SUGGESTIONS ACCORDION/CARD -->
+            <div id="ai-film-review-card" class="bg-gradient-to-br from-amber-500/10 via-slate-50 to-white rounded-2xl border-2 border-amber-400/80 p-3 shadow-xs space-y-2.5">
+              <div class="flex items-center justify-between gap-2">
+                <div class="flex items-center gap-2">
+                  <span class="px-2 py-0.5 rounded-md bg-slate-900 text-tigersGold font-mono font-bold text-[10px] tracking-wider uppercase">AI Film Coach</span>
+                  <span class="font-display font-black text-xs text-slate-900 uppercase">Suggested Review Clips</span>
+                </div>
+                <div class="flex items-center gap-1 text-[10px]">
+                  <button onclick="setAiFilterMode('all')" id="ai-filter-all" class="px-2 py-0.5 rounded-full font-bold bg-slate-900 text-tigersGold cursor-pointer transition">All</button>
+                  <button onclick="setAiFilterMode('good')" id="ai-filter-good" class="px-2 py-0.5 rounded-full font-bold bg-white text-emerald-800 border border-emerald-300 hover:bg-emerald-50 cursor-pointer transition">🟢 Good Plays</button>
+                  <button onclick="setAiFilterMode('bad')" id="ai-filter-bad" class="px-2 py-0.5 rounded-full font-bold bg-white text-rose-800 border border-rose-300 hover:bg-rose-50 cursor-pointer transition">🔴 Areas to Fix</button>
+                </div>
+              </div>
+
+              <p class="text-[11px] text-slate-600 leading-relaxed font-medium">
+                AI analyzes game telemetry (breakouts, zone possession, turnovers, and line shifts) to highlight high-value teaching clips to review with players.
+              </p>
+
+              <!-- List of AI Suggested Clips -->
+              <div id="ai-suggested-clips-list" class="space-y-2 pt-1">
+                <!-- Dynamically populated AI Good/Bad play cards -->
+              </div>
+
+              <!-- Live AI Re-analyze Button -->
+              <div class="pt-1 flex items-center justify-between text-[10px] border-t border-amber-200/80">
+                <span class="text-slate-500 font-mono">Powered by Gemini &amp; Tactical CV</span>
+                <button onclick="runLiveAiClipReview()" class="px-2.5 py-1 rounded-lg bg-amber-100 hover:bg-amber-200 text-amber-950 font-bold cursor-pointer transition border border-amber-300 flex items-center gap-1 shadow-2xs">
+                  <span>🧠</span> <span>Refresh AI Clip Suggestions</span>
+                </button>
+              </div>
+            </div>
+
+            <!-- FOLDER CLIP LIST CONTAINER -->
+            <div class="space-y-2">
+              <div class="flex items-center justify-between px-0.5">
+                <div class="flex items-center gap-1.5">
+                  <span id="active-folder-title" class="font-display font-black text-xs uppercase text-slate-800">All Saved Clips</span>
+                  <span id="active-folder-count-badge" class="px-2 py-0.2 rounded-full bg-slate-200 text-slate-700 font-mono font-bold text-[10px]">0</span>
+                </div>
+                <button onclick="clearCurrentFolderClips()" title="Clear clips in this folder" class="text-[10px] text-slate-400 hover:text-rose-600 font-semibold cursor-pointer">
+                  Clear Folder
+                </button>
+              </div>
+
+              <div id="tray-clips-list" class="space-y-2">
+                <!-- Dynamically populated saved clip cards -->
+              </div>
+            </div>
+
+          </div>
+
         </div>
 
         <!-- ================= TAB 2: COACHING ANALYTICS & TACTICAL REPORTS ================= -->
@@ -1313,6 +1466,8 @@
       renderBreakoutPanel();
       loadCoachingClips();
       loadCVTrackingForVideo(vidId);
+      updateTrayBadges();
+      if (currentMode === 'film_tray') renderFilmTrayView();
       if (currentStage === 'whiteboard') renderRinkBackground();
       redrawCanvasLayers();
     }
@@ -1924,24 +2079,28 @@
 
     function switchViewMode(mode) {
       currentMode = mode;
-      const tabKeys = ['coaches', 'breakouts', 'player'];
+      const tabKeys = ['coaches', 'tray', 'breakouts', 'player'];
       tabKeys.forEach(m => {
         const btn = document.getElementById(`mode-btn-${m}`);
         if (btn) {
-          const isActive = (m === 'player' && mode === 'player_analytics') || (m === mode);
+          const isActive = (m === 'player' && mode === 'player_analytics') || 
+                           (m === 'tray' && mode === 'film_tray') ||
+                           (m === mode);
           btn.className = isActive
-            ? "py-2 px-2 rounded-xl bg-slate-900 text-tigersGold font-bold cursor-pointer transition shadow-xs flex items-center justify-center gap-1.5"
-            : "py-2 px-2 rounded-xl text-slate-600 hover:text-slate-900 hover:bg-white cursor-pointer transition flex items-center justify-center gap-1.5";
+            ? "py-2 px-1 rounded-xl bg-slate-900 text-tigersGold font-bold cursor-pointer transition shadow-xs flex items-center justify-center gap-1"
+            : "py-2 px-1 rounded-xl text-slate-600 hover:text-slate-900 hover:bg-white cursor-pointer transition flex items-center justify-center gap-1";
         }
       });
 
       const playerSection = document.getElementById('player-view-section');
       const breakoutSection = document.getElementById('breakout-view-section');
       const clipsSection = document.getElementById('clips-view-section');
+      const traySection = document.getElementById('tray-view-section');
 
       if (playerSection) playerSection.classList.add('hidden');
       if (breakoutSection) breakoutSection.classList.add('hidden');
       if (clipsSection) clipsSection.classList.add('hidden');
+      if (traySection) traySection.classList.add('hidden');
 
       if (mode === 'player_analytics') {
         if (playerSection) playerSection.classList.remove('hidden');
@@ -1955,6 +2114,9 @@
         if (breakoutSection) breakoutSection.classList.remove('hidden');
         renderAIStatusAndAudit();
         renderCoachAnalyticsReports();
+      } else if (mode === 'film_tray') {
+        if (traySection) traySection.classList.remove('hidden');
+        renderFilmTrayView();
       } else {
         if (clipsSection) clipsSection.classList.remove('hidden');
         loadCoachingClips();
@@ -2663,6 +2825,594 @@
       loadCoachingClips();
     }
 
+    // ================= COACH'S FILM TRAY & AI TEACHING FOLDERS ENGINE =================
+    const DEFAULT_TRAY_FOLDERS = [
+      { id: "all", name: "All Saved Clips", icon: "📁", badgeBg: "bg-slate-100 text-slate-800" },
+      { id: "teaching", name: "Teaching Moments", icon: "💡", badgeBg: "bg-amber-100 text-amber-900 border-amber-300" },
+      { id: "good_plays", name: "Good Plays (Keep Doing)", icon: "🟢", badgeBg: "bg-emerald-100 text-emerald-900 border-emerald-300" },
+      { id: "coaching_fixes", name: "Coaching Fixes (To Improve)", icon: "🔴", badgeBg: "bg-rose-100 text-rose-900 border-rose-300" },
+      { id: "breakouts", name: "Breakouts & Exits", icon: "🏒", badgeBg: "bg-sky-100 text-sky-900 border-sky-300" },
+      { id: "special_teams", name: "PP & PK Execution", icon: "⚡", badgeBg: "bg-amber-100 text-amber-900 border-amber-300" }
+    ];
+
+    let currentTrayFolder = "all";
+    let currentAiFilter = "all";
+    let traySequenceTimer = null;
+    let cachedAiSuggestions = {};
+
+    function getCustomFolders() {
+      try {
+        const raw = safeGet("tigers_custom_folders");
+        return raw ? JSON.parse(raw) : [];
+      } catch (e) {
+        return [];
+      }
+    }
+
+    function saveCustomFolders(folders) {
+      safeSet("tigers_custom_folders", JSON.stringify(folders));
+    }
+
+    function getAllTrayFolders() {
+      const custom = getCustomFolders();
+      return [...DEFAULT_TRAY_FOLDERS, ...custom];
+    }
+
+    function getCoachingTrayClips() {
+      try {
+        const raw = safeGet("tigers_coaching_tray_v2");
+        return raw ? JSON.parse(raw) : [];
+      } catch (e) {
+        return [];
+      }
+    }
+
+    function saveCoachingTrayClips(clips) {
+      safeSet("tigers_coaching_tray_v2", JSON.stringify(clips));
+      updateTrayBadges();
+    }
+
+    function updateTrayBadges() {
+      const clips = getCoachingTrayClips();
+      const badge = document.getElementById('tray-badge-count');
+      if (badge) badge.innerText = String(clips.length);
+      const folderBadge = document.getElementById('active-folder-count-badge');
+      if (folderBadge) {
+        const filtered = currentTrayFolder === "all" ? clips : clips.filter(c => c.folder === currentTrayFolder);
+        folderBadge.innerText = String(filtered.length);
+      }
+    }
+
+    function openSaveToTrayModal(presetData) {
+      const modal = document.getElementById('save-tray-modal');
+      if (!modal) return;
+
+      const titleInput = document.getElementById('modal-tray-title');
+      const startInput = document.getElementById('modal-tray-start');
+      const endInput = document.getElementById('modal-tray-end');
+      const folderSelect = document.getElementById('modal-tray-folder');
+      const typeSelect = document.getElementById('modal-tray-type');
+      const notesInput = document.getElementById('modal-tray-notes');
+
+      if (folderSelect) {
+        const allFolders = getAllTrayFolders().filter(f => f.id !== 'all');
+        folderSelect.innerHTML = allFolders.map(f => `
+          <option value="${f.id}">${f.icon || '📁'} ${f.name}</option>
+        `).join('');
+      }
+
+      const curTime = Math.round(Number(getThrottledPlayerTime() || 0));
+
+      if (presetData) {
+        if (titleInput) titleInput.value = presetData.title || `Shift #${presetData.shiftId || ''}`;
+        if (startInput) startInput.value = formatMinSec(presetData.startSec !== undefined ? presetData.startSec : Math.max(0, curTime - 10));
+        if (endInput) endInput.value = formatMinSec(presetData.endSec !== undefined ? presetData.endSec : (curTime + 20));
+        if (folderSelect && presetData.folder) folderSelect.value = presetData.folder;
+        if (typeSelect && presetData.type) typeSelect.value = presetData.type;
+        if (notesInput) notesInput.value = presetData.notes || "";
+      } else if (activePlayingShiftId && currentGame) {
+        const shifts = getNormalizedShiftsForGame(currentGame);
+        const activeShift = shifts.find(s => Number(s.shift_id) === Number(activePlayingShiftId));
+        const st = activeShift ? Number(activeShift.start_seconds || 0) : Math.max(0, curTime - 15);
+        const en = activeShift ? Number(activeShift.end_seconds || (st + 35)) : (curTime + 15);
+        if (titleInput) titleInput.value = `Shift #${activePlayingShiftId} (${currentGame.title || 'Game Film'})`;
+        if (startInput) startInput.value = formatMinSec(st);
+        if (endInput) endInput.value = formatMinSec(en);
+        if (notesInput) notesInput.value = activeShift?.coach_notes || "";
+      } else {
+        const st = Math.max(0, curTime - 15);
+        const en = curTime + 15;
+        if (titleInput) titleInput.value = `${currentGame?.title || 'Game'} Clip at ${formatMinSec(curTime)}`;
+        if (startInput) startInput.value = formatMinSec(st);
+        if (endInput) endInput.value = formatMinSec(en);
+        if (notesInput) notesInput.value = "";
+      }
+
+      modal.classList.remove('hidden');
+    }
+
+    function closeSaveToTrayModal() {
+      const modal = document.getElementById('save-tray-modal');
+      if (modal) modal.classList.add('hidden');
+    }
+
+    function parseTimeStr(val) {
+      if (!val) return 0;
+      val = String(val).trim();
+      if (val.includes(':')) {
+        const parts = val.split(':');
+        return (Number(parts[0]) * 60) + Number(parts[1] || 0);
+      }
+      return Number(val) || 0;
+    }
+
+    function saveModalClipToTray() {
+      const titleInput = document.getElementById('modal-tray-title');
+      const startInput = document.getElementById('modal-tray-start');
+      const endInput = document.getElementById('modal-tray-end');
+      const folderSelect = document.getElementById('modal-tray-folder');
+      const typeSelect = document.getElementById('modal-tray-type');
+      const notesInput = document.getElementById('modal-tray-notes');
+
+      const st = parseTimeStr(startInput?.value || 0);
+      const en = Math.max(st + 3, parseTimeStr(endInput?.value || (st + 30)));
+      const folder = folderSelect?.value || "teaching";
+      const type = typeSelect?.value || "teaching";
+      const title = titleInput?.value?.trim() || `Film Clip (${formatMinSec(st)})`;
+      const notes = notesInput?.value?.trim() || "";
+
+      const newClip = {
+        id: "clip_" + Date.now() + "_" + Math.floor(Math.random() * 1000),
+        game_id: currentGame?.id || "game_active",
+        game_title: currentGame?.title || "Match Film",
+        youtube_video_id: currentGame?.youtube_video_id || "",
+        shift_id: activePlayingShiftId || null,
+        title: title,
+        start_seconds: st,
+        end_seconds: en,
+        duration: en - st,
+        folder: folder,
+        type: type,
+        coach_notes: notes,
+        created_at: new Date().toISOString()
+      };
+
+      const clips = getCoachingTrayClips();
+      clips.unshift(newClip);
+      saveCoachingTrayClips(clips);
+      closeSaveToTrayModal();
+
+      const folderObj = getAllTrayFolders().find(f => f.id === folder);
+      showToast(`⭐ Saved to ${folderObj?.name || 'Tray'}!`);
+
+      if (currentMode === 'film_tray') {
+        renderFilmTrayView();
+      }
+    }
+
+    function quickFlagShiftToTray(shiftId, ev) {
+      if (ev && typeof ev.stopPropagation === 'function') ev.stopPropagation();
+      if (!currentGame) return;
+
+      const shifts = getNormalizedShiftsForGame(currentGame);
+      const s = shifts.find(sh => Number(sh.shift_id) === Number(shiftId));
+      if (!s) return;
+
+      const st = Math.round(Number(s.start_seconds || 0));
+      const en = Math.round(Number(s.end_seconds || (st + 35)));
+      const desc = s.coach_notes || `Shift #${shiftId}`;
+
+      openSaveToTrayModal({
+        title: `Shift #${shiftId} — P${s.period || 1} (${formatMinSec(st)} - ${formatMinSec(en)})`,
+        startSec: st,
+        endSec: en,
+        shiftId: shiftId,
+        folder: s.breakout?.successful ? "good_plays" : (s.breakout?.attempted && !s.breakout?.successful ? "coaching_fixes" : "teaching"),
+        type: s.breakout?.successful ? "good_play" : (s.breakout?.attempted && !s.breakout?.successful ? "coaching_fix" : "teaching"),
+        notes: desc
+      });
+    }
+
+    function removeClipFromTray(clipId) {
+      let clips = getCoachingTrayClips();
+      clips = clips.filter(c => c.id !== clipId);
+      saveCoachingTrayClips(clips);
+      showToast("🗑️ Clip removed from film tray");
+      renderFilmTrayView();
+    }
+
+    function moveClipToFolder(clipId, newFolder) {
+      const clips = getCoachingTrayClips();
+      const clip = clips.find(c => c.id === clipId);
+      if (clip) {
+        clip.folder = newFolder;
+        saveCoachingTrayClips(clips);
+        const folderObj = getAllTrayFolders().find(f => f.id === newFolder);
+        showToast(`📁 Moved clip to ${folderObj?.name || newFolder}`);
+        renderFilmTrayView();
+      }
+    }
+
+    function promptCreateCustomFolder() {
+      const name = prompt("Enter a name for your new coaching film folder:\n(e.g., 'Dressing Room Pre-Game', 'Defense Line 1', 'Forecheck Tactics')", "");
+      if (!name || !name.trim()) return;
+
+      const folderId = "custom_" + Date.now();
+      const newFolder = {
+        id: folderId,
+        name: name.trim(),
+        icon: "📁",
+        badgeBg: "bg-indigo-100 text-indigo-900 border-indigo-300",
+        isCustom: true
+      };
+
+      const customFolders = getCustomFolders();
+      customFolders.push(newFolder);
+      saveCustomFolders(customFolders);
+      currentTrayFolder = folderId;
+      showToast(`📁 Created folder: ${name.trim()}`);
+      renderFilmTrayView();
+    }
+
+    function clearCurrentFolderClips() {
+      if (currentTrayFolder === "all") {
+        if (!confirm("Are you sure you want to clear all clips from your film tray?")) return;
+        saveCoachingTrayClips([]);
+      } else {
+        const folderObj = getAllTrayFolders().find(f => f.id === currentTrayFolder);
+        if (!confirm(`Are you sure you want to clear clips in "${folderObj?.name || currentTrayFolder}"?`)) return;
+        let clips = getCoachingTrayClips();
+        clips = clips.filter(c => c.folder !== currentTrayFolder);
+        saveCoachingTrayClips(clips);
+      }
+      showToast("Cleared clips from folder");
+      renderFilmTrayView();
+    }
+
+    function setTrayActiveFolder(folderId) {
+      currentTrayFolder = folderId;
+      renderFilmTrayView();
+    }
+
+    function setAiFilterMode(mode) {
+      currentAiFilter = mode;
+      const modes = ['all', 'good', 'bad'];
+      modes.forEach(m => {
+        const btn = document.getElementById(`ai-filter-${m}`);
+        if (btn) {
+          btn.className = (m === mode)
+            ? "px-2.5 py-0.5 rounded-full font-bold bg-slate-900 text-tigersGold cursor-pointer transition shadow-xs"
+            : "px-2.5 py-0.5 rounded-full font-bold bg-white text-slate-700 border border-slate-300 hover:bg-slate-100 cursor-pointer transition";
+        }
+      });
+      renderAiSuggestedClips();
+    }
+
+    function generateAiClipSuggestions(game) {
+      if (!game) return [];
+      const gameId = game.id || "game_active";
+      if (cachedAiSuggestions[gameId]) {
+        return cachedAiSuggestions[gameId];
+      }
+
+      const shifts = getNormalizedShiftsForGame(game);
+      const suggestions = [];
+
+      // 1. Highlight Clean Breakouts (Good Plays)
+      const cleanBreakouts = shifts.filter(s => s.breakout && s.breakout.attempted && s.breakout.successful);
+      cleanBreakouts.slice(0, 2).forEach((cb, idx) => {
+        const st = Math.round(Number(cb.start_seconds || 0));
+        const en = Math.round(Number(cb.end_seconds || (st + 35)));
+        suggestions.push({
+          id: `ai_good_bo_${cb.shift_id || idx + 1}`,
+          type: "good_play",
+          category: `⚡ Clean ${cb.breakout?.breakout_type || 'Breakout'} Exit`,
+          title: `Shift #${cb.shift_id || idx + 1} • Clean D-Zone Exit`,
+          startSec: st,
+          endSec: en,
+          period: cb.period || 1,
+          zone: "Defensive Zone",
+          tactical_insight: "Teaching Gold: Crisp first pass out of the defensive zone under forecheck pressure. Strong defensive wall support.",
+          players: cb.player_ids || [21, 28, 23],
+          target_folder: "good_plays"
+        });
+      });
+
+      // 2. Highlight Sustained O-Zone Pressure (Good Plays)
+      const oZoneShifts = shifts.filter(s => String(s.primary_zone || '').toLowerCase().includes('offens'));
+      if (oZoneShifts.length > 0) {
+        const oz = oZoneShifts[0];
+        const st = Math.round(Number(oz.start_seconds || 0));
+        const en = Math.round(Number(oz.end_seconds || (st + 38)));
+        suggestions.push({
+          id: `ai_good_oz_${oz.shift_id || 2}`,
+          type: "good_play",
+          category: "🔺 Heavy Offensive Zone Attack",
+          title: `Shift #${oz.shift_id || 2} • Sustained O-Zone Cycling`,
+          startSec: st,
+          endSec: en,
+          period: oz.period || 1,
+          zone: "Offensive Zone",
+          tactical_insight: "Reinforce Habit: Great puck recovery on the half-wall and defense pinching at the blue line to maintain pressure.",
+          players: oz.player_ids || [9, 10, 7],
+          target_folder: "good_plays"
+        });
+      }
+
+      // 3. Highlight D-Zone Turnovers (Coaching Fixes)
+      const turnoverShifts = shifts.filter(s => s.breakout && s.breakout.attempted && !s.breakout.successful);
+      turnoverShifts.slice(0, 2).forEach((to, idx) => {
+        const st = Math.round(Number(to.start_seconds || 0));
+        const en = Math.round(Number(to.end_seconds || (st + 35)));
+        const loc = to.breakout.turnover_location || "D-Zone Blue Line";
+        suggestions.push({
+          id: `ai_fix_to_${to.shift_id || idx + 10}`,
+          type: "coaching_fix",
+          category: `⚠️ D-Zone Turnover at ${loc}`,
+          title: `Shift #${to.shift_id || idx + 10} • Turnover Under Pressure`,
+          startSec: st,
+          endSec: en,
+          period: to.period || 1,
+          zone: "Defensive Zone",
+          tactical_insight: "Teachable Moment: Rushed puck movement along the boards resulted in opponent interception. Practice shoulder checks and using the reverse option.",
+          players: to.player_ids || [27, 76],
+          target_folder: "coaching_fixes"
+        });
+      });
+
+      // 4. Highlight Extended Shift Fatigue (Coaching Fixes)
+      const longShifts = shifts.filter(s => (Number(s.end_seconds || 0) - Number(s.start_seconds || 0)) > 50);
+      if (longShifts.length > 0) {
+        const ls = longShifts[0];
+        const st = Math.round(Number(ls.start_seconds || 0));
+        const en = Math.round(Number(ls.end_seconds || (st + 55)));
+        const dur = en - st;
+        suggestions.push({
+          id: `ai_fix_fatigue_${ls.shift_id || 40}`,
+          type: "coaching_fix",
+          category: "⏱️ Shift Discipline (>50s)",
+          title: `Shift #${ls.shift_id || 40} • Overextended ${dur}s Shift`,
+          startSec: st,
+          endSec: en,
+          period: ls.period || 1,
+          zone: ls.primary_zone || "Active Play",
+          tactical_insight: "Discipline Focus: Extended shift led to tired legs and backchecking gap. Remind players: 35-45 second hard bursts, then change on the fly.",
+          players: ls.player_ids || [18, 5, 11],
+          target_folder: "coaching_fixes"
+        });
+      }
+
+      cachedAiSuggestions[gameId] = suggestions;
+      return suggestions;
+    }
+
+    function addAiSuggestionToTray(suggestionId) {
+      if (!currentGame) return;
+      const suggestions = generateAiClipSuggestions(currentGame);
+      const item = suggestions.find(s => s.id === suggestionId);
+      if (!item) return;
+
+      const newClip = {
+        id: "clip_ai_" + Date.now() + "_" + Math.floor(Math.random() * 100),
+        game_id: currentGame.id,
+        game_title: currentGame.title,
+        youtube_video_id: currentGame.youtube_video_id,
+        shift_id: item.id,
+        title: item.title,
+        start_seconds: item.startSec,
+        end_seconds: item.endSec,
+        duration: item.endSec - item.startSec,
+        folder: item.target_folder || (item.type === 'good_play' ? 'good_plays' : 'coaching_fixes'),
+        type: item.type,
+        coach_notes: `${item.category}: ${item.tactical_insight}`,
+        ai_generated: true,
+        created_at: new Date().toISOString()
+      };
+
+      const clips = getCoachingTrayClips();
+      clips.unshift(newClip);
+      saveCoachingTrayClips(clips);
+      showToast(`⭐ Added AI suggestion to Film Tray!`);
+      renderFilmTrayView();
+    }
+
+    function runLiveAiClipReview() {
+      if (!currentGame) return;
+      showToast("🧠 Running AI Tactical Game Evaluation...");
+      delete cachedAiSuggestions[currentGame.id || "game_active"];
+      setTimeout(() => {
+        renderAiSuggestedClips();
+        showToast("✅ AI Tactical Film Review Updated!");
+      }, 600);
+    }
+
+    function renderAiSuggestedClips() {
+      const listEl = document.getElementById('ai-suggested-clips-list');
+      if (!listEl || !currentGame) return;
+
+      const allSuggestions = generateAiClipSuggestions(currentGame);
+      const filtered = allSuggestions.filter(s => {
+        if (currentAiFilter === 'good') return s.type === 'good_play';
+        if (currentAiFilter === 'bad') return s.type === 'coaching_fix';
+        return true;
+      });
+
+      if (filtered.length === 0) {
+        listEl.innerHTML = `<div class="p-3 text-center text-xs text-slate-500">No suggestions match filter.</div>`;
+        return;
+      }
+
+      listEl.innerHTML = filtered.map(s => {
+        const isGood = s.type === 'good_play';
+        const typeBadge = isGood
+          ? `<span class="px-2 py-0.5 rounded text-[9px] font-black uppercase bg-emerald-100 text-emerald-900 border border-emerald-300">🟢 Good Play</span>`
+          : `<span class="px-2 py-0.5 rounded text-[9px] font-black uppercase bg-rose-100 text-rose-900 border border-rose-300">🔴 Coaching Fix</span>`;
+        const borderCls = isGood ? 'border-emerald-200 hover:border-emerald-400' : 'border-rose-200 hover:border-rose-400';
+        const bgCls = isGood ? 'bg-emerald-50/40' : 'bg-rose-50/40';
+
+        return `
+          <div class="p-2.5 rounded-xl border ${borderCls} ${bgCls} space-y-1.5 shadow-2xs transition">
+            <div class="flex items-center justify-between gap-1.5">
+              <div class="flex items-center gap-1.5 flex-wrap">
+                ${typeBadge}
+                <span class="font-bold text-slate-900 text-xs">${s.category}</span>
+                <span class="text-[10px] font-mono text-slate-500">P${s.period} • ${formatMinSec(s.startSec)} - ${formatMinSec(s.endSec)}</span>
+              </div>
+              <div class="flex items-center gap-1">
+                <button onclick="playClip(${s.startSec}, ${s.endSec}, '${s.title.replace(/'/g, "\\'")}', '${s.id}'); if(typeof isTheaterMode !== 'undefined' && isTheaterMode && isFlyoutOpen) toggleFlyoutDrawer(false);" class="px-2 py-1 rounded-lg bg-white hover:bg-tigersGold hover:text-slate-950 text-slate-800 font-bold text-[10px] border border-slate-300 cursor-pointer transition shadow-2xs flex items-center gap-1">
+                  <span>▶️</span> <span>Play</span>
+                </button>
+                <button onclick="addAiSuggestionToTray('${s.id}')" title="Save to Tray folder" class="px-2 py-1 rounded-lg bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold text-[10px] cursor-pointer transition shadow-2xs flex items-center gap-1">
+                  <span>➕</span> <span>To Tray</span>
+                </button>
+              </div>
+            </div>
+            <p class="text-[11px] text-slate-700 leading-relaxed font-medium">${s.tactical_insight}</p>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function renderFilmTrayView() {
+      updateTrayBadges();
+      const folderPillsEl = document.getElementById('tray-folder-pills');
+      const clipsListEl = document.getElementById('tray-clips-list');
+      const folderTitleEl = document.getElementById('active-folder-title');
+
+      const allFolders = getAllTrayFolders();
+      const currentFolderObj = allFolders.find(f => f.id === currentTrayFolder) || allFolders[0];
+      if (folderTitleEl) folderTitleEl.innerText = `${currentFolderObj.icon || '📁'} ${currentFolderObj.name}`;
+
+      const allClips = getCoachingTrayClips();
+
+      // Render Folder Pills
+      if (folderPillsEl) {
+        folderPillsEl.innerHTML = allFolders.map(f => {
+          const count = f.id === "all" ? allClips.length : allClips.filter(c => c.folder === f.id).length;
+          const isActive = f.id === currentTrayFolder;
+          return `
+            <button onclick="setTrayActiveFolder('${f.id}')" class="px-2.5 py-1 rounded-lg font-bold text-[11px] cursor-pointer transition flex items-center gap-1 ${
+              isActive 
+                ? 'bg-slate-900 text-tigersGold shadow-xs' 
+                : 'bg-white hover:bg-slate-100 text-slate-700 border border-slate-300'
+            }">
+              <span>${f.icon || '📁'}</span>
+              <span>${f.name.split(' ')[0]}</span>
+              <span class="text-[9px] px-1 py-0.2 rounded-full ${isActive ? 'bg-slate-800 text-amber-300' : 'bg-slate-200 text-slate-600'} font-mono">${count}</span>
+            </button>
+          `;
+        }).join('');
+      }
+
+      // Render AI Suggested Clips section
+      renderAiSuggestedClips();
+
+      // Render Clips in current folder
+      if (clipsListEl) {
+        const filtered = currentTrayFolder === "all" ? allClips : allClips.filter(c => c.folder === currentTrayFolder);
+
+        if (filtered.length === 0) {
+          clipsListEl.innerHTML = `
+            <div class="py-8 px-4 text-center text-xs text-slate-600 bg-white rounded-2xl border border-slate-200 shadow-sm space-y-2">
+              <div class="w-10 h-10 rounded-full bg-amber-50 text-amber-800 flex items-center justify-center mx-auto text-base">⭐</div>
+              <div class="font-bold text-slate-900">No clips in this folder yet</div>
+              <div class="text-[11px] text-slate-500 max-w-xs mx-auto">
+                While watching game film, click <strong class="text-amber-800">⭐ Flag Clip</strong> or add suggested teaching plays from the AI Film Coach above!
+              </div>
+            </div>
+          `;
+          return;
+        }
+
+        clipsListEl.innerHTML = filtered.map((c, idx) => {
+          const typeBadge = c.type === 'good_play'
+            ? `<span class="px-1.5 py-0.5 rounded text-[9px] font-black uppercase bg-emerald-100 text-emerald-900 border border-emerald-300">🟢 Good Play</span>`
+            : (c.type === 'coaching_fix'
+              ? `<span class="px-1.5 py-0.5 rounded text-[9px] font-black uppercase bg-rose-100 text-rose-900 border border-rose-300">🔴 Coaching Fix</span>`
+              : `<span class="px-1.5 py-0.5 rounded text-[9px] font-black uppercase bg-amber-100 text-amber-900 border border-amber-300">💡 Teaching</span>`);
+
+          const safeTitle = (c.title || 'Clip').replace(/'/g, "\\'");
+          const safeNotes = (c.coach_notes || '').replace(/'/g, "\\'");
+
+          return `
+            <div class="p-3 rounded-2xl bg-white border border-slate-200 hover:border-tigersGold transition shadow-xs space-y-2 group">
+              <div class="flex items-center justify-between gap-1.5">
+                <div class="flex items-center gap-1.5 flex-wrap">
+                  <span class="px-2 py-0.5 rounded bg-slate-900 text-tigersGold font-mono text-[10px] font-bold">#${idx + 1}</span>
+                  <span class="font-bold text-slate-900 text-xs">${c.title}</span>
+                  ${typeBadge}
+                  <span class="text-[11px] font-mono text-slate-500 font-semibold">${formatMinSec(c.start_seconds)} - ${formatMinSec(c.end_seconds)} (${c.duration}s)</span>
+                </div>
+                <div class="flex items-center gap-1 shrink-0">
+                  <button onclick="playClip(${c.start_seconds}, ${c.end_seconds}, '${safeNotes || safeTitle}', '${c.shift_id || idx + 1}'); if(typeof isTheaterMode !== 'undefined' && isTheaterMode && isFlyoutOpen) toggleFlyoutDrawer(false);" class="px-2.5 py-1 rounded-lg bg-tigersGold hover:bg-tigersGoldBright text-slate-950 font-black text-[10px] cursor-pointer transition shadow-2xs flex items-center gap-1">
+                    <span>▶️</span> <span>Play Clip</span>
+                  </button>
+                  <button onclick="removeClipFromTray('${c.id}')" title="Remove from tray" class="px-2 py-1 rounded-lg hover:bg-rose-50 text-slate-400 hover:text-rose-600 font-bold text-xs cursor-pointer transition">
+                    ✕
+                  </button>
+                </div>
+              </div>
+
+              ${c.coach_notes ? `<div class="text-xs text-slate-700 font-medium leading-relaxed bg-slate-50 p-2 rounded-xl border border-slate-100">${c.coach_notes}</div>` : ''}
+
+              <div class="flex items-center justify-between pt-1 border-t border-slate-100 text-[10px]">
+                <div class="flex items-center gap-1.5 text-slate-500">
+                  <span>Folder:</span>
+                  <select onchange="moveClipToFolder('${c.id}', this.value)" class="bg-slate-100 border border-slate-300 rounded px-1.5 py-0.5 text-[10px] font-bold text-slate-800 cursor-pointer">
+                    ${allFolders.filter(f => f.id !== 'all').map(f => `
+                      <option value="${f.id}" ${f.id === c.folder ? 'selected' : ''}>${f.icon || '📁'} ${f.name}</option>
+                    `).join('')}
+                  </select>
+                </div>
+                <span class="text-slate-400 font-mono text-[9px]">${c.game_title ? c.game_title.substring(0, 24) + '...' : ''}</span>
+              </div>
+            </div>
+          `;
+        }).join('');
+      }
+    }
+
+    function playAllClipsInTraySequence() {
+      const allClips = getCoachingTrayClips();
+      const filtered = currentTrayFolder === "all" ? allClips : allClips.filter(c => c.folder === currentTrayFolder);
+      if (filtered.length === 0) {
+        showToast("⚠️ No clips in this folder to play.");
+        return;
+      }
+
+      playTrayClipAtIndex(filtered, 0);
+    }
+
+    function playTrayClipAtIndex(clipsList, idx) {
+      if (idx >= clipsList.length) {
+        showToast("🏁 Completed all clips in film folder!");
+        if (traySequenceTimer) clearInterval(traySequenceTimer);
+        traySequenceTimer = null;
+        return;
+      }
+
+      const clip = clipsList[idx];
+      showToast(`🎬 Playing Tray Clip ${idx + 1} of ${clipsList.length}: ${clip.title}`);
+      playClip(clip.start_seconds, clip.end_seconds, clip.coach_notes || clip.title, clip.shift_id);
+
+      if (traySequenceTimer) clearInterval(traySequenceTimer);
+      traySequenceTimer = setInterval(() => {
+        const cur = Number(getThrottledPlayerTime() || 0);
+        if (cur >= clip.end_seconds - 0.5) {
+          clearInterval(traySequenceTimer);
+          traySequenceTimer = null;
+          if (idx + 1 < clipsList.length) {
+            showToast(`⏸ Clip #${idx + 1} finished. Next clip starting in 3 seconds...`);
+            setTimeout(() => {
+              playTrayClipAtIndex(clipsList, idx + 1);
+            }, 3000);
+          } else {
+            showToast("🏁 Completed all clips in film folder!");
+          }
+        }
+      }, 500);
+    }
+
     function getNormalizedShiftsForGame(game) {
       if (!game) return [];
       let rawClips = [];
@@ -2879,6 +3629,9 @@
             </div>
             <div class="flex items-center gap-1.5 shrink-0">
               ${confBadge}
+              <button onclick="quickFlagShiftToTray(${shiftId}, event)" title="Save to Coaching Film Tray" class="text-xs px-2 py-0.5 rounded-lg bg-amber-50 hover:bg-amber-100 border border-amber-300 text-amber-900 font-bold cursor-pointer transition flex items-center gap-1 shadow-2xs">
+                <span>⭐</span> <span class="hidden sm:inline">Tray</span>
+              </button>
               <button onclick="toggleStarShift(${shiftId}, event)" title="Bookmark shift" class="text-sm leading-none cursor-pointer ${starred ? 'text-amber-500' : 'text-slate-400 hover:text-amber-500'}">
                 ${starred ? '⭐' : '☆'}
               </button>
@@ -3326,10 +4079,83 @@
     }
 
     setInterval(() => {
-      if (currentCVTracking && cvOverlayEnabled) {
+      if ((currentCVTracking && cvOverlayEnabled) || currentStage === 'whiteboard') {
         redrawCanvasLayers();
       }
     }, 250);
+
+    function drawFallbackShiftPositions(w, h) {
+      if (!ctx || !currentGame) return;
+      const shifts = getNormalizedShiftsForGame(currentGame);
+      const curTime = Number(getThrottledPlayerTime() || 0);
+      const shift = (activePlayingShiftId 
+        ? shifts.find(s => Number(s.shift_id) === Number(activePlayingShiftId))
+        : shifts.find(s => curTime >= Number(s.start_seconds || 0) && curTime <= Number(s.end_seconds || (Number(s.start_seconds || 0) + 35)))) || shifts[0];
+      if (!shift) return;
+
+      const lineup = resolveShiftLineup(shift);
+      const zone = String(shift.primary_zone || 'Neutral Zone').toLowerCase();
+
+      let baseX = 0.50;
+      if (zone.includes('defens')) baseX = 0.22;
+      else if (zone.includes('offens')) baseX = 0.78;
+
+      const basePositions = {
+        "G":  { x: 0.08, y: 0.50 },
+        "LD": { x: baseX - 0.10, y: 0.35 },
+        "RD": { x: baseX - 0.10, y: 0.65 },
+        "LW": { x: baseX + 0.06, y: 0.28 },
+        "C":  { x: baseX + 0.02, y: 0.50 },
+        "RW": { x: baseX + 0.06, y: 0.72 }
+      };
+
+      // Draw Tigers Skaters
+      lineup.skaters.forEach(sk => {
+        const bp = basePositions[sk.role] || { x: baseX, y: 0.5 };
+        const px = bp.x * w;
+        const py = bp.y * h;
+        const isSelected = (String(sk.num) === String(currentJersey));
+
+        ctx.save();
+        ctx.beginPath();
+        ctx.arc(px, py, 17, 0, Math.PI * 2);
+        ctx.fillStyle = isSelected ? "#0284c7" : "#f5b316";
+        ctx.fill();
+        ctx.strokeStyle = "#0f172a";
+        ctx.lineWidth = 2.5;
+        ctx.stroke();
+
+        ctx.fillStyle = isSelected ? "#ffffff" : "#0f172a";
+        ctx.font = "900 10.5px 'JetBrains Mono', monospace";
+        ctx.textAlign = "center";
+        ctx.textBaseline = "middle";
+        ctx.fillText(`#${sk.num}`, px, py - 4);
+        ctx.font = "900 8.5px 'Inter', sans-serif";
+        ctx.fillText(sk.role, px, py + 6.5);
+        ctx.restore();
+      });
+
+      // Draw Goalie
+      const gX = basePositions["G"].x * w;
+      const gY = basePositions["G"].y * h;
+      const isGoalieSelected = (String(lineup.goalie.num) === String(currentJersey));
+      ctx.save();
+      ctx.beginPath();
+      ctx.arc(gX, gY, 17, 0, Math.PI * 2);
+      ctx.fillStyle = isGoalieSelected ? "#0284c7" : "#f5b316";
+      ctx.fill();
+      ctx.strokeStyle = "#0f172a";
+      ctx.lineWidth = 2.5;
+      ctx.stroke();
+      ctx.fillStyle = isGoalieSelected ? "#ffffff" : "#0f172a";
+      ctx.font = "900 10.5px 'JetBrains Mono', monospace";
+      ctx.textAlign = "center";
+      ctx.textBaseline = "middle";
+      ctx.fillText(`#${lineup.goalie.num}`, gX, gY - 4);
+      ctx.font = "900 8.5px 'Inter', sans-serif";
+      ctx.fillText("G", gX, gY + 6.5);
+      ctx.restore();
+    }
 
     function redrawCanvasLayers() {
       if (!ctx || !canvas) return;
@@ -3339,6 +4165,8 @@
       const cvFrame = getNearestCVFrame(getThrottledPlayerTime());
       if (cvFrame) {
         drawVerifiedCVFrame(cvFrame, w, h);
+      } else if (currentStage === 'whiteboard' && currentGame) {
+        drawFallbackShiftPositions(w, h);
       }
 
       if (activeSystemTemplate !== "none" && BASELINE_SYSTEMS[activeSystemTemplate]) {
