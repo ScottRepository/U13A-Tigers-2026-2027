@@ -41,28 +41,15 @@ ROSTER_META = {
     98: {"name": "Hudson Barfitt", "surname": "Barfitt", "nat": "G"},
 }
 
-FORWARD_LINES = [
-    {"name": "Line 1", "C": 23, "LW": 10, "RW": 7},
-    {"name": "Line 2", "C": 9,  "LW": 3,  "RW": 5},
-    {"name": "Line 3", "C": 18, "LW": 16, "RW": 11},
-]
-
-DEFENSE_PAIRS = [
-    {"name": "Pair 1", "LD": 28, "RD": 21},
-    {"name": "Pair 2", "LD": 76, "RD": 27},
-    {"name": "Pair 3", "LD": 97, "RD": 21},
-]
-
-SPECIAL_TEAMS_UNITS = {
-    "PP": {"C": 23, "LW": 10, "RW": 7, "LD": 28, "RD": 21},
-    "PK": {"C": 9, "LW": 18, "LD": 28, "RD": 21, "RW": 10},
-}
+# NOTE: Line combinations vary from game to game based on player attendance and in-game decisions.
+# cv_tracker.py dynamically resolves on-ice roles (C, LW, RW, LD, RD) shift-by-shift from the actual skaters present.
 
 
 def resolve_shift_roles(shift: Dict[str, Any]) -> Dict[str, Dict[str, Any]]:
     """
-    Maps shift player_ids to coherent 5-on-ice skater roles (C, LW, RW, LD, RD) + G
-    using strict forward line trios and defense pairings constraints.
+    Dynamically maps shift player_ids to coherent 5-on-ice skater roles (C, LW, RW, LD, RD) + G.
+    Lines change every game and within games based on attendance and in-game decisions,
+    so this assigns roles strictly from the skaters actually active on this specific shift.
     """
     raw_ids = [int(x) for x in (shift.get("player_ids") or []) if str(x).isdigit()]
     goalie_id = next((pid for pid in raw_ids if ROSTER_META.get(pid, {}).get("nat") == "G"), None)
@@ -70,67 +57,84 @@ def resolve_shift_roles(shift: Dict[str, Any]) -> Dict[str, Dict[str, Any]]:
         p_num = shift.get("period", 1)
         goalie_id = 98 if p_num == 3 else 13
 
+    # Skaters actually present on this shift
     skaters = [pid for pid in raw_ids if pid in ROSTER_META and ROSTER_META[pid]["nat"] != "G"]
+    if not skaters:
+        skaters = [9, 10, 7, 28, 21]
 
     assigned: Dict[str, Optional[int]] = {"C": None, "LW": None, "RW": None, "LD": None, "RD": None}
     used = set()
 
-    # Center check from faceoff tracking
+    # 1. Center: prioritize faceoff specialist active on this shift
     center_id = shift.get("center_id")
-    if center_id and int(center_id) in ROSTER_META and ROSTER_META[int(center_id)]["nat"] == "C":
+    if center_id and int(center_id) in skaters:
         assigned["C"] = int(center_id)
         used.add(int(center_id))
+    else:
+        c_cand = next((p for p in skaters if ROSTER_META[p]["nat"] == "C" and p not in used), None)
+        if c_cand:
+            assigned["C"] = c_cand
+            used.add(c_cand)
 
-    # Match best forward line based on detected forwards
-    f_candidates = [p for p in skaters if ROSTER_META[p]["nat"] in ("C", "LW", "RW")]
-    best_line = FORWARD_LINES[0]
-    best_f_overlap = -1
-    for fline in FORWARD_LINES:
-        line_members = {fline["C"], fline["LW"], fline["RW"]}
-        overlap = len(set(f_candidates).intersection(line_members))
-        if assigned["C"] and fline["C"] == assigned["C"]:
-            overlap += 2
-        if overlap > best_f_overlap:
-            best_f_overlap = overlap
-            best_line = fline
+    # 2. Defense: map natural LD and RD from skaters present on this shift
+    d_candidates = [p for p in skaters if ROSTER_META[p]["nat"] in ("LD", "RD") and p not in used]
+    ld_cand = next((p for p in d_candidates if ROSTER_META[p]["nat"] == "LD"), None)
+    if ld_cand:
+        assigned["LD"] = ld_cand
+        used.add(ld_cand)
+    rd_cand = next((p for p in d_candidates if ROSTER_META[p]["nat"] == "RD" and p not in used), None)
+    if rd_cand:
+        assigned["RD"] = rd_cand
+        used.add(rd_cand)
 
-    # Assign forward line positions
-    if assigned["C"] is None:
-        c_cand = next((p for p in f_candidates if ROSTER_META[p]["nat"] == "C" and p not in used), None)
-        assigned["C"] = c_cand or best_line["C"]
-        used.add(assigned["C"])
+    # If any defense slot remains open, use any remaining defensemen
+    for d in d_candidates:
+        if d not in used:
+            if assigned["LD"] is None:
+                assigned["LD"] = d
+                used.add(d)
+            elif assigned["RD"] is None:
+                assigned["RD"] = d
+                used.add(d)
 
-    lw_cand = next((p for p in f_candidates if ROSTER_META[p]["nat"] == "LW" and p not in used), None)
-    assigned["LW"] = lw_cand or best_line["LW"]
-    used.add(assigned["LW"])
+    # 3. Forwards: map natural LW and RW from remaining skaters
+    f_candidates = [p for p in skaters if p not in used]
+    lw_cand = next((p for p in f_candidates if ROSTER_META[p]["nat"] == "LW"), None)
+    if lw_cand:
+        assigned["LW"] = lw_cand
+        used.add(lw_cand)
 
     rw_cand = next((p for p in f_candidates if ROSTER_META[p]["nat"] == "RW" and p not in used), None)
-    assigned["RW"] = rw_cand or best_line["RW"]
-    used.add(assigned["RW"])
+    if rw_cand:
+        assigned["RW"] = rw_cand
+        used.add(rw_cand)
 
-    # Match best defense pair based on detected defensemen
-    d_candidates = [p for p in skaters if ROSTER_META[p]["nat"] in ("LD", "RD")]
-    best_pair = DEFENSE_PAIRS[0]
-    best_d_overlap = -1
-    for dpair in DEFENSE_PAIRS:
-        pair_members = {dpair["LD"], dpair["RD"]}
-        overlap = len(set(d_candidates).intersection(pair_members))
-        if overlap > best_d_overlap:
-            best_d_overlap = overlap
-            best_pair = dpair
+    # Center fallback if not yet assigned
+    if assigned["C"] is None:
+        rem_c = next((p for p in skaters if p not in used), None)
+        if rem_c:
+            assigned["C"] = rem_c
+            used.add(rem_c)
 
-    ld_cand = next((p for p in d_candidates if ROSTER_META[p]["nat"] == "LD" and p not in used), None)
-    assigned["LD"] = ld_cand or best_pair["LD"]
-    used.add(assigned["LD"])
+    # Fill remaining unfilled slots with any remaining skaters present on this shift
+    rem_skaters = [p for p in skaters if p not in used]
+    empty_roles = [r for r in ["LW", "RW", "LD", "RD", "C"] if assigned[r] is None]
+    for r, p in zip(empty_roles, rem_skaters):
+        assigned[r] = p
+        used.add(p)
 
-    rd_cand = next((p for p in d_candidates if ROSTER_META[p]["nat"] == "RD" and p not in used), None)
-    assigned["RD"] = rd_cand or best_pair["RD"]
-    used.add(assigned["RD"])
+    # If shift had fewer than 5 skaters recorded (e.g. 4v4 or PK), fill remaining without duplicates
+    fallback_pool = [9, 10, 7, 28, 21, 18, 3, 5, 27, 76, 97, 11, 16]
+    for r in ["C", "LW", "RW", "LD", "RD"]:
+        if assigned[r] is None:
+            filler = next((p for p in fallback_pool if p not in used), 9)
+            assigned[r] = filler
+            used.add(filler)
 
     result = {}
     for role, pid in assigned.items():
-        p = ROSTER_META.get(pid or 9, {"surname": f"#{pid}"})
-        result[role] = {"num": pid or 9, "role": role, "surname": p["surname"]}
+        p = ROSTER_META.get(pid, {"surname": f"#{pid}"})
+        result[role] = {"num": pid, "role": role, "surname": p["surname"]}
     g_meta = ROSTER_META.get(goalie_id, {"surname": "Hart"})
     result["G"] = {"num": goalie_id, "role": "G", "surname": g_meta["surname"]}
     return result

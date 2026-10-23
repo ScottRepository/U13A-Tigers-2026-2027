@@ -342,15 +342,15 @@ TEAM ROSTER & VISUAL ATTRIBUTES:
   * Left-Hand Forwards: #3 Stewart Dolmage
   * Right-Hand Forwards: #5 Nathan Zhao (wears glasses), #7 Maxwell Dey, #10 Arjun Manjunath, #11 Andrew Bichay, #16 Joshua Liu, #88 Roy Chen
 
-REGULAR LINE COMBINATIONS & DEFENSIVE PAIRINGS:
-- Forward Line 1: #10 Arjun Manjunath (LW) — #23 Easton Carpentier (C) — #7 Maxwell Dey (RW)
-- Forward Line 2: #3 Stewart Dolmage (LW) — #9 Oliver Patterson (C) — #5 Nathan Zhao (RW)
-- Forward Line 3: #16 Joshua Liu (LW) — #18 Nathan Carinci (C) — #11 Andrew Bichay (RW) / #88 Roy Chen (RW)
-- Defense Pair 1: #28 Ross Elley (LD) — #21 Caleb Irgengioro-Wu (RD)
-- Defense Pair 2: #76 Matt Davis (LD) — #27 Alen Fazlic (RD)
-- Defense Pair 3: #97 Hudson Millar (LD) — #21 Caleb Irgengioro-Wu (RD)
-- Powerplay Unit (PP): #23, #10, #7, #28, #21
-- Penalty Kill Unit (PK): #9, #18, #28, #21, #10
+LINES ARE NOT THE SAME EVERY GAME (DYNAMIC SHIFT IDENTIFICATION):
+- CRITICAL: Forward line combinations and defensive pairings are NOT the same every game! Coaches modify line trios and defense pairs depending on player attendance, game matchups, player availability, and mid-game line shuffling.
+- DO NOT assume fixed forward lines or defensive pairings across games.
+- Instead, observe who is physically skating together on the ice for each specific shift:
+  * Centers (taking the draw at faceoffs): #9 Oliver Patterson (LH), #18 Nathan Carinci (RH), #23 Easton Carpentier (LH)
+  * Wingers / Forwards: #3 Stewart Dolmage (LH), #5 Nathan Zhao (RH, wears glasses), #7 Maxwell Dey (RH), #10 Arjun Manjunath (RH), #11 Andrew Bichay (RH), #16 Joshua Liu (RH), #88 Roy Chen (RH)
+  * Defensemen: #21 Caleb Irgengioro-Wu (RH), #27 Alen Fazlic (RH), #28 Ross Elley (LH), #76 Matt Davis (LH), #97 Hudson Millar (LH)
+  * Goalies: #13 Matthew Hart (Catches Left, Yellow/White pads), #98 Hudson Barfitt (Catches Left, Red/White pads)
+- Group each shift's "player_ids" according to the 5 skaters actually participating during that specific active clip.
 
 DETECTION & CLASSIFICATION RULES:
 
@@ -361,11 +361,11 @@ DETECTION & CLASSIFICATION RULES:
    - Exact Clip End (end_seconds): Set end_seconds to the EXACT second the whistle blows and play stops (or when the line changes). Each clip should be 20 to 55 seconds of continuous live action — NEVER span across a stoppage or whistle.
    - Look for the opening faceoff puck drop of the 1st, 2nd, and 3rd periods and record their exact video timestamps in seconds under "periods" ("1", "2", "3").
 
-2. PLAYER ATTRIBUTION VIA REGULAR LINES & FACEOFFS:
-   - Identify the 5 Tigers skaters on the ice using the line combinations above. Skaters frequently shift on together as lines and D-pairs.
+2. DYNAMIC PLAYER ATTRIBUTION & FACEOFFS:
+   - Identify the 5 Tigers skaters on the ice shift-by-shift.
    - Faceoffs: Identify the Tigers center taking the draw by checking their jersey number and stick curve (#9 LH, #18 RH, or #23 LH) and set "center_id".
    - Goalie Identification: Check the Tigers net at the start of each period (#13 has Yellow/White pads, #98 has Red/White pads) and include the active goalie number in player_ids.
-   - Skaters on Ice: Populate "player_ids" with the 5 Tigers skaters (and/or goalie) visible on each shift, distributing shifts realistically across all 3 forward lines and defense pairings.
+   - Skaters on Ice: Populate "player_ids" with the 5 Tigers skaters (and/or goalie) visible on each shift, capturing line changes as they happen.
 
 3. SPECIAL TEAMS & PENALTY TRACKING:
    - Watch for referee arm signals for delayed penalties, players skating to the penalty box, and arena scoreboard penalty clocks:

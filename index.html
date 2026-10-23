@@ -608,6 +608,9 @@
             <button onclick="scrollReportTo('report-shots-card')" class="px-2.5 py-1 rounded-lg bg-white hover:bg-tigersGold text-slate-800 border border-slate-300 shadow-sm whitespace-nowrap cursor-pointer transition">
               🎯 Shots & Corsi
             </button>
+            <button onclick="scrollReportTo('report-lines-card')" class="px-2.5 py-1 rounded-lg bg-white hover:bg-tigersGold text-slate-800 border border-slate-300 shadow-sm whitespace-nowrap cursor-pointer transition">
+              👥 Lines & Pairings
+            </button>
             <button onclick="scrollReportTo('report-faceoffs-card')" class="px-2.5 py-1 rounded-lg bg-white hover:bg-tigersGold text-slate-800 border border-slate-300 shadow-sm whitespace-nowrap cursor-pointer transition">
               🏒 Faceoffs
             </button>
@@ -855,6 +858,50 @@
             </div>
             <div id="icetime-leaders-list" class="space-y-1.5 text-xs">
               <!-- Dynamically populated top 5 skaters -->
+            </div>
+          </div>
+
+          <!-- 7. GAME LINE COMBINATIONS & LINE CHEMISTRY -->
+          <div id="report-lines-card" class="bg-white p-3.5 rounded-2xl border border-slate-200 shadow-sm space-y-3">
+            <div class="flex items-center justify-between">
+              <div>
+                <h3 class="text-xs font-display font-bold text-slate-900 uppercase tracking-wider flex items-center gap-1.5">
+                  <span>👥</span> Game Line Combinations & Chemistry
+                </h3>
+                <div class="text-[10px] text-slate-500 font-medium">Dynamic combinations discovered from shifts in this game</div>
+              </div>
+              <span class="text-[10px] bg-amber-50 border border-amber-300 text-amber-900 px-2 py-0.5 rounded-full font-mono font-bold">Game-Specific</span>
+            </div>
+
+            <!-- Active Lineup for this game -->
+            <div class="p-2.5 bg-slate-50 rounded-xl border border-slate-200 space-y-1.5">
+              <div class="text-[10px] font-bold text-slate-600 uppercase tracking-wider flex items-center justify-between">
+                <span>Active Lineup In This Game</span>
+                <span class="text-[9px] text-slate-400 font-normal">Click player to jump</span>
+              </div>
+              <div id="game-active-lineup-badges" class="flex flex-wrap gap-1">
+                <!-- Dynamically populated badges -->
+              </div>
+            </div>
+
+            <!-- Forward Trios Rolled This Game -->
+            <div class="space-y-1.5">
+              <div class="text-[11px] font-display font-bold text-amber-900 uppercase tracking-wider flex items-center gap-1">
+                <span>🏒</span> Forward Line Trios (Ranked by Shifts Together)
+              </div>
+              <div id="game-forward-lines-list" class="space-y-2">
+                <!-- Dynamically populated forward combinations -->
+              </div>
+            </div>
+
+            <!-- Defense Pairings Rolled This Game -->
+            <div class="space-y-1.5 pt-1">
+              <div class="text-[11px] font-display font-bold text-sky-900 uppercase tracking-wider flex items-center gap-1">
+                <span>🛡️</span> Defense Pairings (Ranked by Shifts Together)
+              </div>
+              <div id="game-defense-pairs-list" class="space-y-2">
+                <!-- Dynamically populated defense pairs -->
+              </div>
             </div>
           </div>
 
@@ -2000,6 +2047,142 @@
             `).join('')
           : '<div class="text-slate-500">No shift telemetry recorded.</div>';
       }
+
+      // 9. DYNAMIC GAME LINE COMBINATIONS & LINE CHEMISTRY
+      renderGameLineCombinations(shifts);
+    }
+
+    let currentLineFilter = null;
+
+    function renderGameLineCombinations(shifts) {
+      const container = document.getElementById('report-lines-card');
+      if (!container) return;
+
+      const forwardCombos = {};
+      const defenseCombos = {};
+      const activeLineupMap = {};
+
+      shifts.forEach(s => {
+        const st = Number(s.start_seconds || 0);
+        const en = Number(s.end_seconds || (st + 35));
+        const dur = Math.max(15, en - st);
+        const pIds = (s.player_ids || []).map(Number).filter(p => !isNaN(p) && p in ROSTER_POSITIONS);
+
+        // Track active players in this game's lineup
+        pIds.forEach(p => {
+          activeLineupMap[p] = (activeLineupMap[p] || 0) + 1;
+        });
+
+        // Separate skaters into forwards and defensemen
+        const fIds = pIds.filter(p => ROSTER_POSITIONS[p].pos !== 'G' && ROSTER_POSITIONS[p].pos !== 'D').sort((a,b) => a-b);
+        const dIds = pIds.filter(p => ROSTER_POSITIONS[p].pos === 'D').sort((a,b) => a-b);
+
+        if (fIds.length >= 2) {
+          const fKey = fIds.join('-');
+          if (!forwardCombos[fKey]) {
+            forwardCombos[fKey] = { ids: fIds, shifts: 0, seconds: 0, shiftIds: [] };
+          }
+          forwardCombos[fKey].shifts++;
+          forwardCombos[fKey].seconds += dur;
+          if (s.shift_id) forwardCombos[fKey].shiftIds.push(s.shift_id);
+        }
+
+        if (dIds.length >= 2) {
+          const dKey = dIds.join('-');
+          if (!defenseCombos[dKey]) {
+            defenseCombos[dKey] = { ids: dIds, shifts: 0, seconds: 0, shiftIds: [] };
+          }
+          defenseCombos[dKey].shifts++;
+          defenseCombos[dKey].seconds += dur;
+          if (s.shift_id) defenseCombos[dKey].shiftIds.push(s.shift_id);
+        }
+      });
+
+      const sortedF = Object.values(forwardCombos).sort((a,b) => b.shifts - a.shifts);
+      const sortedD = Object.values(defenseCombos).sort((a,b) => b.shifts - a.shifts);
+
+      // Render forward lines list
+      const fListEl = document.getElementById('game-forward-lines-list');
+      if (fListEl) {
+        fListEl.innerHTML = sortedF.length > 0
+          ? sortedF.slice(0, 5).map((fc, idx) => {
+              const names = fc.ids.map(id => {
+                const p = ROSTER_POSITIONS[id];
+                return `<span class="inline-flex items-center gap-1 font-bold"><span class="px-1.5 py-0.2 rounded bg-slate-900 text-tigersGold text-[10px]">#${id}</span> <span class="text-slate-800 text-xs">${p ? p.name.split(' ').pop() : id}</span></span>`;
+              }).join(' <span class="text-slate-300 font-bold">•</span> ');
+              return `
+                <div class="p-2.5 rounded-xl bg-slate-50 border border-slate-200 hover:border-tigersGold transition space-y-1.5">
+                  <div class="flex items-center justify-between">
+                    <span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-amber-100 text-amber-900 border border-amber-300">Trio ${idx + 1} (${fc.shifts} shifts)</span>
+                    <span class="text-[10px] font-mono text-slate-500 font-bold">${formatMinSec(fc.seconds)} TOI</span>
+                  </div>
+                  <div class="flex flex-wrap items-center gap-1.5 pt-0.5">${names}</div>
+                  <button onclick="filterShiftsByLine([${fc.ids.join(',')}])" class="w-full py-1 rounded-lg bg-white hover:bg-tigersGold hover:text-slate-950 text-slate-700 text-[10px] font-bold border border-slate-300 cursor-pointer transition shadow-2xs">
+                    🎬 Filter & Watch Trio Shifts (${fc.shifts}) →
+                  </button>
+                </div>
+              `;
+            }).join('')
+          : '<div class="text-xs text-slate-500">No forward combinations detected in this game.</div>';
+      }
+
+      // Render defense pairs list
+      const dListEl = document.getElementById('game-defense-pairs-list');
+      if (dListEl) {
+        dListEl.innerHTML = sortedD.length > 0
+          ? sortedD.slice(0, 5).map((dc, idx) => {
+              const names = dc.ids.map(id => {
+                const p = ROSTER_POSITIONS[id];
+                return `<span class="inline-flex items-center gap-1 font-bold"><span class="px-1.5 py-0.2 rounded bg-slate-800 text-sky-300 text-[10px]">#${id}</span> <span class="text-slate-800 text-xs">${p ? p.name.split(' ').pop() : id}</span></span>`;
+              }).join(' <span class="text-slate-300 font-bold">•</span> ');
+              return `
+                <div class="p-2.5 rounded-xl bg-slate-50 border border-slate-200 hover:border-tigersGold transition space-y-1.5">
+                  <div class="flex items-center justify-between">
+                    <span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-sky-100 text-sky-900 border border-sky-300">D-Pair ${idx + 1} (${dc.shifts} shifts)</span>
+                    <span class="text-[10px] font-mono text-slate-500 font-bold">${formatMinSec(dc.seconds)} TOI</span>
+                  </div>
+                  <div class="flex flex-wrap items-center gap-1.5 pt-0.5">${names}</div>
+                  <button onclick="filterShiftsByLine([${dc.ids.join(',')}])" class="w-full py-1 rounded-lg bg-white hover:bg-tigersGold hover:text-slate-950 text-slate-700 text-[10px] font-bold border border-slate-300 cursor-pointer transition shadow-2xs">
+                    🎬 Filter & Watch Pair Shifts (${dc.shifts}) →
+                  </button>
+                </div>
+              `;
+            }).join('')
+          : '<div class="text-xs text-slate-500">No defense pairs detected in this game.</div>';
+      }
+
+      // Render active lineup attendance badges
+      const lineupEl = document.getElementById('game-active-lineup-badges');
+      if (lineupEl) {
+        const activeIds = Object.keys(activeLineupMap).map(Number).sort((a,b) => a-b);
+        lineupEl.innerHTML = activeIds.map(id => {
+          const p = ROSTER_POSITIONS[id];
+          const isG = p?.pos === 'G';
+          const isD = p?.pos === 'D';
+          const bg = isG ? 'bg-sky-100 text-sky-800 border-sky-300' : (isD ? 'bg-indigo-100 text-indigo-800 border-indigo-300' : 'bg-amber-100 text-amber-900 border-amber-300');
+          return `
+            <button onclick="actionJumpToMetric('player', ${id})" class="px-2 py-0.5 rounded-lg border text-[10px] font-bold cursor-pointer transition hover:scale-105 shadow-2xs ${bg}" title="${p?.name || id} (${p?.pos || ''}) — ${activeLineupMap[id]} shifts">
+              #${id} ${p ? p.name.split(' ').pop() : id} <span class="opacity-75 font-normal text-[9px]">(${activeLineupMap[id]})</span>
+            </button>
+          `;
+        }).join('');
+      }
+    }
+
+    function filterShiftsByLine(playerIds) {
+      currentLineFilter = playerIds;
+      currentJersey = "all";
+      const sel = document.getElementById('player-select');
+      if (sel) sel.value = "all";
+      switchViewMode('coaches');
+      const names = playerIds.map(id => `#${id}`).join(', ');
+      showToast(`🔍 Showing shifts with line (${names})`);
+    }
+
+    function clearLineFilter() {
+      currentLineFilter = null;
+      loadCoachingClips();
+      showToast("Cleared line filter");
     }
 
     function renderBreakoutPanel() {
@@ -2448,6 +2631,7 @@
     }
 
     function selectPlayer(num, autoSwitchToStats = true) {
+      currentLineFilter = null;
       currentJersey = String(num);
       const sel = document.getElementById('player-select');
       if (sel) sel.value = currentJersey;
@@ -3537,6 +3721,13 @@
         }
       }
 
+      if (currentLineFilter && Array.isArray(currentLineFilter) && currentLineFilter.length > 0) {
+        filtered = filtered.filter(s => {
+          const pIds = (s.player_ids || s.players || []).map(Number);
+          return currentLineFilter.some(pid => pIds.includes(pid));
+        });
+      }
+
       if (activeCategory !== 'all') {
         filtered = filtered.filter(s => matchesCategoryFilter(s, activeCategory));
       }
@@ -3555,9 +3746,14 @@
 
       const pName = currentJersey === "all" ? "All 17 Players" : `#${currentJersey} ${ROSTER_POSITIONS[currentJersey]?.name || ''}`;
       if (titleEl) {
-        titleEl.innerText = isBreakoutOnly 
-          ? `Breakouts • ${pName}` 
-          : `${pName} (${filtered.length} shifts)`;
+        if (currentLineFilter && Array.isArray(currentLineFilter) && currentLineFilter.length > 0) {
+          const lineNames = currentLineFilter.map(id => `#${id}`).join(' • ');
+          titleEl.innerHTML = `Line: [${lineNames}] (${filtered.length} shifts) <button onclick="clearLineFilter()" class="ml-1.5 px-2 py-0.5 rounded-full bg-slate-200 hover:bg-rose-100 hover:text-rose-700 text-[10px] font-bold cursor-pointer transition">✕ Clear</button>`;
+        } else {
+          titleEl.innerText = isBreakoutOnly 
+            ? `Breakouts • ${pName}` 
+            : `${pName} (${filtered.length} shifts)`;
+        }
       }
       if (countEl) countEl.innerText = `${filtered.length}`;
       if (!container) return;
