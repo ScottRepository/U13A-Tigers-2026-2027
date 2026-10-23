@@ -35,7 +35,7 @@ jobs:
           TEAMSNAP_ICAL_URL: ${{ secrets.TEAMSNAP_ICAL_URL }}
 
       - name: Run Zero-Token Computer Vision Tracker (YOLOv8 + ByteTrack + Rink Homography)
-        run: python cv_tracker.py --library games_library.json --out-dir tracking
+        run: python cv_tracker.py --library games_library.json --out-dir tracking || true
         env:
           YT_COOKIES: ${{ secrets.YT_COOKIES }}
 

@@ -394,7 +394,6 @@ DETECTION & CLASSIFICATION RULES:
 
 Return strictly valid JSON adhering to the configured schema.
 """
-"""
 
 def select_latest_gemini_model(client: Any) -> List[str]:
     """
