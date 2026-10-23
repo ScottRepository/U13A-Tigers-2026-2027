@@ -41,43 +41,91 @@ ROSTER_META = {
     98: {"name": "Hudson Barfitt", "surname": "Barfitt", "nat": "G"},
 }
 
+FORWARD_LINES = [
+    {"name": "Line 1", "C": 23, "LW": 10, "RW": 7},
+    {"name": "Line 2", "C": 9,  "LW": 3,  "RW": 5},
+    {"name": "Line 3", "C": 18, "LW": 16, "RW": 11},
+]
+
+DEFENSE_PAIRS = [
+    {"name": "Pair 1", "LD": 28, "RD": 21},
+    {"name": "Pair 2", "LD": 76, "RD": 27},
+    {"name": "Pair 3", "LD": 97, "RD": 21},
+]
+
+SPECIAL_TEAMS_UNITS = {
+    "PP": {"C": 23, "LW": 10, "RW": 7, "LD": 28, "RD": 21},
+    "PK": {"C": 9, "LW": 18, "LD": 28, "RD": 21, "RW": 10},
+}
+
 
 def resolve_shift_roles(shift: Dict[str, Any]) -> Dict[str, Dict[str, Any]]:
     """
-    Maps the shift's player_ids to the 5 on-ice skater roles (C, LW, RW, LD, RD) + G.
+    Maps shift player_ids to coherent 5-on-ice skater roles (C, LW, RW, LD, RD) + G
+    using strict forward line trios and defense pairings constraints.
     """
     raw_ids = [int(x) for x in (shift.get("player_ids") or []) if str(x).isdigit()]
-    goalie_id = next((pid for pid in raw_ids if ROSTER_META.get(pid, {}).get("nat") == "G"), 13)
-    skaters = [pid for pid in raw_ids if pid in ROSTER_META and ROSTER_META[pid]["nat"] != "G"]
+    goalie_id = next((pid for pid in raw_ids if ROSTER_META.get(pid, {}).get("nat") == "G"), None)
+    if not goalie_id:
+        p_num = shift.get("period", 1)
+        goalie_id = 98 if p_num == 3 else 13
 
-    fallback_order = [9, 10, 7, 21, 28, 23, 11, 3, 27, 76, 18, 5, 16, 97, 88]
-    for fid in fallback_order:
-        if len(skaters) < 5 and fid not in skaters:
-            skaters.append(fid)
+    skaters = [pid for pid in raw_ids if pid in ROSTER_META and ROSTER_META[pid]["nat"] != "G"]
 
     assigned: Dict[str, Optional[int]] = {"C": None, "LW": None, "RW": None, "LD": None, "RD": None}
     used = set()
 
+    # Center check from faceoff tracking
     center_id = shift.get("center_id")
-    if center_id and int(center_id) in ROSTER_META and ROSTER_META[int(center_id)]["nat"] != "G":
+    if center_id and int(center_id) in ROSTER_META and ROSTER_META[int(center_id)]["nat"] == "C":
         assigned["C"] = int(center_id)
         used.add(int(center_id))
 
-    for pid in skaters:
-        if pid in used:
-            continue
-        nat = ROSTER_META[pid]["nat"]
-        if nat in assigned and assigned[nat] is None:
-            assigned[nat] = pid
-            used.add(pid)
+    # Match best forward line based on detected forwards
+    f_candidates = [p for p in skaters if ROSTER_META[p]["nat"] in ("C", "LW", "RW")]
+    best_line = FORWARD_LINES[0]
+    best_f_overlap = -1
+    for fline in FORWARD_LINES:
+        line_members = {fline["C"], fline["LW"], fline["RW"]}
+        overlap = len(set(f_candidates).intersection(line_members))
+        if assigned["C"] and fline["C"] == assigned["C"]:
+            overlap += 2
+        if overlap > best_f_overlap:
+            best_f_overlap = overlap
+            best_line = fline
 
-    for role in ["C", "LW", "RW", "LD", "RD"]:
-        if assigned[role] is None:
-            nxt = next((pid for pid in skaters if pid not in used), None)
-            if nxt is None:
-                nxt = next((pid for pid in fallback_order if pid not in used), 9)
-            assigned[role] = nxt
-            used.add(nxt)
+    # Assign forward line positions
+    if assigned["C"] is None:
+        c_cand = next((p for p in f_candidates if ROSTER_META[p]["nat"] == "C" and p not in used), None)
+        assigned["C"] = c_cand or best_line["C"]
+        used.add(assigned["C"])
+
+    lw_cand = next((p for p in f_candidates if ROSTER_META[p]["nat"] == "LW" and p not in used), None)
+    assigned["LW"] = lw_cand or best_line["LW"]
+    used.add(assigned["LW"])
+
+    rw_cand = next((p for p in f_candidates if ROSTER_META[p]["nat"] == "RW" and p not in used), None)
+    assigned["RW"] = rw_cand or best_line["RW"]
+    used.add(assigned["RW"])
+
+    # Match best defense pair based on detected defensemen
+    d_candidates = [p for p in skaters if ROSTER_META[p]["nat"] in ("LD", "RD")]
+    best_pair = DEFENSE_PAIRS[0]
+    best_d_overlap = -1
+    for dpair in DEFENSE_PAIRS:
+        pair_members = {dpair["LD"], dpair["RD"]}
+        overlap = len(set(d_candidates).intersection(pair_members))
+        if overlap > best_d_overlap:
+            best_d_overlap = overlap
+            best_pair = dpair
+
+    ld_cand = next((p for p in d_candidates if ROSTER_META[p]["nat"] == "LD" and p not in used), None)
+    assigned["LD"] = ld_cand or best_pair["LD"]
+    used.add(assigned["LD"])
+
+    rd_cand = next((p for p in d_candidates if ROSTER_META[p]["nat"] == "RD" and p not in used), None)
+    assigned["RD"] = rd_cand or best_pair["RD"]
+    used.add(assigned["RD"])
 
     result = {}
     for role, pid in assigned.items():
@@ -88,12 +136,12 @@ def resolve_shift_roles(shift: Dict[str, Any]) -> Dict[str, Dict[str, Any]]:
     return result
 
 
-def estimate_ice_bounds_and_pan(frame_bgr: Any, primary_zone: str) -> Tuple[float, float, float]:
+def estimate_ice_bounds_and_pan(frame_bgr: Any, primary_zone: str) -> Tuple[float, float, float, str]:
     """
     Uses OpenCV HSV color segmentation on the frame to find:
     1. The vertical bounds of the ice sheet (ice_top_y, ice_bottom_y) in normalized [0..1] coords
     2. The horizontal camera pan center (cam_rink_x in [0.15 .. 0.85]) based on blue/red ice lines
-       and the shift's primary_zone.
+    3. The detected active zone ('Defensive Zone', 'Neutral Zone', 'Offensive Zone') based on blue line positions.
     """
     import cv2
     import numpy as np
@@ -103,41 +151,55 @@ def estimate_ice_bounds_and_pan(frame_bgr: Any, primary_zone: str) -> Tuple[floa
     hsv = cv2.cvtColor(small, cv2.COLOR_BGR2HSV)
 
     # 1. Ice sheet mask (high brightness, low-to-moderate saturation)
-    ice_mask = cv2.inRange(hsv, np.array([0, 0, 145]), np.array([180, 75, 255]))
+    ice_mask = cv2.inRange(hsv, np.array([0, 0, 140]), np.array([180, 80, 255]))
     row_counts = np.mean(ice_mask > 0, axis=1)
-    ice_rows = np.where(row_counts > 0.35)[0]
+    ice_rows = np.where(row_counts > 0.30)[0]
 
     if len(ice_rows) >= 10:
-        ice_top_y = max(0.18, float(ice_rows[0]) / 180.0)
+        ice_top_y = max(0.16, float(ice_rows[0]) / 180.0)
         ice_bottom_y = min(0.96, float(ice_rows[-1]) / 180.0)
     else:
-        ice_top_y, ice_bottom_y = 0.28, 0.92
+        ice_top_y, ice_bottom_y = 0.25, 0.92
 
     if ice_bottom_y - ice_top_y < 0.25:
-        ice_top_y, ice_bottom_y = 0.28, 0.92
+        ice_top_y, ice_bottom_y = 0.25, 0.92
 
-    # 2. Detect painted Blue Lines & Red Line within the ice region to refine camera pan
-    zone_lower = (primary_zone or "Neutral Zone").lower()
-    if "offensive" in zone_lower:
-        base_pan_x = 0.72
-    elif "defensive" in zone_lower:
-        base_pan_x = 0.28
-    else:
-        base_pan_x = 0.50
-
-    blue_mask = cv2.inRange(hsv, np.array([100, 70, 90]), np.array([135, 255, 255]))
+    # 2. Detect painted regulation Blue Lines (H: 98..130, S: 70..255, V: 75..255)
+    blue_mask = cv2.inRange(hsv, np.array([98, 70, 75]), np.array([130, 255, 255]))
     blue_mask[:int(ice_top_y * 180), :] = 0
     blue_mask[int(ice_bottom_y * 180):, :] = 0
 
     col_blue = np.sum(blue_mask > 0, axis=0)
-    peak_cols = np.where(col_blue > 18)[0]
+    peak_cols = np.where(col_blue > 14)[0]
+
+    zone_lower = (primary_zone or "Neutral Zone").lower()
+    if "offensive" in zone_lower:
+        base_pan_x = 0.74
+        detected_zone = "Offensive Zone"
+    elif "defensive" in zone_lower:
+        base_pan_x = 0.26
+        detected_zone = "Defensive Zone"
+    else:
+        base_pan_x = 0.50
+        detected_zone = "Neutral Zone"
+
     if len(peak_cols) > 0:
         mean_blue_x = float(np.mean(peak_cols)) / 320.0
-        # If the blue line is on the left side of the screen (mean_blue_x < 0.4), camera is aimed right
-        pan_adjust = (0.50 - mean_blue_x) * 0.22
-        base_pan_x = max(0.18, min(0.82, base_pan_x + pan_adjust))
+        # If blue line is near the left edge of frame (mean_blue_x < 0.35), camera is panned deep into O-Zone
+        if mean_blue_x < 0.35:
+            detected_zone = "Offensive Zone"
+            base_pan_x = max(0.68, min(0.85, 0.72 + (0.35 - mean_blue_x) * 0.3))
+        # If blue line is near the right edge of frame (mean_blue_x > 0.65), camera is panned into D-Zone
+        elif mean_blue_x > 0.65:
+            detected_zone = "Defensive Zone"
+            base_pan_x = max(0.15, min(0.32, 0.28 - (mean_blue_x - 0.65) * 0.3))
+        else:
+            # Blue line is in middle of frame -> Neutral zone transition
+            detected_zone = "Neutral Zone"
+            pan_adjust = (0.50 - mean_blue_x) * 0.22
+            base_pan_x = max(0.35, min(0.65, 0.50 + pan_adjust))
 
-    return ice_top_y, ice_bottom_y, base_pan_x
+    return ice_top_y, ice_bottom_y, base_pan_x, detected_zone
 
 
 def classify_skater_team(frame_bgr: Any, x1: int, y1: int, x2: int, y2: int, tigers_wear_dark: bool) -> str:
@@ -198,18 +260,42 @@ def download_youtube_video_lowres(video_id: str, out_path: str) -> bool:
 
     url = f"https://www.youtube.com/watch?v={video_id}"
     cookie_path = os.path.join(os.path.dirname(out_path), "yt_cookies.txt")
+    
+    # Try fetching cookie content from env or local file or settings
     raw_cookies = (os.environ.get("YT_COOKIES") or "").strip()
-    has_cookies = False
-    if raw_cookies and ("youtube.com" in raw_cookies or "Netscape" in raw_cookies):
+    if not raw_cookies and os.path.exists("youtube_cookies.txt"):
         try:
-            with open(cookie_path, "w", encoding="utf-8") as cf:
-                cf.write(raw_cookies)
-            has_cookies = True
+            with open("youtube_cookies.txt", "r", encoding="utf-8") as ycf:
+                raw_cookies = ycf.read().strip()
         except Exception:
+            pass
+
+    if not raw_cookies and os.path.exists("games_library.json"):
+        try:
+            with open("games_library.json", "r", encoding="utf-8") as glf:
+                gdata = json.load(glf)
+                raw_cookies = (gdata.get("settings", {}).get("yt_cookies") or "").strip()
+        except Exception:
+            pass
+
+    has_cookies = False
+    if raw_cookies:
+        try:
+            cookie_content = raw_cookies
+            if not cookie_content.startswith("# Netscape"):
+                cookie_content = "# Netscape HTTP Cookie File\n# Generated for Hockey Analysis App\n" + cookie_content
+            with open(cookie_path, "w", encoding="utf-8") as cf:
+                cf.write(cookie_content)
+            has_cookies = True
+            print(f"[cv_tracker] Loaded YouTube cookies ({len(cookie_content)} bytes)")
+        except Exception as ce:
+            print(f"[cv_tracker] Warning: Could not write cookie file: {ce}")
             has_cookies = False
 
     client_attempts = [
+        (["web"], has_cookies),
         (["ios", "web"], has_cookies),
+        (["android", "ios"], has_cookies),
         (["mweb", "tv", "web"], False),
         (["android_vr", "web"], False),
     ]
@@ -234,6 +320,7 @@ def download_youtube_video_lowres(video_id: str, out_path: str) -> bool:
             with yt_dlp.YoutubeDL(ydl_opts) as ydl:
                 ydl.download([url])
             if os.path.exists(out_path) and os.path.getsize(out_path) > 100_000:
+                print(f"[cv_tracker] Successfully downloaded video {video_id} ({os.path.getsize(out_path)} bytes)")
                 return True
         except Exception as exc:
             print(f"[cv_tracker] yt-dlp notice ({clients}, cookies={use_c}) for {video_id}: {exc}", flush=True)
@@ -307,7 +394,7 @@ def track_game_video(game: Dict[str, Any], out_dir: str, sample_fps: float = 4.0
                     t_cur += step_sec
                     continue
 
-                ice_top, ice_bot, cam_pan_x = estimate_ice_bounds_and_pan(frame, primary_zone)
+                ice_top, ice_bot, cam_pan_x, frame_zone = estimate_ice_bounds_and_pan(frame, primary_zone)
 
                 results = model.track(
                     frame,
@@ -416,6 +503,8 @@ def track_game_video(game: Dict[str, Any], out_dir: str, sample_fps: float = 4.0
                 frames_dict[t_key] = {
                     "t": round(t_cur, 2),
                     "shift_id": shift.get("shift_id", 1),
+                    "zone": frame_zone,
+                    "pan": round(cam_pan_x, 3),
                     "tigers": assigned_tigers,
                     "opponents": [
                         {"vx": ob["vx"], "vy": ob["vy"], "rx": ob["rx"], "ry": ob["ry"]}

@@ -2402,9 +2402,14 @@
                 <div class="text-xs text-slate-700 font-medium leading-relaxed">${notes}</div>
                 <div class="flex items-center justify-between pt-1">
                   <span class="text-[10px] text-slate-400 group-hover:text-amber-700 font-semibold transition">Click anywhere to jump to clip</span>
-                  <span class="px-2 py-0.5 rounded-lg bg-white group-hover:bg-tigersGold group-hover:text-slate-950 text-slate-700 font-bold text-[10px] border border-slate-300 group-hover:border-tigersGold transition shadow-2xs flex items-center gap-1">
-                    <span>▶️</span> <span>Play Clip</span>
-                  </span>
+                  <div class="flex items-center gap-1.5">
+                    <button onclick="quickFlagShiftToTray(${s.shift_id || (idx + 1)}, event)" title="Save this shift to coaching film tray" class="px-2 py-0.5 rounded-lg bg-amber-100 hover:bg-amber-400 text-amber-950 font-bold text-[10px] border border-amber-300 transition flex items-center gap-1 cursor-pointer">
+                      <span>⭐</span> <span>Tray</span>
+                    </button>
+                    <span class="px-2 py-0.5 rounded-lg bg-white group-hover:bg-tigersGold group-hover:text-slate-950 text-slate-700 font-bold text-[10px] border border-slate-300 group-hover:border-tigersGold transition shadow-2xs flex items-center gap-1">
+                      <span>▶️</span> <span>Play Clip</span>
+                    </span>
+                  </div>
                 </div>
               </div>
             `;
@@ -2998,6 +3003,12 @@
         renderFilmTrayView();
       }
     }
+
+    // Global alias helpers for UI event handlers
+    window.flagClip = openSaveToTrayModal;
+    window.openSaveTrayModal = openSaveToTrayModal;
+    window.quickFlagShiftToTray = quickFlagShiftToTray;
+    window.flagShiftToTrayDirectly = quickFlagShiftToTray;
 
     function quickFlagShiftToTray(shiftId, ev) {
       if (ev && typeof ev.stopPropagation === 'function') ev.stopPropagation();

@@ -342,6 +342,16 @@ TEAM ROSTER & VISUAL ATTRIBUTES:
   * Left-Hand Forwards: #3 Stewart Dolmage
   * Right-Hand Forwards: #5 Nathan Zhao (wears glasses), #7 Maxwell Dey, #10 Arjun Manjunath, #11 Andrew Bichay, #16 Joshua Liu, #88 Roy Chen
 
+REGULAR LINE COMBINATIONS & DEFENSIVE PAIRINGS:
+- Forward Line 1: #10 Arjun Manjunath (LW) — #23 Easton Carpentier (C) — #7 Maxwell Dey (RW)
+- Forward Line 2: #3 Stewart Dolmage (LW) — #9 Oliver Patterson (C) — #5 Nathan Zhao (RW)
+- Forward Line 3: #16 Joshua Liu (LW) — #18 Nathan Carinci (C) — #11 Andrew Bichay (RW) / #88 Roy Chen (RW)
+- Defense Pair 1: #28 Ross Elley (LD) — #21 Caleb Irgengioro-Wu (RD)
+- Defense Pair 2: #76 Matt Davis (LD) — #27 Alen Fazlic (RD)
+- Defense Pair 3: #97 Hudson Millar (LD) — #21 Caleb Irgengioro-Wu (RD)
+- Powerplay Unit (PP): #23, #10, #7, #28, #21
+- Penalty Kill Unit (PK): #9, #18, #28, #21, #10
+
 DETECTION & CLASSIFICATION RULES:
 
 1. SHIFT & STOPPAGE BOUNDARIES (ACTIVE PLAY ONLY — PUCK DROP TO WHISTLE):
@@ -351,34 +361,39 @@ DETECTION & CLASSIFICATION RULES:
    - Exact Clip End (end_seconds): Set end_seconds to the EXACT second the whistle blows and play stops (or when the line changes). Each clip should be 20 to 55 seconds of continuous live action — NEVER span across a stoppage or whistle.
    - Look for the opening faceoff puck drop of the 1st, 2nd, and 3rd periods and record their exact video timestamps in seconds under "periods" ("1", "2", "3").
 
-2. PLAYER ATTRIBUTION VIA FACEOFFS & POSITIONS:
-   - Goalie Identification: Check the Tigers net at the start of each period (#13 has Yellow/White pads, #98 has Red/White pads) and include the active goalie number in player_ids or track the 5 skaters on the ice.
-   - Faceoffs: Skaters are stationary right before the puck drops. Identify the Tigers center taking the draw by checking their jersey number and stick curve (#9 LH, #18 RH, or #23 LH) and set "center_id".
-   - Skaters on Ice: Populate "player_ids" with the 5 Tigers skaters (and/or goalie) visible on each shift, distributing shifts realistically across all 3 forward lines and defense pairings on the roster (#3, #5, #7, #9, #10, #11, #13, #16, #18, #21, #23, #27, #28, #76, #88, #97, #98) based on jersey numbers and handedness.
+2. PLAYER ATTRIBUTION VIA REGULAR LINES & FACEOFFS:
+   - Identify the 5 Tigers skaters on the ice using the line combinations above. Skaters frequently shift on together as lines and D-pairs.
+   - Faceoffs: Identify the Tigers center taking the draw by checking their jersey number and stick curve (#9 LH, #18 RH, or #23 LH) and set "center_id".
+   - Goalie Identification: Check the Tigers net at the start of each period (#13 has Yellow/White pads, #98 has Red/White pads) and include the active goalie number in player_ids.
+   - Skaters on Ice: Populate "player_ids" with the 5 Tigers skaters (and/or goalie) visible on each shift, distributing shifts realistically across all 3 forward lines and defense pairings.
 
-3. ZONE & FACEOFF TRACKING (STRICT RINK & GOALIE ANCHORS):
-   - Check on-ice skater counts and scoreboard clock:
-     * "5v5" (Even strength)
-     * "PP (Tigers)" (Tigers man advantage)
-     * "PK (Tigers)" (Tigers shorthanded)
+3. SPECIAL TEAMS & PENALTY TRACKING:
+   - Watch for referee arm signals for delayed penalties, players skating to the penalty box, and arena scoreboard penalty clocks:
+     * "5v5" (Even strength — 5 skaters per team)
+     * "PP (Tigers)" (Tigers man advantage — 5 skaters vs 4, opponent in penalty box)
+     * "PK (Tigers)" (Tigers shorthanded — 4 skaters vs 5, Tigers player in penalty box)
+   - Accurately mark "PP (Tigers)" or "PK (Tigers)" for all shifts occurring while a penalty clock is running.
+
+4. ZONE & FACEOFF TRACKING (STRICT RINK & GOALIE ANCHORS):
    - Primary Zone ("Defensive Zone", "Neutral Zone", or "Offensive Zone") MUST be determined using these exact visual landmarks:
      * "Neutral Zone": The puck and active play are between the two blue lines with the red center line in the middle.
-     * "Offensive Zone": The puck and active play are between the opponent's blue line and the end boards where the OPPOSING GOALIE is in the net (wearing opposing jersey/pad colors).
-     * "Defensive Zone": The puck and active play are between the Tigers' blue line and the end boards where the TIGERS GOALIE (#13 Matthew Hart in Yellow/White pads or #98 Hudson Barfitt in Red/White pads, wearing Tigers jersey) is in the net.
+     * "Offensive Zone": The puck and active play are between the opponent's blue line and the end boards where the OPPOSING GOALIE is in the net.
+     * "Defensive Zone": The puck and active play are between the Tigers' blue line and the end boards where the TIGERS GOALIE (#13 Matthew Hart in Yellow/White pads or #98 Hudson Barfitt in Red/White pads) is in the net.
    - Faceoff Tracking:
      * Record every faceoff puck drop as the exact `start_seconds` of the clip so coaches can skip directly from faceoff to faceoff.
      * Set `faceoff_location` to "Center Ice", "D-Zone Dot", "O-Zone Dot", "Neutral Zone Dot", or "On-the-Fly", and set `faceoff_won` to true if the Tigers win possession off the draw.
 
-4. BREAKOUT TRACKING:
+5. BREAKOUT TRACKING:
    - attempted: true if Tigers secure puck possession below their own defensive faceoff dots and initiate forward movement; otherwise false.
    - successful: true if Tigers advance the puck across their own defensive blue line into the neutral zone with controlled possession; false if turned over, iced, or intercepted.
    - breakout_type: "Rim", "D-to-D", "Wheel", "Chip Off Glass", or "None".
    - turnover_location: "Behind Goal Line", "Half-Wall", "Blue Line", or "None".
 
-5. COACHING NOTES:
+6. COACHING NOTES:
    - Provide 1 concise, actionable coaching sentence summarizing tactical execution on that shift.
 
 Return strictly valid JSON adhering to the configured schema.
+"""
 """
 
 def select_latest_gemini_model(client: Any) -> List[str]:
