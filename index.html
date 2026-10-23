@@ -378,7 +378,7 @@
   </div>
 
   <!-- ================= MAIN APP VIEW ================= -->
-  <div id="main-content" class="max-w-[1640px] mx-auto space-y-2.5" style="display: none;">
+  <div id="main-content" class="w-full max-w-[1920px] 2xl:max-w-none mx-auto space-y-2.5 px-1 sm:px-2 md:px-3" style="display: none;">
     
     <!-- STREAMLINED PRO COACHING HEADER -->
     <header class="bg-white border border-slate-200/90 rounded-2xl px-4 py-2.5 shadow-sm flex flex-wrap items-center justify-between gap-3 relative">
@@ -445,6 +445,41 @@
       </div>
     </header>
 
+    <!-- ================= PRO SAAS TOP NAVIGATION BAR (Hudl/Teamworks Style) ================= -->
+    <nav class="bg-white border border-slate-200/90 rounded-2xl p-1.5 shadow-xs flex flex-wrap items-center justify-between gap-2">
+      <!-- 5 Main Sections -->
+      <div class="flex items-center gap-1 sm:gap-1.5 text-xs font-bold uppercase tracking-wider overflow-x-auto no-scrollbar py-0.5">
+        <button onclick="switchViewMode('coaches')" id="top-nav-btn-coaches" class="px-3.5 py-2 rounded-xl bg-slate-900 text-tigersGold font-black cursor-pointer transition shadow-xs flex items-center gap-1.5 shrink-0">
+          <span>🎬</span> <span>Film &amp; Shifts</span>
+          <span id="top-clip-count" class="text-[9px] px-1.5 py-0.2 rounded-full bg-slate-800 text-amber-300 font-mono">0</span>
+        </button>
+        <button onclick="switchViewMode('breakouts')" id="top-nav-btn-breakouts" class="px-3.5 py-2 rounded-xl text-slate-600 hover:text-slate-900 hover:bg-slate-100 cursor-pointer transition flex items-center gap-1.5 shrink-0">
+          <span>📊</span> <span>Team Analytics</span>
+        </button>
+        <button onclick="switchViewMode('player_analytics')" id="top-nav-btn-player" class="px-3.5 py-2 rounded-xl text-slate-600 hover:text-slate-900 hover:bg-slate-100 cursor-pointer transition flex items-center gap-1.5 shrink-0">
+          <span>👤</span> <span>Player Hub</span>
+        </button>
+        <button onclick="switchViewMode('film_tray')" id="top-nav-btn-tray" class="px-3.5 py-2 rounded-xl text-slate-600 hover:text-slate-900 hover:bg-slate-100 cursor-pointer transition flex items-center gap-1.5 shrink-0">
+          <span>⭐</span> <span>Coaching Tray</span>
+          <span id="top-tray-count" class="text-[9px] px-1.5 py-0.2 rounded-full bg-amber-100 text-amber-900 font-mono">0</span>
+        </button>
+        <button onclick="switchViewMode('feedback')" id="top-nav-btn-feedback" class="px-3.5 py-2 rounded-xl text-slate-600 hover:text-slate-900 hover:bg-slate-100 cursor-pointer transition flex items-center gap-1.5 shrink-0">
+          <span>💬</span> <span>Feedback Hub</span>
+        </button>
+      </div>
+
+      <!-- Right: Layout Switcher (Split vs Full-Width Report) -->
+      <div class="flex items-center gap-1 bg-slate-100 p-1 rounded-xl border border-slate-200 text-[11px] font-bold shrink-0">
+        <span class="text-[10px] text-slate-500 uppercase px-1 font-semibold hidden md:inline">Layout:</span>
+        <button onclick="setLayoutMode('split')" id="layout-btn-split" title="Side-by-side Video &amp; Feed" class="px-2.5 py-1 rounded-lg bg-white text-slate-900 shadow-2xs cursor-pointer transition font-bold flex items-center gap-1">
+          <span>🗕</span> <span>Split View</span>
+        </button>
+        <button onclick="setLayoutMode('expanded')" id="layout-btn-expanded" title="Full-width expanded reports &amp; mini-player" class="px-2.5 py-1 rounded-lg text-slate-600 hover:text-slate-900 cursor-pointer transition font-bold flex items-center gap-1">
+          <span>🗖</span> <span>Full Width</span>
+        </button>
+      </div>
+    </nav>
+
     <!-- Floating Flyout Toggle Button (Active in Big Screen Mode) -->
     <button id="floating-flyout-btn" onclick="toggleFlyoutDrawer(true)" class="hidden fixed top-20 right-4 z-40 bg-slate-900/95 hover:bg-slate-900 text-tigersGold border-2 border-tigersGold px-3.5 py-2 rounded-xl shadow-2xl font-display font-black text-xs cursor-pointer flex items-center gap-2 transition-transform hover:scale-105 active:scale-95">
       <span>📋</span> <span>Menu &amp; Stats</span>
@@ -457,13 +492,28 @@
     <!-- ================= SPLIT-SCREEN WORKSPACE ================= -->
     <div id="workspace-grid" class="grid grid-cols-1 lg:grid-cols-12 gap-3 items-start relative">
       
-      <!-- LEFT COLUMN (7/12 on lg, 8/12 on xl): STICKY VIDEO STAGE, TRANSPORT & 2D RINK -->
-      <div id="video-column" class="lg:col-span-7 xl:col-span-8 lg:sticky lg:top-2 space-y-2.5 transition-all duration-300">
+      <!-- LEFT COLUMN (7/12 on lg, 8/12 on xl in split mode; floating PiP in expanded mode) -->
+      <div id="video-column" class="lg:col-span-7 xl:col-span-8 lg:sticky lg:top-2 space-y-2.5 transition-all duration-300 relative w-full">
         
-        <div class="bg-white border border-slate-200 rounded-2xl p-2.5 md:p-3 shadow-lg space-y-2.5">
+        <div id="video-card-container" class="bg-white border border-slate-200 rounded-2xl p-2.5 md:p-3 shadow-lg space-y-2.5 transition-all">
+          
+          <!-- PiP Mode Floating Header (Visible only when in expanded report layout) -->
+          <div id="pip-header-bar" class="hidden flex items-center justify-between text-xs text-white p-2 rounded-xl bg-slate-900 border border-slate-800">
+            <div class="flex items-center gap-1.5 font-bold text-[11px] text-tigersGold truncate">
+              <span>🎬</span> <span class="truncate max-w-[190px]" id="pip-header-title">Film Mini-Player</span>
+            </div>
+            <div class="flex items-center gap-1 shrink-0">
+              <button onclick="setLayoutMode('split')" title="Expand to Side-by-Side Film Study" class="px-2 py-0.5 rounded-lg bg-tigersGold hover:bg-tigersGoldBright text-slate-950 text-[10px] font-black cursor-pointer transition shadow-xs flex items-center gap-1">
+                <span>🗖</span> <span>Expand</span>
+              </button>
+              <button onclick="togglePipCollapse()" id="pip-collapse-btn" title="Minimize / Show Video Box" class="px-1.5 py-0.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 text-[10px] font-bold cursor-pointer transition">
+                ─
+              </button>
+            </div>
+          </div>
           
           <!-- 16:9 Video / 2D Rink Stage -->
-          <div class="relative w-full rounded-xl overflow-hidden aspect-video bg-slate-900 shadow-md ring-2 ring-tigersGold/50">
+          <div id="video-stage-wrapper" class="relative w-full rounded-xl overflow-hidden aspect-video bg-slate-900 shadow-md ring-2 ring-tigersGold/50">
             <div id="video-container" class="w-full h-full">
               <div id="yt-player" class="w-full h-full flex items-center justify-center text-xs text-slate-400">Loading Game Broadcast...</div>
             </div>
@@ -3214,8 +3264,78 @@
       document.getElementById('mute-btn').innerText = "🔊";
     }
 
+    let currentLayoutMode = 'split'; // 'split' or 'expanded'
+    let isPipCollapsed = false;
+
+    function setLayoutMode(layout) {
+      currentLayoutMode = layout;
+      const videoCol = document.getElementById('video-column');
+      const sidebarCol = document.getElementById('sidebar-column');
+      const pipHeader = document.getElementById('pip-header-bar');
+      const splitBtn = document.getElementById('layout-btn-split');
+      const expBtn = document.getElementById('layout-btn-expanded');
+      const pipTitle = document.getElementById('pip-header-title');
+
+      if (splitBtn && expBtn) {
+        if (layout === 'split') {
+          splitBtn.className = "px-2.5 py-1 rounded-lg bg-white text-slate-900 shadow-2xs cursor-pointer transition font-bold flex items-center gap-1";
+          expBtn.className = "px-2.5 py-1 rounded-lg text-slate-600 hover:text-slate-900 cursor-pointer transition font-bold flex items-center gap-1";
+        } else {
+          expBtn.className = "px-2.5 py-1 rounded-lg bg-white text-slate-900 shadow-2xs cursor-pointer transition font-bold flex items-center gap-1";
+          splitBtn.className = "px-2.5 py-1 rounded-lg text-slate-600 hover:text-slate-900 cursor-pointer transition font-bold flex items-center gap-1";
+        }
+      }
+
+      if (pipTitle && currentGame) {
+        pipTitle.innerText = `${currentGame.title || 'Film'} (Mini-Player)`;
+      }
+
+      if (layout === 'expanded') {
+        if (sidebarCol) {
+          sidebarCol.className = "col-span-12 w-full bg-white border border-slate-200 rounded-2xl shadow-sm flex flex-col min-h-[calc(100vh-140px)] transition-all duration-300";
+        }
+        if (videoCol) {
+          videoCol.className = "fixed bottom-5 right-5 z-40 w-[380px] max-w-[calc(100vw-24px)] bg-slate-900 rounded-2xl shadow-2xl border-2 border-tigersGold p-2 space-y-2 transition-all duration-300 animate-in fade-in slide-in-from-bottom-5";
+        }
+        if (pipHeader) pipHeader.classList.remove('hidden');
+      } else {
+        if (sidebarCol) {
+          sidebarCol.className = "lg:col-span-5 xl:col-span-4 bg-white border border-slate-200 rounded-2xl shadow-sm flex flex-col lg:h-[calc(100vh-88px)] overflow-hidden transition-all duration-300";
+        }
+        if (videoCol) {
+          videoCol.className = "lg:col-span-7 xl:col-span-8 lg:sticky lg:top-2 space-y-2.5 transition-all duration-300 relative w-full";
+        }
+        if (pipHeader) pipHeader.classList.add('hidden');
+        if (isPipCollapsed) togglePipCollapse();
+      }
+
+      setTimeout(() => {
+        resizeCanvas();
+        redrawCanvasLayers();
+      }, 100);
+    }
+
+    function togglePipCollapse() {
+      isPipCollapsed = !isPipCollapsed;
+      const stage = document.getElementById('video-stage-wrapper');
+      const controls = document.querySelector('#video-card-container > .bg-slate-900');
+      const btn = document.getElementById('pip-collapse-btn');
+
+      if (isPipCollapsed) {
+        if (stage) stage.classList.add('hidden');
+        if (controls) controls.classList.add('hidden');
+        if (btn) btn.innerText = "+";
+      } else {
+        if (stage) stage.classList.remove('hidden');
+        if (controls) controls.classList.remove('hidden');
+        if (btn) btn.innerText = "─";
+      }
+    }
+
     function switchViewMode(mode) {
       currentMode = mode;
+
+      // 1. Update Sidebar 5-Tab Buttons
       const tabKeys = ['coaches', 'tray', 'breakouts', 'player', 'feedback'];
       tabKeys.forEach(m => {
         const btn = document.getElementById(`mode-btn-${m}`);
@@ -3230,6 +3350,41 @@
         }
       });
 
+      // 2. Update Top Pro Navigation Bar Buttons
+      const topNavMap = {
+        'coaches': 'coaches',
+        'breakouts': 'breakouts',
+        'player_analytics': 'player',
+        'film_tray': 'tray',
+        'feedback': 'feedback'
+      };
+      ['coaches', 'breakouts', 'player', 'tray', 'feedback'].forEach(key => {
+        const b = document.getElementById(`top-nav-btn-${key}`);
+        if (b) {
+          const isActive = (topNavMap[mode] === key);
+          b.className = isActive
+            ? "px-3.5 py-2 rounded-xl bg-slate-900 text-tigersGold font-black cursor-pointer transition shadow-xs flex items-center gap-1.5 shrink-0"
+            : "px-3.5 py-2 rounded-xl text-slate-600 hover:text-slate-900 hover:bg-slate-100 cursor-pointer transition flex items-center gap-1.5 shrink-0";
+        }
+      });
+
+      // 3. Sync badge counts
+      const topClipBadge = document.getElementById('top-clip-count');
+      const sideClipBadge = document.getElementById('clip-strip-count');
+      if (topClipBadge && sideClipBadge) topClipBadge.innerText = sideClipBadge.innerText;
+
+      const topTrayBadge = document.getElementById('top-tray-count');
+      const sideTrayBadge = document.getElementById('tray-badge-count');
+      if (topTrayBadge && sideTrayBadge) topTrayBadge.innerText = sideTrayBadge.innerText;
+
+      // 4. Contextual Adaptive Layout: Auto-Expand for Reports, Split for Film
+      if (mode === 'breakouts' || mode === 'player_analytics' || mode === 'feedback') {
+        setLayoutMode('expanded');
+      } else {
+        setLayoutMode('split');
+      }
+
+      // 5. Hide all sections, show active section
       const playerSection = document.getElementById('player-view-section');
       const breakoutSection = document.getElementById('breakout-view-section');
       const clipsSection = document.getElementById('clips-view-section');
@@ -4032,6 +4187,7 @@
 
       if (currentStage === 'whiteboard') setStageMode('video');
       if (isDrawingMode) toggleDrawMode();
+      if (isPipCollapsed && typeof togglePipCollapse === 'function') togglePipCollapse();
 
       const timeRangeStr = `${Math.floor(start / 60)}:${Math.floor(start % 60).toString().padStart(2, '0')} - ${Math.floor(end / 60)}:${Math.floor(end % 60).toString().padStart(2, '0')}`;
       const noteText = document.getElementById('active-note-text');
@@ -4207,6 +4363,8 @@
       const clips = getCoachingTrayClips();
       const badge = document.getElementById('tray-badge-count');
       if (badge) badge.innerText = String(clips.length);
+      const topBadge = document.getElementById('top-tray-count');
+      if (topBadge) topBadge.innerText = String(clips.length);
       const folderBadge = document.getElementById('active-folder-count-badge');
       if (folderBadge) {
         const filtered = currentTrayFolder === "all" ? clips : clips.filter(c => c.folder === currentTrayFolder);
@@ -5098,6 +5256,8 @@
         }
       }
       if (countEl) countEl.innerText = `${filtered.length}`;
+      const topCountEl = document.getElementById('top-clip-count');
+      if (topCountEl) topCountEl.innerText = `${filtered.length}`;
       if (!container) return;
       container.innerHTML = '';
 
