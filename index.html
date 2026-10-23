@@ -201,6 +201,177 @@
     </div>
   </div>
 
+  <!-- ================= HOW TO USE THIS APP MODAL ================= -->
+  <div id="help-guide-modal" onclick="if(event.target === this) closeHelpModal()" class="fixed inset-0 bg-slate-950/80 backdrop-blur-md z-[9999] flex items-center justify-center p-3 sm:p-4 hidden" style="display: none;">
+    <div class="bg-white rounded-2xl max-w-3xl w-full max-h-[90vh] border border-slate-200 shadow-2xl overflow-hidden flex flex-col animate-in fade-in zoom-in-95 duration-150">
+      
+      <!-- Modal Header -->
+      <div class="p-4 bg-slate-900 text-white flex items-center justify-between shrink-0 border-b border-slate-800">
+        <div class="flex items-center gap-2.5">
+          <span class="text-xl">❓</span>
+          <div>
+            <h3 class="font-display font-black text-base uppercase tracking-wider text-tigersGold">
+              How to Use This Portal &amp; FAQ
+            </h3>
+            <div class="text-[11px] text-slate-400 font-semibold">
+              Aurora Tigers U13A (2026–2027) Video Breakdown &amp; Analytics Guide
+            </div>
+          </div>
+        </div>
+        <button onclick="closeHelpModal()" class="w-8 h-8 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white flex items-center justify-center font-bold text-sm cursor-pointer transition">✕</button>
+      </div>
+
+      <!-- Modal Body (Scrollable) -->
+      <div class="p-5 overflow-y-auto custom-scroll space-y-5 text-slate-700 text-xs leading-relaxed">
+        
+        <!-- Section 1: Quick Start -->
+        <div class="bg-amber-50/70 border border-amber-200 rounded-2xl p-4 space-y-2">
+          <div class="flex items-center gap-2">
+            <span class="text-base">🚀</span>
+            <h4 class="font-display font-black text-xs uppercase tracking-wider text-amber-950">1. Quick Start: Watching Film</h4>
+          </div>
+          <ul class="list-disc list-inside space-y-1 text-slate-700 font-medium ml-1">
+            <li><strong>Select a Game:</strong> Use the top game selector dropdown to choose any regular season or playoff matchup.</li>
+            <li><strong>Jump to Any Shift:</strong> In the right sidebar, click on any shift card (e.g., <em>Shift #12 (12:45 - 13:30)</em>) to jump immediately to that play in the video player.</li>
+            <li><strong>Enlarge Video / Theater Mode:</strong> Click the <span class="font-mono bg-white px-1.5 py-0.5 rounded border border-amber-300 font-bold">⛶ Theater</span> button under the video. The player expands to full width while the navigation tucks into an easy flyout tray for viewing on TVs, projectors, or tablets.</li>
+            <li><strong>Slow Motion Study:</strong> Use the playback speed buttons (<span class="font-mono font-bold">0.5x</span>, <span class="font-mono font-bold">0.75x</span>, <span class="font-mono font-bold">1x</span>) to break down tape frame-by-frame.</li>
+          </ul>
+        </div>
+
+        <!-- Section 2: Role Views & Passcodes -->
+        <div class="bg-white border border-slate-200 rounded-2xl p-4 shadow-2xs space-y-2.5">
+          <div class="flex items-center gap-2">
+            <span class="text-base">👥</span>
+            <h4 class="font-display font-black text-xs uppercase tracking-wider text-slate-900">2. Portal Roles: Parents vs Coaches vs Admins</h4>
+          </div>
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+            <div class="p-3 rounded-xl bg-slate-50 border border-slate-200 space-y-1">
+              <div class="flex items-center gap-1.5 font-bold text-slate-900 text-[11px]">
+                <span>👪</span> <span>Parent View</span>
+              </div>
+              <p class="text-[11px] text-slate-600">
+                Tailored for families and players. Focuses on individual ice time, shift clips, coach-assigned homework plays, and positional IQ guides.
+              </p>
+            </div>
+            <div class="p-3 rounded-xl bg-amber-50 border border-amber-200 space-y-1">
+              <div class="flex items-center gap-1.5 font-bold text-amber-950 text-[11px]">
+                <span>📋</span> <span>Coach Mode</span>
+              </div>
+              <p class="text-[11px] text-slate-700">
+                Full tactical breakdown. Unlocks the Coaching Film Tray, clip bookmarking, homework assignments with teaching notes, and breakout audit stats.
+              </p>
+            </div>
+            <div class="p-3 rounded-xl bg-slate-50 border border-slate-200 space-y-1">
+              <div class="flex items-center gap-1.5 font-bold text-slate-900 text-[11px]">
+                <span>⚙️</span> <span>Admin Mode</span>
+              </div>
+              <p class="text-[11px] text-slate-600">
+                Team administration. Allows updating roster jersey numbers, importing/exporting game JSON files, and syncing YouTube URLs.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Section 3: Architecture & How AI Works -->
+        <div class="bg-slate-900 text-white rounded-2xl p-4 space-y-2.5 border border-slate-800">
+          <div class="flex items-center gap-2">
+            <span class="text-base">🤖</span>
+            <h4 class="font-display font-black text-xs uppercase tracking-wider text-tigersGold">
+              3. How AI Analysis Works: Does It Re-Analyze When Buttons Are Clicked?
+            </h4>
+          </div>
+          <div class="space-y-2 text-slate-300 text-[11px]">
+            <p>
+              <strong class="text-white">NO. The website NEVER downloads videos or runs AI computer vision in your browser.</strong>
+            </p>
+            <p>
+              Here is how the automated workflow operates behind the scenes:
+            </p>
+            <ol class="list-decimal list-inside space-y-1 ml-1 text-slate-300 font-mono text-[10px]">
+              <li><strong class="text-white">1-Time Cloud Sync:</strong> When a game video is uploaded to YouTube, our automated cloud GitHub Actions pipeline (<code class="text-amber-400">auto_sync.py</code> and <code class="text-amber-400">cv_tracker.py</code>) executes once.</li>
+              <li><strong class="text-white">Telemetry Generation:</strong> The cloud pipeline detects shifts, zone possession times, and breakouts, then packages them into lightweight static JSON files (<code class="text-amber-400">games_library.json</code>).</li>
+              <li><strong class="text-white">Instant Browser Playback:</strong> When parents or coaches visit the website, the portal loads the pre-computed JSON in milliseconds. Clicking buttons or switching players only commands YouTube to jump to already saved seconds. No data is re-calculated!</li>
+            </ol>
+          </div>
+        </div>
+
+        <!-- Section 4: Maximizing AI Accuracy -->
+        <div class="bg-white border border-slate-200 rounded-2xl p-4 shadow-2xs space-y-2">
+          <div class="flex items-center gap-2">
+            <span class="text-base">🎯</span>
+            <h4 class="font-display font-black text-xs uppercase tracking-wider text-slate-900">4. How to Maximize AI Tracking Accuracy</h4>
+          </div>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-2.5 text-[11px]">
+            <div class="p-2.5 rounded-xl bg-slate-50 border border-slate-200 space-y-1">
+              <strong class="text-slate-900 flex items-center gap-1"><span>📹</span> Camera Position &amp; Quality</strong>
+              <p class="text-slate-600">Record in <strong>1080p at 60fps</strong> from center ice elevated above the glass. A wide lens showing both blue lines maximizes jersey number recognition.</p>
+            </div>
+            <div class="p-2.5 rounded-xl bg-slate-50 border border-slate-200 space-y-1">
+              <strong class="text-slate-900 flex items-center gap-1"><span>🥅</span> Goalie Visual Anchors</strong>
+              <p class="text-slate-600">Our goalies have unique gear: <strong>#13 Matthew Hart</strong> wears yellow/white pads; <strong>#98 Hudson Barfitt</strong> wears red/white pads. This locks down defensive vs offensive zones every period.</p>
+            </div>
+            <div class="p-2.5 rounded-xl bg-slate-50 border border-slate-200 space-y-1">
+              <strong class="text-slate-900 flex items-center gap-1"><span>📋</span> Active Lineup / Scratches</strong>
+              <p class="text-slate-600">If a player is absent or ill for a game, noting scratches prevents the AI from falsely identifying jersey numbers that aren't dressed.</p>
+            </div>
+            <div class="p-2.5 rounded-xl bg-slate-50 border border-slate-200 space-y-1">
+              <strong class="text-slate-900 flex items-center gap-1"><span>⏱️</span> Arena Clock &amp; Whistle Clarity</strong>
+              <p class="text-slate-600">Keeping whistle audio clear and occasionally panning past the arena scoreboard gives the AI precise reference points for period clock synchronization.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Section 5: Positional Playbook for Parents -->
+        <div class="bg-white border border-slate-200 rounded-2xl p-4 shadow-2xs space-y-2">
+          <div class="flex items-center gap-2">
+            <span class="text-base">🏒</span>
+            <h4 class="font-display font-black text-xs uppercase tracking-wider text-slate-900">5. Positional Playbook ("Where Should I Be on the Ice?")</h4>
+          </div>
+          <p class="text-[11px] text-slate-600">
+            In the <strong>👤 Player</strong> tab, scroll down to the <em>Positional Playbook</em>. It provides custom tactical checklists tailored to each position (Centers, Wingers, Defensemen, and Goalies) so parents and players can review:
+          </p>
+          <div class="flex flex-wrap gap-2 text-[10px] font-bold">
+            <span class="px-2.5 py-1 rounded-lg bg-emerald-50 text-emerald-800 border border-emerald-200">🏒 Offensive Zone F1/F2/F3 Forecheck</span>
+            <span class="px-2.5 py-1 rounded-lg bg-rose-50 text-rose-800 border border-rose-200">🛡️ D-Zone House Defense &amp; Net-Front</span>
+            <span class="px-2.5 py-1 rounded-lg bg-blue-50 text-blue-800 border border-blue-200">⚡ Breakout Passing Options</span>
+          </div>
+        </div>
+
+        <!-- Section 6: Coach Film Tray & Homework -->
+        <div class="bg-white border border-slate-200 rounded-2xl p-4 shadow-2xs space-y-2">
+          <div class="flex items-center gap-2">
+            <span class="text-base">⭐</span>
+            <h4 class="font-display font-black text-xs uppercase tracking-wider text-slate-900">6. Coaching Film Tray &amp; Assigned Homework</h4>
+          </div>
+          <p class="text-[11px] text-slate-600">
+            Coaches can click the <span class="font-mono bg-slate-100 px-1 py-0.5 rounded border border-slate-300 font-bold">⭐ Save to Tray</span> button on any play to bookmark it. Coaches can classify it (<em>Good Play</em> vs <em>Coaching Fix</em>), attach personal teaching notes, and assign it directly to a player. Players will see their assigned review clips highlighted in their dossier.
+          </p>
+        </div>
+
+        <!-- Section 7: Feedback Hub -->
+        <div class="bg-slate-50 border border-slate-200 rounded-2xl p-4 space-y-2">
+          <div class="flex items-center gap-2">
+            <span class="text-base">💬</span>
+            <h4 class="font-display font-black text-xs uppercase tracking-wider text-slate-900">7. Shift Corrections &amp; Coach Feedback</h4>
+          </div>
+          <p class="text-[11px] text-slate-600">
+            Have a question or noticed a shift timestamp that needs a slight trim? Click the <strong>💬 Feedback</strong> tab in the sidebar or header. You can submit shift timestamp corrections, tactical questions, or notes directly to the coaching staff!
+          </p>
+        </div>
+
+      </div>
+
+      <!-- Modal Footer -->
+      <div class="p-3.5 bg-slate-50 border-t border-slate-200 flex items-center justify-between shrink-0">
+        <span class="text-[11px] text-slate-500 font-medium">Aurora Tigers U13A Coaching &amp; Analytics Team</span>
+        <button onclick="closeHelpModal()" class="px-4 py-1.5 rounded-xl bg-slate-900 hover:bg-slate-800 text-tigersGold font-bold text-xs cursor-pointer transition shadow-xs">
+          Got It, Let's Watch Film!
+        </button>
+      </div>
+
+    </div>
+  </div>
+
   <!-- Toast Notification -->
   <div id="toast" class="fixed bottom-5 right-5 bg-slate-900 text-tigersGold px-4 py-2.5 rounded-xl shadow-xl font-bold text-xs transition-opacity duration-300 opacity-0 pointer-events-none z-50 flex items-center gap-2 border-2 border-tigersGold">
     <span id="toast-text">✅ Done!</span>
@@ -261,6 +432,12 @@
 
       <!-- Right: Role Indicator & Switch Button -->
       <div class="flex items-center gap-2">
+        <button onclick="openHelpModal()" title="How to use this app guide" class="text-[11px] bg-slate-900 hover:bg-slate-800 text-tigersGold px-2.5 py-1 rounded-lg border border-tigersGold/40 font-bold cursor-pointer transition shadow-xs flex items-center gap-1 active:scale-95">
+          <span>❓</span> <span class="hidden sm:inline">How to Use</span>
+        </button>
+        <button onclick="switchViewMode('feedback')" title="Send feedback or shift corrections to coaches" class="text-[11px] bg-white hover:bg-slate-50 text-slate-700 px-2.5 py-1 rounded-lg border border-slate-300 font-semibold cursor-pointer transition shadow-xs flex items-center gap-1">
+          <span>💬</span> <span class="hidden sm:inline">Feedback</span>
+        </button>
         <span id="role-badge" class="px-2.5 py-1 rounded-lg text-[10px] font-bold uppercase bg-amber-50 text-amber-900 border border-amber-300">Coach Mode</span>
         <button onclick="promptSwitchRole()" class="text-[11px] bg-white hover:bg-slate-50 text-slate-700 px-2.5 py-1 rounded-lg border border-slate-300 font-semibold cursor-pointer transition shadow-xs">
           Switch Role
@@ -457,8 +634,8 @@
           </button>
         </div>
         
-        <!-- 4-TAB STREAMLINED NAVIGATION HEADER -->
-        <div class="grid grid-cols-4 gap-1 p-1 bg-slate-100 border-b border-slate-200 text-[11px] font-bold uppercase tracking-wider shrink-0">
+        <!-- 5-TAB STREAMLINED NAVIGATION HEADER -->
+        <div class="grid grid-cols-5 gap-1 p-1 bg-slate-100 border-b border-slate-200 text-[11px] font-bold uppercase tracking-wider shrink-0">
           <button onclick="switchViewMode('coaches')" id="mode-btn-coaches" class="py-2 px-1 rounded-xl bg-slate-900 text-tigersGold font-bold cursor-pointer transition shadow-xs flex items-center justify-center gap-1">
             <span>🎬</span> <span>Shifts</span>
             <span id="clip-strip-count" class="text-[9px] px-1 py-0.2 rounded-full bg-slate-800 text-amber-300 font-mono font-bold">0</span>
@@ -472,6 +649,9 @@
           </button>
           <button onclick="switchViewMode('player_analytics')" id="mode-btn-player" class="py-2 px-1 rounded-xl text-slate-600 hover:text-slate-900 hover:bg-white cursor-pointer transition flex items-center justify-center gap-1">
             <span>👤</span> <span id="player-tab-label">Player</span>
+          </button>
+          <button onclick="switchViewMode('feedback')" id="mode-btn-feedback" class="py-2 px-1 rounded-xl text-slate-600 hover:text-slate-900 hover:bg-white cursor-pointer transition flex items-center justify-center gap-1">
+            <span>💬</span> <span>Feedback</span>
           </button>
         </div>
 
@@ -1205,6 +1385,106 @@
             </summary>
             <div id="roster-cards-grid" class="grid grid-cols-2 gap-2 mt-3 pt-2 border-t border-slate-100"></div>
           </details>
+
+        </div>
+
+        <!-- ================= TAB 5: COACH & PARENT FEEDBACK HUB ================= -->
+        <div id="feedback-view-section" class="flex-1 overflow-y-auto custom-scroll p-3 space-y-3 hidden bg-slate-50/50">
+          
+          <div class="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm space-y-3">
+            <div class="flex items-center justify-between">
+              <div class="flex items-center gap-2">
+                <span class="text-xl">💬</span>
+                <div>
+                  <h3 class="font-display font-black text-sm uppercase tracking-wider text-slate-900">Coaching Staff &amp; Team Feedback</h3>
+                  <div class="text-[11px] text-slate-500 font-medium">Send shift corrections, positioning questions, or player notes to the coaches</div>
+                </div>
+              </div>
+              <span class="px-2 py-0.5 rounded-full text-[10px] font-mono font-bold bg-amber-100 text-amber-900 border border-amber-300">Tigers Hub</span>
+            </div>
+
+            <!-- Feedback Submission Form -->
+            <form onsubmit="submitTeamFeedback(event)" class="space-y-3 pt-1">
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                <div>
+                  <label class="block text-[10px] font-bold text-slate-700 uppercase tracking-wider mb-1">Your Name / Relation</label>
+                  <input type="text" id="feedback-sender-name" class="w-full bg-slate-50 border border-slate-300 rounded-xl px-3 py-2 text-xs text-slate-900 font-semibold focus:outline-none focus:border-tigersGold" placeholder="e.g. Scott (Parent of #3) or Coach" required />
+                </div>
+                <div>
+                  <label class="block text-[10px] font-bold text-slate-700 uppercase tracking-wider mb-1">Regarding Player (Optional)</label>
+                  <select id="feedback-player-select" class="w-full bg-slate-50 border border-slate-300 rounded-xl px-2.5 py-2 text-xs text-slate-900 font-bold focus:outline-none cursor-pointer">
+                    <option value="team">-- General Team / All Players --</option>
+                    <option value="3">#3 Stewart Dolmage (LW)</option>
+                    <option value="5">#5 Nathan Zhao (RW)</option>
+                    <option value="7">#7 Maxwell Dey (RW)</option>
+                    <option value="9">#9 Oliver Patterson (C)</option>
+                    <option value="10">#10 Arjun Manjunath (LW)</option>
+                    <option value="11">#11 Andrew Bichay (RW)</option>
+                    <option value="13">#13 Matthew Hart (G)</option>
+                    <option value="16">#16 Joshua Liu (LW)</option>
+                    <option value="18">#18 Nathan Carinci (C)</option>
+                    <option value="21">#21 Caleb Irgengioro-Wu (RD)</option>
+                    <option value="23">#23 Easton Carpentier (C)</option>
+                    <option value="27">#27 Alen Fazlic (RD)</option>
+                    <option value="28">#28 Ross Elley (LD)</option>
+                    <option value="76">#76 Matt Davis (LD)</option>
+                    <option value="88">#88 Roy Chen (RW)</option>
+                    <option value="97">#97 Hudson Millar (LD)</option>
+                    <option value="98">#98 Hudson Barfitt (G)</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                <div>
+                  <label class="block text-[10px] font-bold text-slate-700 uppercase tracking-wider mb-1">Topic / Category</label>
+                  <select id="feedback-category-select" class="w-full bg-slate-50 border border-slate-300 rounded-xl px-2.5 py-2 text-xs text-slate-900 font-bold focus:outline-none cursor-pointer">
+                    <option value="Shift Correction">⏱️ Shift Timestamp Correction</option>
+                    <option value="Player Positioning">🏒 Question on Player Positioning</option>
+                    <option value="Film Homework">⭐ Question on Film Homework / Assigned Play</option>
+                    <option value="Feature Idea">💡 Feature Suggestion for the Portal</option>
+                    <option value="General Praise">👏 Praise / Good Play Observation</option>
+                  </select>
+                </div>
+                <div>
+                  <label class="block text-[10px] font-bold text-slate-700 uppercase tracking-wider mb-1">Video Clip Reference (Optional)</label>
+                  <input type="text" id="feedback-clip-timestamp" class="w-full bg-slate-50 border border-slate-300 rounded-xl px-3 py-2 text-xs text-slate-900 font-mono" placeholder="e.g. Period 2 @ 14:20" />
+                </div>
+              </div>
+
+              <div>
+                <label class="block text-[10px] font-bold text-slate-700 uppercase tracking-wider mb-1">Message / Question / Correction Note</label>
+                <textarea id="feedback-message-text" rows="3" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-2.5 text-xs text-slate-900 focus:outline-none focus:border-tigersGold" placeholder="Describe the question, note, or shift timestamp adjustment for the coaches..." required></textarea>
+              </div>
+
+              <div class="flex flex-wrap items-center justify-between gap-2 pt-1 border-t border-slate-100">
+                <span class="text-[10px] text-slate-400">Feedback is saved locally and can be copied or emailed.</span>
+                <div class="flex items-center gap-1.5">
+                  <button type="button" onclick="copyFeedbackDraft()" class="px-3 py-1.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold cursor-pointer transition shadow-2xs flex items-center gap-1">
+                    <span>📋</span> <span>Copy Note</span>
+                  </button>
+                  <button type="submit" class="px-4 py-1.5 rounded-xl bg-tigersGold hover:bg-tigersGoldBright text-slate-950 text-xs font-black cursor-pointer transition shadow-sm flex items-center gap-1.5">
+                    <span>💾</span> <span>Save &amp; Submit</span>
+                  </button>
+                </div>
+              </div>
+            </form>
+          </div>
+
+          <!-- Feedback History Log Card -->
+          <div class="bg-white p-3.5 rounded-2xl border border-slate-200 shadow-sm space-y-2.5">
+            <div class="flex items-center justify-between">
+              <h4 class="text-xs font-display font-bold text-slate-900 uppercase tracking-wider flex items-center gap-1.5">
+                <span>📋</span> Feedback &amp; Note History
+              </h4>
+              <button onclick="clearFeedbackHistory()" class="text-[10px] text-slate-400 hover:text-rose-600 font-semibold cursor-pointer">
+                Clear
+              </button>
+            </div>
+            <div id="feedback-history-list" class="space-y-2">
+              <!-- Dynamically populated feedback items -->
+            </div>
+          </div>
 
         </div>
 
@@ -2796,12 +3076,13 @@
 
     function switchViewMode(mode) {
       currentMode = mode;
-      const tabKeys = ['coaches', 'tray', 'breakouts', 'player'];
+      const tabKeys = ['coaches', 'tray', 'breakouts', 'player', 'feedback'];
       tabKeys.forEach(m => {
         const btn = document.getElementById(`mode-btn-${m}`);
         if (btn) {
           const isActive = (m === 'player' && mode === 'player_analytics') || 
                            (m === 'tray' && mode === 'film_tray') ||
+                           (m === 'feedback' && mode === 'feedback') ||
                            (m === mode);
           btn.className = isActive
             ? "py-2 px-1 rounded-xl bg-slate-900 text-tigersGold font-bold cursor-pointer transition shadow-xs flex items-center justify-center gap-1"
@@ -2813,11 +3094,13 @@
       const breakoutSection = document.getElementById('breakout-view-section');
       const clipsSection = document.getElementById('clips-view-section');
       const traySection = document.getElementById('tray-view-section');
+      const feedbackSection = document.getElementById('feedback-view-section');
 
       if (playerSection) playerSection.classList.add('hidden');
       if (breakoutSection) breakoutSection.classList.add('hidden');
       if (clipsSection) clipsSection.classList.add('hidden');
       if (traySection) traySection.classList.add('hidden');
+      if (feedbackSection) feedbackSection.classList.add('hidden');
 
       if (mode === 'player_analytics') {
         if (playerSection) playerSection.classList.remove('hidden');
@@ -2834,6 +3117,9 @@
       } else if (mode === 'film_tray') {
         if (traySection) traySection.classList.remove('hidden');
         renderFilmTrayView();
+      } else if (mode === 'feedback') {
+        if (feedbackSection) feedbackSection.classList.remove('hidden');
+        renderFeedbackHistory();
       } else {
         if (clipsSection) clipsSection.classList.remove('hidden');
         loadCoachingClips();
@@ -3848,6 +4134,191 @@
         modal.style.display = 'none';
         modal.classList.add('hidden');
       }
+    }
+
+    function openHelpModal() {
+      const modal = document.getElementById('help-guide-modal');
+      if (modal) {
+        modal.style.display = 'flex';
+        modal.classList.remove('hidden');
+      }
+    }
+
+    function closeHelpModal() {
+      const modal = document.getElementById('help-guide-modal');
+      if (modal) {
+        modal.style.display = 'none';
+        modal.classList.add('hidden');
+      }
+    }
+
+    function escapeHtml(str) {
+      if (!str) return '';
+      return String(str)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#039;');
+    }
+
+    // ================= FEEDBACK & NOTES LOGIC =================
+    const FEEDBACK_STORAGE_KEY = 'tigers_coaching_feedback_items';
+
+    function getStoredFeedback() {
+      try {
+        const raw = localStorage.getItem(FEEDBACK_STORAGE_KEY);
+        return raw ? JSON.parse(raw) : [];
+      } catch (e) {
+        return [];
+      }
+    }
+
+    function saveStoredFeedback(list) {
+      try {
+        localStorage.setItem(FEEDBACK_STORAGE_KEY, JSON.stringify(list));
+      } catch (e) {}
+    }
+
+    function submitTeamFeedback(e) {
+      if (e && e.preventDefault) e.preventDefault();
+
+      const nameEl = document.getElementById('feedback-sender-name');
+      const playerEl = document.getElementById('feedback-player-select');
+      const catEl = document.getElementById('feedback-category-select');
+      const timeEl = document.getElementById('feedback-clip-timestamp');
+      const msgEl = document.getElementById('feedback-message-text');
+
+      const senderName = nameEl?.value.trim() || 'Anonymous Parent/Coach';
+      const targetPlayer = playerEl?.value || 'team';
+      const category = catEl?.value || 'General Note';
+      const clipTimestamp = timeEl?.value.trim() || '';
+      const message = msgEl?.value.trim() || '';
+
+      if (!message) {
+        alert("Please enter a message or note before submitting.");
+        return;
+      }
+
+      const pInfo = targetPlayer !== 'team' && ROSTER_POSITIONS[targetPlayer] ? ROSTER_POSITIONS[targetPlayer] : null;
+      const playerDisplay = pInfo ? `#${targetPlayer} ${pInfo.name}` : 'Team / All Players';
+
+      const newEntry = {
+        id: 'fb_' + Date.now(),
+        date: new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' }),
+        gameTitle: currentGame?.title || 'Aurora Tigers Game',
+        senderName,
+        targetPlayer,
+        playerDisplay,
+        category,
+        clipTimestamp,
+        message
+      };
+
+      const list = getStoredFeedback();
+      list.unshift(newEntry);
+      saveStoredFeedback(list);
+
+      if (msgEl) msgEl.value = '';
+      if (timeEl) timeEl.value = '';
+
+      showToast("💬 Feedback submitted & saved!");
+      renderFeedbackHistory();
+    }
+
+    function renderFeedbackHistory() {
+      const container = document.getElementById('feedback-history-list');
+      if (!container) return;
+
+      const list = getStoredFeedback();
+      if (!list || list.length === 0) {
+        container.innerHTML = `
+          <div class="text-center py-6 text-slate-400 text-xs italic bg-slate-50 rounded-xl border border-dashed border-slate-200">
+            No feedback entries saved yet.<br>
+            Use the form above to submit a shift timestamp correction or player note.
+          </div>
+        `;
+        return;
+      }
+
+      container.innerHTML = list.map(item => `
+        <div class="p-3 rounded-xl bg-slate-50 border border-slate-200 shadow-2xs space-y-1.5 hover:border-slate-300 transition">
+          <div class="flex items-center justify-between text-[11px]">
+            <div class="flex items-center gap-1.5 flex-wrap">
+              <span class="font-bold text-slate-900">${escapeHtml(item.senderName)}</span>
+              <span class="text-slate-300">•</span>
+              <span class="px-2 py-0.2 rounded-md bg-amber-50 text-amber-900 border border-amber-200 font-semibold text-[10px]">${escapeHtml(item.category)}</span>
+              <span class="px-2 py-0.2 rounded-md bg-white text-slate-700 border border-slate-200 font-mono text-[10px]">${escapeHtml(item.playerDisplay)}</span>
+            </div>
+            <div class="flex items-center gap-2">
+              <span class="text-[10px] text-slate-400 font-mono">${escapeHtml(item.date)}</span>
+              <button onclick="deleteFeedbackItem('${item.id}')" title="Delete entry" class="text-slate-400 hover:text-rose-600 font-bold text-xs cursor-pointer">✕</button>
+            </div>
+          </div>
+          ${item.clipTimestamp ? `
+            <div class="text-[10px] font-mono text-amber-800 bg-amber-50/60 px-2 py-0.5 rounded border border-amber-200/60 inline-block">
+              ⏱️ Clip: ${escapeHtml(item.clipTimestamp)} (${escapeHtml(item.gameTitle)})
+            </div>
+          ` : ''}
+          <div class="text-xs text-slate-700 whitespace-pre-wrap leading-relaxed">${escapeHtml(item.message)}</div>
+          <div class="flex justify-end pt-1">
+            <button onclick="copySingleFeedbackText('${item.id}')" class="text-[10px] text-slate-500 hover:text-slate-900 font-semibold cursor-pointer flex items-center gap-1">
+              <span>📋</span> <span>Copy Note</span>
+            </button>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function copySingleFeedbackText(id) {
+      const list = getStoredFeedback();
+      const item = list.find(x => x.id === id);
+      if (!item) return;
+      const text = `[Aurora Tigers Feedback]\nFrom: ${item.senderName}\nPlayer: ${item.playerDisplay}\nCategory: ${item.category}\nGame: ${item.gameTitle}\nClip: ${item.clipTimestamp || 'N/A'}\nMessage: ${item.message}`;
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).then(() => {
+          showToast("📋 Feedback note copied to clipboard!");
+        }).catch(() => {
+          alert("Copied text:\n" + text);
+        });
+      } else {
+        alert("Feedback note:\n" + text);
+      }
+    }
+
+    function copyFeedbackDraft() {
+      const name = document.getElementById('feedback-sender-name')?.value.trim() || 'Parent/Coach';
+      const playerEl = document.getElementById('feedback-player-select');
+      const playerText = playerEl?.options[playerEl.selectedIndex]?.text || 'Team';
+      const cat = document.getElementById('feedback-category-select')?.value || 'General';
+      const clip = document.getElementById('feedback-clip-timestamp')?.value.trim() || 'N/A';
+      const msg = document.getElementById('feedback-message-text')?.value.trim() || '';
+
+      const text = `[Aurora Tigers Feedback Note]\nFrom: ${name}\nPlayer: ${playerText}\nTopic: ${cat}\nClip: ${clip}\nNote: ${msg}`;
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).then(() => {
+          showToast("📋 Draft note copied to clipboard!");
+        }).catch(() => {
+          alert("Draft text:\n" + text);
+        });
+      } else {
+        alert("Draft note:\n" + text);
+      }
+    }
+
+    function deleteFeedbackItem(id) {
+      let list = getStoredFeedback();
+      list = list.filter(x => x.id !== id);
+      saveStoredFeedback(list);
+      renderFeedbackHistory();
+      showToast("Deleted feedback item");
+    }
+
+    function clearFeedbackHistory() {
+      if (!confirm("Are you sure you want to clear all feedback history?")) return;
+      localStorage.removeItem(FEEDBACK_STORAGE_KEY);
+      renderFeedbackHistory();
+      showToast("Feedback history cleared");
     }
 
     function parseTimeStr(val) {
