@@ -9,6 +9,10 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:ital,wght@0,600;0,700;1,700&family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
   <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Firebase SDK v10 (Compat) -->
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
   <script>
     tailwind.config = {
       theme: {
@@ -1680,6 +1684,31 @@
   </div>
 
   <script>
+    // ================= FIREBASE CLOUD CONFIGURATION =================
+    const firebaseConfig = {
+      apiKey: "AIzaSyDEiz00S7NnH2_de7vIc5TJc7zA51x_X1A",
+      authDomain: "aurora-tigers-u13a.firebaseapp.com",
+      projectId: "aurora-tigers-u13a",
+      storageBucket: "aurora-tigers-u13a.firebasestorage.app",
+      messagingSenderId: "981256803411",
+      appId: "1:981256803411:web:9e2a4ad1194a21e2bb22a6",
+      measurementId: "G-25GTN0QWHF"
+    };
+
+    let auth = null, db = null;
+    try {
+      if (typeof firebase !== 'undefined' && !firebase.apps.length) {
+        firebase.initializeApp(firebaseConfig);
+        auth = firebase.auth();
+        db = firebase.firestore();
+      }
+    } catch(err) {
+      console.warn("Firebase initialization notice:", err);
+    }
+
+    const COACH_EMAILS = ["scriptochango@gmail.com"];
+    let currentUser = null;
+
     const PARENT_PASSCODE = "U13ATIGERS";
     const COACH_PASSCODE = "COACHTIGERS";
     const ADMIN_PASSCODE = "ADMINTIGERS";
@@ -1858,11 +1887,57 @@
       if (input) input.type = (input.type === 'password') ? 'text' : 'password';
     }
 
+    function loginWithGoogle() {
+      if (!auth) {
+        alert("Firebase is initializing. Please wait a moment or use the passcode below.");
+        return;
+      }
+      const provider = new firebase.auth.GoogleAuthProvider();
+      auth.signInWithPopup(provider)
+        .then((result) => {
+          handleAuthenticatedUser(result.user);
+        })
+        .catch((error) => {
+          console.error("Google login notice:", error);
+          if (error.code !== "auth/popup-closed-by-user") {
+            alert("Google Sign-In: " + error.message);
+          }
+        });
+    }
+
+    function handleAuthenticatedUser(user) {
+      if (!user) return;
+      currentUser = user;
+      const email = (user.email || "").toLowerCase();
+      isCoach = COACH_EMAILS.includes(email);
+      safeSet("team_role", isCoach ? "coach" : "parent");
+      safeSet("user_email", email);
+      safeSet("user_name", user.displayName || email);
+      unlockScreen();
+      syncCloudData();
+      showToast(`Signed in: ${user.displayName || email}`);
+    }
+
     function checkAuth() {
-      const storedRole = safeGet("team_role");
-      if (storedRole === "coach" || storedRole === "parent") {
-        isCoach = (storedRole === "coach");
-        unlockScreen();
+      if (auth) {
+        auth.onAuthStateChanged((user) => {
+          if (user) {
+            handleAuthenticatedUser(user);
+            return;
+          }
+          const storedRole = safeGet("team_role");
+          if (storedRole === "coach" || storedRole === "parent") {
+            isCoach = (storedRole === "coach");
+            unlockScreen();
+            syncCloudData();
+          }
+        });
+      } else {
+        const storedRole = safeGet("team_role");
+        if (storedRole === "coach" || storedRole === "parent") {
+          isCoach = (storedRole === "coach");
+          unlockScreen();
+        }
       }
     }
 
@@ -1897,6 +1972,7 @@
       if (main) main.style.display = 'block';
       updateRoleBadge();
       initAppSafe();
+      syncCloudData();
     }
 
     function updateRoleBadge() {
@@ -4357,6 +4433,47 @@
     function saveCoachingTrayClips(clips) {
       safeSet("tigers_coaching_tray_v2", JSON.stringify(clips));
       updateTrayBadges();
+      if (db) {
+        db.collection("tray").doc("shared_coaching_tray").set({
+          clips: clips,
+          last_updated: firebase.firestore.FieldValue.serverTimestamp(),
+          updated_by: currentUser?.email || (isCoach ? "Coach" : "User")
+        }).catch(err => console.log("Tray cloud set notice:", err));
+      }
+    }
+
+    // Real-Time Cloud Firestore Sync Engine
+    function syncCloudData() {
+      if (!db) return;
+
+      // 1. Shared Coaching Tray Listener
+      try {
+        db.collection("tray").doc("shared_coaching_tray").onSnapshot((doc) => {
+          if (doc && doc.exists && Array.isArray(doc.data().clips)) {
+            const cloudClips = doc.data().clips;
+            if (cloudClips.length > 0) {
+              safeSet("tigers_coaching_tray_v2", JSON.stringify(cloudClips));
+              updateTrayBadges();
+              if (currentMode === 'film_tray') renderFilmTrayView();
+              if (currentMode === 'player_analytics') renderPlayerAnalyticsDossier(currentJersey);
+            }
+          }
+        }, (err) => console.log("Tray sync notice:", err));
+      } catch(e) {}
+
+      // 2. Feedback Cloud Submissions Listener (for Coaches)
+      try {
+        db.collection("feedback").orderBy("created_at", "desc").limit(30).onSnapshot((snapshot) => {
+          const cloudList = [];
+          snapshot.forEach((doc) => {
+            cloudList.push({ id: doc.id, ...doc.data() });
+          });
+          if (cloudList.length > 0) {
+            window.cloudFeedbackList = cloudList;
+            if (currentMode === 'feedback') renderFeedbackHistory();
+          }
+        }, (err) => console.log("Feedback sync notice:", err));
+      } catch(e) {}
     }
 
     function updateTrayBadges() {
@@ -4523,6 +4640,21 @@
       list.unshift(newEntry);
       saveStoredFeedback(list);
 
+      // Write to Firebase Cloud Firestore for Coach Inbox
+      if (db) {
+        db.collection("feedback").add({
+          senderName,
+          targetPlayer,
+          playerDisplay,
+          category,
+          clipTimestamp,
+          message,
+          gameTitle: currentGame?.title || 'Aurora Tigers Game',
+          created_at: firebase.firestore.FieldValue.serverTimestamp(),
+          authorEmail: currentUser?.email || 'Anonymous'
+        }).catch(err => console.log("Feedback cloud error:", err));
+      }
+
       if (msgEl) msgEl.value = '';
       if (timeEl) timeEl.value = '';
 
@@ -4534,7 +4666,15 @@
       const container = document.getElementById('feedback-history-list');
       if (!container) return;
 
-      const list = getStoredFeedback();
+      const localList = getStoredFeedback();
+      const cloudList = window.cloudFeedbackList || [];
+      const combined = [...localList];
+      cloudList.forEach(cf => {
+        if (!combined.some(x => x.id === cf.id || (x.message === cf.message && x.senderName === cf.senderName))) {
+          combined.push(cf);
+        }
+      });
+      const list = combined;
       if (!list || list.length === 0) {
         container.innerHTML = `
           <div class="text-center py-6 text-slate-400 text-xs italic bg-slate-50 rounded-xl border border-dashed border-slate-200">
