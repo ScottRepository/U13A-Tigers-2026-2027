@@ -320,13 +320,39 @@ GEMINI_RESPONSE_SCHEMA = {
     "required": ["game_title", "shifts"]
 }
 
-def build_coaching_prompt(duration_sec: float, is_home: bool = True, game_title: str = "") -> str:
+def build_coaching_prompt(
+    duration_sec: float, 
+    is_home: bool = True, 
+    game_title: str = "",
+    scratches: Optional[List[int]] = None,
+    verified_lines: Optional[Dict[str, Any]] = None
+) -> str:
     tigers_jersey = "WHITE jerseys" if is_home else "DARK/BLACK (or Away) jerseys"
     opp_jersey = "DARK jerseys" if is_home else "WHITE/LIGHT jerseys"
+    
+    scratch_section = ""
+    if scratches and len(scratches) > 0:
+        scratch_str = ", ".join([f"#{num}" for num in scratches])
+        scratch_section = f"""
+CRITICAL COACH ATTENDANCE DIRECTIVE (ABSENT / SCRATCHED PLAYERS):
+- The following players were confirmed ABSENT / NOT DRESSED for this game: {scratch_str}.
+- STRICT RULE: DO NOT attribute any shifts, touches, or faceoffs to {scratch_str}. They were not at the arena today.
+"""
+
+    line_section = ""
+    if verified_lines:
+        line_section = f"""
+COACH CONFIRMED PRIMARY LINE COMBINATIONS (PRIORITIZE THESE TRIOS & PAIRS):
+- Forward Lines: {json.dumps(verified_lines.get('forward_lines', {}))}
+- Defense Pairs: {json.dumps(verified_lines.get('defense_pairs', {}))}
+- When identifying skaters, prioritize these confirmed regular unit combinations.
+"""
+
     return f"""
 You are an expert ice hockey video coach analyzing game footage for the Aurora Tigers U13A team (Match: {game_title or 'U13A Tigers Game'}).
 In this match, the Aurora Tigers wear {tigers_jersey} (or check the Tigers gold/black trim & goalie pad anchors below), and the opposing team wears {opp_jersey}. Total run time: {int(duration_sec)}s.
-
+{scratch_section}
+{line_section}
 TEAM ROSTER & VISUAL ATTRIBUTES:
 - Goalies:
   * #13 Matthew Hart (Goalie, Catches Left, Yellow and White pads)
@@ -470,6 +496,8 @@ def process_video_with_gemini(
     duration_sec: float,
     is_home: bool = True,
     game_title: str = "",
+    scratches: Optional[List[int]] = None,
+    verified_lines: Optional[Dict[str, Any]] = None,
 ) -> Optional[Dict[str, Any]]:
     if not GOOGLE_API_KEY:
         logger.info("ℹ️ No GEMINI_API_KEY configured. Skipping Google AI video processing.")
@@ -481,7 +509,13 @@ def process_video_with_gemini(
 
         logger.info("🚀 Initializing Gemini Client with Hockey Tactical Anchors...")
         client = genai.Client(api_key=GOOGLE_API_KEY)
-        prompt = build_coaching_prompt(duration_sec, is_home=is_home, game_title=game_title)
+        prompt = build_coaching_prompt(
+            duration_sec, 
+            is_home=is_home, 
+            game_title=game_title,
+            scratches=scratches,
+            verified_lines=verified_lines
+        )
 
         # Path A: 3-Period Segmented YouTube URI Analysis via Gemini 3.5 Flash (Token-Saver Mode)
         # Trims pre-game warmup, intermission buffers, and post-game handshakes, and samples at 0.5 FPS
@@ -1083,6 +1117,10 @@ def run_sync():
             true_duration = fetch_video_duration(vid_id, default_dur=2700.0)
 
         gemini_result = None
+        existing_entry = existing_games_by_vid.get(vid_id)
+        known_scratches = existing_entry.get("scratches", []) if existing_entry else []
+        known_lines = existing_entry.get("verified_lines", {}) if existing_entry else {}
+
         try:
             # Step 1: Fast Token-Saver YouTube URI analysis (0.5 FPS + MEDIA_RESOLUTION_LOW + active period windows)
             gemini_result = process_video_with_gemini(
@@ -1091,6 +1129,8 @@ def run_sync():
                 duration_sec=true_duration,
                 is_home=ts_data.get("is_home", True),
                 game_title=real_title,
+                scratches=known_scratches,
+                verified_lines=known_lines,
             )
             # Step 2: Only download HD MP4 locally if direct YouTube URI analysis did not return shifts
             if not (gemini_result and gemini_result.get("shifts")):
@@ -1102,6 +1142,8 @@ def run_sync():
                         duration_sec=true_duration,
                         is_home=ts_data.get("is_home", True),
                         game_title=real_title,
+                        scratches=known_scratches,
+                        verified_lines=known_lines,
                     )
         except Exception as dl_err:
             logger.warning(f"Download/AI notice for {vid_id}: {dl_err}")
