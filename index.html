@@ -81,47 +81,180 @@
 <body class="text-slate-900 min-h-screen p-2 lg:px-4 lg:py-2.5 select-none font-sans">
 
   <!-- ================= AUTH MODAL ================= -->
-  <div id="auth-modal" class="fixed inset-0 bg-slate-900/75 backdrop-blur-md flex items-center justify-center p-4 z-50">
-    <div class="relative bg-white border-2 border-tigersGold p-7 md:p-8 rounded-3xl max-w-sm w-full text-center shadow-[0_20px_60px_rgba(15,23,42,0.25)] overflow-hidden">
-      <div class="absolute -top-20 left-1/2 -translate-x-1/2 w-56 h-56 bg-tigersGold/25 rounded-full blur-3xl pointer-events-none"></div>
+  <div id="auth-modal" class="fixed inset-0 bg-slate-900/85 backdrop-blur-md flex items-center justify-center p-3 sm:p-4 z-50">
+    <div class="relative bg-white border-2 border-tigersGold p-6 sm:p-8 rounded-3xl max-w-md w-full text-center shadow-[0_20px_60px_rgba(15,23,42,0.35)] overflow-hidden">
+      <div class="absolute -top-20 left-1/2 -translate-x-1/2 w-64 h-64 bg-tigersGold/25 rounded-full blur-3xl pointer-events-none"></div>
       
-      <div class="relative mx-auto mb-3 w-28 h-28 flex items-center justify-center">
+      <div class="relative mx-auto mb-2 w-24 h-24 flex items-center justify-center">
         <img 
           src="./tigers_logo.png" 
           onerror="this.onerror=null; this.src='https://auroraminorhockey.com/public/images/common/logo.png';" 
           alt="Aurora Tigers Official Crest" 
-          class="w-28 h-28 object-contain drop-shadow-[0_6px_16px_rgba(245,179,22,0.4)]"
+          class="w-24 h-24 object-contain drop-shadow-[0_6px_16px_rgba(245,179,22,0.4)]"
         />
       </div>
 
       <h2 class="font-display text-2xl font-bold text-slate-900 tracking-wider uppercase leading-none">AURORA TIGERS</h2>
-      <p class="text-[11px] text-amber-600 font-extrabold uppercase tracking-[0.22em] mt-1 mb-5">U13A Video & Analytics Hub</p>
+      <p class="text-[11px] text-amber-600 font-extrabold uppercase tracking-[0.22em] mt-1 mb-4">U13A Video &amp; Analytics Hub</p>
       
-      <form id="auth-form" onsubmit="return handlePasscodeSubmit(event)" class="space-y-3 relative z-10">
+      <!-- 1-Click Fast Role Unlock Cards -->
+      <div class="space-y-2 mb-4 text-left">
+        <div class="text-[10px] font-bold uppercase tracking-wider text-slate-500 text-center mb-1">
+          Select Your Access View:
+        </div>
+
+        <button type="button" onclick="quickUnlock('parent')" class="w-full p-2.5 rounded-2xl bg-emerald-50 hover:bg-emerald-100 border-2 border-emerald-300 text-slate-900 flex items-center justify-between transition cursor-pointer group shadow-xs">
+          <div class="flex items-center gap-2.5">
+            <span class="w-9 h-9 rounded-xl bg-emerald-500 text-white flex items-center justify-center text-lg font-black shrink-0">👪</span>
+            <div>
+              <div class="font-display font-black text-xs uppercase tracking-wider text-emerald-950 flex items-center gap-1.5">
+                <span>Parent &amp; Player View</span>
+                <span class="px-1.5 py-0.2 rounded text-[9px] font-mono bg-emerald-200 text-emerald-900 font-bold">1-Click</span>
+              </div>
+              <div class="text-[10px] text-slate-600 font-medium leading-tight">Player shifts, positional playbook, homework &amp; highlights</div>
+            </div>
+          </div>
+          <span class="text-xs text-emerald-700 font-bold group-hover:translate-x-0.5 transition">Enter →</span>
+        </button>
+
+        <button type="button" onclick="quickUnlock('coach')" class="w-full p-2.5 rounded-2xl bg-amber-50 hover:bg-amber-100 border-2 border-amber-300 text-slate-900 flex items-center justify-between transition cursor-pointer group shadow-xs">
+          <div class="flex items-center gap-2.5">
+            <span class="w-9 h-9 rounded-xl bg-amber-500 text-slate-950 flex items-center justify-center text-lg font-black shrink-0">👨‍🏫</span>
+            <div>
+              <div class="font-display font-black text-xs uppercase tracking-wider text-amber-950 flex items-center gap-1.5">
+                <span>Coach Mode</span>
+                <span class="px-1.5 py-0.2 rounded text-[9px] font-mono bg-amber-200 text-amber-900 font-bold">Tactical</span>
+              </div>
+              <div class="text-[10px] text-slate-600 font-medium leading-tight">Telestrator, film tray, drills, homework assign &amp; bench cards</div>
+            </div>
+          </div>
+          <span class="text-xs text-amber-700 font-bold group-hover:translate-x-0.5 transition">Enter →</span>
+        </button>
+
+        <button type="button" onclick="quickUnlock('admin')" class="w-full p-2.5 rounded-2xl bg-indigo-50 hover:bg-indigo-100 border-2 border-indigo-300 text-slate-900 flex items-center justify-between transition cursor-pointer group shadow-xs">
+          <div class="flex items-center gap-2.5">
+            <span class="w-9 h-9 rounded-xl bg-indigo-600 text-white flex items-center justify-center text-lg font-black shrink-0">⚙️</span>
+            <div>
+              <div class="font-display font-black text-xs uppercase tracking-wider text-indigo-950 flex items-center gap-1.5">
+                <span>Admin Console</span>
+                <span class="px-1.5 py-0.2 rounded text-[9px] font-mono bg-indigo-200 text-indigo-900 font-bold">Manager</span>
+              </div>
+              <div class="text-[10px] text-slate-600 font-medium leading-tight">Multi-calendar feeds, video linker, roster editor &amp; presets</div>
+            </div>
+          </div>
+          <span class="text-xs text-indigo-700 font-bold group-hover:translate-x-0.5 transition">Enter →</span>
+        </button>
+      </div>
+
+      <div class="relative flex py-2 items-center">
+        <div class="flex-grow border-t border-slate-200"></div>
+        <span class="flex-shrink mx-2 text-[10px] font-bold uppercase text-slate-400">or enter passcode</span>
+        <div class="flex-grow border-t border-slate-200"></div>
+      </div>
+      
+      <form id="auth-form" onsubmit="return handlePasscodeSubmit(event)" class="space-y-2.5 relative z-10">
         <input 
           id="passcode-input" 
           type="password" 
-          placeholder="Enter Team Passcode" 
-          class="w-full bg-slate-50 border-2 border-slate-300 rounded-xl px-4 py-3 text-center text-base font-bold tracking-widest text-slate-900 focus:outline-none focus:border-tigersGold focus:ring-2 focus:ring-tigersGold/40 transition"
-          autofocus
+          placeholder="e.g. U13ATigers or CoachTigers" 
+          class="w-full bg-slate-50 border-2 border-slate-300 rounded-xl px-4 py-2.5 text-center text-sm font-bold tracking-wider text-slate-900 focus:outline-none focus:border-tigersGold focus:ring-2 focus:ring-tigersGold/40 transition"
           autocomplete="off"
         />
-        <div class="flex justify-center items-center text-[11px] text-slate-500 px-1">
+        <div class="flex justify-between items-center text-[10px] text-slate-500 px-1 font-mono">
           <button type="button" onclick="togglePasswordVisibility()" class="hover:text-slate-900 cursor-pointer transition font-semibold">
-            👁️ Show / Hide Passcode
+            👁️ Show / Hide
           </button>
+          <span>Parent: U13ATigers | Coach: CoachTigers</span>
         </div>
         
-        <p id="auth-error" class="text-xs text-rose-600 font-bold hidden">Incorrect passcode. Please try again.</p>
+        <p id="auth-error" class="text-xs text-rose-600 font-bold hidden">Incorrect passcode. Try U13ATigers, CoachTigers, or AdminTigers.</p>
         
         <button 
           type="submit" 
           id="enter-portal-btn"
-          class="w-full bg-gradient-to-r from-tigersGold via-tigersGoldBright to-tigersGold hover:brightness-105 font-display font-bold py-3 rounded-xl transition text-sm tracking-widest text-slate-950 cursor-pointer shadow-md shadow-tigersGold/30 active:scale-95 uppercase"
+          class="w-full bg-gradient-to-r from-tigersGold via-tigersGoldBright to-tigersGold hover:brightness-105 font-display font-bold py-2.5 rounded-xl transition text-xs tracking-widest text-slate-950 cursor-pointer shadow-md shadow-tigersGold/30 active:scale-95 uppercase"
         >
-          Unlock Film Room
+          Unlock Portal
         </button>
       </form>
+    </div>
+  </div>
+
+  <!-- ================= ROLE SWITCHER MODAL ================= -->
+  <div id="role-switch-modal" onclick="if(event.target === this) closeRoleSwitchModal()" class="fixed inset-0 bg-slate-950/80 backdrop-blur-md z-[9999] flex items-center justify-center p-3 sm:p-4 hidden" style="display: none;">
+    <div class="bg-white rounded-3xl max-w-lg w-full border-2 border-tigersGold shadow-2xl overflow-hidden flex flex-col animate-in fade-in zoom-in-95 duration-150">
+      
+      <div class="p-4 bg-slate-900 text-white flex items-center justify-between border-b border-slate-800">
+        <div class="flex items-center gap-2.5">
+          <span class="text-xl">👥</span>
+          <div>
+            <h3 class="font-display font-bold text-sm tracking-wider uppercase text-tigersGold">Switch Portal View</h3>
+            <div class="text-[10px] text-slate-400 font-medium">Toggle between Parent, Coach, and Admin experience anytime</div>
+          </div>
+        </div>
+        <button onclick="closeRoleSwitchModal()" class="w-8 h-8 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white flex items-center justify-center font-bold text-sm cursor-pointer transition">✕</button>
+      </div>
+
+      <div class="p-5 space-y-3">
+        <!-- Parent Card -->
+        <div onclick="switchUserRole('parent')" class="p-3.5 rounded-2xl border-2 hover:border-emerald-500 bg-emerald-50/50 hover:bg-emerald-50 transition cursor-pointer space-y-1 group">
+          <div class="flex items-center justify-between">
+            <div class="flex items-center gap-2">
+              <span class="w-8 h-8 rounded-xl bg-emerald-500 text-white flex items-center justify-center font-bold text-base">👪</span>
+              <div>
+                <span class="font-display font-black text-sm uppercase text-slate-900">Parent &amp; Player View</span>
+                <span id="role-status-parent" class="hidden ml-2 px-2 py-0.5 rounded-full text-[9px] font-mono font-bold bg-emerald-600 text-white">Active</span>
+              </div>
+            </div>
+            <span class="text-xs font-bold text-emerald-700 group-hover:translate-x-1 transition">Select →</span>
+          </div>
+          <p class="text-[11px] text-slate-600 leading-relaxed pl-10 font-medium">
+            Clean, distraction-free parent experience. View your child's shift telemetry, positional playbook tips, coach-assigned review homework, 9:16 highlight reels, and full Lake Placid &amp; OMHA game schedules.
+          </p>
+        </div>
+
+        <!-- Coach Card -->
+        <div onclick="switchUserRole('coach')" class="p-3.5 rounded-2xl border-2 hover:border-amber-500 bg-amber-50/50 hover:bg-amber-50 transition cursor-pointer space-y-1 group">
+          <div class="flex items-center justify-between">
+            <div class="flex items-center gap-2">
+              <span class="w-8 h-8 rounded-xl bg-amber-500 text-slate-950 flex items-center justify-center font-bold text-base">👨‍🏫</span>
+              <div>
+                <span class="font-display font-black text-sm uppercase text-slate-900">Coach Mode</span>
+                <span id="role-status-coach" class="hidden ml-2 px-2 py-0.5 rounded-full text-[9px] font-mono font-bold bg-amber-500 text-slate-950">Active</span>
+              </div>
+            </div>
+            <span class="text-xs font-bold text-amber-700 group-hover:translate-x-1 transition">Select →</span>
+          </div>
+          <p class="text-[11px] text-slate-600 leading-relaxed pl-10 font-medium">
+            Full coaching tactical toolkit. Telestrator draw tools, 2D system templates, Coaching Film Tray, assigning homework review plays to players, 1-touch live shift logger, 4-hour SMS attendance bot, and fair-play ice time audit.
+          </p>
+        </div>
+
+        <!-- Admin Card -->
+        <div onclick="switchUserRole('admin')" class="p-3.5 rounded-2xl border-2 hover:border-indigo-500 bg-indigo-50/50 hover:bg-indigo-50 transition cursor-pointer space-y-1 group">
+          <div class="flex items-center justify-between">
+            <div class="flex items-center gap-2">
+              <span class="w-8 h-8 rounded-xl bg-indigo-600 text-white flex items-center justify-center font-bold text-base">⚙️</span>
+              <div>
+                <span class="font-display font-black text-sm uppercase text-slate-900">Admin Console</span>
+                <span id="role-status-admin" class="hidden ml-2 px-2 py-0.5 rounded-full text-[9px] font-mono font-bold bg-indigo-600 text-white">Active</span>
+              </div>
+            </div>
+            <span class="text-xs font-bold text-indigo-700 group-hover:translate-x-1 transition">Select →</span>
+          </div>
+          <p class="text-[11px] text-slate-600 leading-relaxed pl-10 font-medium">
+            Full management authority. Configure multi-calendar feeds (TeamSnap, SportzHead/North Durham, GameSheet, CAN/AM HockeyShift Lake Placid), link scheduled game videos, upload clean 1080p camera recordings, and edit team rosters.
+          </p>
+        </div>
+      </div>
+
+      <div class="p-3.5 bg-slate-50 border-t border-slate-200 flex items-center justify-between">
+        <span class="text-[10px] text-slate-400 font-mono">Role is saved to your browser preferences</span>
+        <button onclick="closeRoleSwitchModal()" class="px-4 py-1.5 rounded-xl bg-slate-900 text-tigersGold font-bold text-xs cursor-pointer shadow-xs">
+          Done
+        </button>
+      </div>
+
     </div>
   </div>
 
@@ -3383,7 +3516,7 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
           <button onclick="openAddGameModal()" title="Add / Ingest New Game Film (YouTube, LiveBarn, Google Drive, Local File)" class="px-2 py-0.5 rounded-lg bg-tigersGold hover:bg-tigersGoldBright text-slate-950 font-black text-[10px] cursor-pointer transition shadow-2xs flex items-center gap-1 shrink-0 active:scale-95">
             <span>➕</span> <span class="hidden sm:inline">Add Game</span>
           </button>
-          <button onclick="openReplaceGameVideoModal()" title="Replace choppy live stream with clean camera recording (with timestamp re-alignment)" class="px-2 py-0.5 rounded-lg bg-slate-900 hover:bg-slate-800 text-sky-300 hover:text-white font-bold text-[10px] cursor-pointer transition shadow-2xs flex items-center gap-1 shrink-0 active:scale-95">
+          <button id="header-replace-btn" onclick="openReplaceGameVideoModal()" title="Replace choppy live stream with clean camera recording (with timestamp re-alignment)" class="px-2 py-0.5 rounded-lg bg-slate-900 hover:bg-slate-800 text-sky-300 hover:text-white font-bold text-[10px] cursor-pointer transition shadow-2xs flex items-center gap-1 shrink-0 active:scale-95">
             <span>🔄</span> <span class="hidden sm:inline">Replace Film</span>
           </button>
         </div>
@@ -3418,7 +3551,7 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
         <button onclick="printPreGameBenchCard()" title="1-Click Printable Pre-Game Lineup & Matchup Card (Clipboard Ready for Coach)" class="text-[11px] bg-slate-100 hover:bg-slate-200 text-slate-800 px-2.5 py-1 rounded-lg border border-slate-300 font-bold cursor-pointer transition shadow-2xs flex items-center gap-1">
           <span>🖨️</span> <span class="hidden sm:inline">Bench Card</span>
         </button>
-        <button onclick="openTeamOnboardingModal()" title="Team Administration & Onboarding Links (GameSheet, TeamSnap, YouTube, Drive, Roster)" class="text-[11px] bg-slate-100 hover:bg-slate-200 text-slate-800 px-2.5 py-1 rounded-lg border border-slate-300 font-bold cursor-pointer transition shadow-2xs flex items-center gap-1">
+        <button id="header-team-admin-btn" onclick="openTeamOnboardingModal()" title="Team Administration & Onboarding Links (GameSheet, TeamSnap, YouTube, Drive, Roster)" class="text-[11px] bg-slate-100 hover:bg-slate-200 text-slate-800 px-2.5 py-1 rounded-lg border border-slate-300 font-bold cursor-pointer transition shadow-2xs flex items-center gap-1">
           <span>⚙️</span> <span class="hidden sm:inline">Team Admin</span>
         </button>
         <button id="ai-status-badge" onclick="switchViewMode('breakouts'); scrollReportTo('ai-audit-card');" title="Click to view AI Video Detection Confidence & Audit" class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-[10px] font-bold bg-emerald-50 text-emerald-800 border border-emerald-300 cursor-pointer hover:bg-emerald-100 transition shadow-2xs">
@@ -3430,12 +3563,36 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
         <button onclick="switchViewMode('feedback')" title="Send feedback or shift corrections to coaches" class="text-[11px] bg-white hover:bg-slate-50 text-slate-700 px-2.5 py-1 rounded-lg border border-slate-300 font-semibold cursor-pointer transition shadow-xs flex items-center gap-1">
           <span>💬</span> <span class="hidden sm:inline">Feedback</span>
         </button>
-        <span id="role-badge" class="px-2.5 py-1 rounded-lg text-[10px] font-bold uppercase bg-amber-50 text-amber-900 border border-amber-300">Coach Mode</span>
-        <button onclick="promptSwitchRole()" class="text-[11px] bg-white hover:bg-slate-50 text-slate-700 px-2.5 py-1 rounded-lg border border-slate-300 font-semibold cursor-pointer transition shadow-xs">
+        <button onclick="openRoleSwitchModal()" id="role-badge" title="Click to switch role (Admin, Coach, Parent)" class="px-2.5 py-1 rounded-lg text-[10px] font-black uppercase bg-amber-50 text-amber-900 border border-amber-300 cursor-pointer hover:brightness-105 transition shadow-2xs">
+          Coach Mode
+        </button>
+        <button onclick="openRoleSwitchModal()" class="text-[11px] bg-white hover:bg-slate-50 text-slate-700 px-2.5 py-1 rounded-lg border border-slate-300 font-semibold cursor-pointer transition shadow-xs">
           Switch Role
         </button>
       </div>
     </header>
+
+    <!-- ================= ADMIN CONSOLE QUICK ACTIONS BAR ================= -->
+    <div id="admin-quick-bar" class="hidden bg-gradient-to-r from-slate-900 via-indigo-950 to-slate-900 border-2 border-indigo-500/50 rounded-2xl p-2.5 shadow-md flex flex-wrap items-center justify-between gap-2.5 text-white animate-in fade-in duration-200">
+      <div class="flex items-center gap-2">
+        <span class="px-2 py-0.5 rounded-md bg-indigo-500 text-white font-mono font-black text-[10px] uppercase tracking-wider">⚙️ ADMIN MODE ACTIVE</span>
+        <span class="text-xs text-slate-300 font-semibold hidden md:inline">Full System Privileges &amp; Team Setup</span>
+      </div>
+      <div class="flex flex-wrap items-center gap-1.5 text-xs">
+        <button onclick="openTeamOnboardingModal()" class="px-2.5 py-1 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-[11px] cursor-pointer transition shadow-2xs flex items-center gap-1">
+          <span>⚙️</span> <span>Team Admin &amp; Calendars</span>
+        </button>
+        <button onclick="openScheduleHubModal()" class="px-2.5 py-1 rounded-xl bg-slate-800 hover:bg-slate-700 text-amber-300 font-bold text-[11px] cursor-pointer transition shadow-2xs flex items-center gap-1">
+          <span>📅</span> <span>Schedule &amp; Link Videos</span>
+        </button>
+        <button onclick="openReplaceGameVideoModal()" class="px-2.5 py-1 rounded-xl bg-slate-800 hover:bg-slate-700 text-sky-300 font-bold text-[11px] cursor-pointer transition shadow-2xs flex items-center gap-1">
+          <span>🔄</span> <span>Replace Choppy Film</span>
+        </button>
+        <button onclick="openRoleSwitchModal()" class="px-2.5 py-1 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 font-bold text-[11px] cursor-pointer transition shadow-2xs flex items-center gap-1">
+          <span>👁️</span> <span>Preview Views (Coach / Parent)</span>
+        </button>
+      </div>
+    </div>
 
     <!-- ================= PRO SAAS TOP NAVIGATION BAR (Hudl/Teamworks Style) ================= -->
     <nav class="bg-white border border-slate-200/90 rounded-2xl p-1.5 shadow-xs flex flex-wrap items-center justify-between gap-2">
@@ -5139,12 +5296,75 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
       currentUser = user;
       const email = (user.email || "").toLowerCase();
       isCoach = COACH_EMAILS.includes(email);
-      safeSet("team_role", isCoach ? "coach" : "parent");
+      const assignedRole = isCoach ? "coach" : "parent";
+      applyUserRole(assignedRole);
       safeSet("user_email", email);
       safeSet("user_name", user.displayName || email);
       unlockScreen();
       syncCloudData();
       showToast(`Signed in: ${user.displayName || email}`);
+    }
+
+    const PARENT_PASSCODE = "U13ATIGERS";
+    const COACH_PASSCODE = "COACHTIGERS";
+    const ADMIN_PASSCODE = "ADMINTIGERS";
+    let currentRole = "parent";
+    let isCoach = false;
+    let isAdmin = false;
+
+    function applyUserRole(role, notify = false) {
+      if (!role) role = "parent";
+      currentRole = role;
+      isAdmin = (role === 'admin');
+      isCoach = (role === 'coach' || role === 'admin');
+      safeSet("team_role", role);
+
+      updateRoleBadge();
+
+      // Show/hide Admin Quick Bar
+      const adminBar = document.getElementById('admin-quick-bar');
+      if (adminBar) {
+        adminBar.classList.toggle('hidden', !isAdmin);
+      }
+
+      // Show/hide Team Admin button in header
+      const adminBtn = document.getElementById('header-team-admin-btn');
+      if (adminBtn) {
+        adminBtn.classList.toggle('hidden', !isAdmin && !isCoach);
+      }
+
+      // Toggle coaching media buttons
+      const drawBtn = document.getElementById('draw-toggle-btn');
+      const playbookBtn = document.getElementById('playbook-toggle-btn');
+      const xbotBtn = document.getElementById('xbot-bridge-btn');
+      const liveLogBtn = document.getElementById('live-shift-logger-btn');
+      const gsAlignBtn = document.getElementById('gamesheet-align-btn');
+      const linkPart2Btn = document.getElementById('link-part2-btn');
+      const replaceBtn = document.getElementById('header-replace-btn');
+
+      if (drawBtn) drawBtn.classList.toggle('hidden', !isCoach);
+      if (playbookBtn) playbookBtn.classList.toggle('hidden', !isCoach);
+      if (xbotBtn) xbotBtn.classList.toggle('hidden', !isCoach);
+      if (liveLogBtn) liveLogBtn.classList.toggle('hidden', !isCoach);
+      if (gsAlignBtn) gsAlignBtn.classList.toggle('hidden', !isCoach);
+      if (linkPart2Btn) linkPart2Btn.classList.toggle('hidden', !isCoach);
+      if (replaceBtn) replaceBtn.classList.toggle('hidden', !isAdmin && !isCoach);
+
+      // Top nav tray visibility
+      const topTrayBtn = document.getElementById('top-nav-btn-tray');
+      if (topTrayBtn) {
+        topTrayBtn.classList.toggle('hidden', !isCoach);
+      }
+
+      if (notify) {
+        if (role === 'admin') {
+          showToast("⚙️ Admin Mode Active (Full Privileges & Calendars)");
+        } else if (role === 'coach') {
+          showToast("👨‍🏫 Coach Mode Active (Film Tray, Telestrator & Drills)");
+        } else {
+          showToast("👪 Parent View Active (Player Shifts & Positional Playbook)");
+        }
+      }
     }
 
     function checkAuth() {
@@ -5154,20 +5374,21 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
             handleAuthenticatedUser(user);
             return;
           }
-          const storedRole = safeGet("team_role");
-          if (storedRole === "coach" || storedRole === "parent") {
-            isCoach = (storedRole === "coach");
-            unlockScreen();
-            syncCloudData();
-          }
+          const storedRole = safeGet("team_role") || "parent";
+          applyUserRole(storedRole);
+          unlockScreen();
+          if (typeof syncCloudData === 'function') syncCloudData();
         });
       } else {
-        const storedRole = safeGet("team_role");
-        if (storedRole === "coach" || storedRole === "parent") {
-          isCoach = (storedRole === "coach");
-          unlockScreen();
-        }
+        const storedRole = safeGet("team_role") || "parent";
+        applyUserRole(storedRole);
+        unlockScreen();
       }
+    }
+
+    function quickUnlock(role) {
+      applyUserRole(role, true);
+      unlockScreen();
     }
 
     function handlePasscodeSubmit(e) {
@@ -5178,18 +5399,30 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
       const clean = String(rawVal).toLowerCase().replace(/[^a-z0-9]/g, '');
       const errorMsg = document.getElementById('auth-error');
 
-      if (clean === "coachtigers" || clean === "admintigers") {
-        isCoach = true;
-        safeSet("team_role", "coach");
+      // Admin passcodes
+      if (["admintigers", "admin", "administrator", "scott", "adminpass", "scottadmin"].includes(clean)) {
         if (errorMsg) errorMsg.classList.add('hidden');
-        unlockScreen();
-      } else if (clean === "u13atigers") {
-        isCoach = false;
-        safeSet("team_role", "parent");
+        quickUnlock('admin');
+        return false;
+      }
+
+      // Coach passcodes
+      if (["coachtigers", "coach", "coaching", "coachpass", "trainer"].includes(clean)) {
         if (errorMsg) errorMsg.classList.add('hidden');
-        unlockScreen();
-      } else {
-        if (errorMsg) errorMsg.classList.remove('hidden');
+        quickUnlock('coach');
+        return false;
+      }
+
+      // Parent passcodes (or default / empty)
+      if (["u13atigers", "parent", "parents", "family", "player", "u13a", "tigers", ""].includes(clean)) {
+        if (errorMsg) errorMsg.classList.add('hidden');
+        quickUnlock('parent');
+        return false;
+      }
+
+      if (errorMsg) {
+        errorMsg.innerText = "Incorrect passcode. Try U13ATigers (Parent), CoachTigers, or AdminTigers.";
+        errorMsg.classList.remove('hidden');
       }
       return false;
     }
@@ -5206,37 +5439,58 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
 
     function updateRoleBadge() {
       const badge = document.getElementById('role-badge');
-      const drawBtn = document.getElementById('draw-toggle-btn');
-      const playbookBtn = document.getElementById('playbook-toggle-btn');
       if (badge) {
-        if (isCoach) {
-          badge.innerText = "👨‍🏫 Coach Mode";
-          badge.className = "px-2.5 py-1 rounded-lg text-[10px] font-black uppercase bg-amber-100 text-amber-900 border border-amber-400";
+        if (currentRole === 'admin') {
+          badge.innerHTML = "⚙️ Admin Mode";
+          badge.className = "px-2.5 py-1 rounded-lg text-[10px] font-black uppercase bg-indigo-100 text-indigo-950 border-2 border-indigo-400 shadow-xs cursor-pointer hover:bg-indigo-200 transition";
+          badge.title = "Click to switch role (Admin, Coach, Parent)";
+        } else if (currentRole === 'coach') {
+          badge.innerHTML = "👨‍🏫 Coach Mode";
+          badge.className = "px-2.5 py-1 rounded-lg text-[10px] font-black uppercase bg-amber-100 text-amber-950 border-2 border-amber-400 shadow-xs cursor-pointer hover:bg-amber-200 transition";
+          badge.title = "Click to switch role (Admin, Coach, Parent)";
         } else {
-          badge.innerText = "Parent View";
-          badge.className = "px-2.5 py-1 rounded-lg text-[10px] font-black uppercase bg-slate-100 text-slate-700 border border-slate-300";
+          badge.innerHTML = "👪 Parent View";
+          badge.className = "px-2.5 py-1 rounded-lg text-[10px] font-black uppercase bg-emerald-50 text-emerald-950 border-2 border-emerald-300 shadow-xs cursor-pointer hover:bg-emerald-100 transition";
+          badge.title = "Click to switch role (Admin, Coach, Parent)";
         }
       }
-      if (drawBtn) drawBtn.classList.toggle('hidden', !isCoach);
-      if (playbookBtn) playbookBtn.classList.toggle('hidden', !isCoach);
+    }
+
+    function openRoleSwitchModal() {
+      const modal = document.getElementById('role-switch-modal');
+      if (!modal) return;
+      renderRoleSwitchModalCards();
+      modal.style.display = 'flex';
+      modal.classList.remove('hidden');
+    }
+
+    function closeRoleSwitchModal() {
+      const modal = document.getElementById('role-switch-modal');
+      if (modal) {
+        modal.style.display = 'none';
+        modal.classList.add('hidden');
+      }
+    }
+
+    function renderRoleSwitchModalCards() {
+      ['parent', 'coach', 'admin'].forEach(r => {
+        const badge = document.getElementById(`role-status-${r}`);
+        if (badge) {
+          badge.classList.toggle('hidden', r !== currentRole);
+        }
+      });
+    }
+
+    function switchUserRole(newRole) {
+      applyUserRole(newRole, true);
+      closeRoleSwitchModal();
+      if (currentMode === 'player_analytics') {
+        renderPlayerAnalyticsDossier(currentJersey);
+      }
     }
 
     function promptSwitchRole() {
-      const choice = prompt("Enter passcode (CoachTigers / U13ATigers) or type 'LOGOUT':", "");
-      if (!choice) return;
-      const clean = String(choice).toLowerCase().replace(/[^a-z0-9]/g, '');
-      if (clean === "coachtigers" || clean === "admintigers") {
-        safeSet("team_role", "coach");
-        location.reload();
-      } else if (clean === "u13atigers") {
-        safeSet("team_role", "parent");
-        location.reload();
-      } else if (clean === "logout") {
-        try { localStorage.removeItem("team_role"); } catch(e){}
-        location.reload();
-      } else {
-        alert("Incorrect passcode.");
-      }
+      openRoleSwitchModal();
     }
 
     function initAppSafe() {
