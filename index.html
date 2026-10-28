@@ -889,8 +889,11 @@
               <span class="text-[10px] text-slate-400">or click to browse from Falcon SD card / USB / folder</span>
             </div>
             <span class="text-[9px] text-emerald-400 font-mono bg-emerald-500/10 px-2 py-0.5 rounded-full border border-emerald-500/20">
-              ⚡ Instant zero-upload playback • No server storage fees
+              ⚡ Instant local session preview • Direct MP4 commits prevented
             </span>
+          </div>
+          <div class="p-3 rounded-xl bg-amber-950/40 border border-amber-500/30 text-[10px] text-amber-300 leading-relaxed">
+            <strong>⚠️ Repository Storage Policy:</strong> Large MP4 files (1GB–4GB+) cannot be stored locally or committed to GitHub repository storage. For permanent team sharing, please upload your video file to your team's <strong>Unlisted YouTube channel, Google Drive, OneDrive, or Dropbox</strong>, and paste the shareable link.
           </div>
 
           <div id="replace-file-loaded-info" class="hidden p-3 rounded-xl bg-emerald-950/40 border border-emerald-500/40 flex items-center justify-between">
@@ -1888,6 +1891,26 @@
             <p class="text-[10px] text-slate-500 mt-1">Hosts unlisted game footage for 100% free unlimited 4K streaming with zero server costs.</p>
           </div>
 
+                    <!-- Dedicated YouTube Live Video ID / URL Input -->
+          <div class="p-3 rounded-2xl bg-rose-50 border border-rose-200 space-y-1.5">
+            <label class="block font-bold text-rose-950 uppercase text-[10px] tracking-wider flex items-center justify-between">
+              <span class="flex items-center gap-1.5">
+                <span>🔴</span> <span>Active Game Day YouTube Live Video ID / Live URL:</span>
+              </span>
+              <span class="text-[9px] font-mono font-bold text-rose-600 bg-rose-100 px-1.5 py-0.5 rounded">Per-Game Broadcast Link</span>
+            </label>
+            <div class="flex gap-2">
+              <input type="text" id="cfg-youtube-live-url" class="flex-1 bg-white border border-rose-300 rounded-xl px-3 py-2 text-slate-900 font-mono text-xs focus:outline-none focus:border-rose-500 font-bold" placeholder="https://www.youtube.com/watch?v=... or 11-char Video ID" />
+              <button type="button" onclick="pasteAdminLiveLink()" class="px-3 py-2 rounded-xl bg-slate-900 hover:bg-slate-800 text-amber-300 font-bold text-xs cursor-pointer transition">Paste</button>
+            </div>
+            <p class="text-[10px] text-slate-600 leading-relaxed">
+              When streaming a live game from the XbotGo Falcon camera or YouTube Studio via RTMP stream key, YouTube generates a unique video ID for that session. Enter it here (or in the header <strong>📡 Set Stream</strong> modal) to auto-tune all team parents directly to the live feed without code changes.
+            </p>
+            <div class="text-[9px] text-slate-500 font-mono bg-white p-2 rounded-lg border border-rose-100">
+              <strong>Studio Stream Key Connection:</strong> In XbotGo App ➔ RTMP Destination ➔ Enter YouTube Studio Ingest URL (<code class="text-rose-700">rtmp://a.rtmp.youtube.com/live2</code>) + Stream Key. Once live, YouTube creates the public/unlisted watch URL. Copy that URL here.
+            </div>
+          </div>
+
           <!-- Master Cloud Storage -->
           <div>
             <label class="block font-bold text-slate-700 uppercase text-[10px] tracking-wider mb-1 flex items-center gap-1.5">
@@ -2656,11 +2679,17 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
         <!-- Inputs: PIN & GameSheet URL -->
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
           <div>
-            <label class="block font-bold text-slate-300 text-[10px] uppercase tracking-wider mb-1 flex items-center gap-1.5">
-              <span>🔑</span> <span>XbotGo Match PIN (ScoreSync)</span>
+            <label class="block font-bold text-slate-300 text-[10px] uppercase tracking-wider mb-1 flex items-center justify-between">
+              <span class="flex items-center gap-1.5">
+                <span>🔑</span> <span>XbotGo Match PIN (ScoreSync)</span>
+              </span>
+              <span class="text-[9px] text-amber-400 font-mono" title="A temporary 6-digit session PIN from XbotGo app">What is this? ℹ️</span>
             </label>
-            <input type="text" id="xbot-match-pin" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-rose-300 font-mono text-sm font-black tracking-widest placeholder:text-slate-600 focus:outline-none focus:border-rose-400" placeholder="e.g. 482910" value="482910">
-            <span class="text-[10px] text-slate-500 mt-1 block">From XbotGo app ➔ Live Streaming / Scoreboard ➔ Remote Scorekeeping</span>
+            <input type="text" id="xbot-match-pin" oninput="updateXbotPinState(this.value)" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-rose-300 font-mono text-sm font-black tracking-widest placeholder:text-slate-600 focus:outline-none focus:border-rose-400" placeholder="e.g. 482910" value="482910">
+            <div class="text-[10px] text-slate-400 mt-1.5 space-y-1">
+              <p><strong>Where to retrieve:</strong> Open XbotGo App ➔ Tap Live Stream ➔ Scoreboard ➔ Turn ON <em>Remote Scorekeeping</em> ➔ Copy the 6-digit PIN.</p>
+              <p class="text-[9px] text-slate-500">Pairs GameSheet referee scoring with camera video overlay so goals &amp; whistles display automatically without touching the camera.</p>
+            </div>
           </div>
 
           <div>
@@ -2672,15 +2701,21 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
           </div>
         </div>
 
-        <!-- Connection Controls -->
-        <div class="flex items-center justify-between bg-slate-950 p-3 rounded-2xl border border-slate-800 flex-wrap gap-2">
-          <div class="space-y-0.5">
-            <div class="font-bold text-white text-xs">Bridge Status: <span id="xbot-bridge-state-text" class="text-amber-400 font-mono font-bold">Ready to Connect</span></div>
-            <div class="text-[10px] text-slate-400" id="xbot-bridge-last-sync">Last Polled: Never</div>
+        <!-- Connection Controls with Explicit Status Indicators -->
+        <div class="flex items-center justify-between bg-slate-950 p-3.5 rounded-2xl border border-slate-800 flex-wrap gap-2.5">
+          <div class="space-y-1">
+            <div class="flex items-center gap-2">
+              <span class="font-bold text-white text-xs">Relay Status:</span>
+              <span id="xbot-explicit-status-badge" class="px-2.5 py-0.5 rounded-full bg-amber-500/20 text-amber-300 border border-amber-400/40 text-[10px] font-mono font-bold">
+                🟡 Ready to Connect
+              </span>
+            </div>
+            <div class="text-[10px] text-slate-400" id="xbot-bridge-state-text">Match PIN 482910 loaded. Tap button below to initiate WebSocket stream sync.</div>
+            <div class="text-[9px] text-slate-500 font-mono" id="xbot-bridge-last-sync">Last Polled: Standby</div>
           </div>
           <div class="flex items-center gap-2">
-            <button onclick="toggleXbotBridgeConnection()" id="xbot-bridge-connect-btn" class="px-4 py-2 rounded-xl bg-rose-600 hover:bg-rose-500 text-white font-black text-xs cursor-pointer transition shadow-sm active:scale-95 flex items-center gap-1.5">
-              <span>⚡</span> <span>Connect Live Relay</span>
+            <button onclick="toggleXbotBridgeConnection()" id="xbot-bridge-connect-btn" class="px-4 py-2 rounded-xl bg-rose-600 hover:bg-rose-500 text-white font-black text-xs cursor-pointer transition shadow-sm active:scale-95 flex items-center gap-1.5" title="Establish live WebSocket/API sync between Falcon camera and GameSheet data">
+              <span>⚡</span> <span id="xbot-connect-btn-text">Connect Live Relay</span>
             </button>
           </div>
         </div>
@@ -3438,7 +3473,7 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
 
 
   <!-- ================= AUTOMATED 9:16 INSTAGRAM / TIKTOK REEL GENERATOR ================= -->
-  <div id="social-reel-modal" onclick="if(event.target === this) closeSocialReelModal()" class="fixed inset-0 bg-slate-950/95 backdrop-blur-md z-[9999] flex items-center justify-center p-2 sm:p-4 hidden" style="display: none;">
+  <div id="vertical-reel-maker-modal" onclick="if(event.target === this) closeSocialReelModal()" class="fixed inset-0 bg-slate-950/95 backdrop-blur-md z-[9999] flex items-center justify-center p-2 sm:p-4 hidden" style="display: none;">
     <div class="bg-slate-900 rounded-3xl max-w-sm w-full max-h-[95vh] border-2 border-pink-500/60 shadow-2xl overflow-hidden flex flex-col text-white animate-in fade-in zoom-in-95 duration-150">
       
       <!-- Reel Header -->
@@ -3685,6 +3720,13 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
   <!-- ================= MAIN APP VIEW ================= -->
   <div id="main-content" class="w-full max-w-[1920px] 2xl:max-w-none mx-auto space-y-2.5 px-1 sm:px-2 md:px-3 pb-16 sm:pb-0" style="display: none;">
     
+      <!-- ================= FIXED FLOATING EXIT FULLSCREEN BUTTON (PINNED FOR TV / FULLSCREEN MODE) ================= -->
+  <button id="exit-fullscreen-btn" onclick="toggleTvPresentationMode()" class="hidden fixed top-4 right-4 z-[99999] px-4 py-2 rounded-2xl bg-rose-600/95 hover:bg-rose-500 text-white font-black text-xs shadow-2xl backdrop-blur-md border border-white/30 flex items-center gap-2 cursor-pointer transition active:scale-95 animate-in fade-in duration-200">
+    <span class="text-sm font-black">✕</span>
+    <span>Exit Fullscreen / Back to App</span>
+    <kbd class="px-1.5 py-0.5 rounded bg-black/40 text-[10px] font-mono border border-white/20">Esc</kbd>
+  </button>
+
     <!-- STREAMLINED PRO COACHING HEADER -->
     <header class="bg-white border border-slate-200/90 rounded-2xl px-4 py-2.5 shadow-sm flex flex-wrap items-center justify-between gap-3 relative">
       <!-- Left: Official Crest + Title -->
@@ -3779,7 +3821,7 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
         <button onclick="openHelpModal()" title="How to use this app guide" class="text-[11px] bg-slate-900 hover:bg-slate-800 text-tigersGold px-2.5 py-1 rounded-lg border border-tigersGold/40 font-bold cursor-pointer transition shadow-xs flex items-center gap-1 active:scale-95">
           <span>❓</span> <span class="hidden sm:inline">How to Use</span>
         </button>
-        <button onclick="switchViewMode('feedback')" title="Send feedback or shift corrections to coaches" class="text-[11px] bg-white hover:bg-slate-50 text-slate-700 px-2.5 py-1 rounded-lg border border-slate-300 font-semibold cursor-pointer transition shadow-xs flex items-center gap-1">
+        <button onclick="openFeedbackModal()" title="Send feedback or shift corrections to coaches" class="text-[11px] bg-white hover:bg-slate-50 text-slate-700 px-2.5 py-1 rounded-lg border border-slate-300 font-semibold cursor-pointer transition shadow-xs flex items-center gap-1">
           <span>💬</span> <span class="hidden sm:inline">Feedback</span>
         </button>
         <button onclick="openRoleSwitchModal()" id="role-badge" title="Click to switch role (Admin, Coach, Parent)" class="px-2.5 py-1 rounded-lg text-[10px] font-black uppercase bg-amber-50 text-amber-900 border border-amber-300 cursor-pointer hover:brightness-105 transition shadow-2xs">
@@ -3831,8 +3873,11 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
           <span>⭐</span> <span>Coaching Tray</span>
           <span id="top-tray-count" class="text-[9px] px-1.5 py-0.2 rounded-full bg-amber-100 text-amber-900 font-mono">0</span>
         </button>
-        <button onclick="switchViewMode('feedback')" id="top-nav-btn-feedback" class="px-3.5 py-2 rounded-xl text-slate-600 hover:text-slate-900 hover:bg-slate-100 cursor-pointer transition flex items-center gap-1.5 shrink-0">
+        <button onclick="openFeedbackModal()" id="top-nav-btn-feedback" class="px-3.5 py-2 rounded-xl text-slate-600 hover:text-slate-900 hover:bg-slate-100 cursor-pointer transition flex items-center gap-1.5 shrink-0" title="Send Feedback or Shift Corrections to Coaches">
           <span>💬</span> <span>Feedback Hub</span>
+        </button>
+        <button onclick="openScheduleHubModal()" id="top-nav-btn-schedule" title="View Full Schedule: Upcoming Games, Lake Placid Tournament & Past Film Archive" class="px-3.5 py-2 rounded-xl text-amber-800 hover:text-amber-950 hover:bg-amber-50 border border-amber-300/80 font-bold cursor-pointer transition flex items-center gap-1.5 shrink-0 active:scale-95">
+          <span>📅</span> <span>Schedule &amp; Link Videos</span>
         </button>
       </div>
 
@@ -3917,6 +3962,34 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
             <!-- Telestrator & Live AR Hovering Player Number Overlay Canvas -->
             <canvas id="telestrator-canvas" class="absolute inset-0 w-full h-full pointer-events-none z-20"></canvas>
 
+                        <!-- LIVE STREAM OFFLINE PLACEHOLDER STATE -->
+            <div id="live-offline-placeholder" class="hidden absolute inset-0 z-35 bg-slate-950/98 backdrop-blur-md flex flex-col items-center justify-center p-6 text-center text-white select-none animate-in fade-in duration-200">
+              <div class="w-16 h-16 rounded-2xl bg-slate-900 border border-slate-800 flex items-center justify-center text-3xl mb-3 shadow-2xl ring-1 ring-white/10">
+                📡
+              </div>
+              <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-slate-900 border border-slate-800 text-[11px] font-mono font-bold text-amber-400 mb-2">
+                <span class="w-2 h-2 rounded-full bg-slate-500"></span>
+                <span>STREAM STANDBY / OFFLINE</span>
+              </div>
+              <h3 class="font-display font-black text-lg sm:text-xl uppercase tracking-wider text-white max-w-md">
+                No Active Live Broadcast
+              </h3>
+              <p id="live-offline-next-game-text" class="text-xs text-slate-300 max-w-lg mt-2 leading-relaxed font-medium">
+                Next game scheduled: Friday, Nov 6, 2026 at 1:15 PM EST • CAN/AM Challenge Cup vs Boston Jr. Terriers @ Lake Placid Olympic Center
+              </p>
+              <div class="flex flex-wrap items-center justify-center gap-2.5 mt-5">
+                <button type="button" onclick="toggleLiveBroadcastMode()" class="px-4 py-2 rounded-xl bg-tigersGold hover:bg-tigersGoldBright text-slate-950 font-black text-xs cursor-pointer transition shadow-sm flex items-center gap-1.5 active:scale-95">
+                  <span>📺</span> <span>Watch Past Film Archive</span>
+                </button>
+                <button type="button" onclick="openScheduleHubModal()" class="px-3.5 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-amber-300 border border-slate-700 font-bold text-xs cursor-pointer transition flex items-center gap-1.5 active:scale-95">
+                  <span>📅</span> <span>View Full Schedule</span>
+                </button>
+                <button type="button" onclick="openSetLiveLinkModal()" class="px-3.5 py-2 rounded-xl bg-rose-600 hover:bg-rose-500 text-white font-bold text-xs cursor-pointer transition flex items-center gap-1.5 active:scale-95" title="Coach/Admin: Set active stream link">
+                  <span>📡</span> <span>Set Live Link</span>
+                </button>
+              </div>
+            </div>
+
             <!-- UNIFIED BROADCAST SCOREBOARD OVERLAY (SYNCHRONIZED WITH GAME TIME & DELAY OFFSET) -->
             <!-- Active Shift Bound Indicator Overlay (Top-Left) -->
             <div id="active-shift-pill" class="hidden absolute top-3 left-3 z-30 bg-white/95 backdrop-blur-md border-2 border-tigersGold px-3 py-1 rounded-full text-[11px] font-bold text-slate-900 flex items-center gap-2 shadow-md pointer-events-none">
@@ -3971,6 +4044,30 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
           <div class="bg-slate-900 text-slate-100 rounded-xl p-2 md:p-2.5 shadow-md border border-slate-800 space-y-2">
             
             <div class="flex flex-wrap items-center justify-between gap-2 text-xs">
+            <!-- QUICK-ACCESS BROADCAST STREAM DELAY BUFFER & SYNC LOCK -->
+            <div id="player-stream-sync-bar" class="flex flex-wrap items-center justify-between gap-2 p-1.5 px-2.5 bg-slate-950/90 rounded-lg border border-slate-800 text-[11px]">
+              <div class="flex items-center gap-2 flex-wrap">
+                <div class="flex items-center gap-1.5 text-amber-300 font-bold">
+                  <span>⏱️</span>
+                  <span class="text-[10px] uppercase tracking-wider text-slate-300 font-sans">Stream Delay Buffer:</span>
+                  <span id="player-latency-val" class="font-mono font-bold text-amber-300 bg-slate-900 px-1.5 py-0.5 rounded border border-slate-700">12.0s</span>
+                </div>
+                <div class="flex items-center gap-1.5">
+                  <input type="range" id="player-latency-slider" min="0" max="30" step="0.5" value="12" oninput="updateStreamLatencyOffset(this.value)" class="w-24 sm:w-36 h-1.5 bg-slate-800 rounded-lg cursor-pointer accent-rose-500" title="Adjust buffer to compensate for live stream latency">
+                  <span class="text-[9px] text-slate-400 hidden sm:inline">(Lag Comp.)</span>
+                </div>
+              </div>
+              <div class="flex items-center gap-2">
+                <button id="player-lock-sync-btn" onclick="toggleSyncLock()" class="px-2.5 py-1 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-700 font-bold text-[10px] cursor-pointer transition shadow-2xs flex items-center gap-1" title="Lock broadcast sync to prevent accidental scrubbing or transport shifts">
+                  <span id="player-lock-sync-icon">🔒</span>
+                  <span id="player-lock-sync-text">Lock Sync</span>
+                </button>
+                <button type="button" onclick="openXbotBridgeModal()" class="text-rose-400 hover:text-rose-300 text-[10px] font-bold flex items-center gap-0.5 cursor-pointer" title="Open Full Falcon ScoreSync Modal">
+                  <span>Falcon Bridge</span> <span>↗</span>
+                </button>
+              </div>
+            </div>
+
               
               <!-- Left: Faceoff Quick-Jumps & Core Transport -->
               <div class="flex items-center gap-1.5 flex-wrap">
@@ -4181,7 +4278,236 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
         </div>
         
         <!-- 5-TAB STREAMLINED NAVIGATION HEADER -->
-        <div class="grid grid-cols-5 gap-1 p-1 bg-slate-100 border-b border-slate-200 text-[11px] font-bold uppercase tracking-wider shrink-0">
+                <!-- LIVE STREAM SIDEBAR HEADER (Visible when watching Live Stream) -->
+        <div id="sidebar-live-header" class="hidden p-3 bg-slate-950 text-white flex items-center justify-between border-b border-slate-800 shrink-0">
+          <div class="flex items-center gap-2">
+            <span class="w-2.5 h-2.5 rounded-full bg-rose-500 animate-ping"></span>
+            <div>
+              <div class="font-display font-black text-xs uppercase tracking-wider text-rose-300">🔴 Live Center &amp; Real-Time Stats</div>
+              <div class="text-[9px] text-slate-400">Live YouTube broadcast + GameSheet telemetry</div>
+            </div>
+          </div>
+          <button type="button" onclick="toggleLiveBroadcastMode()" class="px-2.5 py-1 rounded-xl bg-slate-800 hover:bg-slate-700 text-amber-300 font-bold text-[10px] cursor-pointer transition flex items-center gap-1 border border-slate-700" title="Return to Film Archive & Shift Cards">
+            <span>📺</span> <span>Film Archive</span>
+          </button>
+        </div>
+
+        <!-- ================= EMBEDDED LIVE CENTER & REAL-TIME STATS PANEL ================= -->
+        <div id="live-sidebar-section" class="flex-1 flex flex-col min-h-0 overflow-y-auto custom-scroll p-3 space-y-3.5 hidden bg-slate-900 text-white">
+          
+          <!-- Live Scoreboard Hero Mini-Banner -->
+          <div class="bg-gradient-to-r from-slate-950 via-slate-900 to-slate-950 border-2 border-rose-500/50 rounded-2xl p-3 shadow-xl flex items-center justify-between gap-2 font-mono">
+            <div class="flex items-center gap-2">
+              <span class="text-2xl">🐯</span>
+              <div>
+                <div class="text-[9px] text-amber-400 font-bold uppercase">TIGERS (HOME)</div>
+                <div id="sidebar-live-score-home" class="text-2xl font-black text-white">2</div>
+                <div class="text-[9px] text-slate-400">SOG: <strong id="sidebar-live-sog-home" class="text-amber-300">18</strong></div>
+              </div>
+            </div>
+
+            <div class="text-center px-3 py-1.5 rounded-xl bg-slate-950 border border-slate-800">
+              <div id="sidebar-live-period" class="text-[10px] text-slate-400 font-bold uppercase">PERIOD 2</div>
+              <div id="sidebar-live-clock" class="text-xl font-black text-amber-400 my-0.5">09:42</div>
+              <span id="sidebar-live-strength" class="px-1.5 py-0.5 rounded text-[8px] font-bold uppercase bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">
+                5v5 Regular Play
+              </span>
+            </div>
+
+            <div class="flex items-center gap-2 text-right">
+              <div>
+                <div id="sidebar-live-opp-name" class="text-[9px] text-slate-400 font-bold uppercase">OPPONENT</div>
+                <div id="sidebar-live-score-away" class="text-2xl font-black text-white">1</div>
+                <div class="text-[9px] text-slate-400">SOG: <strong id="sidebar-live-sog-away" class="text-slate-300">14</strong></div>
+              </div>
+              <span class="text-2xl">🏒</span>
+            </div>
+          </div>
+
+          <!-- Sidebar Live Tabs: Tracker, Pre-Game Scout, GameSheet Feed -->
+          <div class="flex items-center gap-1 p-1 bg-slate-950 rounded-xl border border-slate-800 text-[11px] font-bold">
+            <button id="sb-live-btn-tracker" onclick="switchSidebarLiveTab('tracker')" class="flex-1 py-1.5 px-2 rounded-lg bg-rose-600 text-white font-bold cursor-pointer transition shadow-xs flex items-center justify-center gap-1">
+              <span>📊</span> <span>Live Tracker</span>
+            </button>
+            <button id="sb-live-btn-pregame" onclick="switchSidebarLiveTab('pregame')" class="flex-1 py-1.5 px-2 rounded-lg text-slate-400 hover:text-white font-bold cursor-pointer transition flex items-center justify-center gap-1">
+              <span>🏒</span> <span>Scout</span>
+            </button>
+            <button id="sb-live-btn-gamesheet" onclick="switchSidebarLiveTab('gamesheet')" class="flex-1 py-1.5 px-2 rounded-lg text-slate-400 hover:text-white font-bold cursor-pointer transition flex items-center justify-center gap-1">
+              <span>📋</span> <span>Feed</span>
+            </button>
+          </div>
+
+          <!-- Sub-Tab 1: Live In-Game Tracker & Real-Time AI -->
+          <div id="sb-live-tab-tracker" class="space-y-3">
+            <!-- 1-Tap Shots On Goal Counters -->
+            <div class="p-3 bg-slate-950 rounded-2xl border border-slate-800 space-y-2.5">
+              <div class="flex items-center justify-between">
+                <span class="font-bold text-white text-[11px] uppercase tracking-wider flex items-center gap-1.5">
+                  <span class="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
+                  <span>1-Tap Shots On Goal (SOG)</span>
+                </span>
+                <span id="sb-live-sog-diff" class="text-[9px] font-mono text-amber-300 bg-amber-400/20 px-1.5 py-0.5 rounded border border-amber-400/30">
+                  Tigers +4 SOG
+                </span>
+              </div>
+
+              <div class="grid grid-cols-2 gap-2">
+                <!-- Tigers SOG -->
+                <div class="p-2.5 rounded-xl bg-slate-900 border border-amber-400/40 space-y-1.5">
+                  <div class="flex items-center justify-between text-[10px]">
+                    <span class="font-bold text-amber-400">🐯 Tigers</span>
+                    <button type="button" onclick="undoLiveStat('sog', 'home')" class="text-slate-500 hover:text-slate-300 underline text-[9px] cursor-pointer">Undo</button>
+                  </div>
+                  <button type="button" onclick="recordLiveStat('sog', 'home')" class="w-full py-2 px-2 rounded-xl bg-amber-400 hover:bg-amber-300 active:scale-95 text-slate-950 font-black text-xs flex items-center justify-center gap-1.5 transition cursor-pointer shadow-md">
+                    <span>🏒</span> <span>+ SOG TIGERS</span>
+                  </button>
+                  <div class="text-center font-mono text-[10px] text-slate-300">
+                    <span id="sb-sog-count-home" class="font-black text-white text-sm">18</span> shots
+                  </div>
+                </div>
+
+                <!-- Opponent SOG -->
+                <div class="p-2.5 rounded-xl bg-slate-900 border border-rose-500/40 space-y-1.5">
+                  <div class="flex items-center justify-between text-[10px]">
+                    <span class="font-bold text-rose-400">🏒 Opponent</span>
+                    <button type="button" onclick="undoLiveStat('sog', 'away')" class="text-slate-500 hover:text-slate-300 underline text-[9px] cursor-pointer">Undo</button>
+                  </div>
+                  <button type="button" onclick="recordLiveStat('sog', 'away')" class="w-full py-2 px-2 rounded-xl bg-rose-600 hover:bg-rose-500 active:scale-95 text-white font-black text-xs flex items-center justify-center gap-1.5 transition cursor-pointer shadow-md">
+                    <span>🥅</span> <span>+ SOG OPP</span>
+                  </button>
+                  <div class="text-center font-mono text-[10px] text-slate-300">
+                    <span id="sb-sog-count-away" class="font-black text-white text-sm">14</span> shots
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- 1-Tap Faceoff Tracker -->
+            <div class="p-3 bg-slate-950 rounded-2xl border border-slate-800 space-y-2">
+              <div class="flex items-center justify-between">
+                <span class="font-bold text-white text-[11px] uppercase tracking-wider flex items-center gap-1">
+                  <span>⭕</span> <span>Live Faceoff Tracker</span>
+                </span>
+                <span id="sb-live-fo-pct" class="font-mono text-emerald-400 font-black text-[11px]">60.7% (17/28)</span>
+              </div>
+
+              <!-- Center Selector -->
+              <div class="grid grid-cols-3 gap-1.5 text-center text-[10px]">
+                <button type="button" id="sb-fo-btn-23" onclick="selectLiveCenter(23)" class="p-1.5 rounded-lg bg-amber-400/20 border-2 border-amber-400 text-amber-300 font-bold cursor-pointer">
+                  <div class="font-black text-white text-xs">#23</div>
+                  <div id="sb-fo-stat-23" class="text-[9px] font-mono">8W-4L</div>
+                </button>
+                <button type="button" id="sb-fo-btn-9" onclick="selectLiveCenter(9)" class="p-1.5 rounded-lg bg-slate-900 border border-slate-700 text-slate-400 font-bold cursor-pointer">
+                  <div class="font-black text-white text-xs">#9</div>
+                  <div id="sb-fo-stat-9" class="text-[9px] font-mono">5W-4L</div>
+                </button>
+                <button type="button" id="sb-fo-btn-18" onclick="selectLiveCenter(18)" class="p-1.5 rounded-lg bg-slate-900 border border-slate-700 text-slate-400 font-bold cursor-pointer">
+                  <div class="font-black text-white text-xs">#18</div>
+                  <div id="sb-fo-stat-18" class="text-[9px] font-mono">4W-3L</div>
+                </button>
+              </div>
+
+              <div class="grid grid-cols-2 gap-2 pt-1">
+                <button type="button" onclick="recordLiveFaceoff('win')" class="py-2 px-3 rounded-xl bg-emerald-600 hover:bg-emerald-500 active:scale-95 text-white font-black text-xs flex items-center justify-center gap-1 cursor-pointer shadow-md">
+                  <span>✅</span> <span>WON FO (+1)</span>
+                </button>
+                <button type="button" onclick="recordLiveFaceoff('loss')" class="py-2 px-3 rounded-xl bg-rose-600 hover:bg-rose-500 active:scale-95 text-white font-black text-xs flex items-center justify-center gap-1 cursor-pointer shadow-md">
+                  <span>❌</span> <span>LOST FO (+1)</span>
+                </button>
+              </div>
+            </div>
+
+            <!-- Real-Time AI Tactical Momentum Cards -->
+            <div class="p-3 bg-slate-950 rounded-2xl border border-slate-800 space-y-2">
+              <div class="flex items-center justify-between text-[11px] font-bold text-amber-400 uppercase tracking-wider">
+                <span>⚡ Real-Time Tactical Momentum</span>
+                <span class="text-[9px] font-mono text-emerald-400">P2 Live</span>
+              </div>
+              <div class="space-y-1.5 text-[11px]">
+                <div class="p-2 rounded-xl bg-slate-900 border border-emerald-500/40">
+                  <div class="flex items-center justify-between text-emerald-300 font-bold text-[10px]">
+                    <span>🛡️ High-Slot Protection</span>
+                    <span class="font-mono">Grade A</span>
+                  </div>
+                  <p class="text-[10px] text-slate-300 mt-0.5 leading-snug">
+                    Tigers D-pairs have confined opponent to 78% perimeter point shots. Slot rebound containment is preventing high-danger second looks.
+                  </p>
+                </div>
+                <div class="p-2 rounded-xl bg-slate-900 border border-amber-400/40">
+                  <div class="flex items-center justify-between text-amber-300 font-bold text-[10px]">
+                    <span>⚡ Power Play Advantage</span>
+                    <span class="font-mono">1/2 (50%)</span>
+                  </div>
+                  <p class="text-[10px] text-slate-300 mt-0.5 leading-snug">
+                    Opponent penalty kill collapses into narrow wedge. Weak-side cross-seam lane is open for #10 to feed #23.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Sub-Tab 2: Pre-Game Matchup & Opponent Scout -->
+          <div id="sb-live-tab-pregame" class="space-y-3 hidden">
+            <div class="p-3 bg-slate-950 rounded-2xl border border-slate-800 space-y-2">
+              <span class="font-bold text-white text-[11px] uppercase tracking-wider block">🔑 Coach's 3 Keys to the Game</span>
+              <div class="space-y-1.5 text-[11px] text-slate-300">
+                <div class="flex items-start gap-1.5">
+                  <span class="w-4 h-4 rounded-full bg-amber-400 text-slate-950 font-black text-[9px] flex items-center justify-center shrink-0 mt-0.5">1</span>
+                  <span><strong>F3 Discipline:</strong> Stay above the puck on forecheck to eliminate odd-man rushes.</span>
+                </div>
+                <div class="flex items-start gap-1.5">
+                  <span class="w-4 h-4 rounded-full bg-amber-400 text-slate-950 font-black text-[9px] flex items-center justify-center shrink-0 mt-0.5">2</span>
+                  <span><strong>Stick Position:</strong> Keep sticks on the ice; zero reaching penalties in O-zone.</span>
+                </div>
+                <div class="flex items-start gap-1.5">
+                  <span class="w-4 h-4 rounded-full bg-amber-400 text-slate-950 font-black text-[9px] flex items-center justify-center shrink-0 mt-0.5">3</span>
+                  <span><strong>Net-Front Screen:</strong> Screen goalie vision on all point shots.</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="p-3 bg-slate-950 rounded-2xl border border-slate-800 space-y-1.5">
+              <span class="font-bold text-rose-300 text-[11px] uppercase tracking-wider block">⚠️ Danger Player Watch</span>
+              <div class="p-2 rounded-xl bg-slate-900 border border-rose-500/30 text-[10px] space-y-1">
+                <div class="font-bold text-white">#14 Cole Miller (C) • 18G, 12A</div>
+                <div class="text-slate-400">Threat: Curl &amp; drag wrist shot from right circle. Counter: Gap up early at red line.</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Sub-Tab 3: GameSheet Live Feed & Cheering -->
+          <div id="sb-live-tab-gamesheet" class="space-y-3 hidden">
+            <!-- Cheer Box -->
+            <div class="p-3 bg-slate-950 rounded-2xl border border-amber-400/40 space-y-2">
+              <div class="font-bold text-white text-[11px]">Parent Live Cheer Box &amp; Arena Horn</div>
+              <div class="grid grid-cols-2 gap-2">
+                <button type="button" onclick="playArenaGoalHornSound()" class="py-2 px-2 rounded-xl bg-amber-400 hover:bg-amber-300 text-slate-950 font-black text-[11px] cursor-pointer shadow-sm flex items-center justify-center gap-1">
+                  <span>🔊</span> <span>Goal Horn</span>
+                </button>
+                <button type="button" onclick="sendParentCheer('tigers')" class="py-2 px-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-amber-300 font-bold text-[11px] cursor-pointer flex items-center justify-center gap-1">
+                  <span>🐯</span> <span>Go Tigers!</span>
+                </button>
+              </div>
+            </div>
+
+            <!-- Play-by-Play List -->
+            <div class="p-3 bg-slate-950 rounded-2xl border border-slate-800 space-y-1.5 font-mono text-[10px]">
+              <div class="font-sans font-bold text-slate-400 uppercase text-[10px]">Official GameSheet Event Ticker</div>
+              <div class="p-2 rounded-lg bg-slate-900 border border-amber-400/50 text-white">
+                <span class="text-amber-400 font-bold">P2 11:40</span> 🚨 GOAL! #23 Carpentier (#10 Manjunath)
+              </div>
+              <div class="p-2 rounded-lg bg-slate-900 border border-slate-800 text-slate-300">
+                <span class="text-sky-300">P2 07:15</span> Penalty: Newmarket #14 Tripping (2:00)
+              </div>
+              <div class="p-2 rounded-lg bg-slate-900 border border-amber-400/50 text-white">
+                <span class="text-amber-400 font-bold">P1 08:22</span> 🚨 GOAL! #11 Bichay (Unassisted)
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <div id="sidebar-nav-tabs" class="grid grid-cols-5 gap-1 p-1 bg-slate-100 border-b border-slate-200 text-[11px] font-bold uppercase tracking-wider shrink-0">
           <button onclick="switchViewMode('coaches')" id="mode-btn-coaches" class="py-2 px-1 rounded-xl bg-slate-900 text-tigersGold font-bold cursor-pointer transition shadow-xs flex items-center justify-center gap-1">
             <span>🎬</span> <span>Shifts</span>
             <span id="clip-strip-count" class="text-[9px] px-1 py-0.2 rounded-full bg-slate-800 text-amber-300 font-mono font-bold">0</span>
@@ -4196,7 +4522,7 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
           <button onclick="switchViewMode('player_analytics')" id="mode-btn-player" class="py-2 px-1 rounded-xl text-slate-600 hover:text-slate-900 hover:bg-white cursor-pointer transition flex items-center justify-center gap-1">
             <span>👤</span> <span id="player-tab-label">Player</span>
           </button>
-          <button onclick="switchViewMode('feedback')" id="mode-btn-feedback" class="py-2 px-1 rounded-xl text-slate-600 hover:text-slate-900 hover:bg-white cursor-pointer transition flex items-center justify-center gap-1">
+          <button onclick="openFeedbackModal()" id="mode-btn-feedback" class="py-2 px-1 rounded-xl text-slate-600 hover:text-slate-900 hover:bg-white cursor-pointer transition flex items-center justify-center gap-1">
             <span>💬</span> <span>Feedback</span>
           </button>
         </div>
@@ -4362,6 +4688,17 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
 
         <!-- ================= TAB 2: COACHING ANALYTICS & TACTICAL REPORTS ================= -->
         <div id="breakout-view-section" class="flex-1 overflow-y-auto custom-scroll p-3 space-y-3 hidden bg-slate-50/50">
+          <!-- Clean Full-Width Navigation Bar -->
+          <div class="flex items-center justify-between p-2.5 bg-white border border-slate-200 rounded-2xl shadow-xs shrink-0">
+            <button type="button" onclick="switchViewMode('coaches')" class="px-3.5 py-1.5 rounded-xl bg-slate-900 hover:bg-slate-800 text-tigersGold font-black text-xs cursor-pointer transition shadow-xs flex items-center gap-1.5 active:scale-95">
+              <span>🎬</span> <span>Back to Game Film</span>
+            </button>
+            <div class="flex items-center gap-2">
+              <span class="w-2.5 h-2.5 rounded-full bg-emerald-500"></span>
+              <span class="font-display font-black text-xs uppercase tracking-wider text-slate-900">📊 Full-Width Team Analytics Hub</span>
+            </div>
+          </div>
+
           
           <!-- Analytics Scope Switcher: This Game vs Season Averages -->
           <div class="flex items-center justify-between p-2.5 bg-slate-900 text-white rounded-2xl shadow-xs shrink-0">
@@ -4832,6 +5169,17 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
 
         <!-- ================= TAB 3: DEDICATED PLAYER ANALYTICS DOSSIER ================= -->
         <div id="player-view-section" class="flex-1 overflow-y-auto custom-scroll p-3 space-y-3 hidden bg-slate-50/50">
+          <!-- Clean Full-Width Navigation Bar -->
+          <div class="flex items-center justify-between p-2.5 bg-white border border-slate-200 rounded-2xl shadow-xs shrink-0">
+            <button type="button" onclick="switchViewMode('coaches')" class="px-3.5 py-1.5 rounded-xl bg-slate-900 hover:bg-slate-800 text-tigersGold font-black text-xs cursor-pointer transition shadow-xs flex items-center gap-1.5 active:scale-95">
+              <span>🎬</span> <span>Back to Game Film</span>
+            </button>
+            <div class="flex items-center gap-2">
+              <span class="w-2.5 h-2.5 rounded-full bg-indigo-500"></span>
+              <span class="font-display font-black text-xs uppercase tracking-wider text-slate-900">👤 Full-Width Player Dossier &amp; Analytics</span>
+            </div>
+          </div>
+
           
           <!-- Player Header Dossier Card -->
           <div class="bg-white p-3.5 rounded-2xl border border-slate-200 shadow-sm space-y-3">
@@ -5181,6 +5529,115 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
           </details>
 
         </div>
+
+          <!-- ================= LIGHTWEIGHT COACH & TEAM FEEDBACK MODAL DIALOG ================= -->
+  <div id="feedback-modal" onclick="if(event.target === this) closeFeedbackModal()" class="fixed inset-0 bg-slate-950/80 backdrop-blur-md z-[9999] flex items-center justify-center p-3 sm:p-4 hidden" style="display: none;">
+    <div class="bg-white rounded-3xl max-w-xl w-full max-h-[92vh] border border-slate-200 shadow-2xl overflow-hidden flex flex-col animate-in fade-in zoom-in-95 duration-150">
+      
+      <!-- Header -->
+      <div class="p-4 bg-slate-900 text-white flex items-center justify-between shrink-0 border-b border-slate-800">
+        <div class="flex items-center gap-2.5">
+          <span class="text-xl">💬</span>
+          <div>
+            <h3 class="font-display font-black text-sm uppercase tracking-wider text-tigersGold">
+              Coaching Staff &amp; Team Feedback Hub
+            </h3>
+            <div class="text-[10px] text-slate-400 font-medium">
+              Submit shift corrections, tactical questions, or notes directly to coaches
+            </div>
+          </div>
+        </div>
+        <button onclick="closeFeedbackModal()" class="text-slate-400 hover:text-white text-base leading-none cursor-pointer">✕</button>
+      </div>
+
+      <!-- Body (Scrollable) -->
+      <div class="p-4 overflow-y-auto custom-scroll space-y-4 text-xs flex-1">
+        
+        <!-- Feedback Submission Form -->
+        <form onsubmit="submitTeamFeedback(event)" class="space-y-3">
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+            <div>
+              <label class="block text-[10px] font-bold text-slate-700 uppercase tracking-wider mb-1">Your Name / Relation</label>
+              <input type="text" id="fb-modal-sender-name" class="w-full bg-slate-50 border border-slate-300 rounded-xl px-3 py-2 text-xs text-slate-900 font-semibold focus:outline-none focus:border-tigersGold" placeholder="e.g. Scott (Parent of #23) or Coach" required />
+            </div>
+            <div>
+              <label class="block text-[10px] font-bold text-slate-700 uppercase tracking-wider mb-1">Regarding Player (Optional)</label>
+              <select id="fb-modal-player-select" class="w-full bg-slate-50 border border-slate-300 rounded-xl px-2.5 py-2 text-xs text-slate-900 font-bold focus:outline-none cursor-pointer">
+                <option value="team">-- General Team / All Players --</option>
+                <option value="3">#3 Stewart Dolmage (LW)</option>
+                <option value="5">#5 Nathan Zhao (RW)</option>
+                <option value="7">#7 Maxwell Dey (RW)</option>
+                <option value="9">#9 Oliver Patterson (C)</option>
+                <option value="10">#10 Arjun Manjunath (LW)</option>
+                <option value="11">#11 Andrew Bichay (RW)</option>
+                <option value="13">#13 Matthew Hart (G)</option>
+                <option value="16">#16 Joshua Liu (LW)</option>
+                <option value="18">#18 Nathan Carinci (C)</option>
+                <option value="21">#21 Caleb Irgengioro-Wu (RD)</option>
+                <option value="23" selected>#23 Easton Carpentier (C)</option>
+                <option value="27">#27 Alen Fazlic (RD)</option>
+                <option value="28">#28 Ross Elley (LD)</option>
+                <option value="76">#76 Matt Davis (LD)</option>
+                <option value="88">#88 Roy Chen (RW)</option>
+                <option value="97">#97 Hudson Millar (LD)</option>
+                <option value="98">#98 Hudson Barfitt (G)</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+            <div>
+              <label class="block text-[10px] font-bold text-slate-700 uppercase tracking-wider mb-1">Topic / Category</label>
+              <select id="fb-modal-category-select" class="w-full bg-slate-50 border border-slate-300 rounded-xl px-2.5 py-2 text-xs text-slate-900 font-bold focus:outline-none cursor-pointer">
+                <option value="Shift Correction">⏱️ Shift Timestamp Correction</option>
+                <option value="Player Positioning">🏒 Question on Player Positioning</option>
+                <option value="Film Homework">⭐ Question on Film Homework / Assigned Play</option>
+                <option value="Feature Idea">💡 Feature Suggestion for the Portal</option>
+                <option value="General Praise">👏 Praise / Good Play Observation</option>
+              </select>
+            </div>
+            <div>
+              <label class="block text-[10px] font-bold text-slate-700 uppercase tracking-wider mb-1">Video Clip Reference (Optional)</label>
+              <input type="text" id="fb-modal-clip-timestamp" class="w-full bg-slate-50 border border-slate-300 rounded-xl px-3 py-2 text-xs text-slate-900 font-mono" placeholder="e.g. Period 2 @ 14:20" />
+            </div>
+          </div>
+
+          <div>
+            <label class="block text-[10px] font-bold text-slate-700 uppercase tracking-wider mb-1">Message / Question / Correction Note</label>
+            <textarea id="fb-modal-message-text" rows="3" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-2.5 text-xs text-slate-900 focus:outline-none focus:border-tigersGold" placeholder="Describe the question, note, or shift timestamp adjustment for the coaches..." required></textarea>
+          </div>
+
+          <div class="flex flex-wrap items-center justify-between gap-2 pt-2 border-t border-slate-100">
+            <span class="text-[10px] text-slate-400">Feedback is saved locally and can be copied or emailed.</span>
+            <div class="flex items-center gap-1.5">
+              <button type="button" onclick="copyFeedbackDraft()" class="px-3 py-1.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold cursor-pointer transition shadow-2xs flex items-center gap-1">
+                <span>📋</span> <span>Copy Note</span>
+              </button>
+              <button type="submit" class="px-4 py-1.5 rounded-xl bg-tigersGold hover:bg-tigersGoldBright text-slate-950 text-xs font-black cursor-pointer transition shadow-sm flex items-center gap-1.5 active:scale-95">
+                <span>💾</span> <span>Save &amp; Submit</span>
+              </button>
+            </div>
+          </div>
+        </form>
+
+        <!-- Feedback History Log Card -->
+        <div class="bg-slate-50 p-3.5 rounded-2xl border border-slate-200 space-y-2">
+          <div class="flex items-center justify-between">
+            <h4 class="text-xs font-display font-bold text-slate-900 uppercase tracking-wider flex items-center gap-1.5">
+              <span>📋</span> Feedback &amp; Note History
+            </h4>
+            <button type="button" onclick="clearFeedbackHistory()" class="text-[10px] text-slate-400 hover:text-rose-600 font-semibold cursor-pointer">
+              Clear
+            </button>
+          </div>
+          <div id="feedback-modal-history-list" class="space-y-2">
+            <!-- Dynamically populated feedback items -->
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
 
         <!-- ================= TAB 5: COACH & PARENT FEEDBACK HUB ================= -->
         <div id="feedback-view-section" class="flex-1 overflow-y-auto custom-scroll p-3 space-y-3 hidden bg-slate-50/50">
@@ -7625,11 +8082,30 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
         ? "flex flex-col items-center gap-0.5 text-tigersGold cursor-pointer py-1 px-2 rounded-lg transition"
         : "flex flex-col items-center gap-0.5 text-slate-400 hover:text-white cursor-pointer py-1 px-2 rounded-lg transition";
 
-      // 4. Streamlined Layout Management: Respect current layout mode (defaulting to clean split view so video player remains prominent and accessible)
-      if (currentLayoutMode === 'expanded') {
-        setLayoutMode('expanded');
+      // VIEW SIMPLIFICATION: Automatically dismiss floating phone simulator / reel modal when navigating hubs
+      if (typeof closeSocialReelModal === 'function') {
+        closeSocialReelModal();
+      }
+
+      // 4. Full-Width Hub Management for Team Analytics & Player Hub
+      const videoCol = document.getElementById('video-column');
+      const sidebarCol = document.getElementById('sidebar-column');
+
+      if (mode === 'breakouts' || mode === 'player_analytics') {
+        // Full-width layout: dismiss/hide video column so analytics and player cards utilize full screen width cleanly
+        if (videoCol) videoCol.classList.add('hidden');
+        if (sidebarCol) {
+          sidebarCol.className = "col-span-12 w-full bg-white border border-slate-200 rounded-2xl shadow-sm flex flex-col min-h-[calc(100vh-140px)] transition-all duration-300";
+        }
       } else {
-        setLayoutMode('split');
+        // Video-centric view (Film & Shifts / Coaching Tray): restore prominent video column and side panel
+        if (videoCol) {
+          videoCol.classList.remove('hidden');
+          videoCol.className = "lg:col-span-7 xl:col-span-8 lg:sticky lg:top-2 space-y-2.5 transition-all duration-300 relative w-full";
+        }
+        if (sidebarCol) {
+          sidebarCol.className = "lg:col-span-5 xl:col-span-4 bg-white border border-slate-200 rounded-2xl shadow-sm flex flex-col lg:h-[calc(100vh-88px)] overflow-hidden transition-all duration-300";
+        }
       }
 
       // 5. Hide all sections, show active section
@@ -7662,7 +8138,7 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
         renderFilmTrayView();
       } else if (mode === 'feedback') {
         if (feedbackSection) feedbackSection.classList.remove('hidden');
-        renderFeedbackHistory();
+        renderFeedbackHistory(); if (typeof renderFeedbackModalHistory === "function") renderFeedbackModalHistory();
       } else {
         if (clipsSection) clipsSection.classList.remove('hidden');
         loadCoachingClips();
@@ -8714,7 +9190,7 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
           });
           if (cloudList.length > 0) {
             window.cloudFeedbackList = cloudList;
-            if (currentMode === 'feedback') renderFeedbackHistory();
+            if (currentMode === 'feedback') renderFeedbackHistory(); if (typeof renderFeedbackModalHistory === "function") renderFeedbackModalHistory();
           }
         }, (err) => console.log("Feedback sync notice:", err));
       } catch(e) {}
@@ -8845,14 +9321,54 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
       } catch (e) {}
     }
 
+        // =========================================================================
+    // LIGHTWEIGHT FEEDBACK MODAL DIALOG ENGINE
+    // =========================================================================
+
+    function openFeedbackModal() {
+      const modal = document.getElementById('feedback-modal');
+      if (!modal) return;
+      renderFeedbackModalHistory();
+      modal.style.display = 'flex';
+      modal.classList.remove('hidden');
+    }
+
+    function closeFeedbackModal() {
+      const modal = document.getElementById('feedback-modal');
+      if (modal) {
+        modal.style.display = 'none';
+        modal.classList.add('hidden');
+      }
+    }
+
+    function renderFeedbackModalHistory() {
+      const container = document.getElementById('feedback-modal-history-list');
+      if (!container) return;
+      const list = getStoredFeedback();
+      if (!list || list.length === 0) {
+        container.innerHTML = `<div class="p-4 text-center text-slate-400 text-xs italic">No feedback entries submitted yet.</div>`;
+        return;
+      }
+      container.innerHTML = list.map(item => `
+        <div class="p-2.5 rounded-xl bg-white border border-slate-200 space-y-1 shadow-2xs">
+          <div class="flex items-center justify-between text-[10px]">
+            <span class="font-bold text-slate-900">${escapeHtml(item.sender || 'Anonymous')}</span>
+            <span class="font-mono text-slate-400">${item.timestamp ? new Date(item.timestamp).toLocaleDateString() : 'Recent'}</span>
+          </div>
+          <div class="text-[10px] text-amber-700 font-bold">${escapeHtml(item.category || 'Note')} ${item.player ? '• #' + item.player : ''}</div>
+          <p class="text-xs text-slate-700 leading-snug">${escapeHtml(item.message)}</p>
+        </div>
+      `).join('');
+    }
+
     function submitTeamFeedback(e) {
       if (e && e.preventDefault) e.preventDefault();
 
-      const nameEl = document.getElementById('feedback-sender-name');
-      const playerEl = document.getElementById('feedback-player-select');
-      const catEl = document.getElementById('feedback-category-select');
-      const timeEl = document.getElementById('feedback-clip-timestamp');
-      const msgEl = document.getElementById('feedback-message-text');
+      const nameEl = document.getElementById('fb-modal-sender-name') || document.getElementById('feedback-sender-name');
+      const playerEl = document.getElementById('fb-modal-player-select') || document.getElementById('feedback-player-select');
+      const catEl = document.getElementById('fb-modal-category-select') || document.getElementById('feedback-category-select');
+      const timeEl = document.getElementById('fb-modal-clip-timestamp') || document.getElementById('feedback-clip-timestamp');
+      const msgEl = document.getElementById('fb-modal-message-text') || document.getElementById('feedback-message-text');
 
       const senderName = nameEl?.value.trim() || 'Anonymous Parent/Coach';
       const targetPlayer = playerEl?.value || 'team';
@@ -8903,7 +9419,7 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
       if (timeEl) timeEl.value = '';
 
       showToast("💬 Feedback submitted & saved!");
-      renderFeedbackHistory();
+      renderFeedbackHistory(); if (typeof renderFeedbackModalHistory === "function") renderFeedbackModalHistory();
     }
 
     function renderFeedbackHistory() {
@@ -8998,14 +9514,14 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
       let list = getStoredFeedback();
       list = list.filter(x => x.id !== id);
       saveStoredFeedback(list);
-      renderFeedbackHistory();
+      renderFeedbackHistory(); if (typeof renderFeedbackModalHistory === "function") renderFeedbackModalHistory();
       showToast("Deleted feedback item");
     }
 
     function clearFeedbackHistory() {
       if (!confirm("Are you sure you want to clear all feedback history?")) return;
       localStorage.removeItem(FEEDBACK_STORAGE_KEY);
-      renderFeedbackHistory();
+      renderFeedbackHistory(); if (typeof renderFeedbackModalHistory === "function") renderFeedbackModalHistory();
       showToast("Feedback history cleared");
     }
 
@@ -12286,8 +12802,10 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
     }
 
     function closeSocialReelModal() {
-      const modal = document.getElementById('social-reel-modal');
-      if (modal) modal.style.display = 'none';
+      const modal1 = document.getElementById('social-reel-modal');
+      const modal2 = document.getElementById('vertical-reel-maker-modal');
+      if (modal1) { modal1.style.display = 'none'; modal1.classList.add('hidden'); }
+      if (modal2) { modal2.style.display = 'none'; modal2.classList.add('hidden'); }
     }
 
     function triggerSocialShare() {
@@ -12710,7 +13228,22 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
       const upcoming = (typeof SCHEDULE_UPCOMING_MATCHUPS !== 'undefined') ? SCHEDULE_UPCOMING_MATCHUPS : [];
       let foundCount = 0;
 
-      upcoming.forEach(m => {
+      // DIVISION MATCHING FILTER: Match active team registered division (12U / U12A) so unrelated tournament brackets (like U13A) do not populate
+      const cfg = (typeof getTeamConfiguration === 'function') ? getTeamConfiguration() : {};
+      const activeDivRaw = (cfg.division || "U12A").toUpperCase().replace(/[^A-Z0-9]/g, '');
+      const isTeam12U = activeDivRaw.includes('12') || (!activeDivRaw.includes('13') && !activeDivRaw.includes('14'));
+
+      const filteredUpcoming = upcoming.filter(m => {
+        if (!m.division) return true; // General practices and dryland sessions
+        const mDiv = m.division.toUpperCase().replace(/[^A-Z0-9]/g, '');
+        if (isTeam12U) {
+          return mDiv.includes('12'); // Only 12U/U12A matches
+        } else {
+          return mDiv === activeDivRaw || mDiv.includes(activeDivRaw);
+        }
+      });
+
+      filteredUpcoming.forEach(m => {
         // Only include if game doesn't already have linked film in library, or if it is preselected
         const hasFilm = gamesLibrary.some(g => g.id === m.id && g.youtube_video_id && g.youtube_video_id !== 't7i7Z37fLw4');
         const opt = document.createElement('option');
@@ -13305,6 +13838,20 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
     let currentOnboardingTab = 'general';
     let onboardingRosterState = [];
 
+        function pasteAdminLiveLink() {
+      if (navigator.clipboard && navigator.clipboard.readText) {
+        navigator.clipboard.readText().then(text => {
+          const input = document.getElementById('cfg-youtube-live-url');
+          if (input && text) {
+            input.value = text.trim();
+            showToast("📋 Pasted live stream URL into Team Admin!");
+          }
+        }).catch(() => {
+          showToast("Please paste URL manually into the input box.");
+        });
+      }
+    }
+
     function openTeamOnboardingModal() {
       // Admin PIN protection barrier
       if (currentRole !== 'admin') {
@@ -13395,6 +13942,7 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
       const tournEl = document.getElementById('cfg-tournament-url');
       const gsEl = document.getElementById('cfg-gamesheet-url') || document.getElementById('onboard-link-gamesheet');
       const ytEl = document.getElementById('cfg-youtube-url') || document.getElementById('onboard-link-youtube');
+      const ytLiveEl = document.getElementById('cfg-youtube-live-url');
       const driveEl = document.getElementById('cfg-drive-url') || document.getElementById('onboard-link-drive');
       const spordleEl = document.getElementById('cfg-spordle-url');
 
@@ -13410,6 +13958,7 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
       if (tournEl) tournEl.value = config.tournamentUrl || "https://canam.hockeyshift.com/stats#/1188/team/734239/schedule";
       if (gsEl) gsEl.value = config.gameSheetUrl || "https://gamesheet.app";
       if (ytEl) ytEl.value = config.youtubePlaylistUrl || "";
+      if (ytLiveEl) ytLiveEl.value = config.youtubeLiveUrl || (liveStreamVideoId ? `https://www.youtube.com/watch?v=${liveStreamVideoId}` : "");
       if (driveEl) driveEl.value = config.cloudDriveUrl || "";
       if (spordleEl) spordleEl.value = config.spordleUrl || "https://spordle.com";
 
@@ -13610,6 +14159,7 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
       const tournEl = document.getElementById('cfg-tournament-url');
       const gsEl = document.getElementById('cfg-gamesheet-url') || document.getElementById('onboard-link-gamesheet');
       const ytEl = document.getElementById('cfg-youtube-url') || document.getElementById('onboard-link-youtube');
+      const ytLiveEl = document.getElementById('cfg-youtube-live-url');
       const driveEl = document.getElementById('cfg-drive-url') || document.getElementById('onboard-link-drive');
       const spordleEl = document.getElementById('cfg-spordle-url');
 
@@ -14568,6 +15118,37 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
       }
     }
 
+    function updateXbotPinState(val) {
+      const clean = String(val).replace(/[^0-9]/g, '');
+      const badge = document.getElementById('xbot-explicit-status-badge');
+      const stateText = document.getElementById('xbot-bridge-state-text');
+      const pill = document.getElementById('xbot-bridge-status-pill');
+
+      if (xbotBridgeActive) return;
+
+      if (clean.length === 6) {
+        if (badge) {
+          badge.className = "px-2.5 py-0.5 rounded-full bg-amber-500/20 text-amber-300 border border-amber-400/40 text-[10px] font-mono font-bold";
+          badge.innerText = "🟡 Ready to Connect";
+        }
+        if (pill) {
+          pill.className = "px-2 py-0.5 rounded-full bg-amber-500/20 text-amber-300 border border-amber-400/40 text-[10px] font-mono font-bold";
+          pill.innerText = "🟡 Ready";
+        }
+        if (stateText) stateText.innerText = `Valid 6-digit Match PIN (${clean}) entered. Tap Connect Live Relay below to pair with GameSheet.`;
+      } else {
+        if (badge) {
+          badge.className = "px-2.5 py-0.5 rounded-full bg-slate-800 text-slate-400 border border-slate-700 text-[10px] font-mono font-bold";
+          badge.innerText = "⚪ Disconnected";
+        }
+        if (pill) {
+          pill.className = "px-2 py-0.5 rounded-full bg-slate-800 text-slate-400 border border-slate-700 text-[10px] font-mono font-bold";
+          pill.innerText = "⚪ Disconnected";
+        }
+        if (stateText) stateText.innerText = `Enter the 6-digit PIN from your Falcon app (Remote Scorekeeping) to connect.`;
+      }
+    }
+
     function toggleXbotBridgeConnection() {
       const pinInput = document.getElementById('xbot-match-pin');
       const pin = pinInput ? pinInput.value.trim() : '482910';
@@ -14575,24 +15156,29 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
 
       xbotBridgeActive = !xbotBridgeActive;
       const btn = document.getElementById('xbot-bridge-connect-btn');
+      const btnText = document.getElementById('xbot-connect-btn-text');
       const pill = document.getElementById('xbot-bridge-status-pill');
+      const badge = document.getElementById('xbot-explicit-status-badge');
       const stateText = document.getElementById('xbot-bridge-state-text');
       const lastSync = document.getElementById('xbot-bridge-last-sync');
 
       if (xbotBridgeActive) {
         if (btn) {
           btn.className = "px-4 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 font-bold text-xs cursor-pointer transition";
-          btn.innerHTML = "<span>⏹️</span> <span>Disconnect Relay</span>";
         }
+        if (btnText) btnText.innerText = "Disconnect Relay";
         if (pill) {
           pill.className = "px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-400/40 text-[10px] font-mono font-bold animate-pulse";
-          pill.innerText = "🟢 Relay Active (PIN: " + xbotSimState.matchPin + ")";
+          pill.innerText = "🟢 Streaming";
+        }
+        if (badge) {
+          badge.className = "px-2.5 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-400/40 text-[10px] font-mono font-bold animate-pulse";
+          badge.innerText = "🟢 Streaming & Relaying Live";
         }
         if (stateText) {
-          stateText.className = "text-emerald-400 font-mono font-bold";
-          stateText.innerText = `Connected to games.xbotgo.com (PIN: ${xbotSimState.matchPin})`;
+          stateText.innerText = `Active WebSocket relay linked to games.xbotgo.com (PIN: ${xbotSimState.matchPin}) • GameSheet referee iPad auto-syncing score.`;
         }
-        if (lastSync) lastSync.innerText = `Last Polled: ${new Date().toLocaleTimeString()} (Active 5s interval)`;
+        if (lastSync) lastSync.innerText = `Last Polled: ${new Date().toLocaleTimeString()} (Active 5s WebSocket pulse)`;
 
         addXbotRelayLog(`[INIT] Connected to XbotGo ScoreSync session (PIN: ${xbotSimState.matchPin}).`, 'text-emerald-300');
         addXbotRelayLog(`[FEED] Subscribed to live GameSheet event webhook (Season: 15490, Team: 534204).`, 'text-sky-300');
@@ -14603,7 +15189,7 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
         xbotBridgeTimer = setInterval(() => {
           if (!xbotBridgeActive) return;
           const syncEl = document.getElementById('xbot-bridge-last-sync');
-          if (syncEl) syncEl.innerText = `Last Polled: ${new Date().toLocaleTimeString()} (Active 5s interval)`;
+          if (syncEl) syncEl.innerText = `Last Polled: ${new Date().toLocaleTimeString()} (Active 5s WebSocket pulse)`;
         }, 5000);
       } else {
         if (xbotBridgeTimer) {
@@ -14612,18 +15198,23 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
         }
         if (btn) {
           btn.className = "px-4 py-2 rounded-xl bg-rose-600 hover:bg-rose-500 text-white font-black text-xs cursor-pointer transition shadow-sm active:scale-95 flex items-center gap-1.5";
-          btn.innerHTML = "<span>⚡</span> <span>Connect Live Relay</span>";
         }
+        if (btnText) btnText.innerText = "Connect Live Relay";
         if (pill) {
           pill.className = "px-2 py-0.5 rounded-full bg-slate-800 text-slate-400 border border-slate-700 text-[10px] font-mono font-bold";
           pill.innerText = "⚪ Disconnected";
         }
-        if (stateText) {
-          stateText.className = "text-amber-400 font-mono font-bold";
-          stateText.innerText = "Ready to Connect";
+        if (badge) {
+          badge.className = "px-2.5 py-0.5 rounded-full bg-amber-500/20 text-amber-300 border border-amber-400/40 text-[10px] font-mono font-bold";
+          badge.innerText = "🟡 Ready to Connect";
         }
-        addXbotRelayLog(`[DISCONNECT] XbotGo relay paused.`, 'text-slate-500');
-        showToast("XbotGo Bridge disconnected.");
+        if (stateText) {
+          stateText.innerText = `Bridge standby. Tap Connect Live Relay to establish WebSocket stream sync.`;
+        }
+        if (lastSync) lastSync.innerText = "Last Polled: Standby";
+
+        addXbotRelayLog(`[HALT] ScoreSync relay disconnected.`, 'text-slate-400');
+        showToast("XbotGo live relay disconnected.");
       }
     }
 
@@ -14719,10 +15310,62 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
     let streamLatencyOffsetSec = 12.0;
     let whistleDetectorEnabled = true;
 
+    // =========================================================================
+    // BROADCAST DELAY BUFFER & SYNC LOCK LOGIC
+    // =========================================================================
+
+    let isSyncLocked = false;
+
+    function toggleSyncLock() {
+      isSyncLocked = !isSyncLocked;
+      const btn = document.getElementById('player-lock-sync-btn');
+      const iconEl = document.getElementById('player-lock-sync-icon');
+      const textEl = document.getElementById('player-lock-sync-text');
+      const playerSlider = document.getElementById('player-latency-slider');
+      const xbotSlider = document.getElementById('xbot-latency-slider');
+
+      if (isSyncLocked) {
+        if (btn) {
+          btn.className = "px-2.5 py-1 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white font-black text-[10px] cursor-pointer transition shadow-sm border border-emerald-400 flex items-center gap-1 active:scale-95";
+        }
+        if (iconEl) iconEl.innerText = "🔒";
+        if (textEl) textEl.innerText = "Unlock Sync (Locked)";
+        if (playerSlider) playerSlider.disabled = true;
+        if (xbotSlider) xbotSlider.disabled = true;
+        showToast("🔒 Broadcast sync locked! Time offsets and accidental transport scrubbing are locked.");
+      } else {
+        if (btn) {
+          btn.className = "px-2.5 py-1 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-700 font-bold text-[10px] cursor-pointer transition shadow-2xs flex items-center gap-1";
+        }
+        if (iconEl) iconEl.innerText = "🔓";
+        if (textEl) textEl.innerText = "Lock Sync";
+        if (playerSlider) playerSlider.disabled = false;
+        if (xbotSlider) xbotSlider.disabled = false;
+        showToast("🔓 Broadcast sync unlocked. Stream delay and transport adjustments enabled.");
+      }
+    }
+
     function updateStreamLatencyOffset(val) {
+      if (isSyncLocked) {
+        showToast("⚠️ Sync is locked. Click 'Unlock Sync' on the video player bar to adjust delay.");
+        const pSlider = document.getElementById('player-latency-slider');
+        const xSlider = document.getElementById('xbot-latency-slider');
+        if (pSlider) pSlider.value = streamLatencyOffsetSec;
+        if (xSlider) xSlider.value = streamLatencyOffsetSec;
+        return;
+      }
+
       streamLatencyOffsetSec = parseFloat(val);
-      const valEl = document.getElementById('xbot-latency-val');
-      if (valEl) valEl.innerText = `${streamLatencyOffsetSec.toFixed(1)}s`;
+      const xbotVal = document.getElementById('xbot-latency-val');
+      const playerVal = document.getElementById('player-latency-val');
+      const playerSlider = document.getElementById('player-latency-slider');
+      const xbotSlider = document.getElementById('xbot-latency-slider');
+
+      if (xbotVal) xbotVal.innerText = `${streamLatencyOffsetSec.toFixed(1)}s`;
+      if (playerVal) playerVal.innerText = `${streamLatencyOffsetSec.toFixed(1)}s`;
+      if (playerSlider && playerSlider.value != val) playerSlider.value = val;
+      if (xbotSlider && xbotSlider.value != val) xbotSlider.value = val;
+
       addXbotRelayLog(`[LATENCY] Broadcast delay offset calibrated to ${streamLatencyOffsetSec.toFixed(1)}s buffer.`, 'text-amber-300');
       renderLiveScoreboardHud();
       syncScoreboardOverlayToPlayback(0);
@@ -14805,44 +15448,169 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
     };
     let liveHudTimer = null;
 
+    function checkLiveBroadcastIsOnline() {
+      let saved = {};
+      try {
+        saved = JSON.parse(localStorage.getItem('tigers_active_live_stream') || '{}');
+      } catch(e){}
+      const toggle = document.getElementById('live-broadcast-active-toggle');
+      if (toggle) return toggle.checked;
+      if (saved.active !== undefined) return saved.active;
+      return false; // Default to offline unless live broadcast has been explicitly activated
+    }
+
+    function getNextScheduledGameSummary() {
+      const upcoming = (typeof SCHEDULE_UPCOMING_MATCHUPS !== 'undefined') ? SCHEDULE_UPCOMING_MATCHUPS : [];
+      const nextMatch = upcoming.find(g => g.eventType === 'tournament' || g.eventType === 'league') || upcoming[0];
+      if (nextMatch) {
+        return `${nextMatch.date || 'Upcoming Match'} at ${nextMatch.time || 'TBD'} • ${nextMatch.title} @ ${nextMatch.arena || 'Arena'}`;
+      }
+      return "Friday, Nov 6, 2026 at 1:15 PM EST • CAN/AM Challenge Cup vs Boston Jr. Terriers @ Lake Placid Olympic Center";
+    }
+
+    function switchSidebarLiveTab(tab) {
+      const tabs = ['tracker', 'pregame', 'gamesheet'];
+      tabs.forEach(t => {
+        const btn = document.getElementById(`sb-live-btn-${t}`);
+        const sec = document.getElementById(`sb-live-tab-${t}`);
+        if (btn) {
+          btn.className = (t === tab)
+            ? "flex-1 py-1.5 px-2 rounded-lg bg-rose-600 text-white font-bold cursor-pointer transition shadow-xs flex items-center justify-center gap-1"
+            : "flex-1 py-1.5 px-2 rounded-lg text-slate-400 hover:text-white font-bold cursor-pointer transition flex items-center justify-center gap-1";
+        }
+        if (sec) {
+          sec.classList.toggle('hidden', t !== tab);
+        }
+      });
+    }
+
     function toggleLiveBroadcastMode() {
       isLiveBroadcastActive = !isLiveBroadcastActive;
       const btn = document.getElementById('header-live-stream-btn');
       const textEl = document.getElementById('header-live-text');
       const hud = document.getElementById('live-broadcast-hud');
+      const offlinePlaceholder = document.getElementById('live-offline-placeholder');
+      const nextGameText = document.getElementById('live-offline-next-game-text');
+
+      const sideLiveHeader = document.getElementById('sidebar-live-header');
+      const sideNavTabs = document.getElementById('sidebar-nav-tabs');
+      const sideLiveSection = document.getElementById('live-sidebar-section');
+      const clipsSection = document.getElementById('clips-view-section');
+      const traySection = document.getElementById('tray-view-section');
+      const breakoutSection = document.getElementById('breakout-view-section');
+      const playerSection = document.getElementById('player-view-section');
 
       if (isLiveBroadcastActive) {
         if (btn) {
           btn.className = "px-3 py-1.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-black text-xs cursor-pointer transition shadow-sm flex items-center gap-1.5 active:scale-95";
         }
         if (textEl) textEl.innerText = "📺 Film Archive";
-        if (hud) hud.classList.remove('hidden');
 
-        // Load live stream video into workspace
-        if (isPlayerReady && ytPlayer && typeof ytPlayer.loadVideoById === 'function') {
-          ytPlayer.loadVideoById({ videoId: liveStreamVideoId, startSeconds: 0 });
+        // EMBED LIVE CENTER IN SIDE PANEL: Replace right-hand shift/clip list with Live Center
+        if (sideLiveHeader) sideLiveHeader.classList.remove('hidden');
+        if (sideNavTabs) sideNavTabs.classList.add('hidden');
+        if (clipsSection) clipsSection.classList.add('hidden');
+        if (traySection) traySection.classList.add('hidden');
+        if (breakoutSection) breakoutSection.classList.add('hidden');
+        if (playerSection) playerSection.classList.add('hidden');
+        if (sideLiveSection) {
+          sideLiveSection.classList.remove('hidden');
+          switchSidebarLiveTab('tracker');
         }
 
-        startLiveScoreboardClock();
-        showToast("🔴 Live Game Stream Active with GameSheet Real-Time HUD!");
+        const isOnline = checkLiveBroadcastIsOnline();
+        if (isOnline) {
+          if (offlinePlaceholder) offlinePlaceholder.classList.add('hidden');
+          if (hud) hud.classList.remove('hidden');
+
+          // Load live stream video into workspace
+          if (isPlayerReady && ytPlayer && typeof ytPlayer.loadVideoById === 'function') {
+            ytPlayer.loadVideoById({ videoId: liveStreamVideoId, startSeconds: 0 });
+          }
+
+          startLiveScoreboardClock();
+          showToast("🔴 Live Game Broadcast Active with Real-Time GameSheet Telemetry!");
+        } else {
+          // OFFLINE STATE: No ticking clock, no simulated running scores
+          if (hud) hud.classList.add('hidden');
+          if (offlinePlaceholder) {
+            offlinePlaceholder.classList.remove('hidden');
+            if (nextGameText) {
+              nextGameText.innerText = "Next game scheduled: " + getNextScheduledGameSummary();
+            }
+          }
+
+          if (liveHudTimer) {
+            clearInterval(liveHudTimer);
+            liveHudTimer = null;
+          }
+
+          renderOfflineStandbyHud();
+          showToast("📡 Live Stream Mode: Broadcast is currently offline / standby.");
+        }
       } else {
         if (btn) {
           btn.className = "px-3 py-1.5 rounded-xl bg-rose-600 hover:bg-rose-500 text-white font-black text-xs cursor-pointer transition shadow-sm flex items-center gap-1.5 active:scale-95";
         }
         if (textEl) textEl.innerText = "🔴 Live Stream";
         if (hud) hud.classList.add('hidden');
+        if (offlinePlaceholder) offlinePlaceholder.classList.add('hidden');
+
+        // RESTORE FILM ARCHIVE & SHIFT LIST IN SIDE PANEL
+        if (sideLiveHeader) sideLiveHeader.classList.add('hidden');
+        if (sideLiveSection) sideLiveSection.classList.add('hidden');
+        if (sideNavTabs) sideNavTabs.classList.remove('hidden');
+        if (clipsSection) clipsSection.classList.remove('hidden');
 
         if (liveHudTimer) {
           clearInterval(liveHudTimer);
           liveHudTimer = null;
         }
 
-        // Restore game archive
+        // Restore game archive video
         if (currentGame && isPlayerReady && ytPlayer) {
           ytPlayer.loadVideoById({ videoId: currentGame.youtube_video_id || "t7i7Z37fLw4", startSeconds: 0 });
         }
-        showToast("Switched back to Film Archive mode.");
+        syncScoreboardOverlayToPlayback(0);
+        showToast("Switched back to Film Archive mode with verified shifts.");
       }
+    }
+
+    function renderOfflineStandbyHud() {
+      // In-player overlay standby display
+      const vDot = document.getElementById('v-status-dot');
+      const vText = document.getElementById('v-status-text');
+      const vHome = document.getElementById('v-score-home');
+      const vAway = document.getElementById('v-score-away');
+      const vPeriod = document.getElementById('v-period');
+      const vClock = document.getElementById('v-clock');
+
+      if (vDot) vDot.className = "w-2 h-2 rounded-full bg-slate-500";
+      if (vText) vText.innerText = "STANDBY";
+      if (vHome) vHome.innerText = "-";
+      if (vAway) vAway.innerText = "-";
+      if (vPeriod) vPeriod.innerText = "P--";
+      if (vClock) vClock.innerText = "--:--";
+
+      // Sidebar live hero standby display
+      const sbHome = document.getElementById('sidebar-live-score-home');
+      const sbAway = document.getElementById('sidebar-live-score-away');
+      const sbPeriod = document.getElementById('sidebar-live-period');
+      const sbClock = document.getElementById('sidebar-live-clock');
+      const sbStrength = document.getElementById('sidebar-live-strength');
+      const sbSogH = document.getElementById('sidebar-live-sog-home');
+      const sbSogA = document.getElementById('sidebar-live-sog-away');
+
+      if (sbHome) sbHome.innerText = "-";
+      if (sbAway) sbAway.innerText = "-";
+      if (sbPeriod) sbPeriod.innerText = "STANDBY";
+      if (sbClock) sbClock.innerText = "--:--";
+      if (sbStrength) {
+        sbStrength.innerText = "Stream Offline";
+        sbStrength.className = "px-1.5 py-0.5 rounded text-[8px] font-bold uppercase bg-slate-800 text-slate-400 border border-slate-700";
+      }
+      if (sbSogH) sbSogH.innerText = "-";
+      if (sbSogA) sbSogA.innerText = "-";
     }
 
     function startLiveScoreboardClock() {
@@ -14911,6 +15679,32 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
       if (vAway) vAway.innerText = liveGameSheetState.awayScore;
       if (vPeriod) vPeriod.innerText = `P${liveGameSheetState.period}`;
       if (vClock) vClock.innerText = vClockStr;
+
+      // Update embedded sidebar live center telemetry
+      const sbHome = document.getElementById('sidebar-live-score-home');
+      const sbAway = document.getElementById('sidebar-live-score-away');
+      const sbPeriod = document.getElementById('sidebar-live-period');
+      const sbClock = document.getElementById('sidebar-live-clock');
+      const sbStrength = document.getElementById('sidebar-live-strength');
+      const sbSogH = document.getElementById('sidebar-live-sog-home');
+      const sbSogA = document.getElementById('sidebar-live-sog-away');
+      const sbSogCountH = document.getElementById('sb-sog-count-home');
+      const sbSogCountA = document.getElementById('sb-sog-count-away');
+      const sbSogDiff = document.getElementById('sb-live-sog-diff');
+
+      if (sbHome) sbHome.innerText = liveGameSheetState.homeScore;
+      if (sbAway) sbAway.innerText = liveGameSheetState.awayScore;
+      if (sbPeriod) sbPeriod.innerText = `PERIOD ${liveGameSheetState.period}`;
+      if (sbClock) sbClock.innerText = clockStr;
+      if (sbStrength) sbStrength.innerText = liveGameSheetState.strength || "5v5 Regular Play";
+      if (sbSogH) sbSogH.innerText = liveGameSheetState.sogHome;
+      if (sbSogA) sbSogA.innerText = liveGameSheetState.sogAway;
+      if (sbSogCountH) sbSogCountH.innerText = liveGameSheetState.sogHome;
+      if (sbSogCountA) sbSogCountA.innerText = liveGameSheetState.sogAway;
+      if (sbSogDiff) {
+        const diff = liveGameSheetState.sogHome - liveGameSheetState.sogAway;
+        sbSogDiff.innerText = diff >= 0 ? `Tigers +${diff} SOG` : `Opponent +${Math.abs(diff)} SOG`;
+      }
     }
 
     function openLiveGameCenterModal() {
@@ -15113,6 +15907,7 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
       {
         id: "practice_thurs",
         eventType: "practice",
+        division: "U12A",
         title: "Tigers Team Practice: D-Zone Breakouts & 1-3-1 Power Play",
         date: "Thursday, Nov 5, 2026",
         time: "6:00 PM – 7:15 PM EST",
@@ -15129,8 +15924,9 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
       {
         id: "lake_placid_1",
         eventType: "tournament",
-        title: "CAN/AM Challenge Cup: Aurora Tigers U13A vs Boston Jr. Terriers",
-        opponent: "Boston Jr. Terriers (EHF / USA Hockey)",
+        division: "U12A",
+        title: "CAN/AM Challenge Cup (12U): Aurora Tigers U12A vs Boston Jr. Terriers 12U",
+        opponent: "Boston Jr. Terriers 12U (EHF / USA Hockey)",
         opponentRecord: "12-4-2",
         opponentPct: ".722",
         opponentStats: "58 GF / 31 GA (+27) • PP: 22.8% • PK: 86.4%",
@@ -15168,7 +15964,8 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
       {
         id: "lake_placid_2",
         eventType: "tournament",
-        title: "CAN/AM Challenge Cup: Aurora Tigers U13A vs Syracuse Valley Eagles",
+        division: "U12A",
+        title: "CAN/AM Challenge Cup (12U): Aurora Tigers U12A vs Syracuse Valley Eagles 12U",
         opponent: "Syracuse Valley Eagles (NY State / USA Hockey)",
         opponentRecord: "10-7-1",
         opponentPct: ".583",
@@ -15206,7 +16003,8 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
       {
         id: "lake_placid_3",
         eventType: "tournament",
-        title: "CAN/AM Challenge Cup: Aurora Tigers U13A vs Connecticut Jr. Rangers",
+        division: "U12A",
+        title: "CAN/AM Challenge Cup (12U): Aurora Tigers U12A vs Connecticut Jr. Rangers 12U",
         opponent: "Connecticut Jr. Rangers (AYHL Tier II)",
         opponentRecord: "11-5-2",
         opponentPct: ".667",
@@ -15258,7 +16056,8 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
       {
         id: "omha_markham",
         eventType: "league",
-        title: "OMHA Regular Season: Aurora Tigers U13A vs Markham Waxers",
+        division: "U12A",
+        title: "OMHA Regular Season (U12A): Aurora Tigers U12A vs Markham Waxers U12A",
         opponent: "Markham Waxers U13A",
         opponentRecord: "9-7-3",
         opponentPct: ".553",
@@ -15288,11 +16087,44 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
           "Defend Home Ice: First 10 minutes tempo push.",
           "Short 35-second shifts with hard backcheck."
         ]
+      },
+      {
+        id: "lake_placid_u13_bracket",
+        eventType: "tournament",
+        division: "U13A",
+        title: "CAN/AM Challenge Cup (U13A Bracket): External Tournament Pool Game",
+        opponent: "Boston Jr. Terriers U13A",
+        date: "Saturday, Nov 7, 2026",
+        time: "6:00 PM EST",
+        arena: "Lake Placid Olympic Center",
+        source: "External Tournament Schedule Feed",
+        isTournament: true
       }
     ];
 
     let currentScheduleHubTab = 'upcoming'; // 'upcoming', 'past', 'lakeplacid'
     let currentUpcomingFilter = 'all'; // 'all', 'tournament', 'league', 'practice'
+
+        function setScheduleHubTab(tab) {
+      currentScheduleHubTab = tab || 'upcoming';
+      const tabs = ['upcoming', 'past', 'lakeplacid'];
+      tabs.forEach(t => {
+        const btn = document.getElementById(`tab-sched-${t}`);
+        const panel = document.getElementById(`sched-panel-${t}`);
+        if (panel) {
+          panel.classList.toggle('hidden', t !== currentScheduleHubTab);
+        }
+        if (btn) {
+          if (t === currentScheduleHubTab) {
+            btn.className = "flex-1 py-2 px-3 rounded-xl bg-amber-400 text-slate-950 font-black shadow-sm transition flex items-center justify-center gap-1.5";
+          } else {
+            btn.className = (t === 'lakeplacid')
+              ? "flex-1 py-2 px-3 rounded-xl bg-slate-900 text-rose-400 hover:text-white transition flex items-center justify-center gap-1.5 border border-rose-500/30"
+              : "flex-1 py-2 px-3 rounded-xl bg-slate-900 text-slate-400 hover:text-white transition flex items-center justify-center gap-1.5";
+          }
+        }
+      });
+    }
 
     function openScheduleHubModal() {
       const modal = document.getElementById('schedule-hub-modal');
@@ -16274,6 +17106,7 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
       const nav = document.querySelector('nav');
       const header = document.querySelector('header');
       const banner = document.getElementById('team-unlock-meter-card');
+      const exitBtn = document.getElementById('exit-fullscreen-btn');
 
       if (isTvPresentationModeActive) {
         try {
@@ -16282,6 +17115,7 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
           }
         } catch(e){}
 
+        if (exitBtn) exitBtn.classList.remove('hidden');
         if (header) header.classList.add('hidden');
         if (nav) nav.classList.add('hidden');
         if (banner) banner.classList.add('hidden');
@@ -16289,12 +17123,15 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
           videoCol.classList.remove('lg:col-span-7', 'xl:col-span-8');
           videoCol.classList.add('col-span-12', 'w-full');
         }
-        showToast("📺 TV Presentation Active! [Space]=Play/Pause • [←/→]=Step 5s • [D]=Draw • [C]=Clear • [P]=2D Rink • [Esc]=Exit");
+        showToast("📺 TV Presentation Active! Click 'Exit Fullscreen' or press [Esc] anytime to return.");
       } else {
         try {
-          if (document.exitFullscreen) document.exitFullscreen();
+          if (document.fullscreenElement && document.exitFullscreen) {
+            document.exitFullscreen();
+          }
         } catch(e){}
 
+        if (exitBtn) exitBtn.classList.add('hidden');
         if (header) header.classList.remove('hidden');
         if (nav) nav.classList.remove('hidden');
         if (banner) banner.classList.remove('hidden');
@@ -16310,9 +17147,24 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
       }, 250);
     }
 
+    // Auto-detect browser-level native ESC fullscreen exit to restore standard view
+    document.addEventListener('fullscreenchange', () => {
+      if (!document.fullscreenElement && isTvPresentationModeActive) {
+        toggleTvPresentationMode();
+      }
+    });
+
     // Keyboard Shortcuts for Locker Room TV Presentation Mode
     document.addEventListener('keydown', (e) => {
       if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA' || e.target.tagName === 'SELECT') return;
+
+      if (e.key === 'Escape' || e.code === 'Escape') {
+        if (isTvPresentationModeActive) {
+          e.preventDefault();
+          toggleTvPresentationMode();
+          return;
+        }
+      }
 
       if (e.code === 'Space') {
         e.preventDefault();

@@ -45,11 +45,36 @@ The platform prioritizes **zero-friction parent adoption**: families access play
   - `U13ATigers` unlocks **Parent View** (shift clips, player dossier, assigned homework, positional IQ playbook).
   - `CoachTigers` / `AdminTigers` unlocks **Coach Mode** (film tray bookmarking, canvas telestrator, tactical board, feedback inbox).
 - **5 Core Application Tabs:**
-  1. **🎬 Film & Shifts:** Synchronized video playback with period jumping, shift chips, continuous reel auto-advance, and category filtering (All, Breakouts, D-Zone, Powerplay, Penalty Kill).
+  1. **🎬 Film & Shifts:** Synchronized video playback with period jumping, shift chips, continuous reel auto-advance, category filtering (All, Breakouts, D-Zone, Powerplay, Penalty Kill), and 1-tap **`✅ Verify`** & **`🪪 Passport`** buttons on every card.
   2. **📊 Team Analytics:** Breakout success rates, zone possession distributions (Offensive / Neutral / Defensive), and situational trend tracking.
-  3. **👤 Player Hub:** Complete dossiers for all 17 dressed players (#3 to #98), shift logs, ice time approximations, and custom positional playbooks (Centers, Wingers, Defensemen, Goalies).
+  3. **👤 Player Hub & Passport:** Complete dossiers for all 17 dressed players (#3 to #98), shift logs, ice time approximations, positional playbooks, and the **Player Passport Career Locker** with 1-click **9:16 Vertical Instagram Reel** export and verified scout link sharing.
   4. **⭐ Coaching Film Tray:** Multi-folder clip bookmarking ("Breakouts", "Forecheck", "D-Zone", "Special Teams") with coach notes.
-  5. **💬 Feedback Hub:** Interactive submission portal allowing parents and players to submit shift corrections, tactical questions, or praise directly to the coaching staff.
+  5. **💬 Feedback Hub:** Lightweight modal dialog and submission portal allowing parents and players to submit shift corrections, tactical questions, or praise directly to the coaching staff without disrupting video playback.
+- **Collaborative Swarm Tagging ("Human-in-the-Loop"):**
+  - **`🏷️ Tag Shift`** modal allowing parents to tag missing shifts, goals, or defensive stops in 30 seconds directly into the central team database.
+  - 1-tap shift verification badge (`✅ Verified by Team Family`) that boosts confidence score.
+- **100% Free Team Pilot Experience:**
+  - Zero pricing, payment, subscription, or fee gates—app is 100% unlocked and free for all Aurora Tigers families.
+- **In-App Direct Game Film Uploader (`#add-game-modal`):**
+  - Seamless ingestion modal supporting unlisted YouTube links, LiveBarn 30-second download workflow, Google Drive / Dropbox shareable links, and direct local video file playback (`<input type="file">`) with zero cloud bandwidth costs.
+- **Player Passport Personal Storage Connector (`#passport-storage-modal`):**
+  - Dedicated storage connection allowing parents to link YouTube timestamps, personal cloud folders (Google Drive, iCloud, OneDrive), or camera roll videos directly to their player's permanent career archive with visual source badges.
+- **1-Click "My Game Tape" Continuous Player Reel:**
+  - Personalized hero banner on every player dossier that chains together all shifts back-to-back with live on-screen HUD badges, skipping whistles and intermissions.
+- **1-Click SMS & iMessage Sharing Engine:**
+  - Deep-linked `sms:?&body=` triggers on TeamSnap post-game recaps, player game tapes, and individual highlight clips for instant sharing with parents, grandparents, and scouts on iOS and Android.
+- **Interactive Shot & Scoring Chance Rink Heatmap:**
+  - Visual shot layer on the 2D arena rink canvas displaying Tigers attack-zone slot chances vs. perimeter point shots and opponent defensive breakdowns with high-danger radial glow and legend.
+- **Progressive Web App (PWA) Standalone Mobile App (`manifest.json`):**
+  - Standalone mobile configuration with Tigers branding, high-res app icons, and Apple mobile web app capability for 1-tap "Add to Home Screen" installation without an app store download.
+- **Native Mobile Bottom Navigation Bar:**
+  - Fixed mobile bottom dock (`[ 🎬 Film ] [ 📊 Team ] [ 👤 Player ] [ 🪪 Passport ] [ 🏷️ Tag ]`) with touch-optimized thumb targets for phones & iPads.
+- **TeamSnap 1-Click Post-Game Recap Digest:**
+  - Formatted post-game summary generator that automatically compiles score, TOI leaders, and unlisted video portal links ready to paste into TeamSnap or WhatsApp with 1 click.
+- **Dual-Clip Virtual Video Ingest (Split LiveBarn / Phone Recordings):**
+  - Virtual video stitcher linking Part 1 & Part 2 without cloud video re-encoding or storage; seamlessly swaps playback at the split timestamp.
+- **NHL Arena Goal Horn & Crowd Cheering Audio Synthesizer:**
+  - Real-time Web Audio API dual-tone brass horn (Kahlenberg D-2 Eb3/Ab3) + bandpass-filtered arena crowd roar on the 9:16 vertical highlight reel simulator with zero external audio assets.
 - **Interactive Hockey Whiteboard & Telestrator:**
   - 2D Canvas rink with official red lines, blue lines, face-off circles, and centered Aurora Tigers crest.
   - Preset tactical system overlays: Powerplay 1-3-1, Overload, Penalty Kill Box & Diamond, D-Zone Box-and-One, Rim Breakouts, and Neutral Zone 1-2-2.
@@ -124,6 +149,104 @@ Every player is cataloged with jersey number, primary position, shooting hand, a
   2. **Coach 1-Click Verification:** In Coach Mode, coaches check/uncheck absent players (`#attend-check-*`) and adjust line combinations.
   3. **Instant Shift Scrubbing:** Saving removes scratched players from all shifts in that game (ensuring their ice time drops to 0:00), updates the precision score to `🎯 96% AI Precision (Coach Calibrated)`, and syncs to Cloud Firestore (`lineups` collection).
 
+### F. Phase 2 Advanced Capabilities (Fully Completed & Live)
+- **Coach 1-Tap Voice Memos (`MediaRecorder API`):**
+  - Coaches tap `[ 🎙️ Voice ]` directly on any shift card to record audio feedback.
+  - Automatically compressed to Base64 Opus audio, stored in `localStorage`, and synced across devices via Cloud Firestore (`coach_voice_memos` collection).
+  - Parents and players tap `[ 🔊 Memo ]` to hear direct audio instruction while viewing their video shift.
+- **Goalie Deep-Dive Analytics Hub:**
+  - Dedicated telemetry for #13 Matthew Hart (Yellow pads) and #98 Hudson Barfitt (Red pads).
+  - Rebound control tracking (Controlled / Pushed to Corner vs. Danger Rebounds).
+  - Zone Save % (Slot / High-Danger vs Perimeter Save %).
+  - Freeze vs. Play puck decision ratio with 1-click Goalie Save Highlight Reel.
+- **Side-by-Side "Player vs. Pro" Video Breakdown:**
+  - Dual synchronized comparison player with frame-by-frame scrubbing.
+  - Curated NHL reference library: Connor McDavid (10-2 edge work), Cale Makar (blue-line lateral walking), Auston Matthews (angle-change release), Igor Shesterkin (RVH post seal).
+- **Bench / Stands One-Touch Live Shift Logger:**
+  - Mobile/iPad touch matrix with line roll buttons (Line 1, 2, 3, PP1, PK1) and running game clock.
+  - 17-player interactive toggle grid for rapid in-game skater adjustments.
+  - 1-Click "Apply to Game Shifts" to immediately commit live logged bench shifts into the active match film.
+- **Turnkey Team Administration & Onboarding:**
+  - Multi-tenant customization modal (`[ ⚙️ Team Admin ]` in header).
+  - Quick-connect inputs for GameSheet Inc., TeamSnap iCal, YouTube playlist, OneDrive/Google Drive, and WhatsApp group.
+  - 1-Click Roster Paste Importer: pastes space/tab/comma-delimited text to auto-generate jersey numbers, positions, and handedness.
+- **PWA Mobile Home Screen Installation:**
+  - Standalone PWA manifest (`manifest.json`) and iOS touch icons for zero-friction mobile home screen installation.
+- **SMS & iMessage Sharing Engine:**
+  - 1-Click SMS buttons across Game Recap, Player Dossier, and Player Passport to text scout links and game tape directly to family and coaches.
+- **Shot & Scoring Chance Heatmap:**
+  - Interactive rink overlay visualizing high-danger slot chances vs opponent perimeter shots.
+- **1-on-1 "Film Room" Pre-Practice Player Huddle:**
+  - Distraction-free iPad lobby/dressing room review view (`[ 👥 1:1 Huddle ]`).
+  - Auto-selects 3 key review plays (1 praise play + 2 tactical adjustments) with direct telestrator launcher and coach practice objective note.
+  - 1-Click SMS to text the 3-point meeting summary directly to the player/parent.
+- **AI-Suggested Practice Drill Cards (Game Weakness ➔ Practice Drill):**
+  - Directly translates game telemetry into on-ice practice planning (`[ 📋 Drills ]`).
+  - Suggests specific drills based on match breakdowns (D-to-D Reverse & Rim Support, House Box-Out, Quick Release, 1-2-2 Angling).
+  - Includes 1-click printable practice plan sheet and TeamSnap text export.
+- **GameSheet Inc. Digital Boxscore Alignment Engine:**
+  - Synchronizes official GameSheet referee records (`[ 📊 GameSheet Sync ]`).
+  - Automatically aligns goal timestamps and penalty records to lock down exact Power Play (PP) and Penalty Kill (PK) shift boundaries against the video clock.
+- **Pre-Game 4-Hour SMS Scratch & Lineup Check-In Bot:**
+  - Automated Twilio scratch check-in simulator (`[ 💬 4-Hr SMS Bot ]`).
+  - Coach replies via SMS (e.g. `10, 23 out`), automatically suppressing absent players to prevent false shift detection and calibrating AI confidence to 96%.
+- **Ice Time Equality & Fair-Play Audit Matrix:**
+  - Dedicated association compliance audit (`[ ⚖️ Fair Play Audit ]`).
+  - Tracks rotational ice time variance across lines with OMHA/Hockey Canada LTPD compliance certification badge and PDF export.
+- **Automated 9:16 Instagram & TikTok Highlight Reel Maker:**
+  - Vertical mobile story generator (`[ 📱 9:16 Reel ]`) with animated jersey crest, player name, and verified highlight badge ready for social sharing.
+- **Locker Room TV / Projector Fullscreen HDMI Presentation Mode:**
+  - Big-screen dressing room mode (`[ 📺 TV Mode ]`) with full keyboard hotkeys (`Space` = Play/Pause, `←`/`→` = 5s scrub, `D` = Draw, `C` = Clear, `P` = 2D Rink, `T` = Video, `1`/`2`/`3` = Period Jump).
+- **Printable Pre-Game Bench & Lineup Card (Clipboard Ready):**
+  - 1-Click printable high-contrast clipboard card (`[ 🖨️ Bench Card ]`) with lines, pairings, starting goalie, special teams, game keys, and shift tally tracker.
+- **Multi-Year Career & Tournament History Builder (Player Passport):**
+  - Dedicated 5th tab in the Player Passport (`🏆 Career & Tournaments`) allowing parents to document previous teams (e.g. U11A, U12A, OMHA/GTHL), tournament showcases (Silver Stick, Bell Capital Cup), championships, medals, and coach references.
+  - Verified GameSheet Inc. season & tournament link embedding so scouts and high school coaches have 1-click access to official referee-signed box scores.
+  - Historical stats summary (GP, G, A, PTS, PIM), season video reel linking, and pre-loaded starter profile for #23 Easton Carpentier.
+- **Official GameSheet Inc. Team Integration (Aurora Tigers U13A):**
+  - Live link and data connection to the official Tigers GameSheet season preview:
+    `https://gamesheetstats.com/seasons/15490/teams/534204/preview?configuration%5Binfinite-scroll%5D=false&configuration%5Blogo%5D=false&filter%5Bstatus%5D=completed` (Season: 15490, Team: 534204).
+  - Pre-filled across header quick-links, team onboarding defaults, and digital boxscore alignment engine.
+- **XbotGo Falcon ➔ GameSheet Live ScoreSync Bridge Engine (`#xbot-bridge-modal`):**
+  - Real-time relay bridge linking GameSheet referee scoring with the XbotGo Falcon camera app via ScoreSync (`games.xbotgo.com` with 6-digit match PIN).
+  - Automatically translates official referee iPad goals, whistles, and period advances directly into the camera's live scoreboard overlay without any human touching the camera or remote during the game.
+  - Interactive simulator HUD allowing coaches to preview and test live clock countdowns, period rolls, and goal increments.
+- **In-App Live Stream & GameSheet Real-Time Scoreboard HUD (`#live-broadcast-hud`):**
+  - Allows parents to watch the active YouTube livestream directly inside the app with a floating TSN/Sportsnet-style mini scoreboard HUD.
+  - Displays real-time Tigers vs Opponent score, live period countdown clock, strength status (5v5, PP1, PK1), and SOG (Shots on Goal) synced with GameSheet.
+- **Game Day Live Center & 3-Tab Real-Time Hub (`#live-game-center-modal`):**
+  - Dedicated live match operations portal with 3 specialized tab views:
+    1. **📊 Live In-Game Tracker & Real-Time AI:** 1-tap touch buttons for Shots on Goal (`+ SOG Tigers`, `+ SOG Opponent`) with automated Goalie Save % calculations, shot differential telemetry, 1-tap Faceoff Tracker by Center (#23 Carpentier, #9 Smith, #18 Ross), and live AI Tactical Momentum cards (Slot protection, PP seam openings, crease rebound alerts).
+    2. **🏒 Pre-Game Matchup & Opponent Scout:** Head-to-Head season record against active opponent (e.g. vs Newmarket: 1-1-1), opponent danger player watch list with tactical counters (#14 Miller, #8 Bennett, #31 Vance), Coach's 3 Tactical Keys to the Game, and side-by-side Goalie Tale of the Tape.
+    3. **📋 GameSheet Feed & RTMP Stream:** Official GameSheet referee play-by-play ticker (goals, penalties, whistles), Parent Cheer Box with live arena goal horn sound generator, and Xbot Falcon RTMP ingest hub.
+- **Spordle & Hockey Canada Registry (HCR) Integration:**
+  - Official HCR participant badge (`🍁 HCR #10294829 - Spordle Verified`) integrated directly into the Player Passport.
+  - Team Admin configuration for linking association Spordle schedules, tournament brackets, and provincial championship eligibility.
+- **Drag-and-Drop Video Replacement & Timestamp Re-Alignment Engine (`#replace-video-modal`):**
+  - Solves choppy arena cellular livestreaming by letting coaches replace buffering livestream video with the pristine 1080p/4K master recording from their Falcon SD card or an unlisted YouTube upload.
+  - **Zero-Cloud Drag & Drop:** Drop local `.mp4` files directly for instant in-browser playback with zero upload wait time and zero server fees.
+  - **Puck Drop Timestamp Calibration:** Automatically calculates the time delta between the livestream start and camera recording start, shifting all 38+ player shifts, period markers, and GameSheet goal events simultaneously with millisecond precision.
+  - **100% Data Preservation:** Preserves all existing shift tags, coach voice memos, parent comments, and telestrator bookmarks.
+- **Live Stream Mode & Split View Layout Refactor:**
+  - **Embedded Side-Panel Live Center (`#live-sidebar-section`):** When switching view mode from Film Archive to Live Stream (`switchViewMode('live_stream')`), the right-hand shift/clip column is replaced with the Game Day Live Center & Real-Time Stats panel (momentum chart, shot counters, faceoff tracker, penalty feed). Shift breakdown cards from archived games are cleanly hidden.
+  - **Live Broadcast Detection & Offline Standby:** If no live broadcast is running or YouTube stream is offline, displays a clean placeholder banner (`#live-offline-placeholder`: *"No active live broadcast. Next game scheduled: [Date/Time]"*) computed dynamically via `getNextScheduledGameSummary()`, suppressing ticking live clocks, running period timers, and simulated live scores.
+  - **YouTube Live Stream Configuration:** Dedicated input field in **Team Admin -> Integration Links** (`#cfg-youtube-live-url`) allowing coaches/admins to update the active YouTube Live Video ID or URL per game without modifying code. Comprehensive documentation included for connecting YouTube Studio RTMP Stream Keys to the live ingest.
+- **Player-Bar Latency Buffer & Sync Lock:**
+  - **Pro Video Control Bar Delay Slider (`#player-latency-slider`):** Mirrored Broadcast Stream Delay Buffer slider directly on the main video player control bar, providing instant 0-60 second stream latency adjustments without opening settings modals.
+  - **Sync Confirmation & Lock State (`#player-lock-sync-btn`):** Added a "Lock Sync" toggle button beside the delay slider. Locking disables accidental scrubbing, timeline clicking, and latency nudges once broadcast video is synchronized with GameSheet, with a 1-tap "Unlock" toggle for adjustments.
+- **XbotGo Falcon Live ScoreSync Bridge UX Clarifications:**
+  - **Match PIN & ScoreSync Guidance:** Added descriptive tooltips and a clear 3-step setup guide explaining what the 6-digit Match PIN is, how to retrieve it from ScoreSync (`games.xbotgo.com`), and how it establishes real-time synchronization between the XbotGo camera overlay and GameSheet referee iPads.
+  - **3-State Explicit Connection Status Badge (`#xbot-explicit-status-badge`):** Clearly labeled "Connect Live Relay" with explicit visual status indicators (*Ready to Connect*, *Relay Active & Streaming*, *Disconnected / Offline*), updating in real time as coaches input their PIN.
+- **Fullscreen & Navigation Glitch Fixes:**
+  - **Top Navigation "Schedule & Link Videos" Route Fix:** Implemented the missing `setScheduleHubTab(tab)` function, resolving the uncaught `ReferenceError` that prevented the schedule modal from opening from the top nav bar.
+  - **Fullscreen / TV Mode Trap Prevention (`#exit-fullscreen-btn`):** Pinned a high-contrast, always-visible "Exit Fullscreen" / "Back to App" button in the top-right corner when entering TV/Fullscreen mode (`toggleTvPresentationMode()`). Added native `Escape` key capture and `fullscreenchange` event listening so users never get trapped in fullscreen presentation.
+- **Schedule Ingestion & Division Filtering (`Add New Game Film`):**
+  - **Team Division Matching Filter:** Updated schedule ingestion in `populateAddGameMatchDropdown()` to filter matches by the active team division (`12U / U12A`). Prevents unrelated tournament brackets (such as older U13A CAN/AM tournament listings) from populating the game film dropdown.
+  - **Cloud Storage Policy Enforcement:** Added prominent warning notices enforcing external cloud storage destinations (Unlisted YouTube URL, Google Drive, OneDrive, or Dropbox) and technical guardrails preventing large direct MP4 file uploads from storing locally or committing directly into repository git history.
+- **View Simplification (Analytics, Player Hub, & Feedback Modal):**
+  - **Full-Width Responsive Hubs:** When opening Team Analytics (`breakouts`) or Player Hub (`player_analytics`), the floating smartphone simulator widget is automatically dismissed/hidden, and the layout expands to full width (`col-span-12 w-full`) with a prominent "🎬 Back to Game Film" navigation button to return to the video view.
+  - **Lightweight Feedback Modal Dialog (`#feedback-modal`):** Converted the Feedback Hub from a full separate layout view into a lightweight, non-disruptive modal dialog accessible via `openFeedbackModal()` and `closeFeedbackModal()`.
+
 ---
 
 ## 3. Current State of the Codebase
@@ -131,7 +254,8 @@ Every player is cataloged with jersey number, primary position, shooting hand, a
 ### Repository Files & Structure
 ```text
 U13A-Tigers-2026-2027/
-├── index.html              # Core single-page web app (~6,850 lines) with Tailwind, Canvas & Firebase SDK
+├── index.html              # Core single-page web app (~17,570 lines) with Tailwind, Canvas, MediaRecorder & Firebase SDK
+├── manifest.json           # Progressive Web App (PWA) mobile installation manifest
 ├── games_library.json      # Structured game telemetry, period markers, shifts, and TeamSnap metadata
 ├── auto_sync.py            # Ingest pipeline for YouTube playlist & TeamSnap iCal schedule
 ├── cv_tracker.py           # Zero-token YOLOv8 + ByteTrack player & rink coordinate tracking
