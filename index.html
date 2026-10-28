@@ -80,6 +80,21 @@
 </head>
 <body class="text-slate-900 min-h-screen p-2 lg:px-4 lg:py-2.5 select-none font-sans">
 
+  <script>
+    // Fail-safe immediate unlock available instantly before entire DOM parse
+    window.quickUnlock = function(role) {
+      if (!role) role = 'parent';
+      try { localStorage.setItem('team_role', role); } catch(e){}
+      const m = document.getElementById('auth-modal');
+      const c = document.getElementById('main-content');
+      if (m) { m.style.display = 'none'; m.classList.add('hidden'); }
+      if (c) { c.style.display = 'block'; c.classList.remove('hidden'); }
+      if (typeof applyUserRole === 'function') applyUserRole(role, true);
+      if (typeof updateRoleBadge === 'function') updateRoleBadge();
+      if (typeof initAppSafe === 'function') initAppSafe();
+    };
+  </script>
+
   <!-- ================= AUTH MODAL ================= -->
   <div id="auth-modal" class="fixed inset-0 bg-slate-900/85 backdrop-blur-md flex items-center justify-center p-3 sm:p-4 z-50">
     <div class="relative bg-white border-2 border-tigersGold p-6 sm:p-8 rounded-3xl max-w-md w-full text-center shadow-[0_20px_60px_rgba(15,23,42,0.35)] overflow-hidden">
@@ -5095,11 +5110,6 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
     const COACH_EMAILS = ["scriptochango@gmail.com"];
     let currentUser = null;
 
-    const PARENT_PASSCODE = "U13ATIGERS";
-    const COACH_PASSCODE = "COACHTIGERS";
-    const ADMIN_PASSCODE = "ADMINTIGERS";
-    let isCoach = false;
-
     function formatMinSec(sec) {
       const s = Math.max(0, Math.round(Number(sec) || 0));
       return `${Math.floor(s / 60)}:${(s % 60).toString().padStart(2, '0')}`;
@@ -5430,12 +5440,26 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
     function unlockScreen() {
       const modal = document.getElementById('auth-modal');
       const main = document.getElementById('main-content');
-      if (modal) modal.style.display = 'none';
-      if (main) main.style.display = 'block';
+      if (modal) {
+        modal.style.display = 'none';
+        modal.classList.add('hidden');
+      }
+      if (main) {
+        main.style.display = 'block';
+        main.classList.remove('hidden');
+      }
       updateRoleBadge();
       initAppSafe();
-      syncCloudData();
+      if (typeof syncCloudData === 'function') syncCloudData();
     }
+
+    window.quickUnlock = quickUnlock;
+    window.handlePasscodeSubmit = handlePasscodeSubmit;
+    window.unlockScreen = unlockScreen;
+    window.applyUserRole = applyUserRole;
+    window.openRoleSwitchModal = openRoleSwitchModal;
+    window.closeRoleSwitchModal = closeRoleSwitchModal;
+    window.switchUserRole = switchUserRole;
 
     function updateRoleBadge() {
       const badge = document.getElementById('role-badge');
@@ -12822,12 +12846,6 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
       renderRosterGrid();
       initPlayerDropdown();
       showToast(`⚙️ Saved team configuration for ${config.teamName}! (${config.calendarProvider.toUpperCase()} calendar linked)`);
-    }
-
-      closeTeamOnboardingModal();
-      renderRosterGrid();
-      initPlayerDropdown();
-      showToast(`⚙️ Saved team configuration for ${config.teamName}!`);
     }
 
     // =========================================================================
