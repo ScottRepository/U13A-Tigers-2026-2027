@@ -728,16 +728,26 @@
           <span class="text-xl">➕</span>
           <div>
             <h3 id="add-game-modal-header" class="font-display font-bold text-sm tracking-wider uppercase text-tigersGold">Add New Game Film</h3>
-            <div id="add-game-modal-sub" class="text-[10px] text-slate-400 font-medium">Link LiveBarn footage, YouTube unlisted match, or pick local file</div>
+            <div id="add-game-modal-sub" class="text-[10px] text-slate-400 font-medium">Link unlisted YouTube match, Google Drive, OneDrive, or Dropbox</div>
           </div>
         </div>
         <button onclick="closeAddGameModal()" class="text-slate-400 hover:text-white text-base leading-none cursor-pointer">✕</button>
       </div>
 
       <div class="p-4 overflow-y-auto custom-scroll space-y-3.5 text-xs">
+        <!-- Scheduled Game / Match Selection Dropdown -->
         <div>
-          <label class="block font-bold text-slate-700 uppercase text-[10px] tracking-wider mb-1">Match Title *</label>
-          <input type="text" id="modal-newgame-title" class="w-full bg-slate-50 border border-slate-300 rounded-xl px-3 py-2 text-slate-900 font-bold focus:outline-none focus:border-tigersGold" placeholder="e.g. Tigers 4 - Richmond Hill 2 (Oct 25, 2026)" />
+          <label class="block font-bold text-slate-700 uppercase text-[10px] tracking-wider mb-1 flex items-center justify-between">
+            <span>Scheduled Match (GameSheet / TeamSnap) *</span>
+            <span class="text-[9px] text-amber-600 font-bold">Unlinked Games Auto-Detected</span>
+          </label>
+          <select id="modal-newgame-match-select" onchange="onNewGameMatchSelect(this.value)" class="w-full bg-slate-50 border border-slate-300 rounded-xl px-3 py-2 text-slate-900 font-bold focus:outline-none focus:border-tigersGold cursor-pointer">
+            <!-- Dynamically populated -->
+          </select>
+          <div id="modal-newgame-custom-title-box" class="hidden mt-2">
+            <label class="block font-bold text-slate-600 uppercase text-[9px] tracking-wider mb-0.5">Custom Match Title:</label>
+            <input type="text" id="modal-newgame-title" class="w-full bg-slate-50 border border-slate-300 rounded-xl px-3 py-1.5 text-slate-900 font-bold focus:outline-none focus:border-tigersGold" placeholder="e.g. Tigers 4 - Richmond Hill 2 (Oct 25, 2026)" />
+          </div>
         </div>
 
         <div class="grid grid-cols-2 gap-2">
@@ -751,47 +761,49 @@
           </div>
         </div>
 
-        <!-- Video Source Selection Tabs -->
+        <!-- Video Source Selection Tabs (External & Cloud Links Only - No heavy local file uploads) -->
         <div>
-          <label class="block font-bold text-slate-700 uppercase text-[10px] tracking-wider mb-1.5">Video Source</label>
+          <label class="block font-bold text-slate-700 uppercase text-[10px] tracking-wider mb-1.5">External Video Source</label>
           <div class="flex items-center gap-1.5 p-1 bg-slate-100 rounded-xl mb-2">
             <button type="button" onclick="setNewGameSourceTab('youtube')" id="tab-source-yt" class="flex-1 py-1 px-2 rounded-lg bg-white text-slate-900 font-bold shadow-2xs text-[10px] transition">
-              🎬 YouTube / LiveBarn
+              🎬 YouTube Unlisted / LiveBarn
             </button>
             <button type="button" onclick="setNewGameSourceTab('drive')" id="tab-source-drive" class="flex-1 py-1 px-2 rounded-lg text-slate-600 hover:text-slate-900 font-bold text-[10px] transition">
-              ☁️ Cloud Drive
-            </button>
-            <button type="button" onclick="setNewGameSourceTab('local')" id="tab-source-local" class="flex-1 py-1 px-2 rounded-lg text-slate-600 hover:text-slate-900 font-bold text-[10px] transition">
-              📁 Local File
+              ☁️ Cloud Drive (Google / OneDrive / Dropbox)
             </button>
           </div>
 
           <!-- YouTube / LiveBarn Input -->
           <div id="source-input-youtube" class="space-y-1.5">
-            <input type="text" id="modal-newgame-yt" class="w-full bg-slate-50 border border-slate-300 rounded-xl px-3 py-2 text-slate-900 font-mono font-bold focus:outline-none focus:border-tigersGold" placeholder="Paste YouTube link or ID (e.g. t7i7Z37fLw4)" />
+            <input type="text" id="modal-newgame-yt" class="w-full bg-slate-50 border border-slate-300 rounded-xl px-3 py-2 text-slate-900 font-mono font-bold focus:outline-none focus:border-tigersGold" placeholder="Paste YouTube link or ID (e.g. https://youtu.be/... or t7i7Z37fLw4)" />
             <div class="p-2.5 rounded-xl bg-amber-50 border border-amber-200 text-[10px] text-amber-950 space-y-1">
-              <strong class="font-bold flex items-center gap-1"><span>💡</span> LiveBarn 30-Second Guide:</strong>
-              <p>1. Download your game recording from LiveBarn.com to your computer or phone.<br>2. Upload to YouTube as <strong>Unlisted</strong> (free, unlimited 4K storage, private to your team).<br>3. Paste the unlisted YouTube link here!</p>
+              <strong class="font-bold flex items-center gap-1"><span>💡</span> Unlisted YouTube Recommendation:</strong>
+              <p>Uploading to YouTube as <strong>Unlisted</strong> provides free, unlimited 4K streaming, private to your team roster, with zero server storage costs.</p>
             </div>
           </div>
 
           <!-- Cloud Drive Input -->
           <div id="source-input-drive" class="space-y-1.5 hidden">
             <input type="text" id="modal-newgame-drive" class="w-full bg-slate-50 border border-slate-300 rounded-xl px-3 py-2 text-slate-900 font-mono text-[11px] focus:outline-none focus:border-sky-500" placeholder="Paste Google Drive, OneDrive, or Dropbox shareable link" />
-            <p class="text-[10px] text-slate-500">Ensure the link permissions are set to "Anyone with the link can view".</p>
+            <div class="p-2.5 rounded-xl bg-sky-50 border border-sky-200 text-[10px] text-sky-950 space-y-1">
+              <strong class="font-bold flex items-center gap-1"><span>🔒</span> Required Link Permissions:</strong>
+              <p>Ensure link access is set to <strong>"Anyone with the link can view"</strong> (public view access). Do not set to restricted or password-protected so coaches and families can stream seamlessly without authentication errors.</p>
+            </div>
           </div>
+        </div>
 
-          <!-- Local File Input -->
-          <div id="source-input-local" class="space-y-1.5 hidden">
-            <input type="file" id="modal-newgame-file" accept="video/mp4,video/quicktime,video/webm" onchange="handleLocalVideoFileSelect(event)" class="w-full text-slate-700 file:mr-3 file:py-1.5 file:px-3 file:rounded-xl file:border-0 file:text-xs file:font-bold file:bg-slate-900 file:text-tigersGold hover:file:bg-slate-800 cursor-pointer" />
-            <p class="text-[10px] text-slate-500">Zero cloud storage fees: Plays directly inside your browser from your device's storage without uploading.</p>
+        <!-- Role-based Submission Workflow Notice -->
+        <div id="modal-newgame-role-notice" class="p-2.5 rounded-xl bg-slate-100 border border-slate-200 text-[11px] flex items-start gap-2">
+          <span class="text-base leading-none">🛡️</span>
+          <div id="modal-newgame-role-hint" class="text-slate-600">
+            <strong>Role Workflow:</strong> Coach &amp; Admin accounts publish game film immediately. Parent submissions are routed into the coach review queue.
           </div>
         </div>
 
         <div class="flex items-center justify-between pt-2 border-t border-slate-100">
           <button onclick="closeAddGameModal()" class="px-3.5 py-1.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold cursor-pointer transition">Cancel</button>
-          <button onclick="saveNewGameToLibrary()" class="px-4 py-1.5 rounded-xl bg-tigersGold hover:bg-tigersGoldBright text-slate-950 font-black cursor-pointer transition shadow-sm flex items-center gap-1.5">
-            <span>💾</span> <span>Save to Team Library</span>
+          <button id="modal-newgame-submit-btn" onclick="saveNewGameToLibrary()" class="px-4 py-1.5 rounded-xl bg-tigersGold hover:bg-tigersGoldBright text-slate-950 font-black cursor-pointer transition shadow-sm flex items-center gap-1.5">
+            <span>💾</span> <span id="modal-newgame-submit-text">Save to Team Library</span>
           </button>
         </div>
       </div>
@@ -837,17 +849,38 @@
         <div>
           <label class="block font-bold text-slate-300 uppercase text-[10px] tracking-wider mb-1.5">Select New Master Footage Source:</label>
           <div class="flex items-center gap-1.5 p-1 bg-slate-950 rounded-xl border border-slate-800">
-            <button type="button" onclick="setReplaceVideoTab('drop')" id="tab-replace-drop" class="flex-1 py-1.5 px-3 rounded-lg bg-sky-600 text-white font-bold text-xs shadow-2xs transition cursor-pointer">
-              📁 Drag &amp; Drop MP4 (Local SD Card)
+            <button type="button" onclick="setReplaceVideoTab('youtube')" id="tab-replace-youtube" class="flex-1 py-1.5 px-2 rounded-lg bg-sky-600 text-white font-bold text-xs shadow-2xs transition cursor-pointer">
+              🎬 YouTube Unlisted
             </button>
-            <button type="button" onclick="setReplaceVideoTab('youtube')" id="tab-replace-youtube" class="flex-1 py-1.5 px-3 rounded-lg text-slate-400 hover:text-white font-bold text-xs transition cursor-pointer">
-              🎬 YouTube Unlisted Link
+            <button type="button" onclick="setReplaceVideoTab('cloud')" id="tab-replace-cloud" class="flex-1 py-1.5 px-2 rounded-lg text-slate-400 hover:text-white font-bold text-xs transition cursor-pointer">
+              ☁️ Cloud Link (Drive/Dropbox/OneDrive)
+            </button>
+            <button type="button" onclick="setReplaceVideoTab('drop')" id="tab-replace-drop" class="flex-1 py-1.5 px-2 rounded-lg text-slate-400 hover:text-white font-bold text-xs transition cursor-pointer">
+              📁 Camera MP4
             </button>
           </div>
         </div>
 
-        <!-- Tab 1: Drag & Drop Dropzone for Local MP4 -->
-        <div id="replace-panel-drop" class="space-y-3">
+        <!-- Tab 1: YouTube Clean Upload URL -->
+        <div id="replace-panel-youtube" class="space-y-2">
+          <label class="block font-bold text-slate-300 text-[10px] uppercase">New Unlisted YouTube Video URL or ID:</label>
+          <input type="text" id="replace-youtube-url-input" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-white font-mono text-xs focus:outline-none focus:border-sky-400" placeholder="https://www.youtube.com/watch?v=..." />
+          <div class="p-2.5 rounded-xl bg-slate-950 border border-slate-800 text-[10px] text-slate-400 leading-relaxed">
+            💡 Paste the new clean unlisted YouTube match link. Timestamp alignment offset will preserve all existing shift cards.
+          </div>
+        </div>
+
+        <!-- Tab 2: Cloud Share Link (Google Drive / Dropbox / OneDrive) -->
+        <div id="replace-panel-cloud" class="space-y-2 hidden">
+          <label class="block font-bold text-slate-300 text-[10px] uppercase">Cloud Share Link (Google Drive, OneDrive, or Dropbox):</label>
+          <input type="text" id="replace-cloud-url-input" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-white font-mono text-xs focus:outline-none focus:border-sky-400" placeholder="https://drive.google.com/... or OneDrive / Dropbox share link" />
+          <div class="p-2.5 rounded-xl bg-sky-950/40 border border-sky-500/30 text-[10px] text-sky-300 leading-relaxed">
+            🔒 Make sure share permissions are set to <strong>"Anyone with the link can view"</strong> for smooth streaming.
+          </div>
+        </div>
+
+        <!-- Tab 3: Drag & Drop Dropzone for Local MP4 -->
+        <div id="replace-panel-drop" class="space-y-3 hidden">
           <div id="replace-dropzone" ondragover="handleReplaceDragOver(event)" ondragleave="handleReplaceDragLeave(event)" ondrop="handleReplaceDrop(event)" onclick="document.getElementById('replace-file-input').click()" class="border-2 border-dashed border-sky-400/50 hover:border-sky-400 bg-slate-950/60 rounded-2xl p-6 text-center cursor-pointer transition flex flex-col items-center justify-center space-y-2 group">
             <input type="file" id="replace-file-input" accept="video/mp4,video/quicktime,video/webm" onchange="handleReplaceFileSelect(event)" class="hidden" />
             <span class="text-3xl group-hover:scale-110 transition-transform">📥</span>
@@ -869,15 +902,6 @@
               </div>
             </div>
             <button type="button" onclick="clearReplaceLocalFile()" class="text-slate-400 hover:text-rose-400 text-xs px-2 py-1 cursor-pointer">✕ Remove</button>
-          </div>
-        </div>
-
-        <!-- Tab 2: YouTube Clean Upload URL -->
-        <div id="replace-panel-youtube" class="space-y-2 hidden">
-          <label class="block font-bold text-slate-300 text-[10px] uppercase">New Unlisted YouTube Video URL or ID:</label>
-          <input type="text" id="replace-youtube-url-input" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-white font-mono text-xs focus:outline-none focus:border-sky-400" placeholder="https://www.youtube.com/watch?v=..." />
-          <div class="p-2.5 rounded-xl bg-slate-950 border border-slate-800 text-[10px] text-slate-400 leading-relaxed">
-            💡 If you uploaded the clean camera file to your team's YouTube channel as <em>Unlisted</em>, paste the new link above.
           </div>
         </div>
 
@@ -1707,7 +1731,12 @@
             </div>
           </div>
         </div>
-        <button onclick="closeTeamOnboardingModal()" class="text-slate-400 hover:text-white text-base leading-none cursor-pointer">✕</button>
+        <div class="flex items-center gap-2">
+          <button type="button" onclick="closeTeamOnboardingModal(); openScheduleHubModal();" class="px-2.5 py-1 rounded-xl bg-slate-800 hover:bg-slate-700 text-amber-300 font-bold text-[11px] cursor-pointer transition shadow-2xs flex items-center gap-1 border border-amber-400/30" title="Open Season &amp; Tournament Schedule Hub">
+            <span>📅</span> <span class="hidden sm:inline">Schedule Hub</span>
+          </button>
+          <button onclick="closeTeamOnboardingModal()" class="text-slate-400 hover:text-white text-base leading-none cursor-pointer">✕</button>
+        </div>
       </div>
 
       <!-- Navigation Tabs -->
@@ -1918,6 +1947,43 @@
         </div>
       </div>
 
+    </div>
+  </div>
+
+  <!-- ================= HUMAN-IN-THE-LOOP QUICK ROSTER POSITION TAGGING MODAL ================= -->
+  <div id="quick-roster-tag-modal" onclick="if(event.target === this) closeQuickRosterTagModal()" class="fixed inset-0 bg-slate-950/80 backdrop-blur-md z-[9999] flex items-center justify-center p-3 sm:p-4 hidden" style="display: none;">
+    <div class="bg-white rounded-3xl max-w-md w-full border border-slate-200 shadow-2xl overflow-hidden flex flex-col animate-in fade-in zoom-in-95 duration-150">
+      <div class="p-4 bg-slate-900 text-white flex items-center justify-between shrink-0 border-b border-slate-800">
+        <div class="flex items-center gap-2">
+          <span class="text-xl">🏷️</span>
+          <div>
+            <h3 class="font-display font-black text-sm uppercase tracking-wider text-tigersGold">
+              Assign Player to Shift
+            </h3>
+            <div id="quick-roster-modal-sub" class="text-[10px] text-slate-400 font-medium">
+              Human-in-the-loop manual position tagging
+            </div>
+          </div>
+        </div>
+        <button onclick="closeQuickRosterTagModal()" class="text-slate-400 hover:text-white text-base leading-none cursor-pointer">✕</button>
+      </div>
+
+      <div class="p-3 bg-amber-50 border-b border-amber-200 flex items-center justify-between text-xs font-bold text-amber-950">
+        <span id="quick-roster-target-pos-badge" class="px-2 py-0.5 rounded-lg bg-amber-200 text-amber-950 font-black">Role: Center</span>
+        <span id="quick-roster-target-shift-text" class="text-[11px] text-amber-800 font-mono">Shift #1</span>
+      </div>
+
+      <div class="p-4 max-h-[360px] overflow-y-auto custom-scroll space-y-2">
+        <div class="text-[10px] uppercase font-bold text-slate-500 tracking-wider mb-1">Click a roster player to assign:</div>
+        <div id="quick-roster-picker-grid" class="grid grid-cols-2 gap-2">
+          <!-- Dynamically populated with team roster players -->
+        </div>
+      </div>
+
+      <div class="p-3 bg-slate-50 border-t border-slate-200 flex items-center justify-between">
+        <button type="button" onclick="removeQuickRosterTag()" class="text-xs text-rose-600 hover:text-rose-700 font-bold px-2 py-1 cursor-pointer">✕ Clear Position</button>
+        <button type="button" onclick="closeQuickRosterTagModal()" class="px-3.5 py-1.5 rounded-xl bg-slate-200 hover:bg-slate-300 text-slate-700 font-bold text-xs cursor-pointer transition">Cancel</button>
+      </div>
     </div>
   </div>
 
@@ -3531,7 +3597,7 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
           <button onclick="openAddGameModal()" title="Add / Ingest New Game Film (YouTube, LiveBarn, Google Drive, Local File)" class="px-2 py-0.5 rounded-lg bg-tigersGold hover:bg-tigersGoldBright text-slate-950 font-black text-[10px] cursor-pointer transition shadow-2xs flex items-center gap-1 shrink-0 active:scale-95">
             <span>➕</span> <span class="hidden sm:inline">Add Game</span>
           </button>
-          <button id="header-replace-btn" onclick="openReplaceGameVideoModal()" title="Replace choppy live stream with clean camera recording (with timestamp re-alignment)" class="px-2 py-0.5 rounded-lg bg-slate-900 hover:bg-slate-800 text-sky-300 hover:text-white font-bold text-[10px] cursor-pointer transition shadow-2xs flex items-center gap-1 shrink-0 active:scale-95">
+          <button id="header-replace-btn" onclick="openReplaceGameVideoModal()" title="Replace game film with clean camera master or cloud recording (preserves all shift markers &amp; offsets)" class="px-2 py-0.5 rounded-lg bg-slate-900 hover:bg-slate-800 text-sky-300 hover:text-white font-bold text-[10px] cursor-pointer transition shadow-2xs flex items-center gap-1 shrink-0 active:scale-95">
             <span>🔄</span> <span class="hidden sm:inline">Replace Film</span>
           </button>
         </div>
@@ -3601,7 +3667,7 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
           <span>📅</span> <span>Schedule &amp; Link Videos</span>
         </button>
         <button onclick="openReplaceGameVideoModal()" class="px-2.5 py-1 rounded-xl bg-slate-800 hover:bg-slate-700 text-sky-300 font-bold text-[11px] cursor-pointer transition shadow-2xs flex items-center gap-1">
-          <span>🔄</span> <span>Replace Choppy Film</span>
+          <span>🔄</span> <span>Replace Film</span>
         </button>
         <button onclick="openRoleSwitchModal()" class="px-2.5 py-1 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 font-bold text-[11px] cursor-pointer transition shadow-2xs flex items-center gap-1">
           <span>👁️</span> <span>Preview Views (Coach / Parent)</span>
@@ -3747,8 +3813,23 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
               <span id="active-shift-overlay-text">Playing Shift</span>
             </div>
 
+            <!-- PERSISTENT TOP-RIGHT VIDEO LIVE SCOREBOARD OVERLAY (SYNCHRONIZED WITH DELAY OFFSET) -->
+            <div id="video-live-scoreboard-overlay" class="absolute top-3 right-3 z-30 bg-slate-950/85 backdrop-blur-md border border-slate-700/80 rounded-xl px-2.5 py-1 text-white font-mono shadow-2xl flex items-center gap-2 select-none pointer-events-none transition-opacity duration-200">
+              <span class="flex items-center gap-1">
+                <span class="w-2 h-2 rounded-full bg-rose-500 animate-pulse"></span>
+                <span class="text-[9px] font-black uppercase text-amber-400">TIG</span>
+                <span id="v-score-home" class="text-xs font-black text-white">2</span>
+                <span class="text-slate-500 text-[10px]">-</span>
+                <span id="v-score-away" class="text-xs font-black text-white">1</span>
+                <span class="text-[9px] font-bold text-slate-300">OPP</span>
+              </span>
+              <span class="text-slate-600">|</span>
+              <span id="v-period" class="text-[10px] font-bold text-amber-300">P2</span>
+              <span id="v-clock" class="text-xs font-black text-emerald-400 font-mono">09:54</span>
+            </div>
+
             <!-- Continuous Shift Reel (Hudl-Style) HUD Overlay -->
-            <div id="continuous-reel-hud" class="hidden absolute top-3 right-3 z-30 bg-slate-900/95 backdrop-blur-md border border-tigersGold text-white px-3 py-1.5 rounded-2xl text-[11px] font-bold flex items-center gap-2 shadow-xl animate-in fade-in duration-150">
+            <div id="continuous-reel-hud" class="hidden absolute top-12 right-3 z-30 bg-slate-900/95 backdrop-blur-md border border-tigersGold text-white px-3 py-1.5 rounded-2xl text-[11px] font-bold flex items-center gap-2 shadow-xl animate-in fade-in duration-150">
               <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
               <span id="reel-hud-text" class="text-tigersGold font-mono">Reel: Shift 1/12</span>
               <div class="flex items-center gap-1 border-l border-slate-700 pl-2">
@@ -5277,6 +5358,9 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
 
     function safeSet(k, v) { try { localStorage.setItem(k, v); } catch(e){} }
     function safeGet(k) { try { return localStorage.getItem(k); } catch(e){ return null; } }
+    function escapeHtml(str) {
+      return String(str || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+    }
 
     function togglePasswordVisibility() {
       const input = document.getElementById('passcode-input');
@@ -5766,6 +5850,7 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
       updateTrayBadges();
       renderOpponentScoutCard();
       renderInteractiveDepthChart();
+      renderLiveScoreboardHud();
       if (currentMode === 'film_tray') renderFilmTrayView();
       if (currentStage === 'whiteboard') renderRinkBackground();
       redrawCanvasLayers();
@@ -9178,8 +9263,11 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
 
         const lineup = resolveShiftLineup(c);
         const playerChips = lineup.skaters.map(sk => {
+          if (!sk.num) {
+            return `<button type="button" onclick="event.stopPropagation(); openQuickRosterTagModal('${shiftId}', '${sk.role}')" class="px-1.5 py-0.5 rounded text-[9px] font-bold bg-amber-50 hover:bg-amber-100 text-amber-800 border border-dashed border-amber-400 cursor-pointer transition flex items-center gap-0.5 shadow-2xs active:scale-95" title="Automated detection missed ${sk.role}. Click to manually tag player."><span>+ Tag ${sk.role}</span></button>`;
+          }
           const isSelected = String(sk.num) === String(currentJersey);
-          return `<span onclick="event.stopPropagation(); selectPlayer('${sk.num}')" title="Filter by #${sk.num} ${sk.name} (${sk.role})" class="px-1.5 py-0.5 rounded text-[9px] font-mono font-bold cursor-pointer transition ${isSelected ? 'bg-tigersGold text-slate-950 font-black ring-1 ring-slate-900' : 'bg-slate-100 text-slate-700 hover:bg-amber-100 border border-slate-300'}">#${sk.num} <span class="text-[8px] text-amber-700 font-sans">${sk.role}</span></span>`;
+          return `<span onclick="event.stopPropagation(); selectPlayer('${sk.num}')" ondblclick="event.stopPropagation(); openQuickRosterTagModal('${shiftId}', '${sk.role}')" title="Filter by #${sk.num} ${sk.name} (${sk.role}) • Double-click to re-assign position" class="px-1.5 py-0.5 rounded text-[9px] font-mono font-bold cursor-pointer transition ${isSelected ? 'bg-tigersGold text-slate-950 font-black ring-1 ring-slate-900' : 'bg-slate-100 text-slate-700 hover:bg-amber-100 border border-slate-300'}">#${sk.num} <span class="text-[8px] text-amber-700 font-sans">${sk.role}</span></span>`;
         }).join('');
 
         const leftAccent = isActive
@@ -9316,24 +9404,42 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
     };
 
     function resolveShiftLineup(shift) {
-      const rawIds = (shift?.player_ids || shift?.players || []).map(n => String(n));
+      const shiftId = shift?.shift_id ?? shift?.id ?? '1';
+      let manualOverride = null;
+      try {
+        const rawO = localStorage.getItem(`shift_override_${currentGame?.id || 'game'}_${shiftId}`);
+        if (rawO) manualOverride = JSON.parse(rawO);
+      } catch(e){}
+
+      let rawIds = (shift?.player_ids || shift?.players || []).map(n => String(n));
+      if (manualOverride && Array.isArray(manualOverride.player_ids)) {
+        rawIds = Array.from(new Set([...rawIds, ...manualOverride.player_ids.map(String)]));
+      }
+
       const goalieId = rawIds.find(id => ROSTER_POSITIONS[id]?.pos === 'G') || "13";
       const skaterPool = rawIds.filter(id => ROSTER_POSITIONS[id] && ROSTER_POSITIONS[id].pos !== 'G');
-
-      const fallbackOrder = ["9", "10", "7", "21", "28", "23", "11", "3", "27", "76", "18", "5", "16", "97", "88"];
-      fallbackOrder.forEach(fid => {
-        if (skaterPool.length < 5 && !skaterPool.includes(fid)) skaterPool.push(fid);
-      });
 
       const assigned = { C: null, LW: null, RW: null, LD: null, RD: null };
       const used = new Set();
 
-      const cid = shift?.center_id ? String(shift.center_id) : null;
-      if (cid && ROSTER_POSITIONS[cid] && ROSTER_POSITIONS[cid].pos !== 'G') {
+      // 1. Manual role overrides from coach/admin human-in-the-loop tagging
+      if (manualOverride && manualOverride.roles) {
+        Object.entries(manualOverride.roles).forEach(([r, pid]) => {
+          if (pid && ROSTER_POSITIONS[pid]) {
+            assigned[r] = String(pid);
+            used.add(String(pid));
+          }
+        });
+      }
+
+      // 2. Check center_id
+      const cid = (!assigned.C && manualOverride?.roles?.C) ? manualOverride.roles.C : (shift?.center_id ? String(shift.center_id) : null);
+      if (cid && ROSTER_POSITIONS[cid] && ROSTER_POSITIONS[cid].pos !== 'G' && !assigned.C) {
         assigned.C = cid;
         used.add(cid);
       }
 
+      // 3. Match natural positions for detected skaters
       skaterPool.forEach(id => {
         if (used.has(id)) return;
         const nat = NATURAL_ROLE_MAP[id];
@@ -9343,9 +9449,10 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
         }
       });
 
+      // 4. Assign remaining detected skaters to empty roles
       ['C', 'LW', 'RW', 'LD', 'RD'].forEach(role => {
         if (!assigned[role]) {
-          const nextId = skaterPool.find(id => !used.has(id)) || fallbackOrder.find(id => !used.has(id));
+          const nextId = skaterPool.find(id => !used.has(id));
           if (nextId) {
             assigned[role] = nextId;
             used.add(nextId);
@@ -9353,8 +9460,13 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
         }
       });
 
+      // DO NOT artificially pad with hardcoded fallback players!
+      // Roles with no detected skater remain null so the clickable [+ Tag ${role}] button renders.
       const skaters = ['C', 'LW', 'RW', 'LD', 'RD'].map(role => {
-        const num = assigned[role] || "9";
+        const num = assigned[role] || null;
+        if (!num) {
+          return { num: null, role, name: `Untagged ${role}`, surname: `Untagged` };
+        }
         const p = ROSTER_POSITIONS[num] || { name: `Player #${num}`, pos: role };
         const parts = p.name.split(' ');
         const surname = parts[parts.length - 1];
@@ -9366,6 +9478,127 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
         goalie: { num: goalieId, role: "G", name: gInfo.name, surname: gInfo.name.split(' ').pop() },
         skaters
       };
+    }
+
+    // =========================================================================
+    // HUMAN-IN-THE-LOOP QUICK ROSTER POSITION TAGGING MODAL CONTROLLER
+    // =========================================================================
+    let currentTaggingShiftId = null;
+    let currentTaggingRole = null;
+
+    function openQuickRosterTagModal(shiftId, role) {
+      currentTaggingShiftId = shiftId;
+      currentTaggingRole = role || 'C';
+
+      const modal = document.getElementById('quick-roster-tag-modal');
+      const roleBadge = document.getElementById('quick-roster-target-pos-badge');
+      const shiftText = document.getElementById('quick-roster-target-shift-text');
+      const grid = document.getElementById('quick-roster-picker-grid');
+
+      if (roleBadge) roleBadge.innerText = `Target Role: ${role || 'Skater'}`;
+      if (shiftText) shiftText.innerText = `Shift #${shiftId}`;
+
+      if (grid) {
+        grid.innerHTML = Object.entries(ROSTER_POSITIONS)
+          .filter(([num, p]) => p.pos !== 'G')
+          .map(([num, p]) => {
+            const isMatch = (p.pos === role || NATURAL_ROLE_MAP[num] === role);
+            return `
+              <button type="button" onclick="applyQuickRosterTag('${shiftId}', '${role}', '${num}')" class="p-2.5 rounded-xl border text-left transition flex items-center justify-between group cursor-pointer ${
+                isMatch ? 'bg-amber-50 hover:bg-amber-100 border-amber-300 ring-1 ring-amber-300' : 'bg-slate-50 hover:bg-slate-100 border-slate-200'
+              }">
+                <div class="min-w-0">
+                  <div class="font-black text-xs text-slate-900 group-hover:text-amber-900 truncate">#${num} ${escapeHtml(p.name)}</div>
+                  <div class="text-[10px] text-slate-500 font-mono">${p.pos} • ${p.hand || 'L'} shot ${p.tag ? '• ' + p.tag : ''}</div>
+                </div>
+                <span class="text-xs px-2 py-0.5 rounded font-bold ${isMatch ? 'bg-amber-400 text-slate-950' : 'bg-slate-200 text-slate-700'}">+</span>
+              </button>
+            `;
+          }).join('');
+      }
+
+      if (modal) {
+        modal.style.display = 'flex';
+        modal.classList.remove('hidden');
+      }
+    }
+
+    function closeQuickRosterTagModal() {
+      currentTaggingShiftId = null;
+      currentTaggingRole = null;
+      const modal = document.getElementById('quick-roster-tag-modal');
+      if (modal) {
+        modal.style.display = 'none';
+        modal.classList.add('hidden');
+      }
+    }
+
+    function applyQuickRosterTag(shiftId, role, playerNum) {
+      if (!shiftId || !playerNum || !currentGame) return;
+      const pInfo = ROSTER_POSITIONS[playerNum] || { name: `Player #${playerNum}` };
+
+      // 1. Update in-memory shift
+      const shiftList = currentGame.shifts || [];
+      const shiftObj = shiftList.find(s => String(s.shift_id ?? s.id) === String(shiftId));
+      if (shiftObj) {
+        if (!Array.isArray(shiftObj.player_ids)) shiftObj.player_ids = [];
+        if (!shiftObj.player_ids.map(String).includes(String(playerNum))) {
+          shiftObj.player_ids.push(Number(playerNum));
+        }
+        if (role === 'C') {
+          shiftObj.center_id = Number(playerNum);
+        }
+      }
+
+      // 2. Persist override to localStorage
+      try {
+        const key = `shift_override_${currentGame.id}_${shiftId}`;
+        const existing = JSON.parse(localStorage.getItem(key) || '{}');
+        if (!existing.roles) existing.roles = {};
+        existing.roles[role] = String(playerNum);
+        if (!Array.isArray(existing.player_ids)) existing.player_ids = [];
+        if (!existing.player_ids.map(String).includes(String(playerNum))) {
+          existing.player_ids.push(String(playerNum));
+        }
+        existing.updatedAt = new Date().toISOString();
+        localStorage.setItem(key, JSON.stringify(existing));
+      } catch(e){}
+
+      // 3. Save to Firestore if connected
+      if (window.db) {
+        try {
+          window.db.collection("games").doc(currentGame.id).collection("shift_overrides").doc(String(shiftId)).set({
+            role: role,
+            player_num: playerNum,
+            player_name: pInfo.name,
+            updated_at: firebase.firestore.FieldValue.serverTimestamp()
+          }, { merge: true }).catch(err => console.log("Shift override sync notice:", err));
+        } catch(e){}
+      }
+
+      closeQuickRosterTagModal();
+      loadCoachingClips();
+      if (typeof updatePlayerAnalyticsView === 'function') updatePlayerAnalyticsView();
+      showToast(`🏷️ Assigned #${playerNum} ${pInfo.name.split(' ').pop()} to ${role} on Shift #${shiftId}!`);
+    }
+
+    function removeQuickRosterTag() {
+      if (!currentTaggingShiftId || !currentTaggingRole || !currentGame) return;
+      const shiftId = currentTaggingShiftId;
+      const role = currentTaggingRole;
+
+      try {
+        const key = `shift_override_${currentGame.id}_${shiftId}`;
+        const existing = JSON.parse(localStorage.getItem(key) || '{}');
+        if (existing.roles && existing.roles[role]) {
+          delete existing.roles[role];
+          localStorage.setItem(key, JSON.stringify(existing));
+        }
+      } catch(e){}
+
+      closeQuickRosterTagModal();
+      loadCoachingClips();
+      showToast(`Position ${role} cleared for Shift #${shiftId}.`);
     }
 
     function setupTelestrator() {
@@ -11997,35 +12230,104 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
     }
 
     // =========================================================================
-    // IN-APP DIRECT GAME FILM UPLOADER ENGINE
+    // IN-APP DIRECT GAME FILM UPLOADER & WORKFLOW ENGINE
     // =========================================================================
 
     let newGameSourceMode = 'youtube';
-    let localVideoFileUrl = null;
     let targetLinkGameId = null;
+
+    function populateAddGameMatchDropdown(preselectId) {
+      const sel = document.getElementById('modal-newgame-match-select');
+      const customBox = document.getElementById('modal-newgame-custom-title-box');
+      if (!sel) return;
+
+      sel.innerHTML = '';
+
+      // Collect scheduled matchups from schedule hub
+      const upcoming = (typeof SCHEDULE_UPCOMING_MATCHUPS !== 'undefined') ? SCHEDULE_UPCOMING_MATCHUPS : [];
+      let foundCount = 0;
+
+      upcoming.forEach(m => {
+        // Only include if game doesn't already have linked film in library, or if it is preselected
+        const hasFilm = gamesLibrary.some(g => g.id === m.id && g.youtube_video_id && g.youtube_video_id !== 't7i7Z37fLw4');
+        const opt = document.createElement('option');
+        opt.value = m.id;
+        opt.innerText = `${m.title} — ${m.date || ''} (${m.arena ? m.arena.split('—')[0].trim() : 'Scheduled'})`;
+        if (preselectId && m.id === preselectId) {
+          opt.selected = true;
+        } else if (!preselectId && foundCount === 0 && !hasFilm) {
+          opt.selected = true;
+        }
+        sel.appendChild(opt);
+        foundCount++;
+      });
+
+      // Always include Custom / Non-Scheduled option
+      const customOpt = document.createElement('option');
+      customOpt.value = "custom";
+      customOpt.innerText = "➕ Custom / Non-Scheduled Match...";
+      if (preselectId === 'custom' || foundCount === 0) customOpt.selected = true;
+      sel.appendChild(customOpt);
+
+      onNewGameMatchSelect(sel.value);
+    }
+
+    function onNewGameMatchSelect(val) {
+      const customBox = document.getElementById('modal-newgame-custom-title-box');
+      const dateInput = document.getElementById('modal-newgame-date');
+      const arenaInput = document.getElementById('modal-newgame-arena');
+      const titleInput = document.getElementById('modal-newgame-title');
+
+      if (val === 'custom') {
+        if (customBox) customBox.classList.remove('hidden');
+        targetLinkGameId = null;
+        if (titleInput && !titleInput.value) titleInput.value = "Aurora Tigers Game Film";
+      } else {
+        if (customBox) customBox.classList.add('hidden');
+        targetLinkGameId = val;
+        const upcoming = (typeof SCHEDULE_UPCOMING_MATCHUPS !== 'undefined') ? SCHEDULE_UPCOMING_MATCHUPS : [];
+        const match = upcoming.find(m => m.id === val);
+        if (match) {
+          if (dateInput) dateInput.value = match.date || new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+          if (arenaInput) arenaInput.value = match.arena || "Aurora Community Centre";
+          if (titleInput) titleInput.value = match.title;
+        }
+      }
+    }
 
     function openAddGameModal() {
       targetLinkGameId = null;
       const modal = document.getElementById('add-game-modal');
       const headEl = document.getElementById('add-game-modal-header');
       const subEl = document.getElementById('add-game-modal-sub');
-      const titleInput = document.getElementById('modal-newgame-title');
-      const dateInput = document.getElementById('modal-newgame-date');
-      const arenaInput = document.getElementById('modal-newgame-arena');
       const ytInput = document.getElementById('modal-newgame-yt');
+      const driveInput = document.getElementById('modal-newgame-drive');
+      const submitText = document.getElementById('modal-newgame-submit-text');
+      const roleHint = document.getElementById('modal-newgame-role-hint');
 
       if (headEl) headEl.innerText = "Add New Game Film";
-      if (subEl) subEl.innerText = "Link LiveBarn footage, YouTube unlisted match, or pick local file";
+      if (subEl) subEl.innerText = "Link unlisted YouTube match, Google Drive, OneDrive, or Dropbox";
 
-      if (dateInput) {
-        dateInput.value = new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
-      }
-      if (arenaInput) arenaInput.value = "Aurora Community Centre";
-      if (titleInput) titleInput.value = "";
       if (ytInput) ytInput.value = "";
+      if (driveInput) driveInput.value = "";
 
+      // Configure role-based publishing vs review text
+      const canPublishDirect = (currentRole === 'coach' || currentRole === 'admin');
+      if (submitText) {
+        submitText.innerText = canPublishDirect ? "Save to Team Library" : "Submit Film to Coach for Review";
+      }
+      if (roleHint) {
+        roleHint.innerHTML = canPublishDirect
+          ? `<strong>🟢 Direct Publishing Active (${currentRole.toUpperCase()}):</strong> Saved film links publish immediately to the team library.`
+          : `<strong>🔒 Parent Review Workflow:</strong> Submitted links will be routed to Coach Scott for verification before appearing in the team library.`;
+      }
+
+      populateAddGameMatchDropdown();
       setNewGameSourceTab('youtube');
-      if (modal) modal.style.display = 'flex';
+      if (modal) {
+        modal.style.display = 'flex';
+        modal.classList.remove('hidden');
+      }
     }
 
     function openLinkVideoForScheduledGame(gameId) {
@@ -12037,21 +12339,28 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
       const modal = document.getElementById('add-game-modal');
       const headEl = document.getElementById('add-game-modal-header');
       const subEl = document.getElementById('add-game-modal-sub');
-      const titleInput = document.getElementById('modal-newgame-title');
-      const dateInput = document.getElementById('modal-newgame-date');
-      const arenaInput = document.getElementById('modal-newgame-arena');
       const ytInput = document.getElementById('modal-newgame-yt');
+      const driveInput = document.getElementById('modal-newgame-drive');
+      const submitText = document.getElementById('modal-newgame-submit-text');
+      const roleHint = document.getElementById('modal-newgame-role-hint');
 
-      if (headEl) headEl.innerText = "📹 Upload or Link Game Video";
-      if (subEl) subEl.innerText = match ? `Attach video to ${match.title || match.game_title}` : "Paste YouTube link, LiveBarn, or pick local camera MP4";
+      if (headEl) headEl.innerText = "📹 Attach Video to Scheduled Match";
+      if (subEl) subEl.innerText = match ? `Attach video link to ${match.title || match.game_title}` : "Paste unlisted YouTube link or cloud share URL";
 
-      if (match) {
-        if (titleInput) titleInput.value = match.title || match.game_title || "Game Film";
-        if (dateInput) dateInput.value = match.date || match.teamsnap?.date || new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
-        if (arenaInput) arenaInput.value = match.arena || match.teamsnap?.arena || "Aurora Community Centre";
-      }
       if (ytInput) ytInput.value = "";
+      if (driveInput) driveInput.value = "";
 
+      const canPublishDirect = (currentRole === 'coach' || currentRole === 'admin');
+      if (submitText) {
+        submitText.innerText = canPublishDirect ? "Save to Team Library" : "Submit Film to Coach for Review";
+      }
+      if (roleHint) {
+        roleHint.innerHTML = canPublishDirect
+          ? `<strong>🟢 Direct Publishing Active (${currentRole.toUpperCase()}):</strong> Video will be attached directly to this game.`
+          : `<strong>🔒 Parent Review Workflow:</strong> Submitted film will be routed to Coach Scott for verification.`;
+      }
+
+      populateAddGameMatchDropdown(gameId);
       setNewGameSourceTab('youtube');
       if (modal) {
         modal.style.display = 'flex';
@@ -12062,12 +12371,15 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
     function closeAddGameModal() {
       targetLinkGameId = null;
       const modal = document.getElementById('add-game-modal');
-      if (modal) modal.style.display = 'none';
+      if (modal) {
+        modal.style.display = 'none';
+        modal.classList.add('hidden');
+      }
     }
 
     function setNewGameSourceTab(tab) {
       newGameSourceMode = tab;
-      const tabs = ['youtube', 'drive', 'local'];
+      const tabs = ['youtube', 'drive'];
       tabs.forEach(t => {
         const btn = document.getElementById(`tab-source-${t === 'youtube' ? 'yt' : t}`);
         const panel = document.getElementById(`source-input-${t}`);
@@ -12080,28 +12392,21 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
       });
     }
 
-    function handleLocalVideoFileSelect(event) {
-      const file = event.target.files && event.target.files[0];
-      if (!file) return;
-      if (localVideoFileUrl) {
-        URL.revokeObjectURL(localVideoFileUrl);
-      }
-      localVideoFileUrl = URL.createObjectURL(file);
-      const titleInput = document.getElementById('modal-newgame-title');
-      if (titleInput && !titleInput.value) {
-        titleInput.value = file.name.replace(/\.[^/.]+$/, "");
-      }
-      showToast(`📁 Local video selected: ${file.name}`);
-    }
-
     function saveNewGameToLibrary() {
+      const matchSel = document.getElementById('modal-newgame-match-select');
       const titleInput = document.getElementById('modal-newgame-title');
       const dateInput = document.getElementById('modal-newgame-date');
       const arenaInput = document.getElementById('modal-newgame-arena');
       const ytInput = document.getElementById('modal-newgame-yt');
       const driveInput = document.getElementById('modal-newgame-drive');
 
-      const title = titleInput?.value.trim() || "Aurora Tigers Game Film";
+      let title = titleInput?.value.trim() || "";
+      if ((!title || matchSel?.value !== 'custom') && matchSel?.selectedIndex >= 0) {
+        const selText = matchSel.options[matchSel.selectedIndex].text;
+        title = selText.split('—')[0].trim();
+      }
+      if (!title) title = "Aurora Tigers Game Film";
+
       const date = dateInput?.value.trim() || new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
       const arena = arenaInput?.value.trim() || "Aurora Community Centre";
 
@@ -12120,12 +12425,53 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
       } else if (newGameSourceMode === 'drive') {
         videoId = driveInput?.value.trim() || "cloud_drive";
         customType = "drive";
-      } else if (newGameSourceMode === 'local') {
-        videoId = localVideoFileUrl || "local_file";
-        customType = "local";
       }
 
       const gameIdToUse = targetLinkGameId || ("game_custom_" + Date.now());
+
+      // =========================================================================
+      // ROLE-BASED WORKFLOW: DIRECT PUBLISH (Coach/Admin) vs REVIEW (Parent/Player)
+      // =========================================================================
+      const isPrivileged = (currentRole === 'coach' || currentRole === 'admin');
+
+      if (!isPrivileged) {
+        // Route to Parent Submission Review Queue
+        const submission = {
+          id: 'sub_' + Date.now(),
+          targetGameId: gameIdToUse,
+          title: title,
+          date: date,
+          arena: arena,
+          videoId: videoId,
+          sourceType: customType,
+          submittedBy: currentRole,
+          submittedAt: new Date().toLocaleString(),
+          status: 'pending_coach_review'
+        };
+
+        try {
+          const key = 'tigers_pending_film_reviews';
+          const list = JSON.parse(localStorage.getItem(key) || '[]');
+          list.unshift(submission);
+          localStorage.setItem(key, JSON.stringify(list));
+        } catch(e){}
+
+        if (window.db) {
+          window.db.collection("film_submissions").add({
+            ...submission,
+            serverTimestamp: firebase.firestore.FieldValue.serverTimestamp()
+          }).catch(err => console.log("Cloud submission notice:", err));
+        }
+
+        closeAddGameModal();
+        alert(`📹 Video link submitted to Coach Scott for review!\n\nMatch: ${title}\nSource: ${customType.toUpperCase()} (${videoId})\n\nOnce the coaching staff verifies the footage and timestamps, it will be published to the active game film library.`);
+        showToast("📹 Submitted to Coach Scott for review!");
+        return;
+      }
+
+      // =========================================================================
+      // COACH / ADMIN DIRECT PUBLISHING
+      // =========================================================================
 
       // 1. If linking to a scheduled game in upcoming list, update it
       const schedMatch = (typeof SCHEDULE_UPCOMING_MATCHUPS !== 'undefined') ? SCHEDULE_UPCOMING_MATCHUPS.find(g => g.id === gameIdToUse) : null;
@@ -12497,10 +12843,22 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
     let onboardingRosterState = [];
 
     function openTeamOnboardingModal() {
+      // Admin PIN protection barrier
+      if (currentRole !== 'admin') {
+        const pin = prompt("🔒 Administrator PIN Required:\nPlease enter the Team Admin PIN to access team configuration, integrations, and roster settings:");
+        if (!pin) return;
+        const clean = String(pin).toLowerCase().replace(/[^a-z0-9]/g, '');
+        if (!["admintigers", "admin", "administrator", "scott", "adminpass", "scottadmin"].includes(clean)) {
+          alert("❌ Access Denied: Invalid Administrator PIN.");
+          return;
+        }
+        applyUserRole('admin', true);
+      }
+
       const modal = document.getElementById('admin-onboarding-modal');
       if (!modal) return;
       loadTeamConfigurationIntoForm();
-      setOnboardingTab('general');
+      setOnboardingTab('profile');
       modal.style.display = 'flex';
       modal.classList.remove('hidden');
     }
@@ -12515,14 +12873,14 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
 
     function setOnboardingTab(tab) {
       currentOnboardingTab = tab;
-      const tabs = ['general', 'integrations', 'roster'];
+      const tabs = ['profile', 'links', 'roster'];
       tabs.forEach(t => {
         const btn = document.getElementById(`onboard-tab-${t}`);
-        const sec = document.getElementById(`onboard-sec-${t}`);
+        const sec = document.getElementById(`onboard-panel-${t}`);
         if (btn) {
           btn.className = (t === tab)
-            ? "px-3.5 py-1.5 rounded-xl bg-tigersGold text-slate-950 font-black cursor-pointer shadow-xs"
-            : "px-3.5 py-1.5 rounded-xl bg-slate-800 text-slate-300 hover:text-white font-bold cursor-pointer transition";
+            ? "flex-1 py-1.5 px-3 rounded-xl bg-slate-900 text-tigersGold shadow-2xs transition font-bold"
+            : "flex-1 py-1.5 px-3 rounded-xl bg-white text-slate-700 hover:bg-slate-200 border border-slate-300 transition font-bold";
         }
         if (sec) {
           sec.classList.toggle('hidden', t !== tab);
@@ -12684,41 +13042,45 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
     }
 
     function renderOnboardingRosterRows() {
-      const tbody = document.getElementById('onboarding-roster-tbody');
-      const countBadge = document.getElementById('onboarding-roster-count');
-      if (!tbody) return;
+      const container = document.getElementById('onboard-roster-rows');
+      const countBadge = document.getElementById('onboard-roster-count');
+      if (!container) return;
 
-      if (countBadge) countBadge.innerText = `${onboardingRosterState.length} Players`;
+      if (countBadge) countBadge.innerText = `${onboardingRosterState.length}`;
 
-      tbody.innerHTML = onboardingRosterState.map((p, idx) => `
-        <tr class="hover:bg-slate-800/50 transition">
-          <td class="p-2">
-            <input type="number" value="${p.num}" onchange="updateRosterRow(${idx}, 'num', this.value)" class="w-16 bg-slate-950 border border-slate-700 rounded-lg px-2 py-1 text-center font-mono font-bold text-amber-300">
-          </td>
-          <td class="p-2">
-            <input type="text" value="${p.name}" onchange="updateRosterRow(${idx}, 'name', this.value)" class="w-full bg-slate-950 border border-slate-700 rounded-lg px-2 py-1 font-bold text-white">
-          </td>
-          <td class="p-2">
-            <select onchange="updateRosterRow(${idx}, 'pos', this.value)" class="bg-slate-950 border border-slate-700 rounded-lg px-2 py-1 text-slate-200 font-bold">
+      container.innerHTML = onboardingRosterState.map((p, idx) => `
+        <div class="flex items-center gap-2 p-2 rounded-xl bg-slate-50 border border-slate-200 hover:border-slate-300 transition text-xs">
+          <div class="w-14 shrink-0">
+            <label class="block text-[8px] font-bold text-slate-500 uppercase">Jersey</label>
+            <input type="text" value="${escapeHtml(p.num)}" onchange="updateRosterRow(${idx}, 'num', this.value)" class="w-full bg-white border border-slate-300 rounded-lg px-2 py-1 text-center font-mono font-bold text-slate-900 focus:outline-none focus:border-tigersGold" />
+          </div>
+          <div class="flex-1 min-w-0">
+            <label class="block text-[8px] font-bold text-slate-500 uppercase">Player Name</label>
+            <input type="text" value="${escapeHtml(p.name)}" onchange="updateRosterRow(${idx}, 'name', this.value)" class="w-full bg-white border border-slate-300 rounded-lg px-2 py-1 font-bold text-slate-900 focus:outline-none focus:border-tigersGold truncate" />
+          </div>
+          <div class="w-24 shrink-0">
+            <label class="block text-[8px] font-bold text-slate-500 uppercase">Pos</label>
+            <select onchange="updateRosterRow(${idx}, 'pos', this.value)" class="w-full bg-white border border-slate-300 rounded-lg px-1.5 py-1 text-slate-900 font-bold focus:outline-none focus:border-tigersGold cursor-pointer">
               <option value="C" ${p.pos === 'C' ? 'selected' : ''}>C (Center)</option>
               <option value="LW" ${p.pos === 'LW' ? 'selected' : ''}>LW (Left Wing)</option>
               <option value="RW" ${p.pos === 'RW' ? 'selected' : ''}>RW (Right Wing)</option>
-              <option value="LD" ${p.pos === 'LD' ? 'selected' : ''}>LD (Left Defense)</option>
-              <option value="RD" ${p.pos === 'RD' ? 'selected' : ''}>RD (Right Defense)</option>
+              <option value="LD" ${p.pos === 'LD' ? 'selected' : ''}>LD (Left Def)</option>
+              <option value="RD" ${p.pos === 'RD' ? 'selected' : ''}>RD (Right Def)</option>
               <option value="D" ${p.pos === 'D' ? 'selected' : ''}>D (Defense)</option>
-              <option value="G" ${p.pos === 'G' ? 'selected' : ''}>G (Goaltender)</option>
+              <option value="G" ${p.pos === 'G' ? 'selected' : ''}>G (Goalie)</option>
             </select>
-          </td>
-          <td class="p-2">
-            <select onchange="updateRosterRow(${idx}, 'hand', this.value)" class="bg-slate-950 border border-slate-700 rounded-lg px-2 py-1 text-slate-200 font-bold">
+          </div>
+          <div class="w-16 shrink-0">
+            <label class="block text-[8px] font-bold text-slate-500 uppercase">Shot</label>
+            <select onchange="updateRosterRow(${idx}, 'hand', this.value)" class="w-full bg-white border border-slate-300 rounded-lg px-1.5 py-1 text-slate-900 font-bold focus:outline-none focus:border-tigersGold cursor-pointer">
               <option value="L" ${p.hand === 'L' ? 'selected' : ''}>L (Left)</option>
               <option value="R" ${p.hand === 'R' ? 'selected' : ''}>R (Right)</option>
             </select>
-          </td>
-          <td class="p-2 text-right">
-            <button onclick="removeRosterRow(${idx})" class="p-1.5 hover:bg-rose-500/20 text-rose-400 hover:text-rose-300 rounded-lg cursor-pointer transition">✕</button>
-          </td>
-        </tr>
+          </div>
+          <div class="pt-3 shrink-0">
+            <button type="button" onclick="removeRosterRow(${idx})" title="Remove player from roster" class="w-7 h-7 rounded-lg bg-rose-50 hover:bg-rose-100 text-rose-600 font-bold flex items-center justify-center cursor-pointer transition">✕</button>
+          </div>
+        </div>
       `).join('');
     }
 
@@ -12745,10 +13107,14 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
     }
 
     function importRosterFromPaste() {
-      const pasteText = prompt(
-        "Paste Roster (Lines with: Jersey# Name Position Hand e.g.\n23 Easton Carpentier C L\n13 Matthew Hart G L):",
-        ""
-      );
+      const textarea = document.getElementById('cfg-roster-paste');
+      let pasteText = textarea ? textarea.value.trim() : "";
+      if (!pasteText) {
+        pasteText = prompt(
+          "Paste Roster (Lines with: Jersey# Name Position Hand e.g.\n23 Easton Carpentier C L\n13 Matthew Hart G L):",
+          ""
+        );
+      }
       if (!pasteText) return;
 
       const lines = pasteText.split('\n');
@@ -12772,7 +13138,7 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
       if (imported.length > 0) {
         onboardingRosterState = imported;
         renderOnboardingRosterRows();
-        showToast(`📋 Imported ${imported.length} players from paste!`);
+        showToast(`📋 Loaded ${imported.length} players into roster editor!`);
       } else {
         alert("Could not parse roster lines. Format example:\n23 Easton Carpentier C L");
       }
@@ -13904,6 +14270,7 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
       const valEl = document.getElementById('xbot-latency-val');
       if (valEl) valEl.innerText = `${streamLatencyOffsetSec.toFixed(1)}s`;
       addXbotRelayLog(`[LATENCY] Broadcast delay offset calibrated to ${streamLatencyOffsetSec.toFixed(1)}s buffer.`, 'text-amber-300');
+      renderLiveScoreboardHud();
     }
 
     function toggleWhistleDetector() {
@@ -14051,9 +14418,22 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
       const cSogH = document.getElementById('live-center-sog-home');
       const cSogA = document.getElementById('live-center-sog-away');
 
+      // Top-right persistent video overlay
+      const vHome = document.getElementById('v-score-home');
+      const vAway = document.getElementById('v-score-away');
+      const vPeriod = document.getElementById('v-period');
+      const vClock = document.getElementById('v-clock');
+
       const min = Math.floor(liveGameSheetState.clockSec / 60);
       const sec = liveGameSheetState.clockSec % 60;
       const clockStr = `${min}:${sec.toString().padStart(2, '0')}`;
+
+      // In-stream synchronized delay: YouTube live stream lags real-time GameSheet timeline
+      // Compensate for designated stream delay offset (so clock shows time matching lagging video frame)
+      const streamDelayedClockSec = Math.max(0, liveGameSheetState.clockSec + Math.round(streamLatencyOffsetSec));
+      const vMin = Math.floor(streamDelayedClockSec / 60);
+      const vSec = streamDelayedClockSec % 60;
+      const vClockStr = `${vMin}:${vSec.toString().padStart(2, '0')}`;
 
       if (hScore) hScore.innerText = liveGameSheetState.homeScore;
       if (aScore) aScore.innerText = liveGameSheetState.awayScore;
@@ -14068,6 +14448,12 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
       if (cClock) cClock.innerText = clockStr;
       if (cSogH) cSogH.innerText = liveGameSheetState.sogHome;
       if (cSogA) cSogA.innerText = liveGameSheetState.sogAway;
+
+      // Update persistent in-player overlay
+      if (vHome) vHome.innerText = liveGameSheetState.homeScore;
+      if (vAway) vAway.innerText = liveGameSheetState.awayScore;
+      if (vPeriod) vPeriod.innerText = `P${liveGameSheetState.period}`;
+      if (vClock) vClock.innerText = vClockStr;
     }
 
     function openLiveGameCenterModal() {
@@ -15490,7 +15876,7 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
       if (zeroChk) zeroChk.checked = false;
 
       clearReplaceLocalFile();
-      setReplaceVideoTab('drop');
+      setReplaceVideoTab('youtube');
       calculateReplaceTimeOffset();
 
       modal.style.display = 'flex';
@@ -15507,24 +15893,17 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
 
     function setReplaceVideoTab(tab) {
       replaceVideoState.mode = tab;
-      const dropTab = document.getElementById('tab-replace-drop');
-      const ytTab = document.getElementById('tab-replace-youtube');
-      const dropPanel = document.getElementById('replace-panel-drop');
-      const ytPanel = document.getElementById('replace-panel-youtube');
-
-      if (dropTab && ytTab) {
-        if (tab === 'drop') {
-          dropTab.className = "flex-1 py-1.5 px-3 rounded-lg bg-sky-600 text-white font-bold text-xs shadow-2xs transition cursor-pointer";
-          ytTab.className = "flex-1 py-1.5 px-3 rounded-lg text-slate-400 hover:text-white font-bold text-xs transition cursor-pointer";
-          if (dropPanel) dropPanel.classList.remove('hidden');
-          if (ytPanel) ytPanel.classList.add('hidden');
-        } else {
-          ytTab.className = "flex-1 py-1.5 px-3 rounded-lg bg-sky-600 text-white font-bold text-xs shadow-2xs transition cursor-pointer";
-          dropTab.className = "flex-1 py-1.5 px-3 rounded-lg text-slate-400 hover:text-white font-bold text-xs transition cursor-pointer";
-          if (ytPanel) ytPanel.classList.remove('hidden');
-          if (dropPanel) dropPanel.classList.add('hidden');
+      const tabs = ['youtube', 'cloud', 'drop'];
+      tabs.forEach(t => {
+        const btn = document.getElementById(`tab-replace-${t}`);
+        const panel = document.getElementById(`replace-panel-${t}`);
+        if (btn) {
+          btn.className = (t === tab)
+            ? "flex-1 py-1.5 px-2 rounded-lg bg-sky-600 text-white font-bold text-xs shadow-2xs transition cursor-pointer"
+            : "flex-1 py-1.5 px-2 rounded-lg text-slate-400 hover:text-white font-bold text-xs transition cursor-pointer";
         }
-      }
+        if (panel) panel.classList.toggle('hidden', t !== tab);
+      });
     }
 
     function handleReplaceDragOver(e) {
@@ -15643,6 +16022,15 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
         }
         newVideoId = replaceVideoState.blobUrl;
         newSourceType = "local";
+      } else if (replaceVideoState.mode === 'cloud') {
+        const cloudInput = document.getElementById('replace-cloud-url-input');
+        const raw = cloudInput?.value.trim() || "";
+        if (!raw) {
+          alert("Please enter a valid Google Drive, Dropbox, or OneDrive share link.");
+          return;
+        }
+        newVideoId = raw;
+        newSourceType = "drive";
       } else {
         const ytInput = document.getElementById('replace-youtube-url-input');
         const raw = ytInput?.value.trim() || "";
