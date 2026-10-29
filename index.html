@@ -124,6 +124,61 @@
     color: var(--text-main) !important;
   }
 
+  /* High-Contrast Black Text on Primary Tigers Gold Buttons & Badges */
+  .bg-tigersGold,
+  .bg-tigersGoldBright,
+  .bg-amber-400,
+  .bg-amber-500 {
+    color: var(--text-on-primary) !important;
+  }
+
+  /* Standardize All Pastel Light-Mode Surfaces into Cohesive Dark Panels */
+  .bg-slate-200,
+  .bg-amber-50, .bg-amber-50\/50, .bg-amber-50\/70, .bg-amber-100, .bg-amber-200,
+  .bg-emerald-50, .bg-emerald-50\/50, .bg-emerald-100, .bg-emerald-200,
+  .bg-rose-50, .bg-rose-100, .bg-rose-200,
+  .bg-sky-50, .bg-sky-100,
+  .bg-indigo-50, .bg-indigo-50\/50, .bg-indigo-100, .bg-indigo-200,
+  .bg-blue-50, .bg-purple-100 {
+    background-color: var(--bg-surface) !important;
+    border-color: var(--border-color) !important;
+    color: var(--text-main) !important;
+  }
+
+  /* Standardize Dark Pastel Typography to Clean High-Contrast Readability */
+  .text-amber-700, .text-amber-800, .text-amber-900, .text-amber-950 {
+    color: var(--primary-team-color) !important;
+  }
+  .text-emerald-700, .text-emerald-800, .text-emerald-900, .text-emerald-950 {
+    color: #34d399 !important;
+  }
+  .text-rose-700, .text-rose-800, .text-rose-900, .text-rose-950 {
+    color: #f87171 !important;
+  }
+  .text-sky-700, .text-sky-800, .text-sky-900, .text-sky-950,
+  .text-indigo-700, .text-indigo-800, .text-indigo-900, .text-indigo-950,
+  .text-blue-800 {
+    color: var(--text-main) !important;
+  }
+
+  /* Unify Rainbow Action Buttons (Indigo/Purple/Sky) into Pro Dark Carbon & Gold */
+  .bg-indigo-600, .bg-indigo-500, .bg-purple-600, .bg-sky-600, .bg-sky-500 {
+    background-color: var(--bg-surface) !important;
+    color: var(--text-main) !important;
+    border: 1px solid var(--border-color) !important;
+  }
+  .bg-indigo-600:hover, .bg-indigo-500:hover, .bg-purple-600:hover, .bg-sky-600:hover, .bg-sky-500:hover {
+    background-color: var(--bg-panel) !important;
+    border-color: var(--primary-team-color) !important;
+    color: var(--primary-team-color) !important;
+  }
+
+  /* Standardize Multi-Color Gradients to Clean Pro Dark Surface */
+  .bg-gradient-to-r, .bg-gradient-to-br {
+    background-image: none !important;
+    background-color: var(--bg-panel) !important;
+  }
+
   .text-slate-600,
   .text-slate-500 {
     color: var(--text-muted) !important;
@@ -4397,43 +4452,40 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
                   </button>
                 </div>
 
-                <button id="playbook-toggle-btn" onclick="toggleDrawer('playbook')" class="px-2.5 py-1 rounded-lg bg-slate-800 hover:bg-slate-700 text-sky-400 border border-slate-700 font-bold cursor-pointer transition text-[11px]">
-                  📐 Systems
-                </button>
-                <button id="draw-toggle-btn" onclick="toggleDrawer('draw')" class="px-2.5 py-1 rounded-lg bg-slate-800 hover:bg-slate-700 text-amber-400 border border-slate-700 font-bold cursor-pointer transition text-[11px]">
-                  🎨 Draw
-                </button>
-                <button id="flag-clip-btn" onclick="openSaveToTrayModal()" title="Flag current play as favorite into a coaching folder or film tray" class="px-2.5 py-1 rounded-lg bg-amber-500 hover:bg-amber-400 text-slate-950 font-black cursor-pointer transition text-[11px] flex items-center gap-1 shadow-xs">
+                <button id="flag-clip-btn" onclick="openSaveToTrayModal()" title="Flag current play as favorite into a coaching folder or film tray" class="px-2.5 py-1 bg-tigersGold hover:bg-tigersGoldBright text-slate-950 font-black cursor-pointer transition text-[11px] flex items-center gap-1">
                   <span>⭐</span> <span>Flag Clip</span>
                 </button>
-                <button id="tag-player-btn" onclick="openTagPlayerModal()" title="Collaboratively tag a player or add a missing shift" class="px-2.5 py-1 rounded-lg bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-black cursor-pointer transition text-[11px] flex items-center gap-1 shadow-xs">
+                <button id="tag-player-btn" onclick="openTagPlayerModal()" title="Collaboratively tag a player or add a missing shift" class="btn-sharp">
                   <span>🏷️</span> <span>Tag Shift</span>
                 </button>
-                <button id="passport-quick-btn" onclick="openPlayerPassportModal(currentJersey === 'all' ? '23' : currentJersey)" title="View Player Passport & Career Archive" class="px-2.5 py-1 rounded-lg bg-indigo-600 hover:bg-indigo-500 text-white font-black cursor-pointer transition text-[11px] flex items-center gap-1 shadow-xs">
-                  <span>🪪</span> <span>Passport</span>
+                <button id="playbook-toggle-btn" onclick="toggleDrawer('playbook')" class="btn-sharp">
+                  <span>📐</span> <span>Systems</span>
                 </button>
-                <button id="teamsnap-recap-btn" onclick="openTeamSnapRecapModal()" title="1-Click Official GameSheet Match Recap &amp; Highlights" class="px-2.5 py-1 rounded-lg bg-sky-500 hover:bg-sky-400 text-slate-950 font-black cursor-pointer transition text-[11px] flex items-center gap-1 shadow-xs">
-                  <span>📋</span> <span>Game Recap</span>
+                <button id="draw-toggle-btn" onclick="toggleDrawer('draw')" class="btn-sharp">
+                  <span>🎨</span> <span>Draw</span>
                 </button>
-                <button id="gamesheet-align-btn" onclick="openGameSheetModal()" title="1-Click Auto-Align Clean Falcon Video with Official GameSheet Boxscore (No PIN required)" class="px-2.5 py-1 rounded-lg bg-amber-400 hover:bg-amber-300 text-slate-950 font-black cursor-pointer transition text-[11px] flex items-center gap-1 shadow-xs">
+                <button id="gamesheet-align-btn" onclick="openGameSheetModal()" title="1-Click Auto-Align Clean Falcon Video with Official GameSheet Boxscore" class="btn-sharp">
                   <span>⚡</span> <span>Align GameSheet</span>
                 </button>
-                <button id="xbot-bridge-btn" onclick="openXbotBridgeModal()" title="XbotGo Falcon ScoreSync Live Bridge: GameSheet referee iPad auto-drives Falcon scoreboard" class="px-2.5 py-1 rounded-lg bg-rose-600 hover:bg-rose-500 text-white font-black cursor-pointer transition text-[11px] flex items-center gap-1 shadow-xs">
+                <button id="xbot-bridge-btn" onclick="openXbotBridgeModal()" title="XbotGo Falcon ScoreSync Live Bridge" class="btn-sharp">
                   <span>📹</span> <span>Xbot Bridge</span>
                 </button>
-                <button id="live-shift-logger-btn" onclick="openLiveShiftLoggerModal()" title="Bench / Stands 1-Touch Live Shift Logger" class="px-2.5 py-1 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-slate-950 font-black cursor-pointer transition text-[11px] flex items-center gap-1 shadow-xs">
+                <button id="live-shift-logger-btn" onclick="openLiveShiftLoggerModal()" title="Bench / Stands 1-Touch Live Shift Logger" class="btn-sharp">
                   <span>⏱️</span> <span>Live Log</span>
                 </button>
-                <button id="player-vs-pro-btn" onclick="openPlayerVsProModal()" title="Side-by-Side Player vs. Pro Video Breakdown" class="px-2.5 py-1 rounded-lg bg-purple-600 hover:bg-purple-500 text-white font-black cursor-pointer transition text-[11px] flex items-center gap-1 shadow-xs">
+                <button id="teamsnap-recap-btn" onclick="openTeamSnapRecapModal()" title="1-Click Official GameSheet Match Recap &amp; Highlights" class="btn-sharp">
+                  <span>📋</span> <span>Game Recap</span>
+                </button>
+                <button id="player-vs-pro-btn" onclick="openPlayerVsProModal()" title="Side-by-Side Player vs. Pro Video Breakdown" class="btn-sharp">
                   <span>🆚</span> <span>Pro Compare</span>
                 </button>
-                <button id="player-huddle-btn" onclick="openPlayerHuddleModal(currentJersey === 'all' ? '23' : currentJersey)" title="1-on-1 Film Huddle & Pre-Practice Meeting Room" class="px-2.5 py-1 rounded-lg bg-amber-500 hover:bg-amber-400 text-slate-950 font-black cursor-pointer transition text-[11px] flex items-center gap-1 shadow-xs">
+                <button id="player-huddle-btn" onclick="openPlayerHuddleModal(currentJersey === 'all' ? '23' : currentJersey)" title="1-on-1 Film Huddle & Pre-Practice Meeting Room" class="btn-sharp">
                   <span>👥</span> <span>1:1 Huddle</span>
                 </button>
-                <button id="practice-drills-btn" onclick="openPracticeDrillsModal()" title="AI Practice Drill Cards (Game Weakness ➔ Practice Drill)" class="px-2.5 py-1 rounded-lg bg-sky-500 hover:bg-sky-400 text-slate-950 font-black cursor-pointer transition text-[11px] flex items-center gap-1 shadow-xs">
-                  <span>📋</span> <span>Drills</span>
+                <button id="practice-drills-btn" onclick="openPracticeDrillsModal()" title="AI Practice Drill Cards" class="btn-sharp">
+                  <span>🏒</span> <span>Drills</span>
                 </button>
-                <button id="tv-mode-btn" onclick="toggleTvPresentationMode()" title="Locker Room TV / Projector Fullscreen HDMI Mode" class="px-2.5 py-1 rounded-lg bg-indigo-600 hover:bg-indigo-500 text-white font-black cursor-pointer transition text-[11px] flex items-center gap-1 shadow-xs">
+                <button id="tv-mode-btn" onclick="toggleTvPresentationMode()" title="Locker Room TV / Projector Fullscreen HDMI Mode" class="btn-sharp">
                   <span>📺</span> <span>TV Mode</span>
                 </button>
                 <button id="link-part2-btn" onclick="openLinkPart2Modal()" title="Link Part 2 Video (for split LiveBarn / phone recordings)" class="px-2.5 py-1 rounded-lg bg-slate-800 hover:bg-slate-700 text-sky-300 hover:text-white border border-slate-700 font-bold cursor-pointer transition text-[11px] flex items-center gap-1 shadow-xs">
@@ -8496,6 +8548,21 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
     }
 
     function switchViewMode(mode) {
+      if (typeof isLiveBroadcastActive !== 'undefined' && isLiveBroadcastActive) {
+        isLiveBroadcastActive = false;
+        const sideLiveHeader = document.getElementById('sidebar-live-header');
+        const sideNavTabs = document.getElementById('sidebar-nav-tabs');
+        const sideLiveSection = document.getElementById('live-sidebar-section');
+        const offlinePlaceholder = document.getElementById('live-offline-placeholder');
+        if (sideLiveHeader) sideLiveHeader.classList.add('hidden');
+        if (sideNavTabs) sideNavTabs.classList.remove('hidden');
+        if (sideLiveSection) sideLiveSection.classList.add('hidden');
+        if (offlinePlaceholder) offlinePlaceholder.classList.add('hidden');
+        if (typeof liveHudTimer !== 'undefined' && liveHudTimer) {
+          clearInterval(liveHudTimer);
+          liveHudTimer = null;
+        }
+      }
       if (typeof updateFunctionalNavActiveState === 'function') updateFunctionalNavActiveState(mode);
       currentMode = mode;
 
@@ -14711,36 +14778,42 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
     // =========================================================================
 
     const PRO_REFERENCE_PRESETS = {
-      mcdavid_edge: {
-        title: "Connor McDavid — Linear Crossovers & Neutral Zone Speed",
-        playerCategory: "Skating & Transition",
-        videoUrl: "https://www.youtube.com/embed/5aLh7tL7GkI?enablejsapi=1&autoplay=0",
-        notes: "Observe McDavid's 10-2 crossover stride cadence. Knees are deep at a 90-degree bend, upper body quiet, accelerating through each crossover push under the stride foot."
+      makar_gap: {
+        name: "Cale Makar (Colorado Avalanche)",
+        title: "Cale Makar — Gap Control & Blue-Line Mobility",
+        videoUrl: "https://www.youtube.com/embed/6qj8oV5B5Xg?enablejsapi=1&autoplay=0",
+        notes: "<strong>Pro Benchmark:</strong> Makar absorbs pressure with a quick shoulder check, presents flat tape, and opens his hips with mohawk pivots to keep square to the play."
       },
-      makar_blueline: {
-        title: "Cale Makar — Lateral Blue-Line Walking & Shot Lane Creation",
-        playerCategory: "Defense & Blue Line",
+      mcdavid_exit: {
+        name: "Connor McDavid (Edmonton Oilers)",
+        title: "Connor McDavid — Rim Exit & Linear Crossovers",
+        videoUrl: "https://www.youtube.com/embed/5aLh7tL7GkI?enablejsapi=1&autoplay=0",
+        notes: "<strong>Pro Benchmark:</strong> Observe McDavid's 10-2 crossover stride cadence collecting the rimmed puck—knees deep at 90 degrees, accelerating through each crossover push."
+      },
+      barkov_house: {
+        name: "Aleksander Barkov (Florida Panthers)",
+        title: "Aleksander Barkov — D-Zone House & Stick Detail",
         videoUrl: "https://www.youtube.com/embed/n4K_zTq1p34?enablejsapi=1&autoplay=0",
-        notes: "Notice Makar's head up and active hip mobility. He never crosses his feet flat-footed; instead, he opens up with mohawk pivots to keep hips square to the net while creating shooting seams."
+        notes: "<strong>Pro Benchmark:</strong> Barkov protects the low-slot house with stick-on-puck angles, sealing passing seams before transitioning immediately to offense."
       },
       matthews_release: {
-        title: "Auston Matthews — Changing Angle Snap Release",
-        playerCategory: "Shooting & Scoring",
+        name: "Auston Matthews (Toronto Maple Leafs)",
+        title: "Auston Matthews — 1-3-1 Slot & Toe-Drag Release",
         videoUrl: "https://www.youtube.com/embed/xLw72bQ5XoA?enablejsapi=1&autoplay=0",
-        notes: "Matthews changes the release angle by pulling the puck 4-6 inches toward his feet right before releasing. He utilizes the stick flex and shoots through defender triangle sticks."
-      },
-      shesterkin_rvh: {
-        title: "Igor Shesterkin — Reverse-VH (RVH) Post Seal & Rebound Control",
-        playerCategory: "Goaltending",
-        videoUrl: "https://www.youtube.com/embed/w7cQe7fLzO0?enablejsapi=1&autoplay=0",
-        notes: "Shesterkin seals the short-side post with skate toe-bridge pinned to post, pad flush on ice, blocker/glove sealing the post gap. Zero daylight on low-angle wrap attempts."
+        notes: "<strong>Pro Benchmark:</strong> Matthews changes the release angle by pulling the puck 4–6 inches toward his feet right before releasing through the defender's triangle."
       }
     };
 
     function openPlayerVsProModal() {
       const modal = document.getElementById('player-vs-pro-modal');
       if (!modal) return;
-      changeProReferencePreset('mcdavid_edge');
+      const tigersIframe = document.getElementById('pro-compare-tigers-iframe');
+      if (tigersIframe && currentGame) {
+        const vid = currentGame.youtube_video_id || (currentGame.id ? currentGame.id.replace('game_', '') : 'jlZoOVrO0kQ');
+        const startSec = (isPlayerReady && ytPlayer && typeof ytPlayer.getCurrentTime === 'function') ? Math.floor(ytPlayer.getCurrentTime()) : 0;
+        tigersIframe.src = `https://www.youtube.com/embed/${vid}?enablejsapi=1&start=${startSec}&autoplay=0`;
+      }
+      changeProReferencePreset('makar_gap');
       modal.style.display = 'flex';
       modal.classList.remove('hidden');
     }
@@ -14754,48 +14827,46 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
     }
 
     function changeProReferencePreset(key) {
-      const preset = PRO_REFERENCE_PRESETS[key] || PRO_REFERENCE_PRESETS.mcdavid_edge;
-      const notesEl = document.getElementById('pro-compare-notes');
-      const iframe = document.getElementById('compare-pro-video');
-      const select = document.getElementById('pro-compare-preset-select');
+      const preset = PRO_REFERENCE_PRESETS[key] || PRO_REFERENCE_PRESETS.makar_gap;
+      const notesEl = document.getElementById('pro-reference-desc');
+      const nameEl = document.getElementById('pro-reference-name');
+      const iframe = document.getElementById('pro-compare-nhl-iframe');
+      const select = document.getElementById('pro-reference-select');
 
-      if (notesEl) notesEl.value = preset.notes;
+      if (notesEl) notesEl.innerHTML = preset.notes;
+      if (nameEl) nameEl.innerText = preset.name;
       if (iframe) iframe.src = preset.videoUrl;
       if (select) select.value = key;
     }
 
     function playBothProCompareVideos() {
-      const proIframe = document.getElementById('compare-pro-video');
-      if (proIframe && proIframe.contentWindow) {
-        proIframe.contentWindow.postMessage('{"event":"command","func":"playVideo","args":""}', '*');
-      }
-      if (isPlayerReady && ytPlayer && typeof ytPlayer.playVideo === 'function') {
-        ytPlayer.playVideo();
-      }
+      ['pro-compare-tigers-iframe', 'pro-compare-nhl-iframe'].forEach(id => {
+        const f = document.getElementById(id);
+        if (f && f.contentWindow) {
+          f.contentWindow.postMessage('{"event":"command","func":"playVideo","args":""}', '*');
+        }
+      });
       showToast("▶️ Playing Both Comparison Feeds");
     }
 
     function pauseBothProCompareVideos() {
-      const proIframe = document.getElementById('compare-pro-video');
-      if (proIframe && proIframe.contentWindow) {
-        proIframe.contentWindow.postMessage('{"event":"command","func":"pauseVideo","args":""}', '*');
-      }
-      if (isPlayerReady && ytPlayer && typeof ytPlayer.pauseVideo === 'function') {
-        ytPlayer.pauseVideo();
-      }
+      ['pro-compare-tigers-iframe', 'pro-compare-nhl-iframe'].forEach(id => {
+        const f = document.getElementById(id);
+        if (f && f.contentWindow) {
+          f.contentWindow.postMessage('{"event":"command","func":"pauseVideo","args":""}', '*');
+        }
+      });
       showToast("⏸️ Paused Comparison Feeds");
     }
 
     function restartBothProCompareVideos() {
-      const proIframe = document.getElementById('compare-pro-video');
-      if (proIframe && proIframe.contentWindow) {
-        proIframe.contentWindow.postMessage('{"event":"command","func":"seekTo","args":[0, true]}', '*');
-        proIframe.contentWindow.postMessage('{"event":"command","func":"playVideo","args":""}', '*');
-      }
-      if (isPlayerReady && ytPlayer && typeof ytPlayer.seekTo === 'function') {
-        ytPlayer.seekTo(0, true);
-        ytPlayer.playVideo();
-      }
+      ['pro-compare-tigers-iframe', 'pro-compare-nhl-iframe'].forEach(id => {
+        const f = document.getElementById(id);
+        if (f && f.contentWindow) {
+          f.contentWindow.postMessage('{"event":"command","func":"seekTo","args":[0, true]}', '*');
+          f.contentWindow.postMessage('{"event":"command","func":"playVideo","args":""}', '*');
+        }
+      });
       showToast("↺ Restarted Both Videos");
     }
 
@@ -15974,12 +16045,12 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
 
     function toggleLiveBroadcastMode() {
       isLiveBroadcastActive = !isLiveBroadcastActive;
-      const btn = document.getElementById('header-live-stream-btn');
-      const textEl = document.getElementById('header-live-text');
       const hud = document.getElementById('live-broadcast-hud');
       const offlinePlaceholder = document.getElementById('live-offline-placeholder');
       const nextGameText = document.getElementById('live-offline-next-game-text');
 
+      const videoCol = document.getElementById('video-column');
+      const sidebarCol = document.getElementById('sidebar-column');
       const sideLiveHeader = document.getElementById('sidebar-live-header');
       const sideNavTabs = document.getElementById('sidebar-nav-tabs');
       const sideLiveSection = document.getElementById('live-sidebar-section');
@@ -15989,10 +16060,15 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
       const playerSection = document.getElementById('player-view-section');
 
       if (isLiveBroadcastActive) {
-        if (btn) {
-          btn.className = "px-3 py-1.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-black text-xs cursor-pointer transition shadow-sm flex items-center gap-1.5 active:scale-95";
+        if (typeof updateFunctionalNavActiveState === 'function') updateFunctionalNavActiveState('live_stream');
+        // Ensure split-screen layout is visible even if user came from full-width Analytics or Player Hub
+        if (videoCol) {
+          videoCol.classList.remove('hidden');
+          videoCol.className = "lg:col-span-7 xl:col-span-8 lg:sticky lg:top-2 space-y-2.5 transition-all duration-300 relative w-full";
         }
-        if (textEl) textEl.innerText = "📺 Film Archive";
+        if (sidebarCol) {
+          sidebarCol.className = "lg:col-span-5 xl:col-span-4 bg-white border border-slate-200 rounded-2xl shadow-sm flex flex-col min-h-[calc(100vh-5rem)] lg:h-[calc(100vh-5rem)] overflow-hidden transition-all duration-300 w-full";
+        }
 
         // EMBED LIVE CENTER IN SIDE PANEL: Replace right-hand shift/clip list with Live Center
         if (sideLiveHeader) sideLiveHeader.classList.remove('hidden');
@@ -16037,10 +16113,7 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
           showToast("📡 Live Stream Mode: Broadcast is currently offline / standby.");
         }
       } else {
-        if (btn) {
-          btn.className = "px-3 py-1.5 rounded-xl bg-rose-600 hover:bg-rose-500 text-white font-black text-xs cursor-pointer transition shadow-sm flex items-center gap-1.5 active:scale-95";
-        }
-        if (textEl) textEl.innerText = "🔴 Live Stream";
+        if (typeof updateFunctionalNavActiveState === 'function') updateFunctionalNavActiveState(currentMode || 'coaches');
         if (hud) hud.classList.add('hidden');
         if (offlinePlaceholder) offlinePlaceholder.classList.add('hidden');
 
@@ -18144,39 +18217,10 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
     // Pro Sharp Geometry Toggle (0px / 2px Hudl/InStat high density)
     let isSharpGeometryEnabled = false;
 
-    function toggleSharpGeometry(forceState) {
-      if (forceState !== undefined) {
-        isSharpGeometryEnabled = Boolean(forceState);
-      } else {
-        isSharpGeometryEnabled = !isSharpGeometryEnabled;
-      }
-
-      const body = document.body;
-      const btn = document.getElementById('sharp-mode-toggle-btn');
-      const btnText = document.getElementById('sharp-mode-btn-text');
-      const toggleInput = document.getElementById('cfg-sharp-geometry-toggle');
-
-      if (isSharpGeometryEnabled) {
-        body.classList.add('sharp-geometry');
-        document.documentElement.style.setProperty('--sharp-radius', '0px');
-        document.documentElement.style.setProperty('--micro-radius', '2px');
-        if (btn) btn.classList.add('border-amber-400', 'text-amber-300');
-        if (btnText) btnText.innerText = 'Sharp: ON';
-        if (toggleInput) toggleInput.checked = true;
-        showToast("📐 Sharp Pro Geometry enabled (0px Hudl/InStat architecture)");
-      } else {
-        body.classList.remove('sharp-geometry');
-        document.documentElement.style.setProperty('--sharp-radius', '12px');
-        document.documentElement.style.setProperty('--micro-radius', '6px');
-        if (btn) btn.classList.remove('border-amber-400', 'text-amber-300');
-        if (btnText) btnText.innerText = 'Sharp Mode';
-        if (toggleInput) toggleInput.checked = false;
-        showToast("⚪ Classic geometry restored");
-      }
-
-      try {
-        localStorage.setItem('tigers_sharp_geometry', isSharpGeometryEnabled ? 'true' : 'false');
-      } catch(e){}
+    function toggleSharpGeometry() {
+      isSharpGeometryEnabled = true;
+      document.documentElement.style.setProperty('--sharp-radius', '0px');
+      document.documentElement.style.setProperty('--micro-radius', '2px');
     }
 
     // System Diagnostics & Connection Audit
