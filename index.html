@@ -41,124 +41,195 @@
       }
     }
   </script>
-    <style>
+      <style>
   /* 
-   * DYNAMIC THEMING ENGINE (Admin Configurable)
-   * Defaulted to Aurora Tigers Gold & Black 
+   * STANDARDIZED PRO SPORTS ANALYTICS COLOR PALETTE & PERMANENT SHARP GEOMETRY
+   * Hudl / InStat / Catapult Inspired Architecture
    */
   :root {
-    --bg-base: #0a0a0a;
-    --bg-surface: #141414;
-    --bg-panel: #1e1e1e;
-    --border-color: #333333;
+    --bg-base: #0c0d12;
+    --bg-surface: #13151d;
+    --bg-panel: #181b24;
+    --border-color: #272a38;
+    --border-subtle: #1e212c;
     
     --primary-team-color: #FDBB30; /* Tigers Gold */
     --secondary-team-color: #000000;
     --text-on-primary: #000000;
     
-    --alert-red: #ff3333;
-    --success-green: #00cc44;
+    --text-main: #f8fafc;
+    --text-muted: #94a3b8;
+    --text-dim: #64748b;
     
-    /* Global Sharp Geometry */
+    --alert-red: #ef4444;
+    --success-green: #10b981;
+    --accent-blue: #38bdf8;
+    
+    /* Permanent Global Sharp Geometry (No Toggle) */
     --sharp-radius: 0px; 
     --micro-radius: 2px;
   }
 
-  /* Viewport Reset & Lock */
-  .app-container {
-    background-color: var(--bg-base);
-    color: #ffffff;
+  /* Global Reset & Permanent Dark Theme */
+  body {
+    background-color: var(--bg-base) !important;
+    color: var(--text-main) !important;
+    background-image: none !important;
     font-family: 'Inter', system-ui, sans-serif;
   }
 
-  /* Unified Header & Scoreboard */
-  .unified-header {
-    display: grid;
-    grid-template-columns: 280px 1fr 340px;
-    align-items: center;
-    background-color: var(--bg-surface);
-    border: 1px solid var(--border-color);
-    padding: 0 16px;
-    height: 58px;
-    min-height: 58px;
+  /* Permanent Sharp Geometry across the whole site */
+  *, *::before, *::after {
+    border-radius: var(--sharp-radius);
+  }
+
+  .rounded-3xl,
+  .rounded-2xl,
+  .rounded-xl,
+  .rounded-lg,
+  .rounded-md,
+  .rounded {
+    border-radius: var(--sharp-radius) !important;
+  }
+
+  .rounded-full:not(.animate-ping):not(#v-status-dot):not(.animate-pulse) {
+    border-radius: var(--micro-radius) !important;
+  }
+
+  input, select, textarea, button {
+    border-radius: var(--micro-radius) !important;
+  }
+
+  /* Standardized Dark Theme Surfaces */
+  .bg-white,
+  .bg-slate-50,
+  .bg-slate-100 {
+    background-color: var(--bg-panel) !important;
+    border-color: var(--border-color) !important;
+    color: var(--text-main) !important;
+  }
+
+  #video-card-container,
+  #sidebar-column,
+  .data-card {
+    background-color: var(--bg-panel) !important;
+    border-color: var(--border-color) !important;
+    color: var(--text-main) !important;
+  }
+
+  /* Standardized Typography in Dark Theme */
+  .text-slate-900,
+  .text-slate-800,
+  .text-slate-700 {
+    color: var(--text-main) !important;
+  }
+
+  .text-slate-600,
+  .text-slate-500 {
+    color: var(--text-muted) !important;
+  }
+
+  .text-slate-400 {
+    color: var(--text-dim) !important;
+  }
+
+  .border-slate-200,
+  .border-slate-300,
+  .border-slate-700,
+  .border-slate-800 {
+    border-color: var(--border-color) !important;
+  }
+
+  /* Dropdown Styles */
+  select, select:focus, select:active, select:hover {
+    background-color: var(--bg-surface) !important;
+    color: var(--text-main) !important;
+    border: 1px solid var(--border-color) !important;
+    color-scheme: dark !important;
+    outline: none !important;
+  }
+  select option {
+    background-color: var(--bg-panel) !important;
+    color: var(--text-main) !important;
+    padding: 8px 12px;
+  }
+  select option:checked, select option:hover {
+    background-color: var(--bg-surface) !important;
+    color: var(--primary-team-color) !important;
+  }
+
+  /* Custom Scrollbar */
+  .custom-scroll::-webkit-scrollbar { width: 6px; height: 6px; }
+  .custom-scroll::-webkit-scrollbar-track { background: var(--bg-base); }
+  .custom-scroll::-webkit-scrollbar-thumb { background: var(--border-color); }
+  .custom-scroll::-webkit-scrollbar-thumb:hover { background: var(--primary-team-color); }
+
+  /* Top Functional Navigation Buttons */
+  .nav-functional-btn {
+    transition: all 0.15s ease;
+  }
+  .nav-functional-btn:hover {
+    background-color: var(--bg-panel);
     color: #ffffff;
-    transition: all 0.2s ease;
+    border-color: var(--border-color);
+  }
+  .nav-functional-btn.active-nav-btn {
+    background-color: var(--bg-panel) !important;
+    color: var(--primary-team-color) !important;
+    border-color: var(--primary-team-color) !important;
   }
 
-  @media (max-width: 900px) {
-    .unified-header {
-      display: flex;
-      flex-direction: column;
-      height: auto;
-      min-height: auto;
-      padding: 10px 14px;
-      gap: 8px;
-    }
-  }
-
-  .brand-logo {
-    font-weight: 800;
-    font-size: 1rem;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    color: var(--primary-team-color);
-    display: flex;
-    align-items: center;
-    gap: 8px;
-  }
-
-  /* Central Live Scoreboard with Special Teams */
+  /* Live Scoreboard Elements */
   .live-scoreboard {
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: 16px;
+    gap: 12px;
     font-family: 'Roboto Mono', 'JetBrains Mono', monospace;
-    font-size: 1.15rem;
+    font-size: 1.1rem;
   }
 
   .team-score {
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 8px;
     font-weight: 700;
-    font-size: 0.9rem;
+    font-size: 0.85rem;
     text-transform: uppercase;
   }
 
   .score-box {
-    background: var(--bg-panel);
-    padding: 2px 10px;
+    background: var(--bg-surface);
+    padding: 2px 8px;
     border: 1px solid var(--border-color);
     border-radius: var(--sharp-radius);
     font-weight: bold;
-    min-width: 28px;
+    min-width: 26px;
     text-align: center;
     color: #ffffff;
   }
 
   .game-clock {
-    padding: 2px 10px;
-    background: var(--bg-panel);
+    padding: 2px 8px;
+    background: var(--bg-surface);
     border: 1px solid var(--border-color);
     border-radius: var(--sharp-radius);
     color: var(--primary-team-color);
     font-weight: 700;
-    font-size: 0.85rem;
+    font-size: 0.82rem;
     letter-spacing: 0.5px;
   }
 
-  /* Special Teams Indicators */
   .special-teams-badge {
-    font-size: 0.72rem;
-    padding: 2px 6px;
+    font-size: 0.7rem;
+    padding: 1px 5px;
     border-radius: var(--micro-radius);
     font-weight: 800;
     text-transform: uppercase;
     letter-spacing: 0.5px;
-    display: none; /* Hidden by default via JS */
+    display: none;
   }
-  
+
   .special-teams-badge.active-pp {
     display: inline-block !important;
     background-color: var(--primary-team-color) !important;
@@ -170,32 +241,24 @@
     display: inline-block !important;
     background-color: var(--alert-red) !important;
     color: #ffffff !important;
-    box-shadow: 0 0 10px rgba(255, 51, 51, 0.4);
-  }
-
-  /* System Controls */
-  .system-controls {
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;
-    gap: 8px;
+    box-shadow: 0 0 10px rgba(239, 68, 68, 0.4);
   }
 
   .btn-sharp {
-    background-color: var(--bg-panel);
-    color: #fff;
+    background-color: var(--bg-surface);
+    color: var(--text-main);
     border: 1px solid var(--border-color);
     border-radius: var(--sharp-radius);
-    padding: 5px 10px;
+    padding: 4px 8px;
     cursor: pointer;
-    font-size: 0.75rem;
+    font-size: 0.72rem;
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 0.5px;
-    transition: all 0.2s ease;
+    transition: all 0.15s ease;
     display: inline-flex;
     align-items: center;
-    gap: 5px;
+    gap: 4px;
   }
 
   .btn-sharp:hover {
@@ -212,7 +275,6 @@
     overflow: hidden;
   }
 
-  /* Left: Video Media Canvas */
   .media-track-frame {
     position: relative;
     background-color: #000;
@@ -221,14 +283,12 @@
     border-right: 1px solid var(--border-color);
   }
 
-  /* Right: Analytics & Shifts Data */
   .analytics-data-sidebar {
     background-color: var(--bg-surface);
     overflow-y: auto;
     padding: 16px;
   }
 
-  /* Data Cards (Sharp) */
   .data-card {
     background-color: var(--bg-panel);
     border: 1px solid var(--border-color);
@@ -237,62 +297,8 @@
     margin-bottom: 12px;
   }
 
-  /* GLOBAL SHARP GEOMETRY MODE (Hudl/InStat High-Density) */
-  body.sharp-geometry .rounded-xl,
-  body.sharp-geometry .rounded-2xl,
-  body.sharp-geometry .rounded-3xl,
-  body.sharp-geometry .rounded-lg {
-    border-radius: var(--sharp-radius) !important;
-  }
-  body.sharp-geometry .rounded-full:not(.animate-ping):not(#v-status-dot):not(.animate-pulse) {
-    border-radius: var(--micro-radius) !important;
-  }
-  body.sharp-geometry input,
-  body.sharp-geometry select,
-  body.sharp-geometry button:not(.btn-sharp) {
-    border-radius: var(--micro-radius) !important;
-  }
-  body.sharp-geometry .score-box,
-  body.sharp-geometry .btn-sharp,
-  body.sharp-geometry .data-card,
-  body.sharp-geometry .unified-header {
-    border-radius: var(--sharp-radius) !important;
-  }
+  #telestrator-canvas { touch-action: none; }
 
-    body {
-      background-color: #f1f5f9;
-      background-image:
-        radial-gradient(circle at 12% 0%, rgba(245, 179, 22, 0.18) 0%, transparent 42%),
-        radial-gradient(circle at 88% 100%, rgba(56, 189, 248, 0.10) 0%, transparent 42%),
-        repeating-linear-gradient(135deg, rgba(15, 23, 42, 0.02) 0px, rgba(15, 23, 42, 0.02) 2px, transparent 2px, transparent 18px);
-      color: #0f172a;
-    }
-    .tiger-header-bg {
-      background: linear-gradient(135deg, #ffffff 0%, #f8fafc 70%, #fffbeb 100%);
-    }
-    .tiger-top-banner {
-      background: linear-gradient(135deg, #1e293b 0%, #0f172a 65%, #29200c 100%);
-    }
-    #telestrator-canvas { touch-action: none; }
-    select, select:focus, select:active, select:hover {
-      background-color: #ffffff !important;
-      color: #0f172a !important;
-      color-scheme: light !important;
-      outline: none !important;
-    }
-    select option {
-      background-color: #ffffff !important;
-      color: #0f172a !important;
-      padding: 8px 12px;
-    }
-    select option:checked, select option:hover {
-      background-color: #fef3c7 !important;
-      color: #92400e !important;
-    }
-    .custom-scroll::-webkit-scrollbar { width: 6px; height: 6px; }
-    .custom-scroll::-webkit-scrollbar-track { background: #f1f5f9; border-radius: 8px; }
-    .custom-scroll::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 8px; }
-    .custom-scroll::-webkit-scrollbar-thumb:hover { background: #f5b316; }
   </style>
 </head>
 <body class="text-slate-900 min-h-screen p-2 lg:px-4 lg:py-2.5 select-none font-sans">
@@ -3972,24 +3978,174 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
     <kbd class="px-1.5 py-0.5 rounded bg-black/40 text-[10px] font-mono border border-white/20">Esc</kbd>
   </button>
 
-        <!-- ================= UNIFIED PRO SPORTS HEADER & CENTRAL GAMESHEET SCOREBOARD ================= -->
-    <header class="unified-header mb-2.5 rounded-2xl shadow-sm">
-      <div class="brand-logo">
+        <!-- ================= MASTER FUNCTIONAL TOP NAVIGATION BAR ================= -->
+    <header id="master-top-nav" class="bg-[var(--bg-surface)] border border-[var(--border-color)] px-3 py-2 flex flex-wrap items-center justify-between gap-3 text-xs select-none">
+      
+      <!-- Left: Official Crest & Brand -->
+      <div class="flex items-center gap-2.5 shrink-0">
         <img 
           src="./tigers_logo.png" 
           onerror="this.onerror=null; this.src='https://auroraminorhockey.com/public/images/common/logo.png';" 
           alt="Aurora Tigers Logo" 
-          class="w-7 h-7 object-contain inline-block"
+          class="w-8 h-8 object-contain"
         />
-        <span class="font-display font-black tracking-wider text-xs sm:text-sm">TIGERS U13A ANALYTICS</span>
+        <div class="flex flex-col">
+          <div class="flex items-center gap-1.5 leading-none">
+            <span class="font-display font-black text-sm uppercase tracking-wider text-white">AURORA <span class="text-amber-400">TIGERS</span></span>
+            <span class="text-[9px] px-1.5 py-0.2 bg-slate-900 border border-amber-400/40 text-amber-300 font-mono font-bold">U13A</span>
+          </div>
+          <span class="text-[9px] text-slate-400 font-medium tracking-tight mt-0.5">Video Breakdown &amp; Analytics Portal</span>
+        </div>
       </div>
+
+      <!-- Center: Functional Primary Menu (Organized by Function) -->
+      <div class="flex items-center gap-1 overflow-x-auto no-scrollbar py-0.5 flex-1 justify-center min-w-0">
+        <button onclick="switchViewMode('breakouts')" id="nav-btn-analytics" class="nav-functional-btn px-2.5 py-1.5 text-[11px] font-bold uppercase tracking-wider text-slate-300 hover:text-white hover:bg-[var(--bg-panel)] border border-transparent hover:border-[var(--border-color)] cursor-pointer transition flex items-center gap-1 shrink-0">
+          <span>📊</span> <span>Analytics</span>
+        </button>
+        <button onclick="toggleLiveBroadcastMode()" id="nav-btn-live" class="nav-functional-btn px-2.5 py-1.5 text-[11px] font-bold uppercase tracking-wider text-rose-400 hover:text-rose-300 hover:bg-[var(--bg-panel)] border border-transparent hover:border-rose-500/40 cursor-pointer transition flex items-center gap-1 shrink-0">
+          <span class="w-2 h-2 rounded-full bg-rose-500 animate-pulse"></span> <span>Live Games</span>
+        </button>
+        <button onclick="openScheduleHubModal()" id="nav-btn-schedule" class="nav-functional-btn px-2.5 py-1.5 text-[11px] font-bold uppercase tracking-wider text-slate-300 hover:text-white hover:bg-[var(--bg-panel)] border border-transparent hover:border-[var(--border-color)] cursor-pointer transition flex items-center gap-1 shrink-0">
+          <span>📅</span> <span>Schedule</span>
+        </button>
+        <button onclick="switchViewMode('coaches')" id="nav-btn-gametape" class="nav-functional-btn active-nav-btn px-2.5 py-1.5 text-[11px] font-bold uppercase tracking-wider text-amber-400 bg-[var(--bg-panel)] border border-amber-400/60 cursor-pointer transition flex items-center gap-1 shrink-0">
+          <span>🎬</span> <span>Game Tape</span>
+          <span id="top-clip-count" class="text-[9px] px-1.5 py-0.2 rounded-full bg-slate-800 text-amber-300 font-mono">0</span>
+        </button>
+        <button onclick="openPreGameScoutModal()" id="nav-btn-pregame" class="nav-functional-btn px-2.5 py-1.5 text-[11px] font-bold uppercase tracking-wider text-slate-300 hover:text-white hover:bg-[var(--bg-panel)] border border-transparent hover:border-[var(--border-color)] cursor-pointer transition flex items-center gap-1 shrink-0">
+          <span>🏒</span> <span>Pre-Game</span>
+        </button>
+        <button onclick="openTournamentHubModal()" id="nav-btn-tournament" class="nav-functional-btn px-2.5 py-1.5 text-[11px] font-bold uppercase tracking-wider text-slate-300 hover:text-white hover:bg-[var(--bg-panel)] border border-transparent hover:border-[var(--border-color)] cursor-pointer transition flex items-center gap-1 shrink-0">
+          <span>🏆</span> <span>Tournament Hub</span>
+        </button>
+        <button onclick="openPlayerPassportModal('23')" id="nav-btn-passport" class="nav-functional-btn px-2.5 py-1.5 text-[11px] font-bold uppercase tracking-wider text-slate-300 hover:text-white hover:bg-[var(--bg-panel)] border border-transparent hover:border-[var(--border-color)] cursor-pointer transition flex items-center gap-1 shrink-0">
+          <span>🪪</span> <span>Player Passport</span>
+        </button>
+
+        <!-- Alerts Popover Toggle -->
+        <div class="relative shrink-0">
+          <button onclick="toggleAlertsDropdown()" id="nav-btn-alerts" class="px-2.5 py-1.5 text-[11px] font-bold uppercase tracking-wider text-amber-300 hover:text-white hover:bg-[var(--bg-panel)] border border-amber-500/30 cursor-pointer transition flex items-center gap-1.5 active:scale-95">
+            <span>🔔</span> <span>Alerts</span>
+            <span id="alerts-unread-badge" class="px-1.5 py-0.2 bg-amber-500 text-slate-950 font-mono font-black text-[10px]">3</span>
+          </button>
+          
+          <!-- Alerts Dropdown Panel -->
+          <div id="alerts-dropdown-menu" class="hidden absolute top-full mt-2 left-1/2 -translate-x-1/2 sm:translate-x-0 sm:left-auto sm:right-0 w-80 sm:w-96 bg-[var(--bg-panel)] border border-[var(--border-color)] shadow-2xl p-3 z-50 animate-in fade-in zoom-in-95 duration-100 text-left">
+            <div class="flex items-center justify-between pb-2 border-b border-[var(--border-color)] mb-2.5">
+              <span class="font-bold uppercase text-[10px] tracking-wider text-amber-400 flex items-center gap-1.5">
+                <span>🔔</span> <span>Team Notifications &amp; Alerts</span>
+              </span>
+              <span class="text-[10px] font-mono text-slate-400">3 New</span>
+            </div>
+            
+            <div class="space-y-2 text-xs">
+              <!-- Alert 1: Upcoming Game -->
+              <div onclick="openScheduleHubModal(); toggleAlertsDropdown(false);" class="p-2.5 bg-[var(--bg-surface)] hover:bg-slate-800 border border-[var(--border-color)] cursor-pointer transition space-y-1">
+                <div class="flex items-center justify-between">
+                  <span class="text-[10px] font-black uppercase text-amber-400 flex items-center gap-1">
+                    <span>📅</span> <span>Upcoming Game</span>
+                  </span>
+                  <span class="text-[9px] font-mono text-slate-400">Nov 6 • 1:15 PM</span>
+                </div>
+                <div class="font-bold text-white text-[11px]">
+                  CAN/AM Challenge Cup vs Boston Jr. Terriers
+                </div>
+                <div class="text-[10px] text-slate-400">
+                  Lake Placid Olympic Center (1980 Rink). Check schedule for lineup.
+                </div>
+              </div>
+
+              <!-- Alert 2: Analytics Completed -->
+              <div onclick="switchViewMode('breakouts'); toggleAlertsDropdown(false);" class="p-2.5 bg-[var(--bg-surface)] hover:bg-slate-800 border border-[var(--border-color)] cursor-pointer transition space-y-1">
+                <div class="flex items-center justify-between">
+                  <span class="text-[10px] font-black uppercase text-emerald-400 flex items-center gap-1">
+                    <span>📊</span> <span>Analytics Completed</span>
+                  </span>
+                  <span class="text-[9px] font-mono text-slate-400">88% AI Precision</span>
+                </div>
+                <div class="font-bold text-white text-[11px]">
+                  Film Breakdown: 20.10.2026 vs Newmarket
+                </div>
+                <div class="text-[10px] text-slate-400">
+                  38 shifts tagged. Breakout success &amp; zone possession metrics calculated.
+                </div>
+              </div>
+
+              <!-- Alert 3: Coach Notes -->
+              <div onclick="switchViewMode('film_tray'); toggleAlertsDropdown(false);" class="p-2.5 bg-[var(--bg-surface)] hover:bg-slate-800 border border-[var(--border-color)] cursor-pointer transition space-y-1">
+                <div class="flex items-center justify-between">
+                  <span class="text-[10px] font-black uppercase text-sky-400 flex items-center gap-1">
+                    <span>📋</span> <span>Coach Notes Added</span>
+                  </span>
+                  <span class="text-[9px] font-mono text-slate-400">3 Clips</span>
+                </div>
+                <div class="font-bold text-white text-[11px]">
+                  Tactical Homework in Coaching Film Tray
+                </div>
+                <div class="text-[10px] text-slate-400">
+                  Coach Carpentier bookmarked 3 plays: D-to-D breakout, net-front defense.
+                </div>
+              </div>
+            </div>
+
+            <div class="pt-2 mt-2 border-t border-[var(--border-color)] flex items-center justify-between text-[10px]">
+              <span class="text-slate-500 font-mono">Aurora Tigers U13A AI Sync</span>
+              <button onclick="toggleAlertsDropdown(false)" class="text-amber-400 hover:underline cursor-pointer font-bold">Dismiss</button>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Right: User Context ("logged in as"), Feedback & Guide Menu -->
+      <div class="flex items-center gap-1.5 shrink-0">
+        <button onclick="openRoleSwitchModal()" id="role-badge" title="Click to switch role (Admin, Coach, Parent)" class="px-2.5 py-1 text-[11px] font-bold bg-[var(--bg-panel)] text-slate-200 border border-[var(--border-color)] cursor-pointer hover:bg-slate-800 transition flex items-center gap-1.5">
+          <span class="text-slate-400 text-[10px]">Logged in as:</span>
+          <strong id="role-badge-text" class="text-amber-400">Coach Mode</strong>
+        </button>
+        <button onclick="openFeedbackModal()" title="Send shift corrections or tactical questions to coaches" class="px-2.5 py-1 text-[11px] font-bold bg-[var(--bg-panel)] text-slate-200 hover:text-white border border-[var(--border-color)] hover:border-amber-400/50 cursor-pointer transition flex items-center gap-1">
+          <span>💬</span> <span class="hidden sm:inline">Feedback</span>
+        </button>
+        <button onclick="openHelpModal()" title="View portal user guide &amp; FAQ" class="px-2.5 py-1 text-[11px] font-bold bg-[var(--bg-panel)] text-slate-200 hover:text-white border border-[var(--border-color)] hover:border-amber-400/50 cursor-pointer transition flex items-center gap-1">
+          <span>❓</span> <span class="hidden sm:inline">How to Use</span>
+        </button>
+        <button onclick="openTeamOnboardingModal()" title="Team Administration &amp; Theming Settings" class="px-2 py-1 text-[11px] font-bold bg-[var(--bg-panel)] text-slate-200 hover:text-white border border-[var(--border-color)] hover:border-amber-400/50 cursor-pointer transition flex items-center gap-1">
+          <span>⚙️</span>
+        </button>
+      </div>
+
+    </header>
+
+    <!-- ================= UNIFIED MATCH SELECTOR & LIVE GAMESHEET SCOREBOARD ================= -->
+    <div id="unified-match-bar" class="bg-[var(--bg-panel)] border-x border-b border-[var(--border-color)] px-3 py-1.5 flex flex-wrap items-center justify-between gap-2.5 text-xs">
       
-      <!-- Gamesheet Synced Scoreboard with Special Teams PP/PK Engine -->
+      <!-- Left: Film Match Selector -->
+      <div class="flex items-center gap-1.5 flex-wrap">
+        <span class="text-amber-400 font-display text-[11px] font-bold uppercase tracking-wider flex items-center gap-1">
+          <span>🎬</span> Film:
+        </span>
+        <select id="game-select" onchange="onGameDropdownChange(this.value)" class="bg-[var(--bg-surface)] text-white font-bold border border-[var(--border-color)] px-2 py-1 text-xs cursor-pointer max-w-[240px] sm:max-w-[320px] truncate focus:border-amber-400"></select>
+        <button onclick="openAddGameModal()" title="Add / Ingest New Game Film" class="px-2 py-1 bg-amber-500 hover:bg-amber-400 text-slate-950 font-black text-[10px] cursor-pointer transition uppercase">
+          ➕ Add Film
+        </button>
+        <button id="header-replace-btn" onclick="openReplaceGameVideoModal()" title="Replace choppy stream with clean camera recording" class="px-2 py-1 bg-[var(--bg-surface)] hover:bg-slate-800 text-sky-300 font-bold text-[10px] border border-[var(--border-color)] cursor-pointer transition uppercase">
+          🔄 Replace
+        </button>
+        <div class="hidden sm:flex items-center gap-1.5 text-[11px] text-slate-400 border-l border-[var(--border-color)] pl-2">
+          <span id="ts-datetime" class="font-semibold text-slate-300">Game Day</span>
+          <span class="text-slate-600">|</span>
+          <a id="ts-arena-link" href="#" target="_blank" class="text-sky-400 hover:underline flex items-center gap-1 max-w-[140px] truncate" title="Open Arena in Google Maps">
+            <span>📍</span> <span id="ts-arena" class="truncate">Arena</span> <span>↗</span>
+          </a>
+        </div>
+      </div>
+
+      <!-- Center: Central Real-Time GameSheet Scoreboard with Special Teams PP/PK -->
       <div class="live-scoreboard" id="central-live-scoreboard">
         <div class="team-score">
-          <span>TIGERS</span>
+          <span class="text-amber-400 font-black">TIGERS</span>
           <div class="score-box" id="home-score">0</div>
-          <!-- Injects dynamically when Gamesheet JSON detects penalty -->
           <span class="special-teams-badge" id="home-st-status"></span> 
         </div>
         
@@ -3999,231 +4155,53 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
         
         <div class="team-score">
           <div class="score-box" id="away-score">0</div>
-          <span id="away-team-header-label">OPPONENT</span>
+          <span id="away-team-header-label" class="text-slate-300 font-bold">OPPONENT</span>
           <span class="special-teams-badge" id="away-st-status"></span> 
         </div>
       </div>
 
-      <!-- Admin & Context System Controls -->
-      <div class="system-controls">
-        <button class="btn-sharp" onclick="syncPuckDrop()" title="Calibrate YouTube Video to Opening Puck Drop (Master Clock Offset)">
+      <!-- Right: Master Sync Clock & Diagnostics -->
+      <div class="flex items-center gap-1.5 shrink-0">
+        <button class="btn-sharp" onclick="syncPuckDrop()" title="Calibrate Opening Puck Drop (Records YouTube Timestamp for Gamesheet Sync)">
           <span>⏱️</span> <span>Sync Clock</span>
         </button>
-        <button class="btn-sharp" onclick="openSystemDiagnosticsModal()" title="Run System Diagnostics & Connection Audit">
+        <button class="btn-sharp" onclick="openSystemDiagnosticsModal()" title="Run System Diagnostics &amp; Connection Audit">
           <span>🔍</span> <span>Diagnostics</span>
         </button>
-        <button class="btn-sharp" onclick="toggleSharpGeometry()" id="sharp-mode-toggle-btn" title="Toggle Sharp Pro Geometry (Hudl/InStat High-Density Architecture)">
-          <span>📐</span> <span id="sharp-mode-btn-text">Sharp Mode</span>
-        </button>
-        <button class="btn-sharp" onclick="openTeamOnboardingModal()" title="Team Administration & Theming Engine">
-          <span>⚙️</span> <span>Admin</span>
-        </button>
-      </div>
-    </header>
-
-    <!-- STREAMLINED PRO COACHING HEADER -->
-    <header class="bg-white border border-slate-200/90 rounded-2xl px-4 py-2.5 shadow-sm flex flex-wrap items-center justify-between gap-3 relative">
-      <!-- Left: Official Crest + Title -->
-      <div class="flex items-center gap-3">
-        <div class="shrink-0 select-none">
-          <img 
-            src="./tigers_logo.png" 
-            onerror="this.onerror=null; this.src='https://auroraminorhockey.com/public/images/common/logo.png';" 
-            alt="Aurora Tigers Logo" 
-            class="w-11 h-11 md:w-12 md:h-12 object-contain"
-          />
-        </div>
-        <div>
-          <div class="flex items-center gap-2">
-            <h1 class="font-display text-lg md:text-xl font-black text-slate-900 tracking-wider uppercase leading-none">
-              AURORA <span class="text-amber-600">TIGERS</span>
-            </h1>
-            <span class="text-[10px] px-2 py-0.5 rounded-md bg-slate-900 text-amber-400 font-mono font-bold tracking-wider">
-              U13A REP
-            </span>
-          </div>
-          <div class="text-[11px] text-slate-500 font-semibold mt-0.5 flex items-center gap-2">
-            <span>Video Breakdown & Player Analytics Portal</span>
-          </div>
-        </div>
-      </div>
-
-      <!-- Center: Clean Game Film Selector & Arena Metadata -->
-      <div class="flex flex-wrap items-center gap-2.5 text-xs flex-1 justify-center">
-        <div class="flex items-center gap-1">
-          <button onclick="toggleLiveBroadcastMode()" id="header-live-stream-btn" title="Watch Live Stream with Real-Time GameSheet Scoreboard HUD" class="px-3 py-1.5 rounded-xl bg-rose-600 hover:bg-rose-500 text-white font-black text-xs cursor-pointer transition shadow-sm flex items-center gap-1.5 active:scale-95">
-            <span class="w-2 h-2 rounded-full bg-white animate-ping"></span>
-            <span id="header-live-text">🔴 Live Stream</span>
+        <div class="flex items-center gap-1 bg-[var(--bg-surface)] p-0.5 border border-[var(--border-color)] text-[11px] font-bold">
+          <button onclick="setLayoutMode('split')" id="layout-btn-split" title="Side-by-side Video &amp; Feed" class="px-2 py-0.5 bg-[var(--bg-panel)] text-amber-400 cursor-pointer font-bold flex items-center gap-1">
+            <span>🗕</span> <span class="hidden sm:inline">Split</span>
           </button>
-          <button onclick="openSetLiveLinkModal()" id="header-set-live-btn" title="Set Today's YouTube Livestream Link (Broadcasts to all parents in real-time)" class="px-2 py-1.5 rounded-xl bg-slate-900 hover:bg-slate-800 text-amber-300 font-bold text-xs cursor-pointer transition shadow-xs flex items-center gap-1 active:scale-95">
-            <span>📡</span> <span class="hidden sm:inline">Set Stream</span>
+          <button onclick="setLayoutMode('expanded')" id="layout-btn-expanded" title="Full-width expanded reports" class="px-2 py-0.5 text-slate-400 hover:text-white cursor-pointer font-bold flex items-center gap-1">
+            <span>🗖</span> <span class="hidden sm:inline">Wide</span>
           </button>
         </div>
-
-        <div class="flex items-center gap-2 bg-slate-100 hover:bg-slate-200/80 transition px-3 py-1.5 rounded-xl border border-slate-300/80 shadow-xs">
-          <span class="text-amber-800 font-display text-[11px] font-bold uppercase tracking-wider flex items-center gap-1">
-            <span>🎬</span> Film:
-          </span>
-          <select id="game-select" onchange="onGameDropdownChange(this.value)" class="bg-transparent text-slate-900 font-bold focus:outline-none cursor-pointer text-xs border-0 max-w-[220px] sm:max-w-[320px] truncate"></select>
-          <button onclick="openScheduleHubModal()" id="header-schedule-btn" title="View Full Schedule: Upcoming Games, Lake Placid Tournament & Past Film Archive" class="px-2 py-0.5 rounded-lg bg-slate-900 hover:bg-slate-800 text-amber-300 font-bold text-[10px] cursor-pointer transition shadow-2xs flex items-center gap-1 shrink-0 active:scale-95">
-            <span>📅</span> <span class="hidden sm:inline">Schedule</span>
-          </button>
-          <button onclick="openAddGameModal()" title="Add / Ingest New Game Film (YouTube, LiveBarn, Google Drive, Local File)" class="px-2 py-0.5 rounded-lg bg-tigersGold hover:bg-tigersGoldBright text-slate-950 font-black text-[10px] cursor-pointer transition shadow-2xs flex items-center gap-1 shrink-0 active:scale-95">
-            <span>➕</span> <span class="hidden sm:inline">Add Game</span>
-          </button>
-          <button id="header-replace-btn" onclick="openReplaceGameVideoModal()" title="Replace game film with clean camera master or cloud recording (preserves all shift markers &amp; offsets)" class="px-2 py-0.5 rounded-lg bg-slate-900 hover:bg-slate-800 text-sky-300 hover:text-white font-bold text-[10px] cursor-pointer transition shadow-2xs flex items-center gap-1 shrink-0 active:scale-95">
-            <span>🔄</span> <span class="hidden sm:inline">Replace Film</span>
-          </button>
-        </div>
-
-        <div class="hidden lg:flex items-center gap-2 bg-white px-3 py-1.5 rounded-xl border border-slate-200 text-[11px] text-slate-600 shadow-xs">
-          <span class="text-slate-800 font-medium flex items-center gap-1">
-            <span>📅</span> <span id="ts-datetime" class="font-semibold">Game Day</span>
-          </span>
-          <span class="text-slate-300">|</span>
-          <a id="ts-arena-link" href="#" target="_blank" class="text-sky-700 hover:underline flex items-center gap-1 max-w-[200px] truncate font-medium" title="Open Arena in Google Maps">
-            <span>📍</span> <span id="ts-arena" class="truncate">Arena</span> <span>↗</span>
-          </a>
-          <span class="text-slate-300">|</span>
-          <button onclick="openGameSheetModal()" class="text-amber-800 hover:text-amber-900 hover:underline flex items-center gap-1 font-bold cursor-pointer" title="GameSheet Digital Boxscore & Special Teams Alignment">
-            <span>📊</span> <span>GameSheet Sync</span>
-          </button>
-          <a id="gamesheet-live-link" href="https://gamesheetstats.com/seasons/15490/teams/534204/preview?configuration%5Binfinite-scroll%5D=false&configuration%5Blogo%5D=false&filter%5Bstatus%5D=completed" target="_blank" rel="noopener" class="text-amber-700 hover:text-amber-900 font-bold flex items-center gap-0.5 text-[10px]" title="Open Official U13A Tigers GameSheet Stats in new tab">
-            <span>Stats</span> <span>↗</span>
-          </a>
-          <span class="text-slate-300">|</span>
-          <button onclick="openXbotBridgeModal()" class="text-rose-700 hover:text-rose-900 hover:underline flex items-center gap-1 font-bold cursor-pointer" title="XbotGo Falcon ScoreSync Bridge: Auto-sync scoreboard from GameSheet">
-            <span>📹</span> <span>Xbot Falcon Bridge</span>
-          </button>
-          <span class="text-slate-300">|</span>
-          <span id="ts-homeaway" class="px-1.5 py-0.5 rounded text-[9px] font-bold uppercase bg-slate-100 text-slate-800 border border-slate-300">Home</span>
-          <span id="ts-jersey" class="text-slate-500 text-[11px]">Jersey: <strong class="text-slate-900">White</strong></span>
-        </div>
       </div>
 
-      <!-- Right: Role Indicator & Switch Button -->
-      <div class="flex items-center gap-2">
-        <button onclick="printPreGameBenchCard()" title="1-Click Printable Pre-Game Lineup & Matchup Card (Clipboard Ready for Coach)" class="text-[11px] bg-slate-100 hover:bg-slate-200 text-slate-800 px-2.5 py-1 rounded-lg border border-slate-300 font-bold cursor-pointer transition shadow-2xs flex items-center gap-1">
-          <span>🖨️</span> <span class="hidden sm:inline">Bench Card</span>
-        </button>
-        <button id="header-team-admin-btn" onclick="openTeamOnboardingModal()" title="Team Administration & Onboarding Links (GameSheet, TeamSnap, YouTube, Drive, Roster)" class="text-[11px] bg-slate-100 hover:bg-slate-200 text-slate-800 px-2.5 py-1 rounded-lg border border-slate-300 font-bold cursor-pointer transition shadow-2xs flex items-center gap-1">
-          <span>⚙️</span> <span class="hidden sm:inline">Team Admin</span>
-        </button>
-        <button id="ai-status-badge" onclick="switchViewMode('breakouts'); scrollReportTo('ai-audit-card');" title="Click to view AI Video Detection Confidence & Audit" class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-[10px] font-bold bg-emerald-50 text-emerald-800 border border-emerald-300 cursor-pointer hover:bg-emerald-100 transition shadow-2xs">
-          🟢 88% AI Confidence
-        </button>
-        <button onclick="openHelpModal()" title="How to use this app guide" class="text-[11px] bg-slate-900 hover:bg-slate-800 text-tigersGold px-2.5 py-1 rounded-lg border border-tigersGold/40 font-bold cursor-pointer transition shadow-xs flex items-center gap-1 active:scale-95">
-          <span>❓</span> <span class="hidden sm:inline">How to Use</span>
-        </button>
-        <button onclick="openFeedbackModal()" title="Send feedback or shift corrections to coaches" class="text-[11px] bg-white hover:bg-slate-50 text-slate-700 px-2.5 py-1 rounded-lg border border-slate-300 font-semibold cursor-pointer transition shadow-xs flex items-center gap-1">
-          <span>💬</span> <span class="hidden sm:inline">Feedback</span>
-        </button>
-        <button onclick="openRoleSwitchModal()" id="role-badge" title="Click to switch role (Admin, Coach, Parent)" class="px-2.5 py-1 rounded-lg text-[10px] font-black uppercase bg-amber-50 text-amber-900 border border-amber-300 cursor-pointer hover:brightness-105 transition shadow-2xs">
-          Coach Mode
-        </button>
-        <button onclick="openRoleSwitchModal()" class="text-[11px] bg-white hover:bg-slate-50 text-slate-700 px-2.5 py-1 rounded-lg border border-slate-300 font-semibold cursor-pointer transition shadow-xs">
-          Switch Role
-        </button>
-      </div>
-    </header>
-
-    <!-- ================= ADMIN CONSOLE QUICK ACTIONS BAR ================= -->
-    <div id="admin-quick-bar" class="hidden bg-gradient-to-r from-slate-900 via-indigo-950 to-slate-900 border-2 border-indigo-500/50 rounded-2xl p-2.5 shadow-md flex flex-wrap items-center justify-between gap-2.5 text-white animate-in fade-in duration-200">
-      <div class="flex items-center gap-2">
-        <span class="px-2 py-0.5 rounded-md bg-indigo-500 text-white font-mono font-black text-[10px] uppercase tracking-wider">⚙️ ADMIN MODE ACTIVE</span>
-        <span class="text-xs text-slate-300 font-semibold hidden md:inline">Full System Privileges &amp; Team Setup</span>
-      </div>
-      <div class="flex flex-wrap items-center gap-1.5 text-xs">
-        <button onclick="openTeamOnboardingModal()" class="px-2.5 py-1 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-[11px] cursor-pointer transition shadow-2xs flex items-center gap-1">
-          <span>⚙️</span> <span>Team Admin &amp; Calendars</span>
-        </button>
-        <button onclick="openScheduleHubModal()" class="px-2.5 py-1 rounded-xl bg-slate-800 hover:bg-slate-700 text-amber-300 font-bold text-[11px] cursor-pointer transition shadow-2xs flex items-center gap-1">
-          <span>📅</span> <span>Schedule &amp; Link Videos</span>
-        </button>
-        <button onclick="openReplaceGameVideoModal()" class="px-2.5 py-1 rounded-xl bg-slate-800 hover:bg-slate-700 text-sky-300 font-bold text-[11px] cursor-pointer transition shadow-2xs flex items-center gap-1">
-          <span>🔄</span> <span>Replace Film</span>
-        </button>
-        <button onclick="openRoleSwitchModal()" class="px-2.5 py-1 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 font-bold text-[11px] cursor-pointer transition shadow-2xs flex items-center gap-1">
-          <span>👁️</span> <span>Preview Views (Coach / Parent)</span>
-        </button>
-      </div>
     </div>
 
-    <!-- ================= PRO SAAS TOP NAVIGATION BAR (Hudl/Teamworks Style) ================= -->
-    <nav class="bg-white border border-slate-200/90 rounded-2xl p-1.5 shadow-xs flex flex-wrap items-center justify-between gap-2">
-      <!-- 5 Main Sections -->
-      <div class="flex items-center gap-1 sm:gap-1.5 text-xs font-bold uppercase tracking-wider overflow-x-auto no-scrollbar py-0.5">
-        <button onclick="switchViewMode('coaches')" id="top-nav-btn-coaches" class="px-3.5 py-2 rounded-xl bg-slate-900 text-tigersGold font-black cursor-pointer transition shadow-xs flex items-center gap-1.5 shrink-0">
-          <span>🎬</span> <span>Film &amp; Shifts</span>
-          <span id="top-clip-count" class="text-[9px] px-1.5 py-0.2 rounded-full bg-slate-800 text-amber-300 font-mono">0</span>
-        </button>
-        <button onclick="switchViewMode('breakouts')" id="top-nav-btn-breakouts" class="px-3.5 py-2 rounded-xl text-slate-600 hover:text-slate-900 hover:bg-slate-100 cursor-pointer transition flex items-center gap-1.5 shrink-0">
-          <span>📊</span> <span>Team Analytics</span>
-        </button>
-        <button onclick="switchViewMode('player_analytics')" id="top-nav-btn-player" class="px-3.5 py-2 rounded-xl text-slate-600 hover:text-slate-900 hover:bg-slate-100 cursor-pointer transition flex items-center gap-1.5 shrink-0">
-          <span>👤</span> <span>Player Hub</span>
-        </button>
-        <button onclick="switchViewMode('film_tray')" id="top-nav-btn-tray" class="px-3.5 py-2 rounded-xl text-slate-600 hover:text-slate-900 hover:bg-slate-100 cursor-pointer transition flex items-center gap-1.5 shrink-0">
-          <span>⭐</span> <span>Coaching Tray</span>
-          <span id="top-tray-count" class="text-[9px] px-1.5 py-0.2 rounded-full bg-amber-100 text-amber-900 font-mono">0</span>
-        </button>
-        <button onclick="openFeedbackModal()" id="top-nav-btn-feedback" class="px-3.5 py-2 rounded-xl text-slate-600 hover:text-slate-900 hover:bg-slate-100 cursor-pointer transition flex items-center gap-1.5 shrink-0" title="Send Feedback or Shift Corrections to Coaches">
-          <span>💬</span> <span>Feedback Hub</span>
-        </button>
-        <button onclick="openScheduleHubModal()" id="top-nav-btn-schedule" title="View Full Schedule: Upcoming Games, Lake Placid Tournament & Past Film Archive" class="px-3.5 py-2 rounded-xl text-amber-800 hover:text-amber-950 hover:bg-amber-50 border border-amber-300/80 font-bold cursor-pointer transition flex items-center gap-1.5 shrink-0 active:scale-95">
-          <span>📅</span> <span>Schedule &amp; Link Videos</span>
-        </button>
-      </div>
-
-      <!-- Right: Layout Switcher (Split vs Full-Width Report) -->
-      <div class="flex items-center gap-1 bg-slate-100 p-1 rounded-xl border border-slate-200 text-[11px] font-bold shrink-0">
-        <span class="text-[10px] text-slate-500 uppercase px-1 font-semibold hidden md:inline">Layout:</span>
-        <button onclick="setLayoutMode('split')" id="layout-btn-split" title="Side-by-side Video &amp; Feed" class="px-2.5 py-1 rounded-lg bg-white text-slate-900 shadow-2xs cursor-pointer transition font-bold flex items-center gap-1">
-          <span>🗕</span> <span>Split View</span>
-        </button>
-        <button onclick="setLayoutMode('expanded')" id="layout-btn-expanded" title="Full-width expanded reports &amp; mini-player" class="px-2.5 py-1 rounded-lg text-slate-600 hover:text-slate-900 cursor-pointer transition font-bold flex items-center gap-1">
-          <span>🗖</span> <span>Full Width</span>
-        </button>
-      </div>
-    </nav>
-
-    <!-- Floating Flyout Toggle Button (Active in Big Screen Mode) -->
-    <button id="floating-flyout-btn" onclick="toggleFlyoutDrawer(true)" class="hidden fixed top-20 right-4 z-40 bg-slate-900/95 hover:bg-slate-900 text-tigersGold border-2 border-tigersGold px-3.5 py-2 rounded-xl shadow-2xl font-display font-black text-xs cursor-pointer flex items-center gap-2 transition-transform hover:scale-105 active:scale-95">
-      <span>📋</span> <span>Menu &amp; Stats</span>
-      <span class="px-1.5 py-0.2 rounded-full bg-tigersGold text-slate-950 font-mono text-[10px]">Open</span>
-    </button>
-
-    <!-- Slide-over Backdrop Overlay -->
-    <div id="flyout-backdrop" onclick="toggleFlyoutDrawer(false)" class="hidden fixed inset-0 bg-slate-950/60 backdrop-blur-xs z-50 transition-opacity duration-300"></div>
-
-    <!-- ================= TEAM PORTAL & FREE ACCESS BANNER ================= -->
-    <div id="team-unlock-meter-card" class="mb-3 bg-gradient-to-r from-slate-900 via-indigo-950 to-slate-900 border border-amber-400/40 rounded-2xl p-3 md:p-3.5 text-white shadow-md flex flex-col md:flex-row items-center justify-between gap-3">
-      <div class="flex items-center gap-3 min-w-0">
-        <span class="w-10 h-10 rounded-xl bg-amber-400/20 text-amber-300 font-black text-lg flex items-center justify-center shrink-0 border border-amber-400/30">
-          🐯
-        </span>
-        <div>
-          <div class="flex items-center gap-2">
-            <h4 class="font-display font-black text-xs md:text-sm uppercase tracking-wider text-amber-300">
-              Aurora Tigers U13A (2026–2027) <span class="text-white">• Free Team Access</span>
-            </h4>
-            <span class="px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-400/30 font-mono font-black text-[10px]">
-              Full Roster (17 Players Active)
-            </span>
-          </div>
-          <p class="text-[11px] text-slate-300 mt-0.5">
-            Shift video breakdowns, tactical systems, and Player Passports are 100% free for all Aurora Tigers families and coaching staff.
-          </p>
-        </div>
-      </div>
-      <div class="shrink-0 flex items-center gap-2">
-        <button onclick="copyTeamSnapInviteLink()" class="px-3.5 py-2 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-black text-xs cursor-pointer transition shadow-xs flex items-center gap-1.5 active:scale-95">
-          <span>📲</span> <span>Share Team Link</span>
-        </button>
-      </div>
+    <!-- Hidden compatibility references for legacy scripts -->
+    <div style="display:none;" id="legacy-header-shims">
+      <span id="ts-homeaway">Home</span>
+      <span id="ts-jersey">White</span>
+      <a id="gamesheet-live-link" href="#">Stats</a>
+      <span id="top-tray-count">0</span>
+      <button id="top-nav-btn-coaches"></button>
+      <button id="top-nav-btn-breakouts"></button>
+      <button id="top-nav-btn-player"></button>
+      <button id="top-nav-btn-tray"></button>
+      <button id="top-nav-btn-feedback"></button>
+      <button id="top-nav-btn-schedule"></button>
+      <button id="header-schedule-btn"></button>
+      <button id="header-team-admin-btn"></button>
+      <button id="ai-status-badge"></button>
+      <div id="admin-quick-bar"></div>
+      <div id="team-unlock-meter-card"></div>
+      <button id="floating-flyout-btn"></button>
+      <div id="flyout-backdrop"></div>
     </div>
 
-    <!-- ================= SPLIT-SCREEN WORKSPACE ================= -->
+<!-- ================= SPLIT-SCREEN WORKSPACE ================= -->
     <div id="workspace-grid" class="grid grid-cols-1 lg:grid-cols-12 gap-3 items-start relative">
       
       <!-- LEFT COLUMN (7/12 on lg, 8/12 on xl in split mode; floating PiP in expanded mode) -->
@@ -6914,20 +6892,20 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
 
     function updateRoleBadge() {
       const badge = document.getElementById('role-badge');
+      const badgeText = document.getElementById('role-badge-text');
       if (badge) {
+        let roleName = "Coach Mode";
+        let roleColor = "text-amber-400";
         if (currentRole === 'admin') {
-          badge.innerHTML = "⚙️ Admin Mode";
-          badge.className = "px-2.5 py-1 rounded-lg text-[10px] font-black uppercase bg-indigo-100 text-indigo-950 border-2 border-indigo-400 shadow-xs cursor-pointer hover:bg-indigo-200 transition";
-          badge.title = "Click to switch role (Admin, Coach, Parent)";
-        } else if (currentRole === 'coach') {
-          badge.innerHTML = "👨‍🏫 Coach Mode";
-          badge.className = "px-2.5 py-1 rounded-lg text-[10px] font-black uppercase bg-amber-100 text-amber-950 border-2 border-amber-400 shadow-xs cursor-pointer hover:bg-amber-200 transition";
-          badge.title = "Click to switch role (Admin, Coach, Parent)";
-        } else {
-          badge.innerHTML = "👪 Parent View";
-          badge.className = "px-2.5 py-1 rounded-lg text-[10px] font-black uppercase bg-emerald-50 text-emerald-950 border-2 border-emerald-300 shadow-xs cursor-pointer hover:bg-emerald-100 transition";
-          badge.title = "Click to switch role (Admin, Coach, Parent)";
+          roleName = "Admin Mode";
+          roleColor = "text-indigo-400";
+        } else if (currentRole === 'parent') {
+          roleName = "Parent View";
+          roleColor = "text-emerald-400";
         }
+        badge.innerHTML = `<span class="text-slate-400 text-[10px]">Logged in as:</span> <strong id="role-badge-text" class="${roleColor}">${roleName}</strong>`;
+        badge.className = "px-2.5 py-1 text-[11px] font-bold bg-[var(--bg-panel)] text-slate-200 border border-[var(--border-color)] cursor-pointer hover:bg-slate-800 transition flex items-center gap-1.5";
+        badge.title = "Click to switch role (Admin, Coach, Parent)";
       }
     }
 
@@ -8518,6 +8496,7 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
     }
 
     function switchViewMode(mode) {
+      if (typeof updateFunctionalNavActiveState === 'function') updateFunctionalNavActiveState(mode);
       currentMode = mode;
 
       // 1. Update Sidebar 5-Tab Buttons
@@ -18406,6 +18385,75 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
       } else {
         showToast("Please enter a valid stream URL.");
       }
+    }
+
+
+    // =========================================================================
+    // FUNCTIONAL TOP MENU ROUTERS & ALERTS POPOVER
+    // =========================================================================
+
+    function openTournamentHubModal() {
+      if (typeof openScheduleHubModal === 'function') openScheduleHubModal();
+      if (typeof setScheduleHubTab === 'function') setScheduleHubTab('lakeplacid');
+    }
+
+    function openPreGameScoutModal() {
+      const targetId = (currentGame && currentGame.id) ? currentGame.id : 'lake_placid_1';
+      if (typeof openPreGamePreviewForGame === 'function') {
+        openPreGamePreviewForGame(targetId);
+      } else {
+        openScheduleHubModal();
+      }
+    }
+
+    function toggleAlertsDropdown(forceState) {
+      const menu = document.getElementById('alerts-dropdown-menu');
+      if (!menu) return;
+      if (forceState !== undefined) {
+        if (forceState) {
+          menu.classList.remove('hidden');
+        } else {
+          menu.classList.add('hidden');
+        }
+      } else {
+        menu.classList.toggle('hidden');
+      }
+    }
+
+    // Dismiss alerts dropdown on outside click
+    document.addEventListener('click', function(e) {
+      const menu = document.getElementById('alerts-dropdown-menu');
+      const btn = document.getElementById('nav-btn-alerts');
+      if (menu && !menu.classList.contains('hidden') && btn && !btn.contains(e.target) && !menu.contains(e.target)) {
+        menu.classList.add('hidden');
+      }
+    });
+
+    // Update functional nav button active states in switchViewMode
+    function updateFunctionalNavActiveState(mode) {
+      const navMap = {
+        'breakouts': 'nav-btn-analytics',
+        'live_stream': 'nav-btn-live',
+        'coaches': 'nav-btn-gametape',
+        'player_analytics': 'nav-btn-passport'
+      };
+
+      ['nav-btn-analytics', 'nav-btn-live', 'nav-btn-schedule', 'nav-btn-gametape', 'nav-btn-pregame', 'nav-btn-tournament', 'nav-btn-passport'].forEach(id => {
+        const btn = document.getElementById(id);
+        if (btn) {
+          if (navMap[mode] === id) {
+            btn.classList.add('active-nav-btn', 'text-amber-400', 'bg-[var(--bg-panel)]', 'border-amber-400/60');
+            btn.classList.remove('text-slate-300', 'border-transparent');
+          } else {
+            btn.classList.remove('active-nav-btn', 'text-amber-400', 'border-amber-400/60');
+            if (id === 'nav-btn-live') {
+              btn.classList.add('text-rose-400');
+            } else {
+              btn.classList.add('text-slate-300');
+            }
+          }
+        }
+      });
     }
 
 </script>

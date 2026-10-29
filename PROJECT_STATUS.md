@@ -256,12 +256,24 @@ Every player is cataloged with jersey number, primary position, shooting hand, a
 - **Special Teams Integration (Real-Time PP & PK Engine):**
   - **Active Penalty State Listener:** Dynamic penalty event tracker monitoring official GameSheet penalty feeds and shift strength classifications (`PP`, `PK`, `5v4`, `4v5`, `5v3`).
   - **Header & Overlay Special Teams Badges:** Injects high-visibility dynamic badges into the central live scoreboard (`#home-st-status`, `#away-st-status`) and video HUD (`#v-special-teams`), highlighting active Powerplays in primary team gold (`--primary-team-color`, `.active-pp`) and Penalty Kills in alert red (`--alert-red`, `.active-pk`) with a ticking countdown timer.
-- **Dynamic Theming Engine & Sharp Geometry Architecture:**
-  - **Global CSS Variables:** Injected `:root` design tokens (`--bg-base`, `--bg-surface`, `--bg-panel`, `--border-color`, `--primary-team-color`, `--secondary-team-color`, `--text-on-primary`, `--alert-red`, `--success-green`, `--sharp-radius`, `--micro-radius`).
-  - **Admin Multi-Team Color Pickers:** Interactive hex-code color pickers in Team Admin allowing coaches to reskin team colors on the fly with automatic persistence in `localStorage` and Firestore.
-  - **Sharp Pro Geometry (Hudl / InStat Mode):** One-click toggle (`[ 📐 Sharp Mode ]` / `toggleSharpGeometry()`) reducing component border-radius to 0px / 2px across cards, buttons, badges, and modals for high-density sports science analytics.
-- **Unified Pro Header & Dual-Pane Architecture:**
-  - Integrated `.unified-header`, `.live-scoreboard`, `.score-box`, `.btn-sharp`, `.workspace-pane`, `.media-track-frame`, and `.analytics-data-sidebar` into the core Antigravity layout.
+- **Standardized Pro Dark Theme & Permanent Sharp Geometry:**
+  - Standardized the entire portal under a cohesive, high-contrast, professional sports analytics dark palette (`--bg-base: #0c0d12`, `--bg-surface: #13151d`, `--bg-panel: #181b24`, `--border-color: #272a38`, `--primary-team-color: #FDBB30`, `--text-main: #f8fafc`, `--text-muted: #94a3b8`).
+  - Permanently standardized sharp geometry (`0px` border-radius for cards, panels, headers, tables, modals; `2px` micro-radius for inputs and controls) across all views. Removed the temporary toggle button so the sharp pro sports analytics design language is permanently active site-wide.
+- **Top Menu Reorganization by Function:**
+  - Restructured the primary top navigation bar into clear functional categories:
+    1. **`📊 Analytics`**: Team Analytics, breakout rates, and zone possession distributions.
+    2. **`🔴 Live Games`**: In-app live stream player with Game Day Live Center HUD.
+    3. **`📅 Schedule`**: Season & tournament schedule calendar with game linking.
+    4. **`🎬 Game Tape`**: Recorded games film archive, shift breakdown, and continuous reel auto-advance.
+    5. **`🏒 Pre-Game`**: Opponent scouting dossier, danger players, and head-to-head preview.
+    6. **`🏆 Tournament Hub`**: Lake Placid CAN/AM showcase and tournament brackets.
+    7. **`🪪 Player Passport`**: Complete player dossiers, career lockers, and verified scout reels.
+    8. **`🔔 Alerts`**: Interactive notifications drop-panel surfacing upcoming game fixtures, analytics completed status from recent games, and coach notes.
+  - **Top-Right Context Menu:**
+    - `👤 Logged in as: [Role Badge]` (displays active role, click to switch)
+    - `💬 Feedback` (opens lightweight feedback modal dialog)
+    - `❓ How to Use` (opens user guide & FAQ modal)
+    - `⚙️ Admin` (opens team onboarding & administration hub)
 
 ---
 
