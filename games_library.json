@@ -2480,7 +2480,9 @@
             "Blue Line": 5
           }
         }
-      }
+      },
+      "game_title": "20.10.2026 - Tigers 1 - Newmarket 9",
+      "youtubeId": "jlZoOVrO0kQ"
     },
     {
       "id": "game_IjPhCAFZStc",
@@ -4873,7 +4875,9 @@
             "Blue Line": 6
           }
         }
-      }
+      },
+      "game_title": "11.10.2026 - Tigers 0 - Islanders 8",
+      "youtubeId": "IjPhCAFZStc"
     },
     {
       "id": "game_p18H81X2Bp0",
@@ -7356,7 +7360,9 @@
             "Blue Line": 5
           }
         }
-      }
+      },
+      "game_title": "04.10.2026 - Tigers 1 - Upper York 11",
+      "youtubeId": "p18H81X2Bp0"
     },
     {
       "id": "game_KxRUQu2z-Ao",
@@ -9751,11 +9757,13 @@
             "Blue Line": 4
           }
         }
-      }
+      },
+      "game_title": "03.10.2026 - Tigers 0 - Caledon 12",
+      "youtubeId": "KxRUQu2z-Ao"
     },
     {
       "id": "game_DYH1Kgffsjc",
-      "title": "26 09 2026   Tigers 0   Welland 8",
+      "title": "26.09.2026 - Tigers 0 - Welland 8",
       "youtube_video_id": "DYH1Kgffsjc",
       "date": "2026-09-26",
       "opponent": "League Match",
@@ -12066,11 +12074,13 @@
             "Blue Line": 6
           }
         }
-      }
+      },
+      "game_title": "26.09.2026 - Tigers 0 - Welland 8",
+      "youtubeId": "DYH1Kgffsjc"
     },
     {
       "id": "game_GywcR8aeMY8",
-      "title": "09 25 2026   Tigers 0   Jr Navy 14",
+      "title": "25.09.2026 - Tigers 0 - Jr Navy 14",
       "youtube_video_id": "GywcR8aeMY8",
       "date": "2026-09-25",
       "opponent": "League Match",
@@ -14460,11 +14470,13 @@
             "Blue Line": 6
           }
         }
-      }
+      },
+      "game_title": "25.09.2026 - Tigers 0 - Jr Navy 14",
+      "youtubeId": "GywcR8aeMY8"
     },
     {
       "id": "game_NhSdyb8rVPA",
-      "title": "09 19 2026   North Durham 10   Aurora 1",
+      "title": "19.09.2026 - Tigers 1 - North Durham 10",
       "youtube_video_id": "NhSdyb8rVPA",
       "date": "2026-09-19",
       "opponent": "League Match",
@@ -16766,7 +16778,9 @@
             "Blue Line": 5
           }
         }
-      }
+      },
+      "game_title": "19.09.2026 - Tigers 1 - North Durham 10",
+      "youtubeId": "NhSdyb8rVPA"
     }
   ]
 }

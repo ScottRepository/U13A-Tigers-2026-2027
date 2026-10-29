@@ -43,34 +43,36 @@
   </script>
       <style>
   /* 
-   * STANDARDIZED PRO SPORTS ANALYTICS COLOR PALETTE & PERMANENT SHARP GEOMETRY
-   * Hudl / InStat / Catapult Inspired Architecture
+   * CUSTOMIZABLE MULTI-TEAM THEME ENGINE & PERMANENT SHARP GEOMETRY
+   * Defaulted to Lighter, Crisp "Ice Light" Pro Analytics Surface
    */
   :root {
-    --bg-base: #0c0d12;
-    --bg-surface: #13151d;
-    --bg-panel: #181b24;
-    --border-color: #272a38;
-    --border-subtle: #1e212c;
+    --bg-base: #eef2f6;
+    --bg-surface: #f8fafc;
+    --bg-panel: #ffffff;
+    --border-color: #cbd5e1;
+    --border-subtle: #e2e8f0;
     
-    --primary-team-color: #FDBB30; /* Tigers Gold */
-    --secondary-team-color: #000000;
-    --text-on-primary: #000000;
+    --primary-team-color: #FDBB30; /* Tigers Gold (Team Configurable) */
+    --secondary-team-color: #0f172a; /* Tigers Slate/Black (Team Configurable) */
+    --accent-text-color: #b45309; /* High-contrast accent text on light surfaces */
+    --text-on-primary: #0f172a;
     
-    --text-main: #f8fafc;
-    --text-muted: #94a3b8;
+    --text-main: #0f172a;
+    --text-muted: #334155;
     --text-dim: #64748b;
+    --theme-color-scheme: light;
     
-    --alert-red: #ef4444;
-    --success-green: #10b981;
-    --accent-blue: #38bdf8;
+    --alert-red: #dc2626;
+    --success-green: #059669;
+    --accent-blue: #0284c7;
     
     /* Permanent Global Sharp Geometry (No Toggle) */
     --sharp-radius: 0px; 
     --micro-radius: 2px;
   }
 
-  /* Global Reset & Permanent Dark Theme */
+  /* Global Reset & Customizable Theme Canvas */
   body {
     background-color: var(--bg-base) !important;
     color: var(--text-main) !important;
@@ -100,15 +102,10 @@
     border-radius: var(--micro-radius) !important;
   }
 
-  /* Standardized Dark Theme Surfaces */
+  /* Standardized Customizable Surfaces */
   .bg-white,
   .bg-slate-50,
-  .bg-slate-100 {
-    background-color: var(--bg-panel) !important;
-    border-color: var(--border-color) !important;
-    color: var(--text-main) !important;
-  }
-
+  .bg-slate-100,
   #video-card-container,
   #sidebar-column,
   .data-card {
@@ -117,22 +114,80 @@
     color: var(--text-main) !important;
   }
 
-  /* Standardized Typography in Dark Theme */
-  .text-slate-900,
-  .text-slate-800,
-  .text-slate-700 {
+  /* Adapt Dark-Coded Containers to Active Theme (Except Video Stage Overlay) */
+  .bg-slate-950:not(#live-offline-placeholder),
+  .bg-slate-900,
+  .bg-slate-800,
+  .bg-slate-700,
+  .bg-slate-800\/90,
+  .bg-slate-800\/80,
+  .bg-slate-900\/90,
+  .bg-slate-900\/80,
+  .bg-slate-950\/90,
+  .bg-slate-950\/80 {
+    background-color: var(--bg-surface) !important;
+    border-color: var(--border-color) !important;
     color: var(--text-main) !important;
   }
 
-  /* High-Contrast Black Text on Primary Tigers Gold Buttons & Badges */
+  /* Keep Video Canvas Overlays Dark for Legibility Over Game Video */
+  #video-container .bg-slate-950\/85,
+  #video-container .bg-slate-900\/95,
+  #video-container .bg-slate-900\/90,
+  #live-offline-placeholder {
+    background-color: rgba(15, 23, 42, 0.92) !important;
+    color: #f8fafc !important;
+    border-color: #334155 !important;
+  }
+  #video-container .text-white,
+  #live-offline-placeholder .text-white {
+    color: #f8fafc !important;
+  }
+
+  /* Standardized Theme Typography */
+  .text-slate-950,
+  .text-slate-900,
+  .text-slate-800,
+  .text-slate-700,
+  .text-white:not(#exit-fullscreen-btn):not(#exit-fullscreen-btn *):not(.active-pk),
+  .text-slate-100,
+  .text-slate-200 {
+    color: var(--text-main) !important;
+  }
+
+  .text-slate-600,
+  .text-slate-500,
+  .text-slate-300 {
+    color: var(--text-muted) !important;
+  }
+
+  .text-slate-400 {
+    color: var(--text-dim) !important;
+  }
+
+  /* Dynamic Team Primary Color Binding across all Gold/Accent Elements */
   .bg-tigersGold,
   .bg-tigersGoldBright,
   .bg-amber-400,
   .bg-amber-500 {
+    background-color: var(--primary-team-color) !important;
     color: var(--text-on-primary) !important;
   }
 
-  /* Standardize All Pastel Light-Mode Surfaces into Cohesive Dark Panels */
+  .text-tigersGold,
+  .text-amber-400,
+  .text-amber-300,
+  .text-amber-700, .text-amber-800, .text-amber-900, .text-amber-950 {
+    color: var(--accent-text-color) !important;
+  }
+
+  .border-tigersGold,
+  .border-amber-400,
+  .border-amber-500 {
+    border-color: var(--primary-team-color) !important;
+  }
+
+  /* Standardize All Pastel Surfaces into Cohesive Elevated Theme Surfaces */
   .bg-slate-200,
   .bg-amber-50, .bg-amber-50\/50, .bg-amber-50\/70, .bg-amber-100, .bg-amber-200,
   .bg-emerald-50, .bg-emerald-50\/50, .bg-emerald-100, .bg-emerald-200,
@@ -145,23 +200,20 @@
     color: var(--text-main) !important;
   }
 
-  /* Standardize Dark Pastel Typography to Clean High-Contrast Readability */
-  .text-amber-700, .text-amber-800, .text-amber-900, .text-amber-950 {
-    color: var(--primary-team-color) !important;
+  /* Semantic Status Text Colors */
+  .text-emerald-400, .text-emerald-600, .text-emerald-700, .text-emerald-800, .text-emerald-900, .text-emerald-950 {
+    color: var(--success-green) !important;
   }
-  .text-emerald-700, .text-emerald-800, .text-emerald-900, .text-emerald-950 {
-    color: #34d399 !important;
+  .text-rose-400, .text-rose-600, .text-rose-700, .text-rose-800, .text-rose-900, .text-rose-950 {
+    color: var(--alert-red) !important;
   }
-  .text-rose-700, .text-rose-800, .text-rose-900, .text-rose-950 {
-    color: #f87171 !important;
-  }
-  .text-sky-700, .text-sky-800, .text-sky-900, .text-sky-950,
+  .text-sky-300, .text-sky-400, .text-sky-700, .text-sky-800, .text-sky-900, .text-sky-950,
   .text-indigo-700, .text-indigo-800, .text-indigo-900, .text-indigo-950,
   .text-blue-800 {
-    color: var(--text-main) !important;
+    color: var(--accent-blue) !important;
   }
 
-  /* Unify Rainbow Action Buttons (Indigo/Purple/Sky) into Pro Dark Carbon & Gold */
+  /* Unify Secondary Action Buttons into Standardized Theme Surface */
   .bg-indigo-600, .bg-indigo-500, .bg-purple-600, .bg-sky-600, .bg-sky-500 {
     background-color: var(--bg-surface) !important;
     color: var(--text-main) !important;
@@ -170,22 +222,13 @@
   .bg-indigo-600:hover, .bg-indigo-500:hover, .bg-purple-600:hover, .bg-sky-600:hover, .bg-sky-500:hover {
     background-color: var(--bg-panel) !important;
     border-color: var(--primary-team-color) !important;
-    color: var(--primary-team-color) !important;
+    color: var(--accent-text-color) !important;
   }
 
-  /* Standardize Multi-Color Gradients to Clean Pro Dark Surface */
+  /* Standardize Gradients to Clean Theme Panel */
   .bg-gradient-to-r, .bg-gradient-to-br {
     background-image: none !important;
     background-color: var(--bg-panel) !important;
-  }
-
-  .text-slate-600,
-  .text-slate-500 {
-    color: var(--text-muted) !important;
-  }
-
-  .text-slate-400 {
-    color: var(--text-dim) !important;
   }
 
   .border-slate-200,
@@ -195,12 +238,13 @@
     border-color: var(--border-color) !important;
   }
 
-  /* Dropdown Styles */
-  select, select:focus, select:active, select:hover {
+  /* Dropdown & Form Input Styles */
+  select, select:focus, select:active, select:hover,
+  input[type="text"], input[type="password"], input[type="url"], input[type="number"], textarea {
     background-color: var(--bg-surface) !important;
     color: var(--text-main) !important;
     border: 1px solid var(--border-color) !important;
-    color-scheme: dark !important;
+    color-scheme: var(--theme-color-scheme) !important;
     outline: none !important;
   }
   select option {
@@ -210,7 +254,7 @@
   }
   select option:checked, select option:hover {
     background-color: var(--bg-surface) !important;
-    color: var(--primary-team-color) !important;
+    color: var(--accent-text-color) !important;
   }
 
   /* Custom Scrollbar */
@@ -222,15 +266,16 @@
   /* Top Functional Navigation Buttons */
   .nav-functional-btn {
     transition: all 0.15s ease;
+    color: var(--text-muted);
   }
   .nav-functional-btn:hover {
     background-color: var(--bg-panel);
-    color: #ffffff;
+    color: var(--text-main);
     border-color: var(--border-color);
   }
   .nav-functional-btn.active-nav-btn {
-    background-color: var(--bg-panel) !important;
-    color: var(--primary-team-color) !important;
+    background-color: var(--primary-team-color) !important;
+    color: var(--text-on-primary) !important;
     border-color: var(--primary-team-color) !important;
   }
 
@@ -251,6 +296,7 @@
     font-weight: 700;
     font-size: 0.85rem;
     text-transform: uppercase;
+    color: var(--text-main);
   }
 
   .score-box {
@@ -261,7 +307,7 @@
     font-weight: bold;
     min-width: 26px;
     text-align: center;
-    color: #ffffff;
+    color: var(--text-main);
   }
 
   .game-clock {
@@ -269,7 +315,7 @@
     background: var(--bg-surface);
     border: 1px solid var(--border-color);
     border-radius: var(--sharp-radius);
-    color: var(--primary-team-color);
+    color: var(--accent-text-color);
     font-weight: 700;
     font-size: 0.82rem;
     letter-spacing: 0.5px;
@@ -4085,80 +4131,125 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
             <span id="alerts-unread-badge" class="px-1.5 py-0.2 bg-amber-500 text-slate-950 font-mono font-black text-[10px]">3</span>
           </button>
           
-          <!-- Alerts Dropdown Panel -->
+          <!-- Alerts Dropdown Panel (100% Dynamic) -->
           <div id="alerts-dropdown-menu" class="hidden absolute top-full mt-2 left-1/2 -translate-x-1/2 sm:translate-x-0 sm:left-auto sm:right-0 w-80 sm:w-96 bg-[var(--bg-panel)] border border-[var(--border-color)] shadow-2xl p-3 z-50 animate-in fade-in zoom-in-95 duration-100 text-left">
             <div class="flex items-center justify-between pb-2 border-b border-[var(--border-color)] mb-2.5">
               <span class="font-bold uppercase text-[10px] tracking-wider text-amber-400 flex items-center gap-1.5">
                 <span>🔔</span> <span>Team Notifications &amp; Alerts</span>
               </span>
-              <span class="text-[10px] font-mono text-slate-400">3 New</span>
+              <div class="flex items-center gap-2">
+                <button onclick="renderDynamicAlertsMenu(true)" class="text-[10px] font-bold text-sky-400 hover:underline cursor-pointer">↻ Refresh</button>
+                <span id="alerts-header-count-label" class="text-[10px] font-mono text-slate-400">3 Active</span>
+              </div>
             </div>
             
-            <div class="space-y-2 text-xs">
-              <!-- Alert 1: Upcoming Game -->
-              <div onclick="openScheduleHubModal(); toggleAlertsDropdown(false);" class="p-2.5 bg-[var(--bg-surface)] hover:bg-slate-800 border border-[var(--border-color)] cursor-pointer transition space-y-1">
-                <div class="flex items-center justify-between">
-                  <span class="text-[10px] font-black uppercase text-amber-400 flex items-center gap-1">
-                    <span>📅</span> <span>Upcoming Game</span>
-                  </span>
-                  <span class="text-[9px] font-mono text-slate-400">Nov 6 • 1:15 PM</span>
-                </div>
-                <div class="font-bold text-white text-[11px]">
-                  CAN/AM Challenge Cup vs Boston Jr. Terriers
-                </div>
-                <div class="text-[10px] text-slate-400">
-                  Lake Placid Olympic Center (1980 Rink). Check schedule for lineup.
-                </div>
-              </div>
-
-              <!-- Alert 2: Analytics Completed -->
-              <div onclick="switchViewMode('breakouts'); toggleAlertsDropdown(false);" class="p-2.5 bg-[var(--bg-surface)] hover:bg-slate-800 border border-[var(--border-color)] cursor-pointer transition space-y-1">
-                <div class="flex items-center justify-between">
-                  <span class="text-[10px] font-black uppercase text-emerald-400 flex items-center gap-1">
-                    <span>📊</span> <span>Analytics Completed</span>
-                  </span>
-                  <span class="text-[9px] font-mono text-slate-400">88% AI Precision</span>
-                </div>
-                <div class="font-bold text-white text-[11px]">
-                  Film Breakdown: 20.10.2026 vs Newmarket
-                </div>
-                <div class="text-[10px] text-slate-400">
-                  38 shifts tagged. Breakout success &amp; zone possession metrics calculated.
-                </div>
-              </div>
-
-              <!-- Alert 3: Coach Notes -->
-              <div onclick="switchViewMode('film_tray'); toggleAlertsDropdown(false);" class="p-2.5 bg-[var(--bg-surface)] hover:bg-slate-800 border border-[var(--border-color)] cursor-pointer transition space-y-1">
-                <div class="flex items-center justify-between">
-                  <span class="text-[10px] font-black uppercase text-sky-400 flex items-center gap-1">
-                    <span>📋</span> <span>Coach Notes Added</span>
-                  </span>
-                  <span class="text-[9px] font-mono text-slate-400">3 Clips</span>
-                </div>
-                <div class="font-bold text-white text-[11px]">
-                  Tactical Homework in Coaching Film Tray
-                </div>
-                <div class="text-[10px] text-slate-400">
-                  Coach Carpentier bookmarked 3 plays: D-to-D breakout, net-front defense.
-                </div>
-              </div>
+            <div id="alerts-dynamic-list" class="space-y-2 text-xs">
+              <!-- Populated dynamically by renderDynamicAlertsMenu() -->
             </div>
 
             <div class="pt-2 mt-2 border-t border-[var(--border-color)] flex items-center justify-between text-[10px]">
-              <span class="text-slate-500 font-mono">Aurora Tigers U13A AI Sync</span>
-              <button onclick="toggleAlertsDropdown(false)" class="text-amber-400 hover:underline cursor-pointer font-bold">Dismiss</button>
+              <button onclick="markAllAlertsRead()" class="text-slate-400 hover:text-slate-900 cursor-pointer font-bold">✓ Mark All Read</button>
+              <button onclick="toggleAlertsDropdown(false)" class="text-amber-400 hover:underline cursor-pointer font-bold">Close</button>
             </div>
           </div>
         </div>
 
       </div>
 
-      <!-- Right: User Context ("logged in as"), Feedback & Guide Menu -->
+      <!-- Right: User Context ("logged in as"), Theme Customizer, Feedback & Guide Menu -->
       <div class="flex items-center gap-1.5 shrink-0">
         <button onclick="openRoleSwitchModal()" id="role-badge" title="Click to switch role (Admin, Coach, Parent)" class="px-2.5 py-1 text-[11px] font-bold bg-[var(--bg-panel)] text-slate-200 border border-[var(--border-color)] cursor-pointer hover:bg-slate-800 transition flex items-center gap-1.5">
           <span class="text-slate-400 text-[10px]">Logged in as:</span>
           <strong id="role-badge-text" class="text-amber-400">Coach Mode</strong>
         </button>
+
+        <!-- Multi-Team Theme & Surface Customizer Popover -->
+        <div class="relative">
+          <button onclick="toggleThemeCustomizerDropdown()" id="nav-btn-theme" title="Customize Team Colors &amp; Surface Brightness" class="px-2.5 py-1 text-[11px] font-bold bg-[var(--bg-panel)] text-slate-200 border border-[var(--border-color)] cursor-pointer transition flex items-center gap-1">
+            <span>🎨</span> <span class="hidden sm:inline">Theme</span>
+          </button>
+
+          <div id="theme-customizer-dropdown" class="hidden absolute top-full mt-2 right-0 w-80 bg-[var(--bg-panel)] border border-[var(--border-color)] shadow-2xl p-3.5 z-50 text-left space-y-3">
+            <div class="flex items-center justify-between pb-2 border-b border-[var(--border-color)]">
+              <span class="font-bold uppercase text-[10px] tracking-wider text-amber-400 flex items-center gap-1.5">
+                <span>🎨</span> <span>Team Appearance &amp; Theme Control</span>
+              </span>
+              <button onclick="resetTeamThemeToDefault()" class="text-[10px] font-bold text-slate-400 hover:underline cursor-pointer">Reset Default</button>
+            </div>
+
+            <!-- 1. Surface Brightness Mode -->
+            <div class="space-y-1.5">
+              <label class="block text-[10px] font-bold uppercase tracking-wider text-slate-400">1. Surface Brightness (Light / Slate / Dark)</label>
+              <div class="grid grid-cols-3 gap-1.5">
+                <button type="button" onclick="applySurfaceBrightnessMode('light')" id="theme-mode-btn-light" class="py-1.5 px-2 text-[10px] font-bold border border-[var(--border-color)] bg-[var(--bg-surface)] cursor-pointer flex items-center justify-center gap-1">
+                  <span>☀️</span> <span>Ice Light</span>
+                </button>
+                <button type="button" onclick="applySurfaceBrightnessMode('slate')" id="theme-mode-btn-slate" class="py-1.5 px-2 text-[10px] font-bold border border-[var(--border-color)] bg-[var(--bg-surface)] cursor-pointer flex items-center justify-center gap-1">
+                  <span>🌤️</span> <span>Soft Slate</span>
+                </button>
+                <button type="button" onclick="applySurfaceBrightnessMode('dark')" id="theme-mode-btn-dark" class="py-1.5 px-2 text-[10px] font-bold border border-[var(--border-color)] bg-[var(--bg-surface)] cursor-pointer flex items-center justify-center gap-1">
+                  <span>🌙</span> <span>Arena Dark</span>
+                </button>
+              </div>
+            </div>
+
+            <!-- 2. Team Color Presets -->
+            <div class="space-y-1.5">
+              <label class="block text-[10px] font-bold uppercase tracking-wider text-slate-400">2. Organization Color Presets</label>
+              <div class="grid grid-cols-2 gap-1.5 text-[10px] font-bold">
+                <button type="button" onclick="applyTeamColorPreset('#FDBB30', '#0f172a', '#0f172a', 'Aurora Tigers Gold')" class="p-1.5 border border-[var(--border-color)] bg-[var(--bg-surface)] hover:border-amber-400 cursor-pointer flex items-center gap-1.5">
+                  <span style="width:12px;height:12px;background:#FDBB30;border:1px solid #0f172a;display:inline-block;"></span>
+                  <span>Tigers Gold</span>
+                </button>
+                <button type="button" onclick="applyTeamColorPreset('#2563eb', '#1e3a8a', '#ffffff', 'Royal Blue & Navy')" class="p-1.5 border border-[var(--border-color)] bg-[var(--bg-surface)] hover:border-amber-400 cursor-pointer flex items-center gap-1.5">
+                  <span style="width:12px;height:12px;background:#2563eb;border:1px solid #1e3a8a;display:inline-block;"></span>
+                  <span>Royal Blue</span>
+                </button>
+                <button type="button" onclick="applyTeamColorPreset('#dc2626', '#18181b', '#ffffff', 'Crimson Red & Black')" class="p-1.5 border border-[var(--border-color)] bg-[var(--bg-surface)] hover:border-amber-400 cursor-pointer flex items-center gap-1.5">
+                  <span style="width:12px;height:12px;background:#dc2626;border:1px solid #18181b;display:inline-block;"></span>
+                  <span>Crimson Red</span>
+                </button>
+                <button type="button" onclick="applyTeamColorPreset('#059669', '#064e3b', '#ffffff', 'Knights Emerald')" class="p-1.5 border border-[var(--border-color)] bg-[var(--bg-surface)] hover:border-amber-400 cursor-pointer flex items-center gap-1.5">
+                  <span style="width:12px;height:12px;background:#059669;border:1px solid #064e3b;display:inline-block;"></span>
+                  <span>Emerald Green</span>
+                </button>
+                <button type="button" onclick="applyTeamColorPreset('#ea580c', '#1c1917', '#ffffff', 'Flyers Orange')" class="p-1.5 border border-[var(--border-color)] bg-[var(--bg-surface)] hover:border-amber-400 cursor-pointer flex items-center gap-1.5">
+                  <span style="width:12px;height:12px;background:#ea580c;border:1px solid #1c1917;display:inline-block;"></span>
+                  <span>Flyers Orange</span>
+                </button>
+                <button type="button" onclick="applyTeamColorPreset('#0284c7', '#0c4a6e', '#ffffff', 'Ice Cyan & Navy')" class="p-1.5 border border-[var(--border-color)] bg-[var(--bg-surface)] hover:border-amber-400 cursor-pointer flex items-center gap-1.5">
+                  <span style="width:12px;height:12px;background:#0284c7;border:1px solid #0c4a6e;display:inline-block;"></span>
+                  <span>Ice Cyan</span>
+                </button>
+              </div>
+            </div>
+
+            <!-- 3. Custom Team Color Pickers -->
+            <div class="space-y-2 pt-1 border-t border-[var(--border-color)]">
+              <label class="block text-[10px] font-bold uppercase tracking-wider text-slate-400">3. Custom Team Palette</label>
+              <div class="grid grid-cols-3 gap-2 text-[10px]">
+                <div>
+                  <span class="block text-slate-400 mb-0.5 font-semibold">Primary</span>
+                  <input type="color" id="quick-theme-primary" value="#FDBB30" oninput="updateTeamColors(this.value, null, null)" class="w-full h-7 cursor-pointer border border-[var(--border-color)] bg-transparent p-0.5">
+                </div>
+                <div>
+                  <span class="block text-slate-400 mb-0.5 font-semibold">Secondary</span>
+                  <input type="color" id="quick-theme-secondary" value="#0f172a" oninput="updateTeamColors(null, this.value, null)" class="w-full h-7 cursor-pointer border border-[var(--border-color)] bg-transparent p-0.5">
+                </div>
+                <div>
+                  <span class="block text-slate-400 mb-0.5 font-semibold">Canvas Bg</span>
+                  <input type="color" id="quick-theme-bg" value="#eef2f6" oninput="applyCustomCanvasBackground(this.value)" class="w-full h-7 cursor-pointer border border-[var(--border-color)] bg-transparent p-0.5">
+                </div>
+              </div>
+            </div>
+
+            <div class="pt-1 border-t border-[var(--border-color)] flex items-center justify-between text-[10px]">
+              <button onclick="openTeamOnboardingModal(); toggleThemeCustomizerDropdown(false);" class="text-sky-400 hover:underline cursor-pointer font-bold">⚙️ Full Team Admin</button>
+              <button onclick="toggleThemeCustomizerDropdown(false)" class="px-2.5 py-1 bg-tigersGold font-black cursor-pointer">Done</button>
+            </div>
+          </div>
+        </div>
+
         <button onclick="openFeedbackModal()" title="Send shift corrections or tactical questions to coaches" class="px-2.5 py-1 text-[11px] font-bold bg-[var(--bg-panel)] text-slate-200 hover:text-white border border-[var(--border-color)] hover:border-amber-400/50 cursor-pointer transition flex items-center gap-1">
           <span>💬</span> <span class="hidden sm:inline">Feedback</span>
         </button>
@@ -4464,34 +4555,47 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
                 <button id="draw-toggle-btn" onclick="toggleDrawer('draw')" class="btn-sharp">
                   <span>🎨</span> <span>Draw</span>
                 </button>
-                <button id="gamesheet-align-btn" onclick="openGameSheetModal()" title="1-Click Auto-Align Clean Falcon Video with Official GameSheet Boxscore" class="btn-sharp">
-                  <span>⚡</span> <span>Align GameSheet</span>
-                </button>
-                <button id="xbot-bridge-btn" onclick="openXbotBridgeModal()" title="XbotGo Falcon ScoreSync Live Bridge" class="btn-sharp">
-                  <span>📹</span> <span>Xbot Bridge</span>
-                </button>
-                <button id="live-shift-logger-btn" onclick="openLiveShiftLoggerModal()" title="Bench / Stands 1-Touch Live Shift Logger" class="btn-sharp">
-                  <span>⏱️</span> <span>Live Log</span>
-                </button>
-                <button id="teamsnap-recap-btn" onclick="openTeamSnapRecapModal()" title="1-Click Official GameSheet Match Recap &amp; Highlights" class="btn-sharp">
-                  <span>📋</span> <span>Game Recap</span>
-                </button>
-                <button id="player-vs-pro-btn" onclick="openPlayerVsProModal()" title="Side-by-Side Player vs. Pro Video Breakdown" class="btn-sharp">
-                  <span>🆚</span> <span>Pro Compare</span>
-                </button>
-                <button id="player-huddle-btn" onclick="openPlayerHuddleModal(currentJersey === 'all' ? '23' : currentJersey)" title="1-on-1 Film Huddle & Pre-Practice Meeting Room" class="btn-sharp">
-                  <span>👥</span> <span>1:1 Huddle</span>
-                </button>
-                <button id="practice-drills-btn" onclick="openPracticeDrillsModal()" title="AI Practice Drill Cards" class="btn-sharp">
-                  <span>🏒</span> <span>Drills</span>
-                </button>
+
+                <!-- Grouped Coach & Broadcast Tools Popover -->
+                <div class="relative">
+                  <button id="coach-tools-menu-btn" onclick="toggleCoachToolsDropdown()" title="Open Coaching, GameSheet &amp; Broadcast Utilities" class="btn-sharp">
+                    <span>🛠️</span> <span>Coach Tools</span> <span>▾</span>
+                  </button>
+                  <div id="coach-tools-dropdown-menu" class="hidden absolute bottom-full mb-2 right-0 w-56 bg-[var(--bg-panel)] border border-[var(--border-color)] shadow-2xl p-2 z-50 space-y-1 text-left">
+                    <div class="px-2 py-1 text-[9px] font-bold uppercase tracking-wider text-slate-400 border-b border-[var(--border-color)] mb-1">
+                      Coaching &amp; Broadcast Utilities
+                    </div>
+                    <button id="gamesheet-align-btn" onclick="openGameSheetModal(); toggleCoachToolsDropdown(false);" class="w-full px-2.5 py-1.5 text-left text-[11px] font-bold hover:bg-[var(--bg-surface)] flex items-center gap-2 cursor-pointer">
+                      <span>⚡</span> <span>Align GameSheet</span>
+                    </button>
+                    <button id="xbot-bridge-btn" onclick="openXbotBridgeModal(); toggleCoachToolsDropdown(false);" class="w-full px-2.5 py-1.5 text-left text-[11px] font-bold hover:bg-[var(--bg-surface)] flex items-center gap-2 cursor-pointer">
+                      <span>📹</span> <span>Xbot Falcon Bridge</span>
+                    </button>
+                    <button id="live-shift-logger-btn" onclick="openLiveShiftLoggerModal(); toggleCoachToolsDropdown(false);" class="w-full px-2.5 py-1.5 text-left text-[11px] font-bold hover:bg-[var(--bg-surface)] flex items-center gap-2 cursor-pointer">
+                      <span>⏱️</span> <span>Live Shift Logger</span>
+                    </button>
+                    <button id="teamsnap-recap-btn" onclick="openTeamSnapRecapModal(); toggleCoachToolsDropdown(false);" class="w-full px-2.5 py-1.5 text-left text-[11px] font-bold hover:bg-[var(--bg-surface)] flex items-center gap-2 cursor-pointer">
+                      <span>📋</span> <span>GameSheet Match Recap</span>
+                    </button>
+                    <button id="player-vs-pro-btn" onclick="openPlayerVsProModal(); toggleCoachToolsDropdown(false);" class="w-full px-2.5 py-1.5 text-left text-[11px] font-bold hover:bg-[var(--bg-surface)] flex items-center gap-2 cursor-pointer">
+                      <span>🆚</span> <span>Pro Video Compare</span>
+                    </button>
+                    <button id="player-huddle-btn" onclick="openPlayerHuddleModal(currentJersey === 'all' ? '23' : currentJersey); toggleCoachToolsDropdown(false);" class="w-full px-2.5 py-1.5 text-left text-[11px] font-bold hover:bg-[var(--bg-surface)] flex items-center gap-2 cursor-pointer">
+                      <span>👥</span> <span>1:1 Player Huddle</span>
+                    </button>
+                    <button id="practice-drills-btn" onclick="openPracticeDrillsModal(); toggleCoachToolsDropdown(false);" class="w-full px-2.5 py-1.5 text-left text-[11px] font-bold hover:bg-[var(--bg-surface)] flex items-center gap-2 cursor-pointer">
+                      <span>🏒</span> <span>Practice Drill Cards</span>
+                    </button>
+                    <button id="link-part2-btn" onclick="openLinkPart2Modal(); toggleCoachToolsDropdown(false);" class="w-full px-2.5 py-1.5 text-left text-[11px] font-bold hover:bg-[var(--bg-surface)] flex items-center gap-2 cursor-pointer">
+                      <span>📹</span> <span>Link Part 2 Video</span>
+                    </button>
+                  </div>
+                </div>
+
                 <button id="tv-mode-btn" onclick="toggleTvPresentationMode()" title="Locker Room TV / Projector Fullscreen HDMI Mode" class="btn-sharp">
                   <span>📺</span> <span>TV Mode</span>
                 </button>
-                <button id="link-part2-btn" onclick="openLinkPart2Modal()" title="Link Part 2 Video (for split LiveBarn / phone recordings)" class="px-2.5 py-1 rounded-lg bg-slate-800 hover:bg-slate-700 text-sky-300 hover:text-white border border-slate-700 font-bold cursor-pointer transition text-[11px] flex items-center gap-1 shadow-xs">
-                  <span>📹</span> <span>Part 2</span>
-                </button>
-                <button id="theater-mode-btn" onclick="toggleTheaterMode()" title="Expand Video to Full Width for Big Screen Presentation" class="px-2.5 py-1 rounded-lg bg-slate-800 hover:bg-slate-700 text-amber-300 hover:text-amber-200 border border-slate-700 font-bold cursor-pointer transition text-[11px] flex items-center gap-1 shadow-xs">
+                <button id="theater-mode-btn" onclick="toggleTheaterMode()" title="Expand Video to Full Width for Big Screen Presentation" class="btn-sharp">
                   <span>⛶</span> <span id="theater-mode-btn-text">Big Screen</span>
                 </button>
               </div>
@@ -7280,6 +7384,7 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
       if (currentMode === 'film_tray') renderFilmTrayView();
       if (currentStage === 'whiteboard') renderRinkBackground();
       redrawCanvasLayers();
+      if (typeof renderDynamicAlertsMenu === 'function') renderDynamicAlertsMenu(false);
     }
 
     let currentCVTracking = null;
@@ -18185,32 +18290,224 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
       return Math.max(0, periodStart + timeElapsedInPeriod);
     }
 
-    // Dynamic Theming Engine (Admin Configurable)
+    // =========================================================================
+    // MULTI-TEAM CUSTOMIZABLE THEME & SURFACE BRIGHTNESS ENGINE
+    // =========================================================================
+
+    let activeSurfaceBrightnessMode = 'light'; // 'light' | 'slate' | 'dark'
+
+    const SURFACE_BRIGHTNESS_MODES = {
+      light: {
+        base: '#eef2f6',
+        surface: '#f8fafc',
+        panel: '#ffffff',
+        border: '#cbd5e1',
+        borderSubtle: '#e2e8f0',
+        textMain: '#0f172a',
+        textMuted: '#334155',
+        textDim: '#64748b',
+        scheme: 'light'
+      },
+      slate: {
+        base: '#dbe3ec',
+        surface: '#e8eef5',
+        panel: '#f4f7fa',
+        border: '#b8c4d4',
+        borderSubtle: '#cbd5e1',
+        textMain: '#0f172a',
+        textMuted: '#1e293b',
+        textDim: '#475569',
+        scheme: 'light'
+      },
+      dark: {
+        base: '#0c0d12',
+        surface: '#13151d',
+        panel: '#181b24',
+        border: '#272a38',
+        borderSubtle: '#1e212c',
+        textMain: '#f8fafc',
+        textMuted: '#94a3b8',
+        textDim: '#64748b',
+        scheme: 'dark'
+      }
+    };
+
+    function getHexLuminance(hex) {
+      const clean = (hex || '#FDBB30').replace('#', '');
+      if (clean.length !== 6) return 0.5;
+      const r = parseInt(clean.substring(0, 2), 16) / 255;
+      const g = parseInt(clean.substring(2, 4), 16) / 255;
+      const b = parseInt(clean.substring(4, 6), 16) / 255;
+      return 0.2126 * r + 0.7152 * g + 0.0722 * b;
+    }
+
+    function computeReadableAccentText(primaryHex, mode) {
+      const lum = getHexLuminance(primaryHex);
+      if (mode === 'dark') {
+        return lum < 0.25 ? '#60a5fa' : primaryHex;
+      } else {
+        // On light/slate backgrounds, if primary color is bright yellow/gold, use deep rich gold (#b45309) for text legibility
+        if (lum > 0.55) {
+          return '#b45309';
+        }
+        return primaryHex;
+      }
+    }
+
+    function applySurfaceBrightnessMode(mode, silent) {
+      const m = SURFACE_BRIGHTNESS_MODES[mode] ? mode : 'light';
+      activeSurfaceBrightnessMode = m;
+      const palette = SURFACE_BRIGHTNESS_MODES[m];
+      const root = document.documentElement;
+
+      root.style.setProperty('--bg-base', palette.base);
+      root.style.setProperty('--bg-surface', palette.surface);
+      root.style.setProperty('--bg-panel', palette.panel);
+      root.style.setProperty('--border-color', palette.border);
+      root.style.setProperty('--border-subtle', palette.borderSubtle);
+      root.style.setProperty('--text-main', palette.textMain);
+      root.style.setProperty('--text-muted', palette.textMuted);
+      root.style.setProperty('--text-dim', palette.textDim);
+      root.style.setProperty('--theme-color-scheme', palette.scheme);
+
+      const primaryHex = getComputedStyle(root).getPropertyValue('--primary-team-color').trim() || '#FDBB30';
+      root.style.setProperty('--accent-text-color', computeReadableAccentText(primaryHex, m));
+
+      const bgPicker = document.getElementById('quick-theme-bg');
+      if (bgPicker) bgPicker.value = palette.base;
+
+      ['light', 'slate', 'dark'].forEach(k => {
+        const btn = document.getElementById(`theme-mode-btn-${k}`);
+        if (btn) {
+          if (k === m) {
+            btn.style.borderColor = 'var(--primary-team-color)';
+            btn.style.backgroundColor = 'var(--primary-team-color)';
+            btn.style.color = 'var(--text-on-primary)';
+          } else {
+            btn.style.borderColor = 'var(--border-color)';
+            btn.style.backgroundColor = 'var(--bg-surface)';
+            btn.style.color = 'var(--text-main)';
+          }
+        }
+      });
+
+      try {
+        localStorage.setItem('tigers_surface_mode', m);
+      } catch(e){}
+
+      if (!silent && typeof showToast === 'function') {
+        const labels = { light: '☀️ Ice Light', slate: '🌤️ Soft Slate', dark: '🌙 Arena Dark' };
+        showToast(`🎨 Theme Surface set to ${labels[m]}`);
+      }
+    }
+
+    function applyCustomCanvasBackground(hex) {
+      if (!hex) return;
+      const lum = getHexLuminance(hex);
+      const isDark = lum < 0.35;
+      const root = document.documentElement;
+      root.style.setProperty('--bg-base', hex);
+      root.style.setProperty('--bg-surface', isDark ? '#181c26' : '#f8fafc');
+      root.style.setProperty('--bg-panel', isDark ? '#1f2430' : '#ffffff');
+      root.style.setProperty('--border-color', isDark ? '#2e3446' : '#cbd5e1');
+      root.style.setProperty('--text-main', isDark ? '#f8fafc' : '#0f172a');
+      root.style.setProperty('--text-muted', isDark ? '#cbd5e1' : '#334155');
+      root.style.setProperty('--theme-color-scheme', isDark ? 'dark' : 'light');
+      const primaryHex = getComputedStyle(root).getPropertyValue('--primary-team-color').trim() || '#FDBB30';
+      root.style.setProperty('--accent-text-color', computeReadableAccentText(primaryHex, isDark ? 'dark' : 'light'));
+    }
+
+    function applyTeamColorPreset(primaryHex, secondaryHex, textOnPrimaryHex, presetName) {
+      updateTeamColors(primaryHex, secondaryHex, textOnPrimaryHex);
+      if (presetName && typeof showToast === 'function') {
+        showToast(`🎨 Applied ${presetName} team palette!`);
+      }
+    }
+
+    function resetTeamThemeToDefault() {
+      applySurfaceBrightnessMode('light', true);
+      updateTeamColors('#FDBB30', '#0f172a', '#0f172a');
+      if (typeof showToast === 'function') {
+        showToast("🎨 Restored default Aurora Tigers Ice Light theme!");
+      }
+    }
+
     function updateTeamColors(primaryHex, secondaryHex, textOnPrimaryHex) {
+      const root = document.documentElement;
       if (primaryHex) {
-        document.documentElement.style.setProperty('--primary-team-color', primaryHex);
+        root.style.setProperty('--primary-team-color', primaryHex);
+        const autoOnPrimary = textOnPrimaryHex || (getHexLuminance(primaryHex) > 0.5 ? '#0f172a' : '#ffffff');
+        root.style.setProperty('--text-on-primary', autoOnPrimary);
+        root.style.setProperty('--accent-text-color', computeReadableAccentText(primaryHex, activeSurfaceBrightnessMode));
+
         const colorEl = document.getElementById('cfg-team-color');
         const colorHexEl = document.getElementById('cfg-team-color-hex');
+        const quickPrim = document.getElementById('quick-theme-primary');
         if (colorEl) colorEl.value = primaryHex;
         if (colorHexEl) colorHexEl.value = primaryHex;
+        if (quickPrim) quickPrim.value = primaryHex;
       }
       if (secondaryHex) {
-        document.documentElement.style.setProperty('--secondary-team-color', secondaryHex);
+        root.style.setProperty('--secondary-team-color', secondaryHex);
         const secColorEl = document.getElementById('cfg-team-secondary-color');
         const secHexEl = document.getElementById('cfg-team-secondary-color-hex');
+        const quickSec = document.getElementById('quick-theme-secondary');
         if (secColorEl) secColorEl.value = secondaryHex;
         if (secHexEl) secHexEl.value = secondaryHex;
+        if (quickSec) quickSec.value = secondaryHex;
       }
       if (textOnPrimaryHex) {
-        document.documentElement.style.setProperty('--text-on-primary', textOnPrimaryHex);
+        root.style.setProperty('--text-on-primary', textOnPrimaryHex);
       }
 
       try {
+        const curPrim = primaryHex || getComputedStyle(root).getPropertyValue('--primary-team-color').trim() || '#FDBB30';
+        const curSec = secondaryHex || getComputedStyle(root).getPropertyValue('--secondary-team-color').trim() || '#0f172a';
+        const curOn = getComputedStyle(root).getPropertyValue('--text-on-primary').trim() || '#0f172a';
         localStorage.setItem('tigers_theme_colors', JSON.stringify({
-          primary: primaryHex || '#FDBB30',
-          secondary: secondaryHex || '#000000',
-          textOnPrimary: textOnPrimaryHex || '#000000'
+          primary: curPrim,
+          secondary: curSec,
+          textOnPrimary: curOn
         }));
+      } catch(e){}
+    }
+
+    function toggleThemeCustomizerDropdown(forceState) {
+      const menu = document.getElementById('theme-customizer-dropdown');
+      if (!menu) return;
+      if (forceState !== undefined) {
+        menu.classList.toggle('hidden', !forceState);
+      } else {
+        menu.classList.toggle('hidden');
+      }
+    }
+
+    function toggleCoachToolsDropdown(forceState) {
+      const menu = document.getElementById('coach-tools-dropdown-menu');
+      if (!menu) return;
+      if (forceState !== undefined) {
+        menu.classList.toggle('hidden', !forceState);
+      } else {
+        menu.classList.toggle('hidden');
+      }
+    }
+
+    function loadSavedTeamTheme() {
+      let savedMode = 'light';
+      try {
+        const m = localStorage.getItem('tigers_surface_mode');
+        if (m && SURFACE_BRIGHTNESS_MODES[m]) savedMode = m;
+      } catch(e){}
+      applySurfaceBrightnessMode(savedMode, true);
+
+      try {
+        const raw = localStorage.getItem('tigers_theme_colors');
+        if (raw) {
+          const parsed = JSON.parse(raw);
+          if (parsed && parsed.primary) {
+            updateTeamColors(parsed.primary, parsed.secondary || '#0f172a', parsed.textOnPrimary);
+          }
+        }
       } catch(e){}
     }
 
@@ -18450,28 +18747,125 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
       }
     }
 
+    let alertsReadState = false;
+
+    function renderDynamicAlertsMenu(showFeedbackToast) {
+      const listEl = document.getElementById('alerts-dynamic-list');
+      const badgeEl = document.getElementById('alerts-unread-badge');
+      const headerCountEl = document.getElementById('alerts-header-count-label');
+      if (!listEl) return;
+
+      // 1. Dynamic Next Upcoming Game from SCHEDULE_UPCOMING_MATCHUPS
+      let nextMatch = null;
+      if (typeof SCHEDULE_UPCOMING_MATCHUPS !== 'undefined' && Array.isArray(SCHEDULE_UPCOMING_MATCHUPS)) {
+        nextMatch = SCHEDULE_UPCOMING_MATCHUPS.find(m => m.status === 'upcoming' || !m.youtube_video_id) || SCHEDULE_UPCOMING_MATCHUPS[0];
+      }
+      const nextTitle = nextMatch ? (nextMatch.title || `vs ${nextMatch.opponent || 'Boston Jr. Terriers'}`) : 'CAN/AM Challenge Cup vs Boston Jr. Terriers';
+      const nextDate = nextMatch ? (nextMatch.dateStr || nextMatch.datetime || 'Nov 6 • 1:15 PM') : 'Nov 6 • 1:15 PM';
+      const nextArena = nextMatch ? (nextMatch.arena || 'Lake Placid Olympic Center (1980 Rink)') : 'Lake Placid Olympic Center (1980 Rink)';
+
+      // 2. Dynamic Latest/Active Game Analytics Completed
+      const activeG = (typeof currentGame !== 'undefined' && currentGame) ? currentGame : ((typeof gamesLibrary !== 'undefined' && gamesLibrary.length > 0) ? gamesLibrary[0] : null);
+      const gameTitle = activeG ? (activeG.title || activeG.game_title || '20.10.2026 - Tigers 1 - Newmarket 9') : '20.10.2026 - Tigers 1 - Newmarket 9';
+      const shiftCount = (activeG && Array.isArray(activeG.shifts)) ? activeG.shifts.length : 26;
+
+      // 3. Dynamic Coach Film Tray & Homework Notes
+      const trayList = (typeof coachingTrayClips !== 'undefined' && Array.isArray(coachingTrayClips)) ? coachingTrayClips : [];
+      const trayCount = trayList.length || 3;
+      const latestTrayNote = (trayList.length > 0 && trayList[0].note)
+        ? trayList[0].note
+        : 'Coach Carpentier bookmarked tactical clips: D-to-D breakout & net-front coverage.';
+
+      listEl.innerHTML = `
+        <!-- Alert 1: Upcoming Game -->
+        <div onclick="openScheduleHubModal(); toggleAlertsDropdown(false);" class="p-2.5 bg-[var(--bg-surface)] hover:border-amber-400 border border-[var(--border-color)] cursor-pointer transition space-y-1">
+          <div class="flex items-center justify-between">
+            <span class="text-[10px] font-black uppercase text-amber-400 flex items-center gap-1">
+              <span>📅</span> <span>Upcoming Game</span>
+            </span>
+            <span class="text-[9px] font-mono text-slate-400">${nextDate}</span>
+          </div>
+          <div class="font-bold text-slate-900 text-[11px]">${nextTitle}</div>
+          <div class="text-[10px] text-slate-500">${nextArena} • Click to view schedule &amp; pre-game lineup.</div>
+        </div>
+
+        <!-- Alert 2: Analytics Completed -->
+        <div onclick="switchViewMode('breakouts'); toggleAlertsDropdown(false);" class="p-2.5 bg-[var(--bg-surface)] hover:border-amber-400 border border-[var(--border-color)] cursor-pointer transition space-y-1">
+          <div class="flex items-center justify-between">
+            <span class="text-[10px] font-black uppercase text-emerald-600 flex items-center gap-1">
+              <span>📊</span> <span>Analytics Completed</span>
+            </span>
+            <span class="text-[9px] font-mono text-slate-400">${shiftCount} Shifts Verified</span>
+          </div>
+          <div class="font-bold text-slate-900 text-[11px]">Film Breakdown: ${gameTitle}</div>
+          <div class="text-[10px] text-slate-500">${shiftCount} shifts tagged. Breakout efficiency &amp; zone possession metrics ready.</div>
+        </div>
+
+        <!-- Alert 3: Coach Notes -->
+        <div onclick="switchViewMode('film_tray'); toggleAlertsDropdown(false);" class="p-2.5 bg-[var(--bg-surface)] hover:border-amber-400 border border-[var(--border-color)] cursor-pointer transition space-y-1">
+          <div class="flex items-center justify-between">
+            <span class="text-[10px] font-black uppercase text-sky-600 flex items-center gap-1">
+              <span>📋</span> <span>Coach Notes &amp; Homework</span>
+            </span>
+            <span class="text-[9px] font-mono text-slate-400">${trayCount} Clips in Tray</span>
+          </div>
+          <div class="font-bold text-slate-900 text-[11px]">Tactical Homework in Coaching Film Tray</div>
+          <div class="text-[10px] text-slate-500 truncate">${latestTrayNote}</div>
+        </div>
+      `;
+
+      const unreadTotal = alertsReadState ? 0 : 3;
+      if (badgeEl) {
+        badgeEl.innerText = String(unreadTotal);
+        badgeEl.classList.toggle('hidden', unreadTotal === 0);
+      }
+      if (headerCountEl) {
+        headerCountEl.innerText = unreadTotal > 0 ? `${unreadTotal} Active` : 'All Read';
+      }
+
+      if (showFeedbackToast && typeof showToast === 'function') {
+        showToast("🔔 Synced live team alerts (Upcoming Schedule, Film Analytics & Coach Notes)!");
+      }
+    }
+
+    function markAllAlertsRead() {
+      alertsReadState = true;
+      renderDynamicAlertsMenu(false);
+      if (typeof showToast === 'function') {
+        showToast("✓ All team alerts marked as read.");
+      }
+    }
+
     function toggleAlertsDropdown(forceState) {
       const menu = document.getElementById('alerts-dropdown-menu');
       if (!menu) return;
+      renderDynamicAlertsMenu(false);
       if (forceState !== undefined) {
-        if (forceState) {
-          menu.classList.remove('hidden');
-        } else {
-          menu.classList.add('hidden');
-        }
+        menu.classList.toggle('hidden', !forceState);
       } else {
         menu.classList.toggle('hidden');
       }
     }
 
-    // Dismiss alerts dropdown on outside click
+    // Dismiss dropdowns (Alerts, Theme Customizer, Coach Tools) on outside click
     document.addEventListener('click', function(e) {
-      const menu = document.getElementById('alerts-dropdown-menu');
-      const btn = document.getElementById('nav-btn-alerts');
-      if (menu && !menu.classList.contains('hidden') && btn && !btn.contains(e.target) && !menu.contains(e.target)) {
-        menu.classList.add('hidden');
-      }
+      const pairs = [
+        ['alerts-dropdown-menu', 'nav-btn-alerts'],
+        ['theme-customizer-dropdown', 'nav-btn-theme'],
+        ['coach-tools-dropdown-menu', 'coach-tools-menu-btn']
+      ];
+      pairs.forEach(([menuId, btnId]) => {
+        const menu = document.getElementById(menuId);
+        const btn = document.getElementById(btnId);
+        if (menu && !menu.classList.contains('hidden') && btn && !btn.contains(e.target) && !menu.contains(e.target)) {
+          menu.classList.add('hidden');
+        }
+      });
     });
+
+    // Initialize customizable theme and dynamic alerts on startup
+    loadSavedTeamTheme();
+    setTimeout(() => { renderDynamicAlertsMenu(false); }, 400);
 
     // Update functional nav button active states in switchViewMode
     function updateFunctionalNavActiveState(mode) {
