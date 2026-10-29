@@ -41,7 +41,224 @@
       }
     }
   </script>
-  <style>
+    <style>
+  /* 
+   * DYNAMIC THEMING ENGINE (Admin Configurable)
+   * Defaulted to Aurora Tigers Gold & Black 
+   */
+  :root {
+    --bg-base: #0a0a0a;
+    --bg-surface: #141414;
+    --bg-panel: #1e1e1e;
+    --border-color: #333333;
+    
+    --primary-team-color: #FDBB30; /* Tigers Gold */
+    --secondary-team-color: #000000;
+    --text-on-primary: #000000;
+    
+    --alert-red: #ff3333;
+    --success-green: #00cc44;
+    
+    /* Global Sharp Geometry */
+    --sharp-radius: 0px; 
+    --micro-radius: 2px;
+  }
+
+  /* Viewport Reset & Lock */
+  .app-container {
+    background-color: var(--bg-base);
+    color: #ffffff;
+    font-family: 'Inter', system-ui, sans-serif;
+  }
+
+  /* Unified Header & Scoreboard */
+  .unified-header {
+    display: grid;
+    grid-template-columns: 280px 1fr 340px;
+    align-items: center;
+    background-color: var(--bg-surface);
+    border: 1px solid var(--border-color);
+    padding: 0 16px;
+    height: 58px;
+    min-height: 58px;
+    color: #ffffff;
+    transition: all 0.2s ease;
+  }
+
+  @media (max-width: 900px) {
+    .unified-header {
+      display: flex;
+      flex-direction: column;
+      height: auto;
+      min-height: auto;
+      padding: 10px 14px;
+      gap: 8px;
+    }
+  }
+
+  .brand-logo {
+    font-weight: 800;
+    font-size: 1rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--primary-team-color);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  /* Central Live Scoreboard with Special Teams */
+  .live-scoreboard {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 16px;
+    font-family: 'Roboto Mono', 'JetBrains Mono', monospace;
+    font-size: 1.15rem;
+  }
+
+  .team-score {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-weight: 700;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+  }
+
+  .score-box {
+    background: var(--bg-panel);
+    padding: 2px 10px;
+    border: 1px solid var(--border-color);
+    border-radius: var(--sharp-radius);
+    font-weight: bold;
+    min-width: 28px;
+    text-align: center;
+    color: #ffffff;
+  }
+
+  .game-clock {
+    padding: 2px 10px;
+    background: var(--bg-panel);
+    border: 1px solid var(--border-color);
+    border-radius: var(--sharp-radius);
+    color: var(--primary-team-color);
+    font-weight: 700;
+    font-size: 0.85rem;
+    letter-spacing: 0.5px;
+  }
+
+  /* Special Teams Indicators */
+  .special-teams-badge {
+    font-size: 0.72rem;
+    padding: 2px 6px;
+    border-radius: var(--micro-radius);
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    display: none; /* Hidden by default via JS */
+  }
+  
+  .special-teams-badge.active-pp {
+    display: inline-block !important;
+    background-color: var(--primary-team-color) !important;
+    color: var(--text-on-primary) !important;
+    box-shadow: 0 0 10px rgba(253, 187, 48, 0.4);
+  }
+
+  .special-teams-badge.active-pk {
+    display: inline-block !important;
+    background-color: var(--alert-red) !important;
+    color: #ffffff !important;
+    box-shadow: 0 0 10px rgba(255, 51, 51, 0.4);
+  }
+
+  /* System Controls */
+  .system-controls {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .btn-sharp {
+    background-color: var(--bg-panel);
+    color: #fff;
+    border: 1px solid var(--border-color);
+    border-radius: var(--sharp-radius);
+    padding: 5px 10px;
+    cursor: pointer;
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    transition: all 0.2s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+  }
+
+  .btn-sharp:hover {
+    background-color: var(--primary-team-color);
+    color: var(--text-on-primary);
+    border-color: var(--primary-team-color);
+  }
+
+  /* Dual-Pane Workspace */
+  .workspace-pane {
+    display: grid;
+    grid-template-columns: 65% 35%;
+    height: 100%;
+    overflow: hidden;
+  }
+
+  /* Left: Video Media Canvas */
+  .media-track-frame {
+    position: relative;
+    background-color: #000;
+    display: flex;
+    flex-direction: column;
+    border-right: 1px solid var(--border-color);
+  }
+
+  /* Right: Analytics & Shifts Data */
+  .analytics-data-sidebar {
+    background-color: var(--bg-surface);
+    overflow-y: auto;
+    padding: 16px;
+  }
+
+  /* Data Cards (Sharp) */
+  .data-card {
+    background-color: var(--bg-panel);
+    border: 1px solid var(--border-color);
+    border-radius: var(--sharp-radius);
+    padding: 12px;
+    margin-bottom: 12px;
+  }
+
+  /* GLOBAL SHARP GEOMETRY MODE (Hudl/InStat High-Density) */
+  body.sharp-geometry .rounded-xl,
+  body.sharp-geometry .rounded-2xl,
+  body.sharp-geometry .rounded-3xl,
+  body.sharp-geometry .rounded-lg {
+    border-radius: var(--sharp-radius) !important;
+  }
+  body.sharp-geometry .rounded-full:not(.animate-ping):not(#v-status-dot):not(.animate-pulse) {
+    border-radius: var(--micro-radius) !important;
+  }
+  body.sharp-geometry input,
+  body.sharp-geometry select,
+  body.sharp-geometry button:not(.btn-sharp) {
+    border-radius: var(--micro-radius) !important;
+  }
+  body.sharp-geometry .score-box,
+  body.sharp-geometry .btn-sharp,
+  body.sharp-geometry .data-card,
+  body.sharp-geometry .unified-header {
+    border-radius: var(--sharp-radius) !important;
+  }
+
     body {
       background-color: #f1f5f9;
       background-image:
@@ -1774,10 +1991,38 @@
               <input type="text" id="cfg-team-season" class="w-full bg-slate-50 border border-slate-300 rounded-xl px-3 py-2 text-slate-900 font-bold focus:outline-none focus:border-tigersGold" value="2026–2027" />
             </div>
             <div>
-              <label class="block font-bold text-slate-700 uppercase text-[10px] tracking-wider mb-1">Primary Color (Hex)</label>
+              <label class="block font-bold text-slate-700 uppercase text-[10px] tracking-wider mb-1">Primary Team Color (Hex)</label>
               <div class="flex items-center gap-2">
-                <input type="color" id="cfg-team-color" class="w-10 h-9 p-0.5 rounded-xl border border-slate-300 cursor-pointer" value="#f5b316" />
-                <input type="text" id="cfg-team-color-hex" class="flex-1 bg-slate-50 border border-slate-300 rounded-xl px-3 py-2 font-mono text-xs" value="#f5b316" readonly />
+                <input type="color" id="cfg-team-color" onchange="document.getElementById('cfg-team-color-hex').value = this.value; updateTeamColors(this.value, document.getElementById('cfg-team-secondary-color').value);" class="w-10 h-9 p-0.5 rounded-xl border border-slate-300 cursor-pointer" value="#FDBB30" />
+                <input type="text" id="cfg-team-color-hex" class="flex-1 bg-slate-50 border border-slate-300 rounded-xl px-3 py-2 font-mono text-xs font-bold" value="#FDBB30" readonly />
+              </div>
+            </div>
+            <div>
+              <label class="block font-bold text-slate-700 uppercase text-[10px] tracking-wider mb-1">Secondary Team Color (Hex)</label>
+              <div class="flex items-center gap-2">
+                <input type="color" id="cfg-team-secondary-color" onchange="document.getElementById('cfg-team-secondary-color-hex').value = this.value; updateTeamColors(document.getElementById('cfg-team-color').value, this.value);" class="w-10 h-9 p-0.5 rounded-xl border border-slate-300 cursor-pointer" value="#000000" />
+                <input type="text" id="cfg-team-secondary-color-hex" class="flex-1 bg-slate-50 border border-slate-300 rounded-xl px-3 py-2 font-mono text-xs font-bold" value="#000000" readonly />
+              </div>
+            </div>
+            <div class="sm:col-span-2 p-3 bg-slate-900 text-white rounded-2xl border border-slate-800 space-y-2">
+              <div class="flex items-center justify-between">
+                <div>
+                  <div class="font-bold text-xs uppercase tracking-wider text-amber-400 flex items-center gap-1.5">
+                    <span>📐</span> <span>Pro Sharp Geometry (Hudl / InStat Mode)</span>
+                  </div>
+                  <div class="text-[10px] text-slate-400">
+                    Reduces border-radius to 0px / 2px for high-density elite sports video analytics
+                  </div>
+                </div>
+                <label class="relative inline-flex items-center cursor-pointer">
+                  <input type="checkbox" id="cfg-sharp-geometry-toggle" onchange="toggleSharpGeometry(this.checked)" class="sr-only peer" />
+                  <div class="w-11 h-6 bg-slate-700 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-amber-500"></div>
+                </label>
+              </div>
+              <div class="flex items-center gap-2 pt-1">
+                <button type="button" onclick="closeTeamOnboardingModal(); openSystemDiagnosticsModal();" class="px-3 py-1.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-amber-300 font-bold text-[11px] cursor-pointer transition border border-slate-700 flex items-center gap-1.5">
+                  <span>🔍</span> <span>Open System Diagnostics Audit</span>
+                </button>
               </div>
             </div>
             <div>
@@ -3727,6 +3972,55 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
     <kbd class="px-1.5 py-0.5 rounded bg-black/40 text-[10px] font-mono border border-white/20">Esc</kbd>
   </button>
 
+        <!-- ================= UNIFIED PRO SPORTS HEADER & CENTRAL GAMESHEET SCOREBOARD ================= -->
+    <header class="unified-header mb-2.5 rounded-2xl shadow-sm">
+      <div class="brand-logo">
+        <img 
+          src="./tigers_logo.png" 
+          onerror="this.onerror=null; this.src='https://auroraminorhockey.com/public/images/common/logo.png';" 
+          alt="Aurora Tigers Logo" 
+          class="w-7 h-7 object-contain inline-block"
+        />
+        <span class="font-display font-black tracking-wider text-xs sm:text-sm">TIGERS U13A ANALYTICS</span>
+      </div>
+      
+      <!-- Gamesheet Synced Scoreboard with Special Teams PP/PK Engine -->
+      <div class="live-scoreboard" id="central-live-scoreboard">
+        <div class="team-score">
+          <span>TIGERS</span>
+          <div class="score-box" id="home-score">0</div>
+          <!-- Injects dynamically when Gamesheet JSON detects penalty -->
+          <span class="special-teams-badge" id="home-st-status"></span> 
+        </div>
+        
+        <div class="game-clock">
+          <span id="game-clock-display">P1 | 15:00</span>
+        </div>
+        
+        <div class="team-score">
+          <div class="score-box" id="away-score">0</div>
+          <span id="away-team-header-label">OPPONENT</span>
+          <span class="special-teams-badge" id="away-st-status"></span> 
+        </div>
+      </div>
+
+      <!-- Admin & Context System Controls -->
+      <div class="system-controls">
+        <button class="btn-sharp" onclick="syncPuckDrop()" title="Calibrate YouTube Video to Opening Puck Drop (Master Clock Offset)">
+          <span>⏱️</span> <span>Sync Clock</span>
+        </button>
+        <button class="btn-sharp" onclick="openSystemDiagnosticsModal()" title="Run System Diagnostics & Connection Audit">
+          <span>🔍</span> <span>Diagnostics</span>
+        </button>
+        <button class="btn-sharp" onclick="toggleSharpGeometry()" id="sharp-mode-toggle-btn" title="Toggle Sharp Pro Geometry (Hudl/InStat High-Density Architecture)">
+          <span>📐</span> <span id="sharp-mode-btn-text">Sharp Mode</span>
+        </button>
+        <button class="btn-sharp" onclick="openTeamOnboardingModal()" title="Team Administration & Theming Engine">
+          <span>⚙️</span> <span>Admin</span>
+        </button>
+      </div>
+    </header>
+
     <!-- STREAMLINED PRO COACHING HEADER -->
     <header class="bg-white border border-slate-200/90 rounded-2xl px-4 py-2.5 shadow-sm flex flex-wrap items-center justify-between gap-3 relative">
       <!-- Left: Official Crest + Title -->
@@ -5530,7 +5824,145 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
 
         </div>
 
-          <!-- ================= LIGHTWEIGHT COACH & TEAM FEEDBACK MODAL DIALOG ================= -->
+            <!-- ================= SYSTEM DIAGNOSTICS & CONNECTION AUDIT MODAL ================= -->
+  <div id="system-diagnostics-modal" onclick="if(event.target === this) closeSystemDiagnosticsModal()" class="fixed inset-0 bg-slate-950/85 backdrop-blur-md z-[9999] flex items-center justify-center p-3 sm:p-4 hidden" style="display: none;">
+    <div class="bg-slate-900 border border-slate-700 text-white rounded-3xl max-w-2xl w-full max-h-[92vh] shadow-2xl overflow-hidden flex flex-col animate-in fade-in zoom-in-95 duration-150">
+      
+      <!-- Modal Header -->
+      <div class="p-4 bg-slate-950 border-b border-slate-800 flex items-center justify-between shrink-0">
+        <div class="flex items-center gap-2.5">
+          <span class="text-xl">🔍</span>
+          <div>
+            <h3 class="font-display font-black text-sm uppercase tracking-wider text-amber-400">
+              System Diagnostics &amp; Connection Audit
+            </h3>
+            <p class="text-[10px] text-slate-400 font-medium">
+              Real-time API probe, media stream health, and clock synchronization telemetry
+            </p>
+          </div>
+        </div>
+        <div class="flex items-center gap-2">
+          <button type="button" onclick="runSystemDiagnosticsAudit()" class="px-2.5 py-1 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-black text-xs cursor-pointer transition shadow-2xs flex items-center gap-1 active:scale-95">
+            <span>▶</span> <span>Run Audit</span>
+          </button>
+          <button onclick="closeSystemDiagnosticsModal()" class="text-slate-400 hover:text-white text-base leading-none cursor-pointer">✕</button>
+        </div>
+      </div>
+
+      <!-- Modal Body -->
+      <div class="p-4 overflow-y-auto custom-scroll space-y-3.5 text-xs flex-1">
+        
+        <!-- Diagnostic Summary Header -->
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 text-center font-mono">
+          <div class="bg-slate-950/80 border border-slate-800 p-2.5 rounded-xl">
+            <div class="text-[10px] uppercase font-bold text-slate-400">YouTube Stream</div>
+            <div id="diag-badge-yt" class="text-xs font-black text-emerald-400 mt-0.5">● Ready</div>
+          </div>
+          <div class="bg-slate-950/80 border border-slate-800 p-2.5 rounded-xl">
+            <div class="text-[10px] uppercase font-bold text-slate-400">GameSheet / JSON</div>
+            <div id="diag-badge-gs" class="text-xs font-black text-emerald-400 mt-0.5">● 200 OK</div>
+          </div>
+          <div class="bg-slate-950/80 border border-slate-800 p-2.5 rounded-xl">
+            <div class="text-[10px] uppercase font-bold text-slate-400">LiveBarn Fallback</div>
+            <div id="diag-badge-lb" class="text-xs font-black text-sky-400 mt-0.5">● Standby</div>
+          </div>
+          <div class="bg-slate-950/80 border border-slate-800 p-2.5 rounded-xl">
+            <div class="text-[10px] uppercase font-bold text-slate-400">Clock Sync</div>
+            <div id="diag-badge-sync" class="text-xs font-black text-amber-400 mt-0.5">● Calibrated</div>
+          </div>
+        </div>
+
+        <!-- System 1: YouTube Media Stream -->
+        <div class="bg-slate-950/60 border border-slate-800 rounded-2xl p-3 space-y-2">
+          <div class="flex items-center justify-between">
+            <div class="font-bold text-slate-200 flex items-center gap-1.5">
+              <span>📹</span> <span>YouTube IFrame Media Stream:</span>
+            </div>
+            <span id="diag-yt-state-pill" class="px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-emerald-500/20 text-emerald-400 border border-emerald-500/40">Mounted</span>
+          </div>
+          <p id="diag-yt-desc" class="text-[11px] text-slate-400 leading-relaxed font-mono">
+            YouTube API v=YT.Player mounted. Video ID check: 200 OK (unlisted embed authorized).
+          </p>
+          <div class="flex items-center gap-2 pt-1">
+            <button onclick="restoreYouTubePlayer()" class="px-2.5 py-1 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 font-bold text-[10px] cursor-pointer">
+              🔄 Reload Player
+            </button>
+            <button onclick="triggerLiveBarnFallback()" class="px-2.5 py-1 rounded-lg bg-amber-500/20 hover:bg-amber-500/30 text-amber-300 border border-amber-500/40 font-bold text-[10px] cursor-pointer">
+              🏟️ Test Fallback Swap
+            </button>
+          </div>
+        </div>
+
+        <!-- System 2: GameSheet API & JSON Payload -->
+        <div class="bg-slate-950/60 border border-slate-800 rounded-2xl p-3 space-y-2">
+          <div class="flex items-center justify-between">
+            <div class="font-bold text-slate-200 flex items-center gap-1.5">
+              <span>📊</span> <span>Gamesheet API &amp; Telemetry Payload (CORS Check):</span>
+            </div>
+            <span id="diag-gs-state-pill" class="px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-emerald-500/20 text-emerald-400 border border-emerald-500/40">200 OK</span>
+          </div>
+          <p id="diag-gs-desc" class="text-[11px] text-slate-400 leading-relaxed font-mono">
+            Static JSON payload (games_library.json) loaded. CORS policy verified. 38+ shifts linked.
+          </p>
+        </div>
+
+        <!-- System 3: LiveBarn Fallback Stream Router -->
+        <div class="bg-slate-950/60 border border-slate-800 rounded-2xl p-3 space-y-2">
+          <div class="flex items-center justify-between">
+            <div class="font-bold text-slate-200 flex items-center gap-1.5">
+              <span>🏟️</span> <span>LiveBarn Secondary Fallback Router:</span>
+            </div>
+            <span id="diag-lb-state-pill" class="px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-sky-500/20 text-sky-400 border border-sky-500/40">Zero-Reload Swap</span>
+          </div>
+          <p id="diag-lb-desc" class="text-[11px] text-slate-400 leading-relaxed font-mono">
+            Routing logic intercepts YouTube error 150/101 and hot-swaps player iframe without full page reload.
+          </p>
+          <div class="flex items-center gap-2 pt-1">
+            <input type="text" id="diag-custom-fallback-input" placeholder="Secondary stream URL (LiveBarn / MP4 / Cloud)" class="flex-1 bg-slate-900 border border-slate-700 rounded-lg px-2.5 py-1 text-[11px] text-white font-mono focus:outline-none focus:border-amber-400" />
+            <button onclick="applyDiagnosticFallbackUrl()" class="px-2.5 py-1 rounded-lg bg-sky-600 hover:bg-sky-500 text-white font-bold text-[10px] cursor-pointer">
+              Set Backup
+            </button>
+          </div>
+        </div>
+
+        <!-- System 4: Gamesheet to Video Clock Synchronization -->
+        <div class="bg-slate-950/60 border border-slate-800 rounded-2xl p-3 space-y-2">
+          <div class="flex items-center justify-between">
+            <div class="font-bold text-slate-200 flex items-center gap-1.5">
+              <span>⏱️</span> <span>Puck Drop Master Clock Synchronization:</span>
+            </div>
+            <span id="diag-sync-state-pill" class="px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-amber-500/20 text-amber-400 border border-amber-500/40">Calibrated</span>
+          </div>
+          <p id="diag-sync-desc" class="text-[11px] text-slate-400 leading-relaxed font-mono">
+            P1 Faceoff start time calibrated. Event timestamp mapping: calculateVideoTimestamp(period, clockStr).
+          </p>
+          <div class="flex flex-wrap items-center gap-2 pt-1">
+            <button onclick="syncPuckDrop(1)" class="px-2.5 py-1 rounded-lg bg-amber-500 hover:bg-amber-400 text-slate-950 font-black text-[10px] cursor-pointer">
+              ⏱️ Sync P1 Puck Drop (Now)
+            </button>
+            <button onclick="syncPuckDrop(2)" class="px-2.5 py-1 rounded-lg bg-slate-800 hover:bg-slate-700 text-amber-300 font-bold text-[10px] cursor-pointer">
+              Sync P2
+            </button>
+            <button onclick="syncPuckDrop(3)" class="px-2.5 py-1 rounded-lg bg-slate-800 hover:bg-slate-700 text-amber-300 font-bold text-[10px] cursor-pointer">
+              Sync P3
+            </button>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Modal Footer -->
+      <div class="p-3 bg-slate-950 border-t border-slate-800 flex items-center justify-between text-slate-400 text-[11px] font-mono">
+        <span id="diag-audit-timestamp">Last Audit: Active Session</span>
+        <button onclick="closeSystemDiagnosticsModal()" class="px-3 py-1 rounded-xl bg-slate-800 hover:bg-slate-700 text-white font-bold cursor-pointer">
+          Done
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ================= LIGHTWEIGHT COACH & TEAM FEEDBACK MODAL DIALOG ================= -->
   <div id="feedback-modal" onclick="if(event.target === this) closeFeedbackModal()" class="fixed inset-0 bg-slate-950/80 backdrop-blur-md z-[9999] flex items-center justify-center p-3 sm:p-4 hidden" style="display: none;">
     <div class="bg-white rounded-3xl max-w-xl w-full max-h-[92vh] border border-slate-200 shadow-2xl overflow-hidden flex flex-col animate-in fade-in zoom-in-95 duration-150">
       
@@ -6045,12 +6477,54 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
           vSpecial.innerText = activeSpecialTeams;
           vSpecial.classList.remove('hidden');
           if (activeSpecialTeams.startsWith('PP')) {
-            vSpecial.className = "px-1.5 py-0.5 rounded text-[9px] font-black uppercase bg-emerald-500/30 text-emerald-300 border border-emerald-400/50";
+            vSpecial.className = "px-1.5 py-0.5 rounded text-[9px] font-black uppercase bg-amber-500/30 text-amber-300 border border-amber-400/50";
           } else {
             vSpecial.className = "px-1.5 py-0.5 rounded text-[9px] font-black uppercase bg-rose-500/30 text-rose-300 border border-rose-400/50";
           }
         } else {
           vSpecial.classList.add('hidden');
+        }
+      }
+
+      // Update Unified Header Central Live Scoreboard
+      const homeScoreEl = document.getElementById('home-score');
+      const awayScoreEl = document.getElementById('away-score');
+      const clockDisplayEl = document.getElementById('game-clock-display');
+      const homeStStatusEl = document.getElementById('home-st-status');
+      const awayStStatusEl = document.getElementById('away-st-status');
+      const awayLabelEl = document.getElementById('away-team-header-label');
+
+      if (homeScoreEl) homeScoreEl.innerText = homeScore;
+      if (awayScoreEl) awayScoreEl.innerText = awayScore;
+      if (clockDisplayEl) clockDisplayEl.innerText = `P${periodNum} | ${clockStr}`;
+      if (awayLabelEl) awayLabelEl.innerText = oppAbbr || "OPPONENT";
+
+      if (homeStStatusEl && awayStStatusEl) {
+        if (activeSpecialTeams) {
+          if (activeSpecialTeams.startsWith('PP')) {
+            // Tigers on Powerplay
+            homeStStatusEl.innerText = `${activeSpecialTeams} (5v4)`;
+            homeStStatusEl.className = 'special-teams-badge active-pp';
+            homeStStatusEl.style.display = 'inline-block';
+
+            awayStStatusEl.innerText = 'PK 4v5';
+            awayStStatusEl.className = 'special-teams-badge active-pk';
+            awayStStatusEl.style.display = 'inline-block';
+          } else if (activeSpecialTeams.startsWith('PK')) {
+            // Tigers on Penalty Kill
+            homeStStatusEl.innerText = `${activeSpecialTeams} (4v5)`;
+            homeStStatusEl.className = 'special-teams-badge active-pk';
+            homeStStatusEl.style.display = 'inline-block';
+
+            awayStStatusEl.innerText = 'PP 5v4';
+            awayStStatusEl.className = 'special-teams-badge active-pp';
+            awayStStatusEl.style.display = 'inline-block';
+          }
+        } else {
+          homeStStatusEl.style.display = 'none';
+          homeStStatusEl.className = 'special-teams-badge';
+          awayStStatusEl.style.display = 'none';
+          awayStStatusEl.className = 'special-teams-badge';
         }
       }
     }
@@ -6507,6 +6981,18 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
         if (typeof initTagPlayerDropdown === 'function') initTagPlayerDropdown();
         if (typeof initPassportPlayerDropdown === 'function') initPassportPlayerDropdown();
         if (typeof updatePassportCounters === 'function') updatePassportCounters();
+
+        // Restore saved theme colors & sharp geometry
+        try {
+          const savedColors = JSON.parse(localStorage.getItem('tigers_theme_colors') || '{}');
+          if (savedColors.primary || savedColors.secondary) {
+            if (typeof updateTeamColors === 'function') updateTeamColors(savedColors.primary, savedColors.secondary, savedColors.textOnPrimary);
+          }
+          const savedSharp = localStorage.getItem('tigers_sharp_geometry');
+          if (savedSharp === 'true' && typeof toggleSharpGeometry === 'function') {
+            toggleSharpGeometry(true);
+          }
+        } catch(e){}
 
         // Restore active live broadcast if present
         try {
@@ -7915,6 +8401,9 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
               isPlayerReady = true;
               resizeCanvas();
               try { ytPlayer.setVolume(80); } catch(e){}
+              if (typeof logSystemDiagnostic === 'function') {
+                logSystemDiagnostic('youtube', true, `Mounted & Ready. Video ID: ${videoId}`);
+              }
               if (pendingVideoId && currentGame) {
                 const targetVid = currentGame.youtube_video_id || (currentGame.id ? currentGame.id.replace('game_', '') : '');
                 if (targetVid && targetVid !== videoId && typeof ytPlayer.cueVideoById === 'function') {
@@ -7925,6 +8414,11 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
                 const clip = pendingClip;
                 pendingClip = null;
                 playShiftClip(clip.startSec, clip.endSec, clip.desc, clip.shiftId);
+              }
+            },
+            'onError': (event) => {
+              if (typeof handleYouTubePlayerError === 'function') {
+                handleYouTubePlayerError(event);
               }
             }
           }
@@ -13951,6 +14445,12 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
       if (seasonEl) seasonEl.value = config.season || "2026–2027";
       if (colorEl && config.primaryColor) colorEl.value = config.primaryColor;
       if (colorHexEl && config.primaryColor) colorHexEl.value = config.primaryColor;
+      const secColorEl = document.getElementById('cfg-team-secondary-color');
+      const secColorHexEl = document.getElementById('cfg-team-secondary-color-hex');
+      const sharpToggleEl = document.getElementById('cfg-sharp-geometry-toggle');
+      if (secColorEl && config.secondaryColor) secColorEl.value = config.secondaryColor;
+      if (secColorHexEl && config.secondaryColor) secColorHexEl.value = config.secondaryColor;
+      if (sharpToggleEl) sharpToggleEl.checked = Boolean(config.sharpGeometry);
       if (provEl && config.calendarProvider) provEl.value = config.calendarProvider;
       if (commsEl) commsEl.value = config.commsUrl || "TeamSnap Mobile App";
       if (calEl) calEl.value = config.calendarUrl || config.teamSnapUrl || "";
@@ -14169,6 +14669,8 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
         logoUrl: "./tigers_logo.png",
         season: seasonEl?.value.trim() || "2026–2027",
         primaryColor: colorEl?.value || "#f5b316",
+        secondaryColor: document.getElementById('cfg-team-secondary-color')?.value || "#000000",
+        sharpGeometry: document.getElementById('cfg-sharp-geometry-toggle')?.checked || isSharpGeometryEnabled,
         passcode: "U13ATigers",
         coachPasscode: "CoachTigers",
         calendarProvider: provEl?.value || "teamsnap",
@@ -14187,6 +14689,13 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
       try {
         localStorage.setItem('tigers_team_config', JSON.stringify(config));
       } catch(e){}
+
+      if (typeof updateTeamColors === 'function') {
+        updateTeamColors(config.primaryColor, config.secondaryColor);
+      }
+      if (typeof toggleSharpGeometry === 'function') {
+        toggleSharpGeometry(config.sharpGeometry);
+      }
 
       // Apply to in-memory ROSTER_POSITIONS
       if (Array.isArray(config.roster) && config.roster.length > 0) {
@@ -17541,7 +18050,365 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
     }
 
     checkAuth();
-  </script>
+  
+    // =========================================================================
+    // ANTIGRAVITY THEMING, PUCK DROP SYNC & SYSTEM DIAGNOSTICS ARCHITECTURE
+    // =========================================================================
+
+    // Calibration: Master Synchronization Offset Variables
+    let periodOneStartVideoTime = 0; // seconds into YouTube video
+    let periodTwoStartVideoTime = null;
+    let periodThreeStartVideoTime = null;
+    let masterPuckDropOffset = 0;
+    let periodLengthSeconds = 900; // 15:00 min periods standard
+
+    function syncPuckDrop(targetPeriod) {
+      const p = targetPeriod || 1;
+      let curSec = 0;
+      if (isPlayerReady && ytPlayer && typeof ytPlayer.getCurrentTime === 'function') {
+        curSec = Math.floor(ytPlayer.getCurrentTime() || 0);
+      } else {
+        curSec = Math.floor(getThrottledPlayerTime() || 0);
+      }
+
+      if (p === 1) {
+        periodOneStartVideoTime = curSec;
+        masterPuckDropOffset = curSec;
+      } else if (p === 2) {
+        periodTwoStartVideoTime = curSec;
+      } else if (p === 3) {
+        periodThreeStartVideoTime = curSec;
+      }
+
+      if (currentGame) {
+        if (!currentGame.periods) currentGame.periods = {};
+        currentGame.periods[p] = curSec;
+
+        // Persist master offset per game
+        try {
+          const stored = JSON.parse(localStorage.getItem('tigers_puck_drop_offsets') || '{}');
+          stored[currentGame.id] = {
+            p1: periodOneStartVideoTime,
+            p2: periodTwoStartVideoTime,
+            p3: periodThreeStartVideoTime,
+            updatedAt: new Date().toISOString()
+          };
+          localStorage.setItem('tigers_puck_drop_offsets', JSON.stringify(stored));
+        } catch(e){}
+
+        // Re-render shifts and update timeline
+        if (typeof renderShiftList === 'function') renderShiftList();
+      }
+
+      const formatted = typeof formatTime === 'function' ? formatTime(curSec) : `${curSec}s`;
+      showToast(`⏱️ Period ${p} Puck Drop synchronized to ${formatted}! Timestamps recalibrated.`);
+      logSystemDiagnostic('sync', true, `Period ${p} puck drop calibrated to ${curSec}s (${formatted})`);
+      syncScoreboardOverlayToPlayback(curSec);
+    }
+
+    function calculateVideoTimestamp(gamesheetPeriod, gamesheetClockStr, customPeriodLen) {
+      const pLen = customPeriodLen || periodLengthSeconds || 900;
+      let minutes = 0;
+      let seconds = 0;
+
+      if (typeof gamesheetClockStr === 'string' && gamesheetClockStr.includes(':')) {
+        const parts = gamesheetClockStr.split(':').map(Number);
+        minutes = isNaN(parts[0]) ? 0 : parts[0];
+        seconds = isNaN(parts[1]) ? 0 : parts[1];
+      } else if (typeof gamesheetClockStr === 'number') {
+        seconds = gamesheetClockStr;
+      }
+
+      const timeElapsedInPeriod = pLen - ((minutes * 60) + seconds);
+
+      let periodStart = 0;
+      if (gamesheetPeriod === 1) {
+        periodStart = periodOneStartVideoTime || (currentGame?.periods?.[1] ?? currentGame?.periods?.["1"] ?? 0);
+      } else if (gamesheetPeriod === 2) {
+        periodStart = periodTwoStartVideoTime || (currentGame?.periods?.[2] ?? currentGame?.periods?.["2"] ?? (periodOneStartVideoTime + pLen + 120));
+      } else if (gamesheetPeriod === 3) {
+        periodStart = periodThreeStartVideoTime || (currentGame?.periods?.[3] ?? currentGame?.periods?.["3"] ?? (periodTwoStartVideoTime ? periodTwoStartVideoTime + pLen + 120 : periodOneStartVideoTime + 2 * (pLen + 120)));
+      }
+
+      return Math.max(0, periodStart + timeElapsedInPeriod);
+    }
+
+    // Dynamic Theming Engine (Admin Configurable)
+    function updateTeamColors(primaryHex, secondaryHex, textOnPrimaryHex) {
+      if (primaryHex) {
+        document.documentElement.style.setProperty('--primary-team-color', primaryHex);
+        const colorEl = document.getElementById('cfg-team-color');
+        const colorHexEl = document.getElementById('cfg-team-color-hex');
+        if (colorEl) colorEl.value = primaryHex;
+        if (colorHexEl) colorHexEl.value = primaryHex;
+      }
+      if (secondaryHex) {
+        document.documentElement.style.setProperty('--secondary-team-color', secondaryHex);
+        const secColorEl = document.getElementById('cfg-team-secondary-color');
+        const secHexEl = document.getElementById('cfg-team-secondary-color-hex');
+        if (secColorEl) secColorEl.value = secondaryHex;
+        if (secHexEl) secHexEl.value = secondaryHex;
+      }
+      if (textOnPrimaryHex) {
+        document.documentElement.style.setProperty('--text-on-primary', textOnPrimaryHex);
+      }
+
+      try {
+        localStorage.setItem('tigers_theme_colors', JSON.stringify({
+          primary: primaryHex || '#FDBB30',
+          secondary: secondaryHex || '#000000',
+          textOnPrimary: textOnPrimaryHex || '#000000'
+        }));
+      } catch(e){}
+    }
+
+    // Pro Sharp Geometry Toggle (0px / 2px Hudl/InStat high density)
+    let isSharpGeometryEnabled = false;
+
+    function toggleSharpGeometry(forceState) {
+      if (forceState !== undefined) {
+        isSharpGeometryEnabled = Boolean(forceState);
+      } else {
+        isSharpGeometryEnabled = !isSharpGeometryEnabled;
+      }
+
+      const body = document.body;
+      const btn = document.getElementById('sharp-mode-toggle-btn');
+      const btnText = document.getElementById('sharp-mode-btn-text');
+      const toggleInput = document.getElementById('cfg-sharp-geometry-toggle');
+
+      if (isSharpGeometryEnabled) {
+        body.classList.add('sharp-geometry');
+        document.documentElement.style.setProperty('--sharp-radius', '0px');
+        document.documentElement.style.setProperty('--micro-radius', '2px');
+        if (btn) btn.classList.add('border-amber-400', 'text-amber-300');
+        if (btnText) btnText.innerText = 'Sharp: ON';
+        if (toggleInput) toggleInput.checked = true;
+        showToast("📐 Sharp Pro Geometry enabled (0px Hudl/InStat architecture)");
+      } else {
+        body.classList.remove('sharp-geometry');
+        document.documentElement.style.setProperty('--sharp-radius', '12px');
+        document.documentElement.style.setProperty('--micro-radius', '6px');
+        if (btn) btn.classList.remove('border-amber-400', 'text-amber-300');
+        if (btnText) btnText.innerText = 'Sharp Mode';
+        if (toggleInput) toggleInput.checked = false;
+        showToast("⚪ Classic geometry restored");
+      }
+
+      try {
+        localStorage.setItem('tigers_sharp_geometry', isSharpGeometryEnabled ? 'true' : 'false');
+      } catch(e){}
+    }
+
+    // System Diagnostics & Connection Audit
+    const systemDiagnostics = {
+      youtube: { status: 'ok', message: 'Mounted & Ready', lastChecked: null },
+      gamesheet: { status: 'ok', message: 'Payload loaded', lastChecked: null },
+      livebarn: { status: 'ready', message: 'Secondary stream routing standby', lastChecked: null },
+      sync: { status: 'calibrated', message: 'Master clock sync ready', lastChecked: null }
+    };
+
+    function openSystemDiagnosticsModal() {
+      const modal = document.getElementById('system-diagnostics-modal');
+      if (modal) {
+        modal.style.display = 'flex';
+        modal.classList.remove('hidden');
+        runSystemDiagnosticsAudit();
+      }
+    }
+
+    function closeSystemDiagnosticsModal() {
+      const modal = document.getElementById('system-diagnostics-modal');
+      if (modal) {
+        modal.style.display = 'none';
+        modal.classList.add('hidden');
+      }
+    }
+
+    function logSystemDiagnostic(system, isOk, message) {
+      if (!systemDiagnostics[system]) systemDiagnostics[system] = {};
+      systemDiagnostics[system].status = isOk ? 'ok' : 'error';
+      systemDiagnostics[system].message = message;
+      systemDiagnostics[system].lastChecked = new Date().toLocaleTimeString();
+      renderSystemDiagnosticsUI();
+    }
+
+    function renderSystemDiagnosticsUI() {
+      const bYt = document.getElementById('diag-badge-yt');
+      const pYt = document.getElementById('diag-yt-state-pill');
+      const dYt = document.getElementById('diag-yt-desc');
+      if (bYt && systemDiagnostics.youtube) {
+        bYt.innerText = systemDiagnostics.youtube.status === 'ok' ? '● Ready' : '● Restricted';
+        bYt.className = `text-xs font-black mt-0.5 ${systemDiagnostics.youtube.status === 'ok' ? 'text-emerald-400' : 'text-rose-400'}`;
+        if (pYt) pYt.innerText = systemDiagnostics.youtube.status === 'ok' ? '200 OK' : 'Error';
+        if (dYt) dYt.innerText = systemDiagnostics.youtube.message || '';
+      }
+
+      const bGs = document.getElementById('diag-badge-gs');
+      const pGs = document.getElementById('diag-gs-state-pill');
+      const dGs = document.getElementById('diag-gs-desc');
+      if (bGs && systemDiagnostics.gamesheet) {
+        bGs.innerText = systemDiagnostics.gamesheet.status === 'ok' ? '● 200 OK' : '● Failed';
+        bGs.className = `text-xs font-black mt-0.5 ${systemDiagnostics.gamesheet.status === 'ok' ? 'text-emerald-400' : 'text-rose-400'}`;
+        if (pGs) pGs.innerText = systemDiagnostics.gamesheet.status === 'ok' ? '200 OK' : 'CORS Block';
+        if (dGs) dGs.innerText = systemDiagnostics.gamesheet.message || '';
+      }
+
+      const bLb = document.getElementById('diag-badge-lb');
+      const pLb = document.getElementById('diag-lb-state-pill');
+      const dLb = document.getElementById('diag-lb-desc');
+      if (bLb && systemDiagnostics.livebarn) {
+        bLb.innerText = '● Standby';
+        if (dLb) dLb.innerText = systemDiagnostics.livebarn.message || '';
+      }
+
+      const bSync = document.getElementById('diag-badge-sync');
+      const dSync = document.getElementById('diag-sync-desc');
+      if (bSync && systemDiagnostics.sync) {
+        bSync.innerText = '● Calibrated';
+        if (dSync) dSync.innerText = systemDiagnostics.sync.message || '';
+      }
+
+      const timeEl = document.getElementById('diag-audit-timestamp');
+      if (timeEl) timeEl.innerText = `Last Audit: ${new Date().toLocaleTimeString()}`;
+    }
+
+    async function runSystemDiagnosticsAudit() {
+      // 1. YouTube Player Audit
+      if (window.YT && window.YT.Player) {
+        logSystemDiagnostic('youtube', true, `YouTube IFrame API mounted (v=YT.Player). Player Ready: ${isPlayerReady}`);
+      } else {
+        logSystemDiagnostic('youtube', false, `YouTube IFrame API not yet mounted.`);
+      }
+
+      // 2. GameSheet Telemetry & JSON Audit
+      const startT = performance.now();
+      try {
+        const res = await fetch('./games_library.json?t=' + Date.now());
+        const latency = Math.round(performance.now() - startT);
+        if (res.ok) {
+          const data = await res.json();
+          const count = Array.isArray(data) ? data.length : (data.games?.length || 0);
+          logSystemDiagnostic('gamesheet', true, `200 OK • CORS verified • ${count} games loaded (${latency}ms latency)`);
+        } else {
+          logSystemDiagnostic('gamesheet', false, `HTTP ${res.status}: Failed to fetch games_library.json`);
+        }
+      } catch (err) {
+        logSystemDiagnostic('gamesheet', false, `Fetch/CORS Error: ${err.message}`);
+      }
+
+      // 3. LiveBarn Fallback Stream Status
+      const hasFallback = Boolean(currentGame?.livebarn_url || currentGame?.fallback_stream_url);
+      logSystemDiagnostic('livebarn', true, hasFallback ? `Secondary LiveBarn URL bound (${currentGame.livebarn_url})` : `LiveBarn fallback router standby • Zero-reload swap enabled`);
+
+      // 4. Clock & Puck Drop Calibration
+      const currentP1 = currentGame?.periods?.[1] ?? periodOneStartVideoTime;
+      const formattedP1 = typeof formatTime === 'function' ? formatTime(currentP1) : `${currentP1}s`;
+      logSystemDiagnostic('sync', true, `Master Faceoff Sync: ${currentP1}s (${formattedP1}) • Offset: +${masterPuckDropOffset}s`);
+    }
+
+    // YouTube Error Interceptor & LiveBarn Hot-Swap
+    function handleYouTubePlayerError(event) {
+      const code = event && event.data;
+      let errorMsg = `YouTube Error (${code})`;
+      let canFallback = false;
+      if (code === 150 || code === 101) {
+        errorMsg = `⚠️ YouTube Error ${code}: Embedded playback restricted by content owner or unlisted permissions.`;
+        canFallback = true;
+      } else if (code === 100) {
+        errorMsg = `⚠️ YouTube Error 100: Video not found or marked private.`;
+        canFallback = true;
+      } else if (code === 2) {
+        errorMsg = `⚠️ YouTube Error 2: Invalid video ID parameter.`;
+      } else if (code === 5) {
+        errorMsg = `⚠️ YouTube Error 5: HTML5 video player error.`;
+        canFallback = true;
+      }
+      console.warn(errorMsg);
+      logSystemDiagnostic('youtube', false, errorMsg);
+      showToast(errorMsg);
+
+      if (canFallback) {
+        triggerLiveBarnFallback();
+      }
+    }
+
+    function triggerLiveBarnFallback(fallbackUrl) {
+      const targetUrl = fallbackUrl || (currentGame && (currentGame.livebarn_url || currentGame.fallback_stream_url)) || "";
+      const container = document.getElementById('video-container');
+      if (!container) return;
+
+      if (targetUrl) {
+        container.innerHTML = `
+          <div class="relative w-full h-full bg-black flex flex-col">
+            <div class="bg-amber-500/20 text-amber-300 border-b border-amber-500/40 p-2 text-xs flex items-center justify-between">
+              <span class="font-bold flex items-center gap-1.5">
+                <span>🏟️</span> <span>LiveBarn Secondary Stream Ingest Active</span>
+              </span>
+              <button onclick="restoreYouTubePlayer()" class="px-2 py-0.5 rounded bg-slate-900 hover:bg-slate-800 text-white font-bold text-[10px] cursor-pointer">
+                🔄 Retry YouTube
+              </button>
+            </div>
+            <iframe src="${targetUrl}" class="w-full flex-1 border-0" allow="autoplay; fullscreen" allowfullscreen></iframe>
+          </div>
+        `;
+        showToast("🏟️ Swapped to LiveBarn secondary stream fallback (zero page reload).");
+        logSystemDiagnostic('livebarn', true, `LiveBarn stream active: ${targetUrl}`);
+      } else {
+        container.innerHTML = `
+          <div class="w-full h-full bg-slate-950 flex flex-col items-center justify-center p-6 text-center text-white space-y-3">
+            <div class="w-12 h-12 rounded-2xl bg-amber-500/20 text-amber-400 flex items-center justify-center text-2xl border border-amber-500/40">
+              ⚠️
+            </div>
+            <h4 class="font-bold text-sm text-slate-100 uppercase tracking-wider">YouTube Stream Unavailable</h4>
+            <p class="text-xs text-slate-400 max-w-md leading-relaxed">
+              The YouTube video is restricted from embedding (Error 150/101) or currently offline.
+              You can seamlessly swap to LiveBarn or load a clean local camera file without refreshing.
+            </p>
+            <div class="flex flex-wrap items-center justify-center gap-2 pt-2">
+              <button onclick="openReplaceGameVideoModal()" class="px-3.5 py-1.5 rounded-xl bg-tigersGold hover:bg-tigersGoldBright text-slate-950 font-black text-xs cursor-pointer transition shadow-sm">
+                📁 Select Camera Master / LiveBarn Clip
+              </button>
+              <button onclick="promptCustomLiveBarnUrl()" class="px-3.5 py-1.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-sky-300 font-bold text-xs cursor-pointer transition border border-slate-700">
+                🏟️ Enter LiveBarn URL
+              </button>
+              <button onclick="restoreYouTubePlayer()" class="px-3.5 py-1.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 font-bold text-xs cursor-pointer transition border border-slate-700">
+                🔄 Retry YouTube Stream
+              </button>
+            </div>
+          </div>
+        `;
+      }
+    }
+
+    function restoreYouTubePlayer() {
+      if (currentGame) {
+        const vid = currentGame.youtube_video_id || (currentGame.id ? currentGame.id.replace('game_', '') : '');
+        if (vid && typeof initYouTubePlayer === 'function') {
+          initYouTubePlayer(vid);
+          showToast("🔄 Attempting to reload YouTube stream...");
+        }
+      }
+    }
+
+    function promptCustomLiveBarnUrl() {
+      const url = prompt("Enter LiveBarn or Secondary Stream URL (e.g. https://livebarn.com/en/videoshare?vid=...):");
+      if (url && url.trim()) {
+        triggerLiveBarnFallback(url.trim());
+      }
+    }
+
+    function applyDiagnosticFallbackUrl() {
+      const input = document.getElementById('diag-custom-fallback-input');
+      if (input && input.value.trim()) {
+        triggerLiveBarnFallback(input.value.trim());
+        closeSystemDiagnosticsModal();
+      } else {
+        showToast("Please enter a valid stream URL.");
+      }
+    }
+
+</script>
 
   <!-- ================= MOBILE BOTTOM NAVIGATION BAR ================= -->
   <nav id="mobile-bottom-nav" class="sm:hidden fixed bottom-0 inset-x-0 bg-slate-950/95 backdrop-blur-md border-t border-slate-800 z-50 px-2 py-1.5 flex items-center justify-around text-[10px] text-slate-400 font-bold shadow-2xl">

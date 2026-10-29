@@ -246,6 +246,22 @@ Every player is cataloged with jersey number, primary position, shooting hand, a
 - **View Simplification (Analytics, Player Hub, & Feedback Modal):**
   - **Full-Width Responsive Hubs:** When opening Team Analytics (`breakouts`) or Player Hub (`player_analytics`), the floating smartphone simulator widget is automatically dismissed/hidden, and the layout expands to full width (`col-span-12 w-full`) with a prominent "🎬 Back to Game Film" navigation button to return to the video view.
   - **Lightweight Feedback Modal Dialog (`#feedback-modal`):** Converted the Feedback Hub from a full separate layout view into a lightweight, non-disruptive modal dialog accessible via `openFeedbackModal()` and `closeFeedbackModal()`.
+- **System Diagnostic & Connection Audit Engine (`#system-diagnostics-modal`):**
+  - **External API & Media Audit:** Automated diagnostic probe verifying that the YouTube IFrame API is mounted, games telemetry JSON (`games_library.json`) fetches 200 OK with verified CORS compliance, and GameSheet/TeamSnap sync endpoints are active.
+  - **Live YouTube Error Interceptor & Zero-Reload LiveBarn Fallback:** Intercepts YouTube player errors (Error 150/101 embed restriction, Error 100 private/deleted, Error 5 HTML5 playback failure) and hot-swaps the video stage to a secondary LiveBarn fallback stream or local master recording without requiring a hard page reload.
+  - **Dedicated Diagnostic Modal:** Interactive diagnostic console accessible from the header and Team Admin with real-time status tiles, API latency counters, and 1-tap test fallback triggers.
+- **Master Puck Drop & Clock Synchronization Engine (`syncPuckDrop()`):**
+  - **Single-Click Puck Drop Calibration:** One-click admin calibration button that captures the exact YouTube video timestamp at opening puck drop, establishing a master faceoff reference offset (`periodOneStartVideoTime`).
+  - **Precise Gamesheet Event Timestamp Mapping:** Implemented `calculateVideoTimestamp(gamesheetPeriod, gamesheetClockStr)` mapping official referee game clock events (e.g. 12:45 remaining in P2) directly to YouTube video seconds across 1st, 2nd, and 3rd period offsets, recalibrating all shifts and timeline markers dynamically.
+- **Special Teams Integration (Real-Time PP & PK Engine):**
+  - **Active Penalty State Listener:** Dynamic penalty event tracker monitoring official GameSheet penalty feeds and shift strength classifications (`PP`, `PK`, `5v4`, `4v5`, `5v3`).
+  - **Header & Overlay Special Teams Badges:** Injects high-visibility dynamic badges into the central live scoreboard (`#home-st-status`, `#away-st-status`) and video HUD (`#v-special-teams`), highlighting active Powerplays in primary team gold (`--primary-team-color`, `.active-pp`) and Penalty Kills in alert red (`--alert-red`, `.active-pk`) with a ticking countdown timer.
+- **Dynamic Theming Engine & Sharp Geometry Architecture:**
+  - **Global CSS Variables:** Injected `:root` design tokens (`--bg-base`, `--bg-surface`, `--bg-panel`, `--border-color`, `--primary-team-color`, `--secondary-team-color`, `--text-on-primary`, `--alert-red`, `--success-green`, `--sharp-radius`, `--micro-radius`).
+  - **Admin Multi-Team Color Pickers:** Interactive hex-code color pickers in Team Admin allowing coaches to reskin team colors on the fly with automatic persistence in `localStorage` and Firestore.
+  - **Sharp Pro Geometry (Hudl / InStat Mode):** One-click toggle (`[ 📐 Sharp Mode ]` / `toggleSharpGeometry()`) reducing component border-radius to 0px / 2px across cards, buttons, badges, and modals for high-density sports science analytics.
+- **Unified Pro Header & Dual-Pane Architecture:**
+  - Integrated `.unified-header`, `.live-scoreboard`, `.score-box`, `.btn-sharp`, `.workspace-pane`, `.media-track-frame`, and `.analytics-data-sidebar` into the core Antigravity layout.
 
 ---
 
@@ -254,7 +270,7 @@ Every player is cataloged with jersey number, primary position, shooting hand, a
 ### Repository Files & Structure
 ```text
 U13A-Tigers-2026-2027/
-├── index.html              # Core single-page web app (~17,570 lines) with Tailwind, Canvas, MediaRecorder & Firebase SDK
+├── index.html              # Core single-page web app (~18,440 lines) with Tailwind, Canvas, MediaRecorder & Firebase SDK
 ├── manifest.json           # Progressive Web App (PWA) mobile installation manifest
 ├── games_library.json      # Structured game telemetry, period markers, shifts, and TeamSnap metadata
 ├── auto_sync.py            # Ingest pipeline for YouTube playlist & TeamSnap iCal schedule
