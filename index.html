@@ -1392,6 +1392,77 @@
     </div>
   </div>
 
+  <!-- ================= DEDICATED FILM LIBRARY & YOUTUBE PLAYLIST HUB MODAL ================= -->
+  <div id="film-library-modal" onclick="if(event.target === this) closeFilmLibraryModal()" class="fixed inset-0 bg-slate-950/90 backdrop-blur-md z-[9999] flex items-center justify-center p-2 sm:p-4 hidden" style="display: none;">
+    <div class="bg-[var(--bg-surface)] max-w-5xl w-full max-h-[92vh] border border-[var(--border-color)] shadow-2xl overflow-hidden flex flex-col text-white animate-in fade-in zoom-in-95 duration-150">
+      
+      <!-- Header -->
+      <div class="p-4 bg-[var(--bg-panel)] flex flex-wrap items-center justify-between gap-3 border-b border-[var(--border-color)] shrink-0">
+        <div class="flex items-center gap-3">
+          <span class="w-10 h-10 bg-amber-500/20 text-amber-300 font-black text-xl flex items-center justify-center border border-amber-400/40">🎬</span>
+          <div>
+            <div class="flex items-center gap-2 flex-wrap">
+              <h3 class="font-display font-black text-base uppercase tracking-wider text-amber-300">
+                Team Film Library &amp; Video Archive
+              </h3>
+              <span id="film-library-modal-count-badge" class="px-2 py-0.5 bg-[var(--bg-surface)] text-amber-300 border border-amber-400/30 text-[10px] font-mono font-bold">
+                8 Archived Games
+              </span>
+            </div>
+            <div class="text-[11px] text-slate-400">
+              Complete game film synced from YouTube Playlist <code class="text-amber-400 font-mono">PLXFVFYYSmylE</code> with visual shifts &amp; AI analytics
+            </div>
+          </div>
+        </div>
+        <div class="flex items-center gap-2">
+          <a href="https://www.youtube.com/playlist?list=PLXFVFYYSmylE" target="_blank" rel="noopener noreferrer" class="px-3 py-1.5 bg-red-600 hover:bg-red-500 text-white font-bold text-xs flex items-center gap-1.5 transition">
+            <span>📺</span> <span>Open Full Playlist on YouTube ↗</span>
+          </a>
+          <button onclick="closeFilmLibraryModal()" class="w-8 h-8 bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white flex items-center justify-center font-bold text-sm cursor-pointer transition">✕</button>
+        </div>
+      </div>
+
+      <!-- Filter & Search Bar -->
+      <div class="p-3 bg-[var(--bg-panel)] border-b border-[var(--border-color)] shrink-0 flex flex-wrap items-center justify-between gap-2.5">
+        <div class="flex items-center gap-2 flex-1 min-w-[240px]">
+          <input type="text" id="film-lib-search-input" oninput="filterFilmLibraryCards()" placeholder="🔍 Search games by opponent, score, or date..." class="bg-[var(--bg-surface)] border border-[var(--border-color)] px-3 py-1.5 text-xs text-white placeholder-slate-500 w-full focus:border-amber-400 outline-none">
+        </div>
+        <div class="flex items-center gap-1.5 text-[11px] font-bold">
+          <button type="button" onclick="setFilmLibraryFilter('all')" id="film-filter-all" class="film-filter-btn px-2.5 py-1 bg-amber-400 text-slate-950 font-black transition">
+            All (8)
+          </button>
+          <button type="button" onclick="setFilmLibraryFilter('win')" id="film-filter-win" class="film-filter-btn px-2.5 py-1 bg-[var(--bg-surface)] text-slate-300 hover:text-white border border-[var(--border-color)] transition">
+            Wins
+          </button>
+          <button type="button" onclick="setFilmLibraryFilter('home')" id="film-filter-home" class="film-filter-btn px-2.5 py-1 bg-[var(--bg-surface)] text-slate-300 hover:text-white border border-[var(--border-color)] transition">
+            Home
+          </button>
+          <button type="button" onclick="setFilmLibraryFilter('away')" id="film-filter-away" class="film-filter-btn px-2.5 py-1 bg-[var(--bg-surface)] text-slate-300 hover:text-white border border-[var(--border-color)] transition">
+            Away
+          </button>
+        </div>
+      </div>
+
+      <!-- Film Cards Grid -->
+      <div class="p-4 overflow-y-auto space-y-3 flex-1" id="film-library-cards-container">
+        <!-- Rendered dynamically via JavaScript -->
+      </div>
+
+      <!-- Footer -->
+      <div class="p-3 bg-[var(--bg-panel)] border-t border-[var(--border-color)] flex items-center justify-between flex-wrap gap-2 text-xs shrink-0">
+        <div class="text-[11px] text-slate-400 flex items-center gap-1.5">
+          <span>💡</span> <span>Click any game to immediately load film &amp; shift breakdowns in the main player.</span>
+        </div>
+        <div class="flex items-center gap-2">
+          <button onclick="closeFilmLibraryModal()" class="px-3.5 py-1.5 bg-[var(--bg-surface)] hover:bg-slate-800 text-slate-300 border border-[var(--border-color)] font-bold text-xs cursor-pointer transition">
+            Close
+          </button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
   <!-- ================= SEASON & TOURNAMENT SCHEDULE HUB MODAL ================= -->
   <div id="schedule-hub-modal" onclick="if(event.target === this) closeScheduleHubModal()" class="fixed inset-0 bg-slate-950/90 backdrop-blur-md z-[9999] flex items-center justify-center p-2 sm:p-4 hidden" style="display: none;">
     <div class="bg-slate-900 rounded-3xl max-w-4xl w-full max-h-[92vh] border-2 border-amber-400/60 shadow-2xl overflow-hidden flex flex-col text-white animate-in fade-in zoom-in-95 duration-150">
@@ -4110,9 +4181,9 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
         <button onclick="openScheduleHubModal()" id="nav-btn-schedule" class="nav-functional-btn px-2.5 py-1.5 text-[11px] font-bold uppercase tracking-wider text-slate-300 hover:text-white hover:bg-[var(--bg-panel)] border border-transparent hover:border-[var(--border-color)] cursor-pointer transition flex items-center gap-1 shrink-0">
           <span>📅</span> <span>Schedule</span>
         </button>
-        <button onclick="switchViewMode('coaches')" id="nav-btn-gametape" class="nav-functional-btn active-nav-btn px-2.5 py-1.5 text-[11px] font-bold uppercase tracking-wider text-amber-400 bg-[var(--bg-panel)] border border-amber-400/60 cursor-pointer transition flex items-center gap-1 shrink-0">
+        <button onclick="switchViewMode('coaches'); openFilmLibraryModal();" id="nav-btn-gametape" class="nav-functional-btn active-nav-btn px-2.5 py-1.5 text-[11px] font-bold uppercase tracking-wider text-amber-400 bg-[var(--bg-panel)] border border-amber-400/60 cursor-pointer transition flex items-center gap-1 shrink-0" title="Browse All 8 Games in Film Library Playlist">
           <span>🎬</span> <span>Game Tape</span>
-          <span id="top-clip-count" class="text-[9px] px-1.5 py-0.2 rounded-full bg-slate-800 text-amber-300 font-mono">0</span>
+          <span id="top-clip-count" class="text-[9px] px-1.5 py-0.2 rounded-full bg-slate-800 text-amber-300 font-mono">8</span>
         </button>
         <button onclick="openPreGameScoutModal()" id="nav-btn-pregame" class="nav-functional-btn px-2.5 py-1.5 text-[11px] font-bold uppercase tracking-wider text-slate-300 hover:text-white hover:bg-[var(--bg-panel)] border border-transparent hover:border-[var(--border-color)] cursor-pointer transition flex items-center gap-1 shrink-0">
           <span>🏒</span> <span>Pre-Game</span>
@@ -4271,8 +4342,11 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
         <span class="text-amber-400 font-display text-[11px] font-bold uppercase tracking-wider flex items-center gap-1">
           <span>🎬</span> Film:
         </span>
-        <select id="game-select" onchange="onGameDropdownChange(this.value)" class="bg-[var(--bg-surface)] text-white font-bold border border-[var(--border-color)] px-2 py-1 text-xs cursor-pointer max-w-[240px] sm:max-w-[320px] truncate focus:border-amber-400"></select>
-        <button onclick="openAddGameModal()" title="Add / Ingest New Game Film" class="px-2 py-1 bg-amber-500 hover:bg-amber-400 text-slate-950 font-black text-[10px] cursor-pointer transition uppercase">
+        <button onclick="openFilmLibraryModal()" title="Browse all 8 games in the YouTube Playlist Archive" class="px-2.5 py-1 bg-amber-500 hover:bg-amber-400 text-slate-950 font-black text-[10px] cursor-pointer transition uppercase flex items-center gap-1 shadow-xs active:scale-95">
+          <span>🎬</span> <span>Film Library (8)</span>
+        </button>
+        <select id="game-select" onchange="onGameDropdownChange(this.value)" class="bg-[var(--bg-surface)] text-white font-bold border border-[var(--border-color)] px-2 py-1 text-xs cursor-pointer max-w-[220px] sm:max-w-[280px] truncate focus:border-amber-400"></select>
+        <button onclick="openAddGameModal()" title="Add / Ingest New Game Film" class="px-2 py-1 bg-[var(--bg-surface)] hover:bg-slate-800 text-slate-300 font-bold text-[10px] border border-[var(--border-color)] cursor-pointer transition uppercase">
           ➕ Add Film
         </button>
         <button id="header-replace-btn" onclick="openReplaceGameVideoModal()" title="Replace choppy stream with clean camera recording" class="px-2 py-1 bg-[var(--bg-surface)] hover:bg-slate-800 text-sky-300 font-bold text-[10px] border border-[var(--border-color)] cursor-pointer transition uppercase">
@@ -7292,9 +7366,14 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
       gamesLibrary.forEach(g => {
         const opt = document.createElement('option');
         opt.value = g.id || g.youtube_video_id;
-        opt.innerText = g.title || g.game_title || 'Match';
+        const shifts = (Array.isArray(g.shifts) ? g.shifts.length : 0);
+        const title = g.title || g.game_title || 'Match Film';
+        opt.innerText = `🎬 ${title} (${shifts} shifts)`;
         select.appendChild(opt);
       });
+      if (currentGame && select) {
+        select.value = currentGame.id || currentGame.youtube_video_id;
+      }
     }
 
     function onGameDropdownChange(gameId) {
@@ -7425,6 +7504,25 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
       const overlayPill = document.getElementById('active-shift-pill');
       if (overlayPill) overlayPill.classList.add('hidden');
 
+      // Ensure we exit live broadcast view if active so the archived film and shifts play properly
+      if (typeof isLiveBroadcastActive !== 'undefined' && isLiveBroadcastActive) {
+        isLiveBroadcastActive = false;
+        const hud = document.getElementById('live-broadcast-hud');
+        const offlinePlaceholder = document.getElementById('live-offline-placeholder');
+        const sideLiveHeader = document.getElementById('sidebar-live-header');
+        const sideNavTabs = document.getElementById('sidebar-nav-tabs');
+        const sideLiveSection = document.getElementById('live-sidebar-section');
+        if (hud) hud.classList.add('hidden');
+        if (offlinePlaceholder) offlinePlaceholder.classList.add('hidden');
+        if (sideLiveHeader) sideLiveHeader.classList.add('hidden');
+        if (sideNavTabs) sideNavTabs.classList.remove('hidden');
+        if (sideLiveSection) sideLiveSection.classList.add('hidden');
+        if (typeof liveHudTimer !== 'undefined' && liveHudTimer) {
+          clearInterval(liveHudTimer);
+          liveHudTimer = null;
+        }
+      }
+
       currentGame = gamesLibrary.find(g => (g.id === gameId || g.youtube_video_id === gameId)) || gamesLibrary[0];
       if (!currentGame) return;
 
@@ -7434,11 +7532,15 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
       const vidId = currentGame.youtube_video_id || (currentGame.id ? currentGame.id.replace('game_', '') : '');
       pendingVideoId = vidId;
 
-      if (ytPlayer && isPlayerReady && typeof ytPlayer.cueVideoById === 'function') {
+      if (ytPlayer && isPlayerReady && typeof ytPlayer.loadVideoById === 'function') {
         try {
-          ytPlayer.cueVideoById(vidId);
+          ytPlayer.loadVideoById({ videoId: vidId, startSeconds: 0 });
         } catch(e) {
-          initYouTubePlayer(vidId);
+          try {
+            ytPlayer.cueVideoById(vidId);
+          } catch(e2) {
+            initYouTubePlayer(vidId);
+          }
         }
       } else {
         initYouTubePlayer(vidId);
@@ -16923,6 +17025,152 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
       });
     }
 
+    // ================= DEDICATED FILM LIBRARY & YOUTUBE PLAYLIST MODAL LOGIC =================
+    let currentFilmLibraryFilter = 'all';
+
+    function openFilmLibraryModal() {
+      if (!gamesLibrary || gamesLibrary.length === 0) {
+        fetch('./games_library.json?t=' + Date.now())
+          .then(res => res.json())
+          .then(data => {
+            if (data && Array.isArray(data.games)) gamesLibrary = data.games;
+            else if (Array.isArray(data)) gamesLibrary = data;
+            renderFilmLibraryCards();
+          })
+          .catch(e => console.error("Error fetching games for modal:", e));
+      } else {
+        renderFilmLibraryCards();
+      }
+      const modal = document.getElementById('film-library-modal');
+      if (modal) {
+        modal.classList.remove('hidden');
+        modal.style.display = 'flex';
+      }
+    }
+
+    function closeFilmLibraryModal() {
+      const modal = document.getElementById('film-library-modal');
+      if (modal) {
+        modal.classList.add('hidden');
+        modal.style.display = 'none';
+      }
+    }
+
+    function setFilmLibraryFilter(filterType) {
+      currentFilmLibraryFilter = filterType;
+      document.querySelectorAll('.film-filter-btn').forEach(b => {
+        b.className = 'film-filter-btn px-2.5 py-1 bg-[var(--bg-surface)] text-slate-300 hover:text-white border border-[var(--border-color)] transition';
+      });
+      const activeBtn = document.getElementById(`film-filter-${filterType}`);
+      if (activeBtn) {
+        activeBtn.className = 'film-filter-btn px-2.5 py-1 bg-amber-400 text-slate-950 font-black transition';
+      }
+      renderFilmLibraryCards();
+    }
+
+    function filterFilmLibraryCards() {
+      renderFilmLibraryCards();
+    }
+
+    function renderFilmLibraryCards() {
+      const container = document.getElementById('film-library-cards-container');
+      const badge = document.getElementById('film-library-modal-count-badge');
+      if (!container) return;
+
+      if (!gamesLibrary || gamesLibrary.length === 0) {
+        container.innerHTML = `<div class="p-8 text-center text-slate-400 font-mono">No games loaded in film library.</div>`;
+        return;
+      }
+
+      if (badge) badge.innerText = `${gamesLibrary.length} Archived Games`;
+
+      const searchVal = (document.getElementById('film-lib-search-input')?.value || '').toLowerCase().trim();
+
+      const filtered = gamesLibrary.filter(g => {
+        const title = (g.title || g.game_title || '').toLowerCase();
+        const opponent = (g.opponent || '').toLowerCase();
+        const date = (g.date || '').toLowerCase();
+        const textMatch = !searchVal || title.includes(searchVal) || opponent.includes(searchVal) || date.includes(searchVal);
+        if (!textMatch) return false;
+
+        if (currentFilmLibraryFilter === 'win') {
+          return title.includes('tigers 6') || title.includes('win');
+        }
+        if (currentFilmLibraryFilter === 'home') {
+          return g.teamsnap?.is_home === true || (g.teamsnap?.home_away || '').toLowerCase() === 'home';
+        }
+        if (currentFilmLibraryFilter === 'away') {
+          return g.teamsnap?.is_home === false || (g.teamsnap?.home_away || '').toLowerCase() === 'away';
+        }
+        return true;
+      });
+
+      if (filtered.length === 0) {
+        container.innerHTML = `<div class="p-8 text-center text-slate-400 font-mono">No games match filter "${escapeHtml(searchVal)}".</div>`;
+        return;
+      }
+
+      container.innerHTML = `
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3.5">
+          ${filtered.map((g, idx) => {
+            const vidId = g.youtube_video_id || (g.id ? g.id.replace('game_', '') : '');
+            const shifts = getNormalizedShiftsForGame(g);
+            const ts = g.teamsnap || {};
+            const isCurrent = currentGame && (currentGame.id === g.id || currentGame.youtube_video_id === g.youtube_video_id);
+            const title = g.title || g.game_title || 'Match Film';
+            const isWin = title.includes('Tigers 6');
+
+            return `
+              <div class="bg-[var(--bg-panel)] border ${isCurrent ? 'border-amber-400 shadow-amber-400/20 shadow-md ring-1 ring-amber-400' : 'border-[var(--border-color)] hover:border-slate-500'} transition overflow-hidden flex flex-col group text-left">
+                <!-- Video Thumbnail Banner -->
+                <div class="relative aspect-video bg-slate-950 overflow-hidden cursor-pointer" onclick="loadGameAndWatch('${g.id || vidId}')">
+                  <img src="https://img.youtube.com/vi/${vidId}/mqdefault.jpg" alt="${escapeHtml(title)}" class="w-full h-full object-cover group-hover:scale-105 transition duration-300" onerror="this.src='https://images.unsplash.com/photo-1580748141549-71748dbe0bdc?auto=format&fit=crop&w=640&q=80'">
+                  <div class="absolute inset-0 bg-slate-950/40 group-hover:bg-slate-950/10 transition flex items-center justify-center">
+                    <div class="w-11 h-11 bg-amber-500/90 text-slate-950 flex items-center justify-center font-black text-lg group-hover:scale-110 transition shadow-xl">▶</div>
+                  </div>
+                  <div class="absolute top-2 left-2 flex items-center gap-1.5 flex-wrap">
+                    <span class="px-2 py-0.5 bg-slate-950/80 text-white font-mono text-[10px] font-bold border border-white/20">Game #${idx + 1}</span>
+                    ${isWin ? '<span class="px-2 py-0.5 bg-emerald-500 text-slate-950 font-black text-[10px] uppercase">🟢 Win</span>' : ''}
+                    ${isCurrent ? '<span class="px-2 py-0.5 bg-amber-400 text-slate-950 font-black text-[10px] uppercase">Active Now</span>' : ''}
+                  </div>
+                  <div class="absolute bottom-2 right-2 px-1.5 py-0.5 bg-slate-950/90 text-amber-300 font-mono text-[10px] font-bold border border-amber-400/30">1080p HD</div>
+                </div>
+
+                <!-- Info Body -->
+                <div class="p-3.5 space-y-2.5 flex-1 flex flex-col justify-between">
+                  <div class="space-y-1.5">
+                    <div class="flex items-center justify-between gap-1 text-[11px] text-slate-400 font-mono">
+                      <span>📅 ${escapeHtml(g.date || ts.date || 'Game Day')}</span>
+                      <span>${ts.home_away ? (ts.home_away === 'Home' ? '🏠 Home' : '🚌 Away') : ''}</span>
+                    </div>
+                    <h4 class="font-bold text-white text-sm line-clamp-1 group-hover:text-amber-300 transition">${escapeHtml(title)}</h4>
+                    <div class="text-[11px] text-slate-400 font-mono flex items-center gap-1">
+                      <span>📍</span> <span class="truncate">${escapeHtml(ts.arena || 'Aurora Community Centre')}</span>
+                    </div>
+                  </div>
+
+                  <div class="pt-2 border-t border-[var(--border-color)] space-y-2">
+                    <div class="flex items-center justify-between text-[11px] font-mono">
+                      <span class="text-amber-300 font-bold">⏱️ ${shifts.length} Verified Shifts</span>
+                      <span class="text-emerald-400 font-bold">AI Anchored</span>
+                    </div>
+                    <div class="flex items-center gap-1.5">
+                      <button type="button" onclick="loadGameAndWatch('${g.id || vidId}')" class="flex-1 py-1.5 bg-amber-500 hover:bg-amber-400 text-slate-950 font-black text-xs cursor-pointer transition uppercase flex items-center justify-center gap-1 shadow-sm active:scale-95">
+                        <span>🎬</span> <span>Watch Film</span>
+                      </button>
+                      <a href="https://www.youtube.com/watch?v=${vidId}" target="_blank" rel="noopener noreferrer" class="px-2.5 py-1.5 bg-[var(--bg-surface)] hover:bg-slate-800 text-slate-300 hover:text-white border border-[var(--border-color)] font-bold text-xs transition flex items-center gap-1" title="Watch full video on YouTube">
+                        <span>↗</span> <span>YT</span>
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            `;
+          }).join('')}
+        </div>
+      `;
+    }
+
     function openScheduleHubModal() {
       const modal = document.getElementById('schedule-hub-modal');
       if (!modal) return;
@@ -17139,49 +17387,80 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
         return;
       }
 
-      container.innerHTML = gamesLibrary.map((g, idx) => {
-        const shifts = getNormalizedShiftsForGame(g);
-        const sched = g.gamesheet_schedule || g.schedule || g.teamsnap || {};
-        const isCurrent = currentGame && (currentGame.id === g.id || currentGame.youtube_video_id === g.youtube_video_id);
-
-        return `
-          <div class="p-3.5 rounded-2xl bg-slate-950 border ${isCurrent ? 'border-amber-400/80 ring-1 ring-amber-400/50' : 'border-slate-800'} hover:border-slate-700 transition space-y-2.5">
-            <div class="flex flex-wrap items-center justify-between gap-2">
-              <div class="flex items-center gap-2">
-                <span class="px-2 py-0.5 rounded font-mono font-bold text-[10px] bg-slate-800 text-slate-300">
-                  Game #${idx + 1}
-                </span>
-                <span class="text-white font-bold text-xs sm:text-sm">${escapeHtml(g.title || g.game_title || 'Match Film')}</span>
-                ${isCurrent ? '<span class="px-1.5 py-0.5 rounded bg-amber-400 text-slate-950 font-black text-[9px] uppercase">Active Now</span>' : ''}
-              </div>
-              <span class="font-mono text-slate-400 text-[10px]">${escapeHtml(sched.date || g.date || 'Game Day')}</span>
-            </div>
-
-            <div class="grid grid-cols-1 sm:grid-cols-3 gap-2 text-[11px] text-slate-300 font-mono">
-              <div>📍 ${escapeHtml(sched.arena || 'Aurora Community Centre')}</div>
-              <div>⏱️ <strong class="text-amber-300">${shifts.length}</strong> Verified Shifts</div>
-              <div>🎬 Video ID: <code class="text-sky-300">${escapeHtml(g.youtube_video_id || 'Uploaded')}</code></div>
-            </div>
-
-            <div class="flex items-center justify-between pt-1 border-t border-slate-900 flex-wrap gap-2">
-              <span class="text-[10px] ${g.youtube_video_id ? 'text-emerald-400' : 'text-amber-400'} font-mono">
-                ${g.youtube_video_id ? '● Full 1080p Telemetry Ready' : '⚠️ No Video Linked Yet'}
-              </span>
-              <div class="flex items-center gap-2">
-                ${g.youtube_video_id ? `
-                  <button type="button" onclick="loadGameAndWatch('${g.id || g.youtube_video_id}')" class="px-3.5 py-1.5 rounded-xl bg-tigersGold hover:bg-tigersGoldBright text-slate-950 font-black text-xs cursor-pointer transition shadow-xs flex items-center gap-1.5 active:scale-95">
-                    <span>🎬</span> <span>Watch Film &amp; Shifts →</span>
-                  </button>
-                ` : `
-                  <button type="button" onclick="openLinkVideoForScheduledGame('${g.id}')" class="px-3.5 py-1.5 rounded-xl bg-gradient-to-r from-rose-600 to-amber-600 hover:from-rose-500 hover:to-amber-500 text-white font-black text-xs cursor-pointer transition shadow-xs flex items-center gap-1.5 active:scale-95">
-                    <span>📹</span> <span>Upload or Link Video</span>
-                  </button>
-                `}
-              </div>
-            </div>
+      container.innerHTML = `
+        <div class="mb-3 p-3 rounded-2xl bg-slate-900 border border-slate-800 flex flex-wrap items-center justify-between gap-2">
+          <div class="flex items-center gap-2">
+            <span class="text-amber-400 font-bold text-xs">🎬 Playlist:</span>
+            <span class="text-white text-xs font-mono">PLXFVFYYSmylE (${gamesLibrary.length} Games)</span>
           </div>
-        `;
-      }).join('');
+          <div class="flex items-center gap-2">
+            <button type="button" onclick="openFilmLibraryModal()" class="px-3 py-1 bg-amber-500 hover:bg-amber-400 text-slate-950 font-black text-xs cursor-pointer transition">
+              🎬 Open Visual Film Gallery
+            </button>
+            <a href="https://www.youtube.com/playlist?list=PLXFVFYYSmylE" target="_blank" rel="noopener noreferrer" class="px-3 py-1 bg-red-600 hover:bg-red-500 text-white font-bold text-xs transition flex items-center gap-1">
+              <span>📺</span> <span>YouTube Playlist ↗</span>
+            </a>
+          </div>
+        </div>
+        ${gamesLibrary.map((g, idx) => {
+          const shifts = getNormalizedShiftsForGame(g);
+          const sched = g.gamesheet_schedule || g.schedule || g.teamsnap || {};
+          const isCurrent = currentGame && (currentGame.id === g.id || currentGame.youtube_video_id === g.youtube_video_id);
+          const vidId = g.youtube_video_id || (g.id ? g.id.replace('game_', '') : '');
+
+          return `
+            <div class="p-3.5 rounded-2xl bg-slate-950 border ${isCurrent ? 'border-amber-400/80 ring-1 ring-amber-400/50' : 'border-slate-800'} hover:border-slate-700 transition space-y-2.5">
+              <div class="flex flex-wrap items-center justify-between gap-2">
+                <div class="flex items-center gap-2">
+                  <span class="px-2 py-0.5 rounded font-mono font-bold text-[10px] bg-slate-800 text-slate-300">
+                    Game #${idx + 1}
+                  </span>
+                  <span class="text-white font-bold text-xs sm:text-sm">${escapeHtml(g.title || g.game_title || 'Match Film')}</span>
+                  ${isCurrent ? '<span class="px-1.5 py-0.5 rounded bg-amber-400 text-slate-950 font-black text-[9px] uppercase">Active Now</span>' : ''}
+                </div>
+                <span class="font-mono text-slate-400 text-[10px]">${escapeHtml(sched.date || g.date || 'Game Day')}</span>
+              </div>
+
+              <div class="flex gap-3 items-center">
+                ${vidId ? `
+                  <div class="w-28 sm:w-36 aspect-video rounded-lg overflow-hidden shrink-0 bg-slate-900 border border-slate-800 relative cursor-pointer" onclick="loadGameAndWatch('${g.id || vidId}')">
+                    <img src="https://img.youtube.com/vi/${vidId}/mqdefault.jpg" alt="${escapeHtml(g.title || '')}" class="w-full h-full object-cover">
+                    <div class="absolute inset-0 bg-black/30 hover:bg-black/10 transition flex items-center justify-center">
+                      <span class="w-7 h-7 rounded-full bg-amber-400 text-slate-950 flex items-center justify-center font-bold text-xs">▶</span>
+                    </div>
+                  </div>
+                ` : ''}
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-1.5 text-[11px] text-slate-300 font-mono flex-1">
+                  <div>📍 ${escapeHtml(sched.arena || 'Aurora Community Centre')}</div>
+                  <div>⏱️ <strong class="text-amber-300">${shifts.length}</strong> Verified Shifts</div>
+                  <div>🎬 Video ID: <code class="text-sky-300">${escapeHtml(vidId || 'Uploaded')}</code></div>
+                  <div>🛡️ Jersey: <span class="text-white">${escapeHtml(sched.jersey || 'Game Jersey')}</span></div>
+                </div>
+              </div>
+
+              <div class="flex items-center justify-between pt-1 border-t border-slate-900 flex-wrap gap-2">
+                <span class="text-[10px] ${g.youtube_video_id ? 'text-emerald-400' : 'text-amber-400'} font-mono">
+                  ${g.youtube_video_id ? '● Full 1080p Telemetry Ready' : '⚠️ No Video Linked Yet'}
+                </span>
+                <div class="flex items-center gap-2">
+                  ${g.youtube_video_id ? `
+                    <button type="button" onclick="loadGameAndWatch('${g.id || g.youtube_video_id}')" class="px-3.5 py-1.5 rounded-xl bg-tigersGold hover:bg-tigersGoldBright text-slate-950 font-black text-xs cursor-pointer transition shadow-xs flex items-center gap-1.5 active:scale-95">
+                      <span>🎬</span> <span>Watch Film &amp; Shifts →</span>
+                    </button>
+                    <a href="https://www.youtube.com/watch?v=${vidId}" target="_blank" rel="noopener noreferrer" class="px-2.5 py-1.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 font-bold text-xs transition" title="Open in YouTube">
+                      ↗ YT
+                    </a>
+                  ` : `
+                    <button type="button" onclick="openLinkVideoForScheduledGame('${g.id}')" class="px-3.5 py-1.5 rounded-xl bg-gradient-to-r from-rose-600 to-amber-600 hover:from-rose-500 hover:to-amber-500 text-white font-black text-xs cursor-pointer transition shadow-xs flex items-center gap-1.5 active:scale-95">
+                      <span>📹</span> <span>Upload or Link Video</span>
+                    </button>
+                  `}
+                </div>
+              </div>
+            </div>
+          `;
+        }).join('')}
+      `;
     }
 
     function renderScheduleHubLakePlacid() {
@@ -17215,6 +17494,7 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
 
     function loadGameAndWatch(gameId) {
       closeScheduleHubModal();
+      if (typeof closeFilmLibraryModal === 'function') closeFilmLibraryModal();
       loadGame(gameId);
       switchViewMode('coaches');
       window.scrollTo({ top: 0, behavior: 'smooth' });
