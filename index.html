@@ -417,10 +417,21 @@
       if (typeof updateRoleBadge === 'function') updateRoleBadge();
       if (typeof initAppSafe === 'function') initAppSafe();
     };
+
+    // Auto-unlock dashboard on page load without blocking on Firebase
+    document.addEventListener('DOMContentLoaded', function() {
+      const m = document.getElementById('auth-modal');
+      const c = document.getElementById('main-content');
+      if (m) { m.style.display = 'none'; m.classList.add('hidden'); }
+      if (c) { c.style.display = 'block'; c.classList.remove('hidden'); }
+      const storedRole = localStorage.getItem('team_role') || 'parent';
+      if (typeof applyUserRole === 'function') applyUserRole(storedRole);
+      if (typeof initAppSafe === 'function') initAppSafe();
+    });
   </script>
 
-  <!-- ================= AUTH MODAL ================= -->
-  <div id="auth-modal" class="fixed inset-0 bg-slate-900/85 backdrop-blur-md flex items-center justify-center p-3 sm:p-4 z-50">
+  <!-- ================= AUTH MODAL (Non-blocking by default; unlocks dashboard immediately) ================= -->
+  <div id="auth-modal" class="fixed inset-0 bg-slate-900/85 backdrop-blur-md flex items-center justify-center p-3 sm:p-4 z-50 hidden" style="display: none;">
     <div class="relative bg-white border-2 border-tigersGold p-6 sm:p-8 rounded-3xl max-w-md w-full text-center shadow-[0_20px_60px_rgba(15,23,42,0.35)] overflow-hidden">
       <div class="absolute -top-20 left-1/2 -translate-x-1/2 w-64 h-64 bg-tigersGold/25 rounded-full blur-3xl pointer-events-none"></div>
       
@@ -1415,6 +1426,9 @@
           </div>
         </div>
         <div class="flex items-center gap-2">
+          <button type="button" onclick="refreshFilmPlaylistFromCloud()" class="px-3 py-1.5 bg-amber-500 hover:bg-amber-400 text-slate-950 font-black text-xs flex items-center gap-1.5 transition cursor-pointer shadow-xs active:scale-95">
+            <span>🔄</span> <span>Sync / Refresh</span>
+          </button>
           <a href="https://www.youtube.com/playlist?list=PLXFVFYYSmylE" target="_blank" rel="noopener noreferrer" class="px-3 py-1.5 bg-red-600 hover:bg-red-500 text-white font-bold text-xs flex items-center gap-1.5 transition">
             <span>📺</span> <span>Open Full Playlist on YouTube ↗</span>
           </a>
@@ -7287,6 +7301,17 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
           document.body.appendChild(tag);
         }
 
+        const FALLBACK_PLAYLIST_GAMES = [
+          { id: "game_jlZoOVrO0kQ", youtube_video_id: "jlZoOVrO0kQ", title: "20.10.2026 - Tigers 1 - Newmarket 9", date: "2026-10-20", opponent: "Newmarket", shifts: [] },
+          { id: "game_IjPhCAFZStc", youtube_video_id: "IjPhCAFZStc", title: "11.10.2026 - Tigers 0 - Islanders 8", date: "2026-10-11", opponent: "Islanders", shifts: [] },
+          { id: "game_kdo2j6c39BQ", youtube_video_id: "kdo2j6c39BQ", title: "10.10.2026 - Tigers 6 - Reading Rockets 3", date: "2026-10-10", opponent: "Reading Rockets", shifts: [] },
+          { id: "game_p18H81X2Bp0", youtube_video_id: "p18H81X2Bp0", title: "04.10.2026 - Tigers 1 - Upper York 11", date: "2026-10-04", opponent: "Upper York", shifts: [] },
+          { id: "game_KxRUQu2z-Ao", youtube_video_id: "KxRUQu2z-Ao", title: "03.10.2026 - Tigers 0 - Caledon 12", date: "2026-10-03", opponent: "Caledon", shifts: [] },
+          { id: "game_DYH1Kgffsjc", youtube_video_id: "DYH1Kgffsjc", title: "26.09.2026 - Tigers 0 - Welland 8", date: "2026-09-26", opponent: "Welland", shifts: [] },
+          { id: "game_GywcR8aeMY8", youtube_video_id: "GywcR8aeMY8", title: "25.09.2026 - Tigers 0 - Jr Navy 14", date: "2026-09-25", opponent: "Jr Navy", shifts: [] },
+          { id: "game_NhSdyb8rVPA", youtube_video_id: "NhSdyb8rVPA", title: "19.09.2026 - Tigers 1 - North Durham 10", date: "2026-09-19", opponent: "North Durham", shifts: [] }
+        ];
+
         fetch('./games_library.json?t=' + Date.now())
           .then(res => {
             if (!res.ok) throw new Error("Could not fetch library: " + res.status);
@@ -7300,46 +7325,48 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
               list = data.games;
             }
 
-            if (list.length > 0) {
-              gamesLibrary = list;
-              // Merge custom ingested games from local storage
-              try {
-                const custom = JSON.parse(localStorage.getItem('tigers_custom_games') || '[]');
-                if (Array.isArray(custom) && custom.length > 0) {
-                  custom.forEach(cg => {
-                    if (!gamesLibrary.some(g => g.id === cg.id)) {
-                      gamesLibrary.unshift(cg);
-                    }
-                  });
-                }
-              } catch(e){}
+            if (!list || list.length === 0) {
+              list = FALLBACK_PLAYLIST_GAMES;
+            }
 
-              // Restore linked scheduled games
-              try {
-                const linked = JSON.parse(localStorage.getItem('tigers_linked_scheduled_games') || '{}');
-                Object.entries(linked).forEach(([gid, data]) => {
-                  const match = (typeof SCHEDULE_UPCOMING_MATCHUPS !== 'undefined') ? SCHEDULE_UPCOMING_MATCHUPS.find(g => g.id === gid) : null;
-                  if (match) {
-                    match.youtube_video_id = data.youtube_video_id;
-                    match.source_type = data.source_type;
+            gamesLibrary = list;
+            // Merge custom ingested games from local storage
+            try {
+              const custom = JSON.parse(localStorage.getItem('tigers_custom_games') || '[]');
+              if (Array.isArray(custom) && custom.length > 0) {
+                custom.forEach(cg => {
+                  if (!gamesLibrary.some(g => g.id === cg.id)) {
+                    gamesLibrary.unshift(cg);
                   }
                 });
-              } catch(e){}
-
-              // Sync active live stream video ID from cloud settings
-              if (data && data.settings && data.settings.active_livestream_video_id) {
-                liveStreamVideoId = data.settings.active_livestream_video_id;
               }
+            } catch(e){}
 
-              populateGameSelect();
-              loadGame(gamesLibrary[0].id || gamesLibrary[0].youtube_video_id);
-            } else {
-              showToast("No games found in games_library.json");
+            // Restore linked scheduled games
+            try {
+              const linked = JSON.parse(localStorage.getItem('tigers_linked_scheduled_games') || '{}');
+              Object.entries(linked).forEach(([gid, data]) => {
+                const match = (typeof SCHEDULE_UPCOMING_MATCHUPS !== 'undefined') ? SCHEDULE_UPCOMING_MATCHUPS.find(g => g.id === gid) : null;
+                if (match) {
+                  match.youtube_video_id = data.youtube_video_id;
+                  match.source_type = data.source_type;
+                }
+              });
+            } catch(e){}
+
+            // Sync active live stream video ID from cloud settings
+            if (data && data.settings && data.settings.active_livestream_video_id) {
+              liveStreamVideoId = data.settings.active_livestream_video_id;
             }
+
+            populateGameSelect();
+            loadGame(gamesLibrary[0].id || gamesLibrary[0].youtube_video_id);
           })
           .catch(err => {
-            console.error("Match load error:", err);
-            showToast("⚠️ Could not load games_library.json.");
+            console.warn("Using embedded fallback playlist games:", err);
+            gamesLibrary = FALLBACK_PLAYLIST_GAMES;
+            populateGameSelect();
+            loadGame(gamesLibrary[0].id || gamesLibrary[0].youtube_video_id);
           });
       } catch (err) {
         console.error("App init notice:", err);
@@ -8684,16 +8711,37 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
         }
       }
 
+      const container = document.getElementById('video-container');
+      if (container && container.innerText && container.innerText.includes('Loading Game Broadcast')) {
+        container.innerHTML = `<div id="yt-player" class="w-full h-full flex flex-col items-center justify-center gap-2 bg-slate-950 text-xs text-amber-300 font-mono"><span class="w-6 h-6 border-2 border-amber-400 border-t-transparent rounded-full animate-spin"></span><span>Connecting Video Stream...</span></div>`;
+      }
+
       if (!window.YT || !window.YT.Player) {
+        if (!window._ytCheckTimer) {
+          let attempts = 0;
+          window._ytCheckTimer = setInterval(() => {
+            attempts++;
+            if (window.YT && window.YT.Player) {
+              clearInterval(window._ytCheckTimer);
+              window._ytCheckTimer = null;
+              initYouTubePlayer(pendingVideoId || videoId);
+            } else if (attempts >= 10) {
+              clearInterval(window._ytCheckTimer);
+              window._ytCheckTimer = null;
+              console.warn("YouTube API script timed out; mounting direct iframe fallback.");
+              mountDirectIframeFallback(pendingVideoId || videoId);
+            }
+          }, 100);
+        }
         return;
       }
+
       try {
         isPlayerReady = false;
         if (ytPlayer && typeof ytPlayer.destroy === 'function') {
-          ytPlayer.destroy();
+          try { ytPlayer.destroy(); } catch(e){}
           ytPlayer = null;
         }
-        const container = document.getElementById('video-container');
         if (container) {
           container.innerHTML = '<div id="yt-player" class="w-full h-full"></div>';
         }
@@ -8704,8 +8752,7 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
             playsinline: 1,
             rel: 0,
             modestbranding: 1,
-            enablejsapi: 1,
-            origin: window.location.origin && window.location.origin !== 'null' ? window.location.origin : undefined
+            enablejsapi: 1
           },
           events: {
             'onReady': () => {
@@ -8728,6 +8775,8 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
               }
             },
             'onError': (event) => {
+              console.warn("YouTube Player error:", event);
+              mountDirectIframeFallback(videoId);
               if (typeof handleYouTubePlayerError === 'function') {
                 handleYouTubePlayerError(event);
               }
@@ -8736,7 +8785,51 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
         });
       } catch (err) {
         console.error("YouTube init error:", err);
+        mountDirectIframeFallback(videoId);
       }
+    }
+
+    function mountDirectIframeFallback(videoId) {
+      if (!videoId) return;
+      isPlayerReady = true;
+      const container = document.getElementById('video-container');
+      if (!container) return;
+      container.innerHTML = `<iframe id="yt-direct-iframe" class="w-full h-full border-0" src="https://www.youtube.com/embed/${videoId}?enablejsapi=1&autoplay=0&rel=0&playsinline=1" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>`;
+      const iframeEl = document.getElementById('yt-direct-iframe');
+      ytPlayer = {
+        seekTo: (sec) => {
+          if (iframeEl && iframeEl.contentWindow) {
+            iframeEl.contentWindow.postMessage(JSON.stringify({ event: 'command', func: 'seekTo', args: [sec, true] }), '*');
+          }
+        },
+        playVideo: () => {
+          if (iframeEl && iframeEl.contentWindow) {
+            iframeEl.contentWindow.postMessage(JSON.stringify({ event: 'command', func: 'playVideo', args: [] }), '*');
+          }
+        },
+        pauseVideo: () => {
+          if (iframeEl && iframeEl.contentWindow) {
+            iframeEl.contentWindow.postMessage(JSON.stringify({ event: 'command', func: 'pauseVideo', args: [] }), '*');
+          }
+        },
+        loadVideoById: (opt) => {
+          const vid = typeof opt === 'string' ? opt : (opt.videoId || opt);
+          if (iframeEl) iframeEl.src = `https://www.youtube.com/embed/${vid}?enablejsapi=1&autoplay=1&rel=0&playsinline=1`;
+        },
+        cueVideoById: (opt) => {
+          const vid = typeof opt === 'string' ? opt : (opt.videoId || opt);
+          if (iframeEl) iframeEl.src = `https://www.youtube.com/embed/${vid}?enablejsapi=1&autoplay=0&rel=0&playsinline=1`;
+        },
+        getCurrentTime: () => getThrottledPlayerTime() || 0,
+        getPlayerState: () => 1,
+        setVolume: (val) => {},
+        unMute: () => {},
+        destroy: () => { if (container) container.innerHTML = ''; }
+      };
+      resizeCanvas();
+      const ppBtn = document.getElementById('play-pause-btn');
+      if (ppBtn) ppBtn.innerText = "▶️";
+    }
     }
 
     function toggleAudioMute() {
@@ -9558,11 +9651,23 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
     }
 
     function toggleDrawer(drawerName) {
-      const playBox = document.getElementById('playbook-drawer');
-      if (drawerName === 'draw') {
-        toggleDrawMode();
-      } else if (drawerName === 'playbook') {
-        if (playBox) playBox.classList.toggle('hidden');
+      try {
+        const playBox = document.getElementById('playbook-drawer');
+        if (drawerName === 'draw') {
+          toggleDrawMode();
+        } else if (drawerName === 'playbook') {
+          if (playBox) {
+            const isNowHidden = playBox.classList.toggle('hidden');
+            const btn = document.getElementById('playbook-toggle-btn');
+            if (btn) {
+              btn.classList.toggle('bg-amber-400', !isNowHidden);
+              btn.classList.toggle('text-slate-950', !isNowHidden);
+            }
+            showToast(!isNowHidden ? "📐 Systems Playbook Drawer Opened" : "📐 Systems Playbook Closed");
+          }
+        }
+      } catch(err) {
+        console.error("toggleDrawer notice:", err);
       }
     }
 
@@ -12364,26 +12469,37 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
     }
 
     function toggleDrawMode() {
-      isDrawingMode = !isDrawingMode;
-      const btn = document.getElementById('draw-toggle-btn');
-      const tools = document.getElementById('draw-tools');
+      try {
+        isDrawingMode = !isDrawingMode;
+        const btn = document.getElementById('draw-toggle-btn');
+        const tools = document.getElementById('draw-tools');
+        if (!canvas) canvas = document.getElementById('telestrator-canvas');
 
-      if (isDrawingMode) {
-        if (currentStage === 'video' && isPlayerReady && ytPlayer && typeof ytPlayer.pauseVideo === 'function') {
-          ytPlayer.pauseVideo();
-          const ppBtn = document.getElementById('play-pause-btn');
-          if (ppBtn) ppBtn.innerText = "▶️";
+        if (isDrawingMode) {
+          if (currentStage === 'video' && isPlayerReady && ytPlayer && typeof ytPlayer.pauseVideo === 'function') {
+            try { ytPlayer.pauseVideo(); } catch(e){}
+            const ppBtn = document.getElementById('play-pause-btn');
+            if (ppBtn) ppBtn.innerText = "▶️";
+          }
+          if (canvas) {
+            canvas.classList.remove('pointer-events-none');
+            canvas.classList.add('cursor-crosshair');
+          }
+          if (btn) btn.className = "px-2.5 py-1.5 rounded-lg bg-amber-400 text-slate-950 font-black flex items-center gap-1 shadow-sm text-[11px] cursor-pointer";
+          if (tools) tools.classList.remove('hidden');
+          showToast("🎨 Telestrator Active: Draw lines & arrows on film");
+        } else {
+          if (canvas) {
+            canvas.classList.add('pointer-events-none');
+            canvas.classList.remove('cursor-crosshair');
+          }
+          if (btn) btn.className = "btn-sharp";
+          if (tools) tools.classList.add('hidden');
+          clearCanvas();
+          showToast("🎨 Telestrator Closed");
         }
-        canvas.classList.remove('pointer-events-none');
-        canvas.classList.add('cursor-crosshair');
-        if (btn) btn.className = "px-2.5 py-1.5 rounded-lg bg-tigersGold text-slate-950 font-black flex items-center gap-1 shadow-sm text-[11px] cursor-pointer";
-        if (tools) tools.classList.remove('hidden');
-      } else {
-        canvas.classList.add('pointer-events-none');
-        canvas.classList.remove('cursor-crosshair');
-        if (btn) btn.className = "px-2.5 py-1.5 rounded-lg bg-white hover:bg-tigersGold text-amber-800 hover:text-slate-950 border border-amber-400 font-bold flex items-center gap-1 transition cursor-pointer text-[11px] shadow-sm";
-        if (tools) tools.classList.add('hidden');
-        clearCanvas();
+      } catch(err) {
+        console.error("toggleDrawMode notice:", err);
       }
     }
 
@@ -12392,7 +12508,7 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
 
     function setSpeed(rate) {
       if (isPlayerReady && ytPlayer && typeof ytPlayer.setPlaybackRate === 'function') {
-        ytPlayer.setPlaybackRate(rate);
+        try { ytPlayer.setPlaybackRate(rate); } catch(e){}
       }
       const rates = [
         { key: '05', val: 0.5 },
@@ -12414,21 +12530,45 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
     }
 
     function togglePlayPause() {
-      if (!isPlayerReady || !ytPlayer) return;
-      if (ytPlayer.getPlayerState() === 1) {
-        ytPlayer.pauseVideo();
-        document.getElementById('play-pause-btn').innerText = "▶️";
-      } else {
-        ytPlayer.playVideo();
-        document.getElementById('play-pause-btn').innerText = "⏸️";
-        if (isDrawingMode) toggleDrawMode();
+      if (!isPlayerReady || !ytPlayer) {
+        showToast("⏳ Video stream initializing... Please wait a moment.");
+        if (pendingVideoId) initYouTubePlayer(pendingVideoId);
+        return;
+      }
+      try {
+        const state = (typeof ytPlayer.getPlayerState === 'function') ? ytPlayer.getPlayerState() : 2;
+        if (state === 1) {
+          if (typeof ytPlayer.pauseVideo === 'function') ytPlayer.pauseVideo();
+          const ppBtn = document.getElementById('play-pause-btn');
+          if (ppBtn) ppBtn.innerText = "▶️";
+          showToast("⏸️ Paused");
+        } else {
+          if (typeof ytPlayer.playVideo === 'function') ytPlayer.playVideo();
+          const ppBtn = document.getElementById('play-pause-btn');
+          if (ppBtn) ppBtn.innerText = "⏸️";
+          if (isDrawingMode) toggleDrawMode();
+          showToast("▶️ Playing Film");
+        }
+      } catch(err) {
+        console.warn("togglePlayPause notice:", err);
       }
     }
 
     function stepSeconds(s) {
-      if (isPlayerReady && ytPlayer) {
+      if (!isPlayerReady || !ytPlayer) {
+        showToast("⏳ Video stream initializing...");
+        if (pendingVideoId) initYouTubePlayer(pendingVideoId);
+        return;
+      }
+      try {
         const cur = getThrottledPlayerTime();
-        ytPlayer.seekTo(Math.max(0, cur + s), true);
+        const target = Math.max(0, cur + s);
+        if (typeof ytPlayer.seekTo === 'function') {
+          ytPlayer.seekTo(target, true);
+        }
+        showToast(`⏩ Jumped ${s > 0 ? '+' : ''}${s}s (${formatMinSec(target)})`);
+      } catch(err) {
+        console.warn("stepSeconds notice:", err);
       }
     }
 
@@ -12793,38 +12933,49 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
     }
 
     function openTagPlayerModal(optShiftId) {
-      initTagPlayerDropdown();
-      const modal = document.getElementById('tag-player-modal');
-      const startInput = document.getElementById('modal-tag-start');
-      const endInput = document.getElementById('modal-tag-end');
-      const contribInput = document.getElementById('modal-tag-contributor');
-      const playerSel = document.getElementById('modal-tag-player');
+      try {
+        initTagPlayerDropdown();
+        const modal = document.getElementById('tag-player-modal');
+        const startInput = document.getElementById('modal-tag-start');
+        const endInput = document.getElementById('modal-tag-end');
+        const contribInput = document.getElementById('modal-tag-contributor');
+        const playerSel = document.getElementById('modal-tag-player');
 
-      if (currentJersey !== "all" && playerSel) {
-        playerSel.value = currentJersey;
-      }
-
-      if (contribInput && !contribInput.value) {
-        contribInput.value = isCoach ? "Coach Staff" : "Tigers Family";
-      }
-
-      let cur = Math.floor(getThrottledPlayerTime());
-      if (optShiftId && currentGame) {
-        const shifts = getNormalizedShiftsForGame(currentGame);
-        const target = shifts.find(s => Number(s.shift_id) === Number(optShiftId));
-        if (target) {
-          cur = Math.floor(Number(target.start_seconds || 0));
+        if (currentJersey !== "all" && playerSel) {
+          playerSel.value = currentJersey;
         }
-      }
 
-      if (startInput) startInput.value = cur;
-      if (endInput) endInput.value = cur + 35;
-      if (modal) modal.style.display = 'flex';
+        if (contribInput && !contribInput.value) {
+          contribInput.value = isCoach ? "Coach Staff" : "Tigers Family";
+        }
+
+        let cur = Math.floor(getThrottledPlayerTime());
+        if (optShiftId && currentGame) {
+          const shifts = getNormalizedShiftsForGame(currentGame);
+          const target = shifts.find(s => Number(s.shift_id) === Number(optShiftId));
+          if (target) {
+            cur = Math.floor(Number(target.start_seconds || 0));
+          }
+        }
+
+        if (startInput) startInput.value = cur;
+        if (endInput) endInput.value = cur + 35;
+        if (modal) {
+          modal.classList.remove('hidden');
+          modal.style.display = 'flex';
+        }
+        showToast("🏷️ Shift Tagging Active");
+      } catch(err) {
+        console.error("openTagPlayerModal error:", err);
+      }
     }
 
     function closeTagPlayerModal() {
       const modal = document.getElementById('tag-player-modal');
-      if (modal) modal.style.display = 'none';
+      if (modal) {
+        modal.classList.add('hidden');
+        modal.style.display = 'none';
+      }
     }
 
     function syncTagModalCurrentTime() {
@@ -17056,6 +17207,31 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
       }
     }
 
+    function refreshFilmPlaylistFromCloud() {
+      showToast("🔄 Refreshing playlist games from repository...");
+      fetch('./games_library.json?t=' + Date.now())
+        .then(res => {
+          if (!res.ok) throw new Error("HTTP " + res.status);
+          return res.json();
+        })
+        .then(data => {
+          let list = [];
+          if (Array.isArray(data)) list = data;
+          else if (data && Array.isArray(data.games)) list = data.games;
+          if (list.length > 0) {
+            gamesLibrary = list;
+            populateGameSelect();
+            renderFilmLibraryCards();
+            showToast(`✓ Synced! ${list.length} games active from playlist PLXFVFYYSmylE.`);
+          }
+        })
+        .catch(err => {
+          console.error("Manual refresh error:", err);
+          showToast("⚠️ Re-syncing from local cache: " + err.message);
+          renderFilmLibraryCards();
+        });
+    }
+
     function setFilmLibraryFilter(filterType) {
       currentFilmLibraryFilter = filterType;
       document.querySelectorAll('.film-filter-btn').forEach(b => {
@@ -19277,6 +19453,15 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
     // Initialize customizable theme and dynamic alerts on startup
     loadSavedTeamTheme();
     setTimeout(() => { renderDynamicAlertsMenu(false); }, 400);
+
+    // Guaranteed immediate startup of application and game library (does not block on external scripts)
+    try {
+      if (typeof initAppSafe === 'function') {
+        initAppSafe();
+      }
+    } catch(err) {
+      console.warn("Immediate init notice:", err);
+    }
 
     // Update functional nav button active states in switchViewMode
     function updateFunctionalNavActiveState(mode) {
