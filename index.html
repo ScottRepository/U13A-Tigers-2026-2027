@@ -1338,7 +1338,7 @@
             Today's YouTube Live Video URL or Video ID:
           </label>
           <div class="flex gap-2">
-            <input type="text" id="set-live-url-input" class="flex-1 bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-white font-mono text-xs focus:outline-none focus:border-rose-400" placeholder="https://www.youtube.com/watch?v=..." value="https://www.youtube.com/watch?v=t7i7Z37fLw4" />
+            <input type="text" id="set-live-url-input" class="flex-1 bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-white font-mono text-xs focus:outline-none focus:border-rose-400" placeholder="https://www.youtube.com/watch?v=..." value="https://youtube.com/live/_wlPpzvCb-Q" />
             <button type="button" onclick="pasteLiveLinkFromClipboard()" class="px-3 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white font-bold text-xs cursor-pointer transition flex items-center gap-1">
               <span>📋</span> <span>Paste</span>
             </button>
@@ -4712,12 +4712,17 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
             <span class="w-2.5 h-2.5 rounded-full bg-rose-500 animate-ping"></span>
             <div>
               <div class="font-display font-black text-xs uppercase tracking-wider text-rose-300">🔴 Live Center &amp; Real-Time Stats</div>
-              <div class="text-[9px] text-slate-400">Live YouTube broadcast + GameSheet telemetry</div>
+              <div class="text-[9px] text-slate-400">Live YouTube broadcast + HockeyShift / GameSheet</div>
             </div>
           </div>
-          <button type="button" onclick="toggleLiveBroadcastMode()" class="px-2.5 py-1 rounded-xl bg-slate-800 hover:bg-slate-700 text-amber-300 font-bold text-[10px] cursor-pointer transition flex items-center gap-1 border border-slate-700" title="Return to Film Archive & Shift Cards">
-            <span>📺</span> <span>Film Archive</span>
-          </button>
+          <div class="flex items-center gap-1.5">
+            <button type="button" onclick="openSetLiveLinkModal()" class="px-2.5 py-1 rounded-xl bg-rose-600 hover:bg-rose-500 text-white font-bold text-[10px] cursor-pointer transition flex items-center gap-1 shadow-sm" title="Update YouTube Live Stream Link">
+              <span>🔗</span> <span>Set Live Link</span>
+            </button>
+            <button type="button" onclick="toggleLiveBroadcastMode()" class="px-2.5 py-1 rounded-xl bg-slate-800 hover:bg-slate-700 text-amber-300 font-bold text-[10px] cursor-pointer transition flex items-center gap-1 border border-slate-700" title="Return to Film Archive & Shift Cards">
+              <span>📺</span> <span>Film Archive</span>
+            </button>
+          </div>
         </div>
 
         <!-- ================= EMBEDDED LIVE CENTER & REAL-TIME STATS PANEL ================= -->
@@ -4749,6 +4754,70 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
                 <div class="text-[9px] text-slate-400">SOG: <strong id="sidebar-live-sog-away" class="text-slate-300">14</strong></div>
               </div>
               <span class="text-2xl">🏒</span>
+            </div>
+          </div>
+
+          <!-- CAN/AM HockeyShift Live Tournament Banner -->
+          <div class="p-2.5 bg-slate-950 rounded-xl border border-rose-500/40 flex items-center justify-between gap-2">
+            <div class="flex items-center gap-2 min-w-0">
+              <span class="px-2 py-0.5 rounded bg-rose-600 text-white text-[9px] font-mono font-black shrink-0">CAN/AM</span>
+              <div class="min-w-0">
+                <div class="text-[11px] font-bold text-white truncate">Lake Placid Game #1372648</div>
+                <div class="text-[9px] text-slate-400 truncate">vs Boston Jr. Terriers @ Herb Brooks Arena</div>
+              </div>
+            </div>
+            <a href="https://canam.hockeyshift.com/stats#/1188/game/1372648" target="_blank" rel="noopener" class="px-2.5 py-1 rounded-lg bg-slate-800 hover:bg-slate-700 text-amber-300 border border-slate-700 text-[10px] font-bold shrink-0 flex items-center gap-1" title="Open official CAN/AM tournament game sheet">
+              <span>📊</span> <span>Boxscore ↗</span>
+            </a>
+          </div>
+
+          <!-- 1-Touch Live Scoreboard Controls (Syncs instantly with on-screen broadcast overlay) -->
+          <div class="p-2.5 bg-slate-950 rounded-xl border border-slate-800 space-y-2">
+            <div class="flex items-center justify-between text-[10px]">
+              <span class="font-bold text-slate-300 uppercase tracking-wider flex items-center gap-1">
+                <span>⏱️</span> <span>1-Touch Live Score Adjuster</span>
+              </span>
+              <span class="text-slate-400 font-mono text-[9px]">Syncs On-Screen Video HUD</span>
+            </div>
+            
+            <div class="grid grid-cols-2 gap-2">
+              <!-- Tigers Score -->
+              <div class="p-2 rounded-lg bg-slate-900 border border-amber-400/30 flex items-center justify-between">
+                <div>
+                  <div class="text-[9px] font-bold text-amber-400 uppercase">🐯 TIGERS</div>
+                  <div id="live-ctrl-score-home" class="text-lg font-black font-mono text-white">2</div>
+                </div>
+                <div class="flex items-center gap-1">
+                  <button type="button" onclick="adjustLiveScore('home', -1)" class="w-6 h-6 rounded bg-slate-800 hover:bg-slate-700 text-slate-300 font-black text-xs cursor-pointer flex items-center justify-center">-</button>
+                  <button type="button" onclick="adjustLiveScore('home', 1)" class="px-2.5 h-6 rounded bg-amber-400 hover:bg-amber-300 text-slate-950 font-black text-xs cursor-pointer flex items-center justify-center gap-0.5 shadow-sm">
+                    <span>+ Goal</span>
+                  </button>
+                </div>
+              </div>
+
+              <!-- Opponent Score -->
+              <div class="p-2 rounded-lg bg-slate-900 border border-rose-500/30 flex items-center justify-between">
+                <div>
+                  <div class="text-[9px] font-bold text-rose-400 uppercase">🏒 BOSTON</div>
+                  <div id="live-ctrl-score-away" class="text-lg font-black font-mono text-white">1</div>
+                </div>
+                <div class="flex items-center gap-1">
+                  <button type="button" onclick="adjustLiveScore('away', -1)" class="w-6 h-6 rounded bg-slate-800 hover:bg-slate-700 text-slate-300 font-black text-xs cursor-pointer flex items-center justify-center">-</button>
+                  <button type="button" onclick="adjustLiveScore('away', 1)" class="px-2.5 h-6 rounded bg-rose-600 hover:bg-rose-500 text-white font-black text-xs cursor-pointer flex items-center justify-center gap-0.5 shadow-sm">
+                    <span>+ Goal</span>
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Period Buttons -->
+            <div class="flex items-center gap-1 pt-0.5 text-[10px] font-mono">
+              <span class="text-slate-400 font-sans font-bold text-[9px] mr-1">PERIOD:</span>
+              <button type="button" onclick="setLivePeriod(1)" id="live-period-btn-1" class="flex-1 py-0.5 rounded bg-slate-800 hover:bg-slate-700 text-slate-300 font-bold cursor-pointer">P1</button>
+              <button type="button" onclick="setLivePeriod(2)" id="live-period-btn-2" class="flex-1 py-0.5 rounded bg-amber-400 text-slate-950 font-black cursor-pointer">P2</button>
+              <button type="button" onclick="setLivePeriod(3)" id="live-period-btn-3" class="flex-1 py-0.5 rounded bg-slate-800 hover:bg-slate-700 text-slate-300 font-bold cursor-pointer">P3</button>
+              <button type="button" onclick="setLivePeriod('OT')" id="live-period-btn-ot" class="flex-1 py-0.5 rounded bg-slate-800 hover:bg-slate-700 text-slate-300 font-bold cursor-pointer">OT</button>
+              <button type="button" onclick="setLivePeriod('FINAL')" id="live-period-btn-final" class="flex-1 py-0.5 rounded bg-slate-800 hover:bg-slate-700 text-slate-300 font-bold cursor-pointer">FINAL</button>
             </div>
           </div>
 
@@ -7182,6 +7251,11 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
                   }
                 });
               } catch(e){}
+
+              // Sync active live stream video ID from cloud settings
+              if (data && data.settings && data.settings.active_livestream_video_id) {
+                liveStreamVideoId = data.settings.active_livestream_video_id;
+              }
 
               populateGameSelect();
               loadGame(gamesLibrary[0].id || gamesLibrary[0].youtube_video_id);
@@ -16097,7 +16171,7 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
     // =========================================================================
 
     let isLiveBroadcastActive = false;
-    let liveStreamVideoId = "t7i7Z37fLw4"; // Default sample or channel live stream
+    let liveStreamVideoId = "_wlPpzvCb-Q"; // Today: CAN/AM Challenge Cup vs Boston Jr. Terriers // Default sample or channel live stream
     let liveGameSheetState = {
       homeScore: 2,
       awayScore: 1,
@@ -16118,9 +16192,12 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
         saved = JSON.parse(localStorage.getItem('tigers_active_live_stream') || '{}');
       } catch(e){}
       const toggle = document.getElementById('live-broadcast-active-toggle');
-      if (toggle) return toggle.checked;
+      if (toggle && toggle.checked !== undefined) return toggle.checked;
+      if (saved.isLive !== undefined) return saved.isLive;
       if (saved.active !== undefined) return saved.active;
-      return false; // Default to offline unless live broadcast has been explicitly activated
+      // Default to online when active live video ID is configured
+      if (liveStreamVideoId) return true;
+      return true;
     }
 
     function getNextScheduledGameSummary() {
@@ -16294,6 +16371,32 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
       }, 1000);
     }
 
+    function adjustLiveScore(team, delta) {
+      if (team === home) {
+        liveGameSheetState.homeScore = Math.max(0, liveGameSheetState.homeScore + delta);
+        if (delta > 0 && typeof playArenaGoalHornSound === function) {
+          playArenaGoalHornSound();
+          showToast(`🚨 GOAL AURORA TIGERS! (${liveGameSheetState.homeScore} - ${liveGameSheetState.awayScore})`);
+        }
+      } else {
+        liveGameSheetState.awayScore = Math.max(0, liveGameSheetState.awayScore + delta);
+        if (delta > 0) {
+          showToast(`Goal Opponent (${liveGameSheetState.homeScore} - ${liveGameSheetState.awayScore})`);
+        }
+      }
+      renderLiveScoreboardHud();
+    }
+
+    function setLivePeriod(p) {
+      liveGameSheetState.period = p;
+      if (p === FINAL) {
+        liveGameSheetState.running = false;
+        liveGameSheetState.clockSec = 0;
+      }
+      renderLiveScoreboardHud();
+      showToast(`Period set to ${p}`);
+    }
+
     function renderLiveScoreboardHud() {
       const hScore = document.getElementById('live-hud-score-home');
       const aScore = document.getElementById('live-hud-score-away');
@@ -16371,6 +16474,31 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
         const diff = liveGameSheetState.sogHome - liveGameSheetState.sogAway;
         sbSogDiff.innerText = diff >= 0 ? `Tigers +${diff} SOG` : `Opponent +${Math.abs(diff)} SOG`;
       }
+
+      // Sync 1-touch live score adjuster controls
+      const ctrlHome = document.getElementById('live-ctrl-score-home');
+      const ctrlAway = document.getElementById('live-ctrl-score-away');
+      if (ctrlHome) ctrlHome.innerText = liveGameSheetState.homeScore;
+      if (ctrlAway) ctrlAway.innerText = liveGameSheetState.awayScore;
+
+      // Sync central scoreboard when live broadcast is active
+      const topHome = document.getElementById('home-score');
+      const topAway = document.getElementById('away-score');
+      const topClock = document.getElementById('game-clock-display');
+      if (topHome && isLiveBroadcastActive) topHome.innerText = liveGameSheetState.homeScore;
+      if (topAway && isLiveBroadcastActive) topAway.innerText = liveGameSheetState.awayScore;
+      if (topClock && isLiveBroadcastActive) topClock.innerText = `P${liveGameSheetState.period} | ${clockStr}`;
+
+      // Update period button highlights
+      ['1', '2', '3', 'ot', 'final'].forEach(pKey => {
+        const btn = document.getElementById(`live-period-btn-${pKey}`);
+        if (btn) {
+          const isActive = String(liveGameSheetState.period).toLowerCase() === pKey;
+          btn.className = isActive
+            ? "flex-1 py-0.5 rounded bg-amber-400 text-slate-950 font-black cursor-pointer"
+            : "flex-1 py-0.5 rounded bg-slate-800 hover:bg-slate-700 text-slate-300 font-bold cursor-pointer";
+        }
+      });
     }
 
     function openLiveGameCenterModal() {
@@ -16391,19 +16519,30 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
       }
     }
 
+    function extractYouTubeVideoId(input) {
+      if (!input) return "";
+      let str = String(input).trim();
+      if (/^[a-zA-Z0-9_-]{11}$/.test(str)) {
+        return str;
+      }
+      const liveMatch = str.match(/(?:youtube\.com|youtu\.be)\/live\/([a-zA-Z0-9_-]{11})/);
+      if (liveMatch) return liveMatch[1];
+      const shortMatch = str.match(/youtu\.be\/([a-zA-Z0-9_-]{11})/);
+      if (shortMatch) return shortMatch[1];
+      const vMatch = str.match(/[?&]v=([a-zA-Z0-9_-]{11})/);
+      if (vMatch) return vMatch[1];
+      const embedMatch = str.match(/youtube\.com\/embed\/([a-zA-Z0-9_-]{11})/);
+      if (embedMatch) return embedMatch[1];
+      const genericMatch = str.match(/([a-zA-Z0-9_-]{11})/);
+      return genericMatch ? genericMatch[1] : str;
+    }
+
     function updateActiveLiveStreamUrl() {
       const input = document.getElementById('live-stream-url-input');
       const raw = input ? input.value.trim() : '';
       if (!raw) return;
 
-      let vidId = raw;
-      if (raw.includes('v=')) {
-        vidId = raw.split('v=')[1].split('&')[0];
-      } else if (raw.includes('youtu.be/')) {
-        vidId = raw.split('youtu.be/')[1].split('?')[0];
-      } else if (raw.includes('/live')) {
-        vidId = raw;
-      }
+      const vidId = extractYouTubeVideoId(raw);
       liveStreamVideoId = vidId;
 
       if (!isLiveBroadcastActive) {
@@ -16509,15 +16648,7 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
         return;
       }
 
-      let vidId = rawUrl;
-      if (rawUrl.includes('v=')) {
-        vidId = rawUrl.split('v=')[1].split('&')[0];
-      } else if (rawUrl.includes('youtu.be/')) {
-        vidId = rawUrl.split('youtu.be/')[1].split('?')[0];
-      } else if (rawUrl.includes('/live')) {
-        vidId = rawUrl;
-      }
-
+      const vidId = extractYouTubeVideoId(rawUrl);
       liveStreamVideoId = vidId;
 
       // Sync to Live Center modal input as well
