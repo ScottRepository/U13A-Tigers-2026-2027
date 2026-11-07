@@ -4591,8 +4591,8 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
                 <button type="button" onclick="setLiveLinkPreset('channel'); tuneCurrentLiveStream();" class="px-2 py-1 rounded-lg bg-slate-800 hover:bg-slate-700 text-rose-300 border border-rose-500/40 text-[10px] font-bold cursor-pointer transition flex items-center gap-1" title="Auto-detect current live stream pushed by RTMP Key (gw39-597h-fv3w-g1k6-b7h4)">
                   <span>⚡</span> <span>Auto-Live (RTMP Key)</span>
                 </button>
-                <button type="button" onclick="setLiveLinkPreset('controlroom'); tuneCurrentLiveStream();" class="px-2 py-1 rounded-lg bg-slate-800 hover:bg-slate-700 text-amber-300 border border-amber-400/30 text-[10px] font-bold cursor-pointer transition flex items-center gap-1" title="Tune Scott's active YouTube Studio stream (DcTU1ha1tow)">
-                  <span>🎯</span> <span>Studio (DcTU1ha1tow)</span>
+                <button type="button" onclick="setLiveLinkPreset('controlroom'); tuneCurrentLiveStream();" class="px-2 py-1 rounded-lg bg-slate-800 hover:bg-slate-700 text-amber-300 border border-amber-400/30 text-[10px] font-bold cursor-pointer transition flex items-center gap-1" title="Tune Scott's active YouTube Studio stream (hmiiwDm6XqI)">
+                  <span>🎯</span> <span>Studio (hmiiwDm6XqI)</span>
                 </button>
                 <button type="button" onclick="setLiveLinkPreset('playlist'); tuneCurrentLiveStream();" class="px-2 py-1 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-700 text-[10px] font-bold cursor-pointer transition flex items-center gap-1" title="Tune Team Playlist PLXFVFYYSmylE">
                   <span>📺</span> <span>Team Playlist</span>
@@ -4604,7 +4604,7 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
             </div>
             <div class="flex items-center gap-1.5">
               <div class="relative flex-1">
-                <input type="text" id="live-quick-url-input" placeholder="Paste YouTube Live URL or Video ID (e.g. DcTU1ha1tow or studio.youtube.com...)" value="DcTU1ha1tow" class="w-full pl-7 pr-2 py-1.5 rounded-lg bg-slate-900 border border-slate-700 text-white font-mono text-[11px] placeholder-slate-500 focus:outline-none focus:border-rose-500" />
+                <input type="text" id="live-quick-url-input" onkeydown="if(event.key==='Enter') tuneCurrentLiveStream();" oninput="handleQuickLiveUrlInput(this.value)" placeholder="Paste YouTube Live URL or Video ID (e.g. youtube.com/live/hmiiwDm6XqI)" value="" class="w-full pl-7 pr-2 py-1.5 rounded-lg bg-slate-900 border border-slate-700 text-white font-mono text-[11px] placeholder-slate-500 focus:outline-none focus:border-rose-500" />
                 <span class="absolute left-2.5 top-1/2 -translate-y-1/2 text-slate-500 text-xs">🔗</span>
               </div>
               <button type="button" onclick="pasteAndTuneLiveStream()" class="px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-amber-300 border border-amber-400/40 font-bold text-[11px] cursor-pointer transition flex items-center gap-1 shrink-0 active:scale-95">
@@ -45952,7 +45952,15 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
       isPlayerReady = true;
       const container = document.getElementById('video-container');
       if (!container) return;
-      container.innerHTML = `<iframe id="yt-direct-iframe" class="w-full h-full border-0" src="https://www.youtube.com/embed/${videoId}?enablejsapi=1&autoplay=0&rel=0&playsinline=1" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>`;
+      container.classList.remove('hidden');
+
+      const directIframe = document.getElementById('yt-direct-iframe');
+      if (directIframe) {
+        directIframe.src = `https://www.youtube.com/embed/${videoId}?enablejsapi=1&autoplay=1&rel=0&playsinline=1`;
+        return;
+      }
+
+      container.innerHTML = `<iframe id="yt-direct-iframe" class="w-full h-full border-0" src="https://www.youtube.com/embed/${videoId}?enablejsapi=1&autoplay=1&rel=0&playsinline=1" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>`;
       const iframeEl = document.getElementById('yt-direct-iframe');
       ytPlayer = {
         seekTo: (sec) => {
@@ -53675,7 +53683,15 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
         pill.className = "px-2 py-0.5 rounded-full text-[9px] font-mono font-bold bg-rose-500/20 text-rose-300 border border-rose-500/40 animate-pulse";
       }
 
-      if (isPlayerReady && ytPlayer && typeof ytPlayer.loadVideoById === 'function') {
+      // Check if direct iframe is present in DOM - if so, update src directly
+      const directIframe = document.getElementById('yt-direct-iframe');
+      if (directIframe) {
+        directIframe.src = `https://www.youtube.com/embed/${liveStreamVideoId}?enablejsapi=1&autoplay=1&rel=0&playsinline=1`;
+        return;
+      }
+
+      const ytIframe = (ytPlayer && typeof ytPlayer.getIframe === 'function') ? ytPlayer.getIframe() : document.getElementById('yt-player');
+      if (isPlayerReady && ytPlayer && ytIframe && document.body.contains(ytIframe) && typeof ytPlayer.loadVideoById === 'function') {
         try {
           ytPlayer.loadVideoById({ videoId: liveStreamVideoId, startSeconds: 0 });
           return;
@@ -53717,23 +53733,29 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
       mountDirectPlaylistFallback(playlistId);
     }
 
-        function mountDirectChannelLiveFallback() {
+    function mountDirectChannelLiveFallback() {
       const channelId = (typeof PIPELINE_CONSTANTS !== 'undefined' && PIPELINE_CONSTANTS.channelId) ? PIPELINE_CONSTANTS.channelId : "UCrlj6wjqPi-Oe4jHcXe_ygA";
       isPlayerReady = true;
       const container = document.getElementById('video-container');
       if (!container) return;
       container.classList.remove('hidden');
-      container.innerHTML = `<iframe id="yt-direct-iframe" class="w-full h-full border-0" src="https://www.youtube.com/embed/live_stream?channel=${channelId}&autoplay=1&enablejsapi=1&rel=0&playsinline=1" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>`;
+      const srcUrl = `https://www.youtube.com/embed/live_stream?channel=${channelId}&autoplay=1&enablejsapi=1&rel=0&playsinline=1`;
+      const directIframe = document.getElementById('yt-direct-iframe');
+      if (directIframe) {
+        directIframe.src = srcUrl;
+      } else {
+        container.innerHTML = `<iframe id="yt-direct-iframe" class="w-full h-full border-0" src="${srcUrl}" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>`;
+      }
       const vText = document.getElementById('v-status-text');
       const vDot = document.getElementById('v-status-dot');
       if (vText) vText.innerText = "LIVE (RTMP)";
       if (vDot) vDot.className = "w-2 h-2 rounded-full bg-rose-500 animate-pulse";
       const pill = document.getElementById('live-stream-status-pill');
       if (pill) {
-        pill.innerText = "AUTO-LIVE (RTMP KEY)";
+        pill.innerText = "AUTO-LIVE (PUBLIC)";
         pill.className = "px-2 py-0.5 rounded-full text-[9px] font-mono font-bold bg-rose-500/20 text-rose-300 border border-rose-500/40 animate-pulse";
       }
-      showToast("⚡ Auto-Live Connected! Streaming whatever broadcast is active from RTMP Key gw39-597h-fv3w-g1k6-b7h4.");
+      showToast("⚡ Auto-Live Connected! Note: YouTube requires Public privacy for channel live auto-routing.");
     }
 
     function mountDirectPlaylistFallback(playlistId) {
@@ -53742,7 +53764,13 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
       const container = document.getElementById('video-container');
       if (!container) return;
       container.classList.remove('hidden');
-      container.innerHTML = `<iframe id="yt-direct-iframe" class="w-full h-full border-0" src="https://www.youtube.com/embed/videoseries?list=${playlistId}&enablejsapi=1&autoplay=1&rel=0&playsinline=1" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>`;
+      const srcUrl = `https://www.youtube.com/embed/videoseries?list=${playlistId}&enablejsapi=1&autoplay=1&rel=0&playsinline=1`;
+      const directIframe = document.getElementById('yt-direct-iframe');
+      if (directIframe) {
+        directIframe.src = srcUrl;
+      } else {
+        container.innerHTML = `<iframe id="yt-direct-iframe" class="w-full h-full border-0" src="${srcUrl}" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>`;
+      }
       const iframeEl = document.getElementById('yt-direct-iframe');
       ytPlayer = {
         seekTo: (sec) => {
@@ -53872,7 +53900,7 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
           if (hud) hud.classList.remove('hidden');
 
           // Load live stream video
-          if (!liveStreamVideoId) liveStreamVideoId = "DcTU1ha1tow";
+          if (!liveStreamVideoId) liveStreamVideoId = "hmiiwDm6XqI";
           loadLiveStreamVideo(liveStreamVideoId);
 
           startLiveScoreboardClock();
@@ -54053,32 +54081,48 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
       showToast(`🔴 Live Broadcast Active • Tuned to ${liveStreamVideoId || YOUTUBE_LIVE_PLAYLIST_ID}`);
     }
 
+    let quickUrlDebounceTimer = null;
+    function handleQuickLiveUrlInput(val) {
+      if (!val) return;
+      const clean = val.trim();
+      const extracted = extractYouTubeVideoId(clean) || extractYouTubePlaylistId(clean);
+      if (extracted && (clean.startsWith('http://') || clean.startsWith('https://') || clean.length === 11)) {
+        clearTimeout(quickUrlDebounceTimer);
+        quickUrlDebounceTimer = setTimeout(() => {
+          tuneLiveStreamId(clean);
+        }, 400);
+      }
+    }
+
     function tuneCurrentLiveStream() {
       const input = document.getElementById('live-quick-url-input');
-      const val = input ? input.value.trim() : (liveStreamVideoId || 'DcTU1ha1tow');
-      tuneLiveStreamId(val || 'DcTU1ha1tow');
+      const val = input ? input.value.trim() : (liveStreamVideoId || 'hmiiwDm6XqI');
+      tuneLiveStreamId(val || 'hmiiwDm6XqI');
     }
 
     function pasteAndTuneLiveStream() {
+      const input = document.getElementById('live-quick-url-input');
       if (navigator.clipboard && navigator.clipboard.readText) {
         navigator.clipboard.readText().then(text => {
-          if (text) {
-            tuneLiveStreamId(text.trim());
+          const clean = text ? text.trim() : "";
+          if (clean && (clean.includes('youtu') || clean.length === 11)) {
+            if (input) input.value = clean;
+            tuneLiveStreamId(clean);
+          } else if (input && input.value) {
+            tuneLiveStreamId(input.value.trim());
           }
         }).catch(() => {
-          const input = document.getElementById('live-quick-url-input');
           if (input && input.value) tuneLiveStreamId(input.value.trim());
         });
       } else {
-        const input = document.getElementById('live-quick-url-input');
         if (input && input.value) tuneLiveStreamId(input.value.trim());
       }
     }
 
     function tuneStandbyLiveStream() {
       const input = document.getElementById('standby-stream-url-input');
-      const val = input ? input.value.trim() : (liveStreamVideoId || 'DcTU1ha1tow');
-      tuneLiveStreamId(val || 'DcTU1ha1tow');
+      const val = input ? input.value.trim() : (liveStreamVideoId || 'hmiiwDm6XqI');
+      tuneLiveStreamId(val || 'hmiiwDm6XqI');
     }
 
     function pasteAndTuneStandbyLiveStream() {
@@ -54445,8 +54489,8 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
         val = "https://www.youtube.com/playlist?list=PLXFVFYYSmylE";
         toastMsg = "🎬 Set to Team Live Playlist: PLXFVFYYSmylE";
       } else if (type === 'controlroom') {
-        val = "https://studio.youtube.com/video/DcTU1ha1tow/livestreaming";
-        toastMsg = "🎯 Set to Live Control Room Ingest (DcTU1ha1tow)";
+        val = "https://studio.youtube.com/video/hmiiwDm6XqI/livestreaming";
+        toastMsg = "🎯 Set to Active Live Studio Stream (hmiiwDm6XqI)";
       } else if (type === 'channel') {
         val = "https://www.youtube.com/embed/live_stream?channel=UCrlj6wjqPi-Oe4jHcXe_ygA";
         toastMsg = "⚡ Set to Auto-Live RTMP Stream (UCrlj6wjqPi-Oe4jHcXe_ygA)";
