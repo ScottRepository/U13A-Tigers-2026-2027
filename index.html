@@ -53652,6 +53652,10 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
     }
 
     function loadLiveStreamVideo(vidId) {
+      if (vidId === 'channel' || (!vidId && liveStreamVideoId === 'channel')) {
+        mountDirectChannelLiveFallback();
+        return;
+      }
       if (!vidId) vidId = liveStreamVideoId || "DcTU1ha1tow";
       liveStreamVideoId = vidId;
 
@@ -54431,21 +54435,30 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
     }
 
     function setLiveLinkPreset(type) {
-      const input = document.getElementById('set-live-url-input');
-      if (!input) return;
+      const modalInput = document.getElementById('set-live-url-input');
+      const quickInput = document.getElementById('live-quick-url-input');
+      const standbyInput = document.getElementById('standby-stream-url-input');
+      let val = "";
+      let toastMsg = "";
+
       if (type === 'playlist') {
-        input.value = "https://www.youtube.com/playlist?list=PLXFVFYYSmylE";
-        showToast("🎬 Set to Team Live Playlist: PLXFVFYYSmylE");
+        val = "https://www.youtube.com/playlist?list=PLXFVFYYSmylE";
+        toastMsg = "🎬 Set to Team Live Playlist: PLXFVFYYSmylE";
       } else if (type === 'controlroom') {
-        input.value = "https://studio.youtube.com/video/DcTU1ha1tow/livestreaming";
-        showToast("🎯 Set to Live Control Room Ingest (DcTU1ha1tow)");
+        val = "https://studio.youtube.com/video/DcTU1ha1tow/livestreaming";
+        toastMsg = "🎯 Set to Live Control Room Ingest (DcTU1ha1tow)";
       } else if (type === 'channel') {
-        input.value = "https://www.youtube.com/embed/live_stream?channel=UCrlj6wjqPi-Oe4jHcXe_ygA";
-        showToast("⚡ Set to Master Channel Stream (UCrlj6wjqPi-Oe4jHcXe_ygA)");
+        val = "https://www.youtube.com/embed/live_stream?channel=UCrlj6wjqPi-Oe4jHcXe_ygA";
+        toastMsg = "⚡ Set to Auto-Live RTMP Stream (UCrlj6wjqPi-Oe4jHcXe_ygA)";
       } else if (type === 'sample') {
-        input.value = "https://www.youtube.com/watch?v=t7i7Z37fLw4";
-        showToast("🎬 Set to Test Stream (t7i7Z37fLw4)");
+        val = "https://www.youtube.com/watch?v=t7i7Z37fLw4";
+        toastMsg = "🎬 Set to Test Stream (t7i7Z37fLw4)";
       }
+
+      if (modalInput) modalInput.value = val;
+      if (quickInput) quickInput.value = val;
+      if (standbyInput) standbyInput.value = val;
+      if (toastMsg) showToast(toastMsg);
     }
 
     function saveAndBroadcastLiveStream() {
@@ -54460,19 +54473,25 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
         return;
       }
 
+      const isChannel = rawUrl === 'channel' || rawUrl.includes('live_stream?channel=');
       const playlistId = extractYouTubePlaylistId(rawUrl);
       if (playlistId) {
         YOUTUBE_LIVE_PLAYLIST_ID = playlistId;
       }
       const vidId = extractYouTubeVideoId(rawUrl);
-      if (vidId && !playlistId) {
+      if (isChannel) {
+        liveStreamVideoId = 'channel';
+      } else if (vidId && !playlistId) {
         liveStreamVideoId = vidId;
       }
 
       // Sync to Dynamic Live Playback Container iframe if present
       const liveFrame = document.querySelector('.video-container iframe[title="U13A Aurora Tigers Live Game Broadcast"]');
       if (liveFrame) {
-        if (playlistId) {
+        if (isChannel) {
+          const chId = (typeof PIPELINE_CONSTANTS !== 'undefined' && PIPELINE_CONSTANTS.channelId) ? PIPELINE_CONSTANTS.channelId : "UCrlj6wjqPi-Oe4jHcXe_ygA";
+          liveFrame.src = `https://www.youtube.com/embed/live_stream?channel=${chId}&autoplay=1&enablejsapi=1&rel=0&playsinline=1`;
+        } else if (playlistId) {
           liveFrame.src = `https://www.youtube.com/embed/videoseries?list=${playlistId}&autoplay=1&rel=0&playsinline=1`;
         } else if (vidId) {
           liveFrame.src = `https://www.youtube.com/embed/${vidId}?autoplay=1&rel=0&playsinline=1`;
