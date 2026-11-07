@@ -6840,6 +6840,7 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
         firebase.initializeApp(firebaseConfig);
         auth = firebase.auth();
         db = firebase.firestore();
+        window.db = db;
       }
     } catch(err) {
       console.warn("Firebase initialization notice:", err);
@@ -54053,6 +54054,16 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
         localStorage.setItem('tigers_active_live_stream', JSON.stringify(payload));
       } catch(e){}
 
+      // Sync unlisted stream in real time to all team parents via Firestore
+      if (window.db) {
+        try {
+          window.db.collection("live_broadcast").doc("active").set({
+            ...payload,
+            serverTimestamp: firebase.firestore.FieldValue.serverTimestamp()
+          }, { merge: true }).catch(err => console.log("Live broadcast Firestore sync notice:", err));
+        } catch(e){}
+      }
+
       // Activate live mode if not active
       if (!isLiveBroadcastActive) {
         toggleLiveBroadcastMode();
@@ -60847,8 +60858,25 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
       }, { passive: true });
     }
 
-        function initAutomatedBroadcastIntegration() {
+        function initLiveCloudSync() {
+      if (typeof window.db !== 'undefined' && window.db) {
+        try {
+          window.db.collection("live_broadcast").doc("active").onSnapshot(doc => {
+            if (doc && doc.exists) {
+              const data = doc.data();
+              if (data && data.isLive && data.videoId && data.videoId !== liveStreamVideoId && data.videoId !== 'channel') {
+                console.log("☁️ Cloud Live Broadcast Detected:", data.videoId);
+                tuneLiveStreamId(data.videoId);
+              }
+            }
+          }, err => console.log("Live broadcast cloud listener notice:", err));
+        } catch(e){}
+      }
+    }
+
+    function initAutomatedBroadcastIntegration() {
       initWorkspaceResizer();
+      initLiveCloudSync();
       try {
         populateLiveMatchupDropdown();
         loadCurrentLiveMatchup();
