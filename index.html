@@ -4576,6 +4576,43 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
             </div>
           </div>
           
+          <!-- DYNAMIC LIVE STREAM TUNER / XBOTGO QUICK INGEST BAR -->
+          <div id="live-stream-tuner-bar" class="hidden p-2.5 rounded-xl bg-slate-950 border border-rose-500/50 shadow-md text-xs space-y-2 mb-2 transition-all">
+            <div class="flex flex-wrap items-center justify-between gap-2">
+              <div class="flex items-center gap-2">
+                <span class="w-2.5 h-2.5 rounded-full bg-rose-500 animate-pulse"></span>
+                <span class="font-black text-white uppercase tracking-wider text-[11px]">🔴 Live Stream Ingest &amp; Tuner</span>
+                <span id="live-stream-status-pill" class="px-2 py-0.5 rounded-full text-[9px] font-mono font-bold bg-rose-500/20 text-rose-300 border border-rose-500/40">LIVE ON AIR</span>
+                <button type="button" onclick="toggleLiveAirStatus()" class="px-2 py-0.5 rounded bg-slate-800 hover:bg-slate-700 text-slate-300 text-[9px] font-mono font-bold cursor-pointer transition border border-slate-700">
+                  Toggle Air
+                </button>
+              </div>
+              <div class="flex items-center gap-1.5">
+                <button type="button" onclick="setLiveLinkPreset('controlroom'); tuneCurrentLiveStream();" class="px-2 py-1 rounded-lg bg-slate-800 hover:bg-slate-700 text-amber-300 border border-amber-400/30 text-[10px] font-bold cursor-pointer transition flex items-center gap-1" title="Tune Scott's active YouTube Studio stream (DcTU1ha1tow)">
+                  <span>🎯</span> <span>Studio (DcTU1ha1tow)</span>
+                </button>
+                <button type="button" onclick="setLiveLinkPreset('playlist'); tuneCurrentLiveStream();" class="px-2 py-1 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-700 text-[10px] font-bold cursor-pointer transition flex items-center gap-1" title="Tune Team Playlist PLXFVFYYSmylE">
+                  <span>📺</span> <span>Team Playlist</span>
+                </button>
+                <button type="button" onclick="toggleLiveBroadcastMode()" class="px-2 py-1 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 text-[10px] font-bold cursor-pointer transition">
+                  <span>✕ Exit Live</span>
+                </button>
+              </div>
+            </div>
+            <div class="flex items-center gap-1.5">
+              <div class="relative flex-1">
+                <input type="text" id="live-quick-url-input" placeholder="Paste YouTube Live URL or Video ID (e.g. DcTU1ha1tow or studio.youtube.com...)" value="DcTU1ha1tow" class="w-full pl-7 pr-2 py-1.5 rounded-lg bg-slate-900 border border-slate-700 text-white font-mono text-[11px] placeholder-slate-500 focus:outline-none focus:border-rose-500" />
+                <span class="absolute left-2.5 top-1/2 -translate-y-1/2 text-slate-500 text-xs">🔗</span>
+              </div>
+              <button type="button" onclick="pasteAndTuneLiveStream()" class="px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-amber-300 border border-amber-400/40 font-bold text-[11px] cursor-pointer transition flex items-center gap-1 shrink-0 active:scale-95">
+                <span>📋</span> <span>Paste &amp; Tune</span>
+              </button>
+              <button type="button" onclick="tuneCurrentLiveStream()" class="px-3.5 py-1.5 rounded-lg bg-rose-600 hover:bg-rose-500 text-white font-black text-[11px] cursor-pointer transition flex items-center gap-1 shrink-0 active:scale-95 shadow-sm">
+                <span>▶</span> <span>Go Live</span>
+              </button>
+            </div>
+          </div>
+          
           <!-- 16:9 Video / 2D Rink Stage -->
           <div id="video-stage-wrapper" class="relative w-full rounded-xl overflow-hidden aspect-video bg-slate-900 shadow-md ring-2 ring-tigersGold/50">
             <div id="video-container" class="w-full h-full absolute inset-0">
@@ -4599,8 +4636,30 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
                 No Active Live Broadcast
               </h3>
               <p id="live-offline-next-game-text" class="text-xs text-slate-300 max-w-lg mt-2 leading-relaxed font-medium">
-                Next game scheduled: Friday, Nov 6, 2026 at 1:15 PM EST • CAN/AM Challenge Cup vs Boston Jr. Terriers @ Lake Placid Olympic Center
+                Next game scheduled: Tuesday, Nov 10, 2026 at 7:30 PM EST • Caledon Hawks vs Aurora Tigers @ Aurora Community Centre (Game #U13A-RS-015)
               </p>
+
+              <!-- In-Place Standby Quick Tuner Card -->
+              <div class="w-full max-w-md mt-4 p-3 rounded-2xl bg-slate-900/90 border border-slate-800 text-left space-y-2">
+                <div class="text-[10px] font-bold uppercase tracking-wider text-rose-300 flex items-center justify-between">
+                  <span>Ready to Stream with XbotGo / YouTube?</span>
+                  <span class="font-mono text-amber-400 text-[9px]">1-Click Tune</span>
+                </div>
+                <div class="flex items-center gap-1.5">
+                  <input type="text" id="standby-stream-url-input" placeholder="Paste YouTube link or Video ID (e.g. DcTU1ha1tow)" value="DcTU1ha1tow" class="flex-1 px-2.5 py-1.5 rounded-lg bg-slate-950 border border-slate-700 text-white font-mono text-[11px] focus:outline-none focus:border-rose-500" />
+                  <button type="button" onclick="tuneStandbyLiveStream()" class="px-3 py-1.5 rounded-lg bg-rose-600 hover:bg-rose-500 text-white font-black text-[11px] cursor-pointer transition shadow-xs flex items-center gap-1 shrink-0 active:scale-95">
+                    <span>▶</span> <span>Tune &amp; Play</span>
+                  </button>
+                </div>
+                <div class="flex items-center justify-between pt-1 text-[10px]">
+                  <button type="button" onclick="pasteAndTuneStandbyLiveStream()" class="text-amber-400 hover:text-amber-300 font-bold flex items-center gap-1 cursor-pointer">
+                    <span>📋 Paste from Clipboard</span>
+                  </button>
+                  <button type="button" onclick="tuneLiveStreamId('DcTU1ha1tow')" class="text-rose-400 hover:text-rose-300 font-bold font-mono cursor-pointer">
+                    🎯 Tune Studio (DcTU1ha1tow)
+                  </button>
+                </div>
+              </div>
               <div class="flex flex-wrap items-center justify-center gap-2.5 mt-5">
                 <button type="button" onclick="toggleLiveBroadcastMode()" class="px-4 py-2 rounded-xl bg-tigersGold hover:bg-tigersGoldBright text-slate-950 font-black text-xs cursor-pointer transition shadow-sm flex items-center gap-1.5 active:scale-95">
                   <span>📺</span> <span>Watch Past Film Archive</span>
@@ -5255,30 +5314,69 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
                 <!-- Tale of the Tape Matchup Card -->
                 <div id="gs-native-tale-of-tape" class="p-2.5 rounded-xl bg-slate-900 border border-slate-800 space-y-2">
                   <div class="flex items-center justify-between text-[11px] font-bold">
-                    <span class="text-rose-300 uppercase tracking-wider" id="gs-native-opp-name">🏒 OPPONENT</span>
-                    <span class="text-slate-400 font-mono text-[10px]" id="gs-native-opp-code">YSMHL U13A</span>
+                    <span class="text-rose-300 uppercase tracking-wider" id="gs-native-opp-name">🏒 CALEDON HAWKS</span>
+                    <span class="text-amber-400 font-mono text-[10px]" id="gs-native-opp-code">Game #U13A-RS-015</span>
                   </div>
-                  <div class="grid grid-cols-4 gap-1.5 text-center font-mono text-[10px]">
-                    <div class="p-1.5 rounded-lg bg-slate-950 border border-slate-800">
-                      <div class="text-slate-400 text-[8px] uppercase">Record</div>
-                      <div class="font-bold text-white mt-0.5" id="gs-native-record">11-6-3</div>
-                    </div>
-                    <div class="p-1.5 rounded-lg bg-slate-950 border border-slate-800">
-                      <div class="text-slate-400 text-[8px] uppercase">Points</div>
-                      <div class="font-bold text-amber-400 mt-0.5" id="gs-native-pts">25 PTS</div>
-                    </div>
-                    <div class="p-1.5 rounded-lg bg-slate-950 border border-slate-800">
-                      <div class="text-slate-400 text-[8px] uppercase">PP%</div>
-                      <div class="font-bold text-emerald-400 mt-0.5" id="gs-native-pp">22.4%</div>
-                    </div>
-                    <div class="p-1.5 rounded-lg bg-slate-950 border border-slate-800">
-                      <div class="text-slate-400 text-[8px] uppercase">PK%</div>
-                      <div class="font-bold text-sky-400 mt-0.5" id="gs-native-pk">84.8%</div>
-                    </div>
+
+                  <!-- Head-to-Head Result Banner -->
+                  <div id="gs-native-h2h-banner" class="p-2 rounded-lg bg-slate-950 border border-amber-500/30 flex items-center justify-between text-[10px] font-mono">
+                    <span class="text-slate-300 font-bold">⚔️ Previous H2H (Oct 3):</span>
+                    <span class="text-amber-300 font-black">Caledon 12 - Tigers 0</span>
                   </div>
-                  <div class="text-[10px] text-slate-300 flex items-center justify-between pt-1 border-t border-slate-800 font-mono">
-                    <span id="gs-native-scoring-stat">Scoring: 2.60 GPG • 2.20 GAPG</span>
-                    <span id="gs-native-pim-stat">PIM/G: 7.8 min</span>
+
+                  <!-- Side-by-Side Tale of the Tape Table -->
+                  <div class="overflow-x-auto">
+                    <table class="w-full text-center font-mono text-[10px] border-collapse">
+                      <thead>
+                        <tr class="text-[9px] uppercase text-slate-400 border-b border-slate-800">
+                          <th class="py-1 text-left">Category</th>
+                          <th class="py-1 text-rose-300 font-bold" id="gs-col-opp-header">Caledon</th>
+                          <th class="py-1 text-amber-400 font-bold">Tigers</th>
+                        </tr>
+                      </thead>
+                      <tbody class="divide-y divide-slate-800/60 text-slate-200">
+                        <tr>
+                          <td class="py-1 text-left text-slate-400 text-[9px] uppercase">Record</td>
+                          <td class="py-1 font-bold text-white" id="gs-native-record">6-0-1</td>
+                          <td class="py-1 font-bold text-white" id="gs-native-tigers-record">0-6-0</td>
+                        </tr>
+                        <tr>
+                          <td class="py-1 text-left text-slate-400 text-[9px] uppercase">Points</td>
+                          <td class="py-1 font-bold text-amber-400" id="gs-native-pts">13 PTS (.929)</td>
+                          <td class="py-1 font-bold text-slate-400" id="gs-native-tigers-pts">0 PTS (.000)</td>
+                        </tr>
+                        <tr>
+                          <td class="py-1 text-left text-slate-400 text-[9px] uppercase">Goals For / GP</td>
+                          <td class="py-1 font-bold text-emerald-400" id="gs-native-gf">5.33 (32 GF)</td>
+                          <td class="py-1 font-bold text-slate-300" id="gs-native-tigers-gf">0.50 (3 GF)</td>
+                        </tr>
+                        <tr>
+                          <td class="py-1 text-left text-slate-400 text-[9px] uppercase">Goals Agst / GP</td>
+                          <td class="py-1 font-bold text-emerald-400" id="gs-native-ga">1.00 (6 GA)</td>
+                          <td class="py-1 font-bold text-rose-400" id="gs-native-tigers-ga">10.33 (62 GA)</td>
+                        </tr>
+                        <tr>
+                          <td class="py-1 text-left text-slate-400 text-[9px] uppercase">Power Play %</td>
+                          <td class="py-1 font-bold text-emerald-400" id="gs-native-pp">35.3%</td>
+                          <td class="py-1 font-bold text-slate-300" id="gs-native-tigers-pp">7.1%</td>
+                        </tr>
+                        <tr>
+                          <td class="py-1 text-left text-slate-400 text-[9px] uppercase">Penalty Kill %</td>
+                          <td class="py-1 font-bold text-emerald-400" id="gs-native-pk">100.0%</td>
+                          <td class="py-1 font-bold text-slate-300" id="gs-native-tigers-pk">46.2%</td>
+                        </tr>
+                        <tr>
+                          <td class="py-1 text-left text-slate-400 text-[9px] uppercase">PIM / GP</td>
+                          <td class="py-1 font-bold text-slate-300" id="gs-native-pim-stat">6.0 min</td>
+                          <td class="py-1 font-bold text-slate-300" id="gs-native-tigers-pim">7.0 min</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+
+                  <div class="text-[10px] text-slate-400 flex items-center justify-between pt-1 border-t border-slate-800 font-mono">
+                    <span id="gs-native-scoring-stat">Scoring: 5.33 GPG • 1.00 GAPG (+26)</span>
+                    <span class="text-emerald-400 font-bold">Verified GameSheet</span>
                   </div>
                 </div>
 
@@ -5286,12 +5384,25 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
                 <div class="p-2.5 rounded-xl bg-slate-900 border border-slate-800 space-y-1.5">
                   <div class="flex items-center justify-between text-[10px] font-bold">
                     <span class="text-white uppercase tracking-wider flex items-center gap-1">
-                      <span>📈</span> <span>Opponent Last 5 Games (GameSheet Form)</span>
+                      <span>📈</span> <span id="gs-last5-title">Caledon Last 5 Games (GameSheet Form)</span>
                     </span>
-                    <span id="gs-native-last5-form-pill" class="text-[9px] font-mono text-emerald-400">W-W-L-W-T</span>
+                    <span id="gs-native-last5-form-pill" class="text-[9px] font-mono text-emerald-400">W-T-W-W-W</span>
                   </div>
                   <div id="gs-native-last5-container" class="space-y-1 font-mono text-[10px]">
                     <!-- Dynamically populated from GAMESHEET_DATABASE -->
+                  </div>
+                </div>
+
+                <!-- Aurora Tigers Last 5 League Games Tracker -->
+                <div class="p-2.5 rounded-xl bg-slate-900 border border-slate-800 space-y-1.5">
+                  <div class="flex items-center justify-between text-[10px] font-bold">
+                    <span class="text-amber-400 uppercase tracking-wider flex items-center gap-1">
+                      <span>🐯</span> <span>Aurora Tigers Last 5 League Games</span>
+                    </span>
+                    <span id="gs-native-tigers-last5-form-pill" class="text-[9px] font-mono text-rose-400">L-L-L-L-L</span>
+                  </div>
+                  <div id="gs-native-tigers-last5-container" class="space-y-1 font-mono text-[10px]">
+                    <!-- Dynamically populated from GAMESHEET_DATABASE.teams.tigers -->
                   </div>
                 </div>
 
@@ -5299,10 +5410,10 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
                 <div class="p-2.5 rounded-xl bg-slate-900 border border-rose-500/30 space-y-1">
                   <div class="flex items-center justify-between text-[10px] font-bold text-rose-300">
                     <span>⚠️ Opponent Primary Threat</span>
-                    <span id="gs-native-danger-stat" class="font-mono text-amber-300">Top Line</span>
+                    <span id="gs-native-danger-stat" class="font-mono text-amber-300">#11 Cole Vance (C)</span>
                   </div>
                   <div id="gs-native-danger-desc" class="text-[10px] text-slate-300 leading-snug">
-                    Attacks middle lane with speed off rush. Seal blue line early.
+                    Attacks middle lane with speed off rush. Counter: F3 high center lane support.
                   </div>
                 </div>
               </div>
@@ -7531,6 +7642,34 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
           const activeLive = JSON.parse(localStorage.getItem('tigers_active_live_stream') || '{}');
           if (activeLive && activeLive.videoId) {
             liveStreamVideoId = activeLive.videoId;
+          }
+        } catch(e){}
+
+        // URL Parameter Support for Instant Live Stream Ingest: e.g. ?live=DcTU1ha1tow
+        try {
+          const urlParams = new URLSearchParams(window.location.search);
+          const liveParam = urlParams.get('live') || urlParams.get('stream') || urlParams.get('v');
+          if (liveParam) {
+            const cleanVid = (typeof extractYouTubeVideoId === 'function') ? (extractYouTubeVideoId(liveParam) || liveParam.trim()) : liveParam.trim();
+            if (cleanVid) {
+              liveStreamVideoId = cleanVid;
+              localStorage.setItem('tigers_active_live_stream', JSON.stringify({
+                videoId: cleanVid,
+                playlistId: (typeof YOUTUBE_LIVE_PLAYLIST_ID !== 'undefined') ? YOUTUBE_LIVE_PLAYLIST_ID : 'PLXFVFYYSmylE',
+                url: liveParam,
+                title: "Live Game Broadcast: Tigers U13A",
+                arena: "Aurora Community Centre",
+                isLive: true,
+                updatedAt: new Date().toISOString()
+              }));
+              setTimeout(() => {
+                if (typeof tuneLiveStreamId === 'function') {
+                  tuneLiveStreamId(cleanVid);
+                } else if (!isLiveBroadcastActive && typeof toggleLiveBroadcastMode === 'function') {
+                  toggleLiveBroadcastMode();
+                }
+              }, 400);
+            }
           }
         } catch(e){}
 
@@ -53458,16 +53597,17 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
         return !!saved.isLive;
       }
       if (toggle && toggle.checked) return true;
-      return false; // Default to offline/standby when no active live broadcast is streaming
+      // Default to online on live toggle so stream immediately connects
+      return true;
     }
 
     function getNextScheduledGameSummary() {
       const upcoming = (typeof SCHEDULE_UPCOMING_MATCHUPS !== 'undefined') ? SCHEDULE_UPCOMING_MATCHUPS : [];
       const nextMatch = upcoming.find(g => g.eventType === 'league' || g.eventType === 'tournament') || upcoming[0];
       if (nextMatch) {
-        return `${nextMatch.date || 'Tonight'} at ${nextMatch.time || '8:20 PM EST'} • ${nextMatch.title} @ ${nextMatch.arena || 'Rotary Place'}`;
+        return `${nextMatch.date || 'Tuesday, Nov 10, 2026'} at ${nextMatch.time || '7:30 PM EST'} • ${nextMatch.title || 'Caledon Hawks vs Aurora Tigers'} @ ${nextMatch.arena || 'Aurora Community Centre (ACC)'}`;
       }
-      return "Tonight, Friday Nov 6, 2026 at 8:20 PM EST • York Simcoe Match vs Orillia Terriers @ Rotary Place (U13A-RS-056)";
+      return "Tuesday, Nov 10, 2026 at 7:30 PM EST • Caledon Hawks vs Aurora Tigers @ Aurora Community Centre (Game #U13A-RS-015)";
     }
 
     function switchSidebarLiveTab(tab) {
@@ -53486,17 +53626,51 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
       });
     }
 
+    function loadLiveStreamVideo(vidId) {
+      if (!vidId) vidId = liveStreamVideoId || "DcTU1ha1tow";
+      liveStreamVideoId = vidId;
+
+      const vText = document.getElementById('v-status-text');
+      const vDot = document.getElementById('v-status-dot');
+      if (vText) vText.innerText = "LIVE STREAM";
+      if (vDot) vDot.className = "w-2 h-2 rounded-full bg-rose-500 animate-pulse";
+      const oppAbbr = document.getElementById('v-opp-abbr');
+      if (oppAbbr) oppAbbr.innerText = "CAL";
+
+      const container = document.getElementById('video-container');
+      if (container) container.classList.remove('hidden');
+
+      const pill = document.getElementById('live-stream-status-pill');
+      if (pill) {
+        pill.innerText = "LIVE ON AIR";
+        pill.className = "px-2 py-0.5 rounded-full text-[9px] font-mono font-bold bg-rose-500/20 text-rose-300 border border-rose-500/40 animate-pulse";
+      }
+
+      if (isPlayerReady && ytPlayer && typeof ytPlayer.loadVideoById === 'function') {
+        try {
+          ytPlayer.loadVideoById({ videoId: liveStreamVideoId, startSeconds: 0 });
+          return;
+        } catch(e) {
+          console.warn("ytPlayer.loadVideoById fallback to iframe:", e);
+        }
+      }
+      mountDirectIframeFallback(liveStreamVideoId);
+    }
+
     function loadLivePlaylistStream() {
-      const playlistId = YOUTUBE_LIVE_PLAYLIST_ID;
+      if (liveStreamVideoId) {
+        loadLiveStreamVideo(liveStreamVideoId);
+        return;
+      }
+      const playlistId = YOUTUBE_LIVE_PLAYLIST_ID || "PLXFVFYYSmylE";
       
       const vText = document.getElementById('v-status-text');
       const vDot = document.getElementById('v-status-dot');
       if (vText) vText.innerText = "LIVE STREAM";
       if (vDot) vDot.className = "w-2 h-2 rounded-full bg-rose-500 animate-pulse";
       const oppAbbr = document.getElementById('v-opp-abbr');
-      if (oppAbbr) oppAbbr.innerText = "ORI";
+      if (oppAbbr) oppAbbr.innerText = "CAL";
 
-      // If YouTube IFrame API player is ready and supports playlist loading
       if (isPlayerReady && ytPlayer) {
         if (typeof ytPlayer.loadPlaylist === 'function') {
           try {
@@ -53510,23 +53684,16 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
             console.warn("ytPlayer.loadPlaylist failed, trying video fallback:", e);
           }
         }
-        if (typeof ytPlayer.loadVideoById === 'function' && liveStreamVideoId) {
-          try {
-            ytPlayer.loadVideoById({ videoId: liveStreamVideoId, startSeconds: 0 });
-            return;
-          } catch(e2){}
-        }
       }
-
-      // Direct iframe fallback loading playlist
       mountDirectPlaylistFallback(playlistId);
     }
 
     function mountDirectPlaylistFallback(playlistId) {
-      if (!playlistId) playlistId = YOUTUBE_LIVE_PLAYLIST_ID;
+      if (!playlistId) playlistId = YOUTUBE_LIVE_PLAYLIST_ID || "PLXFVFYYSmylE";
       isPlayerReady = true;
       const container = document.getElementById('video-container');
       if (!container) return;
+      container.classList.remove('hidden');
       container.innerHTML = `<iframe id="yt-direct-iframe" class="w-full h-full border-0" src="https://www.youtube.com/embed/videoseries?list=${playlistId}&enablejsapi=1&autoplay=1&rel=0&playsinline=1" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>`;
       const iframeEl = document.getElementById('yt-direct-iframe');
       ytPlayer = {
@@ -53571,6 +53738,7 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
       const hud = document.getElementById('live-broadcast-hud');
       const offlinePlaceholder = document.getElementById('live-offline-placeholder');
       const nextGameText = document.getElementById('live-offline-next-game-text');
+      const tunerBar = document.getElementById('live-stream-tuner-bar');
 
       const videoCol = document.getElementById('video-column');
       const sidebarCol = document.getElementById('sidebar-column');
@@ -53581,14 +53749,15 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
       const traySection = document.getElementById('tray-view-section');
       const breakoutSection = document.getElementById('breakout-view-section');
       const playerSection = document.getElementById('player-view-section');
-      const liveStreamContainer = document.querySelector('.video-container');
       const interactiveContainer = document.getElementById('video-container');
 
       if (isLiveBroadcastActive) {
-        if (liveStreamContainer) liveStreamContainer.style.display = 'block';
-        if (interactiveContainer) interactiveContainer.classList.add('hidden');
+        // CRITICAL FIX: NEVER hide interactiveContainer! Keep player visible!
+        if (interactiveContainer) interactiveContainer.classList.remove('hidden');
+        if (tunerBar) tunerBar.classList.remove('hidden');
         if (typeof updateFunctionalNavActiveState === 'function') updateFunctionalNavActiveState('live_stream');
-        // Ensure split-screen layout is visible even if user came from full-width Analytics or Player Hub
+
+        // Ensure split-screen layout is visible
         if (videoCol) {
           videoCol.classList.remove('hidden');
           videoCol.className = "lg:col-span-7 xl:col-span-8 lg:sticky lg:top-2 space-y-2.5 transition-all duration-300 relative w-full";
@@ -53597,7 +53766,7 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
           sidebarCol.className = "lg:col-span-5 xl:col-span-4 bg-white border border-slate-200 rounded-2xl shadow-sm flex flex-col min-h-[calc(100vh-5rem)] lg:h-[calc(100vh-5rem)] overflow-hidden transition-all duration-300 w-full";
         }
 
-        // EMBED LIVE CENTER IN SIDE PANEL: Replace right-hand shift/clip list with Live Center
+        // EMBED LIVE CENTER IN SIDE PANEL
         if (sideLiveHeader) sideLiveHeader.classList.remove('hidden');
         if (sideNavTabs) sideNavTabs.classList.add('hidden');
         if (clipsSection) clipsSection.classList.add('hidden');
@@ -53615,14 +53784,15 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
           if (offlinePlaceholder) offlinePlaceholder.classList.add('hidden');
           if (hud) hud.classList.remove('hidden');
 
-          // Load live stream video from playlist PLXFVFYYSmylE
-          loadLivePlaylistStream();
+          // Load live stream video
+          if (!liveStreamVideoId) liveStreamVideoId = "DcTU1ha1tow";
+          loadLiveStreamVideo(liveStreamVideoId);
 
           startLiveScoreboardClock();
           renderLiveScoreboardHud();
-          showToast("🔴 Live Game Broadcast Active • Streamed from YouTube Playlist PLXFVFYYSmylE!");
+          showToast(`🔴 Live Game Broadcast Active • Stream: ${liveStreamVideoId}`);
         } else {
-          // OFFLINE STATE: No ticking clock, silence player, display clean standby card
+          // OFFLINE / STANDBY STATE
           if (hud) hud.classList.add('hidden');
           if (ytPlayer && typeof ytPlayer.pauseVideo === 'function') {
             try { ytPlayer.pauseVideo(); } catch(e){}
@@ -53640,10 +53810,10 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
           }
 
           renderOfflineStandbyHud();
-          showToast("📡 Live Stream Mode: Broadcast is currently offline / standby.");
+          showToast("📡 Live Stream Mode: Broadcast is currently in standby. Click 'Go Live' to stream.");
         }
       } else {
-        if (liveStreamContainer) liveStreamContainer.style.display = 'none';
+        if (tunerBar) tunerBar.classList.add('hidden');
         if (interactiveContainer) interactiveContainer.classList.remove('hidden');
         if (typeof updateFunctionalNavActiveState === 'function') updateFunctionalNavActiveState(currentMode || 'coaches');
         if (hud) hud.classList.add('hidden');
@@ -53662,7 +53832,7 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
 
         // Restore game archive video
         if (currentGame && isPlayerReady && ytPlayer) {
-          const vidId = currentGame.youtube_video_id || (currentGame.id ? currentGame.id.replace('game_', '') : 'JJd6PGgJeG8');
+          const vidId = currentGame.youtube_video_id || (currentGame.id ? currentGame.id.replace('game_', '') : 'A-2-QEqPFqk');
           if (typeof ytPlayer.loadVideoById === 'function') {
             ytPlayer.loadVideoById({ videoId: vidId, startSeconds: 0 });
           } else {
@@ -53675,7 +53845,6 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
     }
 
     function renderOfflineStandbyHud() {
-      // In-player overlay standby display
       const vDot = document.getElementById('v-status-dot');
       const vText = document.getElementById('v-status-text');
       const vHome = document.getElementById('v-score-home');
@@ -53690,7 +53859,6 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
       if (vPeriod) vPeriod.innerText = "P--";
       if (vClock) vClock.innerText = "--:--";
 
-      // Sidebar live hero standby display
       const sbHome = document.getElementById('sidebar-live-score-home');
       const sbAway = document.getElementById('sidebar-live-score-away');
       const sbPeriod = document.getElementById('sidebar-live-period');
@@ -53704,11 +53872,156 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
       if (sbPeriod) sbPeriod.innerText = "STANDBY";
       if (sbClock) sbClock.innerText = "--:--";
       if (sbStrength) {
-        sbStrength.innerText = "Stream Offline";
+        sbStrength.innerText = "Stream Standby";
         sbStrength.className = "px-1.5 py-0.5 rounded text-[8px] font-bold uppercase bg-slate-800 text-slate-400 border border-slate-700";
       }
       if (sbSogH) sbSogH.innerText = "-";
       if (sbSogA) sbSogA.innerText = "-";
+    }
+
+    // =========================================================================
+    // DYNAMIC LIVE STREAM TUNER & QUICK INGEST CONTROLS (XBOTGO / YOUTUBE LIVE)
+    // =========================================================================
+    function tuneLiveStreamId(rawInput) {
+      if (!rawInput) return;
+      const playlistId = extractYouTubePlaylistId(rawInput);
+      const vidId = extractYouTubeVideoId(rawInput) || (playlistId ? '' : rawInput.trim());
+
+      if (playlistId) {
+        YOUTUBE_LIVE_PLAYLIST_ID = playlistId;
+      }
+      if (vidId) {
+        liveStreamVideoId = vidId;
+      }
+
+      const quickInput = document.getElementById('live-quick-url-input');
+      if (quickInput) quickInput.value = rawInput;
+      const standbyInput = document.getElementById('standby-stream-url-input');
+      if (standbyInput) standbyInput.value = rawInput;
+
+      // Save to localStorage
+      const payload = {
+        videoId: liveStreamVideoId || "",
+        playlistId: YOUTUBE_LIVE_PLAYLIST_ID || "",
+        url: rawInput,
+        title: "Live Game Broadcast: Tigers U13A",
+        arena: "Aurora Community Centre",
+        isLive: true,
+        updatedAt: new Date().toISOString()
+      };
+      try {
+        localStorage.setItem('tigers_active_live_stream', JSON.stringify(payload));
+      } catch(e){}
+
+      // Activate live mode if not active
+      if (!isLiveBroadcastActive) {
+        toggleLiveBroadcastMode();
+      } else {
+        const offlinePlaceholder = document.getElementById('live-offline-placeholder');
+        if (offlinePlaceholder) offlinePlaceholder.classList.add('hidden');
+        const hud = document.getElementById('live-broadcast-hud');
+        if (hud) hud.classList.remove('hidden');
+
+        if (liveStreamVideoId) {
+          loadLiveStreamVideo(liveStreamVideoId);
+        } else if (YOUTUBE_LIVE_PLAYLIST_ID) {
+          loadLivePlaylistStream();
+        }
+
+        startLiveScoreboardClock();
+        renderLiveScoreboardHud();
+      }
+
+      const pill = document.getElementById('live-stream-status-pill');
+      if (pill) {
+        pill.innerText = "LIVE ON AIR";
+        pill.className = "px-2 py-0.5 rounded-full text-[9px] font-mono font-bold bg-rose-500/20 text-rose-300 border border-rose-500/40 animate-pulse";
+      }
+
+      showToast(`🔴 Live Broadcast Active • Tuned to ${liveStreamVideoId || YOUTUBE_LIVE_PLAYLIST_ID}`);
+    }
+
+    function tuneCurrentLiveStream() {
+      const input = document.getElementById('live-quick-url-input');
+      const val = input ? input.value.trim() : (liveStreamVideoId || 'DcTU1ha1tow');
+      tuneLiveStreamId(val || 'DcTU1ha1tow');
+    }
+
+    function pasteAndTuneLiveStream() {
+      if (navigator.clipboard && navigator.clipboard.readText) {
+        navigator.clipboard.readText().then(text => {
+          if (text) {
+            tuneLiveStreamId(text.trim());
+          }
+        }).catch(() => {
+          const input = document.getElementById('live-quick-url-input');
+          if (input && input.value) tuneLiveStreamId(input.value.trim());
+        });
+      } else {
+        const input = document.getElementById('live-quick-url-input');
+        if (input && input.value) tuneLiveStreamId(input.value.trim());
+      }
+    }
+
+    function tuneStandbyLiveStream() {
+      const input = document.getElementById('standby-stream-url-input');
+      const val = input ? input.value.trim() : (liveStreamVideoId || 'DcTU1ha1tow');
+      tuneLiveStreamId(val || 'DcTU1ha1tow');
+    }
+
+    function pasteAndTuneStandbyLiveStream() {
+      if (navigator.clipboard && navigator.clipboard.readText) {
+        navigator.clipboard.readText().then(text => {
+          if (text) tuneLiveStreamId(text.trim());
+        }).catch(() => {
+          tuneStandbyLiveStream();
+        });
+      } else {
+        tuneStandbyLiveStream();
+      }
+    }
+
+    function toggleLiveAirStatus() {
+      let saved = {};
+      try {
+        saved = JSON.parse(localStorage.getItem('tigers_active_live_stream') || '{}');
+      } catch(e){}
+      const currentlyLive = saved.isLive !== false;
+      const newStatus = !currentlyLive;
+      saved.isLive = newStatus;
+      saved.videoId = saved.videoId || liveStreamVideoId || "DcTU1ha1tow";
+      try {
+        localStorage.setItem('tigers_active_live_stream', JSON.stringify(saved));
+      } catch(e){}
+
+      const pill = document.getElementById('live-stream-status-pill');
+      const offlinePlaceholder = document.getElementById('live-offline-placeholder');
+      const hud = document.getElementById('live-broadcast-hud');
+
+      if (newStatus) {
+        if (pill) {
+          pill.innerText = "LIVE ON AIR";
+          pill.className = "px-2 py-0.5 rounded-full text-[9px] font-mono font-bold bg-rose-500/20 text-rose-300 border border-rose-500/40 animate-pulse";
+        }
+        if (offlinePlaceholder) offlinePlaceholder.classList.add('hidden');
+        if (hud) hud.classList.remove('hidden');
+        loadLiveStreamVideo(saved.videoId);
+        startLiveScoreboardClock();
+        renderLiveScoreboardHud();
+        showToast("🔴 Live Broadcast On Air!");
+      } else {
+        if (pill) {
+          pill.innerText = "STANDBY";
+          pill.className = "px-2 py-0.5 rounded-full text-[9px] font-mono font-bold bg-amber-500/20 text-amber-300 border border-amber-500/40";
+        }
+        if (offlinePlaceholder) offlinePlaceholder.classList.remove('hidden');
+        if (hud) hud.classList.add('hidden');
+        if (ytPlayer && typeof ytPlayer.pauseVideo === 'function') {
+          try { ytPlayer.pauseVideo(); } catch(e){}
+        }
+        renderOfflineStandbyHud();
+        showToast("🟡 Broadcast set to Standby.");
+      }
     }
 
     function startLiveScoreboardClock() {
@@ -56407,17 +56720,33 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
 
       const tigRecEl = document.getElementById('preview-tigers-record');
       const tigPctEl = document.getElementById('preview-tigers-pct');
-      if (tigRecEl) tigRecEl.innerText = `${tWins}-${tLosses}-${tTies}`;
-      if (tigPctEl) tigPctEl.innerText = `${tPct} Win Pct (${tGF} GF / ${tGA} GA • ${tPIM} PIM)`;
+      const isLeagueGame = match.eventType === 'league' || !!match.gameSheetCode;
+      const tigGs = (typeof GAMESHEET_DATABASE !== 'undefined' && GAMESHEET_DATABASE.teams && GAMESHEET_DATABASE.teams.tigers) ? GAMESHEET_DATABASE.teams.tigers : null;
+
+      if (isLeagueGame && tigGs && tigGs.record) {
+        if (tigRecEl) tigRecEl.innerText = `${tigGs.record.w}-${tigGs.record.l}-${tigGs.record.t} (${tigGs.record.pts} PTS)`;
+        if (tigPctEl) tigPctEl.innerText = `${tigGs.record.winPct} Win Pct • GF/GP: ${tigGs.stats?.gpg || '0.50'} • GAPG: ${tigGs.stats?.gapg || '10.33'}`;
+        const tigStatsDiv = tigRecEl?.parentElement?.querySelector('.text-\\[10px\\].text-slate-400') || tigRecEl?.parentElement?.querySelector('.pt-1');
+        if (tigStatsDiv && tigGs.stats && tigGs.specialTeams) {
+          tigStatsDiv.innerHTML = `Goals: <strong>${tigGs.stats.gf} GF / ${tigGs.stats.ga} GA (${tigGs.stats.diff})</strong><br>PP: <strong>${tigGs.specialTeams.ppPct}</strong> • PK: <strong>${tigGs.specialTeams.pkPct}</strong> • PIM/GP: <strong>${tigGs.stats.pimPg} min</strong>`;
+        }
+      } else {
+        if (tigRecEl) tigRecEl.innerText = `${tWins}-${tLosses}-${tTies}`;
+        if (tigPctEl) tigPctEl.innerText = `${tPct} Win Pct (${tGF} GF / ${tGA} GA • ${tPIM} PIM)`;
+      }
 
       if (titleEl) titleEl.innerText = match.title;
       if (metaEl) metaEl.innerText = `${match.date} (${match.time}) • ${match.arena}`;
       if (divBadge) divBadge.innerText = match.isTournament ? "CAN/AM Showcase" : "OMHA League";
       if (oppNameEl) oppNameEl.innerText = `🏒 ${match.opponent.toUpperCase()}`;
       if (oppRecEl) {
-        oppRecEl.innerText = (h2hWins > 0 || h2hLosses > 0) 
-          ? `H2H: ${h2hWins}-${h2hLosses}-${h2hTies}` 
-          : (match.opponentRecord || "11-6-3");
+        if (oppFirstWord === 'caledon') {
+          oppRecEl.innerText = "6-0-1 (13 PTS) • Undefeated";
+        } else if (h2hWins > 0 || h2hLosses > 0) {
+          oppRecEl.innerText = `H2H: ${h2hWins}-${h2hLosses}-${h2hTies}`;
+        } else {
+          oppRecEl.innerText = match.opponentRecord || "6-0-1 (13 PTS)";
+        }
       }
       if (oppPctEl) oppPctEl.innerText = `${match.opponentPct || '.625'} Win Pct`;
       // Pull verified GameSheet data for opponent
@@ -58245,82 +58574,82 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
       "gameSheetCode": "U13A-RS-015",
       "gameSheetUrl": "https://gamesheetstats.com/seasons/15490/teams/534204/schedule?configuration%5Binfinite-scroll%5D=false&configuration%5Blogo%5D=false&filter%5Bquery%5D=caledon",
       "record": {
-        "gp": 20,
-        "w": 11,
-        "l": 6,
-        "t": 3,
-        "pts": 25,
-        "winPct": ".625"
+        "gp": 7,
+        "w": 6,
+        "l": 0,
+        "t": 1,
+        "pts": 13,
+        "winPct": ".929"
       },
       "stats": {
-        "gf": 52,
-        "ga": 44,
-        "diff": "+8",
-        "gpg": "2.60",
-        "gapg": "2.20",
-        "pim": 78,
-        "pimPg": "7.8"
+        "gf": 32,
+        "ga": 6,
+        "diff": "+26",
+        "gpg": "5.33",
+        "gapg": "1.00",
+        "pim": 42,
+        "pimPg": "6.0"
       },
       "specialTeams": {
-        "ppPct": "22.4%",
-        "ppGoals": 11,
-        "ppOpps": 49,
-        "ppGpg": "0.55",
-        "pkPct": "84.8%",
-        "shGoals": 2,
-        "shAllowed": 8,
-        "tendency": "Runs umbrella 1-3-1 setup with heavy point slapper from #4 Sterling; look for back-door tap-ins."
+        "ppPct": "35.3%",
+        "ppGoals": 6,
+        "ppOpps": 17,
+        "ppGpg": "0.86",
+        "pkPct": "100.0%",
+        "shGoals": 1,
+        "shAllowed": 0,
+        "tendency": "Lethal 35.3% power play and perfect 100.0% penalty kill. Dangerous transition rush with high slot support."
       },
       "last5Games": [
         {
-          "date": "Nov 04",
-          "opp": "Upper York Admirals",
+          "date": "Oct 25",
+          "opp": "Orangeville Flyers",
+          "vsAt": "vs",
+          "score": "3-0",
+          "result": "W",
+          "gf": 3,
+          "ga": 0,
+          "notes": "Shutout home win; controlled neutral zone"
+        },
+        {
+          "date": "Oct 24",
+          "opp": "Stouffville Clippers",
+          "vsAt": "vs",
+          "score": "3-3",
+          "result": "T",
+          "gf": 3,
+          "ga": 3,
+          "notes": "High-pace draw against physical Clippers"
+        },
+        {
+          "date": "Oct 20",
+          "opp": "Barrie Colts U13-1 White",
+          "vsAt": "@",
+          "score": "4-1",
+          "result": "W",
+          "gf": 4,
+          "ga": 1,
+          "notes": "Road win; 2 power play goals"
+        },
+        {
+          "date": "Oct 18",
+          "opp": "Richmond Hill Jaguars",
+          "vsAt": "@",
+          "score": "4-0",
+          "result": "W",
+          "gf": 4,
+          "ga": 0,
+          "notes": "Road shutout; disciplined defensive box"
+        },
+        {
+          "date": "Oct 17",
+          "opp": "South Simcoe Storm",
           "vsAt": "vs",
           "score": "5-2",
           "result": "W",
           "gf": 5,
           "ga": 2,
-          "notes": "Exploded for 3 goals in P2"
-        },
-        {
-          "date": "Oct 31",
-          "opp": "Barrie Colts-T2",
-          "vsAt": "vs",
-          "score": "4-2",
-          "result": "W",
-          "gf": 4,
-          "ga": 2,
-          "notes": "Strong neutral zone transition"
-        },
-        {
-          "date": "Oct 24",
-          "opp": "Orillia Terriers",
-          "vsAt": "@",
-          "score": "1-3",
-          "result": "L",
-          "gf": 1,
-          "ga": 3,
-          "notes": "Struggled against Orillia forecheck"
-        },
-        {
-          "date": "Oct 17",
-          "opp": "Upper York Admirals",
-          "vsAt": "vs",
-          "score": "5-1",
-          "result": "W",
-          "gf": 5,
-          "ga": 1,
-          "notes": "Dominated special teams (2 PPG)"
-        },
-        {
-          "date": "Oct 10",
-          "opp": "Markham Waxers",
-          "vsAt": "@",
-          "score": "2-2",
-          "result": "T",
-          "gf": 2,
-          "ga": 2,
-          "notes": "Tied late in P3 on 6v5 extra skater"
+          "notes": "Lethal finish off rush opportunities"
         }
       ],
       "dangerPlayers": [
@@ -59093,30 +59422,30 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
       "teamId": "534204",
       "gameSheetUrl": "https://gamesheetstats.com/seasons/15490/teams/534204/schedule",
       "record": {
-        "gp": 21,
-        "w": 3,
-        "l": 18,
+        "gp": 6,
+        "w": 0,
+        "l": 6,
         "t": 0,
-        "pts": 6,
-        "winPct": ".143"
+        "pts": 0,
+        "winPct": ".000"
       },
       "stats": {
-        "gf": 31,
-        "ga": 98,
-        "diff": "-67",
-        "gpg": "1.48",
-        "gapg": "4.67",
-        "pim": 64,
-        "pimPg": "3.0"
+        "gf": 3,
+        "ga": 62,
+        "diff": "-59",
+        "gpg": "0.50",
+        "gapg": "10.33",
+        "pim": 42,
+        "pimPg": "7.0"
       },
       "specialTeams": {
-        "ppPct": "14.2%",
-        "ppGoals": 4,
-        "ppOpps": 28,
-        "pkPct": "71.5%",
-        "shGoals": 1,
+        "ppPct": "7.1%",
+        "ppGoals": 1,
+        "ppOpps": 14,
+        "pkPct": "46.2%",
+        "shGoals": 0,
         "shAllowed": 14,
-        "tendency": "Fast counter-attack and disciplined short shifts; outstanding CAN/AM tournament finalist."
+        "tendency": "Resilient defensive structure looking for breakout execution. Head-to-head vs Caledon on Oct 3: 0-12."
       },
       "last5Games": [
         {
@@ -59127,47 +59456,47 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
           "result": "L",
           "gf": 0,
           "ga": 9,
-          "notes": "Strong physical effort against top-seeded Orillia"
+          "notes": "Physical league clash at Rotary Place"
         },
         {
-          "date": "Nov 01",
-          "opp": "Tewksbury Redmen",
-          "vsAt": "vs",
-          "score": "3-7",
+          "date": "Oct 20",
+          "opp": "Newmarket Renegades",
+          "vsAt": "@",
+          "score": "1-8",
           "result": "L",
-          "gf": 3,
-          "ga": 7,
-          "notes": "CAN/AM Gold Medal Game Showcase"
+          "gf": 1,
+          "ga": 8,
+          "notes": "Scored in P2; fought hard on PK"
         },
         {
-          "date": "Oct 31",
-          "opp": "Skills Competition",
+          "date": "Oct 10",
+          "opp": "Georgian Bay Islanders",
           "vsAt": "vs",
-          "score": "Event",
-          "result": "W",
+          "score": "0-9",
+          "result": "L",
           "gf": 0,
-          "ga": 0,
-          "notes": "CAN/AM Team Skills Showcase"
+          "ga": 9,
+          "notes": "Home stand against top tier offense"
         },
         {
-          "date": "Oct 31",
-          "opp": "Mayfield",
+          "date": "Oct 06",
+          "opp": "Orillia Terriers",
           "vsAt": "vs",
-          "score": "11-0",
-          "result": "W",
-          "gf": 11,
-          "ga": 0,
-          "notes": "Shutout victory in tournament play"
+          "score": "1-13",
+          "result": "L",
+          "gf": 1,
+          "ga": 13,
+          "notes": "High pace test against division leaders"
         },
         {
-          "date": "Oct 30",
-          "opp": "East Coast Thunder",
-          "vsAt": "vs",
-          "score": "7-0",
-          "result": "W",
-          "gf": 7,
-          "ga": 0,
-          "notes": "Complete dominant team performance"
+          "date": "Oct 04",
+          "opp": "Upper York Admirals",
+          "vsAt": "@",
+          "score": "1-11",
+          "result": "L",
+          "gf": 1,
+          "ga": 11,
+          "notes": "Opening road test in regular season play"
         }
       ],
       "goalie": {
@@ -59182,7 +59511,12 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
         "Protect the House: Lock down slot area and tie up sticks.",
         "Short Shifts (35-45s): High energy and hard backchecks.",
         "Quick D-to-D Reverses: Break forecheck pressure early."
-      ]
+      ],
+      "headToHead": {
+        "summary": "Oct 3, 2026: Caledon Hawks 12, Aurora Tigers 0",
+        "date": "2026-10-03",
+        "score": "0-12"
+      }
     },
     "south_simcoe": {
       "teamName": "South Simcoe Storm",
@@ -59917,24 +60251,84 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
       const oppCodeEl = document.getElementById('gs-native-opp-code');
       const recEl = document.getElementById('gs-native-record');
       const ptsEl = document.getElementById('gs-native-pts');
+      const gfEl = document.getElementById('gs-native-gf');
+      const gaEl = document.getElementById('gs-native-ga');
       const ppEl = document.getElementById('gs-native-pp');
       const pkEl = document.getElementById('gs-native-pk');
       const scoringEl = document.getElementById('gs-native-scoring-stat');
       const pimEl = document.getElementById('gs-native-pim-stat');
+      const last5Title = document.getElementById('gs-last5-title');
       const last5Pill = document.getElementById('gs-native-last5-form-pill');
       const last5Container = document.getElementById('gs-native-last5-container');
       const dangerStat = document.getElementById('gs-native-danger-stat');
       const dangerDesc = document.getElementById('gs-native-danger-desc');
+      const oppColHeader = document.getElementById('gs-col-opp-header');
 
+      // Tigers Native Stats
+      const tigData = (typeof GAMESHEET_DATABASE !== 'undefined' && GAMESHEET_DATABASE.teams && GAMESHEET_DATABASE.teams.tigers) 
+        ? GAMESHEET_DATABASE.teams.tigers 
+        : null;
+      const tigRecEl = document.getElementById('gs-native-tigers-record');
+      const tigPtsEl = document.getElementById('gs-native-tigers-pts');
+      const tigGfEl = document.getElementById('gs-native-tigers-gf');
+      const tigGaEl = document.getElementById('gs-native-tigers-ga');
+      const tigPpEl = document.getElementById('gs-native-tigers-pp');
+      const tigPkEl = document.getElementById('gs-native-tigers-pk');
+      const tigPimEl = document.getElementById('gs-native-tigers-pim');
+      const tigLast5Pill = document.getElementById('gs-native-tigers-last5-form-pill');
+      const tigLast5Container = document.getElementById('gs-native-tigers-last5-container');
+
+      if (oppColHeader) oppColHeader.innerText = gsData.shortName || gsData.teamName || 'Opponent';
       if (oppNameEl) oppNameEl.innerText = `🏒 ${gsData.teamName.toUpperCase()}`;
-      if (oppCodeEl) oppCodeEl.innerText = match.gameSheetCode || gsData.gameSheetCode || 'OMHA U13A';
+      if (oppCodeEl) oppCodeEl.innerText = match.gameSheetCode ? `Game #${match.gameSheetCode}` : 'Game #U13A-RS-015';
+      
+      // Opponent Stats
       if (recEl && gsData.record) recEl.innerText = `${gsData.record.w}-${gsData.record.l}-${gsData.record.t}`;
       if (ptsEl && gsData.record) ptsEl.innerText = `${gsData.record.pts} PTS (${gsData.record.winPct})`;
-      if (ppEl && gsData.specialTeams) ppEl.innerText = gsData.specialTeams.ppPct || '20.0%';
-      if (pkEl && gsData.specialTeams) pkEl.innerText = gsData.specialTeams.pkPct || '80.0%';
-      if (scoringEl && gsData.stats) scoringEl.innerText = `Scoring: ${gsData.stats.gpg} GPG • ${gsData.stats.gapg} GAPG (${gsData.stats.gf} GF / ${gsData.stats.ga} GA)`;
-      if (pimEl && gsData.stats) pimEl.innerText = `PIM/G: ${gsData.stats.pimPg} min`;
+      if (gfEl && gsData.stats) gfEl.innerText = `${gsData.stats.gpg} (${gsData.stats.gf} GF)`;
+      if (gaEl && gsData.stats) gaEl.innerText = `${gsData.stats.gapg} (${gsData.stats.ga} GA)`;
+      if (ppEl && gsData.specialTeams) ppEl.innerText = gsData.specialTeams.ppPct || '35.3%';
+      if (pkEl && gsData.specialTeams) pkEl.innerText = gsData.specialTeams.pkPct || '100.0%';
+      if (pimEl && gsData.stats) pimEl.innerText = `${gsData.stats.pimPg} min`;
+      if (scoringEl && gsData.stats) scoringEl.innerText = `Scoring: ${gsData.stats.gpg} GPG • ${gsData.stats.gapg} GAPG (${gsData.stats.diff})`;
 
+      // Tigers Stats
+      if (tigData) {
+        if (tigRecEl && tigData.record) tigRecEl.innerText = `${tigData.record.w}-${tigData.record.l}-${tigData.record.t}`;
+        if (tigPtsEl && tigData.record) tigPtsEl.innerText = `${tigData.record.pts} PTS (${tigData.record.winPct})`;
+        if (tigGfEl && tigData.stats) tigGfEl.innerText = `${tigData.stats.gpg} (${tigData.stats.gf} GF)`;
+        if (tigGaEl && tigData.stats) tigGaEl.innerText = `${tigData.stats.gapg} (${tigData.stats.ga} GA)`;
+        if (tigPpEl && tigData.specialTeams) tigPpEl.innerText = tigData.specialTeams.ppPct || '7.1%';
+        if (tigPkEl && tigData.specialTeams) tigPkEl.innerText = tigData.specialTeams.pkPct || '46.2%';
+        if (tigPimEl && tigData.stats) tigPimEl.innerText = `${tigData.stats.pimPg} min`;
+
+        if (tigData.last5Games && tigData.last5Games.length > 0) {
+          const tigFormStr = tigData.last5Games.map(g => g.result).join('-');
+          if (tigLast5Pill) tigLast5Pill.innerText = tigFormStr;
+
+          if (tigLast5Container) {
+            tigLast5Container.innerHTML = tigData.last5Games.map(g => {
+              const resColor = (g.result === 'W') 
+                ? 'bg-emerald-500/20 text-emerald-300 border border-emerald-500/40' 
+                : (g.result === 'L') 
+                  ? 'bg-rose-500/20 text-rose-300 border border-rose-500/40' 
+                  : 'bg-amber-500/20 text-amber-300 border border-amber-500/40';
+              return `
+                <div class="flex items-center justify-between p-1.5 rounded-lg bg-slate-950 border border-slate-800">
+                  <div class="flex items-center gap-1.5">
+                    <span class="w-4 h-4 rounded text-[9px] font-black flex items-center justify-center ${resColor}">${g.result}</span>
+                    <span class="text-white text-[10px]">${escapeHtml(g.date)}: ${escapeHtml(g.vsAt)} ${escapeHtml(g.opp)}</span>
+                  </div>
+                  <span class="text-amber-300 font-bold text-[10px]">${escapeHtml(g.score)}</span>
+                </div>
+              `;
+            }).join('');
+          }
+        }
+      }
+
+      // Opponent Last 5 Games
+      if (last5Title) last5Title.innerText = `${gsData.shortName || gsData.teamName} Last 5 Games (GameSheet Form)`;
       if (gsData.last5Games && gsData.last5Games.length > 0) {
         const formStr = gsData.last5Games.map(g => g.result).join('-');
         if (last5Pill) last5Pill.innerText = `Form: ${formStr}`;
@@ -59961,7 +60355,7 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
 
       if (gsData.dangerPlayers && gsData.dangerPlayers.length > 0) {
         const topP = gsData.dangerPlayers[0];
-        if (dangerStat) dangerStat.innerText = `${topP.number} ${topP.name} (${topP.pos})`;
+        if (dangerStat) dangerStat.innerText = `${topP.number || ''} ${topP.name} (${topP.pos || ''})`;
         if (dangerDesc) dangerDesc.innerHTML = `<strong>Threat:</strong> ${escapeHtml(topP.threat)} <br/><span class="text-emerald-400"><strong>Counter:</strong> ${escapeHtml(topP.counter)}</span>`;
       }
     }

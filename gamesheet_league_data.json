@@ -15,82 +15,82 @@
       "gameSheetCode": "U13A-RS-015",
       "gameSheetUrl": "https://gamesheetstats.com/seasons/15490/teams/534204/schedule?configuration%5Binfinite-scroll%5D=false&configuration%5Blogo%5D=false&filter%5Bquery%5D=caledon",
       "record": {
-        "gp": 20,
-        "w": 11,
-        "l": 6,
-        "t": 3,
-        "pts": 25,
-        "winPct": ".625"
+        "gp": 7,
+        "w": 6,
+        "l": 0,
+        "t": 1,
+        "pts": 13,
+        "winPct": ".929"
       },
       "stats": {
-        "gf": 52,
-        "ga": 44,
-        "diff": "+8",
-        "gpg": "2.60",
-        "gapg": "2.20",
-        "pim": 78,
-        "pimPg": "7.8"
+        "gf": 32,
+        "ga": 6,
+        "diff": "+26",
+        "gpg": "5.33",
+        "gapg": "1.00",
+        "pim": 42,
+        "pimPg": "6.0"
       },
       "specialTeams": {
-        "ppPct": "22.4%",
-        "ppGoals": 11,
-        "ppOpps": 49,
-        "ppGpg": "0.55",
-        "pkPct": "84.8%",
-        "shGoals": 2,
-        "shAllowed": 8,
-        "tendency": "Runs umbrella 1-3-1 setup with heavy point slapper from #4 Sterling; look for back-door tap-ins."
+        "ppPct": "35.3%",
+        "ppGoals": 6,
+        "ppOpps": 17,
+        "ppGpg": "0.86",
+        "pkPct": "100.0%",
+        "shGoals": 1,
+        "shAllowed": 0,
+        "tendency": "Lethal 35.3% power play and perfect 100.0% penalty kill. Dangerous transition rush with high slot support."
       },
       "last5Games": [
         {
-          "date": "Nov 04",
-          "opp": "Upper York Admirals",
+          "date": "Oct 25",
+          "opp": "Orangeville Flyers",
+          "vsAt": "vs",
+          "score": "3-0",
+          "result": "W",
+          "gf": 3,
+          "ga": 0,
+          "notes": "Shutout home win; controlled neutral zone"
+        },
+        {
+          "date": "Oct 24",
+          "opp": "Stouffville Clippers",
+          "vsAt": "vs",
+          "score": "3-3",
+          "result": "T",
+          "gf": 3,
+          "ga": 3,
+          "notes": "High-pace draw against physical Clippers"
+        },
+        {
+          "date": "Oct 20",
+          "opp": "Barrie Colts U13-1 White",
+          "vsAt": "@",
+          "score": "4-1",
+          "result": "W",
+          "gf": 4,
+          "ga": 1,
+          "notes": "Road win; 2 power play goals"
+        },
+        {
+          "date": "Oct 18",
+          "opp": "Richmond Hill Jaguars",
+          "vsAt": "@",
+          "score": "4-0",
+          "result": "W",
+          "gf": 4,
+          "ga": 0,
+          "notes": "Road shutout; disciplined defensive box"
+        },
+        {
+          "date": "Oct 17",
+          "opp": "South Simcoe Storm",
           "vsAt": "vs",
           "score": "5-2",
           "result": "W",
           "gf": 5,
           "ga": 2,
-          "notes": "Exploded for 3 goals in P2"
-        },
-        {
-          "date": "Oct 31",
-          "opp": "Barrie Colts-T2",
-          "vsAt": "vs",
-          "score": "4-2",
-          "result": "W",
-          "gf": 4,
-          "ga": 2,
-          "notes": "Strong neutral zone transition"
-        },
-        {
-          "date": "Oct 24",
-          "opp": "Orillia Terriers",
-          "vsAt": "@",
-          "score": "1-3",
-          "result": "L",
-          "gf": 1,
-          "ga": 3,
-          "notes": "Struggled against Orillia forecheck"
-        },
-        {
-          "date": "Oct 17",
-          "opp": "Upper York Admirals",
-          "vsAt": "vs",
-          "score": "5-1",
-          "result": "W",
-          "gf": 5,
-          "ga": 1,
-          "notes": "Dominated special teams (2 PPG)"
-        },
-        {
-          "date": "Oct 10",
-          "opp": "Markham Waxers",
-          "vsAt": "@",
-          "score": "2-2",
-          "result": "T",
-          "gf": 2,
-          "ga": 2,
-          "notes": "Tied late in P3 on 6v5 extra skater"
+          "notes": "Lethal finish off rush opportunities"
         }
       ],
       "dangerPlayers": [
@@ -863,30 +863,30 @@
       "teamId": "534204",
       "gameSheetUrl": "https://gamesheetstats.com/seasons/15490/teams/534204/schedule",
       "record": {
-        "gp": 21,
-        "w": 3,
-        "l": 18,
+        "gp": 6,
+        "w": 0,
+        "l": 6,
         "t": 0,
-        "pts": 6,
-        "winPct": ".143"
+        "pts": 0,
+        "winPct": ".000"
       },
       "stats": {
-        "gf": 31,
-        "ga": 98,
-        "diff": "-67",
-        "gpg": "1.48",
-        "gapg": "4.67",
-        "pim": 64,
-        "pimPg": "3.0"
+        "gf": 3,
+        "ga": 62,
+        "diff": "-59",
+        "gpg": "0.50",
+        "gapg": "10.33",
+        "pim": 42,
+        "pimPg": "7.0"
       },
       "specialTeams": {
-        "ppPct": "14.2%",
-        "ppGoals": 4,
-        "ppOpps": 28,
-        "pkPct": "71.5%",
-        "shGoals": 1,
+        "ppPct": "7.1%",
+        "ppGoals": 1,
+        "ppOpps": 14,
+        "pkPct": "46.2%",
+        "shGoals": 0,
         "shAllowed": 14,
-        "tendency": "Fast counter-attack and disciplined short shifts; outstanding CAN/AM tournament finalist."
+        "tendency": "Resilient defensive structure looking for breakout execution. Head-to-head vs Caledon on Oct 3: 0-12."
       },
       "last5Games": [
         {
@@ -897,47 +897,47 @@
           "result": "L",
           "gf": 0,
           "ga": 9,
-          "notes": "Strong physical effort against top-seeded Orillia"
+          "notes": "Physical league clash at Rotary Place"
         },
         {
-          "date": "Nov 01",
-          "opp": "Tewksbury Redmen",
-          "vsAt": "vs",
-          "score": "3-7",
+          "date": "Oct 20",
+          "opp": "Newmarket Renegades",
+          "vsAt": "@",
+          "score": "1-8",
           "result": "L",
-          "gf": 3,
-          "ga": 7,
-          "notes": "CAN/AM Gold Medal Game Showcase"
+          "gf": 1,
+          "ga": 8,
+          "notes": "Scored in P2; fought hard on PK"
         },
         {
-          "date": "Oct 31",
-          "opp": "Skills Competition",
+          "date": "Oct 10",
+          "opp": "Georgian Bay Islanders",
           "vsAt": "vs",
-          "score": "Event",
-          "result": "W",
+          "score": "0-9",
+          "result": "L",
           "gf": 0,
-          "ga": 0,
-          "notes": "CAN/AM Team Skills Showcase"
+          "ga": 9,
+          "notes": "Home stand against top tier offense"
         },
         {
-          "date": "Oct 31",
-          "opp": "Mayfield",
+          "date": "Oct 06",
+          "opp": "Orillia Terriers",
           "vsAt": "vs",
-          "score": "11-0",
-          "result": "W",
-          "gf": 11,
-          "ga": 0,
-          "notes": "Shutout victory in tournament play"
+          "score": "1-13",
+          "result": "L",
+          "gf": 1,
+          "ga": 13,
+          "notes": "High pace test against division leaders"
         },
         {
-          "date": "Oct 30",
-          "opp": "East Coast Thunder",
-          "vsAt": "vs",
-          "score": "7-0",
-          "result": "W",
-          "gf": 7,
-          "ga": 0,
-          "notes": "Complete dominant team performance"
+          "date": "Oct 04",
+          "opp": "Upper York Admirals",
+          "vsAt": "@",
+          "score": "1-11",
+          "result": "L",
+          "gf": 1,
+          "ga": 11,
+          "notes": "Opening road test in regular season play"
         }
       ],
       "goalie": {
@@ -952,7 +952,12 @@
         "Protect the House: Lock down slot area and tie up sticks.",
         "Short Shifts (35-45s): High energy and hard backchecks.",
         "Quick D-to-D Reverses: Break forecheck pressure early."
-      ]
+      ],
+      "headToHead": {
+        "summary": "Oct 3, 2026: Caledon Hawks 12, Aurora Tigers 0",
+        "date": "2026-10-03",
+        "score": "0-12"
+      }
     },
     "south_simcoe": {
       "teamName": "South Simcoe Storm",
