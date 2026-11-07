@@ -4901,12 +4901,26 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
         <!-- ================= EMBEDDED LIVE CENTER & REAL-TIME STATS PANEL ================= -->
         <div id="live-sidebar-section" class="flex-1 flex flex-col min-h-0 overflow-y-auto custom-scroll p-3 space-y-3.5 hidden bg-slate-900 text-white">
           
+          <!-- Live Game Matchup Switcher (Dynamic GameSheet & TeamSnap Sync) -->
+          <div class="p-2.5 bg-slate-950 rounded-xl border border-rose-500/50 space-y-1.5">
+            <div class="flex items-center justify-between text-[10px]">
+              <span class="font-bold text-rose-300 uppercase tracking-wider flex items-center gap-1.5">
+                <span class="w-2 h-2 rounded-full bg-rose-500 animate-ping"></span>
+                <span>Select Game Day Matchup:</span>
+              </span>
+              <span id="live-match-status-pill" class="text-[9px] font-mono font-bold text-amber-300 bg-amber-400/20 px-2 py-0.5 rounded border border-amber-400/30">Active Live</span>
+            </div>
+            <select id="live-game-selector" onchange="changeActiveLiveMatchup(this.value)" class="w-full bg-slate-900 border border-slate-700 text-white font-mono text-xs rounded-xl px-2.5 py-2 cursor-pointer focus:outline-none focus:border-rose-400">
+              <!-- Dynamically populated from cross-referenced schedule -->
+            </select>
+          </div>
+
           <!-- Live Scoreboard Hero Mini-Banner -->
           <div class="bg-gradient-to-r from-slate-950 via-slate-900 to-slate-950 border-2 border-rose-500/50 rounded-2xl p-3 shadow-xl flex items-center justify-between gap-2 font-mono">
             <div class="flex items-center gap-2">
               <span class="text-2xl">🐯</span>
               <div>
-                <div class="text-[9px] text-amber-400 font-bold uppercase">TIGERS (AWAY)</div>
+                <div id="sidebar-live-team-label" class="text-[9px] text-amber-400 font-bold uppercase">TIGERS (AWAY)</div>
                 <div id="sidebar-live-score-home" class="text-2xl font-black text-white">0</div>
                 <div class="text-[9px] text-slate-400">SOG: <strong id="sidebar-live-sog-home" class="text-amber-300">0</strong></div>
               </div>
@@ -4935,11 +4949,11 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
             <div class="flex items-center gap-2 min-w-0">
               <span class="px-2 py-0.5 rounded bg-emerald-600 text-white text-[9px] font-mono font-black shrink-0">GAMESHEET</span>
               <div class="min-w-0">
-                <div class="text-[11px] font-bold text-white truncate">York Simcoe Game #U13A-RS-056</div>
-                <div class="text-[9px] text-slate-400 truncate">at Orillia Terriers • Rotary Place (Tonight 8:20 PM)</div>
+                <div id="live-match-banner-title" class="text-[11px] font-bold text-white truncate">York Simcoe Game #U13A-RS-056</div>
+                <div id="live-match-banner-meta" class="text-[9px] text-slate-400 truncate">at Orillia Terriers • Rotary Place</div>
               </div>
             </div>
-            <a href="https://www.gamesheetinc.com/stats?seasonId=15490-york-simcoe-minor-hockey-league-a-2026-2027&title=York%20Simcoe%20Minor%20Hockey%20League%20A%20-%202026-2027" target="_blank" rel="noopener noreferrer" class="px-2.5 py-1 rounded-lg bg-emerald-500 hover:bg-emerald-400 text-slate-950 text-[10px] font-black shrink-0 flex items-center gap-1 shadow-sm" title="Open official GameSheet live league score and stats">
+            <a id="live-gamesheet-external-link" href="https://gamesheetstats.com/seasons/15490/teams/534204/schedule?configuration%5Binfinite-scroll%5D=false&configuration%5Blogo%5D=false&filter%5Bquery%5D=aurora" target="_blank" rel="noopener noreferrer" class="px-2.5 py-1 rounded-lg bg-emerald-500 hover:bg-emerald-400 text-slate-950 text-[10px] font-black shrink-0 flex items-center gap-1 shadow-sm" title="Open official GameSheet live league score and stats">
               <span>📊</span> <span>GameSheet ↗</span>
             </a>
           </div>
@@ -5118,32 +5132,34 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
 
           <!-- Sub-Tab 2: Pre-Game Matchup & Opponent Scout -->
           <div id="sb-live-tab-pregame" class="space-y-3 hidden">
-            <div class="p-3 bg-slate-950 rounded-2xl border border-slate-800 space-y-2">
-              <div class="flex items-center justify-between">
-                <span class="font-bold text-white text-[11px] uppercase tracking-wider block">🔑 Coach's 3 Keys to the Game</span>
-                <span class="text-[9px] font-mono text-amber-400">Rotary Place Rink</span>
+            <div id="sb-live-pregame-content" class="space-y-3">
+              <div class="p-3 bg-slate-950 rounded-2xl border border-slate-800 space-y-2">
+                <div class="flex items-center justify-between">
+                  <span class="font-bold text-white text-[11px] uppercase tracking-wider block">🔑 Coach's 3 Keys to the Game</span>
+                  <span id="sb-pregame-rink-label" class="text-[9px] font-mono text-amber-400">Rotary Place Rink</span>
+                </div>
+                <div id="sb-pregame-keys-list" class="space-y-1.5 text-[11px] text-slate-300">
+                  <div class="flex items-start gap-1.5">
+                    <span class="w-4 h-4 rounded-full bg-amber-400 text-slate-950 font-black text-[9px] flex items-center justify-center shrink-0 mt-0.5">1</span>
+                    <span><strong>1-2-2 Forecheck Funnel:</strong> F1 angle puck carrier to half-wall; seal off center ice.</span>
+                  </div>
+                  <div class="flex items-start gap-1.5">
+                    <span class="w-4 h-4 rounded-full bg-amber-400 text-slate-950 font-black text-[9px] flex items-center justify-center shrink-0 mt-0.5">2</span>
+                    <span><strong>Protect the House:</strong> Low-slot stick tie-ups; clear second rebounds to corner.</span>
+                  </div>
+                  <div class="flex items-start gap-1.5">
+                    <span class="w-4 h-4 rounded-full bg-amber-400 text-slate-950 font-black text-[9px] flex items-center justify-center shrink-0 mt-0.5">3</span>
+                    <span><strong>Short Shifts (35–45s):</strong> Hard backcheck through center ice; maintain high game pace.</span>
+                  </div>
+                </div>
               </div>
-              <div class="space-y-1.5 text-[11px] text-slate-300">
-                <div class="flex items-start gap-1.5">
-                  <span class="w-4 h-4 rounded-full bg-amber-400 text-slate-950 font-black text-[9px] flex items-center justify-center shrink-0 mt-0.5">1</span>
-                  <span><strong>1-2-2 Forecheck Funnel:</strong> F1 angle puck carrier to half-wall; seal off center ice.</span>
-                </div>
-                <div class="flex items-start gap-1.5">
-                  <span class="w-4 h-4 rounded-full bg-amber-400 text-slate-950 font-black text-[9px] flex items-center justify-center shrink-0 mt-0.5">2</span>
-                  <span><strong>Protect the House:</strong> Low-slot stick tie-ups; clear second rebounds to corner.</span>
-                </div>
-                <div class="flex items-start gap-1.5">
-                  <span class="w-4 h-4 rounded-full bg-amber-400 text-slate-950 font-black text-[9px] flex items-center justify-center shrink-0 mt-0.5">3</span>
-                  <span><strong>Short Shifts (35–45s):</strong> Hard backcheck through center ice; maintain high game pace.</span>
-                </div>
-              </div>
-            </div>
 
-            <div class="p-3 bg-slate-950 rounded-2xl border border-slate-800 space-y-1.5">
-              <span class="font-bold text-rose-300 text-[11px] uppercase tracking-wider block">⚠️ Matchup Detail: Orillia Terriers</span>
-              <div class="p-2 rounded-xl bg-slate-900 border border-rose-500/30 text-[10px] space-y-1">
-                <div class="font-bold text-white">YSMHL Regular Season Game #U13A-RS-056</div>
-                <div class="text-slate-400">Arena: Rotary Place (100 University Ave, Orillia, ON) • 8:20 PM EST puck drop. Tigers skating in Away (Black) jerseys.</div>
+              <div class="p-3 bg-slate-950 rounded-2xl border border-slate-800 space-y-1.5">
+                <span id="sb-pregame-opp-header" class="font-bold text-rose-300 text-[11px] uppercase tracking-wider block">⚠️ Matchup Detail: Caledon Hawks</span>
+                <div class="p-2 rounded-xl bg-slate-900 border border-rose-500/30 text-[10px] space-y-1">
+                  <div id="sb-pregame-game-title" class="font-bold text-white">YSMHL Regular Season Game #U13A-RS-015</div>
+                  <div id="sb-pregame-game-meta" class="text-slate-400">Arena: Aurora Recreation Complex (East - Pfaff) • 7:30 PM EST puck drop. Tigers skating in Home (White) jerseys.</div>
+                </div>
               </div>
             </div>
           </div>
@@ -5168,14 +5184,22 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
               <div class="flex items-center justify-between">
                 <span class="font-bold text-white text-[11px] uppercase tracking-wider flex items-center gap-1.5">
                   <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
-                  <span>Official GameSheet Live Scores</span>
+                  <span id="gamesheet-tab-title">GameSheet Live Game Tracker</span>
                 </span>
-                <a href="https://www.gamesheetinc.com/stats?seasonId=15490-york-simcoe-minor-hockey-league-a-2026-2027&title=York%20Simcoe%20Minor%20Hockey%20League%20A%20-%202026-2027" target="_blank" rel="noopener noreferrer" class="text-[10px] text-emerald-400 hover:underline font-bold">
+                <a id="gamesheet-embed-open-link" href="https://gamesheetstats.com/seasons/15490/teams/534204/schedule?configuration%5Binfinite-scroll%5D=false&configuration%5Blogo%5D=false&filter%5Bquery%5D=aurora" target="_blank" rel="noopener noreferrer" class="text-[10px] text-emerald-400 hover:underline font-bold">
                   Open New Tab ↗
                 </a>
               </div>
-              <div class="w-full h-80 rounded-xl overflow-hidden border border-slate-800 bg-white relative">
-                <iframe src="https://www.gamesheetinc.com/stats?seasonId=15490-york-simcoe-minor-hockey-league-a-2026-2027&title=York%20Simcoe%20Minor%20Hockey%20League%20A%20-%202026-2027" class="w-full h-full border-0" title="GameSheet Official Stats"></iframe>
+
+              <!-- Quick View Filter Switcher -->
+              <div class="flex flex-wrap gap-1 text-[10px]">
+                <button type="button" onclick="setGameSheetViewMode('matchup')" id="gs-btn-matchup" class="px-2 py-0.5 rounded bg-emerald-600 text-white font-bold cursor-pointer transition">Matchup Live</button>
+                <button type="button" onclick="setGameSheetViewMode('schedule')" id="gs-btn-schedule" class="px-2 py-0.5 rounded bg-slate-800 hover:bg-slate-700 text-slate-300 font-bold cursor-pointer transition">Team Schedule</button>
+                <button type="button" onclick="setGameSheetViewMode('scores')" id="gs-btn-scores" class="px-2 py-0.5 rounded bg-slate-800 hover:bg-slate-700 text-slate-300 font-bold cursor-pointer transition">All Scores</button>
+              </div>
+
+              <div class="w-full h-96 rounded-xl overflow-hidden border border-slate-800 bg-white relative">
+                <iframe id="gamesheet-live-frame" src="https://gamesheetstats.com/seasons/15490/teams/534204/schedule?configuration%5Binfinite-scroll%5D=false&configuration%5Blogo%5D=false&filter%5Bquery%5D=aurora" class="w-full h-full border-0" title="GameSheet Official Stats"></iframe>
               </div>
             </div>
 
@@ -7454,10 +7478,18 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
               });
             } catch(e){}
 
-            // Sync active live stream video ID from cloud settings
-            if (data && data.settings && data.settings.active_livestream_video_id) {
-              liveStreamVideoId = data.settings.active_livestream_video_id;
+            // Sync settings from games_library.json
+            if (data && data.settings) {
+              gamesLibrarySettings = data.settings;
+              if (data.settings.active_livestream_video_id) {
+                liveStreamVideoId = data.settings.active_livestream_video_id;
+              }
+              if (data.settings.active_livestream_playlist_id) {
+                YOUTUBE_LIVE_PLAYLIST_ID = data.settings.active_livestream_playlist_id;
+              }
             }
+            populateLiveMatchupDropdown();
+            loadCurrentLiveMatchup();
 
             populateGameSelect();
             loadGame(gamesLibrary[0].id || gamesLibrary[0].youtube_video_id);
@@ -16706,7 +16738,8 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
         if (playerSection) playerSection.classList.add('hidden');
         if (sideLiveSection) {
           sideLiveSection.classList.remove('hidden');
-          switchSidebarLiveTab('tracker');
+          loadCurrentLiveMatchup();
+          switchSidebarLiveTab('gamesheet');
         }
 
         const isOnline = checkLiveBroadcastIsOnline();
@@ -17204,235 +17237,1729 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
     // SEASON & TOURNAMENT SCHEDULE HUB & PRE-GAME SCOUTING ENGINE
     // =========================================================================
 
+    let activeLiveMatchupId = 'game_u13a_rs_015'; // Default to next upcoming
+    let currentGsViewMode = 'matchup'; // 'matchup', 'schedule', 'scores'
+    let gamesLibrarySettings = {};
+
     const SCHEDULE_UPCOMING_MATCHUPS = [
+  {
+    "id": "game_u13a_rs_014",
+    "eventType": "league",
+    "division": "U13A",
+    "title": "York Simcoe League: Aurora Tigers U13A at Caledon Hawks",
+    "opponent": "Caledon Hawks",
+    "opponentQuery": "caledon",
+    "opponentRecord": "YSMHL Regular Season",
+    "opponentStats": "YSMHL Regular Season Game #U13A-RS-014",
+    "opponentHome": "6215 Old Church Rd, Caledon East, ON, L7C 1J7, Canada",
+    "date": "Saturday, Oct 3, 2026",
+    "dateIso": "2026-10-03",
+    "time": "3:00 PM EST",
+    "arena": "6215 Old Church Rd",
+    "arenaType": "standard",
+    "rinkDimensions": "200' x 85' Standard Ice Sheet",
+    "mapsUrl": "https://maps.google.com/?q=6215%20Old%20Church%20Rd%2C%20Caledon%20East%2C%20ON%2C%20L7C%201J7%2C%20Canada",
+    "jersey": "Away (Black)",
+    "source": "TeamSnap Master + GameSheet Inc.",
+    "sourceType": "gamesheet",
+    "isHome": false,
+    "isTournament": false,
+    "leagueName": "York Simcoe Minor Hockey League (OMHA)",
+    "gameSheetCode": "U13A-RS-014",
+    "gameSheetSeasonId": "15490",
+    "gameSheetTeamId": "534204",
+    "gameSheetUrl": "https://gamesheetstats.com/seasons/15490/teams/534204/schedule?configuration%5Binfinite-scroll%5D=false&configuration%5Blogo%5D=false&filter%5Bquery%5D=caledon",
+    "dangerPlayers": [
       {
-        id: "game_u13a_rs_056",
-        eventType: "league",
-        division: "U13A",
-        title: "York Simcoe League: Aurora Tigers U13A at Orillia Terriers",
-        opponent: "Orillia Terriers",
-        opponentRecord: "8-4-1",
-        opponentPct: ".654",
-        opponentStats: "YSMHL Regular Season Game #U13A-RS-056",
-        opponentHome: "Rotary Place, Orillia, ON",
-        date: "Friday, Nov 6, 2026",
-        time: "8:20 PM EST",
-        arena: "Rotary Place (West Orillia Sports Complex)",
-        arenaType: "standard",
-        rinkDimensions: "200' x 85' Standard Ice Sheet",
-        mapsUrl: "https://maps.google.com/?q=100+University+Avenue+Orillia+ON",
-        jersey: "Away (Black)",
-        source: "TeamSnap Master + GameSheet Inc.",
-        sourceType: "gamesheet",
-        isHome: false,
-        isTournament: false,
-        leagueName: "York Simcoe Minor Hockey League (OMHA)",
-        gameSheetCode: "U13A-RS-056",
-        gameSheetSeasonId: "15490",
-        gameSheetUrl: "https://www.gamesheetinc.com/stats?seasonId=15490-york-simcoe-minor-hockey-league-a-2026-2027&title=York%20Simcoe%20Minor%20Hockey%20League%20A%20-%202026-2027",
-        coachKeys: [
-          "Neutral Zone Trap Breakdown: Quick D-to-D reverse before Orillia's 1-2-2 forecheck can pin puck to the half-wall.",
-          "Protect the House: Low-slot stick tie-ups; clear all second-chance rebounds into corners.",
-          "Short Disciplined Shifts: 35-45s shifts with relentless hard backchecking through the middle."
-        ]
+        "name": "#11 Opponent Playmaker (C)",
+        "stat": "Top Line Center",
+        "threat": "Attacks middle lane with speed off rush.",
+        "counter": "F3 maintain center lane support; seal defensive blue line."
       },
       {
-        id: "practice_thurs",
-        eventType: "practice",
-        division: "U12A",
-        title: "Tigers Team Practice: D-Zone Breakouts & 1-3-1 Power Play",
-        date: "Thursday, Nov 5, 2026",
-        time: "6:00 PM – 7:15 PM EST",
-        arena: "Aurora Community Centre (Rink 1)",
-        arenaType: "standard",
-        rinkDimensions: "200' x 85' Standard Ice Sheet",
-        mapsUrl: "https://maps.google.com/?q=Aurora+Community+Centre+1+Mosley+St+Aurora+ON",
-        jersey: "Practice Jerseys (Yellow/Black)",
-        source: "TeamSnap Master (Manager Controlled)",
-        sourceType: "teamsnap",
-        practiceFocus: "Quick D-to-D reverse under heavy forecheck, low-slot stick tie-ups, and 1-3-1 power play bumper entries before Lake Placid trip.",
-        isTournament: false
-      },
-      {
-        id: "lake_placid_1",
-        eventType: "tournament",
-        division: "U12A",
-        title: "CAN/AM Challenge Cup (12U): Aurora Tigers U12A vs Boston Jr. Terriers 12U",
-        opponent: "Boston Jr. Terriers 12U (EHF / USA Hockey)",
-        opponentRecord: "12-4-2",
-        opponentPct: ".722",
-        opponentStats: "58 GF / 31 GA (+27) • PP: 22.8% • PK: 86.4%",
-        opponentHome: "Canton Sportsplex, Canton, MA",
-        date: "Friday, Nov 6, 2026",
-        time: "1:15 PM EST",
-        arena: "Lake Placid Olympic Center — 1980 Herb Brooks Arena",
-        arenaType: "olympic", // 200' x 100' Olympic Ice Sheet
-        rinkDimensions: "200' x 100' Olympic Sheet (15 ft wider than standard)",
-        mapsUrl: "https://maps.google.com/?q=Lake+Placid+Olympic+Center+2634+Main+St+Lake+Placid+NY",
-        jersey: "Home (White)",
-        source: "TeamSnap Master + CAN/AM HockeyShift",
-        sourceType: "tournament",
-        isHome: true,
-        isTournament: true,
-        tournamentName: "2026 CAN/AM Youth Challenge Cup",
-        hockeyShiftGameId: "1372648",
-        hockeyShiftUrl: "https://canam.hockeyshift.com/stats#/1188/game/1372648",
-        dangerPlayers: [
-          { name: "#19 Brady Callahan (C)", stat: "15G, 11A", threat: "Elite open-ice speed; utilizes the 15-foot wider Olympic wings to curl and shoot.", counter: "Angle him early at the red line; F3 must stay above the puck." },
-          { name: "#4 Liam O'Connor (D)", stat: "4G, 14A", threat: "Powerplay quarterback; heavy point blast and active weak-side pinching.", counter: "Keep active high sticks in passing lane; chip puck off glass behind his pinch." },
-          { name: "#88 Tyler Hayes (RW)", stat: "9G, 8A", threat: "Gritty net-front presence; screens goalie and tips point shots.", counter: "Lift his stick blade in the slot; box out early." }
-        ],
-        goalie: {
-          name: "#30 Colin Walsh",
-          stat: "2.12 GAA • .916 SV% (10-3-1)",
-          scout: "Classic butterfly goaltender. Sees long perimeter shots cleanly; highly vulnerable to low far-pad rebound scrums."
-        },
-        coachKeys: [
-          "Exploit 15-Foot Wider Olympic Ice: Use clean D-to-D passes behind our net. The extra width completely bypasses Boston's trap.",
-          "F3 Defensive Discipline: F3 forward must NEVER pinch below the offensive hashmarks. Deep turnovers on 100-foot ice create huge odd-man rushes.",
-          "Crash for Dirty Rebounds: Shoot low far-pad on Walsh and drive both wingers to the crease for second-chance tap-ins."
-        ]
-      },
-      {
-        id: "lake_placid_2",
-        eventType: "tournament",
-        division: "U12A",
-        title: "CAN/AM Challenge Cup (12U): Aurora Tigers U12A vs Syracuse Valley Eagles 12U",
-        opponent: "Syracuse Valley Eagles (NY State / USA Hockey)",
-        opponentRecord: "10-7-1",
-        opponentPct: ".583",
-        opponentStats: "46 GF / 42 GA (+4) • PP: 18.5% • PK: 81.0%",
-        opponentHome: "Meachem Ice Rink, Syracuse, NY",
-        date: "Saturday, Nov 7, 2026",
-        time: "9:30 AM EST",
-        arena: "Lake Placid Olympic Center — 1932 Jack Shea Arena",
-        arenaType: "standard",
-        rinkDimensions: "200' x 85' Standard Ice Sheet",
-        mapsUrl: "https://maps.google.com/?q=Lake+Placid+Olympic+Center+2634+Main+St+Lake+Placid+NY",
-        jersey: "Away (Black)",
-        source: "TeamSnap Master + CAN/AM HockeyShift",
-        sourceType: "tournament",
-        isHome: false,
-        isTournament: true,
-        tournamentName: "2026 CAN/AM Youth Challenge Cup",
-        hockeyShiftGameId: "1372649",
-        hockeyShiftUrl: "https://canam.hockeyshift.com/stats#/1188/team/734239/schedule",
-        dangerPlayers: [
-          { name: "#11 Matthew Russo (C)", stat: "12G, 9A", threat: "Aggressive north-south rusher with quick wrist release off the rush.", counter: "Maintain tight gap control; do not back into our goalie." },
-          { name: "#22 Jake Snyder (LW)", stat: "8G, 7A", threat: "Heavy physical forechecker who pins defensemen on the end-boards.", counter: "Quick first pass off the wall before contact arrives." }
-        ],
-        goalie: {
-          name: "#1 Anthony DeLuca",
-          stat: "2.35 GAA • .905 SV%",
-          scout: "Aggressive challenger; comes out beyond crease. Pass across the royal road for open backdoor tap-ins."
-        },
-        coachKeys: [
-          "Tight Boards Execution: 1932 rink has lively boards; ring pucks off the glass to clear zone under forecheck.",
-          "Royal Road Passing: Move puck east-west across the slot to catch DeLuca out of position.",
-          "Discipline & Zero Reaching Penalties: Keep sticks on the ice in the neutral zone."
-        ]
-      },
-      {
-        id: "lake_placid_3",
-        eventType: "tournament",
-        division: "U12A",
-        title: "CAN/AM Challenge Cup (12U): Aurora Tigers U12A vs Connecticut Jr. Rangers 12U",
-        opponent: "Connecticut Jr. Rangers (AYHL Tier II)",
-        opponentRecord: "11-5-2",
-        opponentPct: ".667",
-        opponentStats: "51 GF / 35 GA (+16) • PP: 21.0% • PK: 84.5%",
-        opponentHome: "Chelsea Piers CT, Stamford, CT",
-        date: "Saturday, Nov 7, 2026",
-        time: "4:45 PM EST",
-        arena: "Saranac Lake Civic Center",
-        arenaType: "standard",
-        rinkDimensions: "200' x 85' Standard Ice Sheet (15 mins from Lake Placid)",
-        mapsUrl: "https://maps.google.com/?q=Saranac+Lake+Civic+Center+213+Ampersand+Ave+Saranac+Lake+NY",
-        jersey: "Home (White)",
-        source: "TeamSnap Master + CAN/AM HockeyShift",
-        sourceType: "tournament",
-        isHome: true,
-        isTournament: true,
-        tournamentName: "2026 CAN/AM Youth Challenge Cup",
-        hockeyShiftGameId: "1372650",
-        hockeyShiftUrl: "https://canam.hockeyshift.com/stats#/1188/team/734239/schedule",
-        dangerPlayers: [
-          { name: "#97 Cole Vance (RW)", stat: "14G, 10A", threat: "Dangerous offensive trigger on the power play left circle.", counter: "Lock down cross-ice seam with PK box stick." }
-        ],
-        goalie: {
-          name: "#35 Mason Clark",
-          stat: "2.05 GAA • .921 SV%",
-          scout: "Fast lateral push; screen his eyes with net-front traffic on all point shots."
-        },
-        coachKeys: [
-          "Travel Readiness: 15-minute drive to Saranac Lake; dynamic warmups ready 45 minutes before puck drop.",
-          "Win the Neutral Zone: Chip and chase behind their high-trapping wingers.",
-          "High Slot House Protection: Tie up sticks in the slot."
-        ]
-      },
-      {
-        id: "dryland_tues",
-        eventType: "dryland",
-        title: "Dryland Agility, Rotational Core & Speed Conditioning",
-        date: "Tuesday, Nov 10, 2026",
-        time: "5:30 PM – 6:30 PM EST",
-        arena: "Stronach Aurora Recreation Complex (SARC Gym)",
-        arenaType: "dryland",
-        mapsUrl: "https://maps.google.com/?q=Stronach+Aurora+Recreation+Complex+1400+Wellington+St+E+Aurora+ON",
-        jersey: "Gym Shorts, Tigers T-Shirt & Runners",
-        source: "TeamSnap Master (Manager Controlled)",
-        sourceType: "teamsnap",
-        practiceFocus: "Explosive linear crossover bounds, rotational core med-ball tosses, and hip flexor mobility.",
-        isTournament: false
-      },
-      {
-        id: "omha_markham",
-        eventType: "league",
-        division: "U12A",
-        title: "OMHA Regular Season (U12A): Aurora Tigers U12A vs Markham Waxers U12A",
-        opponent: "Markham Waxers U13A",
-        opponentRecord: "9-7-3",
-        opponentPct: ".553",
-        opponentStats: "44 GF / 40 GA (+4) • PP: 17.5% • PK: 82.0%",
-        opponentHome: "Markham Centennial Community Centre",
-        date: "Wednesday, Nov 11, 2026",
-        time: "7:00 PM EST",
-        arena: "Aurora Community Centre (Rink 1)",
-        arenaType: "standard",
-        rinkDimensions: "200' x 85' Standard OMHA Sheet",
-        mapsUrl: "https://maps.google.com/?q=Aurora+Community+Centre+1+Mosley+St+Aurora+ON",
-        jersey: "Home (White)",
-        source: "TeamSnap Master + GameSheet Inc.",
-        sourceType: "gamesheet",
-        isHome: true,
-        isTournament: false,
-        tournamentName: "OMHA U13A Regular Season",
-        dangerPlayers: [
-          { name: "#16 Lucas Chang (C)", stat: "11G, 8A", threat: "Shifty playmaker off the rush.", counter: "Gap up tightly at blue line." }
-        ],
-        goalie: {
-          name: "#1 Marcus Hill",
-          stat: "2.30 GAA • .910 SV%",
-          scout: "Solid fundamental goaltender."
-        },
-        coachKeys: [
-          "Defend Home Ice: First 10 minutes tempo push.",
-          "Short 35-second shifts with hard backcheck."
-        ]
-      },
-      {
-        id: "lake_placid_u13_bracket",
-        eventType: "tournament",
-        division: "U13A",
-        title: "CAN/AM Challenge Cup (U13A Bracket): External Tournament Pool Game",
-        opponent: "Boston Jr. Terriers U13A",
-        date: "Saturday, Nov 7, 2026",
-        time: "6:00 PM EST",
-        arena: "Lake Placid Olympic Center",
-        source: "External Tournament Schedule Feed",
-        isTournament: true
+        "name": "#4 Opponent Point D-Man",
+        "stat": "PP Specialist",
+        "threat": "Heavy low slap-pass and wrist shot through traffic.",
+        "counter": "High winger get into shot lane; active stick on weak side."
       }
-    ];
+    ],
+    "goalie": {
+      "name": "Opponent Starter",
+      "stat": "YSMHL Starter",
+      "scout": "Solid positioning; vulnerable to quick east-west royal road passes and low-pad rebound scrums."
+    },
+    "coachKeys": [
+      "Quick D-to-D Reverse: Break forecheck pressure with early puck reversal behind the net.",
+      "Protect the Slot (House): Lock down inside-the-dots real estate and tie up opposing sticks.",
+      "Disciplined 35-45s Shifts: Hard backcheck through middle; outwork in third period."
+    ]
+  },
+  {
+    "id": "game_u13a_rs_083",
+    "eventType": "league",
+    "division": "U13A",
+    "title": "York Simcoe League: Aurora Tigers U13A at Upper York Admirals",
+    "opponent": "Upper York Admirals",
+    "opponentQuery": "admirals",
+    "opponentRecord": "YSMHL Regular Season",
+    "opponentStats": "YSMHL Regular Season Game #U13A-RS-083",
+    "opponentHome": "50 Hawkins St, Sutton, ON, L0E1R0, Canada",
+    "date": "Sunday, Oct 4, 2026",
+    "dateIso": "2026-10-04",
+    "time": "3:45 PM EST",
+    "arena": "50 Hawkins St",
+    "arenaType": "standard",
+    "rinkDimensions": "200' x 85' Standard Ice Sheet",
+    "mapsUrl": "https://maps.google.com/?q=50%20Hawkins%20St%2C%20Sutton%2C%20ON%2C%20L0E1R0%2C%20Canada",
+    "jersey": "Away (Black)",
+    "source": "TeamSnap Master + GameSheet Inc.",
+    "sourceType": "gamesheet",
+    "isHome": false,
+    "isTournament": false,
+    "leagueName": "York Simcoe Minor Hockey League (OMHA)",
+    "gameSheetCode": "U13A-RS-083",
+    "gameSheetSeasonId": "15490",
+    "gameSheetTeamId": "534204",
+    "gameSheetUrl": "https://gamesheetstats.com/seasons/15490/teams/534204/schedule?configuration%5Binfinite-scroll%5D=false&configuration%5Blogo%5D=false&filter%5Bquery%5D=admirals",
+    "dangerPlayers": [
+      {
+        "name": "#11 Opponent Playmaker (C)",
+        "stat": "Top Line Center",
+        "threat": "Attacks middle lane with speed off rush.",
+        "counter": "F3 maintain center lane support; seal defensive blue line."
+      },
+      {
+        "name": "#4 Opponent Point D-Man",
+        "stat": "PP Specialist",
+        "threat": "Heavy low slap-pass and wrist shot through traffic.",
+        "counter": "High winger get into shot lane; active stick on weak side."
+      }
+    ],
+    "goalie": {
+      "name": "Opponent Starter",
+      "stat": "YSMHL Starter",
+      "scout": "Solid positioning; vulnerable to quick east-west royal road passes and low-pad rebound scrums."
+    },
+    "coachKeys": [
+      "Quick D-to-D Reverse: Break forecheck pressure with early puck reversal behind the net.",
+      "Protect the Slot (House): Lock down inside-the-dots real estate and tie up opposing sticks.",
+      "Disciplined 35-45s Shifts: Hard backcheck through middle; outwork in third period."
+    ]
+  },
+  {
+    "id": "game_u13a_rs_057",
+    "eventType": "league",
+    "division": "U13A",
+    "title": "York Simcoe League: Aurora Tigers U13A vs Orillia Terriers",
+    "opponent": "Orillia Terriers",
+    "opponentQuery": "orillia",
+    "opponentRecord": "YSMHL Regular Season",
+    "opponentStats": "YSMHL Regular Season Game #U13A-RS-057",
+    "opponentHome": "1400 Wellington St E, Aurora, ON",
+    "date": "Tuesday, Oct 6, 2026",
+    "dateIso": "2026-10-06",
+    "time": "7:30 PM EST",
+    "arena": "1400 Wellington St E",
+    "arenaType": "standard",
+    "rinkDimensions": "200' x 85' Standard Ice Sheet",
+    "mapsUrl": "https://maps.google.com/?q=1400%20Wellington%20St%20E%2C%20Aurora%2C%20ON",
+    "jersey": "Home (White)",
+    "source": "TeamSnap Master + GameSheet Inc.",
+    "sourceType": "gamesheet",
+    "isHome": true,
+    "isTournament": false,
+    "leagueName": "York Simcoe Minor Hockey League (OMHA)",
+    "gameSheetCode": "U13A-RS-057",
+    "gameSheetSeasonId": "15490",
+    "gameSheetTeamId": "534204",
+    "gameSheetUrl": "https://gamesheetstats.com/seasons/15490/teams/534204/schedule?configuration%5Binfinite-scroll%5D=false&configuration%5Blogo%5D=false&filter%5Bquery%5D=orillia",
+    "dangerPlayers": [
+      {
+        "name": "#11 Opponent Playmaker (C)",
+        "stat": "Top Line Center",
+        "threat": "Attacks middle lane with speed off rush.",
+        "counter": "F3 maintain center lane support; seal defensive blue line."
+      },
+      {
+        "name": "#4 Opponent Point D-Man",
+        "stat": "PP Specialist",
+        "threat": "Heavy low slap-pass and wrist shot through traffic.",
+        "counter": "High winger get into shot lane; active stick on weak side."
+      }
+    ],
+    "goalie": {
+      "name": "Opponent Starter",
+      "stat": "YSMHL Starter",
+      "scout": "Solid positioning; vulnerable to quick east-west royal road passes and low-pad rebound scrums."
+    },
+    "coachKeys": [
+      "Quick D-to-D Reverse: Break forecheck pressure with early puck reversal behind the net.",
+      "Protect the Slot (House): Lock down inside-the-dots real estate and tie up opposing sticks.",
+      "Disciplined 35-45s Shifts: Hard backcheck through middle; outwork in third period."
+    ]
+  },
+  {
+    "id": "game_u13a_rs_029",
+    "eventType": "league",
+    "division": "U13A",
+    "title": "York Simcoe League: Aurora Tigers U13A vs Georgian Bay Islanders",
+    "opponent": "Georgian Bay Islanders",
+    "opponentQuery": "georgian",
+    "opponentRecord": "YSMHL Regular Season",
+    "opponentStats": "YSMHL Regular Season Game #U13A-RS-029",
+    "opponentHome": "1 Community Centre Lane, Aurora, ON",
+    "date": "Saturday, Oct 10, 2026",
+    "dateIso": "2026-10-10",
+    "time": "6:15 PM EST",
+    "arena": "1 Community Centre Lane",
+    "arenaType": "standard",
+    "rinkDimensions": "200' x 85' Standard Ice Sheet",
+    "mapsUrl": "https://maps.google.com/?q=1%20Community%20Centre%20Lane%2C%20Aurora%2C%20ON",
+    "jersey": "Home (White)",
+    "source": "TeamSnap Master + GameSheet Inc.",
+    "sourceType": "gamesheet",
+    "isHome": true,
+    "isTournament": false,
+    "leagueName": "York Simcoe Minor Hockey League (OMHA)",
+    "gameSheetCode": "U13A-RS-029",
+    "gameSheetSeasonId": "15490",
+    "gameSheetTeamId": "534204",
+    "gameSheetUrl": "https://gamesheetstats.com/seasons/15490/teams/534204/schedule?configuration%5Binfinite-scroll%5D=false&configuration%5Blogo%5D=false&filter%5Bquery%5D=georgian",
+    "dangerPlayers": [
+      {
+        "name": "#11 Opponent Playmaker (C)",
+        "stat": "Top Line Center",
+        "threat": "Attacks middle lane with speed off rush.",
+        "counter": "F3 maintain center lane support; seal defensive blue line."
+      },
+      {
+        "name": "#4 Opponent Point D-Man",
+        "stat": "PP Specialist",
+        "threat": "Heavy low slap-pass and wrist shot through traffic.",
+        "counter": "High winger get into shot lane; active stick on weak side."
+      }
+    ],
+    "goalie": {
+      "name": "Opponent Starter",
+      "stat": "YSMHL Starter",
+      "scout": "Solid positioning; vulnerable to quick east-west royal road passes and low-pad rebound scrums."
+    },
+    "coachKeys": [
+      "Quick D-to-D Reverse: Break forecheck pressure with early puck reversal behind the net.",
+      "Protect the Slot (House): Lock down inside-the-dots real estate and tie up opposing sticks.",
+      "Disciplined 35-45s Shifts: Hard backcheck through middle; outwork in third period."
+    ]
+  },
+  {
+    "id": "game_u13a_rs_130",
+    "eventType": "league",
+    "division": "U13A",
+    "title": "York Simcoe League: Aurora Tigers U13A at Newmarket Renegades",
+    "opponent": "Newmarket Renegades",
+    "opponentQuery": "newmarket",
+    "opponentRecord": "YSMHL Regular Season",
+    "opponentStats": "YSMHL Regular Season Game #U13A-RS-130",
+    "opponentHome": "800 Mulock Drive, Newmarket, ON, Canada",
+    "date": "Tuesday, Oct 20, 2026",
+    "dateIso": "2026-10-20",
+    "time": "7:15 PM EST",
+    "arena": "800 Mulock Drive",
+    "arenaType": "standard",
+    "rinkDimensions": "200' x 85' Standard Ice Sheet",
+    "mapsUrl": "https://maps.google.com/?q=800%20Mulock%20Drive%2C%20Newmarket%2C%20ON%2C%20Canada",
+    "jersey": "Away (Black)",
+    "source": "TeamSnap Master + GameSheet Inc.",
+    "sourceType": "gamesheet",
+    "isHome": false,
+    "isTournament": false,
+    "leagueName": "York Simcoe Minor Hockey League (OMHA)",
+    "gameSheetCode": "U13A-RS-130",
+    "gameSheetSeasonId": "15490",
+    "gameSheetTeamId": "534204",
+    "gameSheetUrl": "https://gamesheetstats.com/seasons/15490/teams/534204/schedule?configuration%5Binfinite-scroll%5D=false&configuration%5Blogo%5D=false&filter%5Bquery%5D=newmarket",
+    "dangerPlayers": [
+      {
+        "name": "#11 Opponent Playmaker (C)",
+        "stat": "Top Line Center",
+        "threat": "Attacks middle lane with speed off rush.",
+        "counter": "F3 maintain center lane support; seal defensive blue line."
+      },
+      {
+        "name": "#4 Opponent Point D-Man",
+        "stat": "PP Specialist",
+        "threat": "Heavy low slap-pass and wrist shot through traffic.",
+        "counter": "High winger get into shot lane; active stick on weak side."
+      }
+    ],
+    "goalie": {
+      "name": "Opponent Starter",
+      "stat": "YSMHL Starter",
+      "scout": "Solid positioning; vulnerable to quick east-west royal road passes and low-pad rebound scrums."
+    },
+    "coachKeys": [
+      "Quick D-to-D Reverse: Break forecheck pressure with early puck reversal behind the net.",
+      "Protect the Slot (House): Lock down inside-the-dots real estate and tie up opposing sticks.",
+      "Disciplined 35-45s Shifts: Hard backcheck through middle; outwork in third period."
+    ]
+  },
+  {
+    "id": "practice_thurs",
+    "eventType": "practice",
+    "division": "U13A",
+    "title": "Tigers Team Practice: D-Zone Breakouts & 1-3-1 Power Play",
+    "date": "Thursday, Nov 5, 2026",
+    "dateIso": "2026-11-05",
+    "time": "6:00 PM – 7:15 PM EST",
+    "arena": "Aurora Community Centre (Rink 1)",
+    "arenaType": "standard",
+    "rinkDimensions": "200' x 85' Standard Ice Sheet",
+    "mapsUrl": "https://maps.google.com/?q=Aurora+Community+Centre+1+Mosley+St+Aurora+ON",
+    "jersey": "Practice Jerseys (Yellow/Black)",
+    "source": "TeamSnap Master (Manager Controlled)",
+    "sourceType": "teamsnap",
+    "practiceFocus": "Quick D-to-D reverse under heavy forecheck, low-slot stick tie-ups, and 1-3-1 power play bumper entries before tournament weekend.",
+    "isTournament": false
+  },
+  {
+    "id": "lake_placid_1",
+    "eventType": "tournament",
+    "division": "U13A",
+    "title": "CAN/AM Challenge Cup: Aurora Tigers U13A vs Boston Jr. Terriers",
+    "opponent": "Boston Jr. Terriers",
+    "opponentQuery": "boston",
+    "opponentRecord": "12-4-2",
+    "opponentPct": ".722",
+    "opponentStats": "58 GF / 31 GA (+27) • PP: 22.8% • PK: 86.4%",
+    "opponentHome": "Canton Sportsplex, Canton, MA",
+    "date": "Friday, Nov 6, 2026",
+    "dateIso": "2026-11-06",
+    "time": "1:15 PM EST",
+    "arena": "Lake Placid Olympic Center — 1980 Herb Brooks Arena",
+    "arenaType": "olympic",
+    "rinkDimensions": "200' x 100' Olympic Sheet (15 ft wider than standard)",
+    "mapsUrl": "https://maps.google.com/?q=Lake+Placid+Olympic+Center+2634+Main+St+Lake+Placid+NY",
+    "jersey": "Home (White)",
+    "source": "TeamSnap Master + CAN/AM HockeyShift",
+    "sourceType": "tournament",
+    "isHome": true,
+    "isTournament": true,
+    "tournamentName": "2026 CAN/AM Youth Challenge Cup",
+    "hockeyShiftGameId": "1372648",
+    "hockeyShiftUrl": "https://canam.hockeyshift.com/stats#/1188/game/1372648",
+    "dangerPlayers": [
+      {
+        "name": "#19 Brady Callahan (C)",
+        "stat": "15G, 11A",
+        "threat": "Elite open-ice speed; utilizes the 15-foot wider Olympic wings to curl and shoot.",
+        "counter": "Angle him early at the red line; F3 must stay above the puck."
+      },
+      {
+        "name": "#4 Liam O'Connor (D)",
+        "stat": "4G, 14A",
+        "threat": "Powerplay quarterback; heavy point blast and active weak-side pinching.",
+        "counter": "Keep active high sticks in passing lane; chip puck off glass behind his pinch."
+      }
+    ],
+    "goalie": {
+      "name": "#30 Colin Walsh",
+      "stat": "2.12 GAA • .916 SV%",
+      "scout": "Classic butterfly goaltender. Sees long perimeter shots cleanly; highly vulnerable to low far-pad rebound scrums."
+    },
+    "coachKeys": [
+      "Exploit 15-Foot Wider Olympic Ice: Use clean D-to-D passes behind our net.",
+      "F3 Defensive Discipline: F3 forward must NEVER pinch below the offensive hashmarks.",
+      "Crash for Dirty Rebounds: Shoot low far-pad and drive wingers to the crease."
+    ]
+  },
+  {
+    "id": "game_u13a_rs_056",
+    "eventType": "league",
+    "division": "U13A",
+    "title": "York Simcoe League: Aurora Tigers U13A at Orillia Terriers",
+    "opponent": "Orillia Terriers",
+    "opponentQuery": "orillia",
+    "opponentRecord": "YSMHL Regular Season",
+    "opponentStats": "YSMHL Regular Season Game #U13A-RS-056",
+    "opponentHome": "100 University Avenue, Orillia, ON, Canada",
+    "date": "Friday, Nov 6, 2026",
+    "dateIso": "2026-11-06",
+    "time": "8:20 PM EST",
+    "arena": "100 University Avenue",
+    "arenaType": "standard",
+    "rinkDimensions": "200' x 85' Standard Ice Sheet",
+    "mapsUrl": "https://maps.google.com/?q=100%20University%20Avenue%2C%20Orillia%2C%20ON%2C%20Canada",
+    "jersey": "Away (Black)",
+    "source": "TeamSnap Master + GameSheet Inc.",
+    "sourceType": "gamesheet",
+    "isHome": false,
+    "isTournament": false,
+    "leagueName": "York Simcoe Minor Hockey League (OMHA)",
+    "gameSheetCode": "U13A-RS-056",
+    "gameSheetSeasonId": "15490",
+    "gameSheetTeamId": "534204",
+    "gameSheetUrl": "https://gamesheetstats.com/seasons/15490/teams/534204/schedule?configuration%5Binfinite-scroll%5D=false&configuration%5Blogo%5D=false&filter%5Bquery%5D=orillia",
+    "dangerPlayers": [
+      {
+        "name": "#11 Opponent Playmaker (C)",
+        "stat": "Top Line Center",
+        "threat": "Attacks middle lane with speed off rush.",
+        "counter": "F3 maintain center lane support; seal defensive blue line."
+      },
+      {
+        "name": "#4 Opponent Point D-Man",
+        "stat": "PP Specialist",
+        "threat": "Heavy low slap-pass and wrist shot through traffic.",
+        "counter": "High winger get into shot lane; active stick on weak side."
+      }
+    ],
+    "goalie": {
+      "name": "Opponent Starter",
+      "stat": "YSMHL Starter",
+      "scout": "Solid positioning; vulnerable to quick east-west royal road passes and low-pad rebound scrums."
+    },
+    "coachKeys": [
+      "Quick D-to-D Reverse: Break forecheck pressure with early puck reversal behind the net.",
+      "Protect the Slot (House): Lock down inside-the-dots real estate and tie up opposing sticks.",
+      "Disciplined 35-45s Shifts: Hard backcheck through middle; outwork in third period."
+    ]
+  },
+  {
+    "id": "lake_placid_3",
+    "eventType": "tournament",
+    "division": "U13A",
+    "title": "CAN/AM Challenge Cup: Aurora Tigers U13A vs Connecticut Jr. Rangers",
+    "opponent": "Connecticut Jr. Rangers",
+    "opponentQuery": "connecticut",
+    "opponentRecord": "11-5-2",
+    "opponentPct": ".667",
+    "opponentStats": "51 GF / 35 GA (+16) • PP: 21.0% • PK: 84.5%",
+    "opponentHome": "Chelsea Piers CT, Stamford, CT",
+    "date": "Saturday, Nov 7, 2026",
+    "dateIso": "2026-11-07",
+    "time": "4:45 PM EST",
+    "arena": "Saranac Lake Civic Center",
+    "arenaType": "standard",
+    "rinkDimensions": "200' x 85' Standard Ice Sheet",
+    "mapsUrl": "https://maps.google.com/?q=Saranac+Lake+Civic+Center+213+Ampersand+Ave+Saranac+Lake+NY",
+    "jersey": "Home (White)",
+    "source": "TeamSnap Master + CAN/AM HockeyShift",
+    "sourceType": "tournament",
+    "isHome": true,
+    "isTournament": true,
+    "tournamentName": "2026 CAN/AM Youth Challenge Cup",
+    "hockeyShiftGameId": "1372650",
+    "hockeyShiftUrl": "https://canam.hockeyshift.com/stats#/1188/team/734239/schedule",
+    "dangerPlayers": [
+      {
+        "name": "#97 Cole Vance (RW)",
+        "stat": "14G, 10A",
+        "threat": "Dangerous offensive trigger on the power play left circle.",
+        "counter": "Lock down cross-ice seam with PK box stick."
+      }
+    ],
+    "goalie": {
+      "name": "#35 Mason Clark",
+      "stat": "2.05 GAA • .921 SV%",
+      "scout": "Fast lateral push; screen his eyes with net-front traffic."
+    },
+    "coachKeys": [
+      "Travel Readiness: 15-minute drive to Saranac Lake; dynamic warmups ready 45 minutes prior.",
+      "Win the Neutral Zone: Chip and chase behind their high-trapping wingers.",
+      "High Slot House Protection: Tie up sticks in the slot."
+    ]
+  },
+  {
+    "id": "lake_placid_2",
+    "eventType": "tournament",
+    "division": "U13A",
+    "title": "CAN/AM Challenge Cup: Aurora Tigers U13A vs Syracuse Valley Eagles",
+    "opponent": "Syracuse Valley Eagles",
+    "opponentQuery": "syracuse",
+    "opponentRecord": "10-7-1",
+    "opponentPct": ".583",
+    "opponentStats": "46 GF / 42 GA (+4) • PP: 18.5% • PK: 81.0%",
+    "opponentHome": "Meachem Ice Rink, Syracuse, NY",
+    "date": "Saturday, Nov 7, 2026",
+    "dateIso": "2026-11-07",
+    "time": "9:30 AM EST",
+    "arena": "Lake Placid Olympic Center — 1932 Jack Shea Arena",
+    "arenaType": "standard",
+    "rinkDimensions": "200' x 85' Standard Ice Sheet",
+    "mapsUrl": "https://maps.google.com/?q=Lake+Placid+Olympic+Center+2634+Main+St+Lake+Placid+NY",
+    "jersey": "Away (Black)",
+    "source": "TeamSnap Master + CAN/AM HockeyShift",
+    "sourceType": "tournament",
+    "isHome": false,
+    "isTournament": true,
+    "tournamentName": "2026 CAN/AM Youth Challenge Cup",
+    "hockeyShiftGameId": "1372649",
+    "hockeyShiftUrl": "https://canam.hockeyshift.com/stats#/1188/team/734239/schedule",
+    "dangerPlayers": [
+      {
+        "name": "#11 Matthew Russo (C)",
+        "stat": "12G, 9A",
+        "threat": "Aggressive north-south rusher with quick wrist release off the rush.",
+        "counter": "Maintain tight gap control; do not back into our goalie."
+      }
+    ],
+    "goalie": {
+      "name": "#1 Anthony DeLuca",
+      "stat": "2.35 GAA • .905 SV%",
+      "scout": "Aggressive challenger; comes out beyond crease. Pass across the royal road."
+    },
+    "coachKeys": [
+      "Tight Boards Execution: Lively boards; ring pucks off the glass to clear zone under forecheck.",
+      "Royal Road Passing: Move puck east-west across the slot.",
+      "Discipline & Zero Reaching Penalties: Keep sticks on the ice in neutral zone."
+    ]
+  },
+  {
+    "id": "dryland_tues",
+    "eventType": "dryland",
+    "division": "U13A",
+    "title": "Dryland Agility, Rotational Core & Speed Conditioning",
+    "date": "Tuesday, Nov 10, 2026",
+    "dateIso": "2026-11-10",
+    "time": "5:30 PM – 6:30 PM EST",
+    "arena": "Stronach Aurora Recreation Complex (SARC Gym)",
+    "arenaType": "dryland",
+    "mapsUrl": "https://maps.google.com/?q=Stronach+Aurora+Recreation+Complex+1400+Wellington+St+E+Aurora+ON",
+    "jersey": "Gym Shorts, Tigers T-Shirt & Runners",
+    "source": "TeamSnap Master (Manager Controlled)",
+    "sourceType": "teamsnap",
+    "practiceFocus": "Explosive linear crossover bounds, rotational core med-ball tosses, and hip flexor mobility.",
+    "isTournament": false
+  },
+  {
+    "id": "game_u13a_rs_015",
+    "eventType": "league",
+    "division": "U13A",
+    "title": "York Simcoe League: Aurora Tigers U13A vs Caledon Hawks",
+    "opponent": "Caledon Hawks",
+    "opponentQuery": "caledon",
+    "opponentRecord": "YSMHL Regular Season",
+    "opponentStats": "YSMHL Regular Season Game #U13A-RS-015",
+    "opponentHome": "1400 Wellington St E, Aurora, ON",
+    "date": "Tuesday, Nov 10, 2026",
+    "dateIso": "2026-11-10",
+    "time": "7:30 PM EST",
+    "arena": "1400 Wellington St E",
+    "arenaType": "standard",
+    "rinkDimensions": "200' x 85' Standard Ice Sheet",
+    "mapsUrl": "https://maps.google.com/?q=1400%20Wellington%20St%20E%2C%20Aurora%2C%20ON",
+    "jersey": "Home (White)",
+    "source": "TeamSnap Master + GameSheet Inc.",
+    "sourceType": "gamesheet",
+    "isHome": true,
+    "isTournament": false,
+    "leagueName": "York Simcoe Minor Hockey League (OMHA)",
+    "gameSheetCode": "U13A-RS-015",
+    "gameSheetSeasonId": "15490",
+    "gameSheetTeamId": "534204",
+    "gameSheetUrl": "https://gamesheetstats.com/seasons/15490/teams/534204/schedule?configuration%5Binfinite-scroll%5D=false&configuration%5Blogo%5D=false&filter%5Bquery%5D=caledon",
+    "dangerPlayers": [
+      {
+        "name": "#11 Opponent Playmaker (C)",
+        "stat": "Top Line Center",
+        "threat": "Attacks middle lane with speed off rush.",
+        "counter": "F3 maintain center lane support; seal defensive blue line."
+      },
+      {
+        "name": "#4 Opponent Point D-Man",
+        "stat": "PP Specialist",
+        "threat": "Heavy low slap-pass and wrist shot through traffic.",
+        "counter": "High winger get into shot lane; active stick on weak side."
+      }
+    ],
+    "goalie": {
+      "name": "Opponent Starter",
+      "stat": "YSMHL Starter",
+      "scout": "Solid positioning; vulnerable to quick east-west royal road passes and low-pad rebound scrums."
+    },
+    "coachKeys": [
+      "Quick D-to-D Reverse: Break forecheck pressure with early puck reversal behind the net.",
+      "Protect the Slot (House): Lock down inside-the-dots real estate and tie up opposing sticks.",
+      "Disciplined 35-45s Shifts: Hard backcheck through middle; outwork in third period."
+    ]
+  },
+  {
+    "id": "game_u13a_rs_168",
+    "eventType": "league",
+    "division": "U13A",
+    "title": "York Simcoe League: Aurora Tigers U13A at Markham Waxers",
+    "opponent": "Markham Waxers",
+    "opponentQuery": "markham",
+    "opponentRecord": "YSMHL Regular Season",
+    "opponentStats": "YSMHL Regular Season Game #U13A-RS-168",
+    "opponentHome": "8600 McCowan Rd., Markham, ON, L3P3M2, Canada",
+    "date": "Wednesday, Nov 11, 2026",
+    "dateIso": "2026-11-11",
+    "time": "6:00 PM EST",
+    "arena": "8600 McCowan Rd.",
+    "arenaType": "standard",
+    "rinkDimensions": "200' x 85' Standard Ice Sheet",
+    "mapsUrl": "https://maps.google.com/?q=8600%20McCowan%20Rd.%2C%20Markham%2C%20ON%2C%20L3P3M2%2C%20Canada",
+    "jersey": "Away (Black)",
+    "source": "TeamSnap Master + GameSheet Inc.",
+    "sourceType": "gamesheet",
+    "isHome": false,
+    "isTournament": false,
+    "leagueName": "York Simcoe Minor Hockey League (OMHA)",
+    "gameSheetCode": "U13A-RS-168",
+    "gameSheetSeasonId": "15490",
+    "gameSheetTeamId": "534204",
+    "gameSheetUrl": "https://gamesheetstats.com/seasons/15490/teams/534204/schedule?configuration%5Binfinite-scroll%5D=false&configuration%5Blogo%5D=false&filter%5Bquery%5D=markham",
+    "dangerPlayers": [
+      {
+        "name": "#11 Opponent Playmaker (C)",
+        "stat": "Top Line Center",
+        "threat": "Attacks middle lane with speed off rush.",
+        "counter": "F3 maintain center lane support; seal defensive blue line."
+      },
+      {
+        "name": "#4 Opponent Point D-Man",
+        "stat": "PP Specialist",
+        "threat": "Heavy low slap-pass and wrist shot through traffic.",
+        "counter": "High winger get into shot lane; active stick on weak side."
+      }
+    ],
+    "goalie": {
+      "name": "Opponent Starter",
+      "stat": "YSMHL Starter",
+      "scout": "Solid positioning; vulnerable to quick east-west royal road passes and low-pad rebound scrums."
+    },
+    "coachKeys": [
+      "Quick D-to-D Reverse: Break forecheck pressure with early puck reversal behind the net.",
+      "Protect the Slot (House): Lock down inside-the-dots real estate and tie up opposing sticks.",
+      "Disciplined 35-45s Shifts: Hard backcheck through middle; outwork in third period."
+    ]
+  },
+  {
+    "id": "game_u13a_rs_174",
+    "eventType": "league",
+    "division": "U13A",
+    "title": "York Simcoe League: Aurora Tigers U13A at Barrie Colts-T1-White",
+    "opponent": "Barrie Colts-T1-White",
+    "opponentQuery": "barrie",
+    "opponentRecord": "YSMHL Regular Season",
+    "opponentStats": "YSMHL Regular Season Game #U13A-RS-174",
+    "opponentHome": "171 Mapleton Ave., Barrie, ON, L5N9B4, Canada",
+    "date": "Monday, Nov 16, 2026",
+    "dateIso": "2026-11-16",
+    "time": "6:20 PM EST",
+    "arena": "171 Mapleton Ave.",
+    "arenaType": "standard",
+    "rinkDimensions": "200' x 85' Standard Ice Sheet",
+    "mapsUrl": "https://maps.google.com/?q=171%20Mapleton%20Ave.%2C%20Barrie%2C%20ON%2C%20L5N9B4%2C%20Canada",
+    "jersey": "Away (Black)",
+    "source": "TeamSnap Master + GameSheet Inc.",
+    "sourceType": "gamesheet",
+    "isHome": false,
+    "isTournament": false,
+    "leagueName": "York Simcoe Minor Hockey League (OMHA)",
+    "gameSheetCode": "U13A-RS-174",
+    "gameSheetSeasonId": "15490",
+    "gameSheetTeamId": "534204",
+    "gameSheetUrl": "https://gamesheetstats.com/seasons/15490/teams/534204/schedule?configuration%5Binfinite-scroll%5D=false&configuration%5Blogo%5D=false&filter%5Bquery%5D=barrie",
+    "dangerPlayers": [
+      {
+        "name": "#11 Opponent Playmaker (C)",
+        "stat": "Top Line Center",
+        "threat": "Attacks middle lane with speed off rush.",
+        "counter": "F3 maintain center lane support; seal defensive blue line."
+      },
+      {
+        "name": "#4 Opponent Point D-Man",
+        "stat": "PP Specialist",
+        "threat": "Heavy low slap-pass and wrist shot through traffic.",
+        "counter": "High winger get into shot lane; active stick on weak side."
+      }
+    ],
+    "goalie": {
+      "name": "Opponent Starter",
+      "stat": "YSMHL Starter",
+      "scout": "Solid positioning; vulnerable to quick east-west royal road passes and low-pad rebound scrums."
+    },
+    "coachKeys": [
+      "Quick D-to-D Reverse: Break forecheck pressure with early puck reversal behind the net.",
+      "Protect the Slot (House): Lock down inside-the-dots real estate and tie up opposing sticks.",
+      "Disciplined 35-45s Shifts: Hard backcheck through middle; outwork in third period."
+    ]
+  },
+  {
+    "id": "game_u13a_rs_070",
+    "eventType": "league",
+    "division": "U13A",
+    "title": "York Simcoe League: Aurora Tigers U13A at South Simcoe Storm",
+    "opponent": "South Simcoe Storm",
+    "opponentQuery": "storm",
+    "opponentRecord": "YSMHL Regular Season",
+    "opponentStats": "YSMHL Regular Season Game #U13A-RS-070",
+    "opponentHome": "471 West Park Ave., Bradford, ON, L3Z 0J3, Canada",
+    "date": "Saturday, Nov 21, 2026",
+    "dateIso": "2026-11-21",
+    "time": "5:00 PM EST",
+    "arena": "471 West Park Ave.",
+    "arenaType": "standard",
+    "rinkDimensions": "200' x 85' Standard Ice Sheet",
+    "mapsUrl": "https://maps.google.com/?q=471%20West%20Park%20Ave.%2C%20Bradford%2C%20ON%2C%20L3Z%200J3%2C%20Canada",
+    "jersey": "Away (Black)",
+    "source": "TeamSnap Master + GameSheet Inc.",
+    "sourceType": "gamesheet",
+    "isHome": false,
+    "isTournament": false,
+    "leagueName": "York Simcoe Minor Hockey League (OMHA)",
+    "gameSheetCode": "U13A-RS-070",
+    "gameSheetSeasonId": "15490",
+    "gameSheetTeamId": "534204",
+    "gameSheetUrl": "https://gamesheetstats.com/seasons/15490/teams/534204/schedule?configuration%5Binfinite-scroll%5D=false&configuration%5Blogo%5D=false&filter%5Bquery%5D=storm",
+    "dangerPlayers": [
+      {
+        "name": "#11 Opponent Playmaker (C)",
+        "stat": "Top Line Center",
+        "threat": "Attacks middle lane with speed off rush.",
+        "counter": "F3 maintain center lane support; seal defensive blue line."
+      },
+      {
+        "name": "#4 Opponent Point D-Man",
+        "stat": "PP Specialist",
+        "threat": "Heavy low slap-pass and wrist shot through traffic.",
+        "counter": "High winger get into shot lane; active stick on weak side."
+      }
+    ],
+    "goalie": {
+      "name": "Opponent Starter",
+      "stat": "YSMHL Starter",
+      "scout": "Solid positioning; vulnerable to quick east-west royal road passes and low-pad rebound scrums."
+    },
+    "coachKeys": [
+      "Quick D-to-D Reverse: Break forecheck pressure with early puck reversal behind the net.",
+      "Protect the Slot (House): Lock down inside-the-dots real estate and tie up opposing sticks.",
+      "Disciplined 35-45s Shifts: Hard backcheck through middle; outwork in third period."
+    ]
+  },
+  {
+    "id": "game_u13a_rs_189",
+    "eventType": "league",
+    "division": "U13A",
+    "title": "York Simcoe League: Aurora Tigers U13A vs Barrie Colts-T2-Blue",
+    "opponent": "Barrie Colts-T2-Blue",
+    "opponentQuery": "barrie",
+    "opponentRecord": "YSMHL Regular Season",
+    "opponentStats": "YSMHL Regular Season Game #U13A-RS-189",
+    "opponentHome": "1400 Wellington St E, Aurora, ON",
+    "date": "Tuesday, Nov 24, 2026",
+    "dateIso": "2026-11-24",
+    "time": "7:30 PM EST",
+    "arena": "1400 Wellington St E",
+    "arenaType": "standard",
+    "rinkDimensions": "200' x 85' Standard Ice Sheet",
+    "mapsUrl": "https://maps.google.com/?q=1400%20Wellington%20St%20E%2C%20Aurora%2C%20ON",
+    "jersey": "Home (White)",
+    "source": "TeamSnap Master + GameSheet Inc.",
+    "sourceType": "gamesheet",
+    "isHome": true,
+    "isTournament": false,
+    "leagueName": "York Simcoe Minor Hockey League (OMHA)",
+    "gameSheetCode": "U13A-RS-189",
+    "gameSheetSeasonId": "15490",
+    "gameSheetTeamId": "534204",
+    "gameSheetUrl": "https://gamesheetstats.com/seasons/15490/teams/534204/schedule?configuration%5Binfinite-scroll%5D=false&configuration%5Blogo%5D=false&filter%5Bquery%5D=barrie",
+    "dangerPlayers": [
+      {
+        "name": "#11 Opponent Playmaker (C)",
+        "stat": "Top Line Center",
+        "threat": "Attacks middle lane with speed off rush.",
+        "counter": "F3 maintain center lane support; seal defensive blue line."
+      },
+      {
+        "name": "#4 Opponent Point D-Man",
+        "stat": "PP Specialist",
+        "threat": "Heavy low slap-pass and wrist shot through traffic.",
+        "counter": "High winger get into shot lane; active stick on weak side."
+      }
+    ],
+    "goalie": {
+      "name": "Opponent Starter",
+      "stat": "YSMHL Starter",
+      "scout": "Solid positioning; vulnerable to quick east-west royal road passes and low-pad rebound scrums."
+    },
+    "coachKeys": [
+      "Quick D-to-D Reverse: Break forecheck pressure with early puck reversal behind the net.",
+      "Protect the Slot (House): Lock down inside-the-dots real estate and tie up opposing sticks.",
+      "Disciplined 35-45s Shifts: Hard backcheck through middle; outwork in third period."
+    ]
+  },
+  {
+    "id": "game_u13a_rs_153",
+    "eventType": "league",
+    "division": "U13A",
+    "title": "York Simcoe League: Aurora Tigers U13A vs Richmond Hill Jaguars",
+    "opponent": "Richmond Hill Jaguars",
+    "opponentQuery": "jaguars",
+    "opponentRecord": "YSMHL Regular Season",
+    "opponentStats": "YSMHL Regular Season Game #U13A-RS-153",
+    "opponentHome": "1 Community Centre Lane, Aurora, ON",
+    "date": "Sunday, Nov 29, 2026",
+    "dateIso": "2026-11-29",
+    "time": "6:45 PM EST",
+    "arena": "1 Community Centre Lane",
+    "arenaType": "standard",
+    "rinkDimensions": "200' x 85' Standard Ice Sheet",
+    "mapsUrl": "https://maps.google.com/?q=1%20Community%20Centre%20Lane%2C%20Aurora%2C%20ON",
+    "jersey": "Home (White)",
+    "source": "TeamSnap Master + GameSheet Inc.",
+    "sourceType": "gamesheet",
+    "isHome": true,
+    "isTournament": false,
+    "leagueName": "York Simcoe Minor Hockey League (OMHA)",
+    "gameSheetCode": "U13A-RS-153",
+    "gameSheetSeasonId": "15490",
+    "gameSheetTeamId": "534204",
+    "gameSheetUrl": "https://gamesheetstats.com/seasons/15490/teams/534204/schedule?configuration%5Binfinite-scroll%5D=false&configuration%5Blogo%5D=false&filter%5Bquery%5D=jaguars",
+    "dangerPlayers": [
+      {
+        "name": "#11 Opponent Playmaker (C)",
+        "stat": "Top Line Center",
+        "threat": "Attacks middle lane with speed off rush.",
+        "counter": "F3 maintain center lane support; seal defensive blue line."
+      },
+      {
+        "name": "#4 Opponent Point D-Man",
+        "stat": "PP Specialist",
+        "threat": "Heavy low slap-pass and wrist shot through traffic.",
+        "counter": "High winger get into shot lane; active stick on weak side."
+      }
+    ],
+    "goalie": {
+      "name": "Opponent Starter",
+      "stat": "YSMHL Starter",
+      "scout": "Solid positioning; vulnerable to quick east-west royal road passes and low-pad rebound scrums."
+    },
+    "coachKeys": [
+      "Quick D-to-D Reverse: Break forecheck pressure with early puck reversal behind the net.",
+      "Protect the Slot (House): Lock down inside-the-dots real estate and tie up opposing sticks.",
+      "Disciplined 35-45s Shifts: Hard backcheck through middle; outwork in third period."
+    ]
+  },
+  {
+    "id": "game_u13a_rs_175",
+    "eventType": "league",
+    "division": "U13A",
+    "title": "York Simcoe League: Aurora Tigers U13A vs Barrie Colts-T1-White",
+    "opponent": "Barrie Colts-T1-White",
+    "opponentQuery": "barrie",
+    "opponentRecord": "YSMHL Regular Season",
+    "opponentStats": "YSMHL Regular Season Game #U13A-RS-175",
+    "opponentHome": "1400 Wellington St E, Aurora, ON",
+    "date": "Tuesday, Dec 1, 2026",
+    "dateIso": "2026-12-01",
+    "time": "7:30 PM EST",
+    "arena": "1400 Wellington St E",
+    "arenaType": "standard",
+    "rinkDimensions": "200' x 85' Standard Ice Sheet",
+    "mapsUrl": "https://maps.google.com/?q=1400%20Wellington%20St%20E%2C%20Aurora%2C%20ON",
+    "jersey": "Home (White)",
+    "source": "TeamSnap Master + GameSheet Inc.",
+    "sourceType": "gamesheet",
+    "isHome": true,
+    "isTournament": false,
+    "leagueName": "York Simcoe Minor Hockey League (OMHA)",
+    "gameSheetCode": "U13A-RS-175",
+    "gameSheetSeasonId": "15490",
+    "gameSheetTeamId": "534204",
+    "gameSheetUrl": "https://gamesheetstats.com/seasons/15490/teams/534204/schedule?configuration%5Binfinite-scroll%5D=false&configuration%5Blogo%5D=false&filter%5Bquery%5D=barrie",
+    "dangerPlayers": [
+      {
+        "name": "#11 Opponent Playmaker (C)",
+        "stat": "Top Line Center",
+        "threat": "Attacks middle lane with speed off rush.",
+        "counter": "F3 maintain center lane support; seal defensive blue line."
+      },
+      {
+        "name": "#4 Opponent Point D-Man",
+        "stat": "PP Specialist",
+        "threat": "Heavy low slap-pass and wrist shot through traffic.",
+        "counter": "High winger get into shot lane; active stick on weak side."
+      }
+    ],
+    "goalie": {
+      "name": "Opponent Starter",
+      "stat": "YSMHL Starter",
+      "scout": "Solid positioning; vulnerable to quick east-west royal road passes and low-pad rebound scrums."
+    },
+    "coachKeys": [
+      "Quick D-to-D Reverse: Break forecheck pressure with early puck reversal behind the net.",
+      "Protect the Slot (House): Lock down inside-the-dots real estate and tie up opposing sticks.",
+      "Disciplined 35-45s Shifts: Hard backcheck through middle; outwork in third period."
+    ]
+  },
+  {
+    "id": "game_u13a_rs_043",
+    "eventType": "league",
+    "division": "U13A",
+    "title": "York Simcoe League: Aurora Tigers U13A vs Orangeville Flyers",
+    "opponent": "Orangeville Flyers",
+    "opponentQuery": "orangeville",
+    "opponentRecord": "YSMHL Regular Season",
+    "opponentStats": "YSMHL Regular Season Game #U13A-RS-043",
+    "opponentHome": "1 Community Centre Lane, Aurora, ON",
+    "date": "Sunday, Dec 6, 2026",
+    "dateIso": "2026-12-06",
+    "time": "5:15 PM EST",
+    "arena": "1 Community Centre Lane",
+    "arenaType": "standard",
+    "rinkDimensions": "200' x 85' Standard Ice Sheet",
+    "mapsUrl": "https://maps.google.com/?q=1%20Community%20Centre%20Lane%2C%20Aurora%2C%20ON",
+    "jersey": "Home (White)",
+    "source": "TeamSnap Master + GameSheet Inc.",
+    "sourceType": "gamesheet",
+    "isHome": true,
+    "isTournament": false,
+    "leagueName": "York Simcoe Minor Hockey League (OMHA)",
+    "gameSheetCode": "U13A-RS-043",
+    "gameSheetSeasonId": "15490",
+    "gameSheetTeamId": "534204",
+    "gameSheetUrl": "https://gamesheetstats.com/seasons/15490/teams/534204/schedule?configuration%5Binfinite-scroll%5D=false&configuration%5Blogo%5D=false&filter%5Bquery%5D=orangeville",
+    "dangerPlayers": [
+      {
+        "name": "#11 Opponent Playmaker (C)",
+        "stat": "Top Line Center",
+        "threat": "Attacks middle lane with speed off rush.",
+        "counter": "F3 maintain center lane support; seal defensive blue line."
+      },
+      {
+        "name": "#4 Opponent Point D-Man",
+        "stat": "PP Specialist",
+        "threat": "Heavy low slap-pass and wrist shot through traffic.",
+        "counter": "High winger get into shot lane; active stick on weak side."
+      }
+    ],
+    "goalie": {
+      "name": "Opponent Starter",
+      "stat": "YSMHL Starter",
+      "scout": "Solid positioning; vulnerable to quick east-west royal road passes and low-pad rebound scrums."
+    },
+    "coachKeys": [
+      "Quick D-to-D Reverse: Break forecheck pressure with early puck reversal behind the net.",
+      "Protect the Slot (House): Lock down inside-the-dots real estate and tie up opposing sticks.",
+      "Disciplined 35-45s Shifts: Hard backcheck through middle; outwork in third period."
+    ]
+  },
+  {
+    "id": "game_u13a_rs_092",
+    "eventType": "league",
+    "division": "U13A",
+    "title": "York Simcoe League: Aurora Tigers U13A vs TNT Tornados",
+    "opponent": "TNT Tornados",
+    "opponentQuery": "tnt",
+    "opponentRecord": "YSMHL Regular Season",
+    "opponentStats": "YSMHL Regular Season Game #U13A-RS-092",
+    "opponentHome": "1 Community Centre Lane, Aurora, ON",
+    "date": "Saturday, Dec 12, 2026",
+    "dateIso": "2026-12-12",
+    "time": "4:45 PM EST",
+    "arena": "1 Community Centre Lane",
+    "arenaType": "standard",
+    "rinkDimensions": "200' x 85' Standard Ice Sheet",
+    "mapsUrl": "https://maps.google.com/?q=1%20Community%20Centre%20Lane%2C%20Aurora%2C%20ON",
+    "jersey": "Home (White)",
+    "source": "TeamSnap Master + GameSheet Inc.",
+    "sourceType": "gamesheet",
+    "isHome": true,
+    "isTournament": false,
+    "leagueName": "York Simcoe Minor Hockey League (OMHA)",
+    "gameSheetCode": "U13A-RS-092",
+    "gameSheetSeasonId": "15490",
+    "gameSheetTeamId": "534204",
+    "gameSheetUrl": "https://gamesheetstats.com/seasons/15490/teams/534204/schedule?configuration%5Binfinite-scroll%5D=false&configuration%5Blogo%5D=false&filter%5Bquery%5D=tnt",
+    "dangerPlayers": [
+      {
+        "name": "#11 Opponent Playmaker (C)",
+        "stat": "Top Line Center",
+        "threat": "Attacks middle lane with speed off rush.",
+        "counter": "F3 maintain center lane support; seal defensive blue line."
+      },
+      {
+        "name": "#4 Opponent Point D-Man",
+        "stat": "PP Specialist",
+        "threat": "Heavy low slap-pass and wrist shot through traffic.",
+        "counter": "High winger get into shot lane; active stick on weak side."
+      }
+    ],
+    "goalie": {
+      "name": "Opponent Starter",
+      "stat": "YSMHL Starter",
+      "scout": "Solid positioning; vulnerable to quick east-west royal road passes and low-pad rebound scrums."
+    },
+    "coachKeys": [
+      "Quick D-to-D Reverse: Break forecheck pressure with early puck reversal behind the net.",
+      "Protect the Slot (House): Lock down inside-the-dots real estate and tie up opposing sticks.",
+      "Disciplined 35-45s Shifts: Hard backcheck through middle; outwork in third period."
+    ]
+  },
+  {
+    "id": "game_u13a_rs_071",
+    "eventType": "league",
+    "division": "U13A",
+    "title": "York Simcoe League: Aurora Tigers U13A vs South Simcoe Storm",
+    "opponent": "South Simcoe Storm",
+    "opponentQuery": "storm",
+    "opponentRecord": "YSMHL Regular Season",
+    "opponentStats": "YSMHL Regular Season Game #U13A-RS-071",
+    "opponentHome": "1 Community Centre Lane, Aurora, ON",
+    "date": "Sunday, Dec 13, 2026",
+    "dateIso": "2026-12-13",
+    "time": "4:45 PM EST",
+    "arena": "1 Community Centre Lane",
+    "arenaType": "standard",
+    "rinkDimensions": "200' x 85' Standard Ice Sheet",
+    "mapsUrl": "https://maps.google.com/?q=1%20Community%20Centre%20Lane%2C%20Aurora%2C%20ON",
+    "jersey": "Home (White)",
+    "source": "TeamSnap Master + GameSheet Inc.",
+    "sourceType": "gamesheet",
+    "isHome": true,
+    "isTournament": false,
+    "leagueName": "York Simcoe Minor Hockey League (OMHA)",
+    "gameSheetCode": "U13A-RS-071",
+    "gameSheetSeasonId": "15490",
+    "gameSheetTeamId": "534204",
+    "gameSheetUrl": "https://gamesheetstats.com/seasons/15490/teams/534204/schedule?configuration%5Binfinite-scroll%5D=false&configuration%5Blogo%5D=false&filter%5Bquery%5D=storm",
+    "dangerPlayers": [
+      {
+        "name": "#11 Opponent Playmaker (C)",
+        "stat": "Top Line Center",
+        "threat": "Attacks middle lane with speed off rush.",
+        "counter": "F3 maintain center lane support; seal defensive blue line."
+      },
+      {
+        "name": "#4 Opponent Point D-Man",
+        "stat": "PP Specialist",
+        "threat": "Heavy low slap-pass and wrist shot through traffic.",
+        "counter": "High winger get into shot lane; active stick on weak side."
+      }
+    ],
+    "goalie": {
+      "name": "Opponent Starter",
+      "stat": "YSMHL Starter",
+      "scout": "Solid positioning; vulnerable to quick east-west royal road passes and low-pad rebound scrums."
+    },
+    "coachKeys": [
+      "Quick D-to-D Reverse: Break forecheck pressure with early puck reversal behind the net.",
+      "Protect the Slot (House): Lock down inside-the-dots real estate and tie up opposing sticks.",
+      "Disciplined 35-45s Shifts: Hard backcheck through middle; outwork in third period."
+    ]
+  },
+  {
+    "id": "game_u13a_rs_091",
+    "eventType": "league",
+    "division": "U13A",
+    "title": "York Simcoe League: Aurora Tigers U13A at TNT Tornados",
+    "opponent": "TNT Tornados",
+    "opponentQuery": "tnt",
+    "opponentRecord": "YSMHL Regular Season",
+    "opponentStats": "YSMHL Regular Season Game #U13A-RS-091",
+    "opponentHome": "7300 Industrial Pkwy, Alliston, ON, L9R1V4, Canada",
+    "date": "Sunday, Jan 3, 2027",
+    "dateIso": "2027-01-03",
+    "time": "3:15 PM EST",
+    "arena": "7300 Industrial Pkwy",
+    "arenaType": "standard",
+    "rinkDimensions": "200' x 85' Standard Ice Sheet",
+    "mapsUrl": "https://maps.google.com/?q=7300%20Industrial%20Pkwy%2C%20Alliston%2C%20ON%2C%20L9R1V4%2C%20Canada",
+    "jersey": "Away (Black)",
+    "source": "TeamSnap Master + GameSheet Inc.",
+    "sourceType": "gamesheet",
+    "isHome": false,
+    "isTournament": false,
+    "leagueName": "York Simcoe Minor Hockey League (OMHA)",
+    "gameSheetCode": "U13A-RS-091",
+    "gameSheetSeasonId": "15490",
+    "gameSheetTeamId": "534204",
+    "gameSheetUrl": "https://gamesheetstats.com/seasons/15490/teams/534204/schedule?configuration%5Binfinite-scroll%5D=false&configuration%5Blogo%5D=false&filter%5Bquery%5D=tnt",
+    "dangerPlayers": [
+      {
+        "name": "#11 Opponent Playmaker (C)",
+        "stat": "Top Line Center",
+        "threat": "Attacks middle lane with speed off rush.",
+        "counter": "F3 maintain center lane support; seal defensive blue line."
+      },
+      {
+        "name": "#4 Opponent Point D-Man",
+        "stat": "PP Specialist",
+        "threat": "Heavy low slap-pass and wrist shot through traffic.",
+        "counter": "High winger get into shot lane; active stick on weak side."
+      }
+    ],
+    "goalie": {
+      "name": "Opponent Starter",
+      "stat": "YSMHL Starter",
+      "scout": "Solid positioning; vulnerable to quick east-west royal road passes and low-pad rebound scrums."
+    },
+    "coachKeys": [
+      "Quick D-to-D Reverse: Break forecheck pressure with early puck reversal behind the net.",
+      "Protect the Slot (House): Lock down inside-the-dots real estate and tie up opposing sticks.",
+      "Disciplined 35-45s Shifts: Hard backcheck through middle; outwork in third period."
+    ]
+  },
+  {
+    "id": "game_u13a_rs_028",
+    "eventType": "league",
+    "division": "U13A",
+    "title": "York Simcoe League: Aurora Tigers U13A at Georgian Bay Islanders",
+    "opponent": "Georgian Bay Islanders",
+    "opponentQuery": "georgian",
+    "opponentRecord": "YSMHL Regular Season",
+    "opponentStats": "YSMHL Regular Season Game #U13A-RS-028",
+    "opponentHome": "61 Maria St, Penetanguishene, ON, Canada",
+    "date": "Saturday, Jan 9, 2027",
+    "dateIso": "2027-01-09",
+    "time": "5:10 PM EST",
+    "arena": "61 Maria St",
+    "arenaType": "standard",
+    "rinkDimensions": "200' x 85' Standard Ice Sheet",
+    "mapsUrl": "https://maps.google.com/?q=61%20Maria%20St%2C%20Penetanguishene%2C%20ON%2C%20Canada",
+    "jersey": "Away (Black)",
+    "source": "TeamSnap Master + GameSheet Inc.",
+    "sourceType": "gamesheet",
+    "isHome": false,
+    "isTournament": false,
+    "leagueName": "York Simcoe Minor Hockey League (OMHA)",
+    "gameSheetCode": "U13A-RS-028",
+    "gameSheetSeasonId": "15490",
+    "gameSheetTeamId": "534204",
+    "gameSheetUrl": "https://gamesheetstats.com/seasons/15490/teams/534204/schedule?configuration%5Binfinite-scroll%5D=false&configuration%5Blogo%5D=false&filter%5Bquery%5D=georgian",
+    "dangerPlayers": [
+      {
+        "name": "#11 Opponent Playmaker (C)",
+        "stat": "Top Line Center",
+        "threat": "Attacks middle lane with speed off rush.",
+        "counter": "F3 maintain center lane support; seal defensive blue line."
+      },
+      {
+        "name": "#4 Opponent Point D-Man",
+        "stat": "PP Specialist",
+        "threat": "Heavy low slap-pass and wrist shot through traffic.",
+        "counter": "High winger get into shot lane; active stick on weak side."
+      }
+    ],
+    "goalie": {
+      "name": "Opponent Starter",
+      "stat": "YSMHL Starter",
+      "scout": "Solid positioning; vulnerable to quick east-west royal road passes and low-pad rebound scrums."
+    },
+    "coachKeys": [
+      "Quick D-to-D Reverse: Break forecheck pressure with early puck reversal behind the net.",
+      "Protect the Slot (House): Lock down inside-the-dots real estate and tie up opposing sticks.",
+      "Disciplined 35-45s Shifts: Hard backcheck through middle; outwork in third period."
+    ]
+  },
+  {
+    "id": "game_u13a_rs_126",
+    "eventType": "league",
+    "division": "U13A",
+    "title": "York Simcoe League: Aurora Tigers U13A at Richmond Hill Jaguars",
+    "opponent": "Richmond Hill Jaguars",
+    "opponentQuery": "jaguars",
+    "opponentRecord": "YSMHL Regular Season",
+    "opponentStats": "YSMHL Regular Season Game #U13A-RS-126",
+    "opponentHome": "350 - 16th Ave., Richmond Hill, ON, L4C7A9, Canada",
+    "date": "Sunday, Jan 10, 2027",
+    "dateIso": "2027-01-10",
+    "time": "1:30 PM EST",
+    "arena": "350 - 16th Ave.",
+    "arenaType": "standard",
+    "rinkDimensions": "200' x 85' Standard Ice Sheet",
+    "mapsUrl": "https://maps.google.com/?q=350%20-%2016th%20Ave.%2C%20Richmond%20Hill%2C%20ON%2C%20L4C7A9%2C%20Canada",
+    "jersey": "Away (Black)",
+    "source": "TeamSnap Master + GameSheet Inc.",
+    "sourceType": "gamesheet",
+    "isHome": false,
+    "isTournament": false,
+    "leagueName": "York Simcoe Minor Hockey League (OMHA)",
+    "gameSheetCode": "U13A-RS-126",
+    "gameSheetSeasonId": "15490",
+    "gameSheetTeamId": "534204",
+    "gameSheetUrl": "https://gamesheetstats.com/seasons/15490/teams/534204/schedule?configuration%5Binfinite-scroll%5D=false&configuration%5Blogo%5D=false&filter%5Bquery%5D=jaguars",
+    "dangerPlayers": [
+      {
+        "name": "#11 Opponent Playmaker (C)",
+        "stat": "Top Line Center",
+        "threat": "Attacks middle lane with speed off rush.",
+        "counter": "F3 maintain center lane support; seal defensive blue line."
+      },
+      {
+        "name": "#4 Opponent Point D-Man",
+        "stat": "PP Specialist",
+        "threat": "Heavy low slap-pass and wrist shot through traffic.",
+        "counter": "High winger get into shot lane; active stick on weak side."
+      }
+    ],
+    "goalie": {
+      "name": "Opponent Starter",
+      "stat": "YSMHL Starter",
+      "scout": "Solid positioning; vulnerable to quick east-west royal road passes and low-pad rebound scrums."
+    },
+    "coachKeys": [
+      "Quick D-to-D Reverse: Break forecheck pressure with early puck reversal behind the net.",
+      "Protect the Slot (House): Lock down inside-the-dots real estate and tie up opposing sticks.",
+      "Disciplined 35-45s Shifts: Hard backcheck through middle; outwork in third period."
+    ]
+  },
+  {
+    "id": "game_u13a_rs_118",
+    "eventType": "league",
+    "division": "U13A",
+    "title": "York Simcoe League: Aurora Tigers U13A vs Upper York Admirals",
+    "opponent": "Upper York Admirals",
+    "opponentQuery": "admirals",
+    "opponentRecord": "YSMHL Regular Season",
+    "opponentStats": "YSMHL Regular Season Game #U13A-RS-118",
+    "opponentHome": "1 Community Centre Lane, Aurora, ON",
+    "date": "Saturday, Jan 16, 2027",
+    "dateIso": "2027-01-16",
+    "time": "4:45 PM EST",
+    "arena": "1 Community Centre Lane",
+    "arenaType": "standard",
+    "rinkDimensions": "200' x 85' Standard Ice Sheet",
+    "mapsUrl": "https://maps.google.com/?q=1%20Community%20Centre%20Lane%2C%20Aurora%2C%20ON",
+    "jersey": "Home (White)",
+    "source": "TeamSnap Master + GameSheet Inc.",
+    "sourceType": "gamesheet",
+    "isHome": true,
+    "isTournament": false,
+    "leagueName": "York Simcoe Minor Hockey League (OMHA)",
+    "gameSheetCode": "U13A-RS-118",
+    "gameSheetSeasonId": "15490",
+    "gameSheetTeamId": "534204",
+    "gameSheetUrl": "https://gamesheetstats.com/seasons/15490/teams/534204/schedule?configuration%5Binfinite-scroll%5D=false&configuration%5Blogo%5D=false&filter%5Bquery%5D=admirals",
+    "dangerPlayers": [
+      {
+        "name": "#11 Opponent Playmaker (C)",
+        "stat": "Top Line Center",
+        "threat": "Attacks middle lane with speed off rush.",
+        "counter": "F3 maintain center lane support; seal defensive blue line."
+      },
+      {
+        "name": "#4 Opponent Point D-Man",
+        "stat": "PP Specialist",
+        "threat": "Heavy low slap-pass and wrist shot through traffic.",
+        "counter": "High winger get into shot lane; active stick on weak side."
+      }
+    ],
+    "goalie": {
+      "name": "Opponent Starter",
+      "stat": "YSMHL Starter",
+      "scout": "Solid positioning; vulnerable to quick east-west royal road passes and low-pad rebound scrums."
+    },
+    "coachKeys": [
+      "Quick D-to-D Reverse: Break forecheck pressure with early puck reversal behind the net.",
+      "Protect the Slot (House): Lock down inside-the-dots real estate and tie up opposing sticks.",
+      "Disciplined 35-45s Shifts: Hard backcheck through middle; outwork in third period."
+    ]
+  },
+  {
+    "id": "game_u13a_rs_169",
+    "eventType": "league",
+    "division": "U13A",
+    "title": "York Simcoe League: Aurora Tigers U13A vs King Rebellion",
+    "opponent": "King Rebellion",
+    "opponentQuery": "rebellion",
+    "opponentRecord": "YSMHL Regular Season",
+    "opponentStats": "YSMHL Regular Season Game #U13A-RS-169",
+    "opponentHome": "1 Community Centre Lane, Aurora, ON",
+    "date": "Sunday, Jan 17, 2027",
+    "dateIso": "2027-01-17",
+    "time": "5:15 PM EST",
+    "arena": "1 Community Centre Lane",
+    "arenaType": "standard",
+    "rinkDimensions": "200' x 85' Standard Ice Sheet",
+    "mapsUrl": "https://maps.google.com/?q=1%20Community%20Centre%20Lane%2C%20Aurora%2C%20ON",
+    "jersey": "Home (White)",
+    "source": "TeamSnap Master + GameSheet Inc.",
+    "sourceType": "gamesheet",
+    "isHome": true,
+    "isTournament": false,
+    "leagueName": "York Simcoe Minor Hockey League (OMHA)",
+    "gameSheetCode": "U13A-RS-169",
+    "gameSheetSeasonId": "15490",
+    "gameSheetTeamId": "534204",
+    "gameSheetUrl": "https://gamesheetstats.com/seasons/15490/teams/534204/schedule?configuration%5Binfinite-scroll%5D=false&configuration%5Blogo%5D=false&filter%5Bquery%5D=rebellion",
+    "dangerPlayers": [
+      {
+        "name": "#11 Opponent Playmaker (C)",
+        "stat": "Top Line Center",
+        "threat": "Attacks middle lane with speed off rush.",
+        "counter": "F3 maintain center lane support; seal defensive blue line."
+      },
+      {
+        "name": "#4 Opponent Point D-Man",
+        "stat": "PP Specialist",
+        "threat": "Heavy low slap-pass and wrist shot through traffic.",
+        "counter": "High winger get into shot lane; active stick on weak side."
+      }
+    ],
+    "goalie": {
+      "name": "Opponent Starter",
+      "stat": "YSMHL Starter",
+      "scout": "Solid positioning; vulnerable to quick east-west royal road passes and low-pad rebound scrums."
+    },
+    "coachKeys": [
+      "Quick D-to-D Reverse: Break forecheck pressure with early puck reversal behind the net.",
+      "Protect the Slot (House): Lock down inside-the-dots real estate and tie up opposing sticks.",
+      "Disciplined 35-45s Shifts: Hard backcheck through middle; outwork in third period."
+    ]
+  },
+  {
+    "id": "game_u13a_rs_007",
+    "eventType": "league",
+    "division": "U13A",
+    "title": "York Simcoe League: Aurora Tigers U13A vs Whitchurch-Stouffville Clippers",
+    "opponent": "Whitchurch-Stouffville Clippers",
+    "opponentQuery": "clippers",
+    "opponentRecord": "YSMHL Regular Season",
+    "opponentStats": "YSMHL Regular Season Game #U13A-RS-007",
+    "opponentHome": "1400 Wellington St E, Aurora, ON",
+    "date": "Tuesday, Jan 19, 2027",
+    "dateIso": "2027-01-19",
+    "time": "7:30 PM EST",
+    "arena": "1400 Wellington St E",
+    "arenaType": "standard",
+    "rinkDimensions": "200' x 85' Standard Ice Sheet",
+    "mapsUrl": "https://maps.google.com/?q=1400%20Wellington%20St%20E%2C%20Aurora%2C%20ON",
+    "jersey": "Home (White)",
+    "source": "TeamSnap Master + GameSheet Inc.",
+    "sourceType": "gamesheet",
+    "isHome": true,
+    "isTournament": false,
+    "leagueName": "York Simcoe Minor Hockey League (OMHA)",
+    "gameSheetCode": "U13A-RS-007",
+    "gameSheetSeasonId": "15490",
+    "gameSheetTeamId": "534204",
+    "gameSheetUrl": "https://gamesheetstats.com/seasons/15490/teams/534204/schedule?configuration%5Binfinite-scroll%5D=false&configuration%5Blogo%5D=false&filter%5Bquery%5D=clippers",
+    "dangerPlayers": [
+      {
+        "name": "#11 Opponent Playmaker (C)",
+        "stat": "Top Line Center",
+        "threat": "Attacks middle lane with speed off rush.",
+        "counter": "F3 maintain center lane support; seal defensive blue line."
+      },
+      {
+        "name": "#4 Opponent Point D-Man",
+        "stat": "PP Specialist",
+        "threat": "Heavy low slap-pass and wrist shot through traffic.",
+        "counter": "High winger get into shot lane; active stick on weak side."
+      }
+    ],
+    "goalie": {
+      "name": "Opponent Starter",
+      "stat": "YSMHL Starter",
+      "scout": "Solid positioning; vulnerable to quick east-west royal road passes and low-pad rebound scrums."
+    },
+    "coachKeys": [
+      "Quick D-to-D Reverse: Break forecheck pressure with early puck reversal behind the net.",
+      "Protect the Slot (House): Lock down inside-the-dots real estate and tie up opposing sticks.",
+      "Disciplined 35-45s Shifts: Hard backcheck through middle; outwork in third period."
+    ]
+  },
+  {
+    "id": "game_u13a_rs_113",
+    "eventType": "league",
+    "division": "U13A",
+    "title": "York Simcoe League: Aurora Tigers U13A at Whitchurch-Stouffville Clippers",
+    "opponent": "Whitchurch-Stouffville Clippers",
+    "opponentQuery": "clippers",
+    "opponentRecord": "YSMHL Regular Season",
+    "opponentStats": "YSMHL Regular Season Game #U13A-RS-113",
+    "opponentHome": "120 Weldon Rd, Stouffville, ON, L4A 1N2, Canada",
+    "date": "Sunday, Jan 24, 2027",
+    "dateIso": "2027-01-24",
+    "time": "4:00 PM EST",
+    "arena": "120 Weldon Rd",
+    "arenaType": "standard",
+    "rinkDimensions": "200' x 85' Standard Ice Sheet",
+    "mapsUrl": "https://maps.google.com/?q=120%20Weldon%20Rd%2C%20Stouffville%2C%20ON%2C%20L4A%201N2%2C%20Canada",
+    "jersey": "Away (Black)",
+    "source": "TeamSnap Master + GameSheet Inc.",
+    "sourceType": "gamesheet",
+    "isHome": false,
+    "isTournament": false,
+    "leagueName": "York Simcoe Minor Hockey League (OMHA)",
+    "gameSheetCode": "U13A-RS-113",
+    "gameSheetSeasonId": "15490",
+    "gameSheetTeamId": "534204",
+    "gameSheetUrl": "https://gamesheetstats.com/seasons/15490/teams/534204/schedule?configuration%5Binfinite-scroll%5D=false&configuration%5Blogo%5D=false&filter%5Bquery%5D=clippers",
+    "dangerPlayers": [
+      {
+        "name": "#11 Opponent Playmaker (C)",
+        "stat": "Top Line Center",
+        "threat": "Attacks middle lane with speed off rush.",
+        "counter": "F3 maintain center lane support; seal defensive blue line."
+      },
+      {
+        "name": "#4 Opponent Point D-Man",
+        "stat": "PP Specialist",
+        "threat": "Heavy low slap-pass and wrist shot through traffic.",
+        "counter": "High winger get into shot lane; active stick on weak side."
+      }
+    ],
+    "goalie": {
+      "name": "Opponent Starter",
+      "stat": "YSMHL Starter",
+      "scout": "Solid positioning; vulnerable to quick east-west royal road passes and low-pad rebound scrums."
+    },
+    "coachKeys": [
+      "Quick D-to-D Reverse: Break forecheck pressure with early puck reversal behind the net.",
+      "Protect the Slot (House): Lock down inside-the-dots real estate and tie up opposing sticks.",
+      "Disciplined 35-45s Shifts: Hard backcheck through middle; outwork in third period."
+    ]
+  },
+  {
+    "id": "game_u13a_rs_158",
+    "eventType": "league",
+    "division": "U13A",
+    "title": "York Simcoe League: Aurora Tigers U13A vs Newmarket Renegades",
+    "opponent": "Newmarket Renegades",
+    "opponentQuery": "newmarket",
+    "opponentRecord": "YSMHL Regular Season",
+    "opponentStats": "YSMHL Regular Season Game #U13A-RS-158",
+    "opponentHome": "1400 Wellington St E, Aurora, ON",
+    "date": "Tuesday, Jan 26, 2027",
+    "dateIso": "2027-01-26",
+    "time": "7:30 PM EST",
+    "arena": "1400 Wellington St E",
+    "arenaType": "standard",
+    "rinkDimensions": "200' x 85' Standard Ice Sheet",
+    "mapsUrl": "https://maps.google.com/?q=1400%20Wellington%20St%20E%2C%20Aurora%2C%20ON",
+    "jersey": "Home (White)",
+    "source": "TeamSnap Master + GameSheet Inc.",
+    "sourceType": "gamesheet",
+    "isHome": true,
+    "isTournament": false,
+    "leagueName": "York Simcoe Minor Hockey League (OMHA)",
+    "gameSheetCode": "U13A-RS-158",
+    "gameSheetSeasonId": "15490",
+    "gameSheetTeamId": "534204",
+    "gameSheetUrl": "https://gamesheetstats.com/seasons/15490/teams/534204/schedule?configuration%5Binfinite-scroll%5D=false&configuration%5Blogo%5D=false&filter%5Bquery%5D=newmarket",
+    "dangerPlayers": [
+      {
+        "name": "#11 Opponent Playmaker (C)",
+        "stat": "Top Line Center",
+        "threat": "Attacks middle lane with speed off rush.",
+        "counter": "F3 maintain center lane support; seal defensive blue line."
+      },
+      {
+        "name": "#4 Opponent Point D-Man",
+        "stat": "PP Specialist",
+        "threat": "Heavy low slap-pass and wrist shot through traffic.",
+        "counter": "High winger get into shot lane; active stick on weak side."
+      }
+    ],
+    "goalie": {
+      "name": "Opponent Starter",
+      "stat": "YSMHL Starter",
+      "scout": "Solid positioning; vulnerable to quick east-west royal road passes and low-pad rebound scrums."
+    },
+    "coachKeys": [
+      "Quick D-to-D Reverse: Break forecheck pressure with early puck reversal behind the net.",
+      "Protect the Slot (House): Lock down inside-the-dots real estate and tie up opposing sticks.",
+      "Disciplined 35-45s Shifts: Hard backcheck through middle; outwork in third period."
+    ]
+  },
+  {
+    "id": "game_u13a_rs_042",
+    "eventType": "league",
+    "division": "U13A",
+    "title": "York Simcoe League: Aurora Tigers U13A at Orangeville Flyers",
+    "opponent": "Orangeville Flyers",
+    "opponentQuery": "orangeville",
+    "opponentRecord": "YSMHL Regular Season",
+    "opponentStats": "YSMHL Regular Season Game #U13A-RS-042",
+    "opponentHome": "275 Alder St, Orangeville, ON, L9W 5A9, Canada",
+    "date": "Thursday, Jan 28, 2027",
+    "dateIso": "2027-01-28",
+    "time": "6:00 PM EST",
+    "arena": "275 Alder St",
+    "arenaType": "standard",
+    "rinkDimensions": "200' x 85' Standard Ice Sheet",
+    "mapsUrl": "https://maps.google.com/?q=275%20Alder%20St%2C%20Orangeville%2C%20ON%2C%20L9W%205A9%2C%20Canada",
+    "jersey": "Away (Black)",
+    "source": "TeamSnap Master + GameSheet Inc.",
+    "sourceType": "gamesheet",
+    "isHome": false,
+    "isTournament": false,
+    "leagueName": "York Simcoe Minor Hockey League (OMHA)",
+    "gameSheetCode": "U13A-RS-042",
+    "gameSheetSeasonId": "15490",
+    "gameSheetTeamId": "534204",
+    "gameSheetUrl": "https://gamesheetstats.com/seasons/15490/teams/534204/schedule?configuration%5Binfinite-scroll%5D=false&configuration%5Blogo%5D=false&filter%5Bquery%5D=orangeville",
+    "dangerPlayers": [
+      {
+        "name": "#11 Opponent Playmaker (C)",
+        "stat": "Top Line Center",
+        "threat": "Attacks middle lane with speed off rush.",
+        "counter": "F3 maintain center lane support; seal defensive blue line."
+      },
+      {
+        "name": "#4 Opponent Point D-Man",
+        "stat": "PP Specialist",
+        "threat": "Heavy low slap-pass and wrist shot through traffic.",
+        "counter": "High winger get into shot lane; active stick on weak side."
+      }
+    ],
+    "goalie": {
+      "name": "Opponent Starter",
+      "stat": "YSMHL Starter",
+      "scout": "Solid positioning; vulnerable to quick east-west royal road passes and low-pad rebound scrums."
+    },
+    "coachKeys": [
+      "Quick D-to-D Reverse: Break forecheck pressure with early puck reversal behind the net.",
+      "Protect the Slot (House): Lock down inside-the-dots real estate and tie up opposing sticks.",
+      "Disciplined 35-45s Shifts: Hard backcheck through middle; outwork in third period."
+    ]
+  },
+  {
+    "id": "game_u13a_rs_188",
+    "eventType": "league",
+    "division": "U13A",
+    "title": "York Simcoe League: Aurora Tigers U13A at Barrie Colts-T2-Blue",
+    "opponent": "Barrie Colts-T2-Blue",
+    "opponentQuery": "barrie",
+    "opponentRecord": "YSMHL Regular Season",
+    "opponentStats": "YSMHL Regular Season Game #U13A-RS-188",
+    "opponentHome": "171 Mapleton Ave., Barrie, ON, L5N9B4, Canada",
+    "date": "Tuesday, Feb 2, 2027",
+    "dateIso": "2027-02-02",
+    "time": "6:00 PM EST",
+    "arena": "171 Mapleton Ave.",
+    "arenaType": "standard",
+    "rinkDimensions": "200' x 85' Standard Ice Sheet",
+    "mapsUrl": "https://maps.google.com/?q=171%20Mapleton%20Ave.%2C%20Barrie%2C%20ON%2C%20L5N9B4%2C%20Canada",
+    "jersey": "Away (Black)",
+    "source": "TeamSnap Master + GameSheet Inc.",
+    "sourceType": "gamesheet",
+    "isHome": false,
+    "isTournament": false,
+    "leagueName": "York Simcoe Minor Hockey League (OMHA)",
+    "gameSheetCode": "U13A-RS-188",
+    "gameSheetSeasonId": "15490",
+    "gameSheetTeamId": "534204",
+    "gameSheetUrl": "https://gamesheetstats.com/seasons/15490/teams/534204/schedule?configuration%5Binfinite-scroll%5D=false&configuration%5Blogo%5D=false&filter%5Bquery%5D=barrie",
+    "dangerPlayers": [
+      {
+        "name": "#11 Opponent Playmaker (C)",
+        "stat": "Top Line Center",
+        "threat": "Attacks middle lane with speed off rush.",
+        "counter": "F3 maintain center lane support; seal defensive blue line."
+      },
+      {
+        "name": "#4 Opponent Point D-Man",
+        "stat": "PP Specialist",
+        "threat": "Heavy low slap-pass and wrist shot through traffic.",
+        "counter": "High winger get into shot lane; active stick on weak side."
+      }
+    ],
+    "goalie": {
+      "name": "Opponent Starter",
+      "stat": "YSMHL Starter",
+      "scout": "Solid positioning; vulnerable to quick east-west royal road passes and low-pad rebound scrums."
+    },
+    "coachKeys": [
+      "Quick D-to-D Reverse: Break forecheck pressure with early puck reversal behind the net.",
+      "Protect the Slot (House): Lock down inside-the-dots real estate and tie up opposing sticks.",
+      "Disciplined 35-45s Shifts: Hard backcheck through middle; outwork in third period."
+    ]
+  }
+];
+
+    function populateLiveMatchupDropdown() {
+      const sel = document.getElementById('live-game-selector');
+      if (!sel) return;
+      const games = (typeof SCHEDULE_UPCOMING_MATCHUPS !== 'undefined')
+        ? SCHEDULE_UPCOMING_MATCHUPS.filter(g => g.eventType === 'league' || g.eventType === 'tournament')
+        : [];
+      if (!games.length) return;
+
+      const currentVal = sel.value;
+      sel.innerHTML = games.map(g => {
+        const vsAt = g.isHome ? 'vs' : 'at';
+        const label = `${g.date} • ${vsAt} ${g.opponent} (${g.gameSheetCode || 'Tourn'})`;
+        return `<option value="${g.id}">${escapeHtml(label)}</option>`;
+      }).join('');
+
+      if (currentVal && games.some(g => g.id === currentVal)) {
+        sel.value = currentVal;
+      } else if (activeLiveMatchupId) {
+        sel.value = activeLiveMatchupId;
+      }
+    }
+
+    function changeActiveLiveMatchup(matchupId) {
+      if (!matchupId && typeof SCHEDULE_UPCOMING_MATCHUPS !== 'undefined') {
+        matchupId = activeLiveMatchupId || 'game_u13a_rs_015';
+      }
+      const match = (typeof SCHEDULE_UPCOMING_MATCHUPS !== 'undefined')
+        ? (SCHEDULE_UPCOMING_MATCHUPS.find(g => g.id === matchupId) || SCHEDULE_UPCOMING_MATCHUPS[0])
+        : null;
+      if (!match) return;
+      activeLiveMatchupId = match.id;
+
+      const sel = document.getElementById('live-game-selector');
+      if (sel && sel.value !== match.id) sel.value = match.id;
+
+      // 1. Live Hero Mini-Banner updates
+      const teamLabel = document.getElementById('sidebar-live-team-label');
+      const oppLabel = document.getElementById('sidebar-live-opp-name');
+      const oppShort = (match.opponent || 'OPP').split(' ')[0].toUpperCase();
+      if (teamLabel) {
+        teamLabel.innerText = match.isHome ? 'TIGERS (HOME)' : 'TIGERS (AWAY)';
+      }
+      if (oppLabel) {
+        oppLabel.innerText = match.isHome ? `${oppShort} (AWAY)` : `${oppShort} (HOME)`;
+      }
+
+      // Update in-player overlay opponent abbreviation
+      const vOpp = document.getElementById('v-opp-abbr');
+      if (vOpp) vOpp.innerText = oppShort.substring(0, 3);
+
+      // 2. GameSheet League Match Banner
+      const bannerTitle = document.getElementById('live-match-banner-title');
+      const bannerMeta = document.getElementById('live-match-banner-meta');
+      if (bannerTitle) {
+        bannerTitle.innerText = match.gameSheetCode
+          ? `York Simcoe Game #${match.gameSheetCode}`
+          : (match.tournamentName || match.title);
+      }
+      if (bannerMeta) {
+        bannerMeta.innerText = `${match.isHome ? 'vs' : 'at'} ${match.opponent} • ${match.arena || 'Arena'}`;
+      }
+
+      // 3. GameSheet links and iframe
+      updateGameSheetIframeForActiveMatchup();
+
+      // 4. Update 1-Touch Adjuster Labels
+      const ctrlHomeLabel = document.querySelector('#live-ctrl-score-home')?.parentElement?.querySelector('.text-\\[9px\\]');
+      const ctrlAwayLabel = document.querySelector('#live-ctrl-score-away')?.parentElement?.querySelector('.text-\\[9px\\]');
+      if (ctrlHomeLabel) ctrlHomeLabel.innerText = match.isHome ? '🐯 TIGERS (HOME)' : '🐯 TIGERS (AWAY)';
+      if (ctrlAwayLabel) ctrlAwayLabel.innerText = match.isHome ? `🏒 ${oppShort} (AWAY)` : `🏒 ${oppShort} (HOME)`;
+
+      // 5. Update Pre-Game Scout panel content dynamically
+      updateLivePreGameScoutContent(match);
+
+      // 6. Update Live Ticker
+      const ticker = document.getElementById('live-gamesheet-ticker-list');
+      if (ticker) {
+        ticker.innerHTML = `
+          <div class="p-2 rounded-lg bg-slate-900 border border-slate-800 text-slate-300">
+            <span class="text-amber-400 font-bold">${match.time || 'Game Day'}</span> Standby for Puck Drop: Aurora Tigers ${match.isHome ? 'vs' : 'at'} ${match.opponent} (${match.gameSheetCode || 'Official Match'})
+          </div>
+        `;
+      }
+    }
+
+    function setGameSheetViewMode(mode) {
+      currentGsViewMode = mode || 'matchup';
+      ['matchup', 'schedule', 'scores'].forEach(m => {
+        const btn = document.getElementById(`gs-btn-${m}`);
+        if (btn) {
+          btn.className = (m === currentGsViewMode)
+            ? "px-2 py-0.5 rounded bg-emerald-600 text-white font-bold cursor-pointer transition shadow-xs"
+            : "px-2 py-0.5 rounded bg-slate-800 hover:bg-slate-700 text-slate-300 font-bold cursor-pointer transition";
+        }
+      });
+      updateGameSheetIframeForActiveMatchup();
+    }
+
+    function updateGameSheetIframeForActiveMatchup() {
+      const match = (typeof SCHEDULE_UPCOMING_MATCHUPS !== 'undefined')
+        ? (SCHEDULE_UPCOMING_MATCHUPS.find(g => g.id === activeLiveMatchupId) || SCHEDULE_UPCOMING_MATCHUPS[0])
+        : null;
+
+      let targetUrl = "https://gamesheetstats.com/seasons/15490/teams/534204/schedule?configuration%5Binfinite-scroll%5D=false&configuration%5Blogo%5D=false&filter%5Bquery%5D=aurora";
+      let tabTitle = "GameSheet Live Game Tracker";
+
+      if (currentGsViewMode === 'scores') {
+        targetUrl = "https://www.gamesheetinc.com/stats?seasonId=15490-york-simcoe-minor-hockey-league-a-2026-2027&title=York%20Simcoe%20Minor%20Hockey%20League%20A%20-%202026-2027";
+        tabTitle = "GameSheet York Simcoe All Scores";
+      } else if (currentGsViewMode === 'schedule') {
+        targetUrl = "https://gamesheetstats.com/seasons/15490/teams/534204/schedule?configuration%5Binfinite-scroll%5D=false&configuration%5Blogo%5D=false&filter%5Bquery%5D=aurora";
+        tabTitle = "Aurora Tigers Season Schedule";
+      } else {
+        // 'matchup' view
+        if (match && match.gameSheetUrl) {
+          targetUrl = match.gameSheetUrl;
+          tabTitle = `GameSheet: ${match.opponent} Live Tracker`;
+        } else if (match && match.opponentQuery) {
+          targetUrl = `https://gamesheetstats.com/seasons/15490/teams/534204/schedule?configuration%5Binfinite-scroll%5D=false&configuration%5Blogo%5D=false&filter%5Bquery%5D=${encodeURIComponent(match.opponentQuery)}`;
+          tabTitle = `GameSheet: ${match.opponent} Live Tracker`;
+        }
+      }
+
+      const frame = document.getElementById('gamesheet-live-frame');
+      const openLink = document.getElementById('gamesheet-embed-open-link');
+      const extLink = document.getElementById('live-gamesheet-external-link');
+      const titleEl = document.getElementById('gamesheet-tab-title');
+
+      if (frame && frame.src !== targetUrl) frame.src = targetUrl;
+      if (openLink) openLink.href = targetUrl;
+      if (extLink) extLink.href = targetUrl;
+      if (titleEl) titleEl.innerText = tabTitle;
+    }
+
+    function updateLivePreGameScoutContent(match) {
+      if (!match) return;
+      const rinkLabel = document.getElementById('sb-pregame-rink-label');
+      const keysList = document.getElementById('sb-pregame-keys-list');
+      const oppHeader = document.getElementById('sb-pregame-opp-header');
+      const gameTitle = document.getElementById('sb-pregame-game-title');
+      const gameMeta = document.getElementById('sb-pregame-game-meta');
+
+      if (rinkLabel) rinkLabel.innerText = match.arena || 'Ice Rink';
+      if (oppHeader) oppHeader.innerText = `⚠️ Matchup Detail: ${match.opponent || 'Opponent'}`;
+      if (gameTitle) {
+        gameTitle.innerText = match.gameSheetCode
+          ? `YSMHL Regular Season Game #${match.gameSheetCode}`
+          : (match.title || 'Official Game Match');
+      }
+      if (gameMeta) {
+        const vsAt = match.isHome ? 'vs' : 'at';
+        gameMeta.innerText = `Arena: ${match.arena || 'Arena'} • ${match.time || 'Puck Drop'}. Tigers skating in ${match.jersey || 'Uniform'}.`;
+      }
+
+      if (keysList && Array.isArray(match.coachKeys) && match.coachKeys.length > 0) {
+        keysList.innerHTML = match.coachKeys.map((k, idx) => `
+          <div class="flex items-start gap-1.5">
+            <span class="w-4 h-4 rounded-full bg-amber-400 text-slate-950 font-black text-[9px] flex items-center justify-center shrink-0 mt-0.5">${idx + 1}</span>
+            <span>${escapeHtml(k)}</span>
+          </div>
+        `).join('');
+      }
+    }
+
+    function loadCurrentLiveMatchup() {
+      populateLiveMatchupDropdown();
+
+      let targetCode = "U13A-RS-015"; // Next upcoming game Caledon
+      if (typeof gamesLibrarySettings !== 'undefined' && gamesLibrarySettings.active_gamesheet_code) {
+        targetCode = gamesLibrarySettings.active_gamesheet_code;
+      }
+
+      let selectedMatch = null;
+      if (typeof SCHEDULE_UPCOMING_MATCHUPS !== 'undefined') {
+        selectedMatch = SCHEDULE_UPCOMING_MATCHUPS.find(g => g.gameSheetCode === targetCode);
+        if (!selectedMatch) {
+          const todayStr = new Date().toISOString().split('T')[0];
+          selectedMatch = SCHEDULE_UPCOMING_MATCHUPS.find(g => (g.eventType === 'league' || g.eventType === 'tournament') && g.dateIso && g.dateIso >= todayStr);
+        }
+        if (!selectedMatch) {
+          selectedMatch = SCHEDULE_UPCOMING_MATCHUPS.find(g => g.eventType === 'league');
+        }
+      }
+
+      if (selectedMatch) {
+        changeActiveLiveMatchup(selectedMatch.id);
+      }
+    }
 
     let currentScheduleHubTab = 'upcoming'; // 'upcoming', 'past', 'lakeplacid'
     let currentUpcomingFilter = 'all'; // 'all', 'tournament', 'league', 'practice'
@@ -19770,6 +21297,10 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
             liveFrame.src = `https://www.youtube.com/embed/live_stream?channel=${PIPELINE_CONSTANTS.channelId}&autoplay=1&rel=0&playsinline=1`;
           }
         }
+
+        // Populate live matchup selector and tune to current/upcoming game
+        populateLiveMatchupDropdown();
+        loadCurrentLiveMatchup();
 
         // 2. Resolve Persistent Archive Grid Component iframe
         const archiveFrame = document.querySelector('.archive-container iframe[title="U13A Aurora Tigers Match Replays"]');

@@ -22,19 +22,21 @@
     "active_livestream_video_id": "DcTU1ha1tow",
     "active_livestream_playlist_id": "PLXFVFYYSmylE",
     "active_livestream_url": "https://www.youtube.com/playlist?list=PLXFVFYYSmylE",
-    "active_gamesheet_code": "U13A-RS-056",
+    "active_gamesheet_code": "U13A-RS-015",
     "active_gamesheet_season_id": "15490",
-    "active_gamesheet_url": "https://www.gamesheetinc.com/stats?seasonId=15490-york-simcoe-minor-hockey-league-a-2026-2027&title=York%20Simcoe%20Minor%20Hockey%20League%20A%20-%202026-2027",
+    "active_gamesheet_team_id": "534204",
+    "active_gamesheet_schedule_url": "https://gamesheetstats.com/seasons/15490/teams/534204/schedule?configuration%5Binfinite-scroll%5D=false&configuration%5Blogo%5D=false&filter%5Bquery%5D=aurora",
+    "active_gamesheet_url": "https://gamesheetstats.com/seasons/15490/teams/534204/schedule?configuration%5Binfinite-scroll%5D=false&configuration%5Blogo%5D=false&filter%5Bquery%5D=aurora",
     "tonight_game": {
-      "code": "U13A-RS-056",
-      "title": "York Simcoe League: Aurora Tigers U13A at Orillia Terriers",
-      "opponent": "Orillia Terriers",
-      "date": "2026-11-06",
-      "time": "8:20 PM EST",
-      "arena": "Rotary Place, Orillia, ON",
-      "jersey": "Away (Black)",
-      "home_away": "Away",
-      "gamesheet_url": "https://www.gamesheetinc.com/stats?seasonId=15490-york-simcoe-minor-hockey-league-a-2026-2027&title=York%20Simcoe%20Minor%20Hockey%20League%20A%20-%202026-2027"
+      "code": "U13A-RS-015",
+      "title": "York Simcoe League: Aurora Tigers U13A vs Caledon Hawks",
+      "opponent": "Caledon Hawks",
+      "date": "2026-11-10",
+      "time": "7:30 PM EST",
+      "arena": "Aurora Recreation Complex (East - Pfaff)",
+      "jersey": "Home (White)",
+      "home_away": "Home",
+      "gamesheet_url": "https://gamesheetstats.com/seasons/15490/teams/534204/schedule?configuration%5Binfinite-scroll%5D=false&configuration%5Blogo%5D=false&filter%5Bquery%5D=caledon"
     }
   },
   "games": [
