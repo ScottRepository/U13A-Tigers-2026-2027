@@ -1363,11 +1363,25 @@
             <button type="button" onclick="setLiveLinkPreset('playlist')" class="px-2.5 py-1 rounded-lg bg-red-600/20 hover:bg-red-600/30 text-rose-300 border border-rose-500/40 font-bold cursor-pointer transition flex items-center gap-1">
               <span>🎬</span> <span>Team Playlist Stream (PLXFVFYYSmylE)</span>
             </button>
+            <button type="button" onclick="setLiveLinkPreset('controlroom')" class="px-2.5 py-1 rounded-lg bg-amber-500/20 hover:bg-amber-500/30 text-amber-300 border border-amber-400/40 font-bold cursor-pointer transition flex items-center gap-1">
+              <span>🎯</span> <span>Control Room (DcTU1ha1tow)</span>
+            </button>
             <button type="button" onclick="setLiveLinkPreset('channel')" class="px-2.5 py-1 rounded-lg bg-rose-500/20 hover:bg-rose-500/30 text-rose-300 border border-rose-400/30 font-bold cursor-pointer transition flex items-center gap-1">
               <span>⚡</span> <span>Channel (@scarpe93/live)</span>
             </button>
             <button type="button" onclick="setLiveLinkPreset('sample')" class="px-2.5 py-1 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 font-bold cursor-pointer transition">
               Test Stream
+            </button>
+          </div>
+
+          <!-- Persistent Stream Key Reference -->
+          <div class="p-2.5 bg-slate-950 rounded-xl border border-slate-800 flex items-center justify-between text-[10px] font-mono">
+            <div>
+              <span class="text-slate-400">Encoder Stream Key (RTMP):</span>
+              <span class="text-amber-300 font-bold ml-1.5 select-all">gw39-597h-fv3w-g1k6-b7h4</span>
+            </div>
+            <button type="button" onclick="navigator.clipboard.writeText('gw39-597h-fv3w-g1k6-b7h4'); showToast('📋 Copied stream key!');" class="px-2 py-0.5 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded border border-slate-700 cursor-pointer">
+              Copy
             </button>
           </div>
         </div>
@@ -3144,6 +3158,40 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
           </div>
         </div>
 
+        <!-- Persistent RTMP Live Destination Verification Card (XbotGo Falcon Pipeline) -->
+        <div class="p-3.5 bg-slate-950 rounded-2xl border border-rose-500/40 space-y-2">
+          <div class="flex items-center justify-between">
+            <span class="flex items-center gap-1.5 font-bold text-rose-300 text-xs">
+              <span>📡</span> <span>XbotGo Falcon RTMP Destination &amp; Persistent Stream Key</span>
+            </span>
+            <span class="px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-400/40 text-[10px] font-mono font-bold flex items-center gap-1">
+              <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+              Verified Production Key
+            </span>
+          </div>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-[11px] pt-1">
+            <div class="bg-slate-900 p-2 rounded-xl border border-slate-800">
+              <span class="text-slate-400 block text-[10px] font-mono">RTMP Server Ingest URL:</span>
+              <span class="font-mono text-white text-xs select-all">rtmp://a.rtmp.youtube.com/live2</span>
+            </div>
+            <div class="bg-slate-900 p-2 rounded-xl border border-slate-800 flex items-center justify-between">
+              <div>
+                <span class="text-slate-400 block text-[10px] font-mono">Persistent Stream Key:</span>
+                <span class="font-mono text-amber-300 text-xs font-bold select-all">gw39-597h-fv3w-g1k6-b7h4</span>
+              </div>
+              <button type="button" onclick="navigator.clipboard.writeText('gw39-597h-fv3w-g1k6-b7h4'); showToast('📋 Copied production stream key!');" class="px-2 py-1 bg-slate-800 hover:bg-slate-700 text-slate-200 text-[10px] font-bold rounded-lg border border-slate-700 cursor-pointer transition">
+                Copy
+              </button>
+            </div>
+          </div>
+          <div class="flex items-center justify-between text-[10px] text-slate-400 pt-1 border-t border-slate-800/80">
+            <span class="flex items-center gap-1">
+              <span>🎯</span> Target Control Room: <a href="https://studio.youtube.com/video/DcTU1ha1tow/livestreaming" target="_blank" rel="noopener noreferrer" class="text-rose-400 hover:text-rose-300 font-mono underline">Live Control Room (DcTU1ha1tow) ↗</a>
+            </span>
+            <a href="https://studio.youtube.com/playlist/PLXFVFYYSmylE/edit" target="_blank" rel="noopener noreferrer" class="text-amber-400 hover:text-amber-300 font-mono underline">Playlist Studio (PLXFVFYYSmylE) ↗</a>
+          </div>
+        </div>
+
         <!-- Connection Controls with Explicit Status Indicators -->
         <div class="flex items-center justify-between bg-slate-950 p-3.5 rounded-2xl border border-slate-800 flex-wrap gap-2.5">
           <div class="space-y-1">
@@ -4466,7 +4514,20 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
           
           <!-- 16:9 Video / 2D Rink Stage -->
           <div id="video-stage-wrapper" class="relative w-full rounded-xl overflow-hidden aspect-video bg-slate-900 shadow-md ring-2 ring-tigersGold/50">
-            <div id="video-container" class="w-full h-full">
+            <!-- START: Automated Live Stream Frame Container -->
+            <div class="video-container" style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; max-width: 100%; background: #000;">
+              <iframe 
+                style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0;"
+                src="https://youtube.com" 
+                title="U13A Aurora Tigers Live Game Broadcast" 
+                frameborder="0" 
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+                allowfullscreen>
+              </iframe>
+            </div>
+            <!-- END: Automated Live Stream Frame Container -->
+
+            <div id="video-container" class="w-full h-full absolute inset-0 hidden">
               <div id="yt-player" class="w-full h-full flex items-center justify-center text-xs text-slate-400">Loading Game Broadcast...</div>
             </div>
             <!-- 2D Ice Rink Background & Player Tracking Canvas -->
@@ -4782,6 +4843,21 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
           </div>
 
         </div>
+
+        <!-- START: Static Match Replay Playlist Component -->
+        <div class="archive-container" style="margin-top: 20px;">
+          <iframe 
+            width="100%" 
+            height="450" 
+            src="https://youtube.com" 
+            title="U13A Aurora Tigers Match Replays" 
+            frameborder="0" 
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+            allowfullscreen>
+          </iframe>
+        </div>
+        <!-- END: Static Match Replay Playlist Component -->
+
       </div>
 
       <!-- RIGHT COLUMN: UNIFIED INTERACTIVE COMMAND CENTER (Docked or Flyout Drawer) -->
@@ -9904,6 +9980,11 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
       if (currentStage === 'whiteboard') setStageMode('video');
       if (isDrawingMode) toggleDrawMode();
       if (isPipCollapsed && typeof togglePipCollapse === 'function') togglePipCollapse();
+
+      const liveStreamContainer = document.querySelector('.video-container');
+      const interactiveContainer = document.getElementById('video-container');
+      if (liveStreamContainer) liveStreamContainer.style.display = 'none';
+      if (interactiveContainer) interactiveContainer.classList.remove('hidden');
 
       const timeRangeStr = `${Math.floor(start / 60)}:${Math.floor(start % 60).toString().padStart(2, '0')} - ${Math.floor(end / 60)}:${Math.floor(end % 60).toString().padStart(2, '0')}`;
       const noteText = document.getElementById('active-note-text');
@@ -16600,8 +16681,12 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
       const traySection = document.getElementById('tray-view-section');
       const breakoutSection = document.getElementById('breakout-view-section');
       const playerSection = document.getElementById('player-view-section');
+      const liveStreamContainer = document.querySelector('.video-container');
+      const interactiveContainer = document.getElementById('video-container');
 
       if (isLiveBroadcastActive) {
+        if (liveStreamContainer) liveStreamContainer.style.display = 'block';
+        if (interactiveContainer) interactiveContainer.classList.add('hidden');
         if (typeof updateFunctionalNavActiveState === 'function') updateFunctionalNavActiveState('live_stream');
         // Ensure split-screen layout is visible even if user came from full-width Analytics or Player Hub
         if (videoCol) {
@@ -16654,6 +16739,8 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
           showToast("📡 Live Stream Mode: Broadcast is currently offline / standby.");
         }
       } else {
+        if (liveStreamContainer) liveStreamContainer.style.display = 'none';
+        if (interactiveContainer) interactiveContainer.classList.remove('hidden');
         if (typeof updateFunctionalNavActiveState === 'function') updateFunctionalNavActiveState(currentMode || 'coaches');
         if (hud) hud.classList.add('hidden');
         if (offlinePlaceholder) offlinePlaceholder.classList.add('hidden');
@@ -17024,9 +17111,12 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
       if (type === 'playlist') {
         input.value = "https://www.youtube.com/playlist?list=PLXFVFYYSmylE";
         showToast("🎬 Set to Team Live Playlist: PLXFVFYYSmylE");
+      } else if (type === 'controlroom') {
+        input.value = "https://studio.youtube.com/video/DcTU1ha1tow/livestreaming";
+        showToast("🎯 Set to Live Control Room Ingest (DcTU1ha1tow)");
       } else if (type === 'channel') {
-        input.value = "https://www.youtube.com/@AuroraTigers/live";
-        showToast("⚡ Set to Permanent Channel Permalink: @AuroraTigers/live");
+        input.value = "https://www.youtube.com/embed/live_stream?channel=UCrlj6wjqPi-Oe4jHcXe_ygA";
+        showToast("⚡ Set to Master Channel Stream (UCrlj6wjqPi-Oe4jHcXe_ygA)");
       } else if (type === 'sample') {
         input.value = "https://www.youtube.com/watch?v=t7i7Z37fLw4";
         showToast("🎬 Set to Test Stream (t7i7Z37fLw4)");
@@ -17052,6 +17142,16 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
       const vidId = extractYouTubeVideoId(rawUrl);
       if (vidId && !playlistId) {
         liveStreamVideoId = vidId;
+      }
+
+      // Sync to Dynamic Live Playback Container iframe if present
+      const liveFrame = document.querySelector('.video-container iframe[title="U13A Aurora Tigers Live Game Broadcast"]');
+      if (liveFrame) {
+        if (playlistId) {
+          liveFrame.src = `https://www.youtube.com/embed/videoseries?list=${playlistId}&autoplay=1&rel=0&playsinline=1`;
+        } else if (vidId) {
+          liveFrame.src = `https://www.youtube.com/embed/${vidId}?autoplay=1&rel=0&playsinline=1`;
+        }
       }
 
       // Sync to Live Center modal input as well
@@ -19646,6 +19746,45 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
     } catch(err) {
       console.warn("Immediate init notice:", err);
     }
+
+    // =========================================================================
+    // AUTOMATED BROADCAST INTEGRATION PIPELINE (ANTIGRAVITY BLUEPRINT)
+    // =========================================================================
+    const PIPELINE_CONSTANTS = {
+      playlistId: "PLXFVFYYSmylE",
+      playlistUrl: "https://www.youtube.com/playlist?list=PLXFVFYYSmylE",
+      channelId: "UCrlj6wjqPi-Oe4jHcXe_ygA",
+      streamKey: "gw39-597h-fv3w-g1k6-b7h4",
+      liveControlRoomVid: "DcTU1ha1tow",
+      liveControlRoomUrl: "https://studio.youtube.com/video/DcTU1ha1tow/livestreaming",
+      playlistStudioUrl: "https://studio.youtube.com/playlist/PLXFVFYYSmylE/edit"
+    };
+
+    function initAutomatedBroadcastIntegration() {
+      try {
+        // 1. Resolve Dynamic Live Playback Container iframe
+        const liveFrame = document.querySelector('.video-container iframe[title="U13A Aurora Tigers Live Game Broadcast"]');
+        if (liveFrame) {
+          const currentSrc = liveFrame.getAttribute('src');
+          if (!currentSrc || currentSrc === 'https://youtube.com' || currentSrc === 'https://www.youtube.com') {
+            liveFrame.src = `https://www.youtube.com/embed/live_stream?channel=${PIPELINE_CONSTANTS.channelId}&autoplay=1&rel=0&playsinline=1`;
+          }
+        }
+
+        // 2. Resolve Persistent Archive Grid Component iframe
+        const archiveFrame = document.querySelector('.archive-container iframe[title="U13A Aurora Tigers Match Replays"]');
+        if (archiveFrame) {
+          const currentArchiveSrc = archiveFrame.getAttribute('src');
+          if (!currentArchiveSrc || currentArchiveSrc === 'https://youtube.com' || currentArchiveSrc === 'https://www.youtube.com') {
+            archiveFrame.src = `https://www.youtube.com/embed/videoseries?list=${PIPELINE_CONSTANTS.playlistId}&rel=0&playsinline=1`;
+          }
+        }
+      } catch (err) {
+        console.warn("Automated broadcast integration init notice:", err);
+      }
+    }
+
+    initAutomatedBroadcastIntegration();
 
     // Update functional nav button active states in switchViewMode
     function updateFunctionalNavActiveState(mode) {
