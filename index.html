@@ -4588,6 +4588,9 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
                 </button>
               </div>
               <div class="flex items-center gap-1.5">
+                <button type="button" onclick="setLiveLinkPreset('channel'); tuneCurrentLiveStream();" class="px-2 py-1 rounded-lg bg-slate-800 hover:bg-slate-700 text-rose-300 border border-rose-500/40 text-[10px] font-bold cursor-pointer transition flex items-center gap-1" title="Auto-detect current live stream pushed by RTMP Key (gw39-597h-fv3w-g1k6-b7h4)">
+                  <span>⚡</span> <span>Auto-Live (RTMP Key)</span>
+                </button>
                 <button type="button" onclick="setLiveLinkPreset('controlroom'); tuneCurrentLiveStream();" class="px-2 py-1 rounded-lg bg-slate-800 hover:bg-slate-700 text-amber-300 border border-amber-400/30 text-[10px] font-bold cursor-pointer transition flex items-center gap-1" title="Tune Scott's active YouTube Studio stream (DcTU1ha1tow)">
                   <span>🎯</span> <span>Studio (DcTU1ha1tow)</span>
                 </button>
@@ -53710,6 +53713,25 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
       mountDirectPlaylistFallback(playlistId);
     }
 
+        function mountDirectChannelLiveFallback() {
+      const channelId = (typeof PIPELINE_CONSTANTS !== 'undefined' && PIPELINE_CONSTANTS.channelId) ? PIPELINE_CONSTANTS.channelId : "UCrlj6wjqPi-Oe4jHcXe_ygA";
+      isPlayerReady = true;
+      const container = document.getElementById('video-container');
+      if (!container) return;
+      container.classList.remove('hidden');
+      container.innerHTML = `<iframe id="yt-direct-iframe" class="w-full h-full border-0" src="https://www.youtube.com/embed/live_stream?channel=${channelId}&autoplay=1&enablejsapi=1&rel=0&playsinline=1" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>`;
+      const vText = document.getElementById('v-status-text');
+      const vDot = document.getElementById('v-status-dot');
+      if (vText) vText.innerText = "LIVE (RTMP)";
+      if (vDot) vDot.className = "w-2 h-2 rounded-full bg-rose-500 animate-pulse";
+      const pill = document.getElementById('live-stream-status-pill');
+      if (pill) {
+        pill.innerText = "AUTO-LIVE (RTMP KEY)";
+        pill.className = "px-2 py-0.5 rounded-full text-[9px] font-mono font-bold bg-rose-500/20 text-rose-300 border border-rose-500/40 animate-pulse";
+      }
+      showToast("⚡ Auto-Live Connected! Streaming whatever broadcast is active from RTMP Key gw39-597h-fv3w-g1k6-b7h4.");
+    }
+
     function mountDirectPlaylistFallback(playlistId) {
       if (!playlistId) playlistId = YOUTUBE_LIVE_PLAYLIST_ID || "PLXFVFYYSmylE";
       isPlayerReady = true;
@@ -53949,6 +53971,27 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
     // =========================================================================
     function tuneLiveStreamId(rawInput) {
       if (!rawInput) return;
+      if (rawInput === 'channel' || rawInput.includes('live_stream?channel=')) {
+        liveStreamVideoId = 'channel';
+        const quickInput = document.getElementById('live-quick-url-input');
+        if (quickInput) quickInput.value = "https://www.youtube.com/embed/live_stream?channel=UCrlj6wjqPi-Oe4jHcXe_ygA";
+        const offlinePlaceholder = document.getElementById('live-offline-placeholder');
+        if (offlinePlaceholder) offlinePlaceholder.classList.add('hidden');
+        const hud = document.getElementById('live-broadcast-hud');
+        if (hud) hud.classList.remove('hidden');
+        mountDirectChannelLiveFallback();
+        startLiveScoreboardClock();
+        renderLiveScoreboardHud();
+        try {
+          localStorage.setItem('tigers_active_live_stream', JSON.stringify({
+            videoId: 'channel',
+            url: "https://www.youtube.com/embed/live_stream?channel=UCrlj6wjqPi-Oe4jHcXe_ygA",
+            streamKey: "gw39-597h-fv3w-g1k6-b7h4",
+            isLive: true
+          }));
+        } catch(e){}
+        return;
+      }
       const playlistId = extractYouTubePlaylistId(rawInput);
       const vidId = extractYouTubeVideoId(rawInput) || (playlistId ? '' : rawInput.trim());
 
