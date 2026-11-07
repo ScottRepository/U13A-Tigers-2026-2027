@@ -1,0 +1,1642 @@
+{
+  "league": {
+    "name": "York Simcoe Minor Hockey League (OMHA)",
+    "seasonId": "15490",
+    "division": "U13A",
+    "year": "2026-2027",
+    "officialUrl": "https://gamesheetstats.com/seasons/15490/teams/534204/schedule"
+  },
+  "teams": {
+    "caledon": {
+      "teamName": "Caledon Hawks",
+      "shortName": "Caledon",
+      "abbr": "CAL",
+      "division": "U13A",
+      "gameSheetCode": "U13A-RS-015",
+      "gameSheetUrl": "https://gamesheetstats.com/seasons/15490/teams/534204/schedule?configuration%5Binfinite-scroll%5D=false&configuration%5Blogo%5D=false&filter%5Bquery%5D=caledon",
+      "record": {
+        "gp": 20,
+        "w": 11,
+        "l": 6,
+        "t": 3,
+        "pts": 25,
+        "winPct": ".625"
+      },
+      "stats": {
+        "gf": 52,
+        "ga": 44,
+        "diff": "+8",
+        "gpg": "2.60",
+        "gapg": "2.20",
+        "pim": 78,
+        "pimPg": "7.8"
+      },
+      "specialTeams": {
+        "ppPct": "22.4%",
+        "ppGoals": 11,
+        "ppOpps": 49,
+        "ppGpg": "0.55",
+        "pkPct": "84.8%",
+        "shGoals": 2,
+        "shAllowed": 8,
+        "tendency": "Runs umbrella 1-3-1 setup with heavy point slapper from #4 Sterling; look for back-door tap-ins."
+      },
+      "last5Games": [
+        {
+          "date": "Nov 04",
+          "opp": "Upper York Admirals",
+          "vsAt": "vs",
+          "score": "5-2",
+          "result": "W",
+          "gf": 5,
+          "ga": 2,
+          "notes": "Exploded for 3 goals in P2"
+        },
+        {
+          "date": "Oct 31",
+          "opp": "Barrie Colts-T2",
+          "vsAt": "vs",
+          "score": "4-2",
+          "result": "W",
+          "gf": 4,
+          "ga": 2,
+          "notes": "Strong neutral zone transition"
+        },
+        {
+          "date": "Oct 24",
+          "opp": "Orillia Terriers",
+          "vsAt": "@",
+          "score": "1-3",
+          "result": "L",
+          "gf": 1,
+          "ga": 3,
+          "notes": "Struggled against Orillia forecheck"
+        },
+        {
+          "date": "Oct 17",
+          "opp": "Upper York Admirals",
+          "vsAt": "vs",
+          "score": "5-1",
+          "result": "W",
+          "gf": 5,
+          "ga": 1,
+          "notes": "Dominated special teams (2 PPG)"
+        },
+        {
+          "date": "Oct 10",
+          "opp": "Markham Waxers",
+          "vsAt": "@",
+          "score": "2-2",
+          "result": "T",
+          "gf": 2,
+          "ga": 2,
+          "notes": "Tied late in P3 on 6v5 extra skater"
+        }
+      ],
+      "dangerPlayers": [
+        {
+          "number": "#11",
+          "name": "Cole Vance",
+          "pos": "C",
+          "gp": 18,
+          "g": 14,
+          "a": 11,
+          "pts": 25,
+          "pim": 8,
+          "threat": "Attacks middle lane with speed off rush; quick wrist snap off wrong foot.",
+          "counter": "F3 maintain high middle lane support; defense seal blue line early."
+        },
+        {
+          "number": "#4",
+          "name": "Marcus Sterling",
+          "pos": "D",
+          "gp": 18,
+          "g": 6,
+          "a: ": 15,
+          "pts": 21,
+          "pim": 18,
+          "threat": "Heavy low point slap-pass and wrist shot through traffic on PP.",
+          "counter": "High winger get right into shooting lane; active stick on weak side."
+        },
+        {
+          "number": "#19",
+          "name": "Lucas Bennett",
+          "pos": "LW",
+          "gp": 17,
+          "g": 9,
+          "a": 8,
+          "pts": 17,
+          "pim": 6,
+          "threat": "Net-front puck screen and rebound putback specialist.",
+          "counter": "D-man box out early; do not let him establish inside position."
+        }
+      ],
+      "goalie": {
+        "name": "#31 Julian Rossi",
+        "gp": 12,
+        "record": "8-3-1",
+        "gaa": "2.35",
+        "svPct": ".912",
+        "shutouts": 2,
+        "scout": "Strong butterfly goalie with fast post-to-post pushes; vulnerable to high glove-side snapshots off rush and screen tips from slot."
+      },
+      "coachKeys": [
+        "Quick D-to-D Reverse: Break Caledon forecheck pressure with early puck reversal behind the net.",
+        "Protect the Slot (House): Lock down inside-the-dots real estate and tie up Bennett/Vance sticks.",
+        "Disciplined 35-45s Shifts: Hard backcheck through middle; match Caledon pace into third period."
+      ]
+    },
+    "orillia": {
+      "teamName": "Orillia Terriers",
+      "shortName": "Orillia",
+      "abbr": "ORI",
+      "division": "U13A",
+      "gameSheetCode": "U13A-RS-056",
+      "gameSheetUrl": "https://gamesheetstats.com/seasons/15490/teams/534204/schedule?configuration%5Binfinite-scroll%5D=false&configuration%5Blogo%5D=false&filter%5Bquery%5D=orillia",
+      "record": {
+        "gp": 19,
+        "w": 13,
+        "l": 4,
+        "t": 2,
+        "pts": 28,
+        "winPct": ".737"
+      },
+      "stats": {
+        "gf": 64,
+        "ga": 38,
+        "diff": "+26",
+        "gpg": "3.37",
+        "gapg": "2.00",
+        "pim": 68,
+        "pimPg": "6.8"
+      },
+      "specialTeams": {
+        "ppPct": "24.1%",
+        "ppGoals": 14,
+        "ppOpps": 58,
+        "ppGpg": "0.74",
+        "pkPct": "87.2%",
+        "shGoals": 3,
+        "shAllowed": 6,
+        "tendency": "Lethal one-timer from left circle off faceoff wins; aggressive 2-man forecheck on PK."
+      },
+      "last5Games": [
+        {
+          "date": "Nov 06",
+          "opp": "Aurora Tigers",
+          "vsAt": "vs",
+          "score": "9-0",
+          "result": "W",
+          "gf": 9,
+          "ga": 0,
+          "notes": "Controlled neutral zone possession and capitalized on odd-man rushes"
+        },
+        {
+          "date": "Nov 01",
+          "opp": "Newmarket Renegades",
+          "vsAt": "@",
+          "score": "4-1",
+          "result": "W",
+          "gf": 4,
+          "ga": 1,
+          "notes": "Solid road defensive win"
+        },
+        {
+          "date": "Oct 28",
+          "opp": "South Simcoe Storm",
+          "vsAt": "vs",
+          "score": "6-2",
+          "result": "W",
+          "gf": 6,
+          "ga": 2,
+          "notes": "Scored 4 goals in first period"
+        },
+        {
+          "date": "Oct 24",
+          "opp": "Caledon Hawks",
+          "vsAt": "vs",
+          "score": "3-1",
+          "result": "W",
+          "gf": 3,
+          "ga": 1,
+          "notes": "Tightly contested defensive matchup"
+        },
+        {
+          "date": "Oct 18",
+          "opp": "Barrie Colts-T1",
+          "vsAt": "@",
+          "score": "2-3",
+          "result": "L",
+          "gf": 2,
+          "ga": 3,
+          "notes": "Lost in tight one-goal road battle"
+        }
+      ],
+      "dangerPlayers": [
+        {
+          "number": "#88",
+          "name": "Nathan Archer",
+          "pos": "C",
+          "gp": 19,
+          "g": 17,
+          "a": 15,
+          "pts": 32,
+          "pim": 10,
+          "threat": "Dynamic skater, lethal one-timer from left circle.",
+          "counter": "Diamond PK shade towards his off-wing; stick in passing lane."
+        },
+        {
+          "number": "#17",
+          "name": "Brody MacLean",
+          "pos": "RW",
+          "gp": 18,
+          "g": 12,
+          "a": 14,
+          "pts": 26,
+          "pim": 12,
+          "threat": "Relentless forecheck and puck retrieval down low.",
+          "counter": "D-partner must provide immediate reverse option under pressure."
+        },
+        {
+          "number": "#5",
+          "name": "Owen Fischer",
+          "pos": "D",
+          "gp": 19,
+          "g": 4,
+          "a": 16,
+          "pts": 20,
+          "pim": 14,
+          "threat": "Mobile two-way defenseman, excellent transitional vision.",
+          "counter": "F1 force him to his backhand; take away center ice passing lane."
+        }
+      ],
+      "goalie": {
+        "name": "#1 Liam Baxter",
+        "gp": 14,
+        "record": "10-3-1",
+        "gaa": "1.95",
+        "svPct": ".928",
+        "shutouts": 3,
+        "scout": "Elite positioning; seal along the ice is near perfect. Attack with screens, second-chance rebounds, and high corners."
+      },
+      "coachKeys": [
+        "1-2-2 Forecheck Funnel: F1 angle puck carrier to half-wall; seal off center ice.",
+        "Neutral Zone Discipline: Chip pucks deep behind Orillia's pinching defense; avoid turnover at offensive blue line.",
+        "Short Shifts (35-45s): Hard backcheck through center ice; maintain high game pace."
+      ]
+    },
+    "newmarket": {
+      "teamName": "Newmarket Renegades",
+      "shortName": "Newmarket",
+      "abbr": "NEW",
+      "division": "U13A",
+      "gameSheetCode": "U13A-RS-130",
+      "gameSheetUrl": "https://gamesheetstats.com/seasons/15490/teams/534204/schedule?configuration%5Binfinite-scroll%5D=false&configuration%5Blogo%5D=false&filter%5Bquery%5D=newmarket",
+      "record": {
+        "gp": 19,
+        "w": 9,
+        "l": 8,
+        "t": 2,
+        "pts": 20,
+        "winPct": ".526"
+      },
+      "stats": {
+        "gf": 48,
+        "ga": 46,
+        "diff": "+2",
+        "gpg": "2.53",
+        "gapg": "2.42",
+        "pim": 84,
+        "pimPg": "8.4"
+      },
+      "specialTeams": {
+        "ppPct": "18.2%",
+        "ppGoals": 9,
+        "ppOpps": 49,
+        "pkPct": "81.5%",
+        "shGoals": 1,
+        "shAllowed": 9,
+        "tendency": "Fast rush team; attacks wide and throws pucks to low slot."
+      },
+      "last5Games": [
+        {
+          "date": "Nov 01",
+          "opp": "Orillia Terriers",
+          "vsAt": "vs",
+          "score": "1-4",
+          "result": "L",
+          "gf": 1,
+          "ga": 4,
+          "notes": "Held tight through P2 before late penalty trouble"
+        },
+        {
+          "date": "Oct 27",
+          "opp": "Richmond Hill Jaguars",
+          "vsAt": "@",
+          "score": "3-2",
+          "result": "W",
+          "gf": 3,
+          "ga": 2,
+          "notes": "Clutch game winner in final minute"
+        },
+        {
+          "date": "Oct 24",
+          "opp": "Markham Waxers",
+          "vsAt": "vs",
+          "score": "2-5",
+          "result": "L",
+          "gf": 2,
+          "ga": 5,
+          "notes": "Outshot 34-18"
+        },
+        {
+          "date": "Oct 20",
+          "opp": "Aurora Tigers",
+          "vsAt": "vs",
+          "score": "9-1",
+          "result": "W",
+          "gf": 9,
+          "ga": 1,
+          "notes": "Quick scoring bursts off rush"
+        },
+        {
+          "date": "Oct 16",
+          "opp": "Orangeville Flyers",
+          "vsAt": "@",
+          "score": "3-3",
+          "result": "T",
+          "gf": 3,
+          "ga": 3,
+          "notes": "Evenly matched physical contest"
+        }
+      ],
+      "dangerPlayers": [
+        {
+          "number": "#9",
+          "name": "Carter Wells",
+          "pos": "C",
+          "gp": 18,
+          "g": 12,
+          "a": 10,
+          "pts": 22,
+          "pim": 14,
+          "threat": "Speedy rusher with deceptive shoulder dip.",
+          "counter": "Gap control; keep him to the boards."
+        }
+      ],
+      "goalie": {
+        "name": "#30 Max Tremblay",
+        "gp": 11,
+        "record": "6-4-1",
+        "gaa": "2.42",
+        "svPct": ".904",
+        "shutouts": 1,
+        "scout": "Scrambles well; vulnerable to low pad rebounds."
+      },
+      "coachKeys": [
+        "Seal Defensive Blue Line: Deny Renegades clean zone entries.",
+        "Quick Puck Movement: Move puck before getting pinned on the boards.",
+        "Win Net-Front Battles: Tie up sticks in front of our goalie."
+      ]
+    },
+    "markham": {
+      "teamName": "Markham Waxers",
+      "shortName": "Markham",
+      "abbr": "MRK",
+      "division": "U13A",
+      "gameSheetCode": "U13A-RS-168",
+      "gameSheetUrl": "https://gamesheetstats.com/seasons/15490/teams/534204/schedule?configuration%5Binfinite-scroll%5D=false&configuration%5Blogo%5D=false&filter%5Bquery%5D=markham",
+      "record": {
+        "gp": 20,
+        "w": 12,
+        "l": 5,
+        "t": 3,
+        "pts": 27,
+        "winPct": ".675"
+      },
+      "stats": {
+        "gf": 58,
+        "ga": 40,
+        "diff": "+18",
+        "gpg": "2.90",
+        "gapg": "2.00",
+        "pim": 62,
+        "pimPg": "6.2"
+      },
+      "specialTeams": {
+        "ppPct": "21.0%",
+        "ppGoals": 11,
+        "ppOpps": 52,
+        "pkPct": "86.0%",
+        "shGoals": 2,
+        "shAllowed": 7,
+        "tendency": "Strong cycle game below hash marks; uses D for point shots with heavy screens."
+      },
+      "last5Games": [
+        {
+          "date": "Nov 03",
+          "opp": "South Simcoe Storm",
+          "vsAt": "vs",
+          "score": "4-1",
+          "result": "W",
+          "gf": 4,
+          "ga": 1,
+          "notes": "Disciplined two-way clinic"
+        },
+        {
+          "date": "Oct 29",
+          "opp": "Orangeville Flyers",
+          "vsAt": "@",
+          "score": "5-2",
+          "result": "W",
+          "gf": 5,
+          "ga": 2,
+          "notes": "Dominant P2 cycle scoring"
+        },
+        {
+          "date": "Oct 24",
+          "opp": "Newmarket Renegades",
+          "vsAt": "@",
+          "score": "5-2",
+          "result": "W",
+          "gf": 5,
+          "ga": 2,
+          "notes": "Controlled pace throughout"
+        },
+        {
+          "date": "Oct 18",
+          "opp": "Barrie Colts-T1",
+          "vsAt": "vs",
+          "score": "1-2",
+          "result": "L",
+          "gf": 1,
+          "ga": 2,
+          "notes": "Defensive duel"
+        },
+        {
+          "date": "Oct 10",
+          "opp": "Caledon Hawks",
+          "vsAt": "vs",
+          "score": "2-2",
+          "result": "T",
+          "gf": 2,
+          "ga": 2,
+          "notes": "Late equalizer scored"
+        }
+      ],
+      "dangerPlayers": [
+        {
+          "number": "#10",
+          "name": "Ryan Chen",
+          "pos": "C",
+          "gp": 19,
+          "g": 13,
+          "a": 13,
+          "pts": 26,
+          "pim": 6,
+          "threat": "High hockey IQ playmaker; finds seam passes easily.",
+          "counter": "Active sticks to take away passing lanes."
+        }
+      ],
+      "goalie": {
+        "name": "#33 Alex Wong",
+        "gp": 13,
+        "record": "8-3-2",
+        "gaa": "2.05",
+        "svPct": ".920",
+        "shutouts": 2,
+        "scout": "Calm in traffic; test with high shots."
+      },
+      "coachKeys": [
+        "Collapse Slot Defense: Prevent cross-crease passes from corner cycles.",
+        "Transition Offense: Fast breakout to catch aggressive Markham pinching D.",
+        "Special Teams Discipline: Stay out of the box against their 21% PP."
+      ]
+    },
+    "barrie": {
+      "teamName": "Barrie Colts",
+      "shortName": "Barrie",
+      "abbr": "BAR",
+      "division": "U13A",
+      "gameSheetCode": "U13A-RS-174",
+      "gameSheetUrl": "https://gamesheetstats.com/seasons/15490/teams/534204/schedule?configuration%5Binfinite-scroll%5D=false&configuration%5Blogo%5D=false&filter%5Bquery%5D=barrie",
+      "record": {
+        "gp": 20,
+        "w": 14,
+        "l": 3,
+        "t": 3,
+        "pts": 31,
+        "winPct": ".775"
+      },
+      "stats": {
+        "gf": 68,
+        "ga": 32,
+        "diff": "+36",
+        "gpg": "3.40",
+        "gapg": "1.60",
+        "pim": 58,
+        "pimPg": "5.8"
+      },
+      "specialTeams": {
+        "ppPct": "25.5%",
+        "ppGoals": 14,
+        "ppOpps": 55,
+        "pkPct": "88.0%",
+        "shGoals": 3,
+        "shAllowed": 6,
+        "tendency": "Fast-paced offensive transitions and high forecheck pressure."
+      },
+      "last5Games": [
+        {
+          "date": "Nov 04",
+          "opp": "Georgian Bay Islanders",
+          "vsAt": "vs",
+          "score": "5-1",
+          "result": "W",
+          "gf": 5,
+          "ga": 1,
+          "notes": "Overwhelmed defense in P1"
+        },
+        {
+          "date": "Oct 31",
+          "opp": "Caledon Hawks",
+          "vsAt": "@",
+          "score": "2-4",
+          "result": "L",
+          "gf": 2,
+          "ga": 4,
+          "notes": "Penalty trouble in P2"
+        },
+        {
+          "date": "Oct 26",
+          "opp": "TNT Tornados",
+          "vsAt": "vs",
+          "score": "6-0",
+          "result": "W",
+          "gf": 6,
+          "ga": 0,
+          "notes": "Complete shutout performance"
+        },
+        {
+          "date": "Oct 21",
+          "opp": "Upper York Admirals",
+          "vsAt": "@",
+          "score": "4-1",
+          "result": "W",
+          "gf": 4,
+          "ga": 1,
+          "notes": "Controlled neutral zone"
+        },
+        {
+          "date": "Oct 18",
+          "opp": "Orillia Terriers",
+          "vsAt": "vs",
+          "score": "3-2",
+          "result": "W",
+          "gf": 3,
+          "ga": 2,
+          "notes": "Edged out close victory"
+        }
+      ],
+      "dangerPlayers": [
+        {
+          "number": "#97",
+          "name": "Jaxson Cooper",
+          "pos": "C",
+          "gp": 19,
+          "g": 16,
+          "a": 14,
+          "pts": 30,
+          "pim": 8,
+          "threat": "Top scorer in division; quick hands in tight.",
+          "counter": "Double-team below dots; body first."
+        }
+      ],
+      "goalie": {
+        "name": "#30 Caden Miller",
+        "gp": 13,
+        "record": "10-2-1",
+        "gaa": "1.68",
+        "svPct": ".935",
+        "shutouts": 4,
+        "scout": "Quick pads, excellent glove."
+      },
+      "coachKeys": [
+        "Puck Support: Always provide two passing options under high pressure.",
+        "Clear Rebounds: Don't give second chances to Barrie forwards.",
+        "Compete on 50/50 Pucks: Match their work ethic in all 3 zones."
+      ]
+    },
+    "upper_york": {
+      "teamName": "Upper York Admirals",
+      "shortName": "Upper York",
+      "abbr": "UYA",
+      "division": "U13A",
+      "gameSheetCode": "U13A-RS-083",
+      "gameSheetUrl": "https://gamesheetstats.com/seasons/15490/teams/534204/schedule?configuration%5Binfinite-scroll%5D=false&configuration%5Blogo%5D=false&filter%5Bquery%5D=upper%20york",
+      "record": {
+        "gp": 20,
+        "w": 7,
+        "l": 10,
+        "t": 3,
+        "pts": 17,
+        "winPct": ".425"
+      },
+      "stats": {
+        "gf": 41,
+        "ga": 55,
+        "diff": "-14",
+        "gpg": "2.05",
+        "gapg": "2.75",
+        "pim": 90,
+        "pimPg": "9.0"
+      },
+      "specialTeams": {
+        "ppPct": "16.5%",
+        "ppGoals": 8,
+        "ppOpps": 48,
+        "pkPct": "79.2%",
+        "shGoals": 1,
+        "shAllowed": 10,
+        "tendency": "Physical grinding squad; heavy hits along boards."
+      },
+      "last5Games": [
+        {
+          "date": "Nov 04",
+          "opp": "Caledon Hawks",
+          "vsAt": "@",
+          "score": "2-5",
+          "result": "L",
+          "gf": 2,
+          "ga": 5,
+          "notes": "Fell behind early"
+        },
+        {
+          "date": "Oct 30",
+          "opp": "South Simcoe Storm",
+          "vsAt": "vs",
+          "score": "3-3",
+          "result": "T",
+          "gf": 3,
+          "ga": 3,
+          "notes": "Physical back-and-forth tilt"
+        },
+        {
+          "date": "Oct 25",
+          "opp": "Markham Waxers",
+          "vsAt": "@",
+          "score": "1-4",
+          "result": "L",
+          "gf": 1,
+          "ga": 4,
+          "notes": "Limited to 14 shots"
+        },
+        {
+          "date": "Oct 17",
+          "opp": "Caledon Hawks",
+          "vsAt": "@",
+          "score": "1-5",
+          "result": "L",
+          "gf": 1,
+          "ga": 5,
+          "notes": "Outworked on special teams"
+        },
+        {
+          "date": "Oct 04",
+          "opp": "Aurora Tigers",
+          "vsAt": "vs",
+          "score": "11-1",
+          "result": "W",
+          "gf": 11,
+          "ga": 1,
+          "notes": "High offensive output"
+        }
+      ],
+      "dangerPlayers": [
+        {
+          "number": "#91",
+          "name": "Tyson Hill",
+          "pos": "LW",
+          "gp": 18,
+          "g": 11,
+          "a": 9,
+          "pts": 20,
+          "pim": 22,
+          "threat": "Physical power forward; drives hard to net.",
+          "counter": "Steer him wide; use stick checks rather than collision."
+        }
+      ],
+      "goalie": {
+        "name": "#35 Jackson Reed",
+        "gp": 12,
+        "record": "4-6-2",
+        "gaa": "2.85",
+        "svPct": ".892",
+        "shutouts": 0,
+        "scout": "Can be screened easily; high blocker side open."
+      },
+      "coachKeys": [
+        "Head Up on Exits: Keep puck moving quickly to evade physical contact.",
+        "Exploit Their PP Vulnerabilities: Upper York aggressive PK leaves backdoor open.",
+        "Stay Disciplined: Do not take retaliatory penalties."
+      ]
+    },
+    "islanders": {
+      "teamName": "Georgian Bay Islanders",
+      "shortName": "Islanders",
+      "abbr": "GBI",
+      "division": "U13A",
+      "gameSheetCode": "U13A-RS-029",
+      "gameSheetUrl": "https://gamesheetstats.com/seasons/15490/teams/534204/schedule?configuration%5Binfinite-scroll%5D=false&configuration%5Blogo%5D=false&filter%5Bquery%5D=islanders",
+      "record": {
+        "gp": 20,
+        "w": 10,
+        "l": 7,
+        "t": 3,
+        "pts": 23,
+        "winPct": ".575"
+      },
+      "stats": {
+        "gf": 50,
+        "ga": 42,
+        "diff": "+8",
+        "gpg": "2.50",
+        "gapg": "2.10",
+        "pim": 76,
+        "pimPg": "7.6"
+      },
+      "specialTeams": {
+        "ppPct": "20.5%",
+        "ppGoals": 10,
+        "ppOpps": 49,
+        "pkPct": "83.5%",
+        "shGoals": 2,
+        "shAllowed": 8,
+        "tendency": "Fast North-South attack; strong forecheck pressure."
+      },
+      "last5Games": [
+        {
+          "date": "Nov 04",
+          "opp": "Barrie Colts-T1",
+          "vsAt": "@",
+          "score": "1-5",
+          "result": "L",
+          "gf": 1,
+          "ga": 5,
+          "notes": "Overmatched by Barrie speed"
+        },
+        {
+          "date": "Oct 31",
+          "opp": "TNT Tornados",
+          "vsAt": "vs",
+          "score": "4-2",
+          "result": "W",
+          "gf": 4,
+          "ga": 2,
+          "notes": "Solid home ice win"
+        },
+        {
+          "date": "Oct 24",
+          "opp": "Richmond Hill Jaguars",
+          "vsAt": "@",
+          "score": "3-3",
+          "result": "T",
+          "gf": 3,
+          "ga": 3,
+          "notes": "Tight contest throughout"
+        },
+        {
+          "date": "Oct 17",
+          "opp": "Orangeville Flyers",
+          "vsAt": "vs",
+          "score": "4-1",
+          "result": "W",
+          "gf": 4,
+          "ga": 1,
+          "notes": "Controlled both ends of ice"
+        },
+        {
+          "date": "Oct 11",
+          "opp": "Aurora Tigers",
+          "vsAt": "vs",
+          "score": "8-0",
+          "result": "W",
+          "gf": 8,
+          "ga": 0,
+          "notes": "Fast transition rushes"
+        }
+      ],
+      "dangerPlayers": [
+        {
+          "number": "#16",
+          "name": "Hudson White",
+          "pos": "C",
+          "gp": 18,
+          "g": 13,
+          "a": 10,
+          "pts": 23,
+          "pim": 10,
+          "threat": "Speedy center; dangerous off turnover rushes.",
+          "counter": "Center lane support; deny middle ice."
+        }
+      ],
+      "goalie": {
+        "name": "#30 Carson Taylor",
+        "gp": 12,
+        "record": "7-4-1",
+        "gaa": "2.15",
+        "svPct": ".915",
+        "shutouts": 2,
+        "scout": "Compact butterfly; beat him with east-west royal road passes."
+      },
+      "coachKeys": [
+        "Neutral Zone Regroup: Don't force passes through Islanders trap.",
+        "Backcheck with Purpose: Pick up trailing defenseman on rush.",
+        "Traffic at the Net: Put bodies and pucks to the net."
+      ]
+    },
+    "tigers": {
+      "teamName": "Aurora Tigers U13A",
+      "shortName": "Aurora Tigers",
+      "abbr": "TIG",
+      "division": "U13A",
+      "teamId": "534204",
+      "gameSheetUrl": "https://gamesheetstats.com/seasons/15490/teams/534204/schedule",
+      "record": {
+        "gp": 21,
+        "w": 3,
+        "l": 18,
+        "t": 0,
+        "pts": 6,
+        "winPct": ".143"
+      },
+      "stats": {
+        "gf": 31,
+        "ga": 98,
+        "diff": "-67",
+        "gpg": "1.48",
+        "gapg": "4.67",
+        "pim": 64,
+        "pimPg": "3.0"
+      },
+      "specialTeams": {
+        "ppPct": "14.2%",
+        "ppGoals": 4,
+        "ppOpps": 28,
+        "pkPct": "71.5%",
+        "shGoals": 1,
+        "shAllowed": 14,
+        "tendency": "Fast counter-attack and disciplined short shifts; outstanding CAN/AM tournament finalist."
+      },
+      "last5Games": [
+        {
+          "date": "Nov 06",
+          "opp": "Orillia Terriers",
+          "vsAt": "@",
+          "score": "0-9",
+          "result": "L",
+          "gf": 0,
+          "ga": 9,
+          "notes": "Strong physical effort against top-seeded Orillia"
+        },
+        {
+          "date": "Nov 01",
+          "opp": "Tewksbury Redmen",
+          "vsAt": "vs",
+          "score": "3-7",
+          "result": "L",
+          "gf": 3,
+          "ga": 7,
+          "notes": "CAN/AM Gold Medal Game Showcase"
+        },
+        {
+          "date": "Oct 31",
+          "opp": "Skills Competition",
+          "vsAt": "vs",
+          "score": "Event",
+          "result": "W",
+          "gf": 0,
+          "ga": 0,
+          "notes": "CAN/AM Team Skills Showcase"
+        },
+        {
+          "date": "Oct 31",
+          "opp": "Mayfield",
+          "vsAt": "vs",
+          "score": "11-0",
+          "result": "W",
+          "gf": 11,
+          "ga": 0,
+          "notes": "Shutout victory in tournament play"
+        },
+        {
+          "date": "Oct 30",
+          "opp": "East Coast Thunder",
+          "vsAt": "vs",
+          "score": "7-0",
+          "result": "W",
+          "gf": 7,
+          "ga": 0,
+          "notes": "Complete dominant team performance"
+        }
+      ],
+      "goalie": {
+        "name": "#13 Matthew Hart / #98 Hudson Barfitt",
+        "record": "3-18-0",
+        "gaa": "4.45",
+        "svPct": ".882",
+        "shutouts": 2,
+        "scout": "Resilient tandem; exceptional rebound control in high-pressure games."
+      },
+      "coachKeys": [
+        "Protect the House: Lock down slot area and tie up sticks.",
+        "Short Shifts (35-45s): High energy and hard backchecks.",
+        "Quick D-to-D Reverses: Break forecheck pressure early."
+      ]
+    },
+    "south_simcoe": {
+      "teamName": "South Simcoe Storm",
+      "shortName": "South Simcoe",
+      "abbr": "SSS",
+      "division": "U13A",
+      "gameSheetCode": "U13A-RS-070",
+      "gameSheetUrl": "https://gamesheetstats.com/seasons/15490/teams/534204/schedule?configuration%5Binfinite-scroll%5D=false&configuration%5Blogo%5D=false&filter%5Bquery%5D=south%20simcoe",
+      "record": {
+        "gp": 20,
+        "w": 8,
+        "l": 9,
+        "t": 3,
+        "pts": 19,
+        "winPct": ".475"
+      },
+      "stats": {
+        "gf": 45,
+        "ga": 49,
+        "diff": "-4",
+        "gpg": "2.25",
+        "gapg": "2.45",
+        "pim": 74,
+        "pimPg": "7.4"
+      },
+      "specialTeams": {
+        "ppPct": "17.8%",
+        "ppGoals": 9,
+        "ppOpps": 51,
+        "pkPct": "80.5%",
+        "shGoals": 1,
+        "shAllowed": 9,
+        "tendency": "Solid neutral zone structure; relies on counter-attacking off opponent turnovers."
+      },
+      "last5Games": [
+        {
+          "date": "Nov 03",
+          "opp": "Markham Waxers",
+          "vsAt": "@",
+          "score": "1-4",
+          "result": "L",
+          "gf": 1,
+          "ga": 4,
+          "notes": "Outshot in P3"
+        },
+        {
+          "date": "Oct 30",
+          "opp": "Upper York Admirals",
+          "vsAt": "@",
+          "score": "3-3",
+          "result": "T",
+          "gf": 3,
+          "ga": 3,
+          "notes": "Comeback draw from 2 goals down"
+        },
+        {
+          "date": "Oct 28",
+          "opp": "Orillia Terriers",
+          "vsAt": "@",
+          "score": "2-6",
+          "result": "L",
+          "gf": 2,
+          "ga": 6,
+          "notes": "Penalty trouble in P1"
+        },
+        {
+          "date": "Oct 22",
+          "opp": "Richmond Hill Jaguars",
+          "vsAt": "vs",
+          "score": "4-1",
+          "result": "W",
+          "gf": 4,
+          "ga": 1,
+          "notes": "Strong 2-way performance"
+        },
+        {
+          "date": "Oct 17",
+          "opp": "Newmarket Renegades",
+          "vsAt": "vs",
+          "score": "3-2",
+          "result": "W",
+          "gf": 3,
+          "ga": 2,
+          "notes": "Clutch power play game-winner"
+        }
+      ],
+      "dangerPlayers": [
+        {
+          "number": "#14",
+          "name": "Mason Clark",
+          "pos": "RW",
+          "gp": 19,
+          "g": 12,
+          "a": 8,
+          "pts": 20,
+          "pim": 10,
+          "threat": "Heavy wrist shot from high slot.",
+          "counter": "Step up early; block shooting lane."
+        }
+      ],
+      "goalie": {
+        "name": "#1 Connor Wright",
+        "gp": 13,
+        "record": "6-5-2",
+        "gaa": "2.55",
+        "svPct": ".901",
+        "shutouts": 1,
+        "scout": "Consistent positioning; beaten on high glove-side deflections."
+      },
+      "coachKeys": [
+        "Patience in Neutral Zone: Don't force low-percentage passes through their 1-2-2.",
+        "Active Stick in D-Zone: Deny Clark room to set up in the high slot.",
+        "Crash the Net: Create secondary chaos around Connor Wright."
+      ]
+    },
+    "richmond_hill": {
+      "teamName": "Richmond Hill Jaguars",
+      "shortName": "Richmond Hill",
+      "abbr": "RHJ",
+      "division": "U13A",
+      "gameSheetCode": "U13A-RS-153",
+      "gameSheetUrl": "https://gamesheetstats.com/seasons/15490/teams/534204/schedule?configuration%5Binfinite-scroll%5D=false&configuration%5Blogo%5D=false&filter%5Bquery%5D=richmond%20hill",
+      "record": {
+        "gp": 20,
+        "w": 6,
+        "l": 12,
+        "t": 2,
+        "pts": 14,
+        "winPct": ".350"
+      },
+      "stats": {
+        "gf": 36,
+        "ga": 58,
+        "diff": "-22",
+        "gpg": "1.80",
+        "gapg": "2.90",
+        "pim": 80,
+        "pimPg": "8.0"
+      },
+      "specialTeams": {
+        "ppPct": "15.0%",
+        "ppGoals": 7,
+        "ppOpps": 47,
+        "pkPct": "76.5%",
+        "shGoals": 1,
+        "shAllowed": 11,
+        "tendency": "Perimeter passing game; struggles when pressured aggressively on the breakout."
+      },
+      "last5Games": [
+        {
+          "date": "Nov 02",
+          "opp": "Newmarket Renegades",
+          "vsAt": "vs",
+          "score": "2-3",
+          "result": "L",
+          "gf": 2,
+          "ga": 3,
+          "notes": "One-goal heartbreak"
+        },
+        {
+          "date": "Oct 28",
+          "opp": "Markham Waxers",
+          "vsAt": "@",
+          "score": "1-4",
+          "result": "L",
+          "gf": 1,
+          "ga": 4,
+          "notes": "Outshot 28-15"
+        },
+        {
+          "date": "Oct 24",
+          "opp": "Georgian Bay Islanders",
+          "vsAt": "vs",
+          "score": "3-3",
+          "result": "T",
+          "gf": 3,
+          "ga": 3,
+          "notes": "Hard-fought point"
+        },
+        {
+          "date": "Oct 22",
+          "opp": "South Simcoe Storm",
+          "vsAt": "@",
+          "score": "1-4",
+          "result": "L",
+          "gf": 1,
+          "ga": 4,
+          "notes": "Struggled on PK"
+        },
+        {
+          "date": "Oct 15",
+          "opp": "Orangeville Flyers",
+          "vsAt": "vs",
+          "score": "3-1",
+          "result": "W",
+          "gf": 3,
+          "ga": 1,
+          "notes": "Solid defensive effort"
+        }
+      ],
+      "dangerPlayers": [
+        {
+          "number": "#12",
+          "name": "Daniel Lee",
+          "pos": "C",
+          "gp": 19,
+          "g": 10,
+          "a": 8,
+          "pts": 18,
+          "pim": 6,
+          "threat": "Agile playmaker; seeks open ice off rush.",
+          "counter": "Body contact along boards to disrupt flow."
+        }
+      ],
+      "goalie": {
+        "name": "#29 Eric Huang",
+        "gp": 14,
+        "record": "5-8-1",
+        "gaa": "3.10",
+        "svPct": ".885",
+        "shutouts": 0,
+        "scout": "Can be unsettled with sustained net-front pressure and screen shots."
+      },
+      "coachKeys": [
+        "High Forecheck Pressure: Force their defense into hurried breakout passes.",
+        "Capitalize on Power Play: Jaguars PK has allowed 11 PP goals this year.",
+        "Drive the Middle Lane: Open seams in their conservative defensive zone box."
+      ]
+    },
+    "orangeville": {
+      "teamName": "Orangeville Flyers",
+      "shortName": "Orangeville",
+      "abbr": "OVF",
+      "division": "U13A",
+      "gameSheetCode": "U13A-RS-043",
+      "gameSheetUrl": "https://gamesheetstats.com/seasons/15490/teams/534204/schedule?configuration%5Binfinite-scroll%5D=false&configuration%5Blogo%5D=false&filter%5Bquery%5D=orangeville",
+      "record": {
+        "gp": 20,
+        "w": 5,
+        "l": 11,
+        "t": 4,
+        "pts": 14,
+        "winPct": ".350"
+      },
+      "stats": {
+        "gf": 34,
+        "ga": 56,
+        "diff": "-22",
+        "gpg": "1.70",
+        "gapg": "2.80",
+        "pim": 86,
+        "pimPg": "8.6"
+      },
+      "specialTeams": {
+        "ppPct": "14.5%",
+        "ppGoals": 7,
+        "ppOpps": 48,
+        "pkPct": "78.0%",
+        "shGoals": 0,
+        "shAllowed": 10,
+        "tendency": "Gritty, physical forechecking style; dumps puck deep and pursues with 2 men."
+      },
+      "last5Games": [
+        {
+          "date": "Nov 01",
+          "opp": "TNT Tornados",
+          "vsAt": "@",
+          "score": "2-3",
+          "result": "L",
+          "gf": 2,
+          "ga": 3,
+          "notes": "Late goal conceded"
+        },
+        {
+          "date": "Oct 29",
+          "opp": "Markham Waxers",
+          "vsAt": "vs",
+          "score": "2-5",
+          "result": "L",
+          "gf": 2,
+          "ga": 5,
+          "notes": "Outpaced in second period"
+        },
+        {
+          "date": "Oct 23",
+          "opp": "Whitchurch-Stouffville",
+          "vsAt": "vs",
+          "score": "1-4",
+          "result": "L",
+          "gf": 1,
+          "ga": 4,
+          "notes": "Struggled to generate high-danger chances"
+        },
+        {
+          "date": "Oct 16",
+          "opp": "Newmarket Renegades",
+          "vsAt": "vs",
+          "score": "3-3",
+          "result": "T",
+          "gf": 3,
+          "ga": 3,
+          "notes": "Tied with 45 seconds remaining"
+        },
+        {
+          "date": "Oct 12",
+          "opp": "King Rebellion",
+          "vsAt": "@",
+          "score": "4-2",
+          "result": "W",
+          "gf": 4,
+          "ga": 2,
+          "notes": "3 unanswered goals in P3"
+        }
+      ],
+      "dangerPlayers": [
+        {
+          "number": "#18",
+          "name": "Liam Evans",
+          "pos": "C",
+          "gp": 18,
+          "g": 9,
+          "a": 8,
+          "pts": 17,
+          "pim": 16,
+          "threat": "Physical center who thrives in dirty ice areas.",
+          "counter": "Box out in front of net; don't allow stick on ice."
+        }
+      ],
+      "goalie": {
+        "name": "#31 Nolan Hall",
+        "gp": 12,
+        "record": "3-7-2",
+        "gaa": "2.95",
+        "svPct": ".889",
+        "shutouts": 0,
+        "scout": "Aggressive depth; susceptible to dekes and rebound wrap-arounds."
+      },
+      "coachKeys": [
+        "Quick D-to-D Rim: Avoid getting pinned on the backboards by their 2-man forecheck.",
+        "Move Puck Early: Prevent them from slowing down game into a physical grind.",
+        "Control Rebounds: Clear slot immediately."
+      ]
+    },
+    "tnt": {
+      "teamName": "TNT Tornados",
+      "shortName": "TNT",
+      "abbr": "TNT",
+      "division": "U13A",
+      "gameSheetCode": "U13A-RS-092",
+      "gameSheetUrl": "https://gamesheetstats.com/seasons/15490/teams/534204/schedule?configuration%5Binfinite-scroll%5D=false&configuration%5Blogo%5D=false&filter%5Bquery%5D=tnt",
+      "record": {
+        "gp": 20,
+        "w": 8,
+        "l": 10,
+        "t": 2,
+        "pts": 18,
+        "winPct": ".450"
+      },
+      "stats": {
+        "gf": 42,
+        "ga": 48,
+        "diff": "-6",
+        "gpg": "2.10",
+        "gapg": "2.40",
+        "pim": 72,
+        "pimPg": "7.2"
+      },
+      "specialTeams": {
+        "ppPct": "17.0%",
+        "ppGoals": 8,
+        "ppOpps": 47,
+        "pkPct": "82.0%",
+        "shGoals": 1,
+        "shAllowed": 8,
+        "tendency": "Disciplined defensive structure with dangerous counter-rush capability."
+      },
+      "last5Games": [
+        {
+          "date": "Nov 04",
+          "opp": "King Rebellion",
+          "vsAt": "vs",
+          "score": "3-1",
+          "result": "W",
+          "gf": 3,
+          "ga": 1,
+          "notes": "Clean defensive clinic"
+        },
+        {
+          "date": "Nov 01",
+          "opp": "Orangeville Flyers",
+          "vsAt": "vs",
+          "score": "3-2",
+          "result": "W",
+          "gf": 3,
+          "ga": 2,
+          "notes": "Edged ahead in final 5 minutes"
+        },
+        {
+          "date": "Oct 31",
+          "opp": "Georgian Bay Islanders",
+          "vsAt": "@",
+          "score": "2-4",
+          "result": "L",
+          "gf": 2,
+          "ga": 4,
+          "notes": "Conceded 2 PPGs"
+        },
+        {
+          "date": "Oct 26",
+          "opp": "Barrie Colts",
+          "vsAt": "@",
+          "score": "0-6",
+          "result": "L",
+          "gf": 0,
+          "ga": 6,
+          "notes": "Overwhelmed by Barrie attack"
+        },
+        {
+          "date": "Oct 20",
+          "opp": "Whitchurch-Stouffville",
+          "vsAt": "vs",
+          "score": "2-2",
+          "result": "T",
+          "gf": 2,
+          "ga": 2,
+          "notes": "Evenly fought draw"
+        }
+      ],
+      "dangerPlayers": [
+        {
+          "number": "#8",
+          "name": "Gavin Ross",
+          "pos": "RW",
+          "gp": 19,
+          "g": 11,
+          "a": 9,
+          "pts": 20,
+          "pim": 12,
+          "threat": "High velocity shot from right dot.",
+          "counter": "Take away his time and space early."
+        }
+      ],
+      "goalie": {
+        "name": "#1 Hunter Brooks",
+        "gp": 13,
+        "record": "6-6-1",
+        "gaa": "2.48",
+        "svPct": ".906",
+        "shutouts": 1,
+        "scout": "Solid fundamentally; test with east-west passes."
+      },
+      "coachKeys": [
+        "Forecheck F1 Intensity: Disrupt their controlled regroup.",
+        "Protect High Slot: Deny Ross his favorite shooting spot.",
+        "Short Shifts: Maintain energetic forecheck pace."
+      ]
+    },
+    "clippers": {
+      "teamName": "Whitchurch-Stouffville Clippers",
+      "shortName": "Clippers",
+      "abbr": "WSC",
+      "division": "U13A",
+      "gameSheetCode": "U13A-RS-007",
+      "gameSheetUrl": "https://gamesheetstats.com/seasons/15490/teams/534204/schedule?configuration%5Binfinite-scroll%5D=false&configuration%5Blogo%5D=false&filter%5Bquery%5D=clippers",
+      "record": {
+        "gp": 20,
+        "w": 7,
+        "l": 9,
+        "t": 4,
+        "pts": 18,
+        "winPct": ".450"
+      },
+      "stats": {
+        "gf": 40,
+        "ga": 46,
+        "diff": "-6",
+        "gpg": "2.00",
+        "gapg": "2.30",
+        "pim": 68,
+        "pimPg": "6.8"
+      },
+      "specialTeams": {
+        "ppPct": "16.8%",
+        "ppGoals": 8,
+        "ppOpps": 48,
+        "pkPct": "81.0%",
+        "shGoals": 1,
+        "shAllowed": 8,
+        "tendency": "Tight defensive checking; looks to win low-scoring 2-1 or 3-2 games."
+      },
+      "last5Games": [
+        {
+          "date": "Nov 02",
+          "opp": "Barrie Colts",
+          "vsAt": "@",
+          "score": "1-4",
+          "result": "L",
+          "gf": 1,
+          "ga": 4,
+          "notes": "Kept it close until late P3"
+        },
+        {
+          "date": "Oct 28",
+          "opp": "King Rebellion",
+          "vsAt": "vs",
+          "score": "4-0",
+          "result": "W",
+          "gf": 4,
+          "ga": 0,
+          "notes": "Dominated possession and shots"
+        },
+        {
+          "date": "Oct 23",
+          "opp": "Orangeville Flyers",
+          "vsAt": "@",
+          "score": "4-1",
+          "result": "W",
+          "gf": 4,
+          "ga": 1,
+          "notes": "Strong road team win"
+        },
+        {
+          "date": "Oct 20",
+          "opp": "TNT Tornados",
+          "vsAt": "@",
+          "score": "2-2",
+          "result": "T",
+          "gf": 2,
+          "ga": 2,
+          "notes": "Shared points on road"
+        },
+        {
+          "date": "Oct 14",
+          "opp": "Upper York Admirals",
+          "vsAt": "vs",
+          "score": "2-3",
+          "result": "L",
+          "gf": 2,
+          "ga": 3,
+          "notes": "Missed late PP opportunities"
+        }
+      ],
+      "dangerPlayers": [
+        {
+          "number": "#21",
+          "name": "Jordan Bell",
+          "pos": "C",
+          "gp": 19,
+          "g": 10,
+          "a": 9,
+          "pts": 19,
+          "pim": 8,
+          "threat": "Two-way leader; very responsible defensively and lethal off rush.",
+          "counter": "Put high body pressure on him in neutral zone."
+        }
+      ],
+      "goalie": {
+        "name": "#1 Mason Cole",
+        "gp": 14,
+        "record": "6-6-2",
+        "gaa": "2.38",
+        "svPct": ".910",
+        "shutouts": 2,
+        "scout": "Strong lower body; quick kick saves."
+      },
+      "coachKeys": [
+        "Win Special Teams Battle: Match their defensive discipline.",
+        "Fast Zone Entries: Push their defense back on heels.",
+        "Saturate the Net: Get bodies in front of Mason Cole."
+      ]
+    },
+    "king": {
+      "teamName": "King Rebellion",
+      "shortName": "King",
+      "abbr": "KNG",
+      "division": "U13A",
+      "gameSheetCode": "U13A-RS-169",
+      "gameSheetUrl": "https://gamesheetstats.com/seasons/15490/teams/534204/schedule?configuration%5Binfinite-scroll%5D=false&configuration%5Blogo%5D=false&filter%5Bquery%5D=king",
+      "record": {
+        "gp": 20,
+        "w": 4,
+        "l": 13,
+        "t": 3,
+        "pts": 11,
+        "winPct": ".275"
+      },
+      "stats": {
+        "gf": 30,
+        "ga": 62,
+        "diff": "-32",
+        "gpg": "1.50",
+        "gapg": "3.10",
+        "pim": 92,
+        "pimPg": "9.2"
+      },
+      "specialTeams": {
+        "ppPct": "13.5%",
+        "ppGoals": 6,
+        "ppOpps": 45,
+        "pkPct": "75.0%",
+        "shGoals": 1,
+        "shAllowed": 12,
+        "tendency": "Prone to penalty troubles; plays emotional, aggressive style."
+      },
+      "last5Games": [
+        {
+          "date": "Nov 04",
+          "opp": "TNT Tornados",
+          "vsAt": "@",
+          "score": "1-3",
+          "result": "L",
+          "gf": 1,
+          "ga": 3,
+          "notes": "Penalty trouble in P2"
+        },
+        {
+          "date": "Oct 31",
+          "opp": "Richmond Hill Jaguars",
+          "vsAt": "vs",
+          "score": "2-2",
+          "result": "T",
+          "gf": 2,
+          "ga": 2,
+          "notes": "Spirited rivalry draw"
+        },
+        {
+          "date": "Oct 28",
+          "opp": "Whitchurch-Stouffville",
+          "vsAt": "@",
+          "score": "0-4",
+          "result": "L",
+          "gf": 0,
+          "ga": 4,
+          "notes": "Shut out on road"
+        },
+        {
+          "date": "Oct 21",
+          "opp": "South Simcoe Storm",
+          "vsAt": "vs",
+          "score": "1-4",
+          "result": "L",
+          "gf": 1,
+          "ga": 4,
+          "notes": "Chances missed in P1"
+        },
+        {
+          "date": "Oct 15",
+          "opp": "Upper York Admirals",
+          "vsAt": "vs",
+          "score": "3-2",
+          "result": "W",
+          "gf": 3,
+          "ga": 2,
+          "notes": "Best game of month"
+        }
+      ],
+      "dangerPlayers": [
+        {
+          "number": "#15",
+          "name": "Tyler Scott",
+          "pos": "C",
+          "gp": 17,
+          "g": 9,
+          "a": 6,
+          "pts": 15,
+          "pim": 18,
+          "threat": "High energy agitator with quick wrister.",
+          "counter": "Stay disciplined; do not engage in scrums."
+        }
+      ],
+      "goalie": {
+        "name": "#31 Lucas King",
+        "gp": 12,
+        "record": "3-8-1",
+        "gaa": "3.25",
+        "svPct": ".880",
+        "shutouts": 0,
+        "scout": "Rebounds kick out into the slot."
+      },
+      "coachKeys": [
+        "Capitalize on Power Play: King is the most penalized team in the division.",
+        "Stay Composed: Maintain emotional control through whistle scrums.",
+        "Shoot for Rebounds: Pucks directed low will create second and third chances."
+      ]
+    }
+  }
+}
