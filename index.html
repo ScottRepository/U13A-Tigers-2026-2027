@@ -7607,6 +7607,27 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
       }
     }
 
+    async function refreshGameSheetDataFromSource() {
+      try {
+        const res = await fetch('./gamesheet_league_data.json?t=' + Date.now());
+        if (res.ok) {
+          const freshData = await res.json();
+          if (freshData && freshData.teams) {
+            if (typeof GAMESHEET_DATABASE !== 'undefined') {
+              GAMESHEET_DATABASE.teams = freshData.teams;
+              GAMESHEET_DATABASE.league = freshData.league;
+            }
+            if (typeof renderGameSheetNativePanel === 'function') {
+              const match = (typeof SCHEDULE_UPCOMING_MATCHUPS !== 'undefined') ? SCHEDULE_UPCOMING_MATCHUPS.find(g => g.id === 'game_u13a_rs_015') || SCHEDULE_UPCOMING_MATCHUPS[0] : null;
+              if (match) renderGameSheetNativePanel(match);
+            }
+          }
+        }
+      } catch(e) {
+        console.warn('Using bundled GAMESHEET_DATABASE fallback:', e);
+      }
+    }
+
     function promptSwitchRole() {
       openRoleSwitchModal();
     }
@@ -7624,6 +7645,7 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
         if (typeof initTagPlayerDropdown === 'function') initTagPlayerDropdown();
         if (typeof initPassportPlayerDropdown === 'function') initPassportPlayerDropdown();
         if (typeof updatePassportCounters === 'function') updatePassportCounters();
+        if (typeof refreshGameSheetDataFromSource === 'function') refreshGameSheetDataFromSource();
 
         // Restore saved theme colors & sharp geometry
         try {
