@@ -1352,7 +1352,7 @@
             Today's YouTube Live Video URL or Video ID:
           </label>
           <div class="flex gap-2">
-            <input type="text" id="set-live-url-input" class="flex-1 bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-white font-mono text-xs focus:outline-none focus:border-rose-400" placeholder="https://www.youtube.com/watch?v=..." value="https://youtube.com/live/_wlPpzvCb-Q" />
+            <input type="text" id="set-live-url-input" class="flex-1 bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-white font-mono text-xs focus:outline-none focus:border-rose-400" placeholder="https://www.youtube.com/watch?v=..." value="https://www.youtube.com/playlist?list=PLXFVFYYSmylE" />
             <button type="button" onclick="pasteLiveLinkFromClipboard()" class="px-3 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white font-bold text-xs cursor-pointer transition flex items-center gap-1">
               <span>📋</span> <span>Paste</span>
             </button>
@@ -1360,11 +1360,14 @@
 
           <!-- Quick Presets -->
           <div class="flex flex-wrap gap-2 pt-1 text-[10px]">
+            <button type="button" onclick="setLiveLinkPreset('playlist')" class="px-2.5 py-1 rounded-lg bg-red-600/20 hover:bg-red-600/30 text-rose-300 border border-rose-500/40 font-bold cursor-pointer transition flex items-center gap-1">
+              <span>🎬</span> <span>Team Playlist Stream (PLXFVFYYSmylE)</span>
+            </button>
             <button type="button" onclick="setLiveLinkPreset('channel')" class="px-2.5 py-1 rounded-lg bg-rose-500/20 hover:bg-rose-500/30 text-rose-300 border border-rose-400/30 font-bold cursor-pointer transition flex items-center gap-1">
-              <span>⚡</span> <span>Use Channel Permalink (@AuroraTigers/live)</span>
+              <span>⚡</span> <span>Channel (@scarpe93/live)</span>
             </button>
             <button type="button" onclick="setLiveLinkPreset('sample')" class="px-2.5 py-1 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 font-bold cursor-pointer transition">
-              Test Stream (t7i7Z37fLw4)
+              Test Stream
             </button>
           </div>
         </div>
@@ -4797,21 +4800,24 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
         </div>
         
         <!-- 5-TAB STREAMLINED NAVIGATION HEADER -->
-                <!-- LIVE STREAM SIDEBAR HEADER (Visible when watching Live Stream) -->
+        <!-- LIVE STREAM SIDEBAR HEADER (Visible when watching Live Stream) -->
         <div id="sidebar-live-header" class="hidden p-3 bg-slate-950 text-white flex items-center justify-between border-b border-slate-800 shrink-0">
           <div class="flex items-center gap-2">
             <span class="w-2.5 h-2.5 rounded-full bg-rose-500 animate-ping"></span>
             <div>
               <div class="font-display font-black text-xs uppercase tracking-wider text-rose-300">🔴 Live Center &amp; Real-Time Stats</div>
-              <div class="text-[9px] text-slate-400">Live YouTube broadcast + HockeyShift / GameSheet</div>
+              <div class="text-[9px] text-slate-400">YouTube Live (Playlist PLXFVFYYSmylE) + GameSheet #U13A-RS-056</div>
             </div>
           </div>
           <div class="flex items-center gap-1.5">
-            <button type="button" onclick="openSetLiveLinkModal()" class="px-2.5 py-1 rounded-xl bg-rose-600 hover:bg-rose-500 text-white font-bold text-[10px] cursor-pointer transition flex items-center gap-1 shadow-sm" title="Update YouTube Live Stream Link">
-              <span>🔗</span> <span>Set Live Link</span>
+            <a href="https://www.youtube.com/playlist?list=PLXFVFYYSmylE" target="_blank" rel="noopener noreferrer" class="px-2.5 py-1 rounded-xl bg-red-600 hover:bg-red-500 text-white font-bold text-[10px] cursor-pointer transition flex items-center gap-1 shadow-sm" title="Open YouTube Playlist Live">
+              <span>📺</span> <span>YT Live ↗</span>
+            </a>
+            <button type="button" onclick="openSetLiveLinkModal()" class="px-2.5 py-1 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 font-bold text-[10px] cursor-pointer transition flex items-center gap-1 border border-slate-700" title="Configure Live Link">
+              <span>⚙️</span>
             </button>
             <button type="button" onclick="toggleLiveBroadcastMode()" class="px-2.5 py-1 rounded-xl bg-slate-800 hover:bg-slate-700 text-amber-300 font-bold text-[10px] cursor-pointer transition flex items-center gap-1 border border-slate-700" title="Return to Film Archive & Shift Cards">
-              <span>📺</span> <span>Film Archive</span>
+              <span>🎬</span> <span>Film</span>
             </button>
           </div>
         </div>
@@ -4824,15 +4830,15 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
             <div class="flex items-center gap-2">
               <span class="text-2xl">🐯</span>
               <div>
-                <div class="text-[9px] text-amber-400 font-bold uppercase">TIGERS (HOME)</div>
-                <div id="sidebar-live-score-home" class="text-2xl font-black text-white">2</div>
-                <div class="text-[9px] text-slate-400">SOG: <strong id="sidebar-live-sog-home" class="text-amber-300">18</strong></div>
+                <div class="text-[9px] text-amber-400 font-bold uppercase">TIGERS (AWAY)</div>
+                <div id="sidebar-live-score-home" class="text-2xl font-black text-white">0</div>
+                <div class="text-[9px] text-slate-400">SOG: <strong id="sidebar-live-sog-home" class="text-amber-300">0</strong></div>
               </div>
             </div>
 
             <div class="text-center px-3 py-1.5 rounded-xl bg-slate-950 border border-slate-800">
-              <div id="sidebar-live-period" class="text-[10px] text-slate-400 font-bold uppercase">PERIOD 2</div>
-              <div id="sidebar-live-clock" class="text-xl font-black text-amber-400 my-0.5">09:42</div>
+              <div id="sidebar-live-period" class="text-[10px] text-slate-400 font-bold uppercase">PERIOD 1</div>
+              <div id="sidebar-live-clock" class="text-xl font-black text-amber-400 my-0.5">15:00</div>
               <span id="sidebar-live-strength" class="px-1.5 py-0.5 rounded text-[8px] font-bold uppercase bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">
                 5v5 Regular Play
               </span>
@@ -4840,25 +4846,25 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
 
             <div class="flex items-center gap-2 text-right">
               <div>
-                <div id="sidebar-live-opp-name" class="text-[9px] text-slate-400 font-bold uppercase">OPPONENT</div>
-                <div id="sidebar-live-score-away" class="text-2xl font-black text-white">1</div>
-                <div class="text-[9px] text-slate-400">SOG: <strong id="sidebar-live-sog-away" class="text-slate-300">14</strong></div>
+                <div id="sidebar-live-opp-name" class="text-[9px] text-slate-400 font-bold uppercase">ORILLIA (HOME)</div>
+                <div id="sidebar-live-score-away" class="text-2xl font-black text-white">0</div>
+                <div class="text-[9px] text-slate-400">SOG: <strong id="sidebar-live-sog-away" class="text-slate-300">0</strong></div>
               </div>
               <span class="text-2xl">🏒</span>
             </div>
           </div>
 
-          <!-- CAN/AM HockeyShift Live Tournament Banner -->
+          <!-- Official GameSheet York Simcoe League Match Banner -->
           <div class="p-2.5 bg-slate-950 rounded-xl border border-rose-500/40 flex items-center justify-between gap-2">
             <div class="flex items-center gap-2 min-w-0">
-              <span class="px-2 py-0.5 rounded bg-rose-600 text-white text-[9px] font-mono font-black shrink-0">CAN/AM</span>
+              <span class="px-2 py-0.5 rounded bg-emerald-600 text-white text-[9px] font-mono font-black shrink-0">GAMESHEET</span>
               <div class="min-w-0">
-                <div class="text-[11px] font-bold text-white truncate">Lake Placid Game #1372648</div>
-                <div class="text-[9px] text-slate-400 truncate">vs Boston Jr. Terriers @ Herb Brooks Arena</div>
+                <div class="text-[11px] font-bold text-white truncate">York Simcoe Game #U13A-RS-056</div>
+                <div class="text-[9px] text-slate-400 truncate">at Orillia Terriers • Rotary Place (Tonight 8:20 PM)</div>
               </div>
             </div>
-            <a href="https://canam.hockeyshift.com/stats#/1188/game/1372648" target="_blank" rel="noopener" class="px-2.5 py-1 rounded-lg bg-slate-800 hover:bg-slate-700 text-amber-300 border border-slate-700 text-[10px] font-bold shrink-0 flex items-center gap-1" title="Open official CAN/AM tournament game sheet">
-              <span>📊</span> <span>Boxscore ↗</span>
+            <a href="https://www.gamesheetinc.com/stats?seasonId=15490-york-simcoe-minor-hockey-league-a-2026-2027&title=York%20Simcoe%20Minor%20Hockey%20League%20A%20-%202026-2027" target="_blank" rel="noopener noreferrer" class="px-2.5 py-1 rounded-lg bg-emerald-500 hover:bg-emerald-400 text-slate-950 text-[10px] font-black shrink-0 flex items-center gap-1 shadow-sm" title="Open official GameSheet live league score and stats">
+              <span>📊</span> <span>GameSheet ↗</span>
             </a>
           </div>
 
@@ -4875,8 +4881,8 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
               <!-- Tigers Score -->
               <div class="p-2 rounded-lg bg-slate-900 border border-amber-400/30 flex items-center justify-between">
                 <div>
-                  <div class="text-[9px] font-bold text-amber-400 uppercase">🐯 TIGERS</div>
-                  <div id="live-ctrl-score-home" class="text-lg font-black font-mono text-white">2</div>
+                  <div class="text-[9px] font-bold text-amber-400 uppercase">🐯 TIGERS (AWAY)</div>
+                  <div id="live-ctrl-score-home" class="text-lg font-black font-mono text-white">0</div>
                 </div>
                 <div class="flex items-center gap-1">
                   <button type="button" onclick="adjustLiveScore('home', -1)" class="w-6 h-6 rounded bg-slate-800 hover:bg-slate-700 text-slate-300 font-black text-xs cursor-pointer flex items-center justify-center">-</button>
@@ -4889,8 +4895,8 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
               <!-- Opponent Score -->
               <div class="p-2 rounded-lg bg-slate-900 border border-rose-500/30 flex items-center justify-between">
                 <div>
-                  <div class="text-[9px] font-bold text-rose-400 uppercase">🏒 BOSTON</div>
-                  <div id="live-ctrl-score-away" class="text-lg font-black font-mono text-white">1</div>
+                  <div class="text-[9px] font-bold text-rose-400 uppercase">🏒 ORILLIA (HOME)</div>
+                  <div id="live-ctrl-score-away" class="text-lg font-black font-mono text-white">0</div>
                 </div>
                 <div class="flex items-center gap-1">
                   <button type="button" onclick="adjustLiveScore('away', -1)" class="w-6 h-6 rounded bg-slate-800 hover:bg-slate-700 text-slate-300 font-black text-xs cursor-pointer flex items-center justify-center">-</button>
@@ -4904,8 +4910,8 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
             <!-- Period Buttons -->
             <div class="flex items-center gap-1 pt-0.5 text-[10px] font-mono">
               <span class="text-slate-400 font-sans font-bold text-[9px] mr-1">PERIOD:</span>
-              <button type="button" onclick="setLivePeriod(1)" id="live-period-btn-1" class="flex-1 py-0.5 rounded bg-slate-800 hover:bg-slate-700 text-slate-300 font-bold cursor-pointer">P1</button>
-              <button type="button" onclick="setLivePeriod(2)" id="live-period-btn-2" class="flex-1 py-0.5 rounded bg-amber-400 text-slate-950 font-black cursor-pointer">P2</button>
+              <button type="button" onclick="setLivePeriod(1)" id="live-period-btn-1" class="flex-1 py-0.5 rounded bg-amber-400 text-slate-950 font-black cursor-pointer">P1</button>
+              <button type="button" onclick="setLivePeriod(2)" id="live-period-btn-2" class="flex-1 py-0.5 rounded bg-slate-800 hover:bg-slate-700 text-slate-300 font-bold cursor-pointer">P2</button>
               <button type="button" onclick="setLivePeriod(3)" id="live-period-btn-3" class="flex-1 py-0.5 rounded bg-slate-800 hover:bg-slate-700 text-slate-300 font-bold cursor-pointer">P3</button>
               <button type="button" onclick="setLivePeriod('OT')" id="live-period-btn-ot" class="flex-1 py-0.5 rounded bg-slate-800 hover:bg-slate-700 text-slate-300 font-bold cursor-pointer">OT</button>
               <button type="button" onclick="setLivePeriod('FINAL')" id="live-period-btn-final" class="flex-1 py-0.5 rounded bg-slate-800 hover:bg-slate-700 text-slate-300 font-bold cursor-pointer">FINAL</button>
@@ -4921,7 +4927,7 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
               <span>🏒</span> <span>Scout</span>
             </button>
             <button id="sb-live-btn-gamesheet" onclick="switchSidebarLiveTab('gamesheet')" class="flex-1 py-1.5 px-2 rounded-lg text-slate-400 hover:text-white font-bold cursor-pointer transition flex items-center justify-center gap-1">
-              <span>📋</span> <span>Feed</span>
+              <span>📋</span> <span>GameSheet</span>
             </button>
           </div>
 
@@ -4935,7 +4941,7 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
                   <span>1-Tap Shots On Goal (SOG)</span>
                 </span>
                 <span id="sb-live-sog-diff" class="text-[9px] font-mono text-amber-300 bg-amber-400/20 px-1.5 py-0.5 rounded border border-amber-400/30">
-                  Tigers +4 SOG
+                  Tigers 0 SOG
                 </span>
               </div>
 
@@ -4950,21 +4956,21 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
                     <span>🏒</span> <span>+ SOG TIGERS</span>
                   </button>
                   <div class="text-center font-mono text-[10px] text-slate-300">
-                    <span id="sb-sog-count-home" class="font-black text-white text-sm">18</span> shots
+                    <span id="sb-sog-count-home" class="font-black text-white text-sm">0</span> shots
                   </div>
                 </div>
 
                 <!-- Opponent SOG -->
                 <div class="p-2.5 rounded-xl bg-slate-900 border border-rose-500/40 space-y-1.5">
                   <div class="flex items-center justify-between text-[10px]">
-                    <span class="font-bold text-rose-400">🏒 Opponent</span>
+                    <span class="font-bold text-rose-400">🏒 Orillia</span>
                     <button type="button" onclick="undoLiveStat('sog', 'away')" class="text-slate-500 hover:text-slate-300 underline text-[9px] cursor-pointer">Undo</button>
                   </div>
                   <button type="button" onclick="recordLiveStat('sog', 'away')" class="w-full py-2 px-2 rounded-xl bg-rose-600 hover:bg-rose-500 active:scale-95 text-white font-black text-xs flex items-center justify-center gap-1.5 transition cursor-pointer shadow-md">
-                    <span>🥅</span> <span>+ SOG OPP</span>
+                    <span>🥅</span> <span>+ SOG ORILLIA</span>
                   </button>
                   <div class="text-center font-mono text-[10px] text-slate-300">
-                    <span id="sb-sog-count-away" class="font-black text-white text-sm">14</span> shots
+                    <span id="sb-sog-count-away" class="font-black text-white text-sm">0</span> shots
                   </div>
                 </div>
               </div>
@@ -4976,22 +4982,22 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
                 <span class="font-bold text-white text-[11px] uppercase tracking-wider flex items-center gap-1">
                   <span>⭕</span> <span>Live Faceoff Tracker</span>
                 </span>
-                <span id="sb-live-fo-pct" class="font-mono text-emerald-400 font-black text-[11px]">60.7% (17/28)</span>
+                <span id="sb-live-fo-pct" class="font-mono text-emerald-400 font-black text-[11px]">0.0% (0/0)</span>
               </div>
 
               <!-- Center Selector -->
               <div class="grid grid-cols-3 gap-1.5 text-center text-[10px]">
                 <button type="button" id="sb-fo-btn-23" onclick="selectLiveCenter(23)" class="p-1.5 rounded-lg bg-amber-400/20 border-2 border-amber-400 text-amber-300 font-bold cursor-pointer">
                   <div class="font-black text-white text-xs">#23</div>
-                  <div id="sb-fo-stat-23" class="text-[9px] font-mono">8W-4L</div>
+                  <div id="sb-fo-stat-23" class="text-[9px] font-mono">0W-0L</div>
                 </button>
                 <button type="button" id="sb-fo-btn-9" onclick="selectLiveCenter(9)" class="p-1.5 rounded-lg bg-slate-900 border border-slate-700 text-slate-400 font-bold cursor-pointer">
                   <div class="font-black text-white text-xs">#9</div>
-                  <div id="sb-fo-stat-9" class="text-[9px] font-mono">5W-4L</div>
+                  <div id="sb-fo-stat-9" class="text-[9px] font-mono">0W-0L</div>
                 </button>
                 <button type="button" id="sb-fo-btn-18" onclick="selectLiveCenter(18)" class="p-1.5 rounded-lg bg-slate-900 border border-slate-700 text-slate-400 font-bold cursor-pointer">
                   <div class="font-black text-white text-xs">#18</div>
-                  <div id="sb-fo-stat-18" class="text-[9px] font-mono">4W-3L</div>
+                  <div id="sb-fo-stat-18" class="text-[9px] font-mono">0W-0L</div>
                 </button>
               </div>
 
@@ -5009,25 +5015,25 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
             <div class="p-3 bg-slate-950 rounded-2xl border border-slate-800 space-y-2">
               <div class="flex items-center justify-between text-[11px] font-bold text-amber-400 uppercase tracking-wider">
                 <span>⚡ Real-Time Tactical Momentum</span>
-                <span class="text-[9px] font-mono text-emerald-400">P2 Live</span>
+                <span class="text-[9px] font-mono text-emerald-400">Game Day Live</span>
               </div>
               <div class="space-y-1.5 text-[11px]">
                 <div class="p-2 rounded-xl bg-slate-900 border border-emerald-500/40">
                   <div class="flex items-center justify-between text-emerald-300 font-bold text-[10px]">
-                    <span>🛡️ High-Slot Protection</span>
-                    <span class="font-mono">Grade A</span>
+                    <span>🛡️ D-Zone Breakout Support</span>
+                    <span class="font-mono">Ready</span>
                   </div>
                   <p class="text-[10px] text-slate-300 mt-0.5 leading-snug">
-                    Tigers D-pairs have confined opponent to 78% perimeter point shots. Slot rebound containment is preventing high-danger second looks.
+                    Quick D-to-D tape-to-tape reverse to counter Orillia forecheck pressure. Strong weak-side winger rim support.
                   </p>
                 </div>
                 <div class="p-2 rounded-xl bg-slate-900 border border-amber-400/40">
                   <div class="flex items-center justify-between text-amber-300 font-bold text-[10px]">
-                    <span>⚡ Power Play Advantage</span>
-                    <span class="font-mono">1/2 (50%)</span>
+                    <span>⚡ Special Teams Readiness</span>
+                    <span class="font-mono">1-3-1 &amp; Box</span>
                   </div>
                   <p class="text-[10px] text-slate-300 mt-0.5 leading-snug">
-                    Opponent penalty kill collapses into narrow wedge. Weak-side cross-seam lane is open for #10 to feed #23.
+                    PP1 1-3-1 bumper setup ready. Active high sticks on penalty kill to eliminate seam passes.
                   </p>
                 </div>
               </div>
@@ -5037,28 +5043,31 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
           <!-- Sub-Tab 2: Pre-Game Matchup & Opponent Scout -->
           <div id="sb-live-tab-pregame" class="space-y-3 hidden">
             <div class="p-3 bg-slate-950 rounded-2xl border border-slate-800 space-y-2">
-              <span class="font-bold text-white text-[11px] uppercase tracking-wider block">🔑 Coach's 3 Keys to the Game</span>
+              <div class="flex items-center justify-between">
+                <span class="font-bold text-white text-[11px] uppercase tracking-wider block">🔑 Coach's 3 Keys to the Game</span>
+                <span class="text-[9px] font-mono text-amber-400">Rotary Place Rink</span>
+              </div>
               <div class="space-y-1.5 text-[11px] text-slate-300">
                 <div class="flex items-start gap-1.5">
                   <span class="w-4 h-4 rounded-full bg-amber-400 text-slate-950 font-black text-[9px] flex items-center justify-center shrink-0 mt-0.5">1</span>
-                  <span><strong>F3 Discipline:</strong> Stay above the puck on forecheck to eliminate odd-man rushes.</span>
+                  <span><strong>1-2-2 Forecheck Funnel:</strong> F1 angle puck carrier to half-wall; seal off center ice.</span>
                 </div>
                 <div class="flex items-start gap-1.5">
                   <span class="w-4 h-4 rounded-full bg-amber-400 text-slate-950 font-black text-[9px] flex items-center justify-center shrink-0 mt-0.5">2</span>
-                  <span><strong>Stick Position:</strong> Keep sticks on the ice; zero reaching penalties in O-zone.</span>
+                  <span><strong>Protect the House:</strong> Low-slot stick tie-ups; clear second rebounds to corner.</span>
                 </div>
                 <div class="flex items-start gap-1.5">
                   <span class="w-4 h-4 rounded-full bg-amber-400 text-slate-950 font-black text-[9px] flex items-center justify-center shrink-0 mt-0.5">3</span>
-                  <span><strong>Net-Front Screen:</strong> Screen goalie vision on all point shots.</span>
+                  <span><strong>Short Shifts (35–45s):</strong> Hard backcheck through center ice; maintain high game pace.</span>
                 </div>
               </div>
             </div>
 
             <div class="p-3 bg-slate-950 rounded-2xl border border-slate-800 space-y-1.5">
-              <span class="font-bold text-rose-300 text-[11px] uppercase tracking-wider block">⚠️ Danger Player Watch</span>
+              <span class="font-bold text-rose-300 text-[11px] uppercase tracking-wider block">⚠️ Matchup Detail: Orillia Terriers</span>
               <div class="p-2 rounded-xl bg-slate-900 border border-rose-500/30 text-[10px] space-y-1">
-                <div class="font-bold text-white">#14 Cole Miller (C) • 18G, 12A</div>
-                <div class="text-slate-400">Threat: Curl &amp; drag wrist shot from right circle. Counter: Gap up early at red line.</div>
+                <div class="font-bold text-white">YSMHL Regular Season Game #U13A-RS-056</div>
+                <div class="text-slate-400">Arena: Rotary Place (100 University Ave, Orillia, ON) • 8:20 PM EST puck drop. Tigers skating in Away (Black) jerseys.</div>
               </div>
             </div>
           </div>
@@ -5078,17 +5087,29 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
               </div>
             </div>
 
-            <!-- Play-by-Play List -->
+            <!-- Official GameSheet Embed & Direct Link -->
+            <div class="p-3 bg-slate-950 rounded-2xl border border-slate-800 space-y-2">
+              <div class="flex items-center justify-between">
+                <span class="font-bold text-white text-[11px] uppercase tracking-wider flex items-center gap-1.5">
+                  <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+                  <span>Official GameSheet Live Scores</span>
+                </span>
+                <a href="https://www.gamesheetinc.com/stats?seasonId=15490-york-simcoe-minor-hockey-league-a-2026-2027&title=York%20Simcoe%20Minor%20Hockey%20League%20A%20-%202026-2027" target="_blank" rel="noopener noreferrer" class="text-[10px] text-emerald-400 hover:underline font-bold">
+                  Open New Tab ↗
+                </a>
+              </div>
+              <div class="w-full h-80 rounded-xl overflow-hidden border border-slate-800 bg-white relative">
+                <iframe src="https://www.gamesheetinc.com/stats?seasonId=15490-york-simcoe-minor-hockey-league-a-2026-2027&title=York%20Simcoe%20Minor%20Hockey%20League%20A%20-%202026-2027" class="w-full h-full border-0" title="GameSheet Official Stats"></iframe>
+              </div>
+            </div>
+
+            <!-- Live Event Ticker -->
             <div class="p-3 bg-slate-950 rounded-2xl border border-slate-800 space-y-1.5 font-mono text-[10px]">
               <div class="font-sans font-bold text-slate-400 uppercase text-[10px]">Official GameSheet Event Ticker</div>
-              <div class="p-2 rounded-lg bg-slate-900 border border-amber-400/50 text-white">
-                <span class="text-amber-400 font-bold">P2 11:40</span> 🚨 GOAL! #23 Carpentier (#10 Manjunath)
-              </div>
-              <div class="p-2 rounded-lg bg-slate-900 border border-slate-800 text-slate-300">
-                <span class="text-sky-300">P2 07:15</span> Penalty: Newmarket #14 Tripping (2:00)
-              </div>
-              <div class="p-2 rounded-lg bg-slate-900 border border-amber-400/50 text-white">
-                <span class="text-amber-400 font-bold">P1 08:22</span> 🚨 GOAL! #11 Bichay (Unassisted)
+              <div id="live-gamesheet-ticker-list" class="space-y-1">
+                <div class="p-2 rounded-lg bg-slate-900 border border-slate-800 text-slate-300">
+                  <span class="text-amber-400 font-bold">8:20 PM</span> Standby for Puck Drop: Aurora Tigers U13A at Orillia Terriers (#U13A-RS-056)
+                </div>
               </div>
             </div>
           </div>
@@ -16426,17 +16447,23 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
     // =========================================================================
 
     let isLiveBroadcastActive = false;
-    let liveStreamVideoId = "_wlPpzvCb-Q"; // Today: CAN/AM Challenge Cup vs Boston Jr. Terriers // Default sample or channel live stream
+    const YOUTUBE_LIVE_PLAYLIST_ID = "PLXFVFYYSmylE";
+    let liveStreamVideoId = "JJd6PGgJeG8"; // Default latest game in playlist; will load playlist by default
     let liveGameSheetState = {
-      homeScore: 2,
-      awayScore: 1,
-      period: 2,
-      clockSec: 582, // 09:42 remaining
-      strength: "5v5",
-      sogHome: 18,
-      sogAway: 14,
-      cheersApplause: 24,
-      cheersTigers: 42,
+      matchTitle: "Aurora Tigers U13A at Orillia Terriers",
+      leagueCode: "U13A-RS-056",
+      seasonId: "15490",
+      arena: "Rotary Place, Orillia, ON",
+      time: "8:20 PM EST",
+      homeScore: 0,
+      awayScore: 0,
+      period: 1,
+      clockSec: 900, // 15:00
+      strength: "5v5 Regular Play",
+      sogHome: 0,
+      sogAway: 0,
+      cheersApplause: 0,
+      cheersTigers: 0,
       running: true
     };
     let liveHudTimer = null;
@@ -16450,18 +16477,16 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
       if (toggle && toggle.checked !== undefined) return toggle.checked;
       if (saved.isLive !== undefined) return saved.isLive;
       if (saved.active !== undefined) return saved.active;
-      // Default to online when active live video ID is configured
-      if (liveStreamVideoId) return true;
       return true;
     }
 
     function getNextScheduledGameSummary() {
       const upcoming = (typeof SCHEDULE_UPCOMING_MATCHUPS !== 'undefined') ? SCHEDULE_UPCOMING_MATCHUPS : [];
-      const nextMatch = upcoming.find(g => g.eventType === 'tournament' || g.eventType === 'league') || upcoming[0];
+      const nextMatch = upcoming.find(g => g.eventType === 'league' || g.eventType === 'tournament') || upcoming[0];
       if (nextMatch) {
-        return `${nextMatch.date || 'Upcoming Match'} at ${nextMatch.time || 'TBD'} • ${nextMatch.title} @ ${nextMatch.arena || 'Arena'}`;
+        return `${nextMatch.date || 'Tonight'} at ${nextMatch.time || '8:20 PM EST'} • ${nextMatch.title} @ ${nextMatch.arena || 'Rotary Place'}`;
       }
-      return "Friday, Nov 6, 2026 at 1:15 PM EST • CAN/AM Challenge Cup vs Boston Jr. Terriers @ Lake Placid Olympic Center";
+      return "Tonight, Friday Nov 6, 2026 at 8:20 PM EST • York Simcoe Match vs Orillia Terriers @ Rotary Place (U13A-RS-056)";
     }
 
     function switchSidebarLiveTab(tab) {
@@ -16478,6 +16503,86 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
           sec.classList.toggle('hidden', t !== tab);
         }
       });
+    }
+
+    function loadLivePlaylistStream() {
+      const playlistId = YOUTUBE_LIVE_PLAYLIST_ID;
+      
+      const vText = document.getElementById('v-status-text');
+      const vDot = document.getElementById('v-status-dot');
+      if (vText) vText.innerText = "LIVE STREAM";
+      if (vDot) vDot.className = "w-2 h-2 rounded-full bg-rose-500 animate-pulse";
+      const oppAbbr = document.getElementById('v-opp-abbr');
+      if (oppAbbr) oppAbbr.innerText = "ORI";
+
+      // If YouTube IFrame API player is ready and supports playlist loading
+      if (isPlayerReady && ytPlayer) {
+        if (typeof ytPlayer.loadPlaylist === 'function') {
+          try {
+            ytPlayer.loadPlaylist({
+              list: playlistId,
+              listType: 'playlist',
+              index: 0
+            });
+            return;
+          } catch(e) {
+            console.warn("ytPlayer.loadPlaylist failed, trying video fallback:", e);
+          }
+        }
+        if (typeof ytPlayer.loadVideoById === 'function' && liveStreamVideoId) {
+          try {
+            ytPlayer.loadVideoById({ videoId: liveStreamVideoId, startSeconds: 0 });
+            return;
+          } catch(e2){}
+        }
+      }
+
+      // Direct iframe fallback loading playlist
+      mountDirectPlaylistFallback(playlistId);
+    }
+
+    function mountDirectPlaylistFallback(playlistId) {
+      if (!playlistId) playlistId = YOUTUBE_LIVE_PLAYLIST_ID;
+      isPlayerReady = true;
+      const container = document.getElementById('video-container');
+      if (!container) return;
+      container.innerHTML = `<iframe id="yt-direct-iframe" class="w-full h-full border-0" src="https://www.youtube.com/embed/videoseries?list=${playlistId}&enablejsapi=1&autoplay=1&rel=0&playsinline=1" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>`;
+      const iframeEl = document.getElementById('yt-direct-iframe');
+      ytPlayer = {
+        seekTo: (sec) => {
+          if (iframeEl && iframeEl.contentWindow) {
+            iframeEl.contentWindow.postMessage(JSON.stringify({ event: 'command', func: 'seekTo', args: [sec, true] }), '*');
+          }
+        },
+        playVideo: () => {
+          if (iframeEl && iframeEl.contentWindow) {
+            iframeEl.contentWindow.postMessage(JSON.stringify({ event: 'command', func: 'playVideo', args: [] }), '*');
+          }
+        },
+        pauseVideo: () => {
+          if (iframeEl && iframeEl.contentWindow) {
+            iframeEl.contentWindow.postMessage(JSON.stringify({ event: 'command', func: 'pauseVideo', args: [] }), '*');
+          }
+        },
+        loadVideoById: (opt) => {
+          const vid = typeof opt === 'string' ? opt : (opt.videoId || opt);
+          if (iframeEl) iframeEl.src = `https://www.youtube.com/embed/${vid}?enablejsapi=1&autoplay=1&rel=0&playsinline=1`;
+        },
+        cueVideoById: (opt) => {
+          const vid = typeof opt === 'string' ? opt : (opt.videoId || opt);
+          if (iframeEl) iframeEl.src = `https://www.youtube.com/embed/${vid}?enablejsapi=1&autoplay=0&rel=0&playsinline=1`;
+        },
+        loadPlaylist: (opt) => {
+          const listId = typeof opt === 'string' ? opt : (opt.list || opt.playlistId || playlistId);
+          if (iframeEl) iframeEl.src = `https://www.youtube.com/embed/videoseries?list=${listId}&enablejsapi=1&autoplay=1&rel=0&playsinline=1`;
+        },
+        getCurrentTime: () => getThrottledPlayerTime() || 0,
+        getPlayerState: () => 1,
+        setVolume: (val) => {},
+        unMute: () => {},
+        destroy: () => { if (container) container.innerHTML = ''; }
+      };
+      resizeCanvas();
     }
 
     function toggleLiveBroadcastMode() {
@@ -16524,13 +16629,12 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
           if (offlinePlaceholder) offlinePlaceholder.classList.add('hidden');
           if (hud) hud.classList.remove('hidden');
 
-          // Load live stream video into workspace
-          if (isPlayerReady && ytPlayer && typeof ytPlayer.loadVideoById === 'function') {
-            ytPlayer.loadVideoById({ videoId: liveStreamVideoId, startSeconds: 0 });
-          }
+          // Load live stream video from playlist PLXFVFYYSmylE
+          loadLivePlaylistStream();
 
           startLiveScoreboardClock();
-          showToast("🔴 Live Game Broadcast Active with Real-Time GameSheet Telemetry!");
+          renderLiveScoreboardHud();
+          showToast("🔴 Live Game Broadcast Active • Streamed from YouTube Playlist PLXFVFYYSmylE!");
         } else {
           // OFFLINE STATE: No ticking clock, no simulated running scores
           if (hud) hud.classList.add('hidden');
@@ -16567,7 +16671,12 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
 
         // Restore game archive video
         if (currentGame && isPlayerReady && ytPlayer) {
-          ytPlayer.loadVideoById({ videoId: currentGame.youtube_video_id || "t7i7Z37fLw4", startSeconds: 0 });
+          const vidId = currentGame.youtube_video_id || (currentGame.id ? currentGame.id.replace('game_', '') : 'JJd6PGgJeG8');
+          if (typeof ytPlayer.loadVideoById === 'function') {
+            ytPlayer.loadVideoById({ videoId: vidId, startSeconds: 0 });
+          } else {
+            mountDirectIframeFallback(vidId);
+          }
         }
         syncScoreboardOverlayToPlayback(0);
         showToast("Switched back to Film Archive mode with verified shifts.");
@@ -16627,19 +16736,33 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
     }
 
     function adjustLiveScore(team, delta) {
-      if (team === 'home') {
+      if (team === 'home' || team === 'tigers') {
         liveGameSheetState.homeScore = Math.max(0, liveGameSheetState.homeScore + delta);
         if (delta > 0 && typeof playArenaGoalHornSound === 'function') {
           playArenaGoalHornSound();
-          showToast(`🚨 GOAL AURORA TIGERS! (${liveGameSheetState.homeScore} - ${liveGameSheetState.awayScore})`);
+          showToast(`🚨 GOAL AURORA TIGERS! (Tigers ${liveGameSheetState.homeScore} - ${liveGameSheetState.awayScore} Orillia)`);
+          addLiveTickerEvent(`🚨 GOAL! Aurora Tigers score! (Tigers ${liveGameSheetState.homeScore} - ${liveGameSheetState.awayScore} Orillia)`);
         }
       } else {
         liveGameSheetState.awayScore = Math.max(0, liveGameSheetState.awayScore + delta);
         if (delta > 0) {
-          showToast(`Goal Opponent (${liveGameSheetState.homeScore} - ${liveGameSheetState.awayScore})`);
+          showToast(`Goal Orillia Terriers (Tigers ${liveGameSheetState.homeScore} - ${liveGameSheetState.awayScore} Orillia)`);
+          addLiveTickerEvent(`Goal Orillia Terriers (Tigers ${liveGameSheetState.homeScore} - ${liveGameSheetState.awayScore} Orillia)`);
         }
       }
       renderLiveScoreboardHud();
+    }
+
+    function addLiveTickerEvent(text) {
+      const ticker = document.getElementById('live-gamesheet-ticker-list');
+      if (!ticker) return;
+      const min = Math.floor(liveGameSheetState.clockSec / 60);
+      const sec = liveGameSheetState.clockSec % 60;
+      const timeStr = `P${liveGameSheetState.period} ${min}:${sec.toString().padStart(2, '0')}`;
+      const item = document.createElement('div');
+      item.className = "p-2 rounded-lg bg-slate-900 border border-amber-400/50 text-white animate-in fade-in duration-200";
+      item.innerHTML = `<span class="text-amber-400 font-bold">${timeStr}</span> ${escapeHtml(text)}`;
+      ticker.prepend(item);
     }
 
     function setLivePeriod(p) {
@@ -16647,6 +16770,9 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
       if (p === 'FINAL') {
         liveGameSheetState.running = false;
         liveGameSheetState.clockSec = 0;
+        addLiveTickerEvent("Game Final: Aurora Tigers vs Orillia Terriers");
+      } else {
+        addLiveTickerEvent(`Period ${p} started`);
       }
       renderLiveScoreboardHud();
       showToast(`Period set to ${p}`);
@@ -16879,10 +17005,26 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
       }
     }
 
+    function extractYouTubePlaylistId(input) {
+      if (!input) return "";
+      let str = String(input).trim();
+      if (/^PL[a-zA-Z0-9_-]+$/.test(str)) {
+        return str;
+      }
+      const listMatch = str.match(/[?&]list=([a-zA-Z0-9_-]+)/);
+      if (listMatch) return listMatch[1];
+      const studioMatch = str.match(/playlist\/([a-zA-Z0-9_-]+)/);
+      if (studioMatch) return studioMatch[1];
+      return "";
+    }
+
     function setLiveLinkPreset(type) {
       const input = document.getElementById('set-live-url-input');
       if (!input) return;
-      if (type === 'channel') {
+      if (type === 'playlist') {
+        input.value = "https://www.youtube.com/playlist?list=PLXFVFYYSmylE";
+        showToast("🎬 Set to Team Live Playlist: PLXFVFYYSmylE");
+      } else if (type === 'channel') {
         input.value = "https://www.youtube.com/@AuroraTigers/live";
         showToast("⚡ Set to Permanent Channel Permalink: @AuroraTigers/live");
       } else if (type === 'sample') {
@@ -16903,8 +17045,14 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
         return;
       }
 
+      const playlistId = extractYouTubePlaylistId(rawUrl);
+      if (playlistId) {
+        YOUTUBE_LIVE_PLAYLIST_ID = playlistId;
+      }
       const vidId = extractYouTubeVideoId(rawUrl);
-      liveStreamVideoId = vidId;
+      if (vidId && !playlistId) {
+        liveStreamVideoId = vidId;
+      }
 
       // Sync to Live Center modal input as well
       const centerInput = document.getElementById('live-stream-url-input');
@@ -16915,7 +17063,8 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
       const shouldBeLive = toggle ? toggle.checked : true;
 
       const broadcastPayload = {
-        videoId: vidId,
+        videoId: vidId || "",
+        playlistId: playlistId || YOUTUBE_LIVE_PLAYLIST_ID,
         url: rawUrl,
         title: matchTitle,
         arena: arenaName,
@@ -16940,15 +17089,15 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
       if (shouldBeLive) {
         if (!isLiveBroadcastActive) {
           toggleLiveBroadcastMode();
-        } else if (isPlayerReady && ytPlayer && typeof ytPlayer.loadVideoById === 'function') {
-          ytPlayer.loadVideoById({ videoId: liveStreamVideoId, startSeconds: 0 });
+        } else {
+          loadLivePlaylistStream();
         }
       } else if (isLiveBroadcastActive) {
         toggleLiveBroadcastMode();
       }
 
       closeSetLiveLinkModal();
-      showToast(`📡 Broadcast stream updated! Parents can 1-tap "Watch Live" to view: ${vidId}`);
+      showToast(`📡 Broadcast stream updated! Parents can 1-tap "Watch Live" to view: ${playlistId ? 'Playlist ' + playlistId : vidId}`);
     }
 
     // =========================================================================
@@ -16956,6 +17105,37 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
     // =========================================================================
 
     const SCHEDULE_UPCOMING_MATCHUPS = [
+      {
+        id: "game_u13a_rs_056",
+        eventType: "league",
+        division: "U13A",
+        title: "York Simcoe League: Aurora Tigers U13A at Orillia Terriers",
+        opponent: "Orillia Terriers",
+        opponentRecord: "8-4-1",
+        opponentPct: ".654",
+        opponentStats: "YSMHL Regular Season Game #U13A-RS-056",
+        opponentHome: "Rotary Place, Orillia, ON",
+        date: "Friday, Nov 6, 2026",
+        time: "8:20 PM EST",
+        arena: "Rotary Place (West Orillia Sports Complex)",
+        arenaType: "standard",
+        rinkDimensions: "200' x 85' Standard Ice Sheet",
+        mapsUrl: "https://maps.google.com/?q=100+University+Avenue+Orillia+ON",
+        jersey: "Away (Black)",
+        source: "TeamSnap Master + GameSheet Inc.",
+        sourceType: "gamesheet",
+        isHome: false,
+        isTournament: false,
+        leagueName: "York Simcoe Minor Hockey League (OMHA)",
+        gameSheetCode: "U13A-RS-056",
+        gameSheetSeasonId: "15490",
+        gameSheetUrl: "https://www.gamesheetinc.com/stats?seasonId=15490-york-simcoe-minor-hockey-league-a-2026-2027&title=York%20Simcoe%20Minor%20Hockey%20League%20A%20-%202026-2027",
+        coachKeys: [
+          "Neutral Zone Trap Breakdown: Quick D-to-D reverse before Orillia's 1-2-2 forecheck can pin puck to the half-wall.",
+          "Protect the House: Low-slot stick tie-ups; clear all second-chance rebounds into corners.",
+          "Short Disciplined Shifts: 35-45s shifts with relentless hard backchecking through the middle."
+        ]
+      },
       {
         id: "practice_thurs",
         eventType: "practice",
