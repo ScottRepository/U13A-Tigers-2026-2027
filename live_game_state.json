@@ -1,0 +1,19 @@
+{
+  "gameCode": "U13A-RS-015",
+  "gameId": 3156645,
+  "date": "Nov 10, 2026",
+  "time": "7:30 PM",
+  "location": "Aurora Rec Complex (Pfaff)",
+  "status": "scheduled",
+  "isLive": false,
+  "homeTeam": "Aurora Tigers U13 A",
+  "homeScore": 0,
+  "homeShots": 0,
+  "awayTeam": "Caledon Hawks 13 A",
+  "awayScore": 0,
+  "awayShots": 0,
+  "period": "1",
+  "clock": "15:00",
+  "events": [],
+  "lastUpdated": "2026-11-07T20:36:34.307865Z"
+}

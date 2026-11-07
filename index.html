@@ -53755,6 +53755,45 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
       resizeCanvas();
     }
 
+        let livePollerTimer = null;
+
+    async function pollLiveGameSheetState() {
+      if (!isLiveBroadcastActive) return;
+      try {
+        const res = await fetch('./live_game_state.json?t=' + Date.now());
+        if (res.ok) {
+          const liveState = await res.json();
+          if (liveState && (liveState.isLive || liveState.status === 'in_progress' || liveState.status === 'scheduled')) {
+            const hScore = Number(liveState.homeScore || 0);
+            const aScore = Number(liveState.awayScore || 0);
+
+            if (hScore !== liveGameSheetState.homeScore || aScore !== liveGameSheetState.awayScore) {
+              const oldHome = liveGameSheetState.homeScore;
+              const oldAway = liveGameSheetState.awayScore;
+              liveGameSheetState.homeScore = hScore;
+              liveGameSheetState.awayScore = aScore;
+              if (liveState.period && liveState.period !== 'Live') {
+                liveGameSheetState.period = liveState.period;
+              }
+              renderLiveScoreboardHud();
+
+              if (hScore > oldHome) {
+                showToast(`🚨 GOAL! ${liveState.homeTeam || 'Tigers'} score! (${hScore} - ${aScore})`);
+                if (typeof addLiveTickerEvent === 'function') {
+                  addLiveTickerEvent(`🚨 GOAL! ${liveState.homeTeam || 'Tigers'} score! (${hScore} - ${aScore})`);
+                }
+              } else if (aScore > oldAway) {
+                showToast(`🚨 GOAL! ${liveState.awayTeam || 'Opponent'} score! (${hScore} - ${aScore})`);
+                if (typeof addLiveTickerEvent === 'function') {
+                  addLiveTickerEvent(`🚨 GOAL! ${liveState.awayTeam || 'Opponent'} score! (${hScore} - ${aScore})`);
+                }
+              }
+            }
+          }
+        }
+      } catch(e){}
+    }
+
     function toggleLiveBroadcastMode() {
       isLiveBroadcastActive = !isLiveBroadcastActive;
       const hud = document.getElementById('live-broadcast-hud');
@@ -53812,6 +53851,10 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
 
           startLiveScoreboardClock();
           renderLiveScoreboardHud();
+          if (!livePollerTimer) {
+            pollLiveGameSheetState();
+            livePollerTimer = setInterval(pollLiveGameSheetState, 15000);
+          }
           showToast(`🔴 Live Game Broadcast Active • Stream: ${liveStreamVideoId}`);
         } else {
           // OFFLINE / STANDBY STATE
@@ -60430,7 +60473,7 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
       ]
     }
   },
-  "lastSynced": "2026-11-07T20:28:49.269907Z"
+  "lastSynced": "2026-11-07T20:36:34.053965Z"
 };
 
     function getOpponentGameSheetData(oppNameOrCode) {

@@ -46,5 +46,5 @@ jobs:
         run: |
           git config --global user.name "Hockey Auto Bot"
           git config --global user.email "bot@hockey-app.local"
-          git add games_library.json tracking/ gamesheet_league_data.json index.html
+          git add games_library.json tracking/ gamesheet_league_data.json live_game_state.json index.html
           git diff --staged --quiet || (git commit -m "chore(sync): auto-synced YouTube games, YOLOv8 tracking & GameSheet league data [skip ci]" && git pull --rebase origin main && git push origin main)

@@ -25,6 +25,7 @@ logger = logging.getLogger("GameSheetSync")
 ROOT_DIR = Path(__file__).resolve().parent
 DATA_FILE = ROOT_DIR / "gamesheet_league_data.json"
 INDEX_FILE = ROOT_DIR / "index.html"
+LIVE_GAME_FILE = ROOT_DIR / "live_game_state.json"
 
 USER_AGENT = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
 SEASON_ID = "15490"
@@ -187,6 +188,59 @@ def compute_team_metrics(team_id: int, games: List[Dict[str, Any]]) -> Dict[str,
         "headToHead": h2h_vs_tigers
     }
 
+
+def extract_live_game_state(tigers_games: List[Dict[str, Any]]) -> Dict[str, Any]:
+    active_game = None
+    for g in tigers_games:
+        if g.get("status") in ["in_progress", "live"]:
+            active_game = g
+            break
+    if not active_game:
+        for g in tigers_games:
+            if g.get("status") == "scheduled":
+                active_game = g
+                break
+    if not active_game and tigers_games:
+        active_game = tigers_games[-1]
+
+    if not active_game:
+        return {}
+
+    home = active_game.get("home", {})
+    vis = active_game.get("visitor", {})
+    is_live = active_game.get("status") in ["in_progress", "live"]
+
+    events = []
+    for side, side_label in [(home, "Home"), (vis, "Away")]:
+        for gd in (side.get("goalDetails") or []):
+            events.append({
+                "period": gd.get("period"),
+                "time": gd.get("clockTime"),
+                "team": side_label,
+                "teamName": side.get("title", ""),
+                "desc": f"Goal scored in P{gd.get('period')} ({gd.get('clockTime')})"
+            })
+
+    return {
+        "gameCode": active_game.get("number", "U13A-RS-015"),
+        "gameId": active_game.get("gameId"),
+        "date": active_game.get("date"),
+        "time": active_game.get("time"),
+        "location": active_game.get("location"),
+        "status": active_game.get("status"),
+        "isLive": is_live,
+        "homeTeam": home.get("title", "Aurora Tigers U13 A"),
+        "homeScore": int(home.get("goals") or 0),
+        "homeShots": int(home.get("shots") or 0),
+        "awayTeam": vis.get("title", "Caledon Hawks 13 A"),
+        "awayScore": int(vis.get("goals") or 0),
+        "awayShots": int(vis.get("shots") or 0),
+        "period": "1" if not is_live else "Live",
+        "clock": "15:00" if not is_live else "Live",
+        "events": events,
+        "lastUpdated": datetime.utcnow().isoformat() + "Z"
+    }
+
 def main():
     logger.info("Starting automated GameSheet sync for York Simcoe Minor Hockey League U13A (Season #15490)...")
     
@@ -255,6 +309,15 @@ def main():
             with open(INDEX_FILE, "w", encoding="utf-8") as f:
                 f.write(html)
             logger.info("Synchronized inline GAMESHEET_DATABASE in index.html")
+
+    # Write live game state
+    tigers_team_id = TEAM_MAP["tigers"]["id"]
+    tigers_games = fetch_team_games(tigers_team_id)
+    if tigers_games:
+        live_state = extract_live_game_state(tigers_games)
+        with open(LIVE_GAME_FILE, "w", encoding="utf-8") as f:
+            json.dump(live_state, f, indent=2)
+        logger.info(f"Updated {LIVE_GAME_FILE} with current game: {live_state.get('gameCode')} (status: {live_state.get('status')})")
 
     logger.info("GameSheet sync complete!")
 
