@@ -4588,8 +4588,8 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
                 </button>
               </div>
               <div class="flex items-center gap-1.5">
-                <button type="button" onclick="setLiveLinkPreset('channel'); tuneCurrentLiveStream();" class="px-2 py-1 rounded-lg bg-slate-800 hover:bg-slate-700 text-rose-300 border border-rose-500/40 text-[10px] font-bold cursor-pointer transition flex items-center gap-1" title="Auto-detect current live stream pushed by RTMP Key (gw39-597h-fv3w-g1k6-b7h4)">
-                  <span>⚡</span> <span>Auto-Live (RTMP Key)</span>
+                <button type="button" onclick="checkActiveLivestreamJson(true);" class="px-2 py-1 rounded-lg bg-slate-800 hover:bg-slate-700 text-rose-300 border border-rose-500/40 text-[10px] font-bold cursor-pointer transition flex items-center gap-1" title="Auto-detect current live stream via Scott's Google Live Stream API">
+                  <span>⚡</span> <span>Auto-Detect Live</span>
                 </button>
                 <button type="button" onclick="setLiveLinkPreset('controlroom'); tuneCurrentLiveStream();" class="px-2 py-1 rounded-lg bg-slate-800 hover:bg-slate-700 text-amber-300 border border-amber-400/30 text-[10px] font-bold cursor-pointer transition flex items-center gap-1" title="Tune Scott's active YouTube Studio stream (hmiiwDm6XqI)">
                   <span>🎯</span> <span>Studio (hmiiwDm6XqI)</span>
@@ -53812,14 +53812,45 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
 
         let livePollerTimer = null;
 
-    async function checkActiveLivestreamJson() {
+    const GOOGLE_LIVE_SYNC_WEB_APP_URL = "https://script.google.com/macros/s/AKfycbwg3qHijcxt4oJdY7Kw-fmVk2MTfbBS87mgyCg_VTYnA1Mgv05myjZqouIus6fxZcbgaA/exec";
+
+    async function checkActiveLivestreamJson(isManual = false) {
+      if (isManual) {
+        showToast("🔍 Auto-detecting live stream from Scott's YouTube account...");
+      }
+      // 1. Check Google Apps Script Live Auto-Detector first
+      try {
+        if (GOOGLE_LIVE_SYNC_WEB_APP_URL) {
+          const gRes = await fetch(GOOGLE_LIVE_SYNC_WEB_APP_URL);
+          if (gRes.ok) {
+            const gData = await gRes.json();
+            if (gData && gData.videoId) {
+              if (gData.isLive || gData.isUpcoming) {
+                if (gData.videoId !== liveStreamVideoId || isManual) {
+                  console.log("⚡ Google Live Stream Auto-Detected:", gData.videoId);
+                  tuneLiveStreamId(gData.videoId);
+                  showToast(`🔴 Live Broadcast Connected: ${gData.title || gData.videoId}`);
+                  return;
+                }
+              }
+            } else if (isManual && gData && gData.message) {
+              showToast("ℹ️ " + gData.message);
+            }
+          }
+        }
+      } catch(e) {
+        console.warn("Google Apps Script sync notice:", e);
+      }
+
+      // 2. Fallback to active_livestream.json
       try {
         const res = await fetch('./active_livestream.json?t=' + Date.now());
         if (res.ok) {
           const data = await res.json();
-          if (data && data.videoId && data.isLive && data.videoId !== liveStreamVideoId && data.videoId !== 'channel') {
-            console.log("⚡ Auto-discovered active livestream via Zapier/JSON:", data.videoId);
+          if (data && data.videoId && data.isLive && (data.videoId !== liveStreamVideoId || isManual)) {
+            console.log("⚡ Auto-discovered active livestream via JSON:", data.videoId);
             tuneLiveStreamId(data.videoId);
+            if (isManual) showToast(`🔴 Live Broadcast Connected: ${data.title || data.videoId}`);
           }
         }
       } catch(e){}
