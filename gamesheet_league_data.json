@@ -658,32 +658,42 @@
       "gameSheetCode": "U13A-RS-083",
       "gameSheetUrl": "https://gamesheetstats.com/seasons/15490/teams/534243/schedule",
       "record": {
-        "gp": 6,
-        "w": 3,
+        "gp": 7,
+        "w": 4,
         "l": 2,
         "t": 1,
-        "pts": 7,
-        "winPct": ".500"
+        "pts": 9,
+        "winPct": ".571"
       },
       "stats": {
-        "gf": 25,
-        "ga": 20,
-        "diff": "+5",
-        "gpg": "4.17",
-        "gapg": "3.33",
-        "pim": 36,
+        "gf": 32,
+        "ga": 21,
+        "diff": "+11",
+        "gpg": "4.57",
+        "gapg": "3.00",
+        "pim": 42,
         "pimPg": "6.0"
       },
       "specialTeams": {
-        "ppPct": "27.8%",
-        "ppGoals": 5,
-        "ppOpps": 18,
-        "pkPct": "80.0%",
+        "ppPct": "32.0%",
+        "ppGoals": 8,
+        "ppOpps": 25,
+        "pkPct": "82.8%",
         "shGoals": 1,
         "shAllowed": 10,
         "tendency": "Physical grinding squad; heavy hits along boards."
       },
       "last5Games": [
+        {
+          "date": "Nov 8, 2026",
+          "opp": "King Rebellion",
+          "vsAt": "@",
+          "score": "7-1",
+          "result": "W",
+          "gf": 7,
+          "ga": 1,
+          "notes": "Away GameSheet regular season box score"
+        },
         {
           "date": "Nov 5, 2026",
           "opp": "Newmarket Renegades",
@@ -722,16 +732,6 @@
           "result": "L",
           "gf": 2,
           "ga": 4,
-          "notes": "Away GameSheet regular season box score"
-        },
-        {
-          "date": "Oct 11, 2026",
-          "opp": "Georgian Bay Islanders",
-          "vsAt": "@",
-          "score": "1-8",
-          "result": "L",
-          "gf": 1,
-          "ga": 8,
           "notes": "Away GameSheet regular season box score"
         }
       ],
@@ -1849,5 +1849,5 @@
       ]
     }
   },
-  "lastSynced": "2026-11-08T14:17:34.695977Z"
+  "lastSynced": "2026-11-08T19:28:00.824263Z"
 }
