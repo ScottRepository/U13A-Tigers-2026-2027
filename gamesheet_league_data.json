@@ -428,32 +428,42 @@
       "gameSheetCode": "U13A-RS-168",
       "gameSheetUrl": "https://gamesheetstats.com/seasons/15490/teams/534252/schedule",
       "record": {
-        "gp": 7,
+        "gp": 8,
         "w": 1,
-        "l": 5,
+        "l": 6,
         "t": 1,
         "pts": 3,
-        "winPct": ".143"
+        "winPct": ".125"
       },
       "stats": {
         "gf": 14,
-        "ga": 37,
-        "diff": "-23",
-        "gpg": "2.00",
-        "gapg": "5.29",
-        "pim": 42,
+        "ga": 44,
+        "diff": "-30",
+        "gpg": "1.75",
+        "gapg": "5.50",
+        "pim": 48,
         "pimPg": "6.0"
       },
       "specialTeams": {
-        "ppPct": "18.8%",
+        "ppPct": "16.7%",
         "ppGoals": 3,
-        "ppOpps": 16,
-        "pkPct": "50.0%",
+        "ppOpps": 18,
+        "pkPct": "46.2%",
         "shGoals": 2,
         "shAllowed": 7,
         "tendency": "Strong cycle game below hash marks; uses D for point shots with heavy screens."
       },
       "last5Games": [
+        {
+          "date": "Nov 7, 2026",
+          "opp": "Barrie Colts U13-2 A Blue",
+          "vsAt": "@",
+          "score": "0-7",
+          "result": "L",
+          "gf": 0,
+          "ga": 7,
+          "notes": "Away GameSheet regular season box score"
+        },
         {
           "date": "Nov 4, 2026",
           "opp": "King Rebellion",
@@ -492,16 +502,6 @@
           "result": "L",
           "gf": 1,
           "ga": 6,
-          "notes": "Home GameSheet regular season box score"
-        },
-        {
-          "date": "Oct 17, 2026",
-          "opp": "Orangeville Flyers",
-          "vsAt": "vs",
-          "score": "4-4",
-          "result": "T",
-          "gf": 4,
-          "ga": 4,
           "notes": "Home GameSheet regular season box score"
         }
       ],
@@ -1849,5 +1849,5 @@
       ]
     }
   },
-  "lastSynced": "2026-11-08T00:20:18.804411Z"
+  "lastSynced": "2026-11-08T07:02:57.348555Z"
 }
