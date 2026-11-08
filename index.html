@@ -53812,8 +53812,22 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
 
         let livePollerTimer = null;
 
+    async function checkActiveLivestreamJson() {
+      try {
+        const res = await fetch('./active_livestream.json?t=' + Date.now());
+        if (res.ok) {
+          const data = await res.json();
+          if (data && data.videoId && data.isLive && data.videoId !== liveStreamVideoId && data.videoId !== 'channel') {
+            console.log("⚡ Auto-discovered active livestream via Zapier/JSON:", data.videoId);
+            tuneLiveStreamId(data.videoId);
+          }
+        }
+      } catch(e){}
+    }
+
     async function pollLiveGameSheetState() {
       if (!isLiveBroadcastActive) return;
+      checkActiveLivestreamJson();
       try {
         const res = await fetch('./live_game_state.json?t=' + Date.now());
         if (res.ok) {
@@ -60877,6 +60891,7 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
     function initAutomatedBroadcastIntegration() {
       initWorkspaceResizer();
       initLiveCloudSync();
+      checkActiveLivestreamJson();
       try {
         populateLiveMatchupDropdown();
         loadCurrentLiveMatchup();
