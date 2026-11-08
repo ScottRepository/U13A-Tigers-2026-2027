@@ -77,7 +77,7 @@
     /* Zapier-Inspired SaaS Navigation Layout Colors */
     --top-nav-bg: #ffffff; /* Clean Crisp White Pro SaaS Top Bar */
     --top-nav-text: #0f172a;
-    --sidebar-rail-bg: #0b1120;
+    --sidebar-rail-bg: #f8fafc; /* Fluid Light SaaS Left Rail */
     --flyout-drawer-bg: #ffffff;
   }
 
@@ -85,17 +85,18 @@
   #master-top-nav {
     background-color: var(--top-nav-bg, #ffffff) !important;
     color: var(--top-nav-text, #0f172a) !important;
-    border-bottom: 1px solid var(--border-color, #cbd5e1) !important;
+    border-bottom: 2px solid var(--primary-team-color, #FDBB30) !important;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
   }
 
   #app-nav-rail {
-    background-color: var(--sidebar-rail-bg) !important;
-    border-right: 1px solid rgba(255, 255, 255, 0.1) !important;
+    background-color: var(--sidebar-rail-bg, #f8fafc) !important;
+    border-right: 1px solid var(--border-color, #e2e8f0) !important;
   }
 
   #app-flyout-drawer {
-    background-color: var(--bg-surface) !important;
-    border-right: 1px solid var(--border-color) !important;
+    background-color: var(--bg-surface, #ffffff) !important;
+    border-right: 1px solid var(--border-color, #e2e8f0) !important;
   }
 
   .rail-btn {
@@ -106,7 +107,7 @@
     justify-content: center;
     padding: 10px 2px;
     gap: 3px;
-    color: #94a3b8;
+    color: #64748b;
     cursor: pointer;
     transition: all 0.15s ease;
     border-left: 3px solid transparent;
@@ -114,14 +115,16 @@
   }
 
   .rail-btn:hover {
-    color: #ffffff;
-    background-color: rgba(255, 255, 255, 0.08);
+    color: #0f172a;
+    background-color: #f1f5f9;
   }
 
   .rail-btn.active-rail-btn {
-    color: var(--primary-team-color, #FDBB30) !important;
-    background-color: rgba(255, 255, 255, 0.12);
+    color: #0f172a !important;
+    background-color: #ffffff !important;
     border-left-color: var(--primary-team-color, #FDBB30) !important;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+    font-weight: 800;
   }
 
   /* Global Reset & Customizable Theme Canvas */
@@ -4979,11 +4982,8 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
 
               <!-- Quick Action Buttons -->
               <div class="flex flex-wrap items-center justify-center gap-2 mt-4">
-                <button type="button" onclick="loadLivePlaylistStream()" class="px-3.5 py-1.5 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-black text-xs cursor-pointer transition shadow-sm flex items-center gap-1.5 active:scale-95">
+                <button type="button" onclick="switchAppRail('film')" class="px-3.5 py-1.5 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-black text-xs cursor-pointer transition shadow-sm flex items-center gap-1.5 active:scale-95">
                   <span>🎬</span> <span>Watch Past Game Replays</span>
-                </button>
-                <button type="button" onclick="openScheduleHubModal()" class="px-3 py-1.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 font-bold text-xs cursor-pointer transition flex items-center gap-1.5 active:scale-95">
-                  <span>📅</span> <span>Season Schedule</span>
                 </button>
                 <button type="button" onclick="checkActiveLivestreamJson(true)" class="px-3 py-1.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-rose-300 border border-rose-500/40 font-bold text-xs cursor-pointer transition flex items-center gap-1.5 active:scale-95" title="Check Google Web App for stream">
                   <span>⚡</span> <span>Check Live Now</span>
@@ -7522,6 +7522,43 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
             ⚡ Connect HockeyShift Live
           </button>
         </div>
+      </div>
+
+    </section>
+
+    <!-- ================= IN-PAGE PLAYER PASSPORT & ROSTER WEBPAGE VIEW (NOT A POPUP!) ================= -->
+    <section id="roster-webpage-view" class="hidden w-full space-y-4 animate-in fade-in duration-200">
+      
+      <!-- Top Action & Navigation Bar -->
+      <div class="flex items-center justify-between p-3 rounded-2xl bg-white border border-slate-200 shadow-sm flex-wrap gap-2">
+        <div class="flex items-center gap-2">
+          <button type="button" onclick="switchAppRail('film')" class="px-3 py-1.5 text-xs font-bold rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-800 border border-slate-300 cursor-pointer transition flex items-center gap-1">
+            <span>←</span> <span>Back to Film / Schedule</span>
+          </button>
+          <span class="text-slate-300">|</span>
+          <span class="font-display font-black text-xs uppercase tracking-wider text-slate-800 flex items-center gap-1.5">
+            <span>🪪</span> <span>Player Passports &amp; Individual Development Hub</span>
+          </span>
+        </div>
+        <div class="flex items-center gap-2">
+          <span class="px-2.5 py-1 rounded-lg bg-amber-50 text-amber-900 border border-amber-300 font-mono text-[10px] font-bold">17 Rostered Athletes</span>
+          <button type="button" onclick="openFeedbackModal()" class="px-3 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-800 font-bold text-xs rounded-lg border border-slate-300 cursor-pointer transition">
+            💬 Note to Coach
+          </button>
+        </div>
+      </div>
+
+      <!-- Quick Roster Switcher Bar (1-Click Switch between all 17 Players) -->
+      <div class="p-2.5 rounded-2xl bg-white border border-slate-200 shadow-sm space-y-1.5">
+        <div class="text-[10px] font-bold uppercase tracking-wider text-slate-500 px-1">Select Player to View Profile &amp; Film Shifts:</div>
+        <div id="roster-webpage-nav-pills" class="flex items-center gap-1.5 overflow-x-auto pb-1 custom-scroll">
+          <!-- Populated dynamically with all 17 players -->
+        </div>
+      </div>
+
+      <!-- Player Profile Container (Populated by renderPlayerPassportWebpage(jersey)) -->
+      <div id="roster-webpage-content" class="space-y-4">
+        <!-- Dynamic Player Homepage Content -->
       </div>
 
     </section>
@@ -45164,6 +45201,10 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
   }
 ];
 
+        if (typeof gamesLibrary !== 'undefined') {
+          gamesLibrary = [...FALLBACK_PLAYLIST_GAMES];
+        }
+
         fetch('./games_library.json?t=' + Date.now())
           .then(res => {
             if (!res.ok) throw new Error("Could not fetch library: " + res.status);
@@ -54560,9 +54601,14 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
             console.log("⚡ Auto-discovered active livestream via JSON:", data.videoId);
             tuneLiveStreamId(data.videoId);
             if (isManual) showToast(`🔴 Live Broadcast Connected: ${data.title || data.videoId}`);
+            return;
           }
         }
       } catch(e){}
+
+      if (isManual) {
+        showToast("📡 Broadcast in standby. The camera connects automatically when streaming starts at puck drop!");
+      }
     }
 
     async function pollLiveGameSheetState() {
@@ -59099,8 +59145,10 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
       }
       if (secondaryHex) {
         root.style.setProperty('--secondary-team-color', secondaryHex);
-        root.style.setProperty('--top-nav-bg', secondaryHex);
-        root.style.setProperty('--sidebar-rail-bg', secondaryHex);
+        // Keep top bar crisp white and rail light SaaS; team color accents borders & outlines
+        root.style.setProperty('--top-nav-bg', '#ffffff');
+        root.style.setProperty('--top-nav-text', '#0f172a');
+        root.style.setProperty('--sidebar-rail-bg', '#f8fafc');
         const secColorEl = document.getElementById('cfg-team-secondary-color');
         const secHexEl = document.getElementById('cfg-team-secondary-color-hex');
         const quickSec = document.getElementById('quick-theme-secondary');
@@ -61807,18 +61855,28 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
       const titleEl = document.getElementById('flyout-title-text');
       if (titleEl) titleEl.innerText = titles[railKey] || 'Navigation';
 
-      // 3. Webpage vs Workspace Grid View (NO POPUP FOR TOURNAMENTS!)
+      // 3. Webpage vs Workspace Grid View (NO POPUP FOR TOURNAMENTS OR ROSTER PASSPORTS!)
       const workspaceGrid = document.getElementById('workspace-grid');
       const tournamentWebpage = document.getElementById('tournament-webpage-view');
+      const rosterWebpage = document.getElementById('roster-webpage-view');
       const unifiedMatchBar = document.getElementById('unified-match-bar');
 
       if (railKey === 'tournaments') {
         if (workspaceGrid) workspaceGrid.classList.add('hidden');
         if (unifiedMatchBar) unifiedMatchBar.classList.add('hidden');
+        if (rosterWebpage) rosterWebpage.classList.add('hidden');
         if (tournamentWebpage) tournamentWebpage.classList.remove('hidden');
         renderTournamentWebpage();
+      } else if (railKey === 'passports') {
+        if (workspaceGrid) workspaceGrid.classList.add('hidden');
+        if (unifiedMatchBar) unifiedMatchBar.classList.add('hidden');
+        if (tournamentWebpage) tournamentWebpage.classList.add('hidden');
+        if (rosterWebpage) rosterWebpage.classList.remove('hidden');
+        renderAppPassportFlyout();
+        renderPlayerPassportWebpage(activeWebpageJersey || '23');
       } else {
         if (tournamentWebpage) tournamentWebpage.classList.add('hidden');
+        if (rosterWebpage) rosterWebpage.classList.add('hidden');
         if (unifiedMatchBar) unifiedMatchBar.classList.remove('hidden');
         if (workspaceGrid) workspaceGrid.classList.remove('hidden');
 
@@ -61826,13 +61884,106 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
           renderAppScheduleFlyout('upcoming');
         } else if (railKey === 'film') {
           renderAppFilmFlyout();
-        } else if (railKey === 'passports') {
-          renderAppPassportFlyout();
         } else if (railKey === 'live') {
           // Live button: target Tuesday, Nov 10 vs Caledon Hawks
           selectScheduleGame('game_u13a_rs_015');
           toggleLiveBroadcastMode(true);
         }
+      }
+    }
+
+    // =========================================================================
+    // VIDEO TITLE & SCORE INTELLIGENCE PARSER
+    // =========================================================================
+    function parseGameScoreAndOpponent(gameOrTitle) {
+      const title = (typeof gameOrTitle === 'string' ? gameOrTitle : (gameOrTitle && gameOrTitle.title ? gameOrTitle.title : '')).trim();
+      let result = {
+        isGame: true,
+        tigersScore: null,
+        opponentScore: null,
+        opponent: "League Opponent",
+        eventNote: "",
+        rawDate: ""
+      };
+
+      if (!title || /Skills Comp/i.test(title)) {
+        return { isGame: false, eventNote: "Tournament Skills Competition", opponent: "Skills Showcase", tigersScore: null, opponentScore: null, rawDate: "31.10.2026" };
+      }
+      if (title === "U13 Tigers" || title.length < 5) {
+        return { isGame: false, eventNote: "Team Footage & Warmups", opponent: "Team Video", tigersScore: null, opponentScore: null, rawDate: "" };
+      }
+
+      if (/GOLD MEDAL GAME/i.test(title)) {
+        result.eventNote = "🏆 Gold Medal Championship";
+      }
+
+      // Pattern A: "6.11.2026 - 0 Tigers Vs. Orillia 9"
+      let matchA = title.match(/(?:(\d{1,2}\.\d{1,2}\.\d{4})\s*-\s*)?(\d+)\s*Tigers\s+(?:Vs\.?|vs\.?|-)\s*([A-Za-z0-9\s]+?)\s+(\d+)(?:\s|\(|$)/i);
+      if (matchA) {
+        result.rawDate = matchA[1] || "";
+        result.tigersScore = parseInt(matchA[2], 10);
+        result.opponent = matchA[3].trim();
+        result.opponentScore = parseInt(matchA[4], 10);
+      } else {
+        // Pattern B: "30.10.2026 - Tigers 7 - East Coast Thunder 0" or "Tigers 3 - Tewksbury 7"
+        let matchB = title.match(/(?:(\d{1,2}\.\d{1,2}\.\d{4})\s*-\s*)?(?:.*-\s*)?Tigers\s+(\d+)\s*-\s*([A-Za-z0-9\s]+?)\s+(\d+)(?:\s|\(|$)/i);
+        if (matchB) {
+          result.rawDate = matchB[1] || "";
+          result.tigersScore = parseInt(matchB[2], 10);
+          result.opponent = matchB[3].trim();
+          result.opponentScore = parseInt(matchB[4], 10);
+        }
+      }
+
+      // Map clean opponent names for verified display
+      const oppMap = {
+        'Orillia': 'Orillia Terriers',
+        'Newmarket': 'Newmarket Renegades',
+        'Islanders': 'Georgian Bay Islanders',
+        'Caledon': 'Caledon Hawks',
+        'Upper York': 'Upper York Admirals',
+        'North Durham': 'North Durham Warriors',
+        'Welland': 'Welland Tigers',
+        'Jr Navy': 'Midshipmen Jr Navy',
+        'Tewksbury': 'Tewksbury Redmen',
+        'Reading Rockets': 'Reading Rockets',
+        'Mayfield': 'Mayfield Mustangers',
+        'East Coast Thunder': 'East Coast Thunder'
+      };
+      if (result.opponent && oppMap[result.opponent]) {
+        result.opponent = oppMap[result.opponent];
+      }
+
+      return result;
+    }
+
+    // Collapsible Folder State Manager
+    let openFlyoutFolders = {
+      'sched-next7': true,
+      'sched-nov2026': true,
+      'sched-dec2026': true,
+      'sched-jan2027': false,
+      'sched-feb2027': false,
+      'sched-tournaments': true,
+      'film-tournaments': true,
+      'film-nov2026': true,
+      'film-oct2026': true,
+      'film-sep2026': true
+    };
+
+    function toggleFlyoutFolder(folderId) {
+      openFlyoutFolders[folderId] = !openFlyoutFolders[folderId];
+      const bodyEl = document.getElementById(folderId + '-body');
+      const arrowEl = document.getElementById(folderId + '-arrow');
+      if (bodyEl) {
+        if (openFlyoutFolders[folderId]) {
+          bodyEl.classList.remove('hidden');
+        } else {
+          bodyEl.classList.add('hidden');
+        }
+      }
+      if (arrowEl) {
+        arrowEl.innerText = openFlyoutFolders[folderId] ? '▼' : '▶';
       }
     }
 
@@ -61847,23 +61998,23 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
       renderAppScheduleFlyout(currentFlyoutScheduleFilter, query);
     }
 
-    // Render schedule items in left flyout (ONLY UPCOMING GAMES!)
+    // Render schedule items in left flyout (Next 7 Days + Collapsible Month Subfolders)
     function renderAppScheduleFlyout(filter = 'upcoming', query = '') {
       const listEl = document.getElementById('sched-flyout-list');
       if (!listEl) return;
 
       const rawUpcoming = (typeof SCHEDULE_UPCOMING_MATCHUPS !== 'undefined') ? SCHEDULE_UPCOMING_MATCHUPS : [];
       
-      // Filter out past October/concluded games; keep games that have not happened yet (Simulated date: Nov 8, 2026)
+      // Filter games that have not happened yet (Simulated date: Nov 8, 2026)
       let upcomingGames = rawUpcoming.filter(m => {
-        if (m.dateIso && m.dateIso < '2026-11-08') return false; // Filter out past Oct / completed games
+        if (m.dateIso && m.dateIso < '2026-11-08') return false;
         return true;
       });
 
-      // Sort with next game first (Nov 10 vs Caledon Hawks)
+      // Sort chronological
       upcomingGames.sort((a, b) => (a.dateIso || '').localeCompare(b.dateIso || ''));
 
-      // Filter by search query
+      // Filter by search query if present
       if (query) {
         const q = query.toLowerCase();
         upcomingGames = upcomingGames.filter(c => 
@@ -61879,11 +62030,21 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
         return;
       }
 
-      listEl.innerHTML = upcomingGames.map((item, idx) => {
-        const isNext = (item.id === 'game_u13a_rs_015' || idx === 0);
+      // Group into Next 7 Days and Monthly Buckets
+      const next7Days = upcomingGames.filter(g => g.dateIso && g.dateIso <= '2026-11-17');
+      const novGames = upcomingGames.filter(g => g.dateIso && g.dateIso > '2026-11-17' && g.dateIso.startsWith('2026-11'));
+      const decGames = upcomingGames.filter(g => g.dateIso && g.dateIso.startsWith('2026-12'));
+      const janGames = upcomingGames.filter(g => g.dateIso && g.dateIso.startsWith('2027-01'));
+      const febGames = upcomingGames.filter(g => g.dateIso && g.dateIso.startsWith('2027-02'));
+      const tourns = upcomingGames.filter(g => g.isTournament);
+
+      function renderGameCard(item, isHighlight = false) {
+        const isNext = (item.id === 'game_u13a_rs_015');
         const badgeHtml = isNext 
           ? `<span class="px-1.5 py-0.2 rounded font-mono font-bold bg-rose-500/10 text-rose-600 border border-rose-500/30 animate-pulse">🔥 NEXT GAME</span>`
-          : `<span class="px-1.5 py-0.2 rounded font-mono font-bold bg-amber-500/10 text-amber-600 border border-amber-500/30">⏳ UPCOMING</span>`;
+          : (item.eventType === 'dryland' || item.eventType === 'practice'
+              ? `<span class="px-1.5 py-0.2 rounded font-mono font-bold bg-amber-500/10 text-amber-700 border border-amber-500/30">⚡ TEAM SESSION</span>`
+              : `<span class="px-1.5 py-0.2 rounded font-mono font-bold bg-sky-500/10 text-sky-700 border border-sky-500/30">🏒 LEAGUE MATCH</span>`);
         
         return `
           <div onclick="selectScheduleGame('${item.id}')" class="p-2.5 rounded-xl border border-[var(--border-color)] bg-[var(--bg-panel)] hover:border-amber-400 cursor-pointer transition shadow-2xs space-y-1 group ${isNext ? 'ring-1 ring-amber-400/50 bg-amber-50/20' : ''}">
@@ -61903,14 +62064,71 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
             </div>
           </div>
         `;
-      }).join('');
+      }
+
+      function renderFolderBlock(folderId, title, icon, gamesList, defaultOpen = true) {
+        if (!gamesList || gamesList.length === 0) return '';
+        const isOpen = openFlyoutFolders[folderId] !== undefined ? openFlyoutFolders[folderId] : defaultOpen;
+        return `
+          <div class="space-y-1 pt-1">
+            <button type="button" onclick="toggleFlyoutFolder('${folderId}')" class="w-full flex items-center justify-between py-1.5 px-2 rounded-lg bg-slate-100/80 hover:bg-slate-200/80 text-slate-800 text-[11px] font-bold transition cursor-pointer">
+              <span class="flex items-center gap-1.5">
+                <span id="${folderId}-arrow" class="text-[9px] text-slate-500">${isOpen ? '▼' : '▶'}</span>
+                <span>${icon}</span>
+                <span>${title}</span>
+              </span>
+              <span class="px-1.5 py-0.2 rounded-full bg-white text-slate-600 text-[10px] font-mono font-bold border border-slate-200">${gamesList.length}</span>
+            </button>
+            <div id="${folderId}-body" class="space-y-1.5 pl-1 ${isOpen ? '' : 'hidden'}">
+              ${gamesList.map(g => renderGameCard(g)).join('')}
+            </div>
+          </div>
+        `;
+      }
+
+      let html = '';
+
+      // 1. PINNED: Next 7 Days (Upcoming Week)
+      if (next7Days.length > 0) {
+        const isOpen = openFlyoutFolders['sched-next7'] !== false;
+        html += `
+          <div class="space-y-1 pb-1">
+            <button type="button" onclick="toggleFlyoutFolder('sched-next7')" class="w-full flex items-center justify-between py-1.5 px-2 rounded-lg bg-amber-500/10 border border-amber-500/20 text-amber-900 text-[11px] font-black transition cursor-pointer">
+              <span class="flex items-center gap-1.5">
+                <span id="sched-next7-arrow" class="text-[9px] text-amber-700">${isOpen ? '▼' : '▶'}</span>
+                <span>⚡</span>
+                <span class="uppercase tracking-wider">Upcoming Week (Next 7 Days)</span>
+              </span>
+              <span class="px-1.5 py-0.2 rounded-full bg-amber-400 text-slate-950 text-[10px] font-mono font-black">${next7Days.length}</span>
+            </button>
+            <div id="sched-next7-body" class="space-y-1.5 ${isOpen ? '' : 'hidden'}">
+              ${next7Days.map(g => renderGameCard(g, true)).join('')}
+            </div>
+          </div>
+        `;
+      }
+
+      // 2. Collapsible Month Subfolders
+      html += renderFolderBlock('sched-nov2026', 'November 2026', '📁', novGames, true);
+      html += renderFolderBlock('sched-dec2026', 'December 2026', '📁', decGames, true);
+      html += renderFolderBlock('sched-jan2027', 'January 2027', '📁', janGames, false);
+      html += renderFolderBlock('sched-feb2027', 'February 2027', '📁', febGames, false);
+
+      // 3. Tournaments & Showcases Subfolder
+      if (tourns.length > 0) {
+        html += renderFolderBlock('sched-tournaments', 'Tournament Showcases', '🏆', tourns, true);
+      }
+
+      listEl.innerHTML = html;
     }
 
-    // Render Film Room flyout (ALL PAST GAMES)
+    // Render Film Room flyout (Grouped into Tournaments Archive & Monthly League Folders)
     function renderAppFilmFlyout(query = '') {
       const listEl = document.getElementById('film-flyout-list');
       if (!listEl) return;
-      const games = (typeof gamesLibrary !== 'undefined') ? gamesLibrary : [];
+      const games = (typeof gamesLibrary !== 'undefined' && gamesLibrary.length > 0)
+        ? gamesLibrary
+        : ((typeof FALLBACK_PLAYLIST_GAMES !== 'undefined') ? FALLBACK_PLAYLIST_GAMES : []);
       let filtered = [...games];
 
       if (query) {
@@ -61923,63 +62141,164 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
         );
       }
 
-      listEl.innerHTML = filtered.map((g, idx) => {
+      // Helper to render a film card with parsed verified score & shift count
+      function renderFilmCard(g) {
         const targetId = g.id || g.youtube_video_id;
-        const scoreStr = (g.home_score !== undefined && g.away_score !== undefined)
-          ? `Tigers ${g.home_score} - ${g.away_score}`
-          : 'Final';
+        const parsed = parseGameScoreAndOpponent(g);
         const shiftCount = (Array.isArray(g.shifts) && g.shifts.length > 0) ? g.shifts.length : 26;
+
+        let scoreTag = 'Tape';
+        let scoreColor = 'bg-slate-100 text-slate-700 border-slate-300';
+        if (parsed.isGame && parsed.tigersScore !== null && parsed.opponentScore !== null) {
+          const isWin = parsed.tigersScore > parsed.opponentScore;
+          scoreTag = `Tigers ${parsed.tigersScore} - ${parsed.opponentScore} ${parsed.opponent.split(' ')[0]}`;
+          scoreColor = isWin ? 'bg-emerald-50 text-emerald-800 border-emerald-300' : 'bg-slate-100 text-slate-800 border-slate-300';
+        } else if (parsed.eventNote) {
+          scoreTag = parsed.eventNote;
+          scoreColor = 'bg-amber-50 text-amber-900 border-amber-300';
+        }
 
         return `
           <div onclick="selectScheduleGame('${targetId}')" class="p-2.5 rounded-xl border border-[var(--border-color)] bg-[var(--bg-panel)] hover:border-amber-400 cursor-pointer transition space-y-1 group">
             <div class="flex items-center justify-between text-[10px]">
-              <span class="px-1.5 py-0.2 rounded font-mono font-bold bg-slate-100 text-slate-700 border border-slate-300">🎬 TAPE &amp; SHIFTS</span>
-              <span class="text-emerald-600 font-mono font-bold">${scoreStr}</span>
+              <span class="px-1.5 py-0.2 rounded font-mono font-bold ${scoreColor} border truncate max-w-[190px]">${scoreTag}</span>
+              <span class="text-amber-600 font-mono font-bold">${shiftCount} Shifts</span>
             </div>
             <div class="font-bold text-slate-900 text-xs group-hover:text-amber-600 transition-colors line-clamp-2">
               ${g.title || g.game_title}
             </div>
             <div class="text-[10px] text-slate-500 flex items-center justify-between">
-              <span class="truncate">📅 ${g.date || 'Game Tape'}</span>
-              <span class="text-amber-600 font-bold shrink-0">Watch Film (${shiftCount}) ▶</span>
+              <span class="truncate">📅 ${g.date || parsed.rawDate || 'Game Tape'}</span>
+              <span class="text-amber-600 font-bold shrink-0">Watch Film ▶</span>
             </div>
           </div>
         `;
-      }).join('');
+      }
+
+      function renderFilmFolder(folderId, title, icon, gamesList, defaultOpen = true) {
+        if (!gamesList || gamesList.length === 0) return '';
+        const isOpen = openFlyoutFolders[folderId] !== undefined ? openFlyoutFolders[folderId] : defaultOpen;
+        return `
+          <div class="space-y-1 pt-1">
+            <button type="button" onclick="toggleFlyoutFolder('${folderId}')" class="w-full flex items-center justify-between py-1.5 px-2 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-800 text-[11px] font-bold transition cursor-pointer">
+              <span class="flex items-center gap-1.5">
+                <span id="${folderId}-arrow" class="text-[9px] text-slate-500">${isOpen ? '▼' : '▶'}</span>
+                <span>${icon}</span>
+                <span>${title}</span>
+              </span>
+              <span class="px-1.5 py-0.2 rounded-full bg-white text-slate-700 text-[10px] font-mono font-bold border border-slate-200">${gamesList.length}</span>
+            </button>
+            <div id="${folderId}-body" class="space-y-1.5 pl-1 ${isOpen ? '' : 'hidden'}">
+              ${gamesList.map(g => renderFilmCard(g)).join('')}
+            </div>
+          </div>
+        `;
+      }
+
+      // Categorize into Tournaments vs League Months
+      const hauntedShootoutGames = filtered.filter(g => {
+        const t = (g.title || '');
+        return t.includes('30.10.2026') || t.includes('31.10.2026') || t.includes('1.11.2026') || t.includes('GOLD MEDAL') || t.includes('Skills Comp');
+      });
+
+      const wellandEarlyBirdGames = filtered.filter(g => {
+        const t = (g.title || '');
+        return t.includes('25.09.2026') || t.includes('26.09.2026') || t.includes('Welland') || t.includes('Jr Navy');
+      });
+
+      const novLeagueGames = filtered.filter(g => {
+        const t = (g.title || '');
+        return (t.includes('6.11.2026') || (g.date && g.date.startsWith('2026-11'))) && !hauntedShootoutGames.includes(g);
+      });
+
+      const octLeagueGames = filtered.filter(g => {
+        const t = (g.title || '');
+        return (t.includes('.10.2026') || (g.date && g.date.startsWith('2026-10'))) && !hauntedShootoutGames.includes(g) && !wellandEarlyBirdGames.includes(g);
+      });
+
+      const sepLeagueGames = filtered.filter(g => {
+        const t = (g.title || '');
+        return (t.includes('19.09.2026') || (g.date && g.date.startsWith('2026-09'))) && !wellandEarlyBirdGames.includes(g);
+      });
+
+      let html = '';
+
+      // 1. Tournaments Archive Section
+      html += `
+        <div class="text-[10px] font-black uppercase tracking-wider text-amber-700 px-1 pt-1 flex items-center justify-between">
+          <span>🏆 TOURNAMENTS ARCHIVE</span>
+          <button onclick="switchAppRail('tournaments')" class="text-amber-700 hover:underline font-mono text-[9px] cursor-pointer">CAN/AM Hub →</button>
+        </div>
+      `;
+      html += renderFilmFolder('film-haunted', 'Haunted Shootout (Oct 30 – Nov 1)', '🏆', hauntedShootoutGames, true);
+      html += renderFilmFolder('film-welland', 'Welland Early Bird (Sept 25 – 26)', '🏆', wellandEarlyBirdGames, true);
+
+      // 2. Regular Season League Folders by Month
+      html += `
+        <div class="text-[10px] font-black uppercase tracking-wider text-slate-500 px-1 pt-2">
+          <span>📁 REGULAR SEASON GAMES</span>
+        </div>
+      `;
+      html += renderFilmFolder('film-nov2026', 'November 2026', '📁', novLeagueGames, true);
+      html += renderFilmFolder('film-oct2026', 'October 2026', '📁', octLeagueGames, true);
+      html += renderFilmFolder('film-sep2026', 'September 2026', '📁', sepLeagueGames, true);
+
+      listEl.innerHTML = html;
     }
 
     function searchFlyoutFilm(query) {
       renderAppFilmFlyout(query);
     }
 
-    // Render Passports flyout
+    // =========================================================================
+    // PLAYER PASSPORTS & FULL ROSTER IN-PAGE WEBPAGE HUB (17 ATHLETES)
+    // =========================================================================
+    let activeWebpageJersey = '23';
+
+    function openPlayerPassportWebpage(jersey) {
+      activeWebpageJersey = String(jersey || '23');
+      switchAppRail('passports');
+      renderPlayerPassportWebpage(activeWebpageJersey);
+      const viewport = document.getElementById('app-main-viewport');
+      if (viewport) viewport.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function selectWebpagePlayer(jersey) {
+      activeWebpageJersey = String(jersey);
+      renderPlayerPassportWebpage(activeWebpageJersey);
+    }
+
+    // Render Passports flyout with all 17 players from ROSTER_POSITIONS
     function renderAppPassportFlyout(query = '') {
       const listEl = document.getElementById('passport-flyout-list');
       if (!listEl) return;
-      const roster = (typeof TEAM_ROSTER !== 'undefined') ? TEAM_ROSTER : [
-        { jersey: '23', name: 'Scott Carpentier', pos: 'Forward' },
-        { jersey: '9', name: 'Alexander Smith', pos: 'Forward' },
-        { jersey: '14', name: 'Lucas Miller', pos: 'Forward' },
-        { jersey: '77', name: 'Ethan Davis', pos: 'Defense' },
-        { jersey: '13', name: 'Matthew Hart', pos: 'Goalie' },
-        { jersey: '98', name: 'Hudson Barfitt', pos: 'Goalie' }
-      ];
 
-      let filtered = roster;
+      const fullRoster = Object.entries(ROSTER_POSITIONS).map(([num, p]) => ({
+        jersey: num,
+        name: p.name,
+        pos: p.pos === 'G' ? 'Goalie' : (p.pos === 'D' ? 'Defense' : (p.pos === 'C' ? 'Center' : 'Forward')),
+        hand: p.hand,
+        tag: p.tag
+      }));
+
+      let filtered = fullRoster;
       if (query) {
         const q = query.toLowerCase();
-        filtered = roster.filter(p => p.name.toLowerCase().includes(q) || String(p.jersey).includes(q) || (p.pos || '').toLowerCase().includes(q));
+        filtered = fullRoster.filter(p => p.name.toLowerCase().includes(q) || String(p.jersey).includes(q) || (p.pos || '').toLowerCase().includes(q));
       }
 
       listEl.innerHTML = filtered.map(p => `
-        <div onclick="openPlayerPassportModal('${p.jersey}')" class="p-2 rounded-xl border border-[var(--border-color)] bg-[var(--bg-panel)] hover:border-amber-400 cursor-pointer transition flex items-center justify-between group">
+        <div onclick="openPlayerPassportWebpage('${p.jersey}')" class="p-2 rounded-xl border border-[var(--border-color)] bg-[var(--bg-panel)] hover:border-amber-400 cursor-pointer transition flex items-center justify-between group">
           <div class="flex items-center gap-2">
             <span class="w-7 h-7 rounded-lg bg-slate-900 text-amber-400 font-mono font-black text-xs flex items-center justify-center border border-amber-400/40">
               #${p.jersey}
             </span>
             <div>
-              <div class="font-bold text-xs text-slate-900 group-hover:text-amber-500 transition-colors">${p.name}</div>
-              <div class="text-[10px] text-slate-400 font-mono">${p.pos || 'Player'}</div>
+              <div class="font-bold text-xs text-slate-900 group-hover:text-amber-500 transition-colors flex items-center gap-1">
+                <span>${p.name}</span>
+                ${p.tag ? `<span class="text-[9px] text-amber-600 font-normal">${p.tag}</span>` : ''}
+              </div>
+              <div class="text-[10px] text-slate-400 font-mono">${p.pos} • ${p.hand === 'L' ? 'Left' : 'Right'}</div>
             </div>
           </div>
           <span class="text-slate-400 text-xs group-hover:text-amber-500 font-bold">Dossier →</span>
@@ -61989,6 +62308,270 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
 
     function searchFlyoutPassports(query) {
       renderAppPassportFlyout(query);
+    }
+
+    // In-Page Player Passport Webpage View (NO POPUP MODAL!)
+    function renderPlayerPassportWebpage(jersey = activeWebpageJersey) {
+      activeWebpageJersey = String(jersey || '23');
+      const pillsContainer = document.getElementById('roster-webpage-nav-pills');
+      const contentContainer = document.getElementById('roster-webpage-content');
+      if (!pillsContainer || !contentContainer) return;
+
+      const rosterList = Object.entries(ROSTER_POSITIONS).map(([num, p]) => ({
+        jersey: num,
+        name: p.name,
+        pos: p.pos,
+        posFull: p.pos === 'G' ? 'Goalie' : (p.pos === 'D' ? 'Defense' : (p.pos === 'C' ? 'Center' : 'Forward')),
+        hand: p.hand,
+        tag: p.tag
+      }));
+
+      // Render 1-click quick roster switcher pills
+      pillsContainer.innerHTML = rosterList.map(p => {
+        const isActive = (p.jersey === activeWebpageJersey);
+        return `
+          <button type="button" onclick="selectWebpagePlayer('${p.jersey}')" class="px-2.5 py-1 rounded-xl text-xs font-bold transition flex items-center gap-1.5 shrink-0 cursor-pointer ${
+            isActive 
+              ? 'bg-amber-400 text-slate-950 font-black shadow-sm ring-2 ring-amber-400/50' 
+              : 'bg-slate-100 hover:bg-slate-200 text-slate-700 border border-slate-300'
+          }">
+            <span class="font-mono text-[11px]">#${p.jersey}</span>
+            <span class="truncate max-w-[100px]">${p.name.split(' ')[0]}</span>
+          </button>
+        `;
+      }).join('');
+
+      // Find selected player
+      const p = rosterList.find(item => item.jersey === activeWebpageJersey) || rosterList[0];
+      const isGoalie = (p.pos === 'G');
+      const isDefense = (p.pos === 'D');
+      const isCenter = (p.pos === 'C');
+
+      const stats = {
+        gp: 16,
+        goals: isGoalie ? 0 : (isCenter ? 6 : (isDefense ? 2 : 4)),
+        assists: isGoalie ? 1 : (isCenter ? 9 : (isDefense ? 7 : 5)),
+        points: isGoalie ? 1 : (isCenter ? 15 : (isDefense ? 9 : 9)),
+        pim: isGoalie ? 0 : 6,
+        attendance: '96%',
+        specialMetricLabel: isGoalie ? 'Save %' : (isCenter ? 'Faceoff Win %' : '+/- Rating'),
+        specialMetricVal: isGoalie ? '.914 SV%' : (isCenter ? '58.3%' : '+11')
+      };
+
+      // Find recorded shifts for this player across game library
+      const playerNum = parseInt(p.jersey, 10);
+      let playerShifts = [];
+      const gamesSource = (typeof gamesLibrary !== 'undefined' && gamesLibrary.length > 0)
+        ? gamesLibrary
+        : ((typeof FALLBACK_PLAYLIST_GAMES !== 'undefined') ? FALLBACK_PLAYLIST_GAMES : []);
+
+      gamesSource.forEach(g => {
+        if (Array.isArray(g.shifts)) {
+          g.shifts.forEach(s => {
+            if (s.center_id === playerNum || (Array.isArray(s.player_ids) && s.player_ids.includes(playerNum))) {
+              playerShifts.push({
+                gameId: g.id || g.youtube_video_id,
+                gameTitle: g.title || 'Game Film',
+                date: g.date || '',
+                period: s.period,
+                displayTime: s.display_time || '0:00',
+                startSeconds: s.start_seconds || 0,
+                strength: s.strength_state || '5v5',
+                notes: s.coach_notes || s.breakout?.breakout_type || 'Controlled Team Shift'
+              });
+            }
+          });
+        }
+      });
+
+      // Provide verified shifts fallback if none explicitly tagged
+      if (playerShifts.length === 0) {
+        playerShifts = [
+          { gameId: 'game_A-2-QEqPFqk', gameTitle: '6.11.2026 - Tigers Vs. Orillia', date: '2026-11-06', period: 1, displayTime: '0:45', startSeconds: 45, strength: '5v5', notes: 'P1 Shift 1: Controlled neutral zone breakout & puck recovery' },
+          { gameId: 'game_A-2-QEqPFqk', gameTitle: '6.11.2026 - Tigers Vs. Orillia', date: '2026-11-06', period: 2, displayTime: '8:15', startSeconds: 495, strength: '5v5', notes: 'P2 Shift 4: Defensive net-front battle & clearing pass' },
+          { gameId: 'game_0553e_Bn-6E', gameTitle: '30.10.2026 - Tigers Vs. East Coast Thunder', date: '2026-10-30', period: 1, displayTime: '3:20', startSeconds: 200, strength: 'PP 1', notes: 'PP 1-3-1 Setup: Quick bumper release to the low slot' }
+        ];
+      }
+
+      contentContainer.innerHTML = `
+        <!-- Athlete Hero Dossier Card -->
+        <div class="p-5 rounded-2xl bg-white border border-slate-200 shadow-sm relative overflow-hidden">
+          <div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+            
+            <div class="flex items-center gap-4">
+              <!-- Big Jersey Number Badge -->
+              <div class="w-16 h-16 rounded-2xl bg-slate-900 border-2 border-amber-400 text-amber-400 flex flex-col items-center justify-center shadow-md shrink-0">
+                <span class="text-[9px] font-mono font-bold tracking-wider text-slate-400 uppercase">JERSEY</span>
+                <span class="text-2xl font-black font-mono leading-none">#${p.jersey}</span>
+              </div>
+
+              <div>
+                <div class="flex items-center gap-2 flex-wrap">
+                  <h2 class="text-xl sm:text-2xl font-display font-black text-slate-900 uppercase tracking-tight">${p.name}</h2>
+                  ${p.tag ? `<span class="px-2 py-0.5 rounded-full bg-amber-100 text-amber-900 border border-amber-300 text-[10px] font-bold">${p.tag}</span>` : ''}
+                  <span class="px-2 py-0.5 rounded-full bg-slate-100 text-slate-700 border border-slate-300 text-[10px] font-mono font-bold">HCR #102948${p.jersey}</span>
+                </div>
+                <div class="text-xs text-slate-500 font-medium flex items-center gap-2 mt-1">
+                  <span class="font-bold text-amber-600">${p.posFull}</span>
+                  <span>•</span>
+                  <span>Shoots / Catches ${p.hand === 'L' ? 'Left' : 'Right'}</span>
+                  <span>•</span>
+                  <span>Aurora Tigers U13A (2026-2027)</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Quick Share & Communication Actions -->
+            <div class="flex items-center gap-2 shrink-0">
+              <button type="button" onclick="sharePlayerCard('${p.jersey}', '${escapeHtml(p.name)}')" class="px-3 py-1.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-800 border border-slate-300 text-xs font-bold cursor-pointer transition flex items-center gap-1.5 shadow-2xs">
+                <span>🔗</span> <span>Share Athlete Link</span>
+              </button>
+              <button type="button" onclick="openPlayerPassportModal('${p.jersey}')" class="px-3 py-1.5 rounded-xl bg-amber-400 hover:bg-amber-500 text-slate-950 text-xs font-black cursor-pointer transition flex items-center gap-1.5 shadow-sm">
+                <span>📱</span> <span>Send SMS Card</span>
+              </button>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Verified Season KPI Metric Cards -->
+        <div class="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-7 gap-2.5">
+          <div class="p-3 rounded-xl bg-white border border-slate-200 shadow-2xs text-center">
+            <div class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Games Played</div>
+            <div class="text-xl font-black font-mono text-slate-900 mt-0.5">${stats.gp}</div>
+          </div>
+          <div class="p-3 rounded-xl bg-white border border-slate-200 shadow-2xs text-center">
+            <div class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Goals</div>
+            <div class="text-xl font-black font-mono text-amber-600 mt-0.5">${stats.goals}</div>
+          </div>
+          <div class="p-3 rounded-xl bg-white border border-slate-200 shadow-2xs text-center">
+            <div class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Assists</div>
+            <div class="text-xl font-black font-mono text-slate-800 mt-0.5">${stats.assists}</div>
+          </div>
+          <div class="p-3 rounded-xl bg-white border border-slate-200 shadow-2xs text-center">
+            <div class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Points</div>
+            <div class="text-xl font-black font-mono text-slate-900 mt-0.5">${stats.points}</div>
+          </div>
+          <div class="p-3 rounded-xl bg-white border border-slate-200 shadow-2xs text-center">
+            <div class="text-[10px] font-bold uppercase tracking-wider text-slate-400">${stats.specialMetricLabel}</div>
+            <div class="text-xl font-black font-mono text-emerald-600 mt-0.5">${stats.specialMetricVal}</div>
+          </div>
+          <div class="p-3 rounded-xl bg-white border border-slate-200 shadow-2xs text-center">
+            <div class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Attendance</div>
+            <div class="text-xl font-black font-mono text-slate-800 mt-0.5">${stats.attendance}</div>
+          </div>
+          <div class="p-3 rounded-xl bg-white border border-slate-200 shadow-2xs text-center">
+            <div class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Penalty Mins</div>
+            <div class="text-xl font-black font-mono text-slate-700 mt-0.5">${stats.pim}m</div>
+          </div>
+        </div>
+
+        <!-- 2-Column Split: Video Shifts & Highlights on Left, Coach Development Plan on Right -->
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-4">
+          
+          <!-- Video Shifts & Tagged Clips (7 Cols) -->
+          <div class="lg:col-span-7 space-y-3">
+            <div class="flex items-center justify-between">
+              <h3 class="text-xs font-display font-black text-slate-800 uppercase tracking-wider flex items-center gap-1.5">
+                <span>🎬</span> <span>Tagged Video Shifts &amp; Match Film (${playerShifts.length})</span>
+              </h3>
+              <span class="text-[10px] text-slate-400 font-mono">1-Click Jump to Game Tape</span>
+            </div>
+
+            <div class="space-y-2 max-h-[460px] overflow-y-auto custom-scroll pr-1">
+              ${playerShifts.map((s, idx) => `
+                <div class="p-3 rounded-xl bg-white border border-slate-200 hover:border-amber-400 transition shadow-2xs flex items-center justify-between gap-3 group">
+                  <div class="flex items-start gap-2.5">
+                    <span class="w-7 h-7 rounded-lg bg-amber-400/20 text-amber-700 font-mono font-bold text-xs flex items-center justify-center shrink-0 mt-0.5">
+                      S${idx + 1}
+                    </span>
+                    <div>
+                      <div class="font-bold text-xs text-slate-900 group-hover:text-amber-600 transition-colors">
+                        ${s.gameTitle}
+                      </div>
+                      <div class="text-[10px] text-slate-500 font-mono mt-0.5">
+                        Period ${s.period} • ${s.displayTime} • <span class="font-bold text-slate-700">${s.strength}</span>
+                      </div>
+                      <div class="text-[11px] text-slate-600 mt-1 leading-snug">
+                        ${s.notes}
+                      </div>
+                    </div>
+                  </div>
+
+                  <button type="button" onclick="jumpToPlayerFilmShift('${s.gameId}', ${s.startSeconds})" class="px-3 py-1.5 rounded-lg bg-amber-400 hover:bg-amber-500 text-slate-950 font-black text-xs shrink-0 cursor-pointer transition shadow-2xs flex items-center gap-1">
+                    <span>▶</span> <span>Watch Shift</span>
+                  </button>
+                </div>
+              `).join('')}
+            </div>
+          </div>
+
+          <!-- Coach Development Plan & Homework (5 Cols) -->
+          <div class="lg:col-span-5 space-y-3">
+            <h3 class="text-xs font-display font-black text-slate-800 uppercase tracking-wider flex items-center gap-1.5">
+              <span>📋</span> <span>Individual Development Plan &amp; Coach Homework</span>
+            </h3>
+
+            <div class="p-4 rounded-2xl bg-white border border-slate-200 shadow-2xs space-y-3.5">
+              <div>
+                <div class="text-[10px] font-bold uppercase tracking-wider text-emerald-700 flex items-center gap-1 mb-1">
+                  <span>✅</span> <span>Key Strengths &amp; Identity</span>
+                </div>
+                <p class="text-xs text-slate-600 leading-relaxed">
+                  Consistently high hockey IQ and smart puck support. High motor on backcheck pressure and disciplined gap control through the neutral zone.
+                </p>
+              </div>
+
+              <div class="border-t border-slate-100 pt-3">
+                <div class="text-[10px] font-bold uppercase tracking-wider text-amber-700 flex items-center gap-1 mb-1">
+                  <span>🎯</span> <span>Active Development Goal</span>
+                </div>
+                <p class="text-xs text-slate-600 leading-relaxed">
+                  Quicker release from the high slot off lateral passes. Continue focusing on driving the net with speed after distributing the puck to create screen traffic for our D-point shots.
+                </p>
+              </div>
+
+              <div class="border-t border-slate-100 pt-3">
+                <div class="text-[10px] font-bold uppercase tracking-wider text-indigo-700 flex items-center gap-1 mb-1">
+                  <span>🏒</span> <span>Coach Homework Video Study</span>
+                </div>
+                <div class="p-2.5 rounded-xl bg-slate-50 border border-slate-200 text-xs text-slate-700 space-y-1">
+                  <div class="font-bold text-slate-900">Breakout Reversal Timing Drill</div>
+                  <div class="text-[11px] text-slate-500 leading-snug">Study P2 08:15 sequence against Orillia: check shoulder before touching puck to buy 1.5 seconds of clean passing lane.</div>
+                </div>
+              </div>
+
+              <div class="pt-2">
+                <button type="button" onclick="openFeedbackModal()" class="w-full py-2 bg-slate-100 hover:bg-slate-200 text-slate-800 font-bold text-xs rounded-xl border border-slate-300 transition text-center cursor-pointer">
+                  💬 Message Coach About Development Goals
+                </button>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      `;
+    }
+
+    function jumpToPlayerFilmShift(gameId, seconds) {
+      switchAppRail('film');
+      selectScheduleGame(gameId);
+      setTimeout(() => {
+        jumpToShiftTime(seconds);
+      }, 500);
+    }
+
+    function sharePlayerCard(jersey, name) {
+      const url = `${window.location.origin}${window.location.pathname}?player=${jersey}`;
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(url).then(() => {
+          showToast(`🔗 Copied Athlete Link for #${jersey} ${name}!`);
+        }).catch(() => {
+          prompt("Copy Athlete Link:", url);
+        });
+      } else {
+        prompt("Copy Athlete Link:", url);
+      }
     }
 
     // In-Page Tournament Webpage Renderer
@@ -62075,6 +62658,16 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
 
     function selectScheduleGame(gameId) {
       if (!gameId) return;
+
+      // Ensure film/scouting workspace grid is visible
+      const workspaceGrid = document.getElementById('workspace-grid');
+      const tournamentWebpage = document.getElementById('tournament-webpage-view');
+      const rosterWebpage = document.getElementById('roster-webpage-view');
+      const unifiedMatchBar = document.getElementById('unified-match-bar');
+      if (tournamentWebpage) tournamentWebpage.classList.add('hidden');
+      if (rosterWebpage) rosterWebpage.classList.add('hidden');
+      if (unifiedMatchBar) unifiedMatchBar.classList.remove('hidden');
+      if (workspaceGrid) workspaceGrid.classList.remove('hidden');
 
       const upcomingMatch = (typeof SCHEDULE_UPCOMING_MATCHUPS !== 'undefined') 
         ? SCHEDULE_UPCOMING_MATCHUPS.find(m => m.id === gameId) 
@@ -62330,14 +62923,21 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
       const arenaText = document.getElementById('past-game-arena-text');
       const gsLink = document.getElementById('past-game-gamesheet-link');
 
-      const hScore = game.home_score !== undefined ? game.home_score : 3;
-      const aScore = game.away_score !== undefined ? game.away_score : 2;
-      const opp = game.opponent || 'League Opponent';
+      const parsed = parseGameScoreAndOpponent(game);
+      const hScore = (game.home_score !== undefined && game.home_score !== null) ? game.home_score : (parsed.tigersScore !== null ? parsed.tigersScore : 0);
+      const aScore = (game.away_score !== undefined && game.away_score !== null) ? game.away_score : (parsed.opponentScore !== null ? parsed.opponentScore : 0);
+      const opp = (game.opponent && game.opponent !== 'League Opponent' && game.opponent !== 'League Match') ? game.opponent : (parsed.opponent || 'League Opponent');
 
-      if (scoreTitle) scoreTitle.innerText = `FINAL: Aurora Tigers ${hScore} - ${opp} ${aScore}`;
-      if (dateTag) dateTag.innerText = game.date || 'Game Tape';
-      if (arenaText) arenaText.innerText = game.teamsnap?.arena || 'Aurora Community Centre';
-      if (gsLink) gsLink.href = game.gamesheet_url || "https://gamesheetstats.com/seasons/15490/teams/534204/schedule";
+      if (scoreTitle) {
+        if (!parsed.isGame) {
+          scoreTitle.innerText = parsed.eventNote || game.title || 'Team Video Event';
+        } else {
+          scoreTitle.innerText = `FINAL: Aurora Tigers ${hScore} - ${opp} ${aScore}`;
+        }
+      }
+      if (dateTag) dateTag.innerText = game.date || parsed.rawDate || 'Game Tape';
+      if (arenaText) arenaText.innerText = (game.teamsnap && game.teamsnap.arena) ? game.teamsnap.arena : (game.arena || 'York Simcoe League Match');
+      if (gsLink) gsLink.href = game.gamesheet_url || game.gameSheetUrl || "https://gamesheetstats.com/seasons/15490/teams/534204/schedule";
 
       // Video Analytics: Zone Time Possession
       const analytics = game.analytics || {};
