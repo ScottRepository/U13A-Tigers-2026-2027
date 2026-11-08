@@ -4626,52 +4626,84 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
             <!-- Telestrator & Live AR Hovering Player Number Overlay Canvas -->
             <canvas id="telestrator-canvas" class="absolute inset-0 w-full h-full pointer-events-none z-20"></canvas>
 
-                        <!-- LIVE STREAM OFFLINE PLACEHOLDER STATE -->
-            <div id="live-offline-placeholder" class="hidden absolute inset-0 z-35 bg-slate-950/98 backdrop-blur-md flex flex-col items-center justify-center p-6 text-center text-white select-none animate-in fade-in duration-200">
-              <div class="w-16 h-16 rounded-2xl bg-slate-900 border border-slate-800 flex items-center justify-center text-3xl mb-3 shadow-2xl ring-1 ring-white/10">
-                📡
+            <!-- LIVE STREAM OFFLINE / STANDBY STATE WITH NEXT GAME COUNTDOWN -->
+            <div id="live-offline-placeholder" class="hidden absolute inset-0 z-35 bg-slate-950/95 backdrop-blur-md flex flex-col items-center justify-center p-4 sm:p-6 text-center text-white select-none animate-in fade-in duration-200 overflow-y-auto">
+              <!-- Top Pill -->
+              <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-slate-900 border border-amber-400/30 text-[11px] font-mono font-bold text-amber-300 mb-3 shadow-sm">
+                <span class="w-2 h-2 rounded-full bg-amber-400 animate-pulse"></span>
+                <span>🔴 BROADCAST STANDBY • CAMERA CONNECTS AT PUCK DROP</span>
               </div>
-              <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-slate-900 border border-slate-800 text-[11px] font-mono font-bold text-amber-400 mb-2">
-                <span class="w-2 h-2 rounded-full bg-slate-500"></span>
-                <span>STREAM STANDBY / OFFLINE</span>
+
+              <!-- Main Next Game Feature Card -->
+              <div class="w-full max-w-lg p-5 rounded-2xl bg-slate-900 border border-slate-800 shadow-2xl relative overflow-hidden text-left">
+                <div class="text-[10px] font-black uppercase tracking-widest text-amber-400 mb-3 flex items-center justify-between">
+                  <span>NEXT SCHEDULED BROADCAST</span>
+                  <span id="standby-league-tag" class="px-2 py-0.5 rounded bg-slate-800 text-slate-300 border border-slate-700 font-mono text-[9px]">YSMHL Game #U13A-RS-015</span>
+                </div>
+
+                <!-- Matchup Banner with Crests -->
+                <div class="flex items-center justify-around py-3 px-2 rounded-xl bg-slate-950/80 border border-slate-800/80 mb-3">
+                  <!-- Home: Tigers -->
+                  <div class="flex flex-col items-center gap-1.5 flex-1">
+                    <img src="./tigers_logo.png" onerror="this.src='https://auroraminorhockey.com/public/images/common/logo.png'" alt="Aurora Tigers" class="w-12 h-12 object-contain drop-shadow" />
+                    <span class="font-black text-xs text-white uppercase tracking-wider text-center">Aurora Tigers</span>
+                    <span class="text-[9px] font-mono font-bold text-amber-400 uppercase">HOME (6-0-0)</span>
+                  </div>
+
+                  <div class="flex flex-col items-center px-3">
+                    <span class="text-xs font-black text-slate-500 font-mono">VS</span>
+                  </div>
+
+                  <!-- Away: Opponent (Caledon Hawks) -->
+                  <div class="flex flex-col items-center gap-1.5 flex-1">
+                    <div class="w-12 h-12 rounded-xl bg-slate-800 border border-slate-700 flex items-center justify-center text-xl shadow-inner font-black text-amber-300">
+                      🦅
+                    </div>
+                    <span id="standby-opp-name" class="font-black text-xs text-white uppercase tracking-wider text-center">Caledon Hawks</span>
+                    <span id="standby-opp-record" class="text-[9px] font-mono font-bold text-rose-400 uppercase">AWAY (6-0-1)</span>
+                  </div>
+                </div>
+
+                <!-- Date, Time, Arena -->
+                <div class="space-y-1 mb-3 text-center">
+                  <div class="flex items-center justify-center gap-2 text-sm sm:text-base font-black text-white">
+                    <span>📅</span>
+                    <span id="standby-game-date">Tuesday, Nov 10, 2026</span>
+                    <span class="text-slate-600">•</span>
+                    <span id="standby-game-time" class="text-amber-300">7:30 PM EST</span>
+                  </div>
+                  <div class="flex items-center justify-center gap-1.5 text-xs text-slate-400">
+                    <span>📍</span>
+                    <span id="standby-game-arena">Aurora Community Centre (ACC)</span>
+                  </div>
+                </div>
+
+                <!-- Live Countdown Clock -->
+                <div class="py-2.5 px-4 rounded-xl bg-slate-950 border border-amber-400/20 flex items-center justify-between">
+                  <span class="text-[10px] font-mono font-bold uppercase tracking-wider text-slate-400 flex items-center gap-1">
+                    <span>⏳</span> <span>Countdown to Puck Drop:</span>
+                  </span>
+                  <span id="standby-countdown-timer" class="text-sm font-mono font-black text-amber-300 tracking-wider">
+                    Calculating...
+                  </span>
+                </div>
               </div>
-              <h3 class="font-display font-black text-lg sm:text-xl uppercase tracking-wider text-white max-w-md">
-                No Active Live Broadcast
-              </h3>
-              <p id="live-offline-next-game-text" class="text-xs text-slate-300 max-w-lg mt-2 leading-relaxed font-medium">
-                Next game scheduled: Tuesday, Nov 10, 2026 at 7:30 PM EST • Caledon Hawks vs Aurora Tigers @ Aurora Community Centre (Game #U13A-RS-015)
+
+              <!-- Reassurance Note for Parents -->
+              <p class="text-[11px] text-slate-400 max-w-md mt-3 leading-relaxed">
+                When coach turns on the XbotGo camera at the rink, this screen will automatically switch to the live video stream.
               </p>
 
-              <!-- In-Place Standby Quick Tuner Card -->
-              <div class="w-full max-w-md mt-4 p-3 rounded-2xl bg-slate-900/90 border border-slate-800 text-left space-y-2">
-                <div class="text-[10px] font-bold uppercase tracking-wider text-rose-300 flex items-center justify-between">
-                  <span>Ready to Stream with XbotGo / YouTube?</span>
-                  <span class="font-mono text-amber-400 text-[9px]">1-Click Tune</span>
-                </div>
-                <div class="flex items-center gap-1.5">
-                  <input type="text" id="standby-stream-url-input" placeholder="Paste YouTube link or Video ID (e.g. DcTU1ha1tow)" value="DcTU1ha1tow" class="flex-1 px-2.5 py-1.5 rounded-lg bg-slate-950 border border-slate-700 text-white font-mono text-[11px] focus:outline-none focus:border-rose-500" />
-                  <button type="button" onclick="tuneStandbyLiveStream()" class="px-3 py-1.5 rounded-lg bg-rose-600 hover:bg-rose-500 text-white font-black text-[11px] cursor-pointer transition shadow-xs flex items-center gap-1 shrink-0 active:scale-95">
-                    <span>▶</span> <span>Tune &amp; Play</span>
-                  </button>
-                </div>
-                <div class="flex items-center justify-between pt-1 text-[10px]">
-                  <button type="button" onclick="pasteAndTuneStandbyLiveStream()" class="text-amber-400 hover:text-amber-300 font-bold flex items-center gap-1 cursor-pointer">
-                    <span>📋 Paste from Clipboard</span>
-                  </button>
-                  <button type="button" onclick="tuneLiveStreamId('DcTU1ha1tow')" class="text-rose-400 hover:text-rose-300 font-bold font-mono cursor-pointer">
-                    🎯 Tune Studio (DcTU1ha1tow)
-                  </button>
-                </div>
-              </div>
-              <div class="flex flex-wrap items-center justify-center gap-2.5 mt-5">
-                <button type="button" onclick="toggleLiveBroadcastMode()" class="px-4 py-2 rounded-xl bg-tigersGold hover:bg-tigersGoldBright text-slate-950 font-black text-xs cursor-pointer transition shadow-sm flex items-center gap-1.5 active:scale-95">
-                  <span>📺</span> <span>Watch Past Film Archive</span>
+              <!-- Quick Action Buttons -->
+              <div class="flex flex-wrap items-center justify-center gap-2 mt-4">
+                <button type="button" onclick="loadLivePlaylistStream()" class="px-3.5 py-1.5 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-black text-xs cursor-pointer transition shadow-sm flex items-center gap-1.5 active:scale-95">
+                  <span>🎬</span> <span>Watch Past Game Replays</span>
                 </button>
-                <button type="button" onclick="openScheduleHubModal()" class="px-3.5 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-amber-300 border border-slate-700 font-bold text-xs cursor-pointer transition flex items-center gap-1.5 active:scale-95">
-                  <span>📅</span> <span>View Full Schedule</span>
+                <button type="button" onclick="openScheduleHubModal()" class="px-3 py-1.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 font-bold text-xs cursor-pointer transition flex items-center gap-1.5 active:scale-95">
+                  <span>📅</span> <span>Season Schedule</span>
                 </button>
-                <button type="button" onclick="openSetLiveLinkModal()" class="px-3.5 py-2 rounded-xl bg-rose-600 hover:bg-rose-500 text-white font-bold text-xs cursor-pointer transition flex items-center gap-1.5 active:scale-95" title="Coach/Admin: Set active stream link">
-                  <span>📡</span> <span>Set Live Link</span>
+                <button type="button" onclick="checkActiveLivestreamJson(true)" class="px-3 py-1.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-rose-300 border border-rose-500/40 font-bold text-xs cursor-pointer transition flex items-center gap-1.5 active:scale-95" title="Check Google Web App for stream">
+                  <span>⚡</span> <span>Check Live Now</span>
                 </button>
               </div>
             </div>
@@ -54009,7 +54041,39 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
       }
     }
 
+    let standbyCountdownInterval = null;
+    function startStandbyCountdown() {
+      if (standbyCountdownInterval) clearInterval(standbyCountdownInterval);
+
+      function update() {
+        const timerEl = document.getElementById('standby-countdown-timer');
+        if (!timerEl) return;
+
+        // Target: Tuesday, Nov 10, 2026 at 7:30 PM EST (Game #U13A-RS-015)
+        const targetDate = new Date("2026-11-10T19:30:00-05:00").getTime();
+        const now = new Date().getTime();
+        const diff = targetDate - now;
+
+        if (diff <= 0) {
+          timerEl.innerText = "PUCK DROP PENDING";
+          timerEl.className = "text-sm font-mono font-black text-rose-400 animate-pulse";
+          return;
+        }
+
+        const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const minutes = Math.floor((diff % (1000 * 60)) / (1000 * 60));
+        const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+
+        timerEl.innerText = `${days}d ${hours}h ${minutes}m ${seconds}s`;
+      }
+
+      update();
+      standbyCountdownInterval = setInterval(update, 1000);
+    }
+
     function renderOfflineStandbyHud() {
+      startStandbyCountdown();
       const vDot = document.getElementById('v-status-dot');
       const vText = document.getElementById('v-status-text');
       const vHome = document.getElementById('v-score-home');
@@ -54057,6 +54121,10 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
         if (offlinePlaceholder) offlinePlaceholder.classList.add('hidden');
         const hud = document.getElementById('live-broadcast-hud');
         if (hud) hud.classList.remove('hidden');
+        if (standbyCountdownInterval) {
+          clearInterval(standbyCountdownInterval);
+          standbyCountdownInterval = null;
+        }
         mountDirectChannelLiveFallback();
         startLiveScoreboardClock();
         renderLiveScoreboardHud();
@@ -54117,6 +54185,10 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
         if (offlinePlaceholder) offlinePlaceholder.classList.add('hidden');
         const hud = document.getElementById('live-broadcast-hud');
         if (hud) hud.classList.remove('hidden');
+        if (standbyCountdownInterval) {
+          clearInterval(standbyCountdownInterval);
+          standbyCountdownInterval = null;
+        }
 
         if (liveStreamVideoId) {
           loadLiveStreamVideo(liveStreamVideoId);
