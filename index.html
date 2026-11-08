@@ -73,6 +73,54 @@
     /* Permanent Global Sharp Geometry (No Toggle) */
     --sharp-radius: 0px; 
     --micro-radius: 2px;
+
+    /* Zapier-Inspired SaaS Navigation Layout Colors */
+    --top-nav-bg: #0f172a;
+    --sidebar-rail-bg: #090d16;
+    --flyout-drawer-bg: #ffffff;
+  }
+
+  /* Zapier SaaS Top Bar & Left Rail Dynamic Binding */
+  #master-top-nav {
+    background-color: var(--top-nav-bg) !important;
+    color: var(--text-on-primary, #ffffff) !important;
+    border-bottom: 1px solid var(--border-color) !important;
+  }
+
+  #app-nav-rail {
+    background-color: var(--sidebar-rail-bg) !important;
+    border-right: 1px solid rgba(255, 255, 255, 0.1) !important;
+  }
+
+  #app-flyout-drawer {
+    background-color: var(--bg-surface) !important;
+    border-right: 1px solid var(--border-color) !important;
+  }
+
+  .rail-btn {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 10px 2px;
+    gap: 3px;
+    color: #94a3b8;
+    cursor: pointer;
+    transition: all 0.15s ease;
+    border-left: 3px solid transparent;
+    user-select: none;
+  }
+
+  .rail-btn:hover {
+    color: #ffffff;
+    background-color: rgba(255, 255, 255, 0.08);
+  }
+
+  .rail-btn.active-rail-btn {
+    color: var(--primary-team-color, #FDBB30) !important;
+    background-color: rgba(255, 255, 255, 0.12);
+    border-left-color: var(--primary-team-color, #FDBB30) !important;
   }
 
   /* Global Reset & Customizable Theme Canvas */
@@ -4282,16 +4330,19 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
     <kbd class="px-1.5 py-0.5 rounded bg-black/40 text-[10px] font-mono border border-white/20">Esc</kbd>
   </button>
 
-        <!-- ================= MASTER FUNCTIONAL TOP NAVIGATION BAR ================= -->
-    <header id="master-top-nav" class="bg-[var(--bg-surface)] border border-[var(--border-color)] px-3 py-2 flex flex-wrap items-center justify-between gap-3 text-xs select-none">
+        <!-- ================= ZAPIER-STYLE MASTER TOP NAVIGATION BAR ================= -->
+    <header id="master-top-nav" class="border-b border-[var(--border-color)] px-3 py-2 flex items-center justify-between gap-3 text-xs select-none sticky top-0 z-40">
       
-      <!-- Left: Official Crest & Brand -->
+      <!-- Left: Sidebar Toggle, Crest & Team Brand -->
       <div class="flex items-center gap-2.5 shrink-0">
+        <button id="sidebar-toggle-btn" onclick="toggleAppSidebar()" title="Toggle Sidebar (Expand/Collapse)" class="w-8 h-8 flex items-center justify-center rounded-lg bg-white/10 hover:bg-white/20 text-white font-bold text-sm cursor-pointer transition active:scale-95">
+          <span>☰</span>
+        </button>
         <img 
           src="./tigers_logo.png" 
           onerror="this.onerror=null; this.src='https://auroraminorhockey.com/public/images/common/logo.png';" 
           alt="Aurora Tigers Logo" 
-          class="w-8 h-8 object-contain"
+          class="w-7 h-7 object-contain"
         />
         <div class="flex flex-col">
           <div class="flex items-center gap-1.5 leading-none">
@@ -4302,73 +4353,34 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
         </div>
       </div>
 
-      <!-- Center: Functional Primary Menu (Organized by Function) -->
-      <div class="flex items-center gap-1 overflow-x-auto no-scrollbar py-0.5 flex-1 justify-center min-w-0">
-        <button onclick="switchViewMode('breakouts')" id="nav-btn-analytics" class="nav-functional-btn px-2.5 py-1.5 text-[11px] font-bold uppercase tracking-wider text-slate-300 hover:text-white hover:bg-[var(--bg-panel)] border border-transparent hover:border-[var(--border-color)] cursor-pointer transition flex items-center gap-1 shrink-0">
-          <span>📊</span> <span>Analytics</span>
-        </button>
-        <button onclick="toggleLiveBroadcastMode()" id="nav-btn-live" class="nav-functional-btn px-2.5 py-1.5 text-[11px] font-bold uppercase tracking-wider text-rose-400 hover:text-rose-300 hover:bg-[var(--bg-panel)] border border-transparent hover:border-rose-500/40 cursor-pointer transition flex items-center gap-1 shrink-0">
-          <span class="w-2 h-2 rounded-full bg-rose-500 animate-pulse"></span> <span>Live Games</span>
-        </button>
-        <button onclick="openScheduleHubModal()" id="nav-btn-schedule" class="nav-functional-btn px-2.5 py-1.5 text-[11px] font-bold uppercase tracking-wider text-slate-300 hover:text-white hover:bg-[var(--bg-panel)] border border-transparent hover:border-[var(--border-color)] cursor-pointer transition flex items-center gap-1 shrink-0">
-          <span>📅</span> <span>Schedule</span>
-        </button>
-        <button onclick="switchViewMode('coaches'); openFilmLibraryModal();" id="nav-btn-gametape" class="nav-functional-btn active-nav-btn px-2.5 py-1.5 text-[11px] font-bold uppercase tracking-wider text-amber-400 bg-[var(--bg-panel)] border border-amber-400/60 cursor-pointer transition flex items-center gap-1 shrink-0" title="Browse All 8 Games in Film Library Playlist">
-          <span>🎬</span> <span>Game Tape</span>
-          <span id="top-clip-count" class="text-[9px] px-1.5 py-0.2 rounded-full bg-slate-800 text-amber-300 font-mono">8</span>
-        </button>
-        <button onclick="openPreGameScoutModal()" id="nav-btn-pregame" class="nav-functional-btn px-2.5 py-1.5 text-[11px] font-bold uppercase tracking-wider text-slate-300 hover:text-white hover:bg-[var(--bg-panel)] border border-transparent hover:border-[var(--border-color)] cursor-pointer transition flex items-center gap-1 shrink-0">
-          <span>🏒</span> <span>Pre-Game</span>
-        </button>
-        <button onclick="openTournamentHubModal()" id="nav-btn-tournament" class="nav-functional-btn px-2.5 py-1.5 text-[11px] font-bold uppercase tracking-wider text-slate-300 hover:text-white hover:bg-[var(--bg-panel)] border border-transparent hover:border-[var(--border-color)] cursor-pointer transition flex items-center gap-1 shrink-0">
-          <span>🏆</span> <span>Tournament Hub</span>
-        </button>
-        <button onclick="openPlayerPassportModal('23')" id="nav-btn-passport" class="nav-functional-btn px-2.5 py-1.5 text-[11px] font-bold uppercase tracking-wider text-slate-300 hover:text-white hover:bg-[var(--bg-panel)] border border-transparent hover:border-[var(--border-color)] cursor-pointer transition flex items-center gap-1 shrink-0">
-          <span>🪪</span> <span>Player Passport</span>
-        </button>
-
-        <!-- Alerts Popover Toggle -->
-        <div class="relative shrink-0">
-          <button onclick="toggleAlertsDropdown()" id="nav-btn-alerts" class="px-2.5 py-1.5 text-[11px] font-bold uppercase tracking-wider text-amber-300 hover:text-white hover:bg-[var(--bg-panel)] border border-amber-500/30 cursor-pointer transition flex items-center gap-1.5 active:scale-95">
-            <span>🔔</span> <span>Alerts</span>
-            <span id="alerts-unread-badge" class="px-1.5 py-0.2 bg-amber-500 text-slate-950 font-mono font-black text-[10px]">3</span>
-          </button>
-          
-          <!-- Alerts Dropdown Panel (100% Dynamic) -->
-          <div id="alerts-dropdown-menu" class="hidden absolute top-full mt-2 left-1/2 -translate-x-1/2 sm:translate-x-0 sm:left-auto sm:right-0 w-80 sm:w-96 bg-[var(--bg-panel)] border border-[var(--border-color)] shadow-2xl p-3 z-50 animate-in fade-in zoom-in-95 duration-100 text-left">
-            <div class="flex items-center justify-between pb-2 border-b border-[var(--border-color)] mb-2.5">
-              <span class="font-bold uppercase text-[10px] tracking-wider text-amber-400 flex items-center gap-1.5">
-                <span>🔔</span> <span>Team Notifications &amp; Alerts</span>
-              </span>
-              <div class="flex items-center gap-2">
-                <button onclick="renderDynamicAlertsMenu(true)" class="text-[10px] font-bold text-sky-400 hover:underline cursor-pointer">↻ Refresh</button>
-                <span id="alerts-header-count-label" class="text-[10px] font-mono text-slate-400">3 Active</span>
-              </div>
-            </div>
-            
-            <div id="alerts-dynamic-list" class="space-y-2 text-xs">
-              <!-- Populated dynamically by renderDynamicAlertsMenu() -->
-            </div>
-
-            <div class="pt-2 mt-2 border-t border-[var(--border-color)] flex items-center justify-between text-[10px]">
-              <button onclick="markAllAlertsRead()" class="text-slate-400 hover:text-slate-900 cursor-pointer font-bold">✓ Mark All Read</button>
-              <button onclick="toggleAlertsDropdown(false)" class="text-amber-400 hover:underline cursor-pointer font-bold">Close</button>
-            </div>
-          </div>
-        </div>
-
+      <!-- Center: Omnisearch Box (Search games, players, clips) -->
+      <div class="flex-1 max-w-md mx-2 hidden sm:block relative">
+        <input 
+          id="app-omnisearch" 
+          type="text" 
+          placeholder="Search games, opponents, players, clips... (Ctrl+K)" 
+          oninput="handleAppOmnisearch(this.value)" 
+          class="w-full bg-slate-900/90 border border-slate-700/80 text-white placeholder-slate-400 rounded-lg pl-8 pr-16 py-1.5 text-xs font-medium focus:outline-none focus:border-amber-400"
+        />
+        <span class="absolute left-2.5 top-1/2 -translate-y-1/2 text-slate-400 text-xs">🔍</span>
+        <kbd class="absolute right-2 top-1/2 -translate-y-1/2 px-1.5 py-0.5 rounded bg-slate-800 text-slate-400 border border-slate-700 font-mono text-[9px]">Ctrl K</kbd>
       </div>
 
-      <!-- Right: User Context ("logged in as"), Theme Customizer, Feedback & Guide Menu -->
+      <!-- Right: User Context ("logged in as"), Theme Customizer, Alerts & Modals -->
       <div class="flex items-center gap-1.5 shrink-0">
-        <button onclick="openRoleSwitchModal()" id="role-badge" title="Click to switch role (Admin, Coach, Parent)" class="px-2.5 py-1 text-[11px] font-bold bg-[var(--bg-panel)] text-slate-200 border border-[var(--border-color)] cursor-pointer hover:bg-slate-800 transition flex items-center gap-1.5">
-          <span class="text-slate-400 text-[10px]">Logged in as:</span>
+        <button onclick="toggleLiveBroadcastMode()" id="nav-btn-live" class="px-2.5 py-1 text-[11px] font-bold uppercase tracking-wider text-rose-400 hover:text-rose-300 bg-rose-500/10 hover:bg-rose-500/20 border border-rose-500/40 cursor-pointer transition flex items-center gap-1.5">
+          <span class="w-2 h-2 rounded-full bg-rose-500 animate-pulse"></span>
+          <span class="hidden sm:inline">Live Games</span>
+        </button>
+
+        <button onclick="openRoleSwitchModal()" id="role-badge" title="Click to switch role (Admin, Coach, Parent)" class="px-2.5 py-1 text-[11px] font-bold bg-white/10 text-slate-200 border border-white/20 cursor-pointer hover:bg-white/20 transition flex items-center gap-1.5">
+          <span class="text-slate-400 text-[10px] hidden md:inline">Logged in as:</span>
           <strong id="role-badge-text" class="text-amber-400">Coach Mode</strong>
         </button>
 
         <!-- Multi-Team Theme & Surface Customizer Popover -->
         <div class="relative">
-          <button onclick="toggleThemeCustomizerDropdown()" id="nav-btn-theme" title="Customize Team Colors &amp; Surface Brightness" class="px-2.5 py-1 text-[11px] font-bold bg-[var(--bg-panel)] text-slate-200 border border-[var(--border-color)] cursor-pointer transition flex items-center gap-1">
+          <button onclick="toggleThemeCustomizerDropdown()" id="nav-btn-theme" title="Customize Team Colors &amp; Surface Brightness" class="px-2.5 py-1 text-[11px] font-bold bg-white/10 text-slate-200 border border-white/20 cursor-pointer transition flex items-center gap-1">
             <span>🎨</span> <span class="hidden sm:inline">Theme</span>
           </button>
 
@@ -4453,18 +4465,237 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
           </div>
         </div>
 
-        <button onclick="openFeedbackModal()" title="Send shift corrections or tactical questions to coaches" class="px-2.5 py-1 text-[11px] font-bold bg-[var(--bg-panel)] text-slate-200 hover:text-white border border-[var(--border-color)] hover:border-amber-400/50 cursor-pointer transition flex items-center gap-1">
-          <span>💬</span> <span class="hidden sm:inline">Feedback</span>
+        <!-- Alerts Popover Toggle -->
+        <div class="relative shrink-0">
+          <button onclick="toggleAlertsDropdown()" id="nav-btn-alerts" class="px-2.5 py-1 text-[11px] font-bold uppercase tracking-wider text-amber-300 hover:text-white bg-white/10 hover:bg-white/20 border border-white/20 cursor-pointer transition flex items-center gap-1.5 active:scale-95">
+            <span>🔔</span> <span>Alerts</span>
+            <span id="alerts-unread-badge" class="px-1.5 py-0.2 bg-amber-500 text-slate-950 font-mono font-black text-[10px]">3</span>
+          </button>
+          
+          <div id="alerts-dropdown-menu" class="hidden absolute top-full mt-2 left-1/2 -translate-x-1/2 sm:translate-x-0 sm:left-auto sm:right-0 w-80 sm:w-96 bg-[var(--bg-panel)] border border-[var(--border-color)] shadow-2xl p-3 z-50 animate-in fade-in zoom-in-95 duration-100 text-left">
+            <div class="flex items-center justify-between pb-2 border-b border-[var(--border-color)] mb-2.5">
+              <span class="font-bold uppercase text-[10px] tracking-wider text-amber-400 flex items-center gap-1.5">
+                <span>🔔</span> <span>Team Notifications &amp; Alerts</span>
+              </span>
+              <div class="flex items-center gap-2">
+                <button onclick="renderDynamicAlertsMenu(true)" class="text-[10px] font-bold text-sky-400 hover:underline cursor-pointer">↻ Refresh</button>
+                <span id="alerts-header-count-label" class="text-[10px] font-mono text-slate-400">3 Active</span>
+              </div>
+            </div>
+            
+            <div id="alerts-dynamic-list" class="space-y-2 text-xs">
+              <!-- Populated dynamically by renderDynamicAlertsMenu() -->
+            </div>
+
+            <div class="pt-2 mt-2 border-t border-[var(--border-color)] flex items-center justify-between text-[10px]">
+              <button onclick="markAllAlertsRead()" class="text-slate-400 hover:text-slate-900 cursor-pointer font-bold">✓ Mark All Read</button>
+              <button onclick="toggleAlertsDropdown(false)" class="text-amber-400 hover:underline cursor-pointer font-bold">Close</button>
+            </div>
+          </div>
+        </div>
+
+        <button onclick="openFeedbackModal()" title="Send shift corrections or tactical questions to coaches" class="px-2.5 py-1 text-[11px] font-bold bg-white/10 text-slate-200 hover:text-white border border-white/20 cursor-pointer transition flex items-center gap-1">
+          <span>💬</span> <span class="hidden md:inline">Feedback</span>
         </button>
-        <button onclick="openHelpModal()" title="View portal user guide &amp; FAQ" class="px-2.5 py-1 text-[11px] font-bold bg-[var(--bg-panel)] text-slate-200 hover:text-white border border-[var(--border-color)] hover:border-amber-400/50 cursor-pointer transition flex items-center gap-1">
-          <span>❓</span> <span class="hidden sm:inline">How to Use</span>
+        <button onclick="openHelpModal()" title="View portal user guide &amp; FAQ" class="px-2.5 py-1 text-[11px] font-bold bg-white/10 text-slate-200 hover:text-white border border-white/20 cursor-pointer transition flex items-center gap-1">
+          <span>❓</span> <span class="hidden md:inline">How to Use</span>
         </button>
-        <button onclick="openTeamOnboardingModal()" title="Team Administration &amp; Theming Settings" class="px-2 py-1 text-[11px] font-bold bg-[var(--bg-panel)] text-slate-200 hover:text-white border border-[var(--border-color)] hover:border-amber-400/50 cursor-pointer transition flex items-center gap-1">
+        <button onclick="openTeamOnboardingModal()" title="Team Administration &amp; Theming Settings" class="px-2 py-1 text-[11px] font-bold bg-white/10 text-slate-200 hover:text-white border border-white/20 cursor-pointer transition flex items-center gap-1">
           <span>⚙️</span>
         </button>
       </div>
 
+      <!-- Compatibility shims for legacy scripts -->
+      <div style="display:none;" id="nav-btn-shims">
+        <button id="nav-btn-analytics" onclick="switchAppRail('analytics')"></button>
+        <button id="nav-btn-schedule" onclick="switchAppRail('schedule')"></button>
+        <button id="nav-btn-gametape" onclick="switchAppRail('film')"></button>
+        <button id="nav-btn-pregame" onclick="switchAppRail('schedule')"></button>
+        <button id="nav-btn-tournament" onclick="switchAppRail('tournaments')"></button>
+        <button id="nav-btn-passport" onclick="switchAppRail('passports')"></button>
+        <span id="top-clip-count">16</span>
+      </div>
+
     </header>
+
+    <!-- ================= ZAPIER SAAS BODY SHELL (RAIL + FLYOUT + VIEWPORT) ================= -->
+    <div id="app-shell-container" class="flex flex-row w-full min-h-[calc(100vh-56px)] items-stretch overflow-hidden relative">
+
+      <!-- FAR-LEFT ICON RAIL (58px wide, always accessible) -->
+      <aside id="app-nav-rail" class="w-14 sm:w-16 shrink-0 flex flex-col justify-between py-2 select-none z-30">
+        <div class="space-y-1">
+          <button id="rail-btn-schedule" onclick="switchAppRail('schedule')" class="rail-btn active-rail-btn" title="Game Schedule &amp; Matchup Scout">
+            <span class="rail-btn-icon text-lg">📅</span>
+            <span class="text-[9px] uppercase tracking-tight font-black">Sched</span>
+          </button>
+          <button id="rail-btn-film" onclick="switchAppRail('film')" class="rail-btn" title="Film Room &amp; Game Tape Archive">
+            <span class="rail-btn-icon text-lg">🎬</span>
+            <span class="text-[9px] uppercase tracking-tight font-black">Film</span>
+          </button>
+          <button id="rail-btn-live" onclick="switchAppRail('live')" class="rail-btn" title="Live Broadcast Stream &amp; Tuner">
+            <span class="rail-btn-icon text-lg">🔴</span>
+            <span class="text-[9px] uppercase tracking-tight font-black">Live</span>
+          </button>
+          <button id="rail-btn-passports" onclick="switchAppRail('passports')" class="rail-btn" title="Player Passports (Folders / Roster)">
+            <span class="rail-btn-icon text-lg">🪪</span>
+            <span class="text-[9px] uppercase tracking-tight font-black">Roster</span>
+          </button>
+          <button id="rail-btn-analytics" onclick="switchAppRail('analytics')" class="rail-btn" title="Team Analytics, Breakouts &amp; Zone Times">
+            <span class="rail-btn-icon text-lg">📊</span>
+            <span class="text-[9px] uppercase tracking-tight font-black">Stats</span>
+          </button>
+          <button id="rail-btn-tournaments" onclick="switchAppRail('tournaments')" class="rail-btn" title="Tournaments &amp; Showcases">
+            <span class="rail-btn-icon text-lg">🏆</span>
+            <span class="text-[9px] uppercase tracking-tight font-black">Tourn</span>
+          </button>
+        </div>
+
+        <div class="space-y-1 pt-2 border-t border-white/10">
+          <button onclick="openTeamOnboardingModal()" class="rail-btn" title="Team Colors &amp; Admin Panel">
+            <span class="rail-btn-icon text-base">⚙️</span>
+            <span class="text-[9px] uppercase tracking-tight font-black">Admin</span>
+          </button>
+        </div>
+      </aside>
+
+      <!-- CONTEXTUAL FLYOUT DRAWER (~300px, Collapsible with ☰) -->
+      <aside id="app-flyout-drawer" class="w-72 sm:w-80 shrink-0 border-r border-[var(--border-color)] flex flex-col h-[calc(100vh-56px)] overflow-hidden transition-all duration-200 z-20">
+        
+        <!-- FLYOUT PANEL 1: SCHEDULE & MATCHUPS (DEFAULT) -->
+        <div id="flyout-panel-schedule" class="flex-1 flex flex-col min-h-0">
+          <div class="p-3 border-b border-[var(--border-color)] bg-[var(--bg-panel)] shrink-0 space-y-2">
+            <div class="flex items-center justify-between">
+              <span class="font-display font-black text-xs uppercase tracking-wider text-amber-500 flex items-center gap-1.5">
+                <span>📅</span> <span>Matchup Schedule</span>
+              </span>
+              <button onclick="openScheduleHubModal()" class="text-[10px] font-bold text-sky-400 hover:underline cursor-pointer">
+                Full Cal ↗
+              </button>
+            </div>
+            
+            <!-- Quick Filter Tabs -->
+            <div class="grid grid-cols-3 gap-1 bg-[var(--bg-surface)] p-1 border border-[var(--border-color)] text-[10px] font-bold text-center">
+              <button onclick="filterFlyoutSchedule('all')" id="sched-flyout-tab-all" class="py-1 bg-[var(--bg-panel)] text-amber-400 cursor-pointer shadow-xs">All</button>
+              <button onclick="filterFlyoutSchedule('upcoming')" id="sched-flyout-tab-upcoming" class="py-1 text-slate-400 hover:text-white cursor-pointer">Upcoming</button>
+              <button onclick="filterFlyoutSchedule('past')" id="sched-flyout-tab-past" class="py-1 text-slate-400 hover:text-white cursor-pointer">Past</button>
+            </div>
+
+            <!-- Search Filter -->
+            <div class="relative">
+              <input id="sched-flyout-search" type="text" placeholder="Filter opponent or arena..." oninput="searchFlyoutSchedule(this.value)" class="w-full bg-[var(--bg-surface)] border border-[var(--border-color)] text-slate-900 rounded px-2 pl-7 py-1 text-xs focus:outline-none focus:border-amber-400" />
+              <span class="absolute left-2 top-1/2 -translate-y-1/2 text-slate-400 text-xs">🔍</span>
+            </div>
+          </div>
+
+          <!-- Scrollable Schedule Cards List -->
+          <div id="sched-flyout-list" class="flex-1 overflow-y-auto custom-scroll p-2 space-y-2 text-xs">
+            <!-- Dynamically populated by renderAppScheduleFlyout() -->
+          </div>
+        </div>
+
+        <!-- FLYOUT PANEL 2: FILM ROOM (16 Games Library) -->
+        <div id="flyout-panel-film" class="flex-1 flex flex-col min-h-0 hidden">
+          <div class="p-3 border-b border-[var(--border-color)] bg-[var(--bg-panel)] shrink-0 space-y-2">
+            <div class="flex items-center justify-between">
+              <span class="font-display font-black text-xs uppercase tracking-wider text-amber-500 flex items-center gap-1.5">
+                <span>🎬</span> <span>Film Tape Library (16)</span>
+              </span>
+              <button onclick="openAddGameModal()" class="text-[10px] font-bold text-amber-400 hover:underline cursor-pointer">
+                ➕ Ingest
+              </button>
+            </div>
+            <div class="relative">
+              <input id="film-flyout-search" type="text" placeholder="Search game tape..." oninput="searchFlyoutFilm(this.value)" class="w-full bg-[var(--bg-surface)] border border-[var(--border-color)] text-slate-900 rounded px-2 pl-7 py-1 text-xs focus:outline-none focus:border-amber-400" />
+              <span class="absolute left-2 top-1/2 -translate-y-1/2 text-slate-400 text-xs">🔍</span>
+            </div>
+          </div>
+          <div id="film-flyout-list" class="flex-1 overflow-y-auto custom-scroll p-2 space-y-2 text-xs">
+            <!-- Dynamically populated by renderAppFilmFlyout() -->
+          </div>
+          <div class="p-2 border-t border-[var(--border-color)] bg-[var(--bg-panel)] shrink-0">
+            <a href="https://www.youtube.com/playlist?list=PLXFVFYYSmylE" target="_blank" rel="noopener noreferrer" class="w-full py-1.5 bg-red-600 hover:bg-red-500 text-white font-black text-[11px] flex items-center justify-center gap-1 shadow-xs">
+              <span>📺</span> <span>Open YouTube Playlist (16) ↗</span>
+            </a>
+          </div>
+        </div>
+
+        <!-- FLYOUT PANEL 3: PLAYER PASSPORTS (Folders) -->
+        <div id="flyout-panel-passports" class="flex-1 flex flex-col min-h-0 hidden">
+          <div class="p-3 border-b border-[var(--border-color)] bg-[var(--bg-panel)] shrink-0 space-y-2">
+            <div class="flex items-center justify-between">
+              <span class="font-display font-black text-xs uppercase tracking-wider text-amber-500 flex items-center gap-1.5">
+                <span>🪪</span> <span>Player Passports</span>
+              </span>
+              <span class="text-[10px] font-mono text-slate-400">17 Rostered</span>
+            </div>
+            <div class="relative">
+              <input id="passport-flyout-search" type="text" placeholder="Search player name or #..." oninput="searchFlyoutPassports(this.value)" class="w-full bg-[var(--bg-surface)] border border-[var(--border-color)] text-slate-900 rounded px-2 pl-7 py-1 text-xs focus:outline-none focus:border-amber-400" />
+              <span class="absolute left-2 top-1/2 -translate-y-1/2 text-slate-400 text-xs">🔍</span>
+            </div>
+          </div>
+          <div id="passport-flyout-list" class="flex-1 overflow-y-auto custom-scroll p-2 space-y-2 text-xs">
+            <!-- Dynamically populated by renderAppPassportFlyout() -->
+          </div>
+        </div>
+
+        <!-- FLYOUT PANEL 4: LIVE BROADCAST TUNER -->
+        <div id="flyout-panel-live" class="flex-1 flex flex-col min-h-0 hidden p-3 space-y-3 overflow-y-auto custom-scroll">
+          <div class="flex items-center justify-between pb-2 border-b border-[var(--border-color)]">
+            <span class="font-display font-black text-xs uppercase tracking-wider text-rose-400 flex items-center gap-1.5">
+              <span class="w-2 h-2 rounded-full bg-rose-500 animate-pulse"></span>
+              <span>Live Broadcast Center</span>
+            </span>
+            <span class="text-[9px] font-mono px-1.5 py-0.5 rounded bg-rose-500/20 text-rose-300 border border-rose-500/40">STANDBY</span>
+          </div>
+
+          <div class="p-2.5 rounded bg-[var(--bg-panel)] border border-[var(--border-color)] space-y-2">
+            <div class="text-[10px] font-bold uppercase text-slate-400">Scott's Google Live Stream API:</div>
+            <button onclick="checkActiveLivestreamJson(true)" class="w-full py-1.5 bg-rose-600 hover:bg-rose-500 text-white font-black text-xs flex items-center justify-center gap-1 cursor-pointer shadow-xs active:scale-95">
+              <span>⚡</span> <span>Auto-Detect Live Stream Now</span>
+            </button>
+          </div>
+
+          <div class="p-2.5 rounded bg-[var(--bg-panel)] border border-[var(--border-color)] space-y-2 text-xs">
+            <div class="text-[10px] font-bold uppercase text-slate-400">Quick Tune Presets:</div>
+            <button onclick="setLiveLinkPreset('controlroom'); tuneCurrentLiveStream();" class="w-full py-1.5 bg-slate-800 hover:bg-slate-700 text-amber-300 border border-amber-400/40 font-bold text-xs flex items-center justify-center gap-1 cursor-pointer">
+              <span>🎯</span> <span>Studio (hmiiwDm6XqI)</span>
+            </button>
+            <button onclick="setLiveLinkPreset('playlist'); tuneCurrentLiveStream();" class="w-full py-1.5 bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 font-bold text-xs flex items-center justify-center gap-1 cursor-pointer">
+              <span>📺</span> <span>Team Playlist (PLXFVFYYSmylE)</span>
+            </button>
+          </div>
+
+          <div class="p-2.5 rounded bg-[var(--bg-panel)] border border-[var(--border-color)] space-y-1 text-[11px]">
+            <span class="font-bold text-amber-400 block">RTMP Stream Key:</span>
+            <code class="block bg-slate-900 text-amber-300 p-1.5 rounded font-mono text-[10px] border border-slate-800 select-all">gw39-597h-fv3w-g1k6-b7h4</code>
+          </div>
+        </div>
+
+        <!-- FLYOUT PANEL 5: TEAM ANALYTICS SUB-NAV -->
+        <div id="flyout-panel-analytics" class="flex-1 flex flex-col min-h-0 hidden p-3 space-y-2">
+          <div class="pb-2 border-b border-[var(--border-color)]">
+            <span class="font-display font-black text-xs uppercase tracking-wider text-amber-500 flex items-center gap-1.5">
+              <span>📊</span> <span>Analytics Navigator</span>
+            </span>
+          </div>
+          <button onclick="switchViewMode('breakouts')" class="w-full p-2.5 bg-[var(--bg-panel)] hover:border-amber-400 border border-[var(--border-color)] text-left cursor-pointer flex items-center justify-between">
+            <span class="font-bold text-xs">🏒 Breakout Execution</span>
+            <span class="text-[10px] text-amber-400 font-mono font-bold">68.2%</span>
+          </button>
+          <button onclick="switchViewMode('breakouts'); scrollReportTo('report-faceoffs-card');" class="w-full p-2.5 bg-[var(--bg-panel)] hover:border-amber-400 border border-[var(--border-color)] text-left cursor-pointer flex items-center justify-between">
+            <span class="font-bold text-xs">🔴 Faceoffs Dominance</span>
+            <span class="text-[10px] text-emerald-400 font-mono font-bold">54.2%</span>
+          </button>
+          <button onclick="switchViewMode('breakouts'); scrollReportTo('report-shot-quality-card');" class="w-full p-2.5 bg-[var(--bg-panel)] hover:border-amber-400 border border-[var(--border-color)] text-left cursor-pointer flex items-center justify-between">
+            <span class="font-bold text-xs">🎯 Shot Quality &amp; Heatmaps</span>
+            <span class="text-[10px] text-sky-400 font-mono font-bold">24 SOG</span>
+          </button>
+        </div>
+
+      </aside>
+
+      <!-- MAIN APP VIEWPORT (FLEX 1) -->
+      <main id="app-main-viewport" class="flex-1 min-w-0 flex flex-col overflow-y-auto custom-scroll p-1.5 sm:p-2.5 space-y-2">
 
     <!-- ================= UNIFIED MATCH SELECTOR & LIVE GAMESHEET SCOREBOARD ================= -->
     <div id="unified-match-bar" class="bg-[var(--bg-panel)] border-x border-b border-[var(--border-color)] px-3 py-1.5 flex flex-wrap items-center justify-between gap-2.5 text-xs">
@@ -5036,6 +5267,247 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
               <span>🎬</span> <span>Film</span>
             </button>
           </div>
+        </div>
+
+        <!-- ================= EMBEDDED PRE-GAME SCOUTING DOSSIER (ACTIVE ON UPCOMING GAME CLICK) ================= -->
+        <div id="scouting-sidebar-section" class="flex-1 flex flex-col min-h-0 overflow-y-auto custom-scroll p-3 space-y-3 hidden bg-[var(--bg-panel)]">
+          
+          <!-- Matchup Header -->
+          <div class="p-3 rounded-xl bg-gradient-to-r from-slate-950 via-slate-900 to-slate-950 text-white border border-amber-400/50 shadow-md space-y-1.5">
+            <div class="flex items-center justify-between text-[10px]">
+              <span class="px-2 py-0.5 rounded font-mono font-bold bg-amber-400 text-slate-950 uppercase" id="side-scout-division-badge">OMHA U13A</span>
+              <span class="text-slate-400 font-mono" id="side-scout-source-tag">GameSheet + TeamSnap</span>
+            </div>
+            <div class="text-sm font-black text-white uppercase tracking-wider" id="side-scout-matchup-title">
+              Aurora Tigers vs Opponent
+            </div>
+            <div class="text-[11px] text-slate-300 flex items-center gap-1.5" id="side-scout-meta">
+              <span>📅 Nov 10, 2026 (7:30 PM) • Aurora Community Centre</span>
+            </div>
+            <div class="flex items-center gap-2 pt-1">
+              <button onclick="printPreGameBenchCard()" class="px-2.5 py-1 rounded bg-slate-800 hover:bg-slate-700 text-amber-300 text-[10px] font-bold border border-amber-400/30 cursor-pointer transition flex items-center gap-1">
+                <span>🖨️</span> <span>Print Bench Card</span>
+              </button>
+              <a id="side-scout-maps-link" href="#" target="_blank" class="px-2.5 py-1 rounded bg-slate-800 hover:bg-slate-700 text-sky-300 text-[10px] font-bold border border-slate-700 cursor-pointer transition flex items-center gap-1">
+                <span>📍</span> <span>Arena Directions ↗</span>
+              </a>
+            </div>
+          </div>
+
+          <!-- Tale of the Tape: Season Record & Stats -->
+          <div class="p-3 rounded-xl bg-[var(--bg-surface)] border border-[var(--border-color)] space-y-2">
+            <div class="text-[10px] font-bold uppercase tracking-wider text-amber-500 flex items-center justify-between">
+              <span>📊 Tale of the Tape (Season Record &amp; Special Teams)</span>
+              <span class="text-slate-400 font-mono text-[9px]">League Verified</span>
+            </div>
+            <div class="grid grid-cols-2 gap-2 text-center text-xs">
+              <!-- Tigers -->
+              <div class="p-2.5 rounded bg-[var(--bg-panel)] border border-amber-400/40 space-y-1">
+                <div class="text-[10px] font-black text-amber-500 uppercase">🐯 AURORA TIGERS</div>
+                <div class="text-lg font-black text-slate-900" id="side-scout-tigers-record">14-3-2</div>
+                <div class="text-[10px] font-mono text-emerald-600 font-bold" id="side-scout-tigers-pct">.789 Win Pct</div>
+                <div class="text-[10px] text-slate-500 pt-1 border-t border-[var(--border-color)] leading-tight" id="side-scout-tigers-st">
+                  PP: <strong>24.2%</strong> • PK: <strong>88.5%</strong>
+                </div>
+              </div>
+              <!-- Opponent -->
+              <div class="p-2.5 rounded bg-[var(--bg-panel)] border border-rose-500/40 space-y-1">
+                <div class="text-[10px] font-black text-rose-500 uppercase truncate" id="side-scout-opp-name">🏒 OPPONENT</div>
+                <div class="text-lg font-black text-slate-900" id="side-scout-opp-record">11-6-3</div>
+                <div class="text-[10px] font-mono text-rose-600 font-bold" id="side-scout-opp-pct">.625 Win Pct</div>
+                <div class="text-[10px] text-slate-500 pt-1 border-t border-[var(--border-color)] leading-tight" id="side-scout-opp-st">
+                  PP: <strong>19.5%</strong> • PK: <strong>81.0%</strong>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Opponent Last 5 Games Form -->
+          <div class="p-3 rounded-xl bg-[var(--bg-surface)] border border-[var(--border-color)] space-y-2">
+            <div class="flex items-center justify-between text-[10px] font-bold uppercase tracking-wider text-slate-600">
+              <span class="flex items-center gap-1 text-amber-500">
+                <span>📈</span> <span>Opponent Recent Form (Last 5 Games)</span>
+              </span>
+              <span id="side-scout-last5-summary" class="font-mono text-slate-400">Form: W-W-L-W-T</span>
+            </div>
+            <div id="side-scout-last5-grid" class="grid grid-cols-5 gap-1 text-center">
+              <!-- Dynamically populated -->
+            </div>
+          </div>
+
+          <!-- Danger Players to Watch -->
+          <div class="p-3 rounded-xl bg-[var(--bg-surface)] border border-[var(--border-color)] space-y-2">
+            <div class="flex items-center justify-between text-[10px] font-bold uppercase tracking-wider text-rose-500">
+              <span class="flex items-center gap-1">
+                <span>⚠️</span> <span>Danger Players to Watch</span>
+              </span>
+              <span class="text-slate-400 font-mono text-[9px]">Scouted Tendencies</span>
+            </div>
+            <div id="side-scout-danger-list" class="space-y-1.5 text-xs">
+              <!-- Dynamically populated -->
+            </div>
+          </div>
+
+          <!-- Goalie Matchup -->
+          <div class="p-3 rounded-xl bg-[var(--bg-surface)] border border-[var(--border-color)] space-y-2">
+            <div class="text-[10px] font-bold uppercase tracking-wider text-slate-600 flex items-center justify-between">
+              <span class="flex items-center gap-1 text-emerald-600">
+                <span>🥅</span> <span>Starting Goalie Matchup &amp; Tendencies</span>
+              </span>
+              <span class="text-slate-400 font-mono text-[9px]">Net-Front Scout</span>
+            </div>
+            <div class="grid grid-cols-2 gap-2 text-center text-xs">
+              <div class="p-2 rounded bg-[var(--bg-panel)] border border-emerald-500/30">
+                <div class="text-[9px] font-bold text-emerald-600 uppercase">Tigers Tandem</div>
+                <div class="font-bold text-slate-900 mt-0.5">#13 Hart / #98 Barfitt</div>
+                <div class="text-[9px] text-slate-500 mt-0.5">2.10 GAA • .919 SV%</div>
+              </div>
+              <div class="p-2 rounded bg-[var(--bg-panel)] border border-rose-500/30">
+                <div class="text-[9px] font-bold text-rose-500 uppercase" id="side-scout-opp-goalie-title">Opponent Goalie</div>
+                <div class="font-bold text-slate-900 mt-0.5" id="side-scout-opp-goalie-name">#31 Starter</div>
+                <div class="text-[9px] text-slate-500 mt-0.5" id="side-scout-opp-goalie-stats">2.45 GAA • .908 SV%</div>
+              </div>
+            </div>
+            <div class="text-[11px] text-slate-600 p-2 rounded bg-[var(--bg-panel)] border border-[var(--border-color)]" id="side-scout-opp-goalie-scout">
+              Butterfly style netminder; vulnerable to high glove-side snap shots and low pad rebounds.
+            </div>
+          </div>
+
+          <!-- Coach's 3 Tactical Keys -->
+          <div class="p-3 rounded-xl bg-[var(--bg-surface)] border border-amber-400/50 space-y-2">
+            <div class="text-[10px] font-bold uppercase tracking-wider text-amber-500 flex items-center gap-1.5">
+              <span>🔑</span> <span>Coach's 3 Tactical Keys to Victory</span>
+            </div>
+            <div id="side-scout-keys-container" class="space-y-1.5 text-xs text-slate-700">
+              <!-- Dynamically populated -->
+            </div>
+          </div>
+
+        </div>
+
+        <!-- ================= EMBEDDED PAST GAME INTEL & ANALYTICS (ACTIVE ON PAST GAME CLICK) ================= -->
+        <div id="past-game-intel-sidebar-section" class="flex-1 flex flex-col min-h-0 overflow-y-auto custom-scroll p-3 space-y-3 hidden bg-[var(--bg-panel)]">
+          
+          <!-- Final Score Header -->
+          <div class="p-3 rounded-xl bg-gradient-to-r from-slate-950 via-slate-900 to-slate-950 text-white border border-amber-400/50 shadow-md space-y-1.5">
+            <div class="flex items-center justify-between text-[10px]">
+              <span class="px-2 py-0.5 rounded font-mono font-bold bg-emerald-500 text-slate-950 uppercase" id="past-game-status-tag">FINAL RESULT</span>
+              <span class="text-slate-400 font-mono" id="past-game-date-tag">Oct 20, 2026</span>
+            </div>
+            <div class="text-sm sm:text-base font-black text-amber-400 uppercase tracking-wider" id="past-game-score-title">
+              FINAL: Aurora Tigers 3 - Opponent 2
+            </div>
+            <div class="text-[11px] text-slate-300 flex items-center justify-between" id="past-game-meta">
+              <span id="past-game-arena-text">Aurora Community Centre</span>
+              <a id="past-game-gamesheet-link" href="#" target="_blank" class="text-sky-300 hover:underline font-bold text-[10px]">GameSheet Box Score ↗</a>
+            </div>
+          </div>
+
+          <!-- VIDEO ANALYTICS: ZONE TIME & POSSESSION -->
+          <div class="p-3 rounded-xl bg-[var(--bg-surface)] border border-[var(--border-color)] space-y-2">
+            <div class="flex items-center justify-between text-[10px] font-bold uppercase tracking-wider text-slate-700">
+              <span class="flex items-center gap-1 text-amber-500">
+                <span>⏱️</span> <span>Video Analytics: Zone Time Possession</span>
+              </span>
+              <span class="text-slate-400 font-mono text-[9px]">Video Computer Vision</span>
+            </div>
+
+            <!-- 3-Segment Visual Zone Bar -->
+            <div class="w-full h-4 rounded overflow-hidden flex font-mono text-[9px] font-black text-white shadow-inner">
+              <div id="past-bar-ozone" class="bg-emerald-500 flex items-center justify-center transition-all duration-300" style="width: 45%;" title="Offensive Zone Time">
+                <span id="past-bar-ozone-text">OZ 45%</span>
+              </div>
+              <div id="past-bar-nzone" class="bg-slate-600 flex items-center justify-center transition-all duration-300" style="width: 25%;" title="Neutral Zone Time">
+                <span id="past-bar-nzone-text">NZ 25%</span>
+              </div>
+              <div id="past-bar-dzone" class="bg-rose-500 flex items-center justify-center transition-all duration-300" style="width: 30%;" title="Defensive Zone Time">
+                <span id="past-bar-dzone-text">DZ 30%</span>
+              </div>
+            </div>
+
+            <div class="grid grid-cols-3 gap-1.5 text-center text-[10px]">
+              <div class="p-1.5 rounded bg-[var(--bg-panel)] border border-[var(--border-color)]">
+                <span class="text-slate-400 font-bold block">Attacking (OZ)</span>
+                <strong id="past-stat-ozone" class="text-emerald-600 font-mono text-xs">18m (45%)</strong>
+              </div>
+              <div class="p-1.5 rounded bg-[var(--bg-panel)] border border-[var(--border-color)]">
+                <span class="text-slate-400 font-bold block">Transition (NZ)</span>
+                <strong id="past-stat-nzone" class="text-slate-700 font-mono text-xs">10m (25%)</strong>
+              </div>
+              <div class="p-1.5 rounded bg-[var(--bg-panel)] border border-[var(--border-color)]">
+                <span class="text-slate-400 font-bold block">Defending (DZ)</span>
+                <strong id="past-stat-dzone" class="text-rose-600 font-mono text-xs">12m (30%)</strong>
+              </div>
+            </div>
+          </div>
+
+          <!-- VIDEO ANALYTICS: FACEOFF DOMINANCE -->
+          <div class="p-3 rounded-xl bg-[var(--bg-surface)] border border-[var(--border-color)] space-y-2">
+            <div class="flex items-center justify-between text-[10px] font-bold uppercase tracking-wider text-slate-700">
+              <span class="flex items-center gap-1 text-emerald-600">
+                <span>🏒</span> <span>Faceoff Dominance (Game Video Breakdown)</span>
+              </span>
+              <span id="past-fo-overall-winrate" class="px-2 py-0.5 rounded font-mono font-bold bg-emerald-500/20 text-emerald-600 border border-emerald-500/40">54.2% Won</span>
+            </div>
+
+            <div class="grid grid-cols-3 gap-1.5 text-center text-[10px]">
+              <div class="p-1.5 rounded bg-[var(--bg-panel)] border border-[var(--border-color)]">
+                <span class="text-slate-400 font-bold block">D-Zone Draws</span>
+                <strong id="past-fo-dzone" class="text-slate-900 font-mono text-xs">6/10 (60%)</strong>
+              </div>
+              <div class="p-1.5 rounded bg-[var(--bg-panel)] border border-[var(--border-color)]">
+                <span class="text-slate-400 font-bold block">Center Ice</span>
+                <strong id="past-fo-neutral" class="text-slate-900 font-mono text-xs">5/9 (55%)</strong>
+              </div>
+              <div class="p-1.5 rounded bg-[var(--bg-panel)] border border-[var(--border-color)]">
+                <span class="text-slate-400 font-bold block">O-Zone Draws</span>
+                <strong id="past-fo-ozone" class="text-slate-900 font-mono text-xs">4/8 (50%)</strong>
+              </div>
+            </div>
+          </div>
+
+          <!-- OFFICIAL GAMESHEET DATA: SPECIAL TEAMS (PP/PK), SOG & PIM -->
+          <div class="p-3 rounded-xl bg-[var(--bg-surface)] border border-[var(--border-color)] space-y-2">
+            <div class="flex items-center justify-between text-[10px] font-bold uppercase tracking-wider text-slate-700">
+              <span class="flex items-center gap-1 text-sky-600">
+                <span>📋</span> <span>GameSheet Official Special Teams &amp; Discipline</span>
+              </span>
+              <span class="text-slate-400 font-mono text-[9px]">Verified Box Score</span>
+            </div>
+
+            <div class="grid grid-cols-2 sm:grid-cols-4 gap-1.5 text-center text-xs">
+              <div class="p-2 rounded bg-[var(--bg-panel)] border border-amber-400/40">
+                <div class="text-[9px] text-slate-400 font-bold uppercase">Power Play (PP)</div>
+                <div id="past-stat-pp" class="text-sm font-black text-amber-500 font-mono mt-0.5">1/3 (33%)</div>
+              </div>
+              <div class="p-2 rounded bg-[var(--bg-panel)] border border-emerald-500/40">
+                <div class="text-[9px] text-slate-400 font-bold uppercase">Penalty Kill (PK)</div>
+                <div id="past-stat-pk" class="text-sm font-black text-emerald-600 font-mono mt-0.5">4/4 (100%)</div>
+              </div>
+              <div class="p-2 rounded bg-[var(--bg-panel)] border border-[var(--border-color)]">
+                <div class="text-[9px] text-slate-400 font-bold uppercase">Shots On Goal</div>
+                <div id="past-stat-sog" class="text-sm font-black text-slate-900 font-mono mt-0.5">24 - 26</div>
+              </div>
+              <div class="p-2 rounded bg-[var(--bg-panel)] border border-[var(--border-color)]">
+                <div class="text-[9px] text-slate-400 font-bold uppercase">Total PIM</div>
+                <div id="past-stat-pim" class="text-sm font-black text-rose-600 font-mono mt-0.5">6 mins</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- PLAY-BY-PLAY & SHIFT VIDEO CLIPS JUMPER -->
+          <div class="p-3 rounded-xl bg-[var(--bg-surface)] border border-[var(--border-color)] space-y-2">
+            <div class="flex items-center justify-between text-[10px] font-bold uppercase tracking-wider text-slate-700">
+              <span class="flex items-center gap-1 text-amber-500">
+                <span>🎬</span> <span>Play-By-Play &amp; Video Shift Cards</span>
+              </span>
+              <span id="past-game-shift-count" class="text-slate-400 font-mono text-[9px]">26 Shifts</span>
+            </div>
+            <div id="past-game-shifts-list" class="space-y-1.5 max-h-72 overflow-y-auto custom-scroll text-xs">
+              <!-- Dynamically populated shift cards that jump video on click -->
+            </div>
+          </div>
+
         </div>
 
         <!-- ================= EMBEDDED LIVE CENTER & REAL-TIME STATS PANEL ================= -->
@@ -6852,7 +7324,10 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
       </div>
     </div>
 
-  </div>
+      </main> <!-- close #app-main-viewport -->
+    </div> <!-- close #app-shell-container -->
+
+  </div> <!-- close #main-content -->
 
   <script>
     // ================= FIREBASE CLOUD CONFIGURATION =================
@@ -58422,6 +58897,8 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
       }
       if (secondaryHex) {
         root.style.setProperty('--secondary-team-color', secondaryHex);
+        root.style.setProperty('--top-nav-bg', secondaryHex);
+        root.style.setProperty('--sidebar-rail-bg', secondaryHex);
         const secColorEl = document.getElementById('cfg-team-secondary-color');
         const secHexEl = document.getElementById('cfg-team-secondary-color-hex');
         const quickSec = document.getElementById('quick-theme-secondary');
@@ -61031,6 +61508,673 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
         }
       });
     }
+
+    // =========================================================================
+    // ZAPIER-STYLE SAAS NAVIGATION & DYNAMIC MATCH INTEL CONTROLLER
+    // =========================================================================
+
+    let activeRailTab = 'schedule';
+    let isAppFlyoutOpen = true;
+    let currentFlyoutScheduleFilter = 'all';
+
+    function toggleAppSidebar(forceState) {
+      const drawer = document.getElementById('app-flyout-drawer');
+      if (!drawer) return;
+      if (forceState !== undefined) {
+        isAppFlyoutOpen = Boolean(forceState);
+      } else {
+        isAppFlyoutOpen = !isAppFlyoutOpen;
+      }
+      if (isAppFlyoutOpen) {
+        drawer.style.display = 'flex';
+      } else {
+        drawer.style.display = 'none';
+      }
+    }
+
+    function switchAppRail(railKey) {
+      activeRailTab = railKey;
+      toggleAppSidebar(true);
+
+      // 1. Highlight Rail Icons
+      const railButtons = ['schedule', 'film', 'live', 'passports', 'analytics', 'tournaments'];
+      railButtons.forEach(key => {
+        const btn = document.getElementById(`rail-btn-${key}`);
+        if (btn) {
+          if (key === railKey) {
+            btn.classList.add('active-rail-btn');
+          } else {
+            btn.classList.remove('active-rail-btn');
+          }
+        }
+      });
+
+      // 2. Switch Flyout Panel
+      const panels = ['schedule', 'film', 'passports', 'live', 'analytics'];
+      panels.forEach(p => {
+        const el = document.getElementById(`flyout-panel-${p}`);
+        if (el) {
+          if (p === railKey) {
+            el.classList.remove('hidden');
+          } else {
+            el.classList.add('hidden');
+          }
+        }
+      });
+
+      // 3. Trigger specific renderers
+      if (railKey === 'schedule') {
+        renderAppScheduleFlyout(currentFlyoutScheduleFilter);
+      } else if (railKey === 'film') {
+        renderAppFilmFlyout();
+      } else if (railKey === 'passports') {
+        renderAppPassportFlyout();
+      } else if (railKey === 'live') {
+        toggleLiveBroadcastMode(true);
+      } else if (railKey === 'tournaments') {
+        openTournamentHubModal();
+      }
+    }
+
+    // Schedule Flyout Filter & Search
+    function filterFlyoutSchedule(filterType) {
+      currentFlyoutScheduleFilter = filterType;
+      ['all', 'upcoming', 'past'].forEach(f => {
+        const btn = document.getElementById(`sched-flyout-tab-${f}`);
+        if (btn) {
+          if (f === filterType) {
+            btn.className = "py-1 bg-[var(--bg-panel)] text-amber-500 font-black cursor-pointer shadow-xs";
+          } else {
+            btn.className = "py-1 text-slate-400 hover:text-slate-900 font-bold cursor-pointer";
+          }
+        }
+      });
+      const query = (document.getElementById('sched-flyout-search')?.value || '').trim();
+      renderAppScheduleFlyout(filterType, query);
+    }
+
+    function searchFlyoutSchedule(query) {
+      renderAppScheduleFlyout(currentFlyoutScheduleFilter, query);
+    }
+
+    // Render schedule items in left flyout
+    function renderAppScheduleFlyout(filter = 'all', query = '') {
+      const listEl = document.getElementById('sched-flyout-list');
+      if (!listEl) return;
+
+      const upcoming = (typeof SCHEDULE_UPCOMING_MATCHUPS !== 'undefined') ? SCHEDULE_UPCOMING_MATCHUPS : [];
+      const past = (typeof gamesLibrary !== 'undefined') ? gamesLibrary : [];
+
+      let combined = [];
+
+      // Add upcoming
+      upcoming.forEach(m => {
+        combined.push({
+          id: m.id,
+          title: m.title || `vs ${m.opponent}`,
+          opponent: m.opponent || 'Opponent',
+          date: m.date || m.dateIso || 'Upcoming',
+          time: m.time || '',
+          arena: m.arena || 'Arena',
+          isUpcoming: true,
+          matchObj: m
+        });
+      });
+
+      // Add past games
+      past.forEach(g => {
+        const scoreStr = (g.home_score !== undefined && g.away_score !== undefined) 
+          ? `Tigers ${g.home_score} - ${g.away_score}` 
+          : 'Final';
+        combined.push({
+          id: g.id || g.youtube_video_id,
+          title: g.title || g.game_title || 'Game Film',
+          opponent: g.opponent || 'League Game',
+          date: g.date || g.teamsnap?.date || 'Past Match',
+          arena: g.teamsnap?.arena || 'Arena',
+          scoreStr: scoreStr,
+          isUpcoming: false,
+          gameObj: g
+        });
+      });
+
+      // Filter by type
+      if (filter === 'upcoming') {
+        combined = combined.filter(c => c.isUpcoming);
+      } else if (filter === 'past') {
+        combined = combined.filter(c => !c.isUpcoming);
+      }
+
+      // Filter by search query
+      if (query) {
+        const q = query.toLowerCase();
+        combined = combined.filter(c => 
+          c.title.toLowerCase().includes(q) || 
+          c.opponent.toLowerCase().includes(q) || 
+          c.arena.toLowerCase().includes(q) ||
+          c.date.toLowerCase().includes(q)
+        );
+      }
+
+      if (combined.length === 0) {
+        listEl.innerHTML = `<div class="p-4 text-center text-slate-400">No matchups found.</div>`;
+        return;
+      }
+
+      listEl.innerHTML = combined.map(item => {
+        if (item.isUpcoming) {
+          return `
+            <div onclick="selectScheduleGame('${item.id}')" class="p-2.5 rounded-xl border border-[var(--border-color)] bg-[var(--bg-panel)] hover:border-amber-400 cursor-pointer transition shadow-2xs space-y-1 group">
+              <div class="flex items-center justify-between text-[10px]">
+                <span class="px-1.5 py-0.2 rounded font-mono font-bold bg-amber-500/10 text-amber-500 border border-amber-500/30">⏳ UPCOMING</span>
+                <span class="text-slate-400 font-mono">${item.time || ''}</span>
+              </div>
+              <div class="font-bold text-slate-900 text-xs group-hover:text-amber-500 transition-colors truncate">
+                ${item.title}
+              </div>
+              <div class="flex items-center justify-between text-[10px] text-slate-500">
+                <span class="truncate">📍 ${item.arena}</span>
+                <span class="text-amber-500 font-bold shrink-0">Scout →</span>
+              </div>
+            </div>
+          `;
+        } else {
+          return `
+            <div onclick="selectScheduleGame('${item.id}')" class="p-2.5 rounded-xl border border-[var(--border-color)] bg-[var(--bg-panel)] hover:border-amber-400 cursor-pointer transition shadow-2xs space-y-1 group">
+              <div class="flex items-center justify-between text-[10px]">
+                <span class="px-1.5 py-0.2 rounded font-mono font-bold bg-slate-100 text-slate-700 border border-slate-300">🎬 FILM &amp; STATS</span>
+                <span class="text-emerald-600 font-mono font-bold">${item.scoreStr || 'Final'}</span>
+              </div>
+              <div class="font-bold text-slate-900 text-xs group-hover:text-amber-500 transition-colors truncate">
+                ${item.title}
+              </div>
+              <div class="flex items-center justify-between text-[10px] text-slate-500">
+                <span>📅 ${item.date}</span>
+                <span class="text-sky-500 font-bold shrink-0">Watch →</span>
+              </div>
+            </div>
+          `;
+        }
+      }).join('');
+    }
+
+    // Render Film Room flyout
+    function renderAppFilmFlyout(query = '') {
+      const listEl = document.getElementById('film-flyout-list');
+      if (!listEl) return;
+      const games = (typeof gamesLibrary !== 'undefined') ? gamesLibrary : [];
+      let filtered = games;
+      if (query) {
+        const q = query.toLowerCase();
+        filtered = games.filter(g => (g.title || '').toLowerCase().includes(q) || (g.opponent || '').toLowerCase().includes(q));
+      }
+      listEl.innerHTML = filtered.map((g, idx) => `
+        <div onclick="selectScheduleGame('${g.id || g.youtube_video_id}')" class="p-2 rounded-xl border border-[var(--border-color)] bg-[var(--bg-panel)] hover:border-amber-400 cursor-pointer transition space-y-1 group">
+          <div class="flex items-center justify-between text-[10px]">
+            <span class="font-mono text-slate-400">#${idx + 1}</span>
+            <span class="px-1.5 py-0.2 rounded font-mono font-bold bg-amber-400/10 text-amber-500">26 Shifts</span>
+          </div>
+          <div class="font-bold text-slate-900 text-xs group-hover:text-amber-500 transition-colors line-clamp-2">
+            ${g.title || g.game_title}
+          </div>
+          <div class="text-[10px] text-slate-500 flex items-center justify-between">
+            <span>📅 ${g.date || 'Game Tape'}</span>
+            <span class="text-amber-500 font-bold">Load Film ▶</span>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function searchFlyoutFilm(query) {
+      renderAppFilmFlyout(query);
+    }
+
+    // Render Passports flyout
+    function renderAppPassportFlyout(query = '') {
+      const listEl = document.getElementById('passport-flyout-list');
+      if (!listEl) return;
+      const roster = (typeof TEAM_ROSTER !== 'undefined') ? TEAM_ROSTER : [
+        { jersey: '23', name: 'Scott Carpentier', pos: 'Forward' },
+        { jersey: '9', name: 'Alexander Smith', pos: 'Forward' },
+        { jersey: '14', name: 'Lucas Miller', pos: 'Forward' },
+        { jersey: '77', name: 'Ethan Davis', pos: 'Defense' },
+        { jersey: '13', name: 'Matthew Hart', pos: 'Goalie' },
+        { jersey: '98', name: 'Hudson Barfitt', pos: 'Goalie' }
+      ];
+
+      let filtered = roster;
+      if (query) {
+        const q = query.toLowerCase();
+        filtered = roster.filter(p => p.name.toLowerCase().includes(q) || String(p.jersey).includes(q) || (p.pos || '').toLowerCase().includes(q));
+      }
+
+      listEl.innerHTML = filtered.map(p => `
+        <div onclick="openPlayerPassportModal('${p.jersey}')" class="p-2 rounded-xl border border-[var(--border-color)] bg-[var(--bg-panel)] hover:border-amber-400 cursor-pointer transition flex items-center justify-between group">
+          <div class="flex items-center gap-2">
+            <span class="w-7 h-7 rounded-lg bg-slate-900 text-amber-400 font-mono font-black text-xs flex items-center justify-center border border-amber-400/40">
+              #${p.jersey}
+            </span>
+            <div>
+              <div class="font-bold text-xs text-slate-900 group-hover:text-amber-500 transition-colors">${p.name}</div>
+              <div class="text-[10px] text-slate-400 font-mono">${p.pos || 'Player'}</div>
+            </div>
+          </div>
+          <span class="text-slate-400 text-xs group-hover:text-amber-500 font-bold">Dossier →</span>
+        </div>
+      `).join('');
+    }
+
+    function searchFlyoutPassports(query) {
+      renderAppPassportFlyout(query);
+    }
+
+    // =========================================================================
+    // CORE INTELLIGENCE: SELECT ANY GAME FROM SCHEDULE
+    // =========================================================================
+
+    function selectScheduleGame(gameId) {
+      if (!gameId) return;
+
+      const upcomingMatch = (typeof SCHEDULE_UPCOMING_MATCHUPS !== 'undefined') 
+        ? SCHEDULE_UPCOMING_MATCHUPS.find(m => m.id === gameId) 
+        : null;
+
+      const pastMatch = (typeof gamesLibrary !== 'undefined')
+        ? gamesLibrary.find(g => g.id === gameId || g.youtube_video_id === gameId)
+        : null;
+
+      // Determine whether game is upcoming (has not happened yet) or past
+      let isUpcoming = false;
+      if (upcomingMatch) {
+        if (!upcomingMatch.youtube_video_id || upcomingMatch.status === 'upcoming' || upcomingMatch.dateIso >= '2026-11-09') {
+          isUpcoming = true;
+        }
+      }
+
+      if (isUpcoming && upcomingMatch) {
+        // ==========================================
+        // 1. GAME HAS NOT HAPPENED YET:
+        // LEFT: Video area shows COUNTDOWN & GAME INFO
+        // RIGHT: Shows PRE-GAME SCOUTING REPORT
+        // ==========================================
+        showGameCountdownStage(upcomingMatch);
+        renderSidebarScoutingReport(upcomingMatch);
+        showToast(`🏒 Loaded Pre-Game Scouting & Countdown for ${upcomingMatch.title}!`);
+      } else {
+        // ==========================================
+        // 2. GAME HAS ALREADY HAPPENED:
+        // LEFT: Video player plays game recording
+        // RIGHT: Shows GAME RESULT, VIDEO ANALYTICS,
+        //        GAMESHEET PP/PK, & PLAY-BY-PLAY SHIFTS
+        // ==========================================
+        hideGameCountdownStage();
+        const targetId = pastMatch ? (pastMatch.id || pastMatch.youtube_video_id) : (upcomingMatch?.youtube_video_id || gameId);
+        loadGame(targetId);
+        renderSidebarPastGameIntel(pastMatch || upcomingMatch);
+        showToast(`🎬 Loaded Game Film & Analytics!`);
+      }
+
+      // Smooth scroll to top of viewport
+      const viewport = document.getElementById('app-main-viewport');
+      if (viewport) viewport.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    // Show Countdown on Left
+    function showGameCountdownStage(match) {
+      const placeholder = document.getElementById('live-offline-placeholder');
+      if (!placeholder) return;
+
+      placeholder.classList.remove('hidden');
+
+      // Update match info in standby stage
+      const leagueTag = document.getElementById('standby-league-tag');
+      const oppName = document.getElementById('standby-opp-name');
+      const oppRecord = document.getElementById('standby-opp-record');
+      const gameDate = document.getElementById('standby-game-date');
+      const gameTime = document.getElementById('standby-game-time');
+      const gameArena = document.getElementById('standby-game-arena');
+
+      if (leagueTag) leagueTag.innerText = match.gameSheetCode ? `Game #${match.gameSheetCode}` : (match.division || 'OMHA U13A');
+      if (oppName) oppName.innerText = match.opponent || 'Opponent Team';
+      if (oppRecord) oppRecord.innerText = match.opponentRecord || 'Regular Season';
+      if (gameDate) gameDate.innerText = match.date || 'Scheduled Match';
+      if (gameTime) gameTime.innerText = match.time || '7:30 PM EST';
+      if (gameArena) {
+        gameArena.innerHTML = `<a href="${match.mapsUrl || '#'}" target="_blank" class="hover:underline flex items-center justify-center gap-1">${match.arena || 'Local Arena'} ↗</a>`;
+      }
+
+      // Start custom countdown for this match
+      if (typeof standbyCountdownInterval !== 'undefined' && standbyCountdownInterval) {
+        clearInterval(standbyCountdownInterval);
+      }
+
+      function updateCountdown() {
+        const timerEl = document.getElementById('standby-countdown-timer');
+        if (!timerEl) return;
+        const targetTimeStr = match.dateIso ? `${match.dateIso}T19:30:00-05:00` : "2026-11-10T19:30:00-05:00";
+        const targetDate = new Date(targetTimeStr).getTime();
+        const now = new Date().getTime();
+        const diff = targetDate - now;
+
+        if (diff <= 0) {
+          timerEl.innerText = "PUCK DROP PENDING";
+          timerEl.className = "text-sm font-mono font-black text-rose-400 animate-pulse";
+          return;
+        }
+
+        const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const minutes = Math.floor((diff % (1000 * 60)) / (1000 * 60));
+        const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+        timerEl.innerText = `${days}d ${hours}h ${minutes}m ${seconds}s`;
+      }
+
+      updateCountdown();
+      standbyCountdownInterval = setInterval(updateCountdown, 1000);
+    }
+
+    function hideGameCountdownStage() {
+      const placeholder = document.getElementById('live-offline-placeholder');
+      if (placeholder) placeholder.classList.add('hidden');
+    }
+
+    // Render Scouting Report in Right Sidebar
+    function renderSidebarScoutingReport(match) {
+      // 1. Hide other sidebar sections
+      ['clips-view-section', 'tray-view-section', 'breakout-view-section', 'player-view-section', 'feedback-view-section', 'live-sidebar-section', 'past-game-intel-sidebar-section'].forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.classList.add('hidden');
+      });
+
+      const sideLiveHeader = document.getElementById('sidebar-live-header');
+      if (sideLiveHeader) sideLiveHeader.classList.add('hidden');
+
+      const scoutSec = document.getElementById('scouting-sidebar-section');
+      if (!scoutSec) return;
+      scoutSec.classList.remove('hidden');
+
+      // Populate Scouting Elements
+      const titleEl = document.getElementById('side-scout-matchup-title');
+      const metaEl = document.getElementById('side-scout-meta');
+      const divBadge = document.getElementById('side-scout-division-badge');
+      const mapsLink = document.getElementById('side-scout-maps-link');
+      const tigRec = document.getElementById('side-scout-tigers-record');
+      const tigPct = document.getElementById('side-scout-tigers-pct');
+      const tigSt = document.getElementById('side-scout-tigers-st');
+      const oppName = document.getElementById('side-scout-opp-name');
+      const oppRec = document.getElementById('side-scout-opp-record');
+      const oppPct = document.getElementById('side-scout-opp-pct');
+      const oppSt = document.getElementById('side-scout-opp-st');
+      const last5Sum = document.getElementById('side-scout-last5-summary');
+      const last5Grid = document.getElementById('side-scout-last5-grid');
+      const dangerList = document.getElementById('side-scout-danger-list');
+      const goalieTitle = document.getElementById('side-scout-opp-goalie-title');
+      const goalieName = document.getElementById('side-scout-opp-goalie-name');
+      const goalieStats = document.getElementById('side-scout-opp-goalie-stats');
+      const goalieScout = document.getElementById('side-scout-opp-goalie-scout');
+      const keysContainer = document.getElementById('side-scout-keys-container');
+
+      if (titleEl) titleEl.innerText = match.title || `Aurora Tigers vs ${match.opponent}`;
+      if (metaEl) metaEl.innerHTML = `<span>📅 ${match.date} (${match.time}) • ${match.arena}</span>`;
+      if (divBadge) divBadge.innerText = match.division || 'OMHA U13A';
+      if (mapsLink) mapsLink.href = match.mapsUrl || `https://maps.google.com/?q=${encodeURIComponent(match.arena || 'Aurora')}`;
+
+      // Get verified GameSheet data
+      const gsOppData = (typeof getOpponentGameSheetData === 'function') ? getOpponentGameSheetData(match.opponent || match.title) : null;
+      const tigGs = (typeof GAMESHEET_DATABASE !== 'undefined' && GAMESHEET_DATABASE.teams && GAMESHEET_DATABASE.teams.tigers) ? GAMESHEET_DATABASE.teams.tigers : null;
+
+      // Tigers Record
+      if (tigGs && tigGs.record) {
+        if (tigRec) tigRec.innerText = `${tigGs.record.w}-${tigGs.record.l}-${tigGs.record.t} (${tigGs.record.pts} PTS)`;
+        if (tigPct) tigPct.innerText = `${tigGs.record.winPct} Win Pct • GF/GP: ${tigGs.stats?.gpg || '0.50'}`;
+        if (tigSt && tigGs.specialTeams) {
+          tigSt.innerHTML = `PP: <strong>${tigGs.specialTeams.ppPct}</strong> • PK: <strong>${tigGs.specialTeams.pkPct}</strong> • PIM: <strong>${tigGs.stats?.pim || 36}m</strong>`;
+        }
+      }
+
+      // Opponent Record
+      if (oppName) oppName.innerText = `🏒 ${match.opponent.toUpperCase()}`;
+      if (gsOppData && gsOppData.record) {
+        if (oppRec) oppRec.innerText = `${gsOppData.record.w}-${gsOppData.record.l}-${gsOppData.record.t} (${gsOppData.record.pts} PTS)`;
+        if (oppPct) oppPct.innerText = `${gsOppData.record.winPct} Win Pct • GF/GP: ${gsOppData.stats?.gpg || '5.14'}`;
+        if (oppSt && gsOppData.specialTeams) {
+          oppSt.innerHTML = `PP: <strong>${gsOppData.specialTeams.ppPct}</strong> • PK: <strong>${gsOppData.specialTeams.pkPct}</strong> • PIM: <strong>${gsOppData.stats?.pim || 42}m</strong>`;
+        }
+      } else {
+        if (oppRec) oppRec.innerText = match.opponentRecord || "6-0-1 (13 PTS)";
+        if (oppPct) oppPct.innerText = ".857 Win Pct";
+      }
+
+      // Opponent Last 5 Games Form
+      if (gsOppData && gsOppData.last5Games && gsOppData.last5Games.length > 0) {
+        const formStr = gsOppData.last5Games.map(g => g.result).join('-');
+        if (last5Sum) last5Sum.innerText = `Form: ${formStr}`;
+        if (last5Grid) {
+          last5Grid.innerHTML = gsOppData.last5Games.map(g => {
+            const isW = g.result === 'W', isL = g.result === 'L';
+            const colorClass = isW ? 'bg-emerald-500 text-white' : (isL ? 'bg-rose-500 text-white' : 'bg-amber-400 text-slate-950');
+            return `
+              <div class="p-1 rounded bg-[var(--bg-panel)] border border-[var(--border-color)]">
+                <span class="px-1 py-0.2 rounded font-black text-[9px] ${colorClass} block">${g.result} ${g.score}</span>
+                <span class="text-[8px] text-slate-400 truncate block mt-0.5">${g.opp.split(' ')[0]}</span>
+              </div>
+            `;
+          }).join('');
+        }
+      }
+
+      // Danger Players
+      if (dangerList) {
+        const players = match.dangerPlayers || [
+          { name: "#11 Opponent Playmaker (C)", badge: "Top Scorer", desc: "Elite puck protection, quick wrist shot off rush." },
+          { name: "#88 Power Forward (LW)", badge: "Goal Scorer", desc: "High net-front presence, dangerous one-timer on PP." }
+        ];
+        dangerList.innerHTML = players.map(p => `
+          <div class="p-2 rounded bg-[var(--bg-panel)] border border-[var(--border-color)] space-y-0.5">
+            <div class="flex items-center justify-between text-[10px]">
+              <span class="font-bold text-slate-900">${p.name}</span>
+              <span class="px-1.5 py-0.2 rounded bg-rose-500/10 text-rose-500 font-mono font-bold text-[9px] border border-rose-500/20">${p.badge || 'Danger'}</span>
+            </div>
+            <div class="text-[10px] text-slate-500 leading-tight">${p.desc || p.tendency || ''}</div>
+          </div>
+        `).join('');
+      }
+
+      // Opponent Goalie
+      if (goalieName) goalieName.innerText = match.oppGoalie?.name || "#31 Starting Netminder";
+      if (goalieStats) goalieStats.innerText = match.oppGoalie?.stats || "2.45 GAA • .908 SV%";
+      if (goalieScout) goalieScout.innerText = match.oppGoalie?.scout || "Butterfly netminder; vulnerable to high glove-side snap shots and low pad rebounds.";
+
+      // Tactical Keys
+      if (keysContainer) {
+        const keys = match.coachKeys || [
+          "Establish aggressive forecheck immediately; dump puck behind slow defensemen and force turnovers below the goal line.",
+          "Clean D-to-D Reverse: Do not force pucks up the middle. Reverse behind our net to open up half-wall passing lane.",
+          "Short 35-Second Bursts: Hard skating, disciplined line changes on the fly. Avoid overextended shifts."
+        ];
+        keysContainer.innerHTML = keys.map((k, i) => `
+          <div class="flex items-start gap-2 p-1.5 rounded bg-[var(--bg-panel)] border border-[var(--border-color)]">
+            <span class="w-4 h-4 rounded-full bg-amber-400 text-slate-950 font-black text-[9px] flex items-center justify-center shrink-0 mt-0.5">${i + 1}</span>
+            <span class="text-[11px] leading-tight">${k}</span>
+          </div>
+        `).join('');
+      }
+    }
+
+    // Render Past Game Intel & Analytics in Right Sidebar
+    function renderSidebarPastGameIntel(game) {
+      if (!game) return;
+
+      // 1. Hide other sidebar sections
+      ['clips-view-section', 'tray-view-section', 'breakout-view-section', 'player-view-section', 'feedback-view-section', 'live-sidebar-section', 'scouting-sidebar-section'].forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.classList.add('hidden');
+      });
+
+      const sideLiveHeader = document.getElementById('sidebar-live-header');
+      if (sideLiveHeader) sideLiveHeader.classList.add('hidden');
+
+      const pastSec = document.getElementById('past-game-intel-sidebar-section');
+      if (!pastSec) return;
+      pastSec.classList.remove('hidden');
+
+      // Score Header
+      const scoreTitle = document.getElementById('past-game-score-title');
+      const dateTag = document.getElementById('past-game-date-tag');
+      const arenaText = document.getElementById('past-game-arena-text');
+      const gsLink = document.getElementById('past-game-gamesheet-link');
+
+      const hScore = game.home_score !== undefined ? game.home_score : 3;
+      const aScore = game.away_score !== undefined ? game.away_score : 2;
+      const opp = game.opponent || 'League Opponent';
+
+      if (scoreTitle) scoreTitle.innerText = `FINAL: Aurora Tigers ${hScore} - ${opp} ${aScore}`;
+      if (dateTag) dateTag.innerText = game.date || 'Game Tape';
+      if (arenaText) arenaText.innerText = game.teamsnap?.arena || 'Aurora Community Centre';
+      if (gsLink) gsLink.href = game.gamesheet_url || "https://gamesheetstats.com/seasons/15490/teams/534204/schedule";
+
+      // Video Analytics: Zone Time Possession
+      const analytics = game.analytics || {};
+      const ozTimeStr = analytics.ozone_time || "18m";
+      const dzTimeStr = analytics.dzone_time || "14m";
+      const ozMin = parseInt(ozTimeStr, 10) || 18;
+      const dzMin = parseInt(dzTimeStr, 10) || 14;
+      const nzMin = 10;
+      const totalMin = ozMin + dzMin + nzMin;
+
+      const ozPct = Math.round((ozMin / totalMin) * 100);
+      const dzPct = Math.round((dzMin / totalMin) * 100);
+      const nzPct = 100 - ozPct - dzPct;
+
+      const barOz = document.getElementById('past-bar-ozone');
+      const barNz = document.getElementById('past-bar-nzone');
+      const barDz = document.getElementById('past-bar-dzone');
+      const barOzText = document.getElementById('past-bar-ozone-text');
+      const barNzText = document.getElementById('past-bar-nzone-text');
+      const barDzText = document.getElementById('past-bar-dzone-text');
+
+      if (barOz) barOz.style.width = `${ozPct}%`;
+      if (barNz) barNz.style.width = `${nzPct}%`;
+      if (barDz) barDz.style.width = `${dzPct}%`;
+      if (barOzText) barOzText.innerText = `OZ ${ozPct}%`;
+      if (barNzText) barNzText.innerText = `NZ ${nzPct}%`;
+      if (barDzText) barDzText.innerText = `DZ ${dzPct}%`;
+
+      const statOz = document.getElementById('past-stat-ozone');
+      const statNz = document.getElementById('past-stat-nzone');
+      const statDz = document.getElementById('past-stat-dzone');
+      if (statOz) statOz.innerText = `${ozTimeStr} (${ozPct}%)`;
+      if (statNz) statNz.innerText = `${nzMin}m (${nzPct}%)`;
+      if (statDz) statDz.innerText = `${dzTimeStr} (${dzPct}%)`;
+
+      // Video Analytics: Faceoffs
+      const foWinrate = document.getElementById('past-fo-overall-winrate');
+      const foDzone = document.getElementById('past-fo-dzone');
+      const foNeutral = document.getElementById('past-fo-neutral');
+      const foOzone = document.getElementById('past-fo-ozone');
+
+      if (foWinrate) foWinrate.innerText = "54.2% Won";
+      if (foDzone) foDzone.innerText = "6/10 (60%)";
+      if (foNeutral) foNeutral.innerText = "5/9 (55%)";
+      if (foOzone) foOzone.innerText = "4/8 (50%)";
+
+      // GameSheet Official Special Teams
+      const statPp = document.getElementById('past-stat-pp');
+      const statPk = document.getElementById('past-stat-pk');
+      const statSog = document.getElementById('past-stat-sog');
+      const statPim = document.getElementById('past-stat-pim');
+
+      if (statPp) statPp.innerText = "1/3 (33%)";
+      if (statPk) statPk.innerText = "4/4 (100%)";
+      if (statSog) statSog.innerText = `${analytics.shots_on_goal || 24} - ${analytics.goalie_saves || 26}`;
+      if (statPim) statPim.innerText = "6 mins";
+
+      // Video Shift Cards
+      const shiftCountEl = document.getElementById('past-game-shift-count');
+      const shiftsListEl = document.getElementById('past-game-shifts-list');
+      const shifts = (game.shifts && Array.isArray(game.shifts)) ? game.shifts : [];
+
+      if (shiftCountEl) shiftCountEl.innerText = `${shifts.length} Shifts Recorded`;
+      if (shiftsListEl) {
+        if (shifts.length === 0) {
+          shiftsListEl.innerHTML = `<div class="p-3 text-center text-slate-400">Select period jumps or play the tape directly.</div>`;
+        } else {
+          shiftsListEl.innerHTML = shifts.map(s => `
+            <div onclick="jumpToShiftTime(${s.start_seconds || 0})" class="p-2 rounded-lg bg-[var(--bg-surface)] hover:bg-[var(--bg-panel)] border border-[var(--border-color)] hover:border-amber-400 cursor-pointer transition flex items-center justify-between group">
+              <div class="flex items-center gap-2">
+                <span class="w-6 h-6 rounded bg-amber-400/20 text-amber-500 font-mono font-bold text-[10px] flex items-center justify-center">
+                  S${s.shift_id || 1}
+                </span>
+                <div>
+                  <div class="font-bold text-slate-900 text-[11px] group-hover:text-amber-500 transition-colors">
+                    Period ${s.period} • ${s.display_time || formatTime(s.start_seconds)}
+                  </div>
+                  <div class="text-[9px] text-slate-400">${s.breakout?.breakout_type || s.coach_notes || '5v5 Regular Play'}</div>
+                </div>
+              </div>
+              <button class="px-2 py-0.5 rounded bg-amber-400 text-slate-950 font-black text-[10px] shadow-2xs">
+                ▶ Jump
+              </button>
+            </div>
+          `).join('');
+        }
+      }
+    }
+
+    function jumpToShiftTime(seconds) {
+      if (typeof ytPlayer !== 'undefined' && ytPlayer && typeof ytPlayer.seekTo === 'function') {
+        ytPlayer.seekTo(seconds, true);
+        if (typeof ytPlayer.playVideo === 'function') ytPlayer.playVideo();
+      } else {
+        const directIframe = document.getElementById('yt-direct-iframe');
+        if (directIframe && directIframe.contentWindow) {
+          directIframe.contentWindow.postMessage(JSON.stringify({
+            event: 'command',
+            func: 'seekTo',
+            args: [seconds, true]
+          }), '*');
+        }
+      }
+      showToast(`⏱️ Jumped video to ${formatTime(seconds)}`);
+    }
+
+    // Omnisearch handler
+    function handleAppOmnisearch(query) {
+      if (!query || !query.trim()) return;
+      const q = query.trim().toLowerCase();
+
+      // Check if it's a number (jersey)
+      if (!isNaN(q)) {
+        openPlayerPassportModal(q);
+        showToast(`🪪 Loading Player #${q} Passport...`);
+        return;
+      }
+
+      // Check in schedule
+      switchAppRail('schedule');
+      const searchBox = document.getElementById('sched-flyout-search');
+      if (searchBox) {
+        searchBox.value = query;
+        searchFlyoutSchedule(query);
+      }
+    }
+
+    // Omnisearch keyboard shortcut Ctrl+K
+    window.addEventListener('keydown', (e) => {
+      if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'k') {
+        e.preventDefault();
+        const searchInput = document.getElementById('app-omnisearch');
+        if (searchInput) {
+          searchInput.focus();
+          searchInput.select();
+        }
+      }
+    });
+
+    // Initial Flyout Render on Load
+    setTimeout(() => {
+      renderAppScheduleFlyout('all');
+    }, 200);
 
 </script>
 
