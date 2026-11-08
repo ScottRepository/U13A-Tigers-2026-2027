@@ -75,16 +75,17 @@
     --micro-radius: 2px;
 
     /* Zapier-Inspired SaaS Navigation Layout Colors */
-    --top-nav-bg: #0f172a;
-    --sidebar-rail-bg: #090d16;
+    --top-nav-bg: #ffffff; /* Clean Crisp White Pro SaaS Top Bar */
+    --top-nav-text: #0f172a;
+    --sidebar-rail-bg: #0b1120;
     --flyout-drawer-bg: #ffffff;
   }
 
   /* Zapier SaaS Top Bar & Left Rail Dynamic Binding */
   #master-top-nav {
-    background-color: var(--top-nav-bg) !important;
-    color: var(--text-on-primary, #ffffff) !important;
-    border-bottom: 1px solid var(--border-color) !important;
+    background-color: var(--top-nav-bg, #ffffff) !important;
+    color: var(--top-nav-text, #0f172a) !important;
+    border-bottom: 1px solid var(--border-color, #cbd5e1) !important;
   }
 
   #app-nav-rail {
@@ -4331,11 +4332,11 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
   </button>
 
         <!-- ================= ZAPIER-STYLE MASTER TOP NAVIGATION BAR ================= -->
-    <header id="master-top-nav" class="border-b border-[var(--border-color)] px-3 py-2 flex items-center justify-between gap-3 text-xs select-none sticky top-0 z-40">
+    <header id="master-top-nav" class="bg-white border-b border-slate-200 px-3 py-2 flex items-center justify-between gap-3 text-xs select-none sticky top-0 z-40 text-slate-800 shadow-xs">
       
       <!-- Left: Sidebar Toggle, Crest & Team Brand -->
       <div class="flex items-center gap-2.5 shrink-0">
-        <button id="sidebar-toggle-btn" onclick="toggleAppSidebar()" title="Toggle Sidebar (Expand/Collapse)" class="w-8 h-8 flex items-center justify-center rounded-lg bg-white/10 hover:bg-white/20 text-white font-bold text-sm cursor-pointer transition active:scale-95">
+        <button id="sidebar-toggle-btn" onclick="toggleAppSidebar()" title="Toggle Sidebar (Expand/Collapse)" class="w-8 h-8 flex items-center justify-center rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-800 font-bold text-sm cursor-pointer border border-slate-300 transition active:scale-95">
           <span>☰</span>
         </button>
         <img 
@@ -4346,47 +4347,47 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
         />
         <div class="flex flex-col">
           <div class="flex items-center gap-1.5 leading-none">
-            <span class="font-display font-black text-sm uppercase tracking-wider text-white">AURORA <span class="text-amber-400">TIGERS</span></span>
-            <span class="text-[9px] px-1.5 py-0.2 bg-slate-900 border border-amber-400/40 text-amber-300 font-mono font-bold">U13A</span>
+            <span class="font-display font-black text-sm uppercase tracking-wider text-slate-900">AURORA <span class="text-amber-500">TIGERS</span></span>
+            <span class="text-[9px] px-1.5 py-0.2 bg-amber-50 border border-amber-300 text-amber-900 font-mono font-bold">U13A</span>
           </div>
-          <span class="text-[9px] text-slate-400 font-medium tracking-tight mt-0.5">Video Breakdown &amp; Analytics Portal</span>
+          <span class="text-[9px] text-slate-500 font-medium tracking-tight mt-0.5">Video Breakdown &amp; Analytics Portal</span>
         </div>
       </div>
 
-      <!-- Center: Omnisearch Box (Search games, players, clips) -->
+      <!-- Center: Omnisearch Box (Search games, opponents, players, clips) -->
       <div class="flex-1 max-w-md mx-2 hidden sm:block relative">
         <input 
           id="app-omnisearch" 
           type="text" 
           placeholder="Search games, opponents, players, clips... (Ctrl+K)" 
           oninput="handleAppOmnisearch(this.value)" 
-          class="w-full bg-slate-900/90 border border-slate-700/80 text-white placeholder-slate-400 rounded-lg pl-8 pr-16 py-1.5 text-xs font-medium focus:outline-none focus:border-amber-400"
+          class="w-full bg-slate-100 border border-slate-300 text-slate-900 placeholder-slate-400 rounded-lg pl-8 pr-16 py-1.5 text-xs font-medium focus:bg-white focus:outline-none focus:border-amber-500 transition"
         />
         <span class="absolute left-2.5 top-1/2 -translate-y-1/2 text-slate-400 text-xs">🔍</span>
-        <kbd class="absolute right-2 top-1/2 -translate-y-1/2 px-1.5 py-0.5 rounded bg-slate-800 text-slate-400 border border-slate-700 font-mono text-[9px]">Ctrl K</kbd>
+        <kbd class="absolute right-2 top-1/2 -translate-y-1/2 px-1.5 py-0.5 rounded bg-slate-200 text-slate-600 border border-slate-300 font-mono text-[9px]">Ctrl K</kbd>
       </div>
 
       <!-- Right: User Context ("logged in as"), Theme Customizer, Alerts & Modals -->
       <div class="flex items-center gap-1.5 shrink-0">
-        <button onclick="toggleLiveBroadcastMode()" id="nav-btn-live" class="px-2.5 py-1 text-[11px] font-bold uppercase tracking-wider text-rose-400 hover:text-rose-300 bg-rose-500/10 hover:bg-rose-500/20 border border-rose-500/40 cursor-pointer transition flex items-center gap-1.5">
+        <button onclick="toggleLiveBroadcastMode()" id="nav-btn-live" class="px-2.5 py-1 text-[11px] font-bold uppercase tracking-wider text-rose-700 bg-rose-50 hover:bg-rose-100 border border-rose-300 cursor-pointer transition flex items-center gap-1.5 shadow-2xs">
           <span class="w-2 h-2 rounded-full bg-rose-500 animate-pulse"></span>
           <span class="hidden sm:inline">Live Games</span>
         </button>
 
-        <button onclick="openRoleSwitchModal()" id="role-badge" title="Click to switch role (Admin, Coach, Parent)" class="px-2.5 py-1 text-[11px] font-bold bg-white/10 text-slate-200 border border-white/20 cursor-pointer hover:bg-white/20 transition flex items-center gap-1.5">
-          <span class="text-slate-400 text-[10px] hidden md:inline">Logged in as:</span>
-          <strong id="role-badge-text" class="text-amber-400">Coach Mode</strong>
+        <button onclick="openRoleSwitchModal()" id="role-badge" title="Click to switch role (Admin, Coach, Parent)" class="px-2.5 py-1 text-[11px] font-bold bg-slate-100 text-slate-800 border border-slate-300 cursor-pointer hover:bg-slate-200 transition flex items-center gap-1.5">
+          <span class="text-slate-500 text-[10px] hidden md:inline">Logged in as:</span>
+          <strong id="role-badge-text" class="text-amber-600">Coach Mode</strong>
         </button>
 
         <!-- Multi-Team Theme & Surface Customizer Popover -->
         <div class="relative">
-          <button onclick="toggleThemeCustomizerDropdown()" id="nav-btn-theme" title="Customize Team Colors &amp; Surface Brightness" class="px-2.5 py-1 text-[11px] font-bold bg-white/10 text-slate-200 border border-white/20 cursor-pointer transition flex items-center gap-1">
+          <button onclick="toggleThemeCustomizerDropdown()" id="nav-btn-theme" title="Customize Team Colors &amp; Surface Brightness" class="px-2.5 py-1 text-[11px] font-bold bg-slate-100 text-slate-800 border border-slate-300 hover:bg-slate-200 cursor-pointer transition flex items-center gap-1">
             <span>🎨</span> <span class="hidden sm:inline">Theme</span>
           </button>
 
           <div id="theme-customizer-dropdown" class="hidden absolute top-full mt-2 right-0 w-80 bg-[var(--bg-panel)] border border-[var(--border-color)] shadow-2xl p-3.5 z-50 text-left space-y-3">
             <div class="flex items-center justify-between pb-2 border-b border-[var(--border-color)]">
-              <span class="font-bold uppercase text-[10px] tracking-wider text-amber-400 flex items-center gap-1.5">
+              <span class="font-bold uppercase text-[10px] tracking-wider text-amber-500 flex items-center gap-1.5">
                 <span>🎨</span> <span>Team Appearance &amp; Theme Control</span>
               </span>
               <button onclick="resetTeamThemeToDefault()" class="text-[10px] font-bold text-slate-400 hover:underline cursor-pointer">Reset Default</button>
@@ -4394,7 +4395,7 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
 
             <!-- 1. Surface Brightness Mode -->
             <div class="space-y-1.5">
-              <label class="block text-[10px] font-bold uppercase tracking-wider text-slate-400">1. Surface Brightness (Light / Slate / Dark)</label>
+              <label class="block text-[10px] font-bold uppercase tracking-wider text-slate-500">1. Surface Brightness (Light / Slate / Dark)</label>
               <div class="grid grid-cols-3 gap-1.5">
                 <button type="button" onclick="applySurfaceBrightnessMode('light')" id="theme-mode-btn-light" class="py-1.5 px-2 text-[10px] font-bold border border-[var(--border-color)] bg-[var(--bg-surface)] cursor-pointer flex items-center justify-center gap-1">
                   <span>☀️</span> <span>Ice Light</span>
@@ -4410,7 +4411,7 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
 
             <!-- 2. Team Color Presets -->
             <div class="space-y-1.5">
-              <label class="block text-[10px] font-bold uppercase tracking-wider text-slate-400">2. Organization Color Presets</label>
+              <label class="block text-[10px] font-bold uppercase tracking-wider text-slate-500">2. Organization Color Presets</label>
               <div class="grid grid-cols-2 gap-1.5 text-[10px] font-bold">
                 <button type="button" onclick="applyTeamColorPreset('#FDBB30', '#0f172a', '#0f172a', 'Aurora Tigers Gold')" class="p-1.5 border border-[var(--border-color)] bg-[var(--bg-surface)] hover:border-amber-400 cursor-pointer flex items-center gap-1.5">
                   <span style="width:12px;height:12px;background:#FDBB30;border:1px solid #0f172a;display:inline-block;"></span>
@@ -4439,46 +4440,46 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
               </div>
             </div>
 
-            <!-- 3. Custom Team Color Pickers -->
+            <!-- 3. Custom Team Palette Pickers -->
             <div class="space-y-2 pt-1 border-t border-[var(--border-color)]">
-              <label class="block text-[10px] font-bold uppercase tracking-wider text-slate-400">3. Custom Team Palette</label>
+              <label class="block text-[10px] font-bold uppercase tracking-wider text-slate-500">3. Custom Team Palette</label>
               <div class="grid grid-cols-3 gap-2 text-[10px]">
                 <div>
-                  <span class="block text-slate-400 mb-0.5 font-semibold">Primary</span>
+                  <span class="block text-slate-500 mb-0.5 font-semibold">Primary</span>
                   <input type="color" id="quick-theme-primary" value="#FDBB30" oninput="updateTeamColors(this.value, null, null)" class="w-full h-7 cursor-pointer border border-[var(--border-color)] bg-transparent p-0.5">
                 </div>
                 <div>
-                  <span class="block text-slate-400 mb-0.5 font-semibold">Secondary</span>
+                  <span class="block text-slate-500 mb-0.5 font-semibold">Secondary</span>
                   <input type="color" id="quick-theme-secondary" value="#0f172a" oninput="updateTeamColors(null, this.value, null)" class="w-full h-7 cursor-pointer border border-[var(--border-color)] bg-transparent p-0.5">
                 </div>
                 <div>
-                  <span class="block text-slate-400 mb-0.5 font-semibold">Canvas Bg</span>
+                  <span class="block text-slate-500 mb-0.5 font-semibold">Canvas Bg</span>
                   <input type="color" id="quick-theme-bg" value="#eef2f6" oninput="applyCustomCanvasBackground(this.value)" class="w-full h-7 cursor-pointer border border-[var(--border-color)] bg-transparent p-0.5">
                 </div>
               </div>
             </div>
 
             <div class="pt-1 border-t border-[var(--border-color)] flex items-center justify-between text-[10px]">
-              <button onclick="openTeamOnboardingModal(); toggleThemeCustomizerDropdown(false);" class="text-sky-400 hover:underline cursor-pointer font-bold">⚙️ Full Team Admin</button>
-              <button onclick="toggleThemeCustomizerDropdown(false)" class="px-2.5 py-1 bg-tigersGold font-black cursor-pointer">Done</button>
+              <button onclick="openTeamOnboardingModal(); toggleThemeCustomizerDropdown(false);" class="text-sky-600 hover:underline cursor-pointer font-bold">⚙️ Full Team Admin</button>
+              <button onclick="toggleThemeCustomizerDropdown(false)" class="px-2.5 py-1 bg-amber-400 text-slate-950 font-black cursor-pointer shadow-xs">Done</button>
             </div>
           </div>
         </div>
 
         <!-- Alerts Popover Toggle -->
         <div class="relative shrink-0">
-          <button onclick="toggleAlertsDropdown()" id="nav-btn-alerts" class="px-2.5 py-1 text-[11px] font-bold uppercase tracking-wider text-amber-300 hover:text-white bg-white/10 hover:bg-white/20 border border-white/20 cursor-pointer transition flex items-center gap-1.5 active:scale-95">
+          <button onclick="toggleAlertsDropdown()" id="nav-btn-alerts" class="px-2.5 py-1 text-[11px] font-bold uppercase tracking-wider text-slate-800 hover:text-slate-900 bg-slate-100 hover:bg-slate-200 border border-slate-300 cursor-pointer transition flex items-center gap-1.5 active:scale-95">
             <span>🔔</span> <span>Alerts</span>
             <span id="alerts-unread-badge" class="px-1.5 py-0.2 bg-amber-500 text-slate-950 font-mono font-black text-[10px]">3</span>
           </button>
           
           <div id="alerts-dropdown-menu" class="hidden absolute top-full mt-2 left-1/2 -translate-x-1/2 sm:translate-x-0 sm:left-auto sm:right-0 w-80 sm:w-96 bg-[var(--bg-panel)] border border-[var(--border-color)] shadow-2xl p-3 z-50 animate-in fade-in zoom-in-95 duration-100 text-left">
             <div class="flex items-center justify-between pb-2 border-b border-[var(--border-color)] mb-2.5">
-              <span class="font-bold uppercase text-[10px] tracking-wider text-amber-400 flex items-center gap-1.5">
+              <span class="font-bold uppercase text-[10px] tracking-wider text-amber-500 flex items-center gap-1.5">
                 <span>🔔</span> <span>Team Notifications &amp; Alerts</span>
               </span>
               <div class="flex items-center gap-2">
-                <button onclick="renderDynamicAlertsMenu(true)" class="text-[10px] font-bold text-sky-400 hover:underline cursor-pointer">↻ Refresh</button>
+                <button onclick="renderDynamicAlertsMenu(true)" class="text-[10px] font-bold text-sky-600 hover:underline cursor-pointer">↻ Refresh</button>
                 <span id="alerts-header-count-label" class="text-[10px] font-mono text-slate-400">3 Active</span>
               </div>
             </div>
@@ -4488,19 +4489,19 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
             </div>
 
             <div class="pt-2 mt-2 border-t border-[var(--border-color)] flex items-center justify-between text-[10px]">
-              <button onclick="markAllAlertsRead()" class="text-slate-400 hover:text-slate-900 cursor-pointer font-bold">✓ Mark All Read</button>
-              <button onclick="toggleAlertsDropdown(false)" class="text-amber-400 hover:underline cursor-pointer font-bold">Close</button>
+              <button onclick="markAllAlertsRead()" class="text-slate-500 hover:text-slate-900 cursor-pointer font-bold">✓ Mark All Read</button>
+              <button onclick="toggleAlertsDropdown(false)" class="text-amber-600 hover:underline cursor-pointer font-bold">Close</button>
             </div>
           </div>
         </div>
 
-        <button onclick="openFeedbackModal()" title="Send shift corrections or tactical questions to coaches" class="px-2.5 py-1 text-[11px] font-bold bg-white/10 text-slate-200 hover:text-white border border-white/20 cursor-pointer transition flex items-center gap-1">
+        <button onclick="openFeedbackModal()" title="Send shift corrections or tactical questions to coaches" class="px-2.5 py-1 text-[11px] font-bold bg-slate-100 text-slate-800 hover:bg-slate-200 border border-slate-300 cursor-pointer transition flex items-center gap-1">
           <span>💬</span> <span class="hidden md:inline">Feedback</span>
         </button>
-        <button onclick="openHelpModal()" title="View portal user guide &amp; FAQ" class="px-2.5 py-1 text-[11px] font-bold bg-white/10 text-slate-200 hover:text-white border border-white/20 cursor-pointer transition flex items-center gap-1">
+        <button onclick="openHelpModal()" title="View portal user guide &amp; FAQ" class="px-2.5 py-1 text-[11px] font-bold bg-slate-100 text-slate-800 hover:bg-slate-200 border border-slate-300 cursor-pointer transition flex items-center gap-1">
           <span>❓</span> <span class="hidden md:inline">How to Use</span>
         </button>
-        <button onclick="openTeamOnboardingModal()" title="Team Administration &amp; Theming Settings" class="px-2 py-1 text-[11px] font-bold bg-white/10 text-slate-200 hover:text-white border border-white/20 cursor-pointer transition flex items-center gap-1">
+        <button onclick="openTeamOnboardingModal()" title="Team Administration &amp; Theming Settings" class="px-2 py-1 text-[11px] font-bold bg-slate-100 text-slate-800 hover:bg-slate-200 border border-slate-300 cursor-pointer transition flex items-center gap-1">
           <span>⚙️</span>
         </button>
       </div>
@@ -4561,23 +4562,37 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
       <!-- CONTEXTUAL FLYOUT DRAWER (~300px, Collapsible with ☰) -->
       <aside id="app-flyout-drawer" class="w-72 sm:w-80 shrink-0 border-r border-[var(--border-color)] flex flex-col h-[calc(100vh-56px)] overflow-hidden transition-all duration-200 z-20">
         
-        <!-- FLYOUT PANEL 1: SCHEDULE & MATCHUPS (DEFAULT) -->
+        <!-- Flyout Drawer Header: Current Panel Title + Pin / Unpin + Collapse -->
+        <div class="px-3 py-2 border-b border-[var(--border-color)] bg-[var(--bg-panel)] flex items-center justify-between text-xs shrink-0 select-none">
+          <div class="flex items-center gap-1.5 font-bold uppercase tracking-wider text-[11px] text-slate-800">
+            <span>📁</span> <span id="flyout-title-text">Matchup Schedule</span>
+          </div>
+          <div class="flex items-center gap-1">
+            <button id="flyout-pin-btn" onclick="toggleFlyoutPin()" title="Pin drawer to keep open, or unpin to auto-collapse when selecting a game" class="px-2 py-1 text-[10px] font-bold rounded border border-slate-300 bg-white hover:bg-slate-100 text-slate-700 cursor-pointer transition flex items-center gap-1 shadow-2xs">
+              <span id="flyout-pin-icon">📌</span> <span id="flyout-pin-label">Pin</span>
+            </button>
+            <button onclick="toggleAppSidebar(false)" title="Collapse Drawer (or press ☰ on top bar)" class="px-2 py-1 text-[10px] font-bold rounded border border-slate-300 bg-white hover:bg-slate-100 text-slate-700 cursor-pointer transition flex items-center gap-1">
+              <span>◀</span> <span class="hidden sm:inline">Collapse</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- FLYOUT PANEL 1: SCHEDULE & MATCHUPS (DEFAULT - UPCOMING GAMES ONLY) -->
         <div id="flyout-panel-schedule" class="flex-1 flex flex-col min-h-0">
           <div class="p-3 border-b border-[var(--border-color)] bg-[var(--bg-panel)] shrink-0 space-y-2">
             <div class="flex items-center justify-between">
               <span class="font-display font-black text-xs uppercase tracking-wider text-amber-500 flex items-center gap-1.5">
-                <span>📅</span> <span>Matchup Schedule</span>
+                <span>📅</span> <span>Upcoming Matchups</span>
               </span>
-              <button onclick="openScheduleHubModal()" class="text-[10px] font-bold text-sky-400 hover:underline cursor-pointer">
+              <button onclick="openScheduleHubModal()" class="text-[10px] font-bold text-sky-600 hover:underline cursor-pointer">
                 Full Cal ↗
               </button>
             </div>
             
-            <!-- Quick Filter Tabs -->
-            <div class="grid grid-cols-3 gap-1 bg-[var(--bg-surface)] p-1 border border-[var(--border-color)] text-[10px] font-bold text-center">
-              <button onclick="filterFlyoutSchedule('all')" id="sched-flyout-tab-all" class="py-1 bg-[var(--bg-panel)] text-amber-400 cursor-pointer shadow-xs">All</button>
-              <button onclick="filterFlyoutSchedule('upcoming')" id="sched-flyout-tab-upcoming" class="py-1 text-slate-400 hover:text-white cursor-pointer">Upcoming</button>
-              <button onclick="filterFlyoutSchedule('past')" id="sched-flyout-tab-past" class="py-1 text-slate-400 hover:text-white cursor-pointer">Past</button>
+            <!-- Quick Filter Notice -->
+            <div class="flex items-center justify-between bg-[var(--bg-surface)] px-2 py-1 border border-[var(--border-color)] text-[10px] font-bold">
+              <span class="text-slate-600">Upcoming games only</span>
+              <span class="text-amber-600 font-mono">Next: Nov 10 vs Caledon</span>
             </div>
 
             <!-- Search Filter -->
@@ -4690,6 +4705,43 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
             <span class="font-bold text-xs">🎯 Shot Quality &amp; Heatmaps</span>
             <span class="text-[10px] text-sky-400 font-mono font-bold">24 SOG</span>
           </button>
+        </div>
+
+        <!-- FLYOUT PANEL 6: TOURNAMENTS HUB -->
+        <div id="flyout-panel-tournaments" class="flex-1 flex flex-col min-h-0 hidden p-3 space-y-3 overflow-y-auto custom-scroll">
+          <div class="flex items-center justify-between pb-2 border-b border-[var(--border-color)]">
+            <span class="font-display font-black text-xs uppercase tracking-wider text-amber-500 flex items-center gap-1.5">
+              <span>🏆</span> <span>Tournaments Hub</span>
+            </span>
+            <span class="text-[9px] font-mono px-1.5 py-0.5 rounded bg-rose-500/10 text-rose-600 border border-rose-500/30 font-bold">CAN/AM</span>
+          </div>
+
+          <div class="p-2.5 rounded-xl bg-[var(--bg-panel)] border border-[var(--border-color)] space-y-1.5">
+            <div class="text-[11px] font-black uppercase text-amber-500">2026 CAN/AM Challenge Cup</div>
+            <div class="text-[10px] text-slate-500">Lake Placid, NY • Herb Brooks 1980 Arena</div>
+            <a href="https://canam.hockeyshift.com/stats#/1188/team/734239/schedule" target="_blank" rel="noopener noreferrer" class="mt-2 w-full py-1.5 bg-amber-400 hover:bg-amber-300 text-slate-950 font-black text-xs flex items-center justify-center gap-1 shadow-xs transition">
+              <span>📊</span> <span>HockeyShift Portal ↗</span>
+            </a>
+          </div>
+
+          <div class="space-y-1 text-xs font-bold text-slate-700">
+            <button onclick="scrollTournamentSection('tourn-sec-olympic')" class="w-full p-2 rounded-lg bg-[var(--bg-surface)] hover:bg-slate-100 border border-[var(--border-color)] text-left flex items-center justify-between">
+              <span>🏛️ Olympic 1980 Rink Guide</span>
+              <span class="text-sky-600 text-[10px]">200' x 100'</span>
+            </button>
+            <button onclick="scrollTournamentSection('tourn-sec-pool')" class="w-full p-2 rounded-lg bg-[var(--bg-surface)] hover:bg-slate-100 border border-[var(--border-color)] text-left flex items-center justify-between">
+              <span>🏒 Pool Play Games</span>
+              <span class="text-amber-600 text-[10px]">3 Matches</span>
+            </button>
+            <button onclick="scrollTournamentSection('tourn-sec-bridge')" class="w-full p-2 rounded-lg bg-[var(--bg-surface)] hover:bg-slate-100 border border-[var(--border-color)] text-left flex items-center justify-between">
+              <span>📹 Falcon + HockeyShift Bridge</span>
+              <span class="text-emerald-600 text-[10px]">Live</span>
+            </button>
+            <button onclick="switchAppRail('schedule')" class="w-full p-2 rounded-lg bg-[var(--bg-panel)] hover:bg-slate-100 border border-[var(--border-color)] text-left flex items-center justify-between text-slate-500">
+              <span>📅 Return to League Schedule</span>
+              <span>→</span>
+            </button>
+          </div>
         </div>
 
       </aside>
@@ -7323,6 +7375,156 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
 
       </div>
     </div>
+
+    <!-- ================= IN-PAGE TOURNAMENT WEBPAGE VIEW (NOT A POPUP!) ================= -->
+    <section id="tournament-webpage-view" class="hidden w-full space-y-4 animate-in fade-in duration-200">
+      
+      <!-- Top Action & Breadcrumb Bar -->
+      <div class="flex items-center justify-between p-3 rounded-2xl bg-white border border-slate-200 shadow-sm flex-wrap gap-2">
+        <div class="flex items-center gap-2">
+          <button onclick="switchAppRail('schedule')" class="px-3 py-1.5 text-xs font-bold rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-800 border border-slate-300 cursor-pointer transition flex items-center gap-1">
+            <span>←</span> <span>Back to League Schedule</span>
+          </button>
+          <span class="text-slate-300">|</span>
+          <span class="font-display font-black text-xs uppercase tracking-wider text-slate-800 flex items-center gap-1.5">
+            <span>🏆</span> <span>CAN/AM Challenge Cup Tournament Hub</span>
+          </span>
+        </div>
+        <div class="flex items-center gap-2">
+          <a href="https://canam.hockeyshift.com/stats#/1188/team/734239/schedule" target="_blank" rel="noopener noreferrer" class="px-3.5 py-1.5 bg-amber-400 hover:bg-amber-300 text-slate-950 font-black text-xs rounded-lg flex items-center gap-1.5 shadow-xs transition">
+            <span>📊</span> <span>Live HockeyShift Hub ↗</span>
+          </a>
+          <button onclick="switchAppRail('film')" class="px-3 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-800 font-bold text-xs rounded-lg border border-slate-300 cursor-pointer transition">
+            🎬 Film Room
+          </button>
+        </div>
+      </div>
+
+      <!-- Tournament Hero Card -->
+      <div class="p-5 rounded-2xl bg-gradient-to-r from-slate-900 via-slate-800 to-amber-950 text-white shadow-md border border-slate-700/60 space-y-3">
+        <div class="flex flex-wrap items-center justify-between gap-2">
+          <div class="flex items-center gap-3">
+            <span class="w-10 h-10 rounded-2xl bg-rose-600 text-white flex items-center justify-center text-xl font-black shadow-md">🏆</span>
+            <div>
+              <span class="text-[10px] font-mono font-bold uppercase text-rose-400 tracking-wider">CAN/AM Youth Challenge Cup Showcase</span>
+              <h2 class="font-display font-black text-lg sm:text-xl text-white uppercase tracking-wider">Lake Placid, New York</h2>
+            </div>
+          </div>
+          <div class="flex items-center gap-2 font-mono text-[11px]">
+            <span class="px-2.5 py-1 rounded-lg bg-rose-500/20 text-rose-300 border border-rose-400/40 font-bold">Team #734239</span>
+            <span class="px-2.5 py-1 rounded-lg bg-emerald-500/20 text-emerald-300 border border-emerald-400/40 font-bold">● HockeyShift Integrated</span>
+          </div>
+        </div>
+
+        <p class="text-slate-300 text-xs leading-relaxed max-w-3xl">
+          The Aurora Tigers U13A competed at the historic <strong>Lake Placid Olympic Center</strong> (home of the legendary 1980 "Miracle on Ice" Herb Brooks Arena and the 1932 Jack Shea Arena). Below are the full pool play results, tactical Olympic rink dimensions, and tournament video archives.
+        </p>
+
+        <div class="flex flex-wrap items-center gap-2 pt-2 border-t border-slate-700/60">
+          <button onclick="scrollTournamentSection('tourn-sec-olympic')" class="px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-sky-300 border border-sky-400/30 text-xs font-bold cursor-pointer transition">
+            🏛️ 1980 Olympic Rink Guide (200' x 100')
+          </button>
+          <button onclick="scrollTournamentSection('tourn-sec-pool')" class="px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-amber-300 border border-amber-400/30 text-xs font-bold cursor-pointer transition">
+            🏒 Pool Play Match Results
+          </button>
+          <button onclick="scrollTournamentSection('tourn-sec-bridge')" class="px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-emerald-300 border border-emerald-400/30 text-xs font-bold cursor-pointer transition">
+            📹 Falcon + Scoreboard Bridge
+          </button>
+        </div>
+      </div>
+
+      <!-- Tactical Rink Guide Section -->
+      <div id="tourn-sec-olympic" class="space-y-2">
+        <h3 class="text-xs font-display font-black text-slate-800 uppercase tracking-wider flex items-center gap-1.5">
+          <span>🏛️</span> <span>Lake Placid Rink Architecture &amp; Tactical Adjustments</span>
+        </h3>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+          <div class="p-4 rounded-2xl bg-white border border-slate-200 shadow-sm space-y-2">
+            <div class="flex items-center justify-between">
+              <span class="font-bold text-slate-900 text-xs flex items-center gap-1.5">
+                <span>🇺🇸</span> <span>1980 Herb Brooks Arena (Olympic Center)</span>
+              </span>
+              <span class="px-2 py-0.5 rounded bg-amber-50 text-amber-800 border border-amber-300 font-mono text-[9px] font-bold">200' x 100' Olympic Ice</span>
+            </div>
+            <p class="text-xs text-slate-600 leading-relaxed">
+              <strong>15 Feet Wider Than Standard NHL Rinks!</strong> The extra real estate behind our net and along the boards gives our defensemen massive room on D-to-D reversals. However, forwards must stay disciplined above the puck — giving up an odd-man rush on Olympic ice allows opponents huge angles to attack.
+            </p>
+            <div class="text-[10px] text-slate-500 font-mono">📍 2634 Main St, Lake Placid, NY 12946</div>
+          </div>
+
+          <div class="p-4 rounded-2xl bg-white border border-slate-200 shadow-sm space-y-2">
+            <div class="flex items-center justify-between">
+              <span class="font-bold text-slate-900 text-xs flex items-center gap-1.5">
+                <span>❄️</span> <span>1932 Jack Shea Arena &amp; Saranac Lake</span>
+              </span>
+              <span class="px-2 py-0.5 rounded bg-slate-100 text-slate-800 border border-slate-300 font-mono text-[9px] font-bold">200' x 85' Standard Ice</span>
+            </div>
+            <p class="text-xs text-slate-600 leading-relaxed">
+              <strong>Fast, tight boards.</strong> Tight forecheck and hard rims along the glass are rewarded. Expect high-traffic battles along the boards. Protect the slot and generate quick low shots with net-front tips.
+            </p>
+            <div class="text-[10px] text-slate-500 font-mono">📍 Saranac Lake Civic Center: 213 Ampersand Ave</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- CAN/AM Pool Play Games List -->
+      <div id="tourn-sec-pool" class="space-y-2">
+        <div class="flex items-center justify-between">
+          <h3 class="text-xs font-display font-black text-slate-800 uppercase tracking-wider flex items-center gap-1.5">
+            <span>🏒</span> <span>CAN/AM Challenge Cup Match Records (Pool Play)</span>
+          </h3>
+          <span class="text-[10px] font-mono text-slate-500 font-semibold">Tigers Team ID: 734239</span>
+        </div>
+        <div id="lake-placid-webpage-games-list" class="space-y-2.5">
+          <!-- Populated by renderTournamentWebpage() -->
+        </div>
+      </div>
+
+      <!-- Live Falcon Scoreboard Bridge -->
+      <div id="tourn-sec-bridge" class="p-4 rounded-2xl bg-white border border-slate-200 shadow-sm space-y-3">
+        <div class="flex items-center justify-between flex-wrap gap-2">
+          <div class="flex items-center gap-2">
+            <span class="text-xl">📹</span>
+            <div>
+              <h4 class="font-bold text-slate-900 text-xs">Falcon Camera + HockeyShift Lake Placid Bridge</h4>
+              <div class="text-[10px] text-slate-500">Scoreboard integration for tournaments not hosted on OMHA GameSheet</div>
+            </div>
+          </div>
+          <span class="px-2 py-0.5 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-300 text-[10px] font-mono font-bold">
+            ● Tournament Bridge Ready
+          </span>
+        </div>
+
+        <p class="text-xs text-slate-600 leading-relaxed">
+          When streaming from the Falcon camera at Lake Placid or external tournaments, you can use our built-in virtual scoreboard overlay or the in-camera XbotGo scoreboard:
+        </p>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
+          <div class="p-3 rounded-xl bg-slate-50 border border-slate-200 space-y-1">
+            <strong class="text-amber-700 flex items-center gap-1"><span>✨</span> Option 1: App Virtual Scoreboard (Recommended)</strong>
+            <p class="text-slate-600 text-[11px] leading-relaxed">
+              Keep Falcon on-screen overlay OFF. The video stays clean 1080p without burned-in pixels. Our portal renders the live Lake Placid scoreboard directly over the video stream for all team parents!
+            </p>
+          </div>
+
+          <div class="p-3 rounded-xl bg-slate-50 border border-slate-200 space-y-1">
+            <strong class="text-rose-700 flex items-center gap-1"><span>📱</span> Option 2: XbotGo In-Camera Scoreboard</strong>
+            <p class="text-slate-600 text-[11px] leading-relaxed">
+              Turn the scoreboard ON inside the XbotGo app. If a parent in the stands has an XbotGo Bluetooth clicker, they can increment the score so YouTube viewers see it burned into the video.
+            </p>
+          </div>
+        </div>
+
+        <div class="flex items-center gap-2 pt-1">
+          <input type="text" id="hockeyshift-game-id-webpage" class="flex-1 bg-slate-50 border border-slate-300 rounded-xl px-3 py-2 text-slate-900 font-mono text-xs focus:outline-none focus:border-amber-400" placeholder="https://canam.hockeyshift.com/stats#/1188/game/1372648" value="https://canam.hockeyshift.com/stats#/1188/game/1372648" />
+          <button onclick="loadHockeyShiftGameFeed()" class="px-3.5 py-2 rounded-xl bg-rose-600 hover:bg-rose-500 text-white font-bold text-xs cursor-pointer transition shrink-0 shadow-xs">
+            ⚡ Connect HockeyShift Live
+          </button>
+        </div>
+      </div>
+
+    </section>
 
       </main> <!-- close #app-main-viewport -->
     </div> <!-- close #app-shell-container -->
@@ -54144,7 +54346,7 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
 
     function getNextScheduledGameSummary() {
       const upcoming = (typeof SCHEDULE_UPCOMING_MATCHUPS !== 'undefined') ? SCHEDULE_UPCOMING_MATCHUPS : [];
-      const nextMatch = upcoming.find(g => g.eventType === 'league' || g.eventType === 'tournament') || upcoming[0];
+      const nextMatch = upcoming.find(g => (g.dateIso >= '2026-11-08' || g.status === 'upcoming') && (g.eventType === 'league' || g.eventType === 'tournament')) || upcoming.find(g => g.id === 'game_u13a_rs_015');
       if (nextMatch) {
         return `${nextMatch.date || 'Tuesday, Nov 10, 2026'} at ${nextMatch.time || '7:30 PM EST'} • ${nextMatch.title || 'Caledon Hawks vs Aurora Tigers'} @ ${nextMatch.arena || 'Aurora Community Centre (ACC)'}`;
       }
@@ -55695,16 +55897,16 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
     "title": "York Simcoe League: Aurora Tigers U13A vs Caledon Hawks",
     "opponent": "Caledon Hawks",
     "opponentQuery": "caledon",
-    "opponentRecord": "YSMHL Regular Season",
+    "opponentRecord": "YSMHL Regular Season (6-0-1)",
     "opponentStats": "YSMHL Regular Season Game #U13A-RS-015",
-    "opponentHome": "1400 Wellington St E, Aurora, ON",
+    "opponentHome": "Aurora Community Centre (ACC), 1 McCallum St, Aurora, ON",
     "date": "Tuesday, Nov 10, 2026",
     "dateIso": "2026-11-10",
     "time": "7:30 PM EST",
-    "arena": "1400 Wellington St E",
+    "arena": "Aurora Community Centre (ACC)",
     "arenaType": "standard",
     "rinkDimensions": "200' x 85' Standard Ice Sheet",
-    "mapsUrl": "https://maps.google.com/?q=1400%20Wellington%20St%20E%2C%20Aurora%2C%20ON",
+    "mapsUrl": "https://maps.google.com/?q=Aurora+Community+Centre+1+McCallum+St+Aurora+ON",
     "jersey": "Home (White)",
     "source": "TeamSnap Master + GameSheet Inc.",
     "sourceType": "gamesheet",
@@ -59184,8 +59386,12 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
     // =========================================================================
 
     function openTournamentHubModal() {
-      if (typeof openScheduleHubModal === 'function') openScheduleHubModal();
-      if (typeof setScheduleHubTab === 'function') setScheduleHubTab('lakeplacid');
+      if (typeof switchAppRail === 'function') {
+        switchAppRail('tournaments');
+      } else {
+        if (typeof openScheduleHubModal === 'function') openScheduleHubModal();
+        if (typeof setScheduleHubTab === 'function') setScheduleHubTab('lakeplacid');
+      }
     }
 
     function openPreGameScoutModal() {
@@ -61515,7 +61721,34 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
 
     let activeRailTab = 'schedule';
     let isAppFlyoutOpen = true;
-    let currentFlyoutScheduleFilter = 'all';
+    let currentFlyoutScheduleFilter = 'upcoming';
+    let isFlyoutPinned = localStorage.getItem('tigers_flyout_pinned') === 'true';
+
+    function updateFlyoutPinUi() {
+      const pinBtn = document.getElementById('flyout-pin-btn');
+      const pinIcon = document.getElementById('flyout-pin-icon');
+      const pinLabel = document.getElementById('flyout-pin-label');
+      if (pinBtn) {
+        if (isFlyoutPinned) {
+          pinBtn.className = "px-2 py-1 text-[10px] font-bold rounded border border-amber-400 bg-amber-100 text-amber-900 cursor-pointer transition flex items-center gap-1 shadow-2xs";
+          if (pinIcon) pinIcon.innerText = "📍";
+          if (pinLabel) pinLabel.innerText = "Pinned";
+          pinBtn.title = "Flyout drawer is pinned open (Click to unpin and auto-collapse on game select)";
+        } else {
+          pinBtn.className = "px-2 py-1 text-[10px] font-bold rounded border border-slate-300 bg-white hover:bg-slate-100 text-slate-700 cursor-pointer transition flex items-center gap-1 shadow-2xs";
+          if (pinIcon) pinIcon.innerText = "📌";
+          if (pinLabel) pinLabel.innerText = "Pin";
+          pinBtn.title = "Pin flyout open (auto-collapses on game select when unpinned)";
+        }
+      }
+    }
+
+    function toggleFlyoutPin() {
+      isFlyoutPinned = !isFlyoutPinned;
+      localStorage.setItem('tigers_flyout_pinned', isFlyoutPinned ? 'true' : 'false');
+      updateFlyoutPinUi();
+      showToast(isFlyoutPinned ? "📌 Flyout drawer pinned open" : "📌 Flyout will auto-collapse when a game is selected");
+    }
 
     function toggleAppSidebar(forceState) {
       const drawer = document.getElementById('app-flyout-drawer');
@@ -61550,7 +61783,7 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
       });
 
       // 2. Switch Flyout Panel
-      const panels = ['schedule', 'film', 'passports', 'live', 'analytics'];
+      const panels = ['schedule', 'film', 'passports', 'live', 'analytics', 'tournaments'];
       panels.forEach(p => {
         const el = document.getElementById(`flyout-panel-${p}`);
         if (el) {
@@ -61562,33 +61795,50 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
         }
       });
 
-      // 3. Trigger specific renderers
-      if (railKey === 'schedule') {
-        renderAppScheduleFlyout(currentFlyoutScheduleFilter);
-      } else if (railKey === 'film') {
-        renderAppFilmFlyout();
-      } else if (railKey === 'passports') {
-        renderAppPassportFlyout();
-      } else if (railKey === 'live') {
-        toggleLiveBroadcastMode(true);
-      } else if (railKey === 'tournaments') {
-        openTournamentHubModal();
+      // Update Title Label in Flyout Drawer Header
+      const titles = {
+        schedule: 'Upcoming Matchups',
+        film: 'Film Room (16 Games)',
+        live: 'Live Stream Center',
+        passports: 'Player Passports',
+        analytics: 'Team Analytics',
+        tournaments: 'Tournaments Hub'
+      };
+      const titleEl = document.getElementById('flyout-title-text');
+      if (titleEl) titleEl.innerText = titles[railKey] || 'Navigation';
+
+      // 3. Webpage vs Workspace Grid View (NO POPUP FOR TOURNAMENTS!)
+      const workspaceGrid = document.getElementById('workspace-grid');
+      const tournamentWebpage = document.getElementById('tournament-webpage-view');
+      const unifiedMatchBar = document.getElementById('unified-match-bar');
+
+      if (railKey === 'tournaments') {
+        if (workspaceGrid) workspaceGrid.classList.add('hidden');
+        if (unifiedMatchBar) unifiedMatchBar.classList.add('hidden');
+        if (tournamentWebpage) tournamentWebpage.classList.remove('hidden');
+        renderTournamentWebpage();
+      } else {
+        if (tournamentWebpage) tournamentWebpage.classList.add('hidden');
+        if (unifiedMatchBar) unifiedMatchBar.classList.remove('hidden');
+        if (workspaceGrid) workspaceGrid.classList.remove('hidden');
+
+        if (railKey === 'schedule') {
+          renderAppScheduleFlyout('upcoming');
+        } else if (railKey === 'film') {
+          renderAppFilmFlyout();
+        } else if (railKey === 'passports') {
+          renderAppPassportFlyout();
+        } else if (railKey === 'live') {
+          // Live button: target Tuesday, Nov 10 vs Caledon Hawks
+          selectScheduleGame('game_u13a_rs_015');
+          toggleLiveBroadcastMode(true);
+        }
       }
     }
 
     // Schedule Flyout Filter & Search
     function filterFlyoutSchedule(filterType) {
       currentFlyoutScheduleFilter = filterType;
-      ['all', 'upcoming', 'past'].forEach(f => {
-        const btn = document.getElementById(`sched-flyout-tab-${f}`);
-        if (btn) {
-          if (f === filterType) {
-            btn.className = "py-1 bg-[var(--bg-panel)] text-amber-500 font-black cursor-pointer shadow-xs";
-          } else {
-            btn.className = "py-1 text-slate-400 hover:text-slate-900 font-bold cursor-pointer";
-          }
-        }
-      });
       const query = (document.getElementById('sched-flyout-search')?.value || '').trim();
       renderAppScheduleFlyout(filterType, query);
     }
@@ -61597,132 +61847,105 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
       renderAppScheduleFlyout(currentFlyoutScheduleFilter, query);
     }
 
-    // Render schedule items in left flyout
-    function renderAppScheduleFlyout(filter = 'all', query = '') {
+    // Render schedule items in left flyout (ONLY UPCOMING GAMES!)
+    function renderAppScheduleFlyout(filter = 'upcoming', query = '') {
       const listEl = document.getElementById('sched-flyout-list');
       if (!listEl) return;
 
-      const upcoming = (typeof SCHEDULE_UPCOMING_MATCHUPS !== 'undefined') ? SCHEDULE_UPCOMING_MATCHUPS : [];
-      const past = (typeof gamesLibrary !== 'undefined') ? gamesLibrary : [];
-
-      let combined = [];
-
-      // Add upcoming
-      upcoming.forEach(m => {
-        combined.push({
-          id: m.id,
-          title: m.title || `vs ${m.opponent}`,
-          opponent: m.opponent || 'Opponent',
-          date: m.date || m.dateIso || 'Upcoming',
-          time: m.time || '',
-          arena: m.arena || 'Arena',
-          isUpcoming: true,
-          matchObj: m
-        });
+      const rawUpcoming = (typeof SCHEDULE_UPCOMING_MATCHUPS !== 'undefined') ? SCHEDULE_UPCOMING_MATCHUPS : [];
+      
+      // Filter out past October/concluded games; keep games that have not happened yet (Simulated date: Nov 8, 2026)
+      let upcomingGames = rawUpcoming.filter(m => {
+        if (m.dateIso && m.dateIso < '2026-11-08') return false; // Filter out past Oct / completed games
+        return true;
       });
 
-      // Add past games
-      past.forEach(g => {
-        const scoreStr = (g.home_score !== undefined && g.away_score !== undefined) 
-          ? `Tigers ${g.home_score} - ${g.away_score}` 
-          : 'Final';
-        combined.push({
-          id: g.id || g.youtube_video_id,
-          title: g.title || g.game_title || 'Game Film',
-          opponent: g.opponent || 'League Game',
-          date: g.date || g.teamsnap?.date || 'Past Match',
-          arena: g.teamsnap?.arena || 'Arena',
-          scoreStr: scoreStr,
-          isUpcoming: false,
-          gameObj: g
-        });
-      });
-
-      // Filter by type
-      if (filter === 'upcoming') {
-        combined = combined.filter(c => c.isUpcoming);
-      } else if (filter === 'past') {
-        combined = combined.filter(c => !c.isUpcoming);
-      }
+      // Sort with next game first (Nov 10 vs Caledon Hawks)
+      upcomingGames.sort((a, b) => (a.dateIso || '').localeCompare(b.dateIso || ''));
 
       // Filter by search query
       if (query) {
         const q = query.toLowerCase();
-        combined = combined.filter(c => 
-          c.title.toLowerCase().includes(q) || 
-          c.opponent.toLowerCase().includes(q) || 
-          c.arena.toLowerCase().includes(q) ||
-          c.date.toLowerCase().includes(q)
+        upcomingGames = upcomingGames.filter(c => 
+          (c.title && c.title.toLowerCase().includes(q)) || 
+          (c.opponent && c.opponent.toLowerCase().includes(q)) || 
+          (c.arena && c.arena.toLowerCase().includes(q)) ||
+          (c.date && c.date.toLowerCase().includes(q))
         );
       }
 
-      if (combined.length === 0) {
-        listEl.innerHTML = `<div class="p-4 text-center text-slate-400">No matchups found.</div>`;
+      if (upcomingGames.length === 0) {
+        listEl.innerHTML = `<div class="p-4 text-center text-slate-400">No upcoming matchups found.</div>`;
         return;
       }
 
-      listEl.innerHTML = combined.map(item => {
-        if (item.isUpcoming) {
-          return `
-            <div onclick="selectScheduleGame('${item.id}')" class="p-2.5 rounded-xl border border-[var(--border-color)] bg-[var(--bg-panel)] hover:border-amber-400 cursor-pointer transition shadow-2xs space-y-1 group">
-              <div class="flex items-center justify-between text-[10px]">
-                <span class="px-1.5 py-0.2 rounded font-mono font-bold bg-amber-500/10 text-amber-500 border border-amber-500/30">⏳ UPCOMING</span>
-                <span class="text-slate-400 font-mono">${item.time || ''}</span>
-              </div>
-              <div class="font-bold text-slate-900 text-xs group-hover:text-amber-500 transition-colors truncate">
-                ${item.title}
-              </div>
-              <div class="flex items-center justify-between text-[10px] text-slate-500">
-                <span class="truncate">📍 ${item.arena}</span>
-                <span class="text-amber-500 font-bold shrink-0">Scout →</span>
-              </div>
+      listEl.innerHTML = upcomingGames.map((item, idx) => {
+        const isNext = (item.id === 'game_u13a_rs_015' || idx === 0);
+        const badgeHtml = isNext 
+          ? `<span class="px-1.5 py-0.2 rounded font-mono font-bold bg-rose-500/10 text-rose-600 border border-rose-500/30 animate-pulse">🔥 NEXT GAME</span>`
+          : `<span class="px-1.5 py-0.2 rounded font-mono font-bold bg-amber-500/10 text-amber-600 border border-amber-500/30">⏳ UPCOMING</span>`;
+        
+        return `
+          <div onclick="selectScheduleGame('${item.id}')" class="p-2.5 rounded-xl border border-[var(--border-color)] bg-[var(--bg-panel)] hover:border-amber-400 cursor-pointer transition shadow-2xs space-y-1 group ${isNext ? 'ring-1 ring-amber-400/50 bg-amber-50/20' : ''}">
+            <div class="flex items-center justify-between text-[10px]">
+              ${badgeHtml}
+              <span class="text-slate-500 font-mono font-semibold">${item.time || ''}</span>
             </div>
-          `;
-        } else {
-          return `
-            <div onclick="selectScheduleGame('${item.id}')" class="p-2.5 rounded-xl border border-[var(--border-color)] bg-[var(--bg-panel)] hover:border-amber-400 cursor-pointer transition shadow-2xs space-y-1 group">
-              <div class="flex items-center justify-between text-[10px]">
-                <span class="px-1.5 py-0.2 rounded font-mono font-bold bg-slate-100 text-slate-700 border border-slate-300">🎬 FILM &amp; STATS</span>
-                <span class="text-emerald-600 font-mono font-bold">${item.scoreStr || 'Final'}</span>
-              </div>
-              <div class="font-bold text-slate-900 text-xs group-hover:text-amber-500 transition-colors truncate">
-                ${item.title}
-              </div>
-              <div class="flex items-center justify-between text-[10px] text-slate-500">
-                <span>📅 ${item.date}</span>
-                <span class="text-sky-500 font-bold shrink-0">Watch →</span>
-              </div>
+            <div class="font-bold text-slate-900 text-xs group-hover:text-amber-600 transition-colors truncate">
+              ${item.title}
             </div>
-          `;
-        }
+            <div class="text-[10px] text-slate-500 flex items-center justify-between">
+              <span class="truncate">📅 ${item.date}</span>
+              <span class="text-amber-600 font-bold shrink-0">Scout &amp; Timer →</span>
+            </div>
+            <div class="text-[10px] text-slate-400 truncate flex items-center gap-1">
+              <span>📍</span> <span class="truncate">${item.arena}</span>
+            </div>
+          </div>
+        `;
       }).join('');
     }
 
-    // Render Film Room flyout
+    // Render Film Room flyout (ALL PAST GAMES)
     function renderAppFilmFlyout(query = '') {
       const listEl = document.getElementById('film-flyout-list');
       if (!listEl) return;
       const games = (typeof gamesLibrary !== 'undefined') ? gamesLibrary : [];
-      let filtered = games;
+      let filtered = [...games];
+
       if (query) {
         const q = query.toLowerCase();
-        filtered = games.filter(g => (g.title || '').toLowerCase().includes(q) || (g.opponent || '').toLowerCase().includes(q));
+        filtered = filtered.filter(g => 
+          (g.title || '').toLowerCase().includes(q) || 
+          (g.game_title || '').toLowerCase().includes(q) ||
+          (g.opponent || '').toLowerCase().includes(q) ||
+          (g.date || '').toLowerCase().includes(q)
+        );
       }
-      listEl.innerHTML = filtered.map((g, idx) => `
-        <div onclick="selectScheduleGame('${g.id || g.youtube_video_id}')" class="p-2 rounded-xl border border-[var(--border-color)] bg-[var(--bg-panel)] hover:border-amber-400 cursor-pointer transition space-y-1 group">
-          <div class="flex items-center justify-between text-[10px]">
-            <span class="font-mono text-slate-400">#${idx + 1}</span>
-            <span class="px-1.5 py-0.2 rounded font-mono font-bold bg-amber-400/10 text-amber-500">26 Shifts</span>
+
+      listEl.innerHTML = filtered.map((g, idx) => {
+        const targetId = g.id || g.youtube_video_id;
+        const scoreStr = (g.home_score !== undefined && g.away_score !== undefined)
+          ? `Tigers ${g.home_score} - ${g.away_score}`
+          : 'Final';
+        const shiftCount = (Array.isArray(g.shifts) && g.shifts.length > 0) ? g.shifts.length : 26;
+
+        return `
+          <div onclick="selectScheduleGame('${targetId}')" class="p-2.5 rounded-xl border border-[var(--border-color)] bg-[var(--bg-panel)] hover:border-amber-400 cursor-pointer transition space-y-1 group">
+            <div class="flex items-center justify-between text-[10px]">
+              <span class="px-1.5 py-0.2 rounded font-mono font-bold bg-slate-100 text-slate-700 border border-slate-300">🎬 TAPE &amp; SHIFTS</span>
+              <span class="text-emerald-600 font-mono font-bold">${scoreStr}</span>
+            </div>
+            <div class="font-bold text-slate-900 text-xs group-hover:text-amber-600 transition-colors line-clamp-2">
+              ${g.title || g.game_title}
+            </div>
+            <div class="text-[10px] text-slate-500 flex items-center justify-between">
+              <span class="truncate">📅 ${g.date || 'Game Tape'}</span>
+              <span class="text-amber-600 font-bold shrink-0">Watch Film (${shiftCount}) ▶</span>
+            </div>
           </div>
-          <div class="font-bold text-slate-900 text-xs group-hover:text-amber-500 transition-colors line-clamp-2">
-            ${g.title || g.game_title}
-          </div>
-          <div class="text-[10px] text-slate-500 flex items-center justify-between">
-            <span>📅 ${g.date || 'Game Tape'}</span>
-            <span class="text-amber-500 font-bold">Load Film ▶</span>
-          </div>
-        </div>
-      `).join('');
+        `;
+      }).join('');
     }
 
     function searchFlyoutFilm(query) {
@@ -61768,6 +61991,84 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
       renderAppPassportFlyout(query);
     }
 
+    // In-Page Tournament Webpage Renderer
+    function renderTournamentWebpage() {
+      const container = document.getElementById('lake-placid-webpage-games-list');
+      if (!container) return;
+
+      const lakePlacidGames = [
+        {
+          id: 'lake_placid_1',
+          title: 'CAN/AM Challenge Cup: Game 1 vs Boston Jr. Terriers',
+          opponent: 'Boston Jr. Terriers',
+          date: 'Friday, Nov 6, 2026',
+          time: '1:15 PM EST',
+          arena: 'Lake Placid Olympic Center — 1980 Herb Brooks Arena',
+          rink: "200' x 100' Olympic Sheet (15 ft wider than standard)",
+          jersey: 'Home (White)',
+          result: 'Final • Tigers 3 - 2 Terriers',
+          status: 'completed'
+        },
+        {
+          id: 'lake_placid_2',
+          title: 'CAN/AM Challenge Cup: Game 2 at Canton Massachusetts',
+          opponent: 'Canton Massachusetts',
+          date: 'Friday, Nov 6, 2026',
+          time: '6:45 PM EST',
+          arena: 'Lake Placid Olympic Center — 1932 Jack Shea Arena',
+          rink: "200' x 85' Standard Ice Sheet",
+          jersey: 'Away (Black)',
+          result: 'Final • Tigers 4 - 1 Canton',
+          status: 'completed'
+        },
+        {
+          id: 'lake_placid_3',
+          title: 'CAN/AM Challenge Cup: Game 3 vs Syracuse Blazers',
+          opponent: 'Syracuse Blazers',
+          date: 'Saturday, Nov 7, 2026',
+          time: '9:30 AM EST',
+          arena: 'Lake Placid Olympic Center — 1980 Herb Brooks Arena',
+          rink: "200' x 100' Olympic Sheet (15 ft wider than standard)",
+          jersey: 'Away (Black)',
+          result: 'Final • Tigers 5 - 2 Syracuse',
+          status: 'completed'
+        }
+      ];
+
+      container.innerHTML = lakePlacidGames.map(g => `
+        <div class="p-3.5 rounded-xl border border-slate-200 bg-white hover:border-amber-400 transition shadow-xs flex flex-wrap items-center justify-between gap-3">
+          <div class="space-y-1">
+            <div class="flex items-center gap-2">
+              <span class="px-2 py-0.5 rounded font-mono font-bold text-[10px] bg-emerald-50 text-emerald-700 border border-emerald-300">🏆 CAN/AM POOL PLAY</span>
+              <span class="font-bold text-xs text-slate-900">${g.opponent}</span>
+              <span class="text-xs font-mono font-bold text-emerald-700">${g.result}</span>
+            </div>
+            <div class="text-[11px] text-slate-500 flex items-center gap-2">
+              <span>📅 ${g.date} • ${g.time}</span>
+              <span>•</span>
+              <span>📍 ${g.arena}</span>
+            </div>
+            <div class="text-[10px] font-mono text-sky-700 font-semibold">
+              🏛️ ${g.rink}
+            </div>
+          </div>
+          <div class="flex items-center gap-2">
+            <a href="https://canam.hockeyshift.com/stats#/1188/team/734239/schedule" target="_blank" rel="noopener" class="px-2.5 py-1 text-[11px] font-bold rounded-lg border border-slate-300 bg-slate-50 hover:bg-slate-100 text-slate-800 transition">
+              Box Score ↗
+            </a>
+            <button onclick="openPreGamePreviewForGame('${g.id}')" class="px-3 py-1 text-[11px] font-bold rounded-lg bg-rose-600 hover:bg-rose-500 text-white transition cursor-pointer">
+              Scouting Dossier
+            </button>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function scrollTournamentSection(id) {
+      const el = document.getElementById(id);
+      if (el) el.scrollIntoView({ behavior: 'smooth' });
+    }
+
     // =========================================================================
     // CORE INTELLIGENCE: SELECT ANY GAME FROM SCHEDULE
     // =========================================================================
@@ -61786,9 +62087,14 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
       // Determine whether game is upcoming (has not happened yet) or past
       let isUpcoming = false;
       if (upcomingMatch) {
-        if (!upcomingMatch.youtube_video_id || upcomingMatch.status === 'upcoming' || upcomingMatch.dateIso >= '2026-11-09') {
+        if (!upcomingMatch.youtube_video_id || upcomingMatch.status === 'upcoming' || upcomingMatch.dateIso >= '2026-11-08') {
           isUpcoming = true;
         }
+      }
+
+      // If drawer is unpinned, auto-collapse so film or scouting takes full width!
+      if (!isFlyoutPinned) {
+        toggleAppSidebar(false);
       }
 
       if (isUpcoming && upcomingMatch) {
@@ -62173,7 +62479,8 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
 
     // Initial Flyout Render on Load
     setTimeout(() => {
-      renderAppScheduleFlyout('all');
+      if (typeof updateFlyoutPinUi === 'function') updateFlyoutPinUi();
+      renderAppScheduleFlyout('upcoming');
     }, 200);
 
 </script>
