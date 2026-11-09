@@ -997,32 +997,42 @@
       "gameSheetCode": "U13A-RS-070",
       "gameSheetUrl": "https://gamesheetstats.com/seasons/15490/teams/534235/schedule",
       "record": {
-        "gp": 8,
-        "w": 4,
+        "gp": 9,
+        "w": 5,
         "l": 2,
         "t": 2,
-        "pts": 10,
-        "winPct": ".500"
+        "pts": 12,
+        "winPct": ".556"
       },
       "stats": {
-        "gf": 29,
-        "ga": 17,
-        "diff": "+12",
-        "gpg": "3.62",
-        "gapg": "2.12",
-        "pim": 48,
+        "gf": 33,
+        "ga": 19,
+        "diff": "+14",
+        "gpg": "3.67",
+        "gapg": "2.11",
+        "pim": 54,
         "pimPg": "6.0"
       },
       "specialTeams": {
-        "ppPct": "14.3%",
-        "ppGoals": 3,
-        "ppOpps": 21,
-        "pkPct": "86.4%",
+        "ppPct": "17.4%",
+        "ppGoals": 4,
+        "ppOpps": 23,
+        "pkPct": "87.5%",
         "shGoals": 1,
         "shAllowed": 9,
         "tendency": "Solid neutral zone structure; relies on counter-attacking off opponent turnovers."
       },
       "last5Games": [
+        {
+          "date": "Nov 8, 2026",
+          "opp": "Stouffville Clippers",
+          "vsAt": "@",
+          "score": "4-2",
+          "result": "W",
+          "gf": 4,
+          "ga": 2,
+          "notes": "Away GameSheet regular season box score"
+        },
         {
           "date": "Nov 7, 2026",
           "opp": "Stouffville Clippers",
@@ -1062,16 +1072,6 @@
           "gf": 4,
           "ga": 2,
           "notes": "Home GameSheet regular season box score"
-        },
-        {
-          "date": "Oct 23, 2026",
-          "opp": "King Rebellion",
-          "vsAt": "@",
-          "score": "5-1",
-          "result": "W",
-          "gf": 5,
-          "ga": 1,
-          "notes": "Away GameSheet regular season box score"
         }
       ],
       "dangerPlayers": [
@@ -1772,30 +1772,40 @@
       "teamId": "534226",
       "gameSheetUrl": "https://gamesheetstats.com/seasons/15490/teams/534226/schedule",
       "record": {
-        "gp": 8,
+        "gp": 9,
         "w": 2,
-        "l": 3,
+        "l": 4,
         "t": 3,
         "pts": 7,
-        "winPct": ".250"
+        "winPct": ".222"
       },
       "stats": {
-        "gf": 22,
-        "ga": 27,
-        "diff": "-5",
-        "gpg": "2.75",
-        "gapg": "3.38",
-        "pim": 48,
+        "gf": 24,
+        "ga": 31,
+        "diff": "-7",
+        "gpg": "2.67",
+        "gapg": "3.44",
+        "pim": 54,
         "pimPg": "6.0"
       },
       "specialTeams": {
-        "ppPct": "13.3%",
+        "ppPct": "11.8%",
         "ppGoals": 2,
-        "ppOpps": 15,
-        "pkPct": "80.0%",
+        "ppOpps": 17,
+        "pkPct": "77.3%",
         "tendency": "Official GameSheet regular season special teams metrics."
       },
       "last5Games": [
+        {
+          "date": "Nov 8, 2026",
+          "opp": "South Simcoe Storm",
+          "vsAt": "vs",
+          "score": "2-4",
+          "result": "L",
+          "gf": 2,
+          "ga": 4,
+          "notes": "Home GameSheet regular season box score"
+        },
         {
           "date": "Nov 7, 2026",
           "opp": "South Simcoe Storm",
@@ -1835,19 +1845,9 @@
           "gf": 3,
           "ga": 3,
           "notes": "Away GameSheet regular season box score"
-        },
-        {
-          "date": "Oct 18, 2026",
-          "opp": "TNT Tornados",
-          "vsAt": "@",
-          "score": "1-6",
-          "result": "L",
-          "gf": 1,
-          "ga": 6,
-          "notes": "Away GameSheet regular season box score"
         }
       ]
     }
   },
-  "lastSynced": "2026-11-08T23:32:20.941462Z"
+  "lastSynced": "2026-11-09T05:24:42.781160Z"
 }
