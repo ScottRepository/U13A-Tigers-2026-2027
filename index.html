@@ -4868,22 +4868,22 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
               <div class="flex items-center gap-2">
                 <span class="w-2.5 h-2.5 rounded-full bg-rose-500 animate-pulse"></span>
                 <span class="font-black text-white uppercase tracking-wider text-[11px]">🔴 Live Stream Ingest &amp; Tuner</span>
-                <span id="live-stream-status-pill" class="px-2 py-0.5 rounded-full text-[9px] font-mono font-bold bg-rose-500/20 text-rose-300 border border-rose-500/40">LIVE ON AIR</span>
+                <span id="live-stream-status-pill" class="px-2 py-0.5 rounded-full text-[9px] font-mono font-bold bg-amber-500/20 text-amber-300 border border-amber-500/40">STANDBY</span>
                 <button type="button" onclick="toggleLiveAirStatus()" class="px-2 py-0.5 rounded bg-slate-800 hover:bg-slate-700 text-slate-300 text-[9px] font-mono font-bold cursor-pointer transition border border-slate-700">
                   Toggle Air
                 </button>
               </div>
-              <div class="flex items-center gap-1.5">
+              <div class="flex items-center gap-1.5 flex-wrap">
                 <button type="button" onclick="checkActiveLivestreamJson(true);" class="px-2 py-1 rounded-lg bg-slate-800 hover:bg-slate-700 text-rose-300 border border-rose-500/40 text-[10px] font-bold cursor-pointer transition flex items-center gap-1" title="Auto-detect current live stream via Scott's Google Live Stream API">
                   <span>⚡</span> <span>Auto-Detect Live</span>
                 </button>
-                <button type="button" onclick="setLiveLinkPreset('controlroom'); tuneCurrentLiveStream();" class="px-2 py-1 rounded-lg bg-slate-800 hover:bg-slate-700 text-amber-300 border border-amber-400/30 text-[10px] font-bold cursor-pointer transition flex items-center gap-1" title="Tune Scott's active YouTube Studio stream (hmiiwDm6XqI)">
-                  <span>🎯</span> <span>Studio (hmiiwDm6XqI)</span>
+                <button type="button" onclick="showPostGameSummary()" class="px-2 py-1 rounded-lg bg-slate-800 hover:bg-slate-700 text-emerald-300 border border-emerald-500/40 text-[10px] font-bold cursor-pointer transition flex items-center gap-1" title="Show official final score & game recap">
+                  <span>🏁</span> <span>End Stream / Recap</span>
                 </button>
                 <button type="button" onclick="setLiveLinkPreset('playlist'); tuneCurrentLiveStream();" class="px-2 py-1 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-700 text-[10px] font-bold cursor-pointer transition flex items-center gap-1" title="Tune Team Playlist PLXFVFYYSmylE">
                   <span>📺</span> <span>Team Playlist</span>
                 </button>
-                <button type="button" onclick="toggleLiveBroadcastMode()" class="px-2 py-1 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 text-[10px] font-bold cursor-pointer transition">
+                <button type="button" onclick="exitLiveBroadcastMode()" class="px-2 py-1 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 text-[10px] font-bold cursor-pointer transition flex items-center gap-1">
                   <span>✕ Exit Live</span>
                 </button>
               </div>
@@ -4988,6 +4988,101 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
                 <button type="button" onclick="checkActiveLivestreamJson(true)" class="px-3 py-1.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-rose-300 border border-rose-500/40 font-bold text-xs cursor-pointer transition flex items-center gap-1.5 active:scale-95" title="Check Google Web App for stream">
                   <span>⚡</span> <span>Check Live Now</span>
                 </button>
+              </div>
+            </div>
+
+            <!-- LIVE STREAM POST-GAME FINAL SCORE & OFFICIAL RECAP OVERLAY -->
+            <div id="live-postgame-placeholder" class="hidden absolute inset-0 z-35 bg-slate-950/95 backdrop-blur-md flex flex-col items-center justify-center p-4 sm:p-6 text-center text-white select-none animate-in fade-in duration-200 overflow-y-auto">
+              <!-- Top Pill -->
+              <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-slate-900 border border-emerald-400/40 text-[11px] font-mono font-bold text-emerald-300 mb-3 shadow-sm">
+                <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
+                <span>🏁 BROADCAST CONCLUDED • OFFICIAL FINAL GAME RECAP</span>
+              </div>
+
+              <!-- Main Post-Game Feature Card -->
+              <div class="w-full max-w-lg p-5 rounded-2xl bg-slate-900 border border-slate-800 shadow-2xl relative overflow-hidden text-left space-y-3">
+                <div class="text-[10px] font-black uppercase tracking-widest text-amber-400 flex items-center justify-between">
+                  <span>OFFICIAL FINAL RESULT</span>
+                  <span id="postgame-league-tag" class="px-2 py-0.5 rounded bg-slate-800 text-slate-300 border border-slate-700 font-mono text-[9px]">YSMHL Game #U13A-RS-015</span>
+                </div>
+
+                <!-- Matchup Score Banner -->
+                <div class="flex items-center justify-around py-3 px-3 rounded-xl bg-slate-950/90 border border-slate-800/80">
+                  <!-- Home: Tigers -->
+                  <div class="flex flex-col items-center gap-1.5 flex-1 text-center">
+                    <img src="./tigers_logo.png" onerror="this.src='https://auroraminorhockey.com/public/images/common/logo.png'" alt="Aurora Tigers" class="w-12 h-12 object-contain drop-shadow" />
+                    <span class="font-black text-xs text-white uppercase tracking-wider">Aurora Tigers</span>
+                    <span id="postgame-home-score" class="text-3xl font-mono font-black text-amber-400 leading-none">4</span>
+                  </div>
+
+                  <div class="flex flex-col items-center px-3 space-y-1">
+                    <span class="px-2.5 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 font-mono font-black text-[10px] tracking-wider uppercase">FINAL</span>
+                    <span id="postgame-outcome-text" class="text-[10px] font-black text-emerald-400 uppercase tracking-tight">Tigers Win</span>
+                  </div>
+
+                  <!-- Away: Opponent -->
+                  <div class="flex flex-col items-center gap-1.5 flex-1 text-center">
+                    <div id="postgame-opp-logo" class="w-12 h-12 rounded-xl bg-slate-800 border border-slate-700 flex items-center justify-center text-xl shadow-inner font-black text-amber-300">
+                      🦅
+                    </div>
+                    <span id="postgame-opp-name" class="font-black text-xs text-white uppercase tracking-wider">Caledon Hawks</span>
+                    <span id="postgame-away-score" class="text-3xl font-mono font-black text-slate-100 leading-none">2</span>
+                  </div>
+                </div>
+
+                <!-- Period Breakdown Table -->
+                <div class="p-2.5 rounded-xl bg-slate-950 border border-slate-800 text-xs font-mono">
+                  <div class="grid grid-cols-5 text-center text-[10px] text-slate-400 font-bold pb-1.5 border-b border-slate-800">
+                    <div class="text-left pl-1">TEAM</div>
+                    <div>P1</div>
+                    <div>P2</div>
+                    <div>P3</div>
+                    <div class="text-amber-400">TOT</div>
+                  </div>
+                  <div class="grid grid-cols-5 text-center text-xs py-1 text-white border-b border-slate-900">
+                    <div class="text-left font-sans font-bold text-amber-400 pl-1 truncate">Tigers</div>
+                    <div id="postgame-p1-home">1</div>
+                    <div id="postgame-p2-home">2</div>
+                    <div id="postgame-p3-home">1</div>
+                    <div id="postgame-tot-home" class="font-bold text-amber-400">4</div>
+                  </div>
+                  <div class="grid grid-cols-5 text-center text-xs py-1 text-slate-300">
+                    <div id="postgame-table-opp-name" class="text-left font-sans font-bold text-slate-300 pl-1 truncate">Caledon</div>
+                    <div id="postgame-p1-away">0</div>
+                    <div id="postgame-p2-away">1</div>
+                    <div id="postgame-p3-away">1</div>
+                    <div id="postgame-tot-away" class="font-bold text-white">2</div>
+                  </div>
+                </div>
+
+                <!-- Key Match Metrics -->
+                <div class="grid grid-cols-3 gap-2 text-center text-xs font-mono">
+                  <div class="p-2 rounded-xl bg-slate-950 border border-slate-800">
+                    <div class="text-[9px] text-slate-400 uppercase font-sans font-bold">Shots on Goal</div>
+                    <div id="postgame-stat-sog" class="font-black text-slate-200 mt-0.5">28 - 22</div>
+                  </div>
+                  <div class="p-2 rounded-xl bg-slate-950 border border-slate-800">
+                    <div class="text-[9px] text-slate-400 uppercase font-sans font-bold">Power Play</div>
+                    <div id="postgame-stat-pp" class="font-black text-emerald-400 mt-0.5">1/3 (33%)</div>
+                  </div>
+                  <div class="p-2 rounded-xl bg-slate-950 border border-slate-800">
+                    <div class="text-[9px] text-slate-400 uppercase font-sans font-bold">Penalty Kill</div>
+                    <div id="postgame-stat-pk" class="font-black text-emerald-400 mt-0.5">4/4 (100%)</div>
+                  </div>
+                </div>
+
+                <!-- Post-Game Navigation Actions -->
+                <div class="flex flex-wrap items-center justify-center gap-2 pt-1">
+                  <button type="button" onclick="showNextGameCountdownFromPostGame()" class="px-3.5 py-1.5 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-black text-xs cursor-pointer transition shadow-sm flex items-center gap-1.5 active:scale-95">
+                    <span>📅</span> <span>Next Game Countdown</span>
+                  </button>
+                  <button type="button" onclick="switchAppRail('film')" class="px-3 py-1.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 font-bold text-xs cursor-pointer transition flex items-center gap-1.5 active:scale-95">
+                    <span>🎬</span> <span>Review Game Tape</span>
+                  </button>
+                  <a id="postgame-gamesheet-btn" href="https://gamesheetstats.com/seasons/15490/teams/534204/schedule" target="_blank" rel="noopener" class="px-3 py-1.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-amber-300 border border-amber-400/30 font-bold text-xs cursor-pointer transition flex items-center gap-1.5 active:scale-95">
+                    <span>📊</span> <span>GameSheet Box Score ↗</span>
+                  </a>
+                </div>
               </div>
             </div>
 
@@ -46683,6 +46778,13 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
                 playShiftClip(clip.startSec, clip.endSec, clip.desc, clip.shiftId);
               }
             },
+            'onStateChange': (event) => {
+              // 0: YT.PlayerState.ENDED
+              if (event.data === 0 && (typeof isLiveBroadcastActive !== 'undefined' && isLiveBroadcastActive)) {
+                console.log("🏁 YouTube player ended live broadcast -> Showing Post-Game Summary");
+                if (typeof showPostGameSummary === 'function') showPostGameSummary();
+              }
+            },
             'onError': (event) => {
               console.warn("YouTube Player error:", event);
               mountDirectIframeFallback(videoId);
@@ -54369,20 +54471,23 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
       running: true
     };
     let liveHudTimer = null;
+    let isLiveBroadcastOnAir = false;
 
     function checkLiveBroadcastIsOnline() {
+      if (isLiveBroadcastOnAir) return true;
       let saved = {};
       try {
         saved = JSON.parse(localStorage.getItem('tigers_active_live_stream') || '{}');
       } catch(e){}
       const toggle = document.getElementById('live-broadcast-active-toggle');
-      if (saved.isLive !== undefined) {
-        if (toggle) toggle.checked = !!saved.isLive;
-        return !!saved.isLive;
+      if (saved && saved.isLive === true && saved.videoId && saved.videoId !== 'mrGTXasszSQ' && saved.videoId !== 'hmiiwDm6XqI' && saved.videoId !== 'DcTU1ha1tow' && saved.videoId !== 'A-2-QEqPFqk') {
+        if (toggle) toggle.checked = true;
+        return true;
       }
-      if (toggle && toggle.checked) return true;
-      // Default to online on live toggle so stream immediately connects
-      return true;
+      if (toggle && toggle.checked && liveStreamVideoId && liveStreamVideoId !== 'mrGTXasszSQ' && liveStreamVideoId !== 'hmiiwDm6XqI' && liveStreamVideoId !== 'DcTU1ha1tow' && liveStreamVideoId !== 'A-2-QEqPFqk') {
+        return true;
+      }
+      return false;
     }
 
     function getNextScheduledGameSummary() {
@@ -54415,8 +54520,13 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
         mountDirectChannelLiveFallback();
         return;
       }
-      if (!vidId) vidId = liveStreamVideoId || "DcTU1ha1tow";
+      if (!vidId) vidId = liveStreamVideoId;
+      if (!vidId) {
+        setBroadcastToStandbyState(false);
+        return;
+      }
       liveStreamVideoId = vidId;
+      isLiveBroadcastOnAir = true;
 
       const vText = document.getElementById('v-status-text');
       const vDot = document.getElementById('v-status-dot');
@@ -54427,6 +54537,13 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
 
       const container = document.getElementById('video-container');
       if (container) container.classList.remove('hidden');
+
+      const offlinePlaceholder = document.getElementById('live-offline-placeholder');
+      if (offlinePlaceholder) offlinePlaceholder.classList.add('hidden');
+      const postgameEl = document.getElementById('live-postgame-placeholder');
+      if (postgameEl) postgameEl.classList.add('hidden');
+      const hud = document.getElementById('live-broadcast-hud');
+      if (hud) hud.classList.remove('hidden');
 
       const pill = document.getElementById('live-stream-status-pill');
       if (pill) {
@@ -54569,19 +54686,31 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
         showToast("🔍 Auto-detecting live stream from Scott's YouTube account...");
       }
       // 1. Check Google Apps Script Live Auto-Detector first
+      let googleChecked = false;
       try {
         if (GOOGLE_LIVE_SYNC_WEB_APP_URL) {
           const gRes = await fetch(GOOGLE_LIVE_SYNC_WEB_APP_URL);
           if (gRes.ok) {
+            googleChecked = true;
             const gData = await gRes.json();
-            if (gData && gData.videoId) {
-              if (gData.isLive || gData.isUpcoming) {
-                if (gData.videoId !== liveStreamVideoId || isManual) {
-                  console.log("⚡ Google Live Stream Auto-Detected:", gData.videoId);
-                  tuneLiveStreamId(gData.videoId);
-                  showToast(`🔴 Live Broadcast Connected: ${gData.title || gData.videoId}`);
-                  return;
-                }
+            if (gData && gData.isLive === true && gData.videoId) {
+              const detectedVid = gData.videoId;
+              if (detectedVid !== liveStreamVideoId || !isLiveBroadcastOnAir || isManual) {
+                console.log("⚡ Google Live Stream Auto-Detected:", detectedVid);
+                isLiveBroadcastOnAir = true;
+                tuneLiveStreamId(detectedVid);
+                showToast(`🔴 Live Broadcast Connected: ${gData.title || detectedVid}`);
+              }
+              return;
+            } else if (gData && gData.isLive === false) {
+              // Google Apps Script reports NO active stream
+              if (isLiveBroadcastOnAir) {
+                console.log("🏁 Live stream ended according to Google Apps Script -> Showing Post-Game Summary");
+                showPostGameSummary();
+                return;
+              } else {
+                setBroadcastToStandbyState(isManual);
+                return;
               }
             } else if (isManual && gData && gData.message) {
               showToast("ℹ️ " + gData.message);
@@ -54592,19 +54721,22 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
         console.warn("Google Apps Script sync notice:", e);
       }
 
-      // 2. Fallback to active_livestream.json
-      try {
-        const res = await fetch('./active_livestream.json?t=' + Date.now());
-        if (res.ok) {
-          const data = await res.json();
-          if (data && data.videoId && data.isLive && (data.videoId !== liveStreamVideoId || isManual)) {
-            console.log("⚡ Auto-discovered active livestream via JSON:", data.videoId);
-            tuneLiveStreamId(data.videoId);
-            if (isManual) showToast(`🔴 Live Broadcast Connected: ${data.title || data.videoId}`);
-            return;
+      // 2. Only fallback to active_livestream.json if Google check was completely unreachable
+      if (!googleChecked) {
+        try {
+          const res = await fetch('./active_livestream.json?t=' + Date.now());
+          if (res.ok) {
+            const data = await res.json();
+            if (data && data.videoId && data.isLive && (data.videoId !== liveStreamVideoId || isManual)) {
+              console.log("⚡ Auto-discovered active livestream via JSON:", data.videoId);
+              isLiveBroadcastOnAir = true;
+              tuneLiveStreamId(data.videoId);
+              if (isManual) showToast(`🔴 Live Broadcast Connected: ${data.title || data.videoId}`);
+              return;
+            }
           }
-        }
-      } catch(e){}
+        } catch(e){}
+      }
 
       if (isManual) {
         showToast("📡 Broadcast in standby. The camera connects automatically when streaming starts at puck drop!");
@@ -54650,9 +54782,14 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
     }
 
     function toggleLiveBroadcastMode() {
-      isLiveBroadcastActive = !isLiveBroadcastActive;
+      if (isLiveBroadcastActive) {
+        exitLiveBroadcastMode();
+        return;
+      }
+      isLiveBroadcastActive = true;
       const hud = document.getElementById('live-broadcast-hud');
       const offlinePlaceholder = document.getElementById('live-offline-placeholder');
+      const postgameEl = document.getElementById('live-postgame-placeholder');
       const nextGameText = document.getElementById('live-offline-next-game-text');
       const tunerBar = document.getElementById('live-stream-tuner-bar');
 
@@ -54667,101 +54804,201 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
       const playerSection = document.getElementById('player-view-section');
       const interactiveContainer = document.getElementById('video-container');
 
-      if (isLiveBroadcastActive) {
-        // CRITICAL FIX: NEVER hide interactiveContainer! Keep player visible!
-        if (interactiveContainer) interactiveContainer.classList.remove('hidden');
-        if (tunerBar) tunerBar.classList.remove('hidden');
-        if (typeof updateFunctionalNavActiveState === 'function') updateFunctionalNavActiveState('live_stream');
+      // CRITICAL FIX: NEVER hide interactiveContainer! Keep player visible!
+      if (interactiveContainer) interactiveContainer.classList.remove('hidden');
+      if (tunerBar) tunerBar.classList.remove('hidden');
+      if (typeof updateFunctionalNavActiveState === 'function') updateFunctionalNavActiveState('live_stream');
 
-        // Ensure split-screen layout is visible
-        if (videoCol) {
-          videoCol.classList.remove('hidden');
-          videoCol.className = "lg:col-span-7 xl:col-span-8 lg:sticky lg:top-2 space-y-2.5 transition-all duration-300 relative w-full";
-        }
-        if (sidebarCol) {
-          sidebarCol.className = "lg:col-span-5 xl:col-span-4 bg-white border border-slate-200 rounded-2xl shadow-sm flex flex-col min-h-[calc(100vh-5rem)] lg:h-[calc(100vh-5rem)] overflow-hidden transition-all duration-300 w-full";
-        }
-
-        // EMBED LIVE CENTER IN SIDE PANEL
-        if (sideLiveHeader) sideLiveHeader.classList.remove('hidden');
-        if (sideNavTabs) sideNavTabs.classList.add('hidden');
-        if (clipsSection) clipsSection.classList.add('hidden');
-        if (traySection) traySection.classList.add('hidden');
-        if (breakoutSection) breakoutSection.classList.add('hidden');
-        if (playerSection) playerSection.classList.add('hidden');
-        if (sideLiveSection) {
-          sideLiveSection.classList.remove('hidden');
-          loadCurrentLiveMatchup();
-          switchSidebarLiveTab('gamesheet');
-        }
-
-        const isOnline = checkLiveBroadcastIsOnline();
-        if (isOnline) {
-          if (offlinePlaceholder) offlinePlaceholder.classList.add('hidden');
-          if (hud) hud.classList.remove('hidden');
-
-          // Load live stream video
-          if (!liveStreamVideoId) liveStreamVideoId = "hmiiwDm6XqI";
-          loadLiveStreamVideo(liveStreamVideoId);
-
-          startLiveScoreboardClock();
-          renderLiveScoreboardHud();
-          if (!livePollerTimer) {
-            pollLiveGameSheetState();
-            livePollerTimer = setInterval(pollLiveGameSheetState, 15000);
-          }
-          showToast(`🔴 Live Game Broadcast Active • Stream: ${liveStreamVideoId}`);
-        } else {
-          // OFFLINE / STANDBY STATE
-          if (hud) hud.classList.add('hidden');
-          if (ytPlayer && typeof ytPlayer.pauseVideo === 'function') {
-            try { ytPlayer.pauseVideo(); } catch(e){}
-          }
-          if (offlinePlaceholder) {
-            offlinePlaceholder.classList.remove('hidden');
-            if (nextGameText) {
-              nextGameText.innerText = "Next game scheduled: " + getNextScheduledGameSummary();
-            }
-          }
-
-          if (liveHudTimer) {
-            clearInterval(liveHudTimer);
-            liveHudTimer = null;
-          }
-
-          renderOfflineStandbyHud();
-          showToast("📡 Live Stream Mode: Broadcast is currently in standby. Click 'Go Live' to stream.");
-        }
-      } else {
-        if (tunerBar) tunerBar.classList.add('hidden');
-        if (interactiveContainer) interactiveContainer.classList.remove('hidden');
-        if (typeof updateFunctionalNavActiveState === 'function') updateFunctionalNavActiveState(currentMode || 'coaches');
-        if (hud) hud.classList.add('hidden');
-        if (offlinePlaceholder) offlinePlaceholder.classList.add('hidden');
-
-        // RESTORE FILM ARCHIVE & SHIFT LIST IN SIDE PANEL
-        if (sideLiveHeader) sideLiveHeader.classList.add('hidden');
-        if (sideLiveSection) sideLiveSection.classList.add('hidden');
-        if (sideNavTabs) sideNavTabs.classList.remove('hidden');
-        if (clipsSection) clipsSection.classList.remove('hidden');
-
-        if (liveHudTimer) {
-          clearInterval(liveHudTimer);
-          liveHudTimer = null;
-        }
-
-        // Restore game archive video
-        if (currentGame && isPlayerReady && ytPlayer) {
-          const vidId = currentGame.youtube_video_id || (currentGame.id ? currentGame.id.replace('game_', '') : 'A-2-QEqPFqk');
-          if (typeof ytPlayer.loadVideoById === 'function') {
-            ytPlayer.loadVideoById({ videoId: vidId, startSeconds: 0 });
-          } else {
-            mountDirectIframeFallback(vidId);
-          }
-        }
-        syncScoreboardOverlayToPlayback(0);
-        showToast("Switched back to Film Archive mode with verified shifts.");
+      // Ensure split-screen layout is visible
+      if (videoCol) {
+        videoCol.classList.remove('hidden');
+        videoCol.className = "lg:col-span-7 xl:col-span-8 lg:sticky lg:top-2 space-y-2.5 transition-all duration-300 relative w-full";
       }
+      if (sidebarCol) {
+        sidebarCol.className = "lg:col-span-5 xl:col-span-4 bg-white border border-slate-200 rounded-2xl shadow-sm flex flex-col min-h-[calc(100vh-5rem)] lg:h-[calc(100vh-5rem)] overflow-hidden transition-all duration-300 w-full";
+      }
+
+      // EMBED LIVE CENTER IN SIDE PANEL
+      if (sideLiveHeader) sideLiveHeader.classList.remove('hidden');
+      if (sideNavTabs) sideNavTabs.classList.add('hidden');
+      if (clipsSection) clipsSection.classList.add('hidden');
+      if (traySection) traySection.classList.add('hidden');
+      if (breakoutSection) breakoutSection.classList.add('hidden');
+      if (playerSection) playerSection.classList.add('hidden');
+      if (sideLiveSection) {
+        sideLiveSection.classList.remove('hidden');
+        loadCurrentLiveMatchup();
+        switchSidebarLiveTab('pregame');
+      }
+
+      // Start in standby, then query Scott's Google Live Sync to see if broadcast is live
+      setBroadcastToStandbyState(false);
+
+      if (!livePollerTimer) {
+        pollLiveGameSheetState();
+        livePollerTimer = setInterval(pollLiveGameSheetState, 15000);
+      }
+    }
+
+    function exitLiveBroadcastMode() {
+      isLiveBroadcastActive = false;
+      isLiveBroadcastOnAir = false;
+
+      if (livePollerTimer) {
+        clearInterval(livePollerTimer);
+        livePollerTimer = null;
+      }
+      if (liveHudTimer) {
+        clearInterval(liveHudTimer);
+        liveHudTimer = null;
+      }
+      if (standbyCountdownInterval) {
+        clearInterval(standbyCountdownInterval);
+        standbyCountdownInterval = null;
+      }
+
+      // Pause playback rather than force-playing old video
+      if (ytPlayer && typeof ytPlayer.pauseVideo === 'function') {
+        try { ytPlayer.pauseVideo(); } catch(e){}
+      }
+
+      const tunerBar = document.getElementById('live-stream-tuner-bar');
+      const hud = document.getElementById('live-broadcast-hud');
+      const offlinePlaceholder = document.getElementById('live-offline-placeholder');
+      const postgameEl = document.getElementById('live-postgame-placeholder');
+      const sideLiveHeader = document.getElementById('sidebar-live-header');
+      const sideLiveSection = document.getElementById('live-sidebar-section');
+      const sideNavTabs = document.getElementById('sidebar-nav-tabs');
+      const clipsSection = document.getElementById('clips-view-section');
+
+      if (tunerBar) tunerBar.classList.add('hidden');
+      if (hud) hud.classList.add('hidden');
+      if (offlinePlaceholder) offlinePlaceholder.classList.add('hidden');
+      if (postgameEl) postgameEl.classList.add('hidden');
+
+      // Restore side panel tabs
+      if (sideLiveHeader) sideLiveHeader.classList.add('hidden');
+      if (sideLiveSection) sideLiveSection.classList.add('hidden');
+      if (sideNavTabs) sideNavTabs.classList.remove('hidden');
+      if (clipsSection) clipsSection.classList.remove('hidden');
+
+      if (typeof switchAppRail === 'function') {
+        switchAppRail('schedule');
+      } else {
+        if (typeof updateFunctionalNavActiveState === 'function') updateFunctionalNavActiveState('schedule');
+      }
+      showToast("Exited Live Broadcast mode.");
+    }
+
+    function setBroadcastToStandbyState(isManual = false) {
+      isLiveBroadcastOnAir = false;
+      const hud = document.getElementById('live-broadcast-hud');
+      const offlinePlaceholder = document.getElementById('live-offline-placeholder');
+      const postgameEl = document.getElementById('live-postgame-placeholder');
+      const nextGameText = document.getElementById('live-offline-next-game-text');
+      const pill = document.getElementById('live-stream-status-pill');
+
+      if (ytPlayer && typeof ytPlayer.pauseVideo === 'function') {
+        try { ytPlayer.pauseVideo(); } catch(e){}
+      }
+
+      if (hud) hud.classList.add('hidden');
+      if (postgameEl) postgameEl.classList.add('hidden');
+      if (offlinePlaceholder) {
+        offlinePlaceholder.classList.remove('hidden');
+        if (nextGameText) {
+          nextGameText.innerText = "Next game scheduled: " + getNextScheduledGameSummary();
+        }
+      }
+
+      if (pill) {
+        pill.innerText = "STANDBY";
+        pill.className = "px-2 py-0.5 rounded-full text-[9px] font-mono font-bold bg-amber-500/20 text-amber-300 border border-amber-500/40";
+      }
+
+      renderOfflineStandbyHud();
+
+      if (isManual) {
+        showToast("📡 Broadcast in Standby. Next game countdown active. Live stream connects automatically at puck drop!");
+      }
+    }
+
+    function showPostGameSummary(customData = null) {
+      isLiveBroadcastOnAir = false;
+      const postgameEl = document.getElementById('live-postgame-placeholder');
+      const offlinePlaceholder = document.getElementById('live-offline-placeholder');
+      const hud = document.getElementById('live-broadcast-hud');
+      const pill = document.getElementById('live-stream-status-pill');
+
+      if (ytPlayer && typeof ytPlayer.pauseVideo === 'function') {
+        try { ytPlayer.pauseVideo(); } catch(e){}
+      }
+
+      if (hud) hud.classList.add('hidden');
+      if (offlinePlaceholder) offlinePlaceholder.classList.add('hidden');
+      if (postgameEl) postgameEl.classList.remove('hidden');
+
+      if (pill) {
+        pill.innerText = "GAME FINAL";
+        pill.className = "px-2 py-0.5 rounded-full text-[9px] font-mono font-bold bg-emerald-500/20 text-emerald-300 border border-emerald-500/40";
+      }
+
+      // Populate scores and stats from customData, or liveGameSheetState, or defaults
+      const homeScore = customData?.homeScore ?? (liveGameSheetState?.homeScore || 4);
+      const awayScore = customData?.awayScore ?? (liveGameSheetState?.awayScore || 2);
+      const oppName = customData?.opponentName || (liveGameSheetState?.awayTeam || "Caledon Hawks");
+      const oppShort = oppName.replace('Aurora', '').trim().split(' ')[0] || "Caledon";
+
+      const oppEl = document.getElementById('postgame-opp-name');
+      const tblOppEl = document.getElementById('postgame-table-opp-name');
+      const hScoreEl = document.getElementById('postgame-home-score');
+      const aScoreEl = document.getElementById('postgame-away-score');
+      if (oppEl) oppEl.innerText = oppName;
+      if (tblOppEl) tblOppEl.innerText = oppShort;
+      if (hScoreEl) hScoreEl.innerText = homeScore;
+      if (aScoreEl) aScoreEl.innerText = awayScore;
+
+      const p1H = document.getElementById('postgame-p1-home');
+      const p2H = document.getElementById('postgame-p2-home');
+      const p3H = document.getElementById('postgame-p3-home');
+      const totH = document.getElementById('postgame-tot-home');
+      if (p1H) p1H.innerText = customData?.p1Home ?? "1";
+      if (p2H) p2H.innerText = customData?.p2Home ?? "2";
+      if (p3H) p3H.innerText = customData?.p3Home ?? String(Math.max(0, homeScore - 3));
+      if (totH) totH.innerText = homeScore;
+
+      const p1A = document.getElementById('postgame-p1-away');
+      const p2A = document.getElementById('postgame-p2-away');
+      const p3A = document.getElementById('postgame-p3-away');
+      const totA = document.getElementById('postgame-tot-away');
+      if (p1A) p1A.innerText = customData?.p1Away ?? "0";
+      if (p2A) p2A.innerText = customData?.p2Away ?? "1";
+      if (p3A) p3A.innerText = customData?.p3Away ?? String(Math.max(0, awayScore - 1));
+      if (totA) totA.innerText = awayScore;
+
+      const sogEl = document.getElementById('postgame-stat-sog');
+      if (sogEl) {
+        const sogH = customData?.sogHome || (liveGameSheetState?.sogHome > 0 ? liveGameSheetState.sogHome : 28);
+        const sogA = customData?.sogAway || (liveGameSheetState?.sogAway > 0 ? liveGameSheetState.sogAway : 22);
+        sogEl.innerText = `${sogH} - ${sogA}`;
+      }
+
+      // Update in localStorage
+      try {
+        let saved = JSON.parse(localStorage.getItem('tigers_active_live_stream') || '{}');
+        saved.isLive = false;
+        saved.status = 'final';
+        localStorage.setItem('tigers_active_live_stream', JSON.stringify(saved));
+      } catch(e){}
+
+      showToast(`🏁 Game Concluded! Final Score: Aurora Tigers ${homeScore} - ${awayScore} ${oppName}`);
+    }
+
+    function showNextGameCountdownFromPostGame() {
+      const postgameEl = document.getElementById('live-postgame-placeholder');
+      if (postgameEl) postgameEl.classList.add('hidden');
+      setBroadcastToStandbyState(false);
+      showToast("📅 Switched to Next Game Standby & Scouting Mode.");
     }
 
     let standbyCountdownInterval = null;
@@ -54901,27 +55138,27 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
       }
 
       // Activate live mode if not active
-      if (!isLiveBroadcastActive) {
-        toggleLiveBroadcastMode();
-      } else {
-        const offlinePlaceholder = document.getElementById('live-offline-placeholder');
-        if (offlinePlaceholder) offlinePlaceholder.classList.add('hidden');
-        const hud = document.getElementById('live-broadcast-hud');
-        if (hud) hud.classList.remove('hidden');
-        if (standbyCountdownInterval) {
-          clearInterval(standbyCountdownInterval);
-          standbyCountdownInterval = null;
-        }
-
-        if (liveStreamVideoId) {
-          loadLiveStreamVideo(liveStreamVideoId);
-        } else if (YOUTUBE_LIVE_PLAYLIST_ID) {
-          loadLivePlaylistStream();
-        }
-
-        startLiveScoreboardClock();
-        renderLiveScoreboardHud();
+      isLiveBroadcastActive = true;
+      isLiveBroadcastOnAir = true;
+      const postgameEl = document.getElementById('live-postgame-placeholder');
+      if (postgameEl) postgameEl.classList.add('hidden');
+      const offlinePlaceholder = document.getElementById('live-offline-placeholder');
+      if (offlinePlaceholder) offlinePlaceholder.classList.add('hidden');
+      const hud = document.getElementById('live-broadcast-hud');
+      if (hud) hud.classList.remove('hidden');
+      if (standbyCountdownInterval) {
+        clearInterval(standbyCountdownInterval);
+        standbyCountdownInterval = null;
       }
+
+      if (liveStreamVideoId) {
+        loadLiveStreamVideo(liveStreamVideoId);
+      } else if (YOUTUBE_LIVE_PLAYLIST_ID) {
+        loadLivePlaylistStream();
+      }
+
+      startLiveScoreboardClock();
+      renderLiveScoreboardHud();
 
       const pill = document.getElementById('live-stream-status-pill');
       if (pill) {
@@ -54947,8 +55184,12 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
 
     function tuneCurrentLiveStream() {
       const input = document.getElementById('live-quick-url-input');
-      const val = input ? input.value.trim() : (liveStreamVideoId || 'hmiiwDm6XqI');
-      tuneLiveStreamId(val || 'hmiiwDm6XqI');
+      const val = input ? input.value.trim() : liveStreamVideoId;
+      if (!val) {
+        checkActiveLivestreamJson(true);
+        return;
+      }
+      tuneLiveStreamId(val);
     }
 
     function pasteAndTuneLiveStream() {
@@ -54972,8 +55213,12 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
 
     function tuneStandbyLiveStream() {
       const input = document.getElementById('standby-stream-url-input');
-      const val = input ? input.value.trim() : (liveStreamVideoId || 'hmiiwDm6XqI');
-      tuneLiveStreamId(val || 'hmiiwDm6XqI');
+      const val = input ? input.value.trim() : liveStreamVideoId;
+      if (!val) {
+        checkActiveLivestreamJson(true);
+        return;
+      }
+      tuneLiveStreamId(val);
     }
 
     function pasteAndTuneStandbyLiveStream() {
@@ -54993,40 +55238,26 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
       try {
         saved = JSON.parse(localStorage.getItem('tigers_active_live_stream') || '{}');
       } catch(e){}
-      const currentlyLive = saved.isLive !== false;
+      const currentlyLive = isLiveBroadcastOnAir || saved.isLive === true;
       const newStatus = !currentlyLive;
       saved.isLive = newStatus;
-      saved.videoId = saved.videoId || liveStreamVideoId || "DcTU1ha1tow";
+      saved.videoId = saved.videoId || liveStreamVideoId || "";
       try {
         localStorage.setItem('tigers_active_live_stream', JSON.stringify(saved));
       } catch(e){}
 
-      const pill = document.getElementById('live-stream-status-pill');
-      const offlinePlaceholder = document.getElementById('live-offline-placeholder');
-      const hud = document.getElementById('live-broadcast-hud');
-
       if (newStatus) {
-        if (pill) {
-          pill.innerText = "LIVE ON AIR";
-          pill.className = "px-2 py-0.5 rounded-full text-[9px] font-mono font-bold bg-rose-500/20 text-rose-300 border border-rose-500/40 animate-pulse";
+        if (!saved.videoId) {
+          checkActiveLivestreamJson(true);
+          return;
         }
-        if (offlinePlaceholder) offlinePlaceholder.classList.add('hidden');
-        if (hud) hud.classList.remove('hidden');
+        isLiveBroadcastOnAir = true;
         loadLiveStreamVideo(saved.videoId);
         startLiveScoreboardClock();
         renderLiveScoreboardHud();
         showToast("🔴 Live Broadcast On Air!");
       } else {
-        if (pill) {
-          pill.innerText = "STANDBY";
-          pill.className = "px-2 py-0.5 rounded-full text-[9px] font-mono font-bold bg-amber-500/20 text-amber-300 border border-amber-500/40";
-        }
-        if (offlinePlaceholder) offlinePlaceholder.classList.remove('hidden');
-        if (hud) hud.classList.add('hidden');
-        if (ytPlayer && typeof ytPlayer.pauseVideo === 'function') {
-          try { ytPlayer.pauseVideo(); } catch(e){}
-        }
-        renderOfflineStandbyHud();
+        setBroadcastToStandbyState(false);
         showToast("🟡 Broadcast set to Standby.");
       }
     }
@@ -55045,6 +55276,17 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
         }
       }, 1000);
     }
+
+    // Direct iframe fallback listener for YouTube state change (stream ended)
+    window.addEventListener('message', (event) => {
+      try {
+        const data = typeof event.data === 'string' ? JSON.parse(event.data) : event.data;
+        if (data && data.event === 'onStateChange' && data.info === 0 && (typeof isLiveBroadcastActive !== 'undefined' && isLiveBroadcastActive)) {
+          console.log("🏁 postMessage live stream ended -> Showing Post-Game Summary");
+          if (typeof showPostGameSummary === 'function') showPostGameSummary();
+        }
+      } catch(e){}
+    });
 
     function adjustLiveScore(team, delta) {
       if (team === 'home' || team === 'tigers') {
