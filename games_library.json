@@ -41,1123 +41,23 @@
   },
   "games": [
     {
-      "id": "game_AJ-wnj_egrU",
-      "title": "U13A Tigers Game",
-      "youtube_video_id": "AJ-wnj_egrU",
-      "date": "2026-11-09",
-      "opponent": "League Match",
-      "periods": {
-        "1": 0,
-        "2": 456,
-        "3": 888
-      },
-      "ai_engine": "Proportional Line Engine",
-      "teamsnap": {
-        "date": "2026-11-09",
-        "time": "Game Time",
-        "arena": "Aurora Community Centre - Pad 1",
-        "address": "1 Community Centre Ln, Aurora, ON L4G 7B1",
-        "maps_url": "https://maps.google.com/?q=Aurora+Community+Centre",
-        "home_away": "Home",
-        "jersey": "Home (White)",
-        "is_home": true
-      },
-      "shifts": [
-        {
-          "shift_id": 1,
-          "period": 1,
-          "start_seconds": 45,
-          "end_seconds": 88,
-          "display_time": "0:45",
-          "center_id": 23,
-          "player_ids": [
-            10,
-            7,
-            11,
-            21,
-            27,
-            13
-          ],
-          "strength_state": "5v5",
-          "primary_zone": "Offensive Zone",
-          "breakout": {
-            "attempted": true,
-            "successful": true,
-            "breakout_type": "D-to-D",
-            "turnover_location": "None"
-          },
-          "coach_notes": "P1 Shift 1: Controlled offensive zone sequence (D-to-D)"
-        },
-        {
-          "shift_id": 2,
-          "period": 1,
-          "start_seconds": 140,
-          "end_seconds": 184,
-          "display_time": "2:20",
-          "center_id": 9,
-          "player_ids": [
-            23,
-            9,
-            3,
-            28,
-            76,
-            13
-          ],
-          "strength_state": "5v5",
-          "primary_zone": "Defensive Zone",
-          "breakout": {
-            "attempted": true,
-            "successful": true,
-            "breakout_type": "Rim",
-            "turnover_location": "None"
-          },
-          "coach_notes": "P1 Shift 2: Controlled defensive zone sequence (Rim)"
-        },
-        {
-          "shift_id": 3,
-          "period": 1,
-          "start_seconds": 235,
-          "end_seconds": 280,
-          "display_time": "3:55",
-          "center_id": 18,
-          "player_ids": [
-            18,
-            5,
-            16,
-            97,
-            28,
-            98
-          ],
-          "strength_state": "5v5",
-          "primary_zone": "Neutral Zone",
-          "breakout": {
-            "attempted": true,
-            "successful": true,
-            "breakout_type": "Wheel",
-            "turnover_location": "None"
-          },
-          "coach_notes": "P1 Shift 3: Controlled neutral zone sequence (Wheel)"
-        },
-        {
-          "shift_id": 4,
-          "period": 1,
-          "start_seconds": 330,
-          "end_seconds": 376,
-          "display_time": "5:30",
-          "center_id": 23,
-          "player_ids": [
-            88,
-            10,
-            23,
-            21,
-            27,
-            98
-          ],
-          "strength_state": "5v5",
-          "primary_zone": "Defensive Zone",
-          "breakout": {
-            "attempted": true,
-            "successful": false,
-            "breakout_type": "Chip Off Glass",
-            "turnover_location": "Half-Wall"
-          },
-          "coach_notes": "P1 Shift 4: Controlled defensive zone sequence (Chip Off Glass)"
-        },
-        {
-          "shift_id": 5,
-          "period": 2,
-          "start_seconds": 501,
-          "end_seconds": 548,
-          "display_time": "8:21",
-          "center_id": 23,
-          "player_ids": [
-            10,
-            7,
-            11,
-            21,
-            27,
-            13
-          ],
-          "strength_state": "5v5",
-          "primary_zone": "Offensive Zone",
-          "breakout": {
-            "attempted": true,
-            "successful": true,
-            "breakout_type": "D-to-D",
-            "turnover_location": "None"
-          },
-          "coach_notes": "P2 Shift 5: Controlled offensive zone sequence (D-to-D)"
-        },
-        {
-          "shift_id": 6,
-          "period": 2,
-          "start_seconds": 596,
-          "end_seconds": 644,
-          "display_time": "9:56",
-          "center_id": 9,
-          "player_ids": [
-            23,
-            9,
-            3,
-            28,
-            76,
-            13
-          ],
-          "strength_state": "5v5",
-          "primary_zone": "Defensive Zone",
-          "breakout": {
-            "attempted": true,
-            "successful": true,
-            "breakout_type": "Rim",
-            "turnover_location": "None"
-          },
-          "coach_notes": "P2 Shift 6: Controlled defensive zone sequence (Rim)"
-        },
-        {
-          "shift_id": 7,
-          "period": 2,
-          "start_seconds": 691,
-          "end_seconds": 733,
-          "display_time": "11:31",
-          "center_id": 18,
-          "player_ids": [
-            18,
-            5,
-            16,
-            97,
-            28,
-            98
-          ],
-          "strength_state": "5v5",
-          "primary_zone": "Neutral Zone",
-          "breakout": {
-            "attempted": true,
-            "successful": true,
-            "breakout_type": "Wheel",
-            "turnover_location": "None"
-          },
-          "coach_notes": "P2 Shift 7: Controlled neutral zone sequence (Wheel)"
-        },
-        {
-          "shift_id": 8,
-          "period": 2,
-          "start_seconds": 786,
-          "end_seconds": 829,
-          "display_time": "13:06",
-          "center_id": 23,
-          "player_ids": [
-            88,
-            10,
-            23,
-            21,
-            27,
-            98
-          ],
-          "strength_state": "5v5",
-          "primary_zone": "Defensive Zone",
-          "breakout": {
-            "attempted": true,
-            "successful": false,
-            "breakout_type": "Chip Off Glass",
-            "turnover_location": "Half-Wall"
-          },
-          "coach_notes": "P2 Shift 8: Controlled defensive zone sequence (Chip Off Glass)"
-        },
-        {
-          "shift_id": 9,
-          "period": 3,
-          "start_seconds": 933,
-          "end_seconds": 977,
-          "display_time": "15:33",
-          "center_id": 23,
-          "player_ids": [
-            10,
-            7,
-            11,
-            21,
-            27,
-            13
-          ],
-          "strength_state": "PP (Tigers)",
-          "primary_zone": "Offensive Zone",
-          "breakout": {
-            "attempted": true,
-            "successful": true,
-            "breakout_type": "D-to-D",
-            "turnover_location": "None"
-          },
-          "coach_notes": "P3 Shift 9: Controlled offensive zone sequence (D-to-D)"
-        },
-        {
-          "shift_id": 10,
-          "period": 3,
-          "start_seconds": 1028,
-          "end_seconds": 1073,
-          "display_time": "17:08",
-          "center_id": 9,
-          "player_ids": [
-            23,
-            9,
-            3,
-            28,
-            76,
-            13
-          ],
-          "strength_state": "5v5",
-          "primary_zone": "Defensive Zone",
-          "breakout": {
-            "attempted": true,
-            "successful": true,
-            "breakout_type": "Rim",
-            "turnover_location": "None"
-          },
-          "coach_notes": "P3 Shift 10: Controlled defensive zone sequence (Rim)"
-        },
-        {
-          "shift_id": 11,
-          "period": 3,
-          "start_seconds": 1123,
-          "end_seconds": 1169,
-          "display_time": "18:43",
-          "center_id": 18,
-          "player_ids": [
-            18,
-            5,
-            16,
-            97,
-            28,
-            98
-          ],
-          "strength_state": "PK (Tigers)",
-          "primary_zone": "Neutral Zone",
-          "breakout": {
-            "attempted": true,
-            "successful": true,
-            "breakout_type": "Wheel",
-            "turnover_location": "None"
-          },
-          "coach_notes": "P3 Shift 11: Controlled neutral zone sequence (Wheel)"
-        }
-      ],
-      "players": {
-        "3": {
-          "name": "Stewart Dolmage",
-          "total_ice_time": "2m 17s",
-          "shifts_count": 3,
-          "avg_shift_len": "46s",
-          "shifts": [
-            {
-              "id": 1,
-              "start": 140.0,
-              "end": 184.0,
-              "duration": 44
-            },
-            {
-              "id": 2,
-              "start": 596.0,
-              "end": 644.0,
-              "duration": 48
-            },
-            {
-              "id": 3,
-              "start": 1028.0,
-              "end": 1073.0,
-              "duration": 45
-            }
-          ]
-        },
-        "5": {
-          "name": "Nathan Zhao",
-          "total_ice_time": "2m 13s",
-          "shifts_count": 3,
-          "avg_shift_len": "44s",
-          "shifts": [
-            {
-              "id": 1,
-              "start": 235.0,
-              "end": 280.0,
-              "duration": 45
-            },
-            {
-              "id": 2,
-              "start": 691.0,
-              "end": 733.0,
-              "duration": 42
-            },
-            {
-              "id": 3,
-              "start": 1123.0,
-              "end": 1169.0,
-              "duration": 46
-            }
-          ]
-        },
-        "7": {
-          "name": "Maxwell Dey",
-          "total_ice_time": "2m 14s",
-          "shifts_count": 3,
-          "avg_shift_len": "45s",
-          "shifts": [
-            {
-              "id": 1,
-              "start": 45.0,
-              "end": 88.0,
-              "duration": 43
-            },
-            {
-              "id": 2,
-              "start": 501.0,
-              "end": 548.0,
-              "duration": 47
-            },
-            {
-              "id": 3,
-              "start": 933.0,
-              "end": 977.0,
-              "duration": 44
-            }
-          ]
-        },
-        "9": {
-          "name": "Oliver Patterson",
-          "total_ice_time": "2m 17s",
-          "shifts_count": 3,
-          "avg_shift_len": "46s",
-          "shifts": [
-            {
-              "id": 1,
-              "start": 140.0,
-              "end": 184.0,
-              "duration": 44
-            },
-            {
-              "id": 2,
-              "start": 596.0,
-              "end": 644.0,
-              "duration": 48
-            },
-            {
-              "id": 3,
-              "start": 1028.0,
-              "end": 1073.0,
-              "duration": 45
-            }
-          ]
-        },
-        "10": {
-          "name": "Arjun Manjunath",
-          "total_ice_time": "3m 43s",
-          "shifts_count": 5,
-          "avg_shift_len": "45s",
-          "shifts": [
-            {
-              "id": 1,
-              "start": 45.0,
-              "end": 88.0,
-              "duration": 43
-            },
-            {
-              "id": 2,
-              "start": 330.0,
-              "end": 376.0,
-              "duration": 46
-            },
-            {
-              "id": 3,
-              "start": 501.0,
-              "end": 548.0,
-              "duration": 47
-            },
-            {
-              "id": 4,
-              "start": 786.0,
-              "end": 829.0,
-              "duration": 43
-            },
-            {
-              "id": 5,
-              "start": 933.0,
-              "end": 977.0,
-              "duration": 44
-            }
-          ]
-        },
-        "11": {
-          "name": "Andrew Bichay",
-          "total_ice_time": "2m 14s",
-          "shifts_count": 3,
-          "avg_shift_len": "45s",
-          "shifts": [
-            {
-              "id": 1,
-              "start": 45.0,
-              "end": 88.0,
-              "duration": 43
-            },
-            {
-              "id": 2,
-              "start": 501.0,
-              "end": 548.0,
-              "duration": 47
-            },
-            {
-              "id": 3,
-              "start": 933.0,
-              "end": 977.0,
-              "duration": 44
-            }
-          ]
-        },
-        "13": {
-          "name": "Matthew Hart",
-          "total_ice_time": "4m 31s",
-          "shifts_count": 6,
-          "avg_shift_len": "45s",
-          "shifts": [
-            {
-              "id": 1,
-              "start": 45.0,
-              "end": 88.0,
-              "duration": 43
-            },
-            {
-              "id": 2,
-              "start": 140.0,
-              "end": 184.0,
-              "duration": 44
-            },
-            {
-              "id": 3,
-              "start": 501.0,
-              "end": 548.0,
-              "duration": 47
-            },
-            {
-              "id": 4,
-              "start": 596.0,
-              "end": 644.0,
-              "duration": 48
-            },
-            {
-              "id": 5,
-              "start": 933.0,
-              "end": 977.0,
-              "duration": 44
-            },
-            {
-              "id": 6,
-              "start": 1028.0,
-              "end": 1073.0,
-              "duration": 45
-            }
-          ]
-        },
-        "16": {
-          "name": "Joshua Liu",
-          "total_ice_time": "2m 13s",
-          "shifts_count": 3,
-          "avg_shift_len": "44s",
-          "shifts": [
-            {
-              "id": 1,
-              "start": 235.0,
-              "end": 280.0,
-              "duration": 45
-            },
-            {
-              "id": 2,
-              "start": 691.0,
-              "end": 733.0,
-              "duration": 42
-            },
-            {
-              "id": 3,
-              "start": 1123.0,
-              "end": 1169.0,
-              "duration": 46
-            }
-          ]
-        },
-        "18": {
-          "name": "Nathan Carinci",
-          "total_ice_time": "2m 13s",
-          "shifts_count": 3,
-          "avg_shift_len": "44s",
-          "shifts": [
-            {
-              "id": 1,
-              "start": 235.0,
-              "end": 280.0,
-              "duration": 45
-            },
-            {
-              "id": 2,
-              "start": 691.0,
-              "end": 733.0,
-              "duration": 42
-            },
-            {
-              "id": 3,
-              "start": 1123.0,
-              "end": 1169.0,
-              "duration": 46
-            }
-          ]
-        },
-        "21": {
-          "name": "Caleb Irgengioro-Wu",
-          "total_ice_time": "3m 43s",
-          "shifts_count": 5,
-          "avg_shift_len": "45s",
-          "shifts": [
-            {
-              "id": 1,
-              "start": 45.0,
-              "end": 88.0,
-              "duration": 43
-            },
-            {
-              "id": 2,
-              "start": 330.0,
-              "end": 376.0,
-              "duration": 46
-            },
-            {
-              "id": 3,
-              "start": 501.0,
-              "end": 548.0,
-              "duration": 47
-            },
-            {
-              "id": 4,
-              "start": 786.0,
-              "end": 829.0,
-              "duration": 43
-            },
-            {
-              "id": 5,
-              "start": 933.0,
-              "end": 977.0,
-              "duration": 44
-            }
-          ]
-        },
-        "23": {
-          "name": "Easton Carpentier",
-          "total_ice_time": "3m 46s",
-          "shifts_count": 5,
-          "avg_shift_len": "45s",
-          "shifts": [
-            {
-              "id": 1,
-              "start": 140.0,
-              "end": 184.0,
-              "duration": 44
-            },
-            {
-              "id": 2,
-              "start": 330.0,
-              "end": 376.0,
-              "duration": 46
-            },
-            {
-              "id": 3,
-              "start": 596.0,
-              "end": 644.0,
-              "duration": 48
-            },
-            {
-              "id": 4,
-              "start": 786.0,
-              "end": 829.0,
-              "duration": 43
-            },
-            {
-              "id": 5,
-              "start": 1028.0,
-              "end": 1073.0,
-              "duration": 45
-            }
-          ]
-        },
-        "27": {
-          "name": "Alen Fazlic",
-          "total_ice_time": "3m 43s",
-          "shifts_count": 5,
-          "avg_shift_len": "45s",
-          "shifts": [
-            {
-              "id": 1,
-              "start": 45.0,
-              "end": 88.0,
-              "duration": 43
-            },
-            {
-              "id": 2,
-              "start": 330.0,
-              "end": 376.0,
-              "duration": 46
-            },
-            {
-              "id": 3,
-              "start": 501.0,
-              "end": 548.0,
-              "duration": 47
-            },
-            {
-              "id": 4,
-              "start": 786.0,
-              "end": 829.0,
-              "duration": 43
-            },
-            {
-              "id": 5,
-              "start": 933.0,
-              "end": 977.0,
-              "duration": 44
-            }
-          ]
-        },
-        "28": {
-          "name": "Ross Elley",
-          "total_ice_time": "4m 30s",
-          "shifts_count": 6,
-          "avg_shift_len": "45s",
-          "shifts": [
-            {
-              "id": 1,
-              "start": 140.0,
-              "end": 184.0,
-              "duration": 44
-            },
-            {
-              "id": 2,
-              "start": 235.0,
-              "end": 280.0,
-              "duration": 45
-            },
-            {
-              "id": 3,
-              "start": 596.0,
-              "end": 644.0,
-              "duration": 48
-            },
-            {
-              "id": 4,
-              "start": 691.0,
-              "end": 733.0,
-              "duration": 42
-            },
-            {
-              "id": 5,
-              "start": 1028.0,
-              "end": 1073.0,
-              "duration": 45
-            },
-            {
-              "id": 6,
-              "start": 1123.0,
-              "end": 1169.0,
-              "duration": 46
-            }
-          ]
-        },
-        "76": {
-          "name": "Matt Davis",
-          "total_ice_time": "2m 17s",
-          "shifts_count": 3,
-          "avg_shift_len": "46s",
-          "shifts": [
-            {
-              "id": 1,
-              "start": 140.0,
-              "end": 184.0,
-              "duration": 44
-            },
-            {
-              "id": 2,
-              "start": 596.0,
-              "end": 644.0,
-              "duration": 48
-            },
-            {
-              "id": 3,
-              "start": 1028.0,
-              "end": 1073.0,
-              "duration": 45
-            }
-          ]
-        },
-        "88": {
-          "name": "Roy Chen",
-          "total_ice_time": "1m 29s",
-          "shifts_count": 2,
-          "avg_shift_len": "44s",
-          "shifts": [
-            {
-              "id": 1,
-              "start": 330.0,
-              "end": 376.0,
-              "duration": 46
-            },
-            {
-              "id": 2,
-              "start": 786.0,
-              "end": 829.0,
-              "duration": 43
-            }
-          ]
-        },
-        "97": {
-          "name": "Hudson Millar",
-          "total_ice_time": "2m 13s",
-          "shifts_count": 3,
-          "avg_shift_len": "44s",
-          "shifts": [
-            {
-              "id": 1,
-              "start": 235.0,
-              "end": 280.0,
-              "duration": 45
-            },
-            {
-              "id": 2,
-              "start": 691.0,
-              "end": 733.0,
-              "duration": 42
-            },
-            {
-              "id": 3,
-              "start": 1123.0,
-              "end": 1169.0,
-              "duration": 46
-            }
-          ]
-        },
-        "98": {
-          "name": "Hudson Barfitt",
-          "total_ice_time": "3m 42s",
-          "shifts_count": 5,
-          "avg_shift_len": "44s",
-          "shifts": [
-            {
-              "id": 1,
-              "start": 235.0,
-              "end": 280.0,
-              "duration": 45
-            },
-            {
-              "id": 2,
-              "start": 330.0,
-              "end": 376.0,
-              "duration": 46
-            },
-            {
-              "id": 3,
-              "start": 691.0,
-              "end": 733.0,
-              "duration": 42
-            },
-            {
-              "id": 4,
-              "start": 786.0,
-              "end": 829.0,
-              "duration": 43
-            },
-            {
-              "id": 5,
-              "start": 1123.0,
-              "end": 1169.0,
-              "duration": 46
-            }
-          ]
-        }
-      },
-      "coaching_clips": {
-        "powerplay": [
-          {
-            "id": 1,
-            "shift_id": 1,
-            "start": 140,
-            "start_seconds": 140,
-            "end": 175,
-            "end_seconds": 175,
-            "duration": 35,
-            "description": "P1 Powerplay (5v4) Setup",
-            "player_ids": [
-              10,
-              23,
-              11,
-              21,
-              88
-            ],
-            "breakout": {
-              "attempted": false,
-              "successful": false,
-              "breakout_type": "None",
-              "turnover_location": "None"
-            }
-          },
-          {
-            "id": 2,
-            "shift_id": 2,
-            "start": 656,
-            "start_seconds": 656,
-            "end": 696,
-            "end_seconds": 696,
-            "duration": 40,
-            "description": "P2 Powerplay (5v4) Umbrella Movement",
-            "player_ids": [
-              10,
-              23,
-              11,
-              21,
-              88
-            ],
-            "breakout": {
-              "attempted": false,
-              "successful": false,
-              "breakout_type": "None",
-              "turnover_location": "None"
-            }
-          }
-        ],
-        "penalty_kill": [
-          {
-            "id": 3,
-            "shift_id": 3,
-            "start": 320,
-            "start_seconds": 320,
-            "end": 360,
-            "end_seconds": 360,
-            "duration": 40,
-            "description": "P1 Penalty Kill (4v5) Box Clear",
-            "player_ids": [
-              9,
-              18,
-              27,
-              76
-            ],
-            "breakout": {
-              "attempted": true,
-              "successful": true,
-              "breakout_type": "Chip Off Glass",
-              "turnover_location": "None"
-            }
-          },
-          {
-            "id": 4,
-            "shift_id": 4,
-            "start": 1008,
-            "start_seconds": 1008,
-            "end": 1043,
-            "end_seconds": 1043,
-            "duration": 35,
-            "description": "P3 Penalty Kill Pressure",
-            "player_ids": [
-              9,
-              18,
-              27,
-              76
-            ],
-            "breakout": {
-              "attempted": false,
-              "successful": false,
-              "breakout_type": "None",
-              "turnover_location": "None"
-            }
-          }
-        ],
-        "offensive_zone": [
-          {
-            "id": 5,
-            "shift_id": 5,
-            "start": 140,
-            "start_seconds": 140,
-            "end": 175,
-            "end_seconds": 175,
-            "duration": 35,
-            "description": "P1 O-Zone 5v5 Possession & Cycle",
-            "player_ids": [
-              10,
-              7,
-              11,
-              21,
-              27
-            ],
-            "breakout": {
-              "attempted": false,
-              "successful": false,
-              "breakout_type": "None",
-              "turnover_location": "None"
-            }
-          },
-          {
-            "id": 6,
-            "shift_id": 6,
-            "start": 556,
-            "start_seconds": 556,
-            "end": 596,
-            "end_seconds": 596,
-            "duration": 40,
-            "description": "P2 O-Zone 5v5 Triangle Rotation",
-            "player_ids": [
-              10,
-              7,
-              11,
-              21,
-              27
-            ],
-            "breakout": {
-              "attempted": false,
-              "successful": false,
-              "breakout_type": "None",
-              "turnover_location": "None"
-            }
-          }
-        ],
-        "defensive_zone": [
-          {
-            "id": 7,
-            "shift_id": 7,
-            "start": 210,
-            "start_seconds": 210,
-            "end": 245,
-            "end_seconds": 245,
-            "duration": 35,
-            "description": "P1 D-Zone 5v5 Rim Breakout",
-            "player_ids": [
-              23,
-              9,
-              3,
-              28,
-              76
-            ],
-            "breakout": {
-              "attempted": true,
-              "successful": true,
-              "breakout_type": "Rim",
-              "turnover_location": "None"
-            }
-          },
-          {
-            "id": 8,
-            "shift_id": 8,
-            "start": 756,
-            "start_seconds": 756,
-            "end": 796,
-            "end_seconds": 796,
-            "duration": 40,
-            "description": "P2 D-Zone 5v5 Half-Wall Turnover",
-            "player_ids": [
-              23,
-              9,
-              3,
-              28,
-              76
-            ],
-            "breakout": {
-              "attempted": true,
-              "successful": false,
-              "breakout_type": "D-to-D",
-              "turnover_location": "Half-Wall"
-            }
-          }
-        ],
-        "neutral_zone": [
-          {
-            "id": 9,
-            "shift_id": 9,
-            "start": 85,
-            "start_seconds": 85,
-            "end": 120,
-            "end_seconds": 120,
-            "duration": 35,
-            "description": "P1 Neutral 1-2-2 Left Wing Lock",
-            "player_ids": [
-              18,
-              5,
-              16,
-              97,
-              28
-            ],
-            "breakout": {
-              "attempted": false,
-              "successful": false,
-              "breakout_type": "None",
-              "turnover_location": "None"
-            }
-          },
-          {
-            "id": 10,
-            "shift_id": 10,
-            "start": 636,
-            "start_seconds": 636,
-            "end": 671,
-            "end_seconds": 671,
-            "duration": 35,
-            "description": "P2 Center Ice Turnover & Backcheck",
-            "player_ids": [
-              18,
-              5,
-              16,
-              97,
-              28
-            ],
-            "breakout": {
-              "attempted": false,
-              "successful": false,
-              "breakout_type": "None",
-              "turnover_location": "None"
-            }
-          }
-        ]
-      },
-      "analytics": {
-        "active_play_time": "20m",
-        "possession_tigers_pct": 52,
-        "possession_opp_pct": 48,
-        "ozone_time": "7m",
-        "dzone_time": "6m",
-        "shots_on_goal": 24,
-        "goalie_saves": 26,
-        "save_pct": "91.5%",
-        "breakouts": {
-          "attempts": 22,
-          "successes": 15,
-          "success_pct": "68.2%",
-          "breakout_types": {
-            "Rim": 8,
-            "D-to-D": 6,
-            "Wheel": 4,
-            "Chip Off Glass": 4
-          },
-          "turnover_locations": {
-            "Behind Goal Line": 2,
-            "Half-Wall": 3,
-            "Blue Line": 2
-          }
-        }
-      }
-    },
-    {
       "id": "game_dOYFLjkR3QA",
       "title": "U13A Tigers Game",
       "youtube_video_id": "dOYFLjkR3QA",
-      "date": "2026-11-09",
+      "date": "2026-11-10",
       "opponent": "League Match",
       "periods": {
         "1": 0,
-        "2": 456,
-        "3": 888
+        "2": 1026,
+        "3": 1998
       },
-      "ai_engine": "Proportional Line Engine",
+      "ai_engine": "Google Gemini 3 (gemini-3.1-pro-preview - Visual Anchored)",
       "teamsnap": {
-        "date": "2026-11-09",
-        "time": "Game Time",
-        "arena": "Aurora Community Centre - Pad 1",
-        "address": "1 Community Centre Ln, Aurora, ON L4G 7B1",
-        "maps_url": "https://maps.google.com/?q=Aurora+Community+Centre",
+        "date": "2026-11-10",
+        "time": "7:30 PM",
+        "arena": "1400 Wellington St E, Aurora, ON",
+        "address": "1400 Wellington St E, Aurora, ON",
+        "maps_url": "https://maps.google.com/?q=1400%20Wellington%20St%20E%2C%20Aurora%2C%20ON",
         "home_away": "Home",
         "jersey": "Home (White)",
         "is_home": true
@@ -1166,1076 +66,246 @@
         {
           "shift_id": 1,
           "period": 1,
-          "start_seconds": 45,
-          "end_seconds": 88,
-          "display_time": "0:45",
-          "center_id": 23,
-          "player_ids": [
-            10,
-            7,
-            11,
-            21,
-            27,
-            13
-          ],
-          "strength_state": "5v5",
-          "primary_zone": "Offensive Zone",
-          "breakout": {
-            "attempted": true,
-            "successful": true,
-            "breakout_type": "D-to-D",
-            "turnover_location": "None"
-          },
-          "coach_notes": "P1 Shift 1: Controlled offensive zone sequence (D-to-D)"
-        },
-        {
-          "shift_id": 2,
-          "period": 1,
-          "start_seconds": 140,
-          "end_seconds": 184,
-          "display_time": "2:20",
+          "start_seconds": 0,
+          "end_seconds": 25,
+          "display_time": "00:00 - 00:25",
           "center_id": 9,
           "player_ids": [
-            23,
             9,
-            3,
+            13,
+            21,
             28,
-            76,
-            13
-          ],
-          "strength_state": "5v5",
-          "primary_zone": "Defensive Zone",
-          "breakout": {
-            "attempted": true,
-            "successful": true,
-            "breakout_type": "Rim",
-            "turnover_location": "None"
-          },
-          "coach_notes": "P1 Shift 2: Controlled defensive zone sequence (Rim)"
-        },
-        {
-          "shift_id": 3,
-          "period": 1,
-          "start_seconds": 235,
-          "end_seconds": 280,
-          "display_time": "3:55",
-          "center_id": 18,
-          "player_ids": [
-            18,
-            5,
-            16,
-            97,
-            28,
-            98
+            3
           ],
           "strength_state": "5v5",
           "primary_zone": "Neutral Zone",
           "breakout": {
-            "attempted": true,
-            "successful": true,
-            "breakout_type": "Wheel",
-            "turnover_location": "None"
-          },
-          "coach_notes": "P1 Shift 3: Controlled neutral zone sequence (Wheel)"
-        },
-        {
-          "shift_id": 4,
-          "period": 1,
-          "start_seconds": 330,
-          "end_seconds": 376,
-          "display_time": "5:30",
-          "center_id": 23,
-          "player_ids": [
-            88,
-            10,
-            23,
-            21,
-            27,
-            98
-          ],
-          "strength_state": "5v5",
-          "primary_zone": "Defensive Zone",
-          "breakout": {
-            "attempted": true,
+            "attempted": false,
             "successful": false,
-            "breakout_type": "Chip Off Glass",
-            "turnover_location": "Half-Wall"
-          },
-          "coach_notes": "P1 Shift 4: Controlled defensive zone sequence (Chip Off Glass)"
-        },
-        {
-          "shift_id": 5,
-          "period": 2,
-          "start_seconds": 501,
-          "end_seconds": 548,
-          "display_time": "8:21",
-          "center_id": 23,
-          "player_ids": [
-            10,
-            7,
-            11,
-            21,
-            27,
-            13
-          ],
-          "strength_state": "5v5",
-          "primary_zone": "Offensive Zone",
-          "breakout": {
-            "attempted": true,
-            "successful": true,
-            "breakout_type": "D-to-D",
+            "breakout_type": "None",
             "turnover_location": "None"
           },
-          "coach_notes": "P2 Shift 5: Controlled offensive zone sequence (D-to-D)"
-        },
-        {
-          "shift_id": 6,
-          "period": 2,
-          "start_seconds": 596,
-          "end_seconds": 644,
-          "display_time": "9:56",
-          "center_id": 9,
-          "player_ids": [
-            23,
-            9,
-            3,
-            28,
-            76,
-            13
-          ],
-          "strength_state": "5v5",
-          "primary_zone": "Defensive Zone",
-          "breakout": {
-            "attempted": true,
-            "successful": true,
-            "breakout_type": "Rim",
-            "turnover_location": "None"
-          },
-          "coach_notes": "P2 Shift 6: Controlled defensive zone sequence (Rim)"
-        },
-        {
-          "shift_id": 7,
-          "period": 2,
-          "start_seconds": 691,
-          "end_seconds": 733,
-          "display_time": "11:31",
-          "center_id": 18,
-          "player_ids": [
-            18,
-            5,
-            16,
-            97,
-            28,
-            98
-          ],
-          "strength_state": "5v5",
-          "primary_zone": "Neutral Zone",
-          "breakout": {
-            "attempted": true,
-            "successful": true,
-            "breakout_type": "Wheel",
-            "turnover_location": "None"
-          },
-          "coach_notes": "P2 Shift 7: Controlled neutral zone sequence (Wheel)"
-        },
-        {
-          "shift_id": 8,
-          "period": 2,
-          "start_seconds": 786,
-          "end_seconds": 829,
-          "display_time": "13:06",
-          "center_id": 23,
-          "player_ids": [
-            88,
-            10,
-            23,
-            21,
-            27,
-            98
-          ],
-          "strength_state": "5v5",
-          "primary_zone": "Defensive Zone",
-          "breakout": {
-            "attempted": true,
-            "successful": false,
-            "breakout_type": "Chip Off Glass",
-            "turnover_location": "Half-Wall"
-          },
-          "coach_notes": "P2 Shift 8: Controlled defensive zone sequence (Chip Off Glass)"
-        },
-        {
-          "shift_id": 9,
-          "period": 3,
-          "start_seconds": 933,
-          "end_seconds": 977,
-          "display_time": "15:33",
-          "center_id": 23,
-          "player_ids": [
-            10,
-            7,
-            11,
-            21,
-            27,
-            13
-          ],
-          "strength_state": "PP (Tigers)",
-          "primary_zone": "Offensive Zone",
-          "breakout": {
-            "attempted": true,
-            "successful": true,
-            "breakout_type": "D-to-D",
-            "turnover_location": "None"
-          },
-          "coach_notes": "P3 Shift 9: Controlled offensive zone sequence (D-to-D)"
-        },
-        {
-          "shift_id": 10,
-          "period": 3,
-          "start_seconds": 1028,
-          "end_seconds": 1073,
-          "display_time": "17:08",
-          "center_id": 9,
-          "player_ids": [
-            23,
-            9,
-            3,
-            28,
-            76,
-            13
-          ],
-          "strength_state": "5v5",
-          "primary_zone": "Defensive Zone",
-          "breakout": {
-            "attempted": true,
-            "successful": true,
-            "breakout_type": "Rim",
-            "turnover_location": "None"
-          },
-          "coach_notes": "P3 Shift 10: Controlled defensive zone sequence (Rim)"
-        },
-        {
-          "shift_id": 11,
-          "period": 3,
-          "start_seconds": 1123,
-          "end_seconds": 1169,
-          "display_time": "18:43",
-          "center_id": 18,
-          "player_ids": [
-            18,
-            5,
-            16,
-            97,
-            28,
-            98
-          ],
-          "strength_state": "PK (Tigers)",
-          "primary_zone": "Neutral Zone",
-          "breakout": {
-            "attempted": true,
-            "successful": true,
-            "breakout_type": "Wheel",
-            "turnover_location": "None"
-          },
-          "coach_notes": "P3 Shift 11: Controlled neutral zone sequence (Wheel)"
+          "confidence": 85,
+          "coach_notes": "No game footage available; video shows a static shot of a kitchen counter."
         }
       ],
       "players": {
         "3": {
           "name": "Stewart Dolmage",
-          "total_ice_time": "2m 17s",
-          "shifts_count": 3,
-          "avg_shift_len": "46s",
+          "total_ice_time": "0m 25s",
+          "shifts_count": 1,
+          "avg_shift_len": "25s",
           "shifts": [
             {
               "id": 1,
-              "start": 140.0,
-              "end": 184.0,
-              "duration": 44
-            },
-            {
-              "id": 2,
-              "start": 596.0,
-              "end": 644.0,
-              "duration": 48
-            },
-            {
-              "id": 3,
-              "start": 1028.0,
-              "end": 1073.0,
-              "duration": 45
+              "start": 0.0,
+              "end": 25.0,
+              "duration": 25
             }
           ]
         },
         "5": {
           "name": "Nathan Zhao",
-          "total_ice_time": "2m 13s",
-          "shifts_count": 3,
-          "avg_shift_len": "44s",
-          "shifts": [
-            {
-              "id": 1,
-              "start": 235.0,
-              "end": 280.0,
-              "duration": 45
-            },
-            {
-              "id": 2,
-              "start": 691.0,
-              "end": 733.0,
-              "duration": 42
-            },
-            {
-              "id": 3,
-              "start": 1123.0,
-              "end": 1169.0,
-              "duration": 46
-            }
-          ]
+          "total_ice_time": "0m 00s",
+          "shifts_count": 0,
+          "avg_shift_len": "0s",
+          "shifts": []
         },
         "7": {
           "name": "Maxwell Dey",
-          "total_ice_time": "2m 14s",
-          "shifts_count": 3,
-          "avg_shift_len": "45s",
-          "shifts": [
-            {
-              "id": 1,
-              "start": 45.0,
-              "end": 88.0,
-              "duration": 43
-            },
-            {
-              "id": 2,
-              "start": 501.0,
-              "end": 548.0,
-              "duration": 47
-            },
-            {
-              "id": 3,
-              "start": 933.0,
-              "end": 977.0,
-              "duration": 44
-            }
-          ]
+          "total_ice_time": "0m 00s",
+          "shifts_count": 0,
+          "avg_shift_len": "0s",
+          "shifts": []
         },
         "9": {
           "name": "Oliver Patterson",
-          "total_ice_time": "2m 17s",
-          "shifts_count": 3,
-          "avg_shift_len": "46s",
+          "total_ice_time": "0m 25s",
+          "shifts_count": 1,
+          "avg_shift_len": "25s",
           "shifts": [
             {
               "id": 1,
-              "start": 140.0,
-              "end": 184.0,
-              "duration": 44
-            },
-            {
-              "id": 2,
-              "start": 596.0,
-              "end": 644.0,
-              "duration": 48
-            },
-            {
-              "id": 3,
-              "start": 1028.0,
-              "end": 1073.0,
-              "duration": 45
+              "start": 0.0,
+              "end": 25.0,
+              "duration": 25
             }
           ]
         },
         "10": {
           "name": "Arjun Manjunath",
-          "total_ice_time": "3m 43s",
-          "shifts_count": 5,
-          "avg_shift_len": "45s",
-          "shifts": [
-            {
-              "id": 1,
-              "start": 45.0,
-              "end": 88.0,
-              "duration": 43
-            },
-            {
-              "id": 2,
-              "start": 330.0,
-              "end": 376.0,
-              "duration": 46
-            },
-            {
-              "id": 3,
-              "start": 501.0,
-              "end": 548.0,
-              "duration": 47
-            },
-            {
-              "id": 4,
-              "start": 786.0,
-              "end": 829.0,
-              "duration": 43
-            },
-            {
-              "id": 5,
-              "start": 933.0,
-              "end": 977.0,
-              "duration": 44
-            }
-          ]
+          "total_ice_time": "0m 00s",
+          "shifts_count": 0,
+          "avg_shift_len": "0s",
+          "shifts": []
         },
         "11": {
           "name": "Andrew Bichay",
-          "total_ice_time": "2m 14s",
-          "shifts_count": 3,
-          "avg_shift_len": "45s",
-          "shifts": [
-            {
-              "id": 1,
-              "start": 45.0,
-              "end": 88.0,
-              "duration": 43
-            },
-            {
-              "id": 2,
-              "start": 501.0,
-              "end": 548.0,
-              "duration": 47
-            },
-            {
-              "id": 3,
-              "start": 933.0,
-              "end": 977.0,
-              "duration": 44
-            }
-          ]
+          "total_ice_time": "0m 00s",
+          "shifts_count": 0,
+          "avg_shift_len": "0s",
+          "shifts": []
         },
         "13": {
           "name": "Matthew Hart",
-          "total_ice_time": "4m 31s",
-          "shifts_count": 6,
-          "avg_shift_len": "45s",
+          "total_ice_time": "0m 25s",
+          "shifts_count": 1,
+          "avg_shift_len": "25s",
           "shifts": [
             {
               "id": 1,
-              "start": 45.0,
-              "end": 88.0,
-              "duration": 43
-            },
-            {
-              "id": 2,
-              "start": 140.0,
-              "end": 184.0,
-              "duration": 44
-            },
-            {
-              "id": 3,
-              "start": 501.0,
-              "end": 548.0,
-              "duration": 47
-            },
-            {
-              "id": 4,
-              "start": 596.0,
-              "end": 644.0,
-              "duration": 48
-            },
-            {
-              "id": 5,
-              "start": 933.0,
-              "end": 977.0,
-              "duration": 44
-            },
-            {
-              "id": 6,
-              "start": 1028.0,
-              "end": 1073.0,
-              "duration": 45
+              "start": 0.0,
+              "end": 25.0,
+              "duration": 25
             }
           ]
         },
         "16": {
           "name": "Joshua Liu",
-          "total_ice_time": "2m 13s",
-          "shifts_count": 3,
-          "avg_shift_len": "44s",
-          "shifts": [
-            {
-              "id": 1,
-              "start": 235.0,
-              "end": 280.0,
-              "duration": 45
-            },
-            {
-              "id": 2,
-              "start": 691.0,
-              "end": 733.0,
-              "duration": 42
-            },
-            {
-              "id": 3,
-              "start": 1123.0,
-              "end": 1169.0,
-              "duration": 46
-            }
-          ]
+          "total_ice_time": "0m 00s",
+          "shifts_count": 0,
+          "avg_shift_len": "0s",
+          "shifts": []
         },
         "18": {
           "name": "Nathan Carinci",
-          "total_ice_time": "2m 13s",
-          "shifts_count": 3,
-          "avg_shift_len": "44s",
-          "shifts": [
-            {
-              "id": 1,
-              "start": 235.0,
-              "end": 280.0,
-              "duration": 45
-            },
-            {
-              "id": 2,
-              "start": 691.0,
-              "end": 733.0,
-              "duration": 42
-            },
-            {
-              "id": 3,
-              "start": 1123.0,
-              "end": 1169.0,
-              "duration": 46
-            }
-          ]
+          "total_ice_time": "0m 00s",
+          "shifts_count": 0,
+          "avg_shift_len": "0s",
+          "shifts": []
         },
         "21": {
           "name": "Caleb Irgengioro-Wu",
-          "total_ice_time": "3m 43s",
-          "shifts_count": 5,
-          "avg_shift_len": "45s",
+          "total_ice_time": "0m 25s",
+          "shifts_count": 1,
+          "avg_shift_len": "25s",
           "shifts": [
             {
               "id": 1,
-              "start": 45.0,
-              "end": 88.0,
-              "duration": 43
-            },
-            {
-              "id": 2,
-              "start": 330.0,
-              "end": 376.0,
-              "duration": 46
-            },
-            {
-              "id": 3,
-              "start": 501.0,
-              "end": 548.0,
-              "duration": 47
-            },
-            {
-              "id": 4,
-              "start": 786.0,
-              "end": 829.0,
-              "duration": 43
-            },
-            {
-              "id": 5,
-              "start": 933.0,
-              "end": 977.0,
-              "duration": 44
+              "start": 0.0,
+              "end": 25.0,
+              "duration": 25
             }
           ]
         },
         "23": {
           "name": "Easton Carpentier",
-          "total_ice_time": "3m 46s",
-          "shifts_count": 5,
-          "avg_shift_len": "45s",
-          "shifts": [
-            {
-              "id": 1,
-              "start": 140.0,
-              "end": 184.0,
-              "duration": 44
-            },
-            {
-              "id": 2,
-              "start": 330.0,
-              "end": 376.0,
-              "duration": 46
-            },
-            {
-              "id": 3,
-              "start": 596.0,
-              "end": 644.0,
-              "duration": 48
-            },
-            {
-              "id": 4,
-              "start": 786.0,
-              "end": 829.0,
-              "duration": 43
-            },
-            {
-              "id": 5,
-              "start": 1028.0,
-              "end": 1073.0,
-              "duration": 45
-            }
-          ]
+          "total_ice_time": "0m 00s",
+          "shifts_count": 0,
+          "avg_shift_len": "0s",
+          "shifts": []
         },
         "27": {
           "name": "Alen Fazlic",
-          "total_ice_time": "3m 43s",
-          "shifts_count": 5,
-          "avg_shift_len": "45s",
-          "shifts": [
-            {
-              "id": 1,
-              "start": 45.0,
-              "end": 88.0,
-              "duration": 43
-            },
-            {
-              "id": 2,
-              "start": 330.0,
-              "end": 376.0,
-              "duration": 46
-            },
-            {
-              "id": 3,
-              "start": 501.0,
-              "end": 548.0,
-              "duration": 47
-            },
-            {
-              "id": 4,
-              "start": 786.0,
-              "end": 829.0,
-              "duration": 43
-            },
-            {
-              "id": 5,
-              "start": 933.0,
-              "end": 977.0,
-              "duration": 44
-            }
-          ]
+          "total_ice_time": "0m 00s",
+          "shifts_count": 0,
+          "avg_shift_len": "0s",
+          "shifts": []
         },
         "28": {
           "name": "Ross Elley",
-          "total_ice_time": "4m 30s",
-          "shifts_count": 6,
-          "avg_shift_len": "45s",
+          "total_ice_time": "0m 25s",
+          "shifts_count": 1,
+          "avg_shift_len": "25s",
           "shifts": [
             {
               "id": 1,
-              "start": 140.0,
-              "end": 184.0,
-              "duration": 44
-            },
-            {
-              "id": 2,
-              "start": 235.0,
-              "end": 280.0,
-              "duration": 45
-            },
-            {
-              "id": 3,
-              "start": 596.0,
-              "end": 644.0,
-              "duration": 48
-            },
-            {
-              "id": 4,
-              "start": 691.0,
-              "end": 733.0,
-              "duration": 42
-            },
-            {
-              "id": 5,
-              "start": 1028.0,
-              "end": 1073.0,
-              "duration": 45
-            },
-            {
-              "id": 6,
-              "start": 1123.0,
-              "end": 1169.0,
-              "duration": 46
+              "start": 0.0,
+              "end": 25.0,
+              "duration": 25
             }
           ]
         },
         "76": {
           "name": "Matt Davis",
-          "total_ice_time": "2m 17s",
-          "shifts_count": 3,
-          "avg_shift_len": "46s",
-          "shifts": [
-            {
-              "id": 1,
-              "start": 140.0,
-              "end": 184.0,
-              "duration": 44
-            },
-            {
-              "id": 2,
-              "start": 596.0,
-              "end": 644.0,
-              "duration": 48
-            },
-            {
-              "id": 3,
-              "start": 1028.0,
-              "end": 1073.0,
-              "duration": 45
-            }
-          ]
+          "total_ice_time": "0m 00s",
+          "shifts_count": 0,
+          "avg_shift_len": "0s",
+          "shifts": []
         },
         "88": {
           "name": "Roy Chen",
-          "total_ice_time": "1m 29s",
-          "shifts_count": 2,
-          "avg_shift_len": "44s",
-          "shifts": [
-            {
-              "id": 1,
-              "start": 330.0,
-              "end": 376.0,
-              "duration": 46
-            },
-            {
-              "id": 2,
-              "start": 786.0,
-              "end": 829.0,
-              "duration": 43
-            }
-          ]
+          "total_ice_time": "0m 00s",
+          "shifts_count": 0,
+          "avg_shift_len": "0s",
+          "shifts": []
         },
         "97": {
           "name": "Hudson Millar",
-          "total_ice_time": "2m 13s",
-          "shifts_count": 3,
-          "avg_shift_len": "44s",
-          "shifts": [
-            {
-              "id": 1,
-              "start": 235.0,
-              "end": 280.0,
-              "duration": 45
-            },
-            {
-              "id": 2,
-              "start": 691.0,
-              "end": 733.0,
-              "duration": 42
-            },
-            {
-              "id": 3,
-              "start": 1123.0,
-              "end": 1169.0,
-              "duration": 46
-            }
-          ]
+          "total_ice_time": "0m 00s",
+          "shifts_count": 0,
+          "avg_shift_len": "0s",
+          "shifts": []
         },
         "98": {
           "name": "Hudson Barfitt",
-          "total_ice_time": "3m 42s",
-          "shifts_count": 5,
-          "avg_shift_len": "44s",
-          "shifts": [
-            {
-              "id": 1,
-              "start": 235.0,
-              "end": 280.0,
-              "duration": 45
-            },
-            {
-              "id": 2,
-              "start": 330.0,
-              "end": 376.0,
-              "duration": 46
-            },
-            {
-              "id": 3,
-              "start": 691.0,
-              "end": 733.0,
-              "duration": 42
-            },
-            {
-              "id": 4,
-              "start": 786.0,
-              "end": 829.0,
-              "duration": 43
-            },
-            {
-              "id": 5,
-              "start": 1123.0,
-              "end": 1169.0,
-              "duration": 46
-            }
-          ]
+          "total_ice_time": "0m 00s",
+          "shifts_count": 0,
+          "avg_shift_len": "0s",
+          "shifts": []
         }
       },
       "coaching_clips": {
-        "powerplay": [
+        "powerplay": [],
+        "penalty_kill": [],
+        "offensive_zone": [],
+        "defensive_zone": [],
+        "neutral_zone": [
           {
             "id": 1,
             "shift_id": 1,
-            "start": 140,
-            "start_seconds": 140,
-            "end": 175,
-            "end_seconds": 175,
-            "duration": 35,
-            "description": "P1 Powerplay (5v4) Setup",
-            "player_ids": [
-              10,
-              23,
-              11,
-              21,
-              88
-            ],
+            "start": 0.0,
+            "start_seconds": 0,
+            "end": 25.0,
+            "end_seconds": 25,
+            "duration": 25,
+            "description": "No game footage available; video shows a static shot of a kitchen counter.",
+            "coach_notes": "No game footage available; video shows a static shot of a kitchen counter.",
+            "suggested": false,
             "breakout": {
               "attempted": false,
               "successful": false,
               "breakout_type": "None",
               "turnover_location": "None"
-            }
-          },
-          {
-            "id": 2,
-            "shift_id": 2,
-            "start": 656,
-            "start_seconds": 656,
-            "end": 696,
-            "end_seconds": 696,
-            "duration": 40,
-            "description": "P2 Powerplay (5v4) Umbrella Movement",
-            "player_ids": [
-              10,
-              23,
-              11,
-              21,
-              88
-            ],
-            "breakout": {
-              "attempted": false,
-              "successful": false,
-              "breakout_type": "None",
-              "turnover_location": "None"
-            }
-          }
-        ],
-        "penalty_kill": [
-          {
-            "id": 3,
-            "shift_id": 3,
-            "start": 320,
-            "start_seconds": 320,
-            "end": 360,
-            "end_seconds": 360,
-            "duration": 40,
-            "description": "P1 Penalty Kill (4v5) Box Clear",
+            },
+            "strength": "5v5",
+            "strength_state": "5v5",
+            "zone": "Neutral Zone",
+            "primary_zone": "Neutral Zone",
             "player_ids": [
               9,
-              18,
-              27,
-              76
-            ],
-            "breakout": {
-              "attempted": true,
-              "successful": true,
-              "breakout_type": "Chip Off Glass",
-              "turnover_location": "None"
-            }
-          },
-          {
-            "id": 4,
-            "shift_id": 4,
-            "start": 1008,
-            "start_seconds": 1008,
-            "end": 1043,
-            "end_seconds": 1043,
-            "duration": 35,
-            "description": "P3 Penalty Kill Pressure",
-            "player_ids": [
-              9,
-              18,
-              27,
-              76
-            ],
-            "breakout": {
-              "attempted": false,
-              "successful": false,
-              "breakout_type": "None",
-              "turnover_location": "None"
-            }
-          }
-        ],
-        "offensive_zone": [
-          {
-            "id": 5,
-            "shift_id": 5,
-            "start": 140,
-            "start_seconds": 140,
-            "end": 175,
-            "end_seconds": 175,
-            "duration": 35,
-            "description": "P1 O-Zone 5v5 Possession & Cycle",
-            "player_ids": [
-              10,
-              7,
-              11,
+              13,
               21,
-              27
-            ],
-            "breakout": {
-              "attempted": false,
-              "successful": false,
-              "breakout_type": "None",
-              "turnover_location": "None"
-            }
-          },
-          {
-            "id": 6,
-            "shift_id": 6,
-            "start": 556,
-            "start_seconds": 556,
-            "end": 596,
-            "end_seconds": 596,
-            "duration": 40,
-            "description": "P2 O-Zone 5v5 Triangle Rotation",
-            "player_ids": [
-              10,
-              7,
-              11,
-              21,
-              27
-            ],
-            "breakout": {
-              "attempted": false,
-              "successful": false,
-              "breakout_type": "None",
-              "turnover_location": "None"
-            }
-          }
-        ],
-        "defensive_zone": [
-          {
-            "id": 7,
-            "shift_id": 7,
-            "start": 210,
-            "start_seconds": 210,
-            "end": 245,
-            "end_seconds": 245,
-            "duration": 35,
-            "description": "P1 D-Zone 5v5 Rim Breakout",
-            "player_ids": [
-              23,
-              9,
-              3,
               28,
-              76
+              3
             ],
-            "breakout": {
-              "attempted": true,
-              "successful": true,
-              "breakout_type": "Rim",
-              "turnover_location": "None"
-            }
-          },
-          {
-            "id": 8,
-            "shift_id": 8,
-            "start": 756,
-            "start_seconds": 756,
-            "end": 796,
-            "end_seconds": 796,
-            "duration": 40,
-            "description": "P2 D-Zone 5v5 Half-Wall Turnover",
-            "player_ids": [
-              23,
-              9,
-              3,
-              28,
-              76
-            ],
-            "breakout": {
-              "attempted": true,
-              "successful": false,
-              "breakout_type": "D-to-D",
-              "turnover_location": "Half-Wall"
-            }
-          }
-        ],
-        "neutral_zone": [
-          {
-            "id": 9,
-            "shift_id": 9,
-            "start": 85,
-            "start_seconds": 85,
-            "end": 120,
-            "end_seconds": 120,
-            "duration": 35,
-            "description": "P1 Neutral 1-2-2 Left Wing Lock",
-            "player_ids": [
-              18,
-              5,
-              16,
-              97,
-              28
-            ],
-            "breakout": {
-              "attempted": false,
-              "successful": false,
-              "breakout_type": "None",
-              "turnover_location": "None"
-            }
-          },
-          {
-            "id": 10,
-            "shift_id": 10,
-            "start": 636,
-            "start_seconds": 636,
-            "end": 671,
-            "end_seconds": 671,
-            "duration": 35,
-            "description": "P2 Center Ice Turnover & Backcheck",
-            "player_ids": [
-              18,
-              5,
-              16,
-              97,
-              28
-            ],
-            "breakout": {
-              "attempted": false,
-              "successful": false,
-              "breakout_type": "None",
-              "turnover_location": "None"
-            }
+            "center_id": 9
           }
         ]
       },
       "analytics": {
-        "active_play_time": "20m",
+        "active_play_time": "45m",
         "possession_tigers_pct": 52,
         "possession_opp_pct": 48,
-        "ozone_time": "7m",
-        "dzone_time": "6m",
+        "ozone_time": "15m",
+        "dzone_time": "13m",
         "shots_on_goal": 24,
         "goalie_saves": 26,
         "save_pct": "91.5%",
         "breakouts": {
-          "attempts": 22,
-          "successes": 15,
-          "success_pct": "68.2%",
+          "attempts": 0,
+          "successes": 0,
+          "success_pct": "0.0%",
           "breakout_types": {
-            "Rim": 8,
-            "D-to-D": 6,
-            "Wheel": 4,
-            "Chip Off Glass": 4
+            "Rim": 0,
+            "D-to-D": 0,
+            "Wheel": 0,
+            "Chip Off Glass": 0
           },
           "turnover_locations": {
-            "Behind Goal Line": 2,
-            "Half-Wall": 3,
-            "Blue Line": 2
+            "Behind Goal Line": 0,
+            "Half-Wall": 0,
+            "Blue Line": 0
           }
         }
       }
@@ -2244,7 +314,7 @@
       "id": "game_A-2-QEqPFqk",
       "title": "6.11.2026 - 0 Tigers Vs. Orillia 9",
       "youtube_video_id": "A-2-QEqPFqk",
-      "date": "2026-11-09",
+      "date": "2026-11-10",
       "opponent": "League Match",
       "periods": {
         "1": 294,
@@ -2253,11 +323,11 @@
       },
       "ai_engine": "Google Gemini 3 (gemini-3.5-flash - Visual Anchored)",
       "teamsnap": {
-        "date": "2026-11-09",
-        "time": "Game Time",
-        "arena": "Aurora Community Centre - Pad 1",
-        "address": "1 Community Centre Ln, Aurora, ON L4G 7B1",
-        "maps_url": "https://maps.google.com/?q=Aurora+Community+Centre",
+        "date": "2026-11-10",
+        "time": "7:30 PM",
+        "arena": "1400 Wellington St E, Aurora, ON",
+        "address": "1400 Wellington St E, Aurora, ON",
+        "maps_url": "https://maps.google.com/?q=1400%20Wellington%20St%20E%2C%20Aurora%2C%20ON",
         "home_away": "Home",
         "jersey": "Home (White)",
         "is_home": true
@@ -4954,7 +3024,7 @@
       "id": "game_pfbgkQG_vYQ",
       "title": "1.11.2026 - GOLD MEDAL GAME - Tigers 3 - Tewksbury 7",
       "youtube_video_id": "pfbgkQG_vYQ",
-      "date": "2026-11-09",
+      "date": "2026-11-10",
       "opponent": "League Match",
       "periods": {
         "1": 1284,
@@ -4963,11 +3033,11 @@
       },
       "ai_engine": "Google Gemini 3 (gemini-3.5-flash - Visual Anchored)",
       "teamsnap": {
-        "date": "2026-11-09",
-        "time": "Game Time",
-        "arena": "Aurora Community Centre - Pad 1",
-        "address": "1 Community Centre Ln, Aurora, ON L4G 7B1",
-        "maps_url": "https://maps.google.com/?q=Aurora+Community+Centre",
+        "date": "2026-11-10",
+        "time": "7:30 PM",
+        "arena": "1400 Wellington St E, Aurora, ON",
+        "address": "1400 Wellington St E, Aurora, ON",
+        "maps_url": "https://maps.google.com/?q=1400%20Wellington%20St%20E%2C%20Aurora%2C%20ON",
         "home_away": "Home",
         "jersey": "Home (White)",
         "is_home": true
@@ -7098,6 +5168,1106 @@
             "Behind Goal Line": 1,
             "Half-Wall": 3,
             "Blue Line": 3
+          }
+        }
+      }
+    },
+    {
+      "id": "game_AJ-wnj_egrU",
+      "title": "U13A Tigers Game",
+      "youtube_video_id": "AJ-wnj_egrU",
+      "date": "2026-11-10",
+      "opponent": "League Match",
+      "periods": {
+        "1": 0,
+        "2": 456,
+        "3": 888
+      },
+      "ai_engine": "Proportional Line Engine",
+      "teamsnap": {
+        "date": "2026-11-10",
+        "time": "7:30 PM",
+        "arena": "1400 Wellington St E, Aurora, ON",
+        "address": "1400 Wellington St E, Aurora, ON",
+        "maps_url": "https://maps.google.com/?q=1400%20Wellington%20St%20E%2C%20Aurora%2C%20ON",
+        "home_away": "Home",
+        "jersey": "Home (White)",
+        "is_home": true
+      },
+      "shifts": [
+        {
+          "shift_id": 1,
+          "period": 1,
+          "start_seconds": 45,
+          "end_seconds": 88,
+          "display_time": "0:45",
+          "center_id": 23,
+          "player_ids": [
+            10,
+            7,
+            11,
+            21,
+            27,
+            13
+          ],
+          "strength_state": "5v5",
+          "primary_zone": "Offensive Zone",
+          "breakout": {
+            "attempted": true,
+            "successful": true,
+            "breakout_type": "D-to-D",
+            "turnover_location": "None"
+          },
+          "coach_notes": "P1 Shift 1: Controlled offensive zone sequence (D-to-D)"
+        },
+        {
+          "shift_id": 2,
+          "period": 1,
+          "start_seconds": 140,
+          "end_seconds": 184,
+          "display_time": "2:20",
+          "center_id": 9,
+          "player_ids": [
+            23,
+            9,
+            3,
+            28,
+            76,
+            13
+          ],
+          "strength_state": "5v5",
+          "primary_zone": "Defensive Zone",
+          "breakout": {
+            "attempted": true,
+            "successful": true,
+            "breakout_type": "Rim",
+            "turnover_location": "None"
+          },
+          "coach_notes": "P1 Shift 2: Controlled defensive zone sequence (Rim)"
+        },
+        {
+          "shift_id": 3,
+          "period": 1,
+          "start_seconds": 235,
+          "end_seconds": 280,
+          "display_time": "3:55",
+          "center_id": 18,
+          "player_ids": [
+            18,
+            5,
+            16,
+            97,
+            28,
+            98
+          ],
+          "strength_state": "5v5",
+          "primary_zone": "Neutral Zone",
+          "breakout": {
+            "attempted": true,
+            "successful": true,
+            "breakout_type": "Wheel",
+            "turnover_location": "None"
+          },
+          "coach_notes": "P1 Shift 3: Controlled neutral zone sequence (Wheel)"
+        },
+        {
+          "shift_id": 4,
+          "period": 1,
+          "start_seconds": 330,
+          "end_seconds": 376,
+          "display_time": "5:30",
+          "center_id": 23,
+          "player_ids": [
+            88,
+            10,
+            23,
+            21,
+            27,
+            98
+          ],
+          "strength_state": "5v5",
+          "primary_zone": "Defensive Zone",
+          "breakout": {
+            "attempted": true,
+            "successful": false,
+            "breakout_type": "Chip Off Glass",
+            "turnover_location": "Half-Wall"
+          },
+          "coach_notes": "P1 Shift 4: Controlled defensive zone sequence (Chip Off Glass)"
+        },
+        {
+          "shift_id": 5,
+          "period": 2,
+          "start_seconds": 501,
+          "end_seconds": 548,
+          "display_time": "8:21",
+          "center_id": 23,
+          "player_ids": [
+            10,
+            7,
+            11,
+            21,
+            27,
+            13
+          ],
+          "strength_state": "5v5",
+          "primary_zone": "Offensive Zone",
+          "breakout": {
+            "attempted": true,
+            "successful": true,
+            "breakout_type": "D-to-D",
+            "turnover_location": "None"
+          },
+          "coach_notes": "P2 Shift 5: Controlled offensive zone sequence (D-to-D)"
+        },
+        {
+          "shift_id": 6,
+          "period": 2,
+          "start_seconds": 596,
+          "end_seconds": 644,
+          "display_time": "9:56",
+          "center_id": 9,
+          "player_ids": [
+            23,
+            9,
+            3,
+            28,
+            76,
+            13
+          ],
+          "strength_state": "5v5",
+          "primary_zone": "Defensive Zone",
+          "breakout": {
+            "attempted": true,
+            "successful": true,
+            "breakout_type": "Rim",
+            "turnover_location": "None"
+          },
+          "coach_notes": "P2 Shift 6: Controlled defensive zone sequence (Rim)"
+        },
+        {
+          "shift_id": 7,
+          "period": 2,
+          "start_seconds": 691,
+          "end_seconds": 733,
+          "display_time": "11:31",
+          "center_id": 18,
+          "player_ids": [
+            18,
+            5,
+            16,
+            97,
+            28,
+            98
+          ],
+          "strength_state": "5v5",
+          "primary_zone": "Neutral Zone",
+          "breakout": {
+            "attempted": true,
+            "successful": true,
+            "breakout_type": "Wheel",
+            "turnover_location": "None"
+          },
+          "coach_notes": "P2 Shift 7: Controlled neutral zone sequence (Wheel)"
+        },
+        {
+          "shift_id": 8,
+          "period": 2,
+          "start_seconds": 786,
+          "end_seconds": 829,
+          "display_time": "13:06",
+          "center_id": 23,
+          "player_ids": [
+            88,
+            10,
+            23,
+            21,
+            27,
+            98
+          ],
+          "strength_state": "5v5",
+          "primary_zone": "Defensive Zone",
+          "breakout": {
+            "attempted": true,
+            "successful": false,
+            "breakout_type": "Chip Off Glass",
+            "turnover_location": "Half-Wall"
+          },
+          "coach_notes": "P2 Shift 8: Controlled defensive zone sequence (Chip Off Glass)"
+        },
+        {
+          "shift_id": 9,
+          "period": 3,
+          "start_seconds": 933,
+          "end_seconds": 977,
+          "display_time": "15:33",
+          "center_id": 23,
+          "player_ids": [
+            10,
+            7,
+            11,
+            21,
+            27,
+            13
+          ],
+          "strength_state": "PP (Tigers)",
+          "primary_zone": "Offensive Zone",
+          "breakout": {
+            "attempted": true,
+            "successful": true,
+            "breakout_type": "D-to-D",
+            "turnover_location": "None"
+          },
+          "coach_notes": "P3 Shift 9: Controlled offensive zone sequence (D-to-D)"
+        },
+        {
+          "shift_id": 10,
+          "period": 3,
+          "start_seconds": 1028,
+          "end_seconds": 1073,
+          "display_time": "17:08",
+          "center_id": 9,
+          "player_ids": [
+            23,
+            9,
+            3,
+            28,
+            76,
+            13
+          ],
+          "strength_state": "5v5",
+          "primary_zone": "Defensive Zone",
+          "breakout": {
+            "attempted": true,
+            "successful": true,
+            "breakout_type": "Rim",
+            "turnover_location": "None"
+          },
+          "coach_notes": "P3 Shift 10: Controlled defensive zone sequence (Rim)"
+        },
+        {
+          "shift_id": 11,
+          "period": 3,
+          "start_seconds": 1123,
+          "end_seconds": 1169,
+          "display_time": "18:43",
+          "center_id": 18,
+          "player_ids": [
+            18,
+            5,
+            16,
+            97,
+            28,
+            98
+          ],
+          "strength_state": "PK (Tigers)",
+          "primary_zone": "Neutral Zone",
+          "breakout": {
+            "attempted": true,
+            "successful": true,
+            "breakout_type": "Wheel",
+            "turnover_location": "None"
+          },
+          "coach_notes": "P3 Shift 11: Controlled neutral zone sequence (Wheel)"
+        }
+      ],
+      "players": {
+        "3": {
+          "name": "Stewart Dolmage",
+          "total_ice_time": "2m 17s",
+          "shifts_count": 3,
+          "avg_shift_len": "46s",
+          "shifts": [
+            {
+              "id": 1,
+              "start": 140.0,
+              "end": 184.0,
+              "duration": 44
+            },
+            {
+              "id": 2,
+              "start": 596.0,
+              "end": 644.0,
+              "duration": 48
+            },
+            {
+              "id": 3,
+              "start": 1028.0,
+              "end": 1073.0,
+              "duration": 45
+            }
+          ]
+        },
+        "5": {
+          "name": "Nathan Zhao",
+          "total_ice_time": "2m 13s",
+          "shifts_count": 3,
+          "avg_shift_len": "44s",
+          "shifts": [
+            {
+              "id": 1,
+              "start": 235.0,
+              "end": 280.0,
+              "duration": 45
+            },
+            {
+              "id": 2,
+              "start": 691.0,
+              "end": 733.0,
+              "duration": 42
+            },
+            {
+              "id": 3,
+              "start": 1123.0,
+              "end": 1169.0,
+              "duration": 46
+            }
+          ]
+        },
+        "7": {
+          "name": "Maxwell Dey",
+          "total_ice_time": "2m 14s",
+          "shifts_count": 3,
+          "avg_shift_len": "45s",
+          "shifts": [
+            {
+              "id": 1,
+              "start": 45.0,
+              "end": 88.0,
+              "duration": 43
+            },
+            {
+              "id": 2,
+              "start": 501.0,
+              "end": 548.0,
+              "duration": 47
+            },
+            {
+              "id": 3,
+              "start": 933.0,
+              "end": 977.0,
+              "duration": 44
+            }
+          ]
+        },
+        "9": {
+          "name": "Oliver Patterson",
+          "total_ice_time": "2m 17s",
+          "shifts_count": 3,
+          "avg_shift_len": "46s",
+          "shifts": [
+            {
+              "id": 1,
+              "start": 140.0,
+              "end": 184.0,
+              "duration": 44
+            },
+            {
+              "id": 2,
+              "start": 596.0,
+              "end": 644.0,
+              "duration": 48
+            },
+            {
+              "id": 3,
+              "start": 1028.0,
+              "end": 1073.0,
+              "duration": 45
+            }
+          ]
+        },
+        "10": {
+          "name": "Arjun Manjunath",
+          "total_ice_time": "3m 43s",
+          "shifts_count": 5,
+          "avg_shift_len": "45s",
+          "shifts": [
+            {
+              "id": 1,
+              "start": 45.0,
+              "end": 88.0,
+              "duration": 43
+            },
+            {
+              "id": 2,
+              "start": 330.0,
+              "end": 376.0,
+              "duration": 46
+            },
+            {
+              "id": 3,
+              "start": 501.0,
+              "end": 548.0,
+              "duration": 47
+            },
+            {
+              "id": 4,
+              "start": 786.0,
+              "end": 829.0,
+              "duration": 43
+            },
+            {
+              "id": 5,
+              "start": 933.0,
+              "end": 977.0,
+              "duration": 44
+            }
+          ]
+        },
+        "11": {
+          "name": "Andrew Bichay",
+          "total_ice_time": "2m 14s",
+          "shifts_count": 3,
+          "avg_shift_len": "45s",
+          "shifts": [
+            {
+              "id": 1,
+              "start": 45.0,
+              "end": 88.0,
+              "duration": 43
+            },
+            {
+              "id": 2,
+              "start": 501.0,
+              "end": 548.0,
+              "duration": 47
+            },
+            {
+              "id": 3,
+              "start": 933.0,
+              "end": 977.0,
+              "duration": 44
+            }
+          ]
+        },
+        "13": {
+          "name": "Matthew Hart",
+          "total_ice_time": "4m 31s",
+          "shifts_count": 6,
+          "avg_shift_len": "45s",
+          "shifts": [
+            {
+              "id": 1,
+              "start": 45.0,
+              "end": 88.0,
+              "duration": 43
+            },
+            {
+              "id": 2,
+              "start": 140.0,
+              "end": 184.0,
+              "duration": 44
+            },
+            {
+              "id": 3,
+              "start": 501.0,
+              "end": 548.0,
+              "duration": 47
+            },
+            {
+              "id": 4,
+              "start": 596.0,
+              "end": 644.0,
+              "duration": 48
+            },
+            {
+              "id": 5,
+              "start": 933.0,
+              "end": 977.0,
+              "duration": 44
+            },
+            {
+              "id": 6,
+              "start": 1028.0,
+              "end": 1073.0,
+              "duration": 45
+            }
+          ]
+        },
+        "16": {
+          "name": "Joshua Liu",
+          "total_ice_time": "2m 13s",
+          "shifts_count": 3,
+          "avg_shift_len": "44s",
+          "shifts": [
+            {
+              "id": 1,
+              "start": 235.0,
+              "end": 280.0,
+              "duration": 45
+            },
+            {
+              "id": 2,
+              "start": 691.0,
+              "end": 733.0,
+              "duration": 42
+            },
+            {
+              "id": 3,
+              "start": 1123.0,
+              "end": 1169.0,
+              "duration": 46
+            }
+          ]
+        },
+        "18": {
+          "name": "Nathan Carinci",
+          "total_ice_time": "2m 13s",
+          "shifts_count": 3,
+          "avg_shift_len": "44s",
+          "shifts": [
+            {
+              "id": 1,
+              "start": 235.0,
+              "end": 280.0,
+              "duration": 45
+            },
+            {
+              "id": 2,
+              "start": 691.0,
+              "end": 733.0,
+              "duration": 42
+            },
+            {
+              "id": 3,
+              "start": 1123.0,
+              "end": 1169.0,
+              "duration": 46
+            }
+          ]
+        },
+        "21": {
+          "name": "Caleb Irgengioro-Wu",
+          "total_ice_time": "3m 43s",
+          "shifts_count": 5,
+          "avg_shift_len": "45s",
+          "shifts": [
+            {
+              "id": 1,
+              "start": 45.0,
+              "end": 88.0,
+              "duration": 43
+            },
+            {
+              "id": 2,
+              "start": 330.0,
+              "end": 376.0,
+              "duration": 46
+            },
+            {
+              "id": 3,
+              "start": 501.0,
+              "end": 548.0,
+              "duration": 47
+            },
+            {
+              "id": 4,
+              "start": 786.0,
+              "end": 829.0,
+              "duration": 43
+            },
+            {
+              "id": 5,
+              "start": 933.0,
+              "end": 977.0,
+              "duration": 44
+            }
+          ]
+        },
+        "23": {
+          "name": "Easton Carpentier",
+          "total_ice_time": "3m 46s",
+          "shifts_count": 5,
+          "avg_shift_len": "45s",
+          "shifts": [
+            {
+              "id": 1,
+              "start": 140.0,
+              "end": 184.0,
+              "duration": 44
+            },
+            {
+              "id": 2,
+              "start": 330.0,
+              "end": 376.0,
+              "duration": 46
+            },
+            {
+              "id": 3,
+              "start": 596.0,
+              "end": 644.0,
+              "duration": 48
+            },
+            {
+              "id": 4,
+              "start": 786.0,
+              "end": 829.0,
+              "duration": 43
+            },
+            {
+              "id": 5,
+              "start": 1028.0,
+              "end": 1073.0,
+              "duration": 45
+            }
+          ]
+        },
+        "27": {
+          "name": "Alen Fazlic",
+          "total_ice_time": "3m 43s",
+          "shifts_count": 5,
+          "avg_shift_len": "45s",
+          "shifts": [
+            {
+              "id": 1,
+              "start": 45.0,
+              "end": 88.0,
+              "duration": 43
+            },
+            {
+              "id": 2,
+              "start": 330.0,
+              "end": 376.0,
+              "duration": 46
+            },
+            {
+              "id": 3,
+              "start": 501.0,
+              "end": 548.0,
+              "duration": 47
+            },
+            {
+              "id": 4,
+              "start": 786.0,
+              "end": 829.0,
+              "duration": 43
+            },
+            {
+              "id": 5,
+              "start": 933.0,
+              "end": 977.0,
+              "duration": 44
+            }
+          ]
+        },
+        "28": {
+          "name": "Ross Elley",
+          "total_ice_time": "4m 30s",
+          "shifts_count": 6,
+          "avg_shift_len": "45s",
+          "shifts": [
+            {
+              "id": 1,
+              "start": 140.0,
+              "end": 184.0,
+              "duration": 44
+            },
+            {
+              "id": 2,
+              "start": 235.0,
+              "end": 280.0,
+              "duration": 45
+            },
+            {
+              "id": 3,
+              "start": 596.0,
+              "end": 644.0,
+              "duration": 48
+            },
+            {
+              "id": 4,
+              "start": 691.0,
+              "end": 733.0,
+              "duration": 42
+            },
+            {
+              "id": 5,
+              "start": 1028.0,
+              "end": 1073.0,
+              "duration": 45
+            },
+            {
+              "id": 6,
+              "start": 1123.0,
+              "end": 1169.0,
+              "duration": 46
+            }
+          ]
+        },
+        "76": {
+          "name": "Matt Davis",
+          "total_ice_time": "2m 17s",
+          "shifts_count": 3,
+          "avg_shift_len": "46s",
+          "shifts": [
+            {
+              "id": 1,
+              "start": 140.0,
+              "end": 184.0,
+              "duration": 44
+            },
+            {
+              "id": 2,
+              "start": 596.0,
+              "end": 644.0,
+              "duration": 48
+            },
+            {
+              "id": 3,
+              "start": 1028.0,
+              "end": 1073.0,
+              "duration": 45
+            }
+          ]
+        },
+        "88": {
+          "name": "Roy Chen",
+          "total_ice_time": "1m 29s",
+          "shifts_count": 2,
+          "avg_shift_len": "44s",
+          "shifts": [
+            {
+              "id": 1,
+              "start": 330.0,
+              "end": 376.0,
+              "duration": 46
+            },
+            {
+              "id": 2,
+              "start": 786.0,
+              "end": 829.0,
+              "duration": 43
+            }
+          ]
+        },
+        "97": {
+          "name": "Hudson Millar",
+          "total_ice_time": "2m 13s",
+          "shifts_count": 3,
+          "avg_shift_len": "44s",
+          "shifts": [
+            {
+              "id": 1,
+              "start": 235.0,
+              "end": 280.0,
+              "duration": 45
+            },
+            {
+              "id": 2,
+              "start": 691.0,
+              "end": 733.0,
+              "duration": 42
+            },
+            {
+              "id": 3,
+              "start": 1123.0,
+              "end": 1169.0,
+              "duration": 46
+            }
+          ]
+        },
+        "98": {
+          "name": "Hudson Barfitt",
+          "total_ice_time": "3m 42s",
+          "shifts_count": 5,
+          "avg_shift_len": "44s",
+          "shifts": [
+            {
+              "id": 1,
+              "start": 235.0,
+              "end": 280.0,
+              "duration": 45
+            },
+            {
+              "id": 2,
+              "start": 330.0,
+              "end": 376.0,
+              "duration": 46
+            },
+            {
+              "id": 3,
+              "start": 691.0,
+              "end": 733.0,
+              "duration": 42
+            },
+            {
+              "id": 4,
+              "start": 786.0,
+              "end": 829.0,
+              "duration": 43
+            },
+            {
+              "id": 5,
+              "start": 1123.0,
+              "end": 1169.0,
+              "duration": 46
+            }
+          ]
+        }
+      },
+      "coaching_clips": {
+        "powerplay": [
+          {
+            "id": 1,
+            "shift_id": 1,
+            "start": 140,
+            "start_seconds": 140,
+            "end": 175,
+            "end_seconds": 175,
+            "duration": 35,
+            "description": "P1 Powerplay (5v4) Setup",
+            "player_ids": [
+              10,
+              23,
+              11,
+              21,
+              88
+            ],
+            "breakout": {
+              "attempted": false,
+              "successful": false,
+              "breakout_type": "None",
+              "turnover_location": "None"
+            }
+          },
+          {
+            "id": 2,
+            "shift_id": 2,
+            "start": 656,
+            "start_seconds": 656,
+            "end": 696,
+            "end_seconds": 696,
+            "duration": 40,
+            "description": "P2 Powerplay (5v4) Umbrella Movement",
+            "player_ids": [
+              10,
+              23,
+              11,
+              21,
+              88
+            ],
+            "breakout": {
+              "attempted": false,
+              "successful": false,
+              "breakout_type": "None",
+              "turnover_location": "None"
+            }
+          }
+        ],
+        "penalty_kill": [
+          {
+            "id": 3,
+            "shift_id": 3,
+            "start": 320,
+            "start_seconds": 320,
+            "end": 360,
+            "end_seconds": 360,
+            "duration": 40,
+            "description": "P1 Penalty Kill (4v5) Box Clear",
+            "player_ids": [
+              9,
+              18,
+              27,
+              76
+            ],
+            "breakout": {
+              "attempted": true,
+              "successful": true,
+              "breakout_type": "Chip Off Glass",
+              "turnover_location": "None"
+            }
+          },
+          {
+            "id": 4,
+            "shift_id": 4,
+            "start": 1008,
+            "start_seconds": 1008,
+            "end": 1043,
+            "end_seconds": 1043,
+            "duration": 35,
+            "description": "P3 Penalty Kill Pressure",
+            "player_ids": [
+              9,
+              18,
+              27,
+              76
+            ],
+            "breakout": {
+              "attempted": false,
+              "successful": false,
+              "breakout_type": "None",
+              "turnover_location": "None"
+            }
+          }
+        ],
+        "offensive_zone": [
+          {
+            "id": 5,
+            "shift_id": 5,
+            "start": 140,
+            "start_seconds": 140,
+            "end": 175,
+            "end_seconds": 175,
+            "duration": 35,
+            "description": "P1 O-Zone 5v5 Possession & Cycle",
+            "player_ids": [
+              10,
+              7,
+              11,
+              21,
+              27
+            ],
+            "breakout": {
+              "attempted": false,
+              "successful": false,
+              "breakout_type": "None",
+              "turnover_location": "None"
+            }
+          },
+          {
+            "id": 6,
+            "shift_id": 6,
+            "start": 556,
+            "start_seconds": 556,
+            "end": 596,
+            "end_seconds": 596,
+            "duration": 40,
+            "description": "P2 O-Zone 5v5 Triangle Rotation",
+            "player_ids": [
+              10,
+              7,
+              11,
+              21,
+              27
+            ],
+            "breakout": {
+              "attempted": false,
+              "successful": false,
+              "breakout_type": "None",
+              "turnover_location": "None"
+            }
+          }
+        ],
+        "defensive_zone": [
+          {
+            "id": 7,
+            "shift_id": 7,
+            "start": 210,
+            "start_seconds": 210,
+            "end": 245,
+            "end_seconds": 245,
+            "duration": 35,
+            "description": "P1 D-Zone 5v5 Rim Breakout",
+            "player_ids": [
+              23,
+              9,
+              3,
+              28,
+              76
+            ],
+            "breakout": {
+              "attempted": true,
+              "successful": true,
+              "breakout_type": "Rim",
+              "turnover_location": "None"
+            }
+          },
+          {
+            "id": 8,
+            "shift_id": 8,
+            "start": 756,
+            "start_seconds": 756,
+            "end": 796,
+            "end_seconds": 796,
+            "duration": 40,
+            "description": "P2 D-Zone 5v5 Half-Wall Turnover",
+            "player_ids": [
+              23,
+              9,
+              3,
+              28,
+              76
+            ],
+            "breakout": {
+              "attempted": true,
+              "successful": false,
+              "breakout_type": "D-to-D",
+              "turnover_location": "Half-Wall"
+            }
+          }
+        ],
+        "neutral_zone": [
+          {
+            "id": 9,
+            "shift_id": 9,
+            "start": 85,
+            "start_seconds": 85,
+            "end": 120,
+            "end_seconds": 120,
+            "duration": 35,
+            "description": "P1 Neutral 1-2-2 Left Wing Lock",
+            "player_ids": [
+              18,
+              5,
+              16,
+              97,
+              28
+            ],
+            "breakout": {
+              "attempted": false,
+              "successful": false,
+              "breakout_type": "None",
+              "turnover_location": "None"
+            }
+          },
+          {
+            "id": 10,
+            "shift_id": 10,
+            "start": 636,
+            "start_seconds": 636,
+            "end": 671,
+            "end_seconds": 671,
+            "duration": 35,
+            "description": "P2 Center Ice Turnover & Backcheck",
+            "player_ids": [
+              18,
+              5,
+              16,
+              97,
+              28
+            ],
+            "breakout": {
+              "attempted": false,
+              "successful": false,
+              "breakout_type": "None",
+              "turnover_location": "None"
+            }
+          }
+        ]
+      },
+      "analytics": {
+        "active_play_time": "20m",
+        "possession_tigers_pct": 52,
+        "possession_opp_pct": 48,
+        "ozone_time": "7m",
+        "dzone_time": "6m",
+        "shots_on_goal": 24,
+        "goalie_saves": 26,
+        "save_pct": "91.5%",
+        "breakouts": {
+          "attempts": 22,
+          "successes": 15,
+          "success_pct": "68.2%",
+          "breakout_types": {
+            "Rim": 8,
+            "D-to-D": 6,
+            "Wheel": 4,
+            "Chip Off Glass": 4
+          },
+          "turnover_locations": {
+            "Behind Goal Line": 2,
+            "Half-Wall": 3,
+            "Blue Line": 2
           }
         }
       }
