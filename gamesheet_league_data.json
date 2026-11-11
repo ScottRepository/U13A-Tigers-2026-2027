@@ -15,26 +15,26 @@
       "gameSheetCode": "U13A-RS-015",
       "gameSheetUrl": "https://gamesheetstats.com/seasons/15490/teams/534275/schedule",
       "record": {
-        "gp": 7,
-        "w": 6,
+        "gp": 8,
+        "w": 7,
         "l": 0,
         "t": 1,
-        "pts": 13,
-        "winPct": ".857"
+        "pts": 15,
+        "winPct": ".875"
       },
       "stats": {
-        "gf": 36,
+        "gf": 44,
         "ga": 6,
-        "diff": "+30",
-        "gpg": "5.14",
-        "gapg": "0.86",
-        "pim": 42,
+        "diff": "+38",
+        "gpg": "5.50",
+        "gapg": "0.75",
+        "pim": 48,
         "pimPg": "6.0"
       },
       "specialTeams": {
-        "ppPct": "31.6%",
-        "ppGoals": 6,
-        "ppOpps": 19,
+        "ppPct": "33.3%",
+        "ppGoals": 7,
+        "ppOpps": 21,
         "ppGpg": "0.86",
         "pkPct": "100.0%",
         "shGoals": 1,
@@ -42,6 +42,16 @@
         "tendency": "Lethal 35.3% power play and perfect 100.0% penalty kill. Dangerous transition rush with high slot support."
       },
       "last5Games": [
+        {
+          "date": "Nov 10, 2026",
+          "opp": "Aurora Tigers",
+          "vsAt": "@",
+          "score": "8-0",
+          "result": "W",
+          "gf": 8,
+          "ga": 0,
+          "notes": "Away GameSheet regular season box score"
+        },
         {
           "date": "Oct 25, 2026",
           "opp": "Orangeville Flyers",
@@ -81,16 +91,6 @@
           "gf": 4,
           "ga": 0,
           "notes": "Away GameSheet regular season box score"
-        },
-        {
-          "date": "Oct 17, 2026",
-          "opp": "South Simcoe Storm",
-          "vsAt": "vs",
-          "score": "5-2",
-          "result": "W",
-          "gf": 5,
-          "ga": 2,
-          "notes": "Home GameSheet regular season box score"
         }
       ],
       "dangerPlayers": [
@@ -147,9 +147,9 @@
       ],
       "teamId": "534275",
       "headToHead": {
-        "summary": "Oct 3, 2026: Caledon 12, Tigers 0",
-        "date": "Oct 3, 2026",
-        "score": "12-0",
+        "summary": "Nov 10, 2026: Caledon 8, Tigers 0",
+        "date": "Nov 10, 2026",
+        "score": "8-0",
         "result": "W"
       }
     },
@@ -893,32 +893,42 @@
       "teamId": "534204",
       "gameSheetUrl": "https://gamesheetstats.com/seasons/15490/teams/534204/schedule",
       "record": {
-        "gp": 6,
+        "gp": 7,
         "w": 0,
-        "l": 6,
+        "l": 7,
         "t": 0,
         "pts": 0,
         "winPct": ".000"
       },
       "stats": {
         "gf": 3,
-        "ga": 62,
-        "diff": "-59",
-        "gpg": "0.50",
-        "gapg": "10.33",
-        "pim": 36,
+        "ga": 70,
+        "diff": "-67",
+        "gpg": "0.43",
+        "gapg": "10.00",
+        "pim": 42,
         "pimPg": "7.0"
       },
       "specialTeams": {
-        "ppPct": "7.1%",
+        "ppPct": "6.2%",
         "ppGoals": 1,
-        "ppOpps": 14,
-        "pkPct": "46.2%",
+        "ppOpps": 16,
+        "pkPct": "46.7%",
         "shGoals": 0,
         "shAllowed": 14,
         "tendency": "Resilient defensive structure looking for breakout execution. Head-to-head vs Caledon on Oct 3: 0-12."
       },
       "last5Games": [
+        {
+          "date": "Nov 10, 2026",
+          "opp": "Caledon Hawks",
+          "vsAt": "vs",
+          "score": "0-8",
+          "result": "L",
+          "gf": 0,
+          "ga": 8,
+          "notes": "Home GameSheet regular season box score"
+        },
         {
           "date": "Nov 6, 2026",
           "opp": "Orillia Terriers",
@@ -958,16 +968,6 @@
           "gf": 1,
           "ga": 13,
           "notes": "Home GameSheet regular season box score"
-        },
-        {
-          "date": "Oct 4, 2026",
-          "opp": "Upper York Admirals",
-          "vsAt": "@",
-          "score": "1-11",
-          "result": "L",
-          "gf": 1,
-          "ga": 11,
-          "notes": "Away GameSheet regular season box score"
         }
       ],
       "goalie": {
@@ -1849,5 +1849,5 @@
       ]
     }
   },
-  "lastSynced": "2026-11-10T22:16:04.671607Z"
+  "lastSynced": "2026-11-11T02:40:26.325803Z"
 }
