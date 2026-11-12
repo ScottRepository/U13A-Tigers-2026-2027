@@ -428,32 +428,42 @@
       "gameSheetCode": "U13A-RS-168",
       "gameSheetUrl": "https://gamesheetstats.com/seasons/15490/teams/534252/schedule",
       "record": {
-        "gp": 9,
-        "w": 1,
+        "gp": 10,
+        "w": 2,
         "l": 7,
         "t": 1,
-        "pts": 3,
-        "winPct": ".111"
+        "pts": 5,
+        "winPct": ".200"
       },
       "stats": {
-        "gf": 14,
+        "gf": 19,
         "ga": 50,
-        "diff": "-36",
-        "gpg": "1.56",
-        "gapg": "5.56",
-        "pim": 54,
+        "diff": "-31",
+        "gpg": "1.90",
+        "gapg": "5.00",
+        "pim": 60,
         "pimPg": "6.0"
       },
       "specialTeams": {
-        "ppPct": "15.8%",
+        "ppPct": "15.0%",
         "ppGoals": 3,
-        "ppOpps": 19,
-        "pkPct": "46.2%",
+        "ppOpps": 20,
+        "pkPct": "50.0%",
         "shGoals": 2,
         "shAllowed": 7,
         "tendency": "Strong cycle game below hash marks; uses D for point shots with heavy screens."
       },
       "last5Games": [
+        {
+          "date": "Nov 11, 2026",
+          "opp": "Aurora Tigers",
+          "vsAt": "vs",
+          "score": "5-0",
+          "result": "W",
+          "gf": 5,
+          "ga": 0,
+          "notes": "Home GameSheet regular season box score"
+        },
         {
           "date": "Nov 8, 2026",
           "opp": "Barrie Colts",
@@ -493,16 +503,6 @@
           "gf": 0,
           "ga": 8,
           "notes": "Home GameSheet regular season box score"
-        },
-        {
-          "date": "Oct 25, 2026",
-          "opp": "Georgian Bay Islanders",
-          "vsAt": "vs",
-          "score": "1-10",
-          "result": "L",
-          "gf": 1,
-          "ga": 10,
-          "notes": "Home GameSheet regular season box score"
         }
       ],
       "dangerPlayers": [
@@ -533,7 +533,13 @@
         "Transition Offense: Fast breakout to catch aggressive Markham pinching D.",
         "Special Teams Discipline: Stay out of the box against their 21% PP."
       ],
-      "teamId": "534252"
+      "teamId": "534252",
+      "headToHead": {
+        "summary": "Nov 11, 2026: Opponent 5, Tigers 0",
+        "date": "Nov 11, 2026",
+        "score": "5-0",
+        "result": "W"
+      }
     },
     "barrie": {
       "teamName": "Barrie Colts U13-1 A White",
@@ -543,32 +549,42 @@
       "gameSheetCode": "U13A-RS-174",
       "gameSheetUrl": "https://gamesheetstats.com/seasons/15490/teams/534191/schedule",
       "record": {
-        "gp": 9,
-        "w": 5,
+        "gp": 10,
+        "w": 6,
         "l": 3,
         "t": 1,
-        "pts": 11,
-        "winPct": ".556"
+        "pts": 13,
+        "winPct": ".600"
       },
       "stats": {
-        "gf": 28,
+        "gf": 31,
         "ga": 20,
-        "diff": "+8",
-        "gpg": "3.11",
-        "gapg": "2.22",
-        "pim": 54,
+        "diff": "+11",
+        "gpg": "3.10",
+        "gapg": "2.00",
+        "pim": 60,
         "pimPg": "6.0"
       },
       "specialTeams": {
-        "ppPct": "25.0%",
-        "ppGoals": 5,
-        "ppOpps": 20,
-        "pkPct": "94.4%",
+        "ppPct": "26.1%",
+        "ppGoals": 6,
+        "ppOpps": 23,
+        "pkPct": "95.0%",
         "shGoals": 3,
         "shAllowed": 6,
         "tendency": "Fast-paced offensive transitions and high forecheck pressure."
       },
       "last5Games": [
+        {
+          "date": "Nov 11, 2026",
+          "opp": "Upper York Admirals",
+          "vsAt": "@",
+          "score": "3-0",
+          "result": "W",
+          "gf": 3,
+          "ga": 0,
+          "notes": "Away GameSheet regular season box score"
+        },
         {
           "date": "Nov 8, 2026",
           "opp": "Markham Waxers",
@@ -607,16 +623,6 @@
           "result": "T",
           "gf": 2,
           "ga": 2,
-          "notes": "Home GameSheet regular season box score"
-        },
-        {
-          "date": "Oct 20, 2026",
-          "opp": "Caledon Hawks",
-          "vsAt": "vs",
-          "score": "1-4",
-          "result": "L",
-          "gf": 1,
-          "ga": 4,
           "notes": "Home GameSheet regular season box score"
         }
       ],
@@ -658,32 +664,42 @@
       "gameSheetCode": "U13A-RS-083",
       "gameSheetUrl": "https://gamesheetstats.com/seasons/15490/teams/534243/schedule",
       "record": {
-        "gp": 7,
+        "gp": 8,
         "w": 4,
-        "l": 2,
+        "l": 3,
         "t": 1,
         "pts": 9,
-        "winPct": ".571"
+        "winPct": ".500"
       },
       "stats": {
         "gf": 32,
-        "ga": 21,
-        "diff": "+11",
-        "gpg": "4.57",
+        "ga": 24,
+        "diff": "+8",
+        "gpg": "4.00",
         "gapg": "3.00",
-        "pim": 42,
+        "pim": 48,
         "pimPg": "6.0"
       },
       "specialTeams": {
-        "ppPct": "32.0%",
+        "ppPct": "29.6%",
         "ppGoals": 8,
-        "ppOpps": 25,
-        "pkPct": "82.8%",
+        "ppOpps": 27,
+        "pkPct": "81.2%",
         "shGoals": 1,
         "shAllowed": 10,
         "tendency": "Physical grinding squad; heavy hits along boards."
       },
       "last5Games": [
+        {
+          "date": "Nov 11, 2026",
+          "opp": "Barrie Colts",
+          "vsAt": "vs",
+          "score": "0-3",
+          "result": "L",
+          "gf": 0,
+          "ga": 3,
+          "notes": "Home GameSheet regular season box score"
+        },
         {
           "date": "Nov 8, 2026",
           "opp": "King Rebellion",
@@ -723,16 +739,6 @@
           "gf": 5,
           "ga": 3,
           "notes": "Home GameSheet regular season box score"
-        },
-        {
-          "date": "Oct 24, 2026",
-          "opp": "South Simcoe Storm",
-          "vsAt": "@",
-          "score": "2-4",
-          "result": "L",
-          "gf": 2,
-          "ga": 4,
-          "notes": "Away GameSheet regular season box score"
         }
       ],
       "dangerPlayers": [
@@ -893,32 +899,42 @@
       "teamId": "534204",
       "gameSheetUrl": "https://gamesheetstats.com/seasons/15490/teams/534204/schedule",
       "record": {
-        "gp": 7,
+        "gp": 8,
         "w": 0,
-        "l": 7,
+        "l": 8,
         "t": 0,
         "pts": 0,
         "winPct": ".000"
       },
       "stats": {
         "gf": 3,
-        "ga": 70,
-        "diff": "-67",
-        "gpg": "0.43",
-        "gapg": "10.00",
-        "pim": 42,
+        "ga": 75,
+        "diff": "-72",
+        "gpg": "0.38",
+        "gapg": "9.38",
+        "pim": 48,
         "pimPg": "7.0"
       },
       "specialTeams": {
-        "ppPct": "6.2%",
+        "ppPct": "5.9%",
         "ppGoals": 1,
-        "ppOpps": 16,
-        "pkPct": "46.7%",
+        "ppOpps": 17,
+        "pkPct": "50.0%",
         "shGoals": 0,
         "shAllowed": 14,
         "tendency": "Resilient defensive structure looking for breakout execution. Head-to-head vs Caledon on Oct 3: 0-12."
       },
       "last5Games": [
+        {
+          "date": "Nov 11, 2026",
+          "opp": "Markham Waxers",
+          "vsAt": "@",
+          "score": "0-5",
+          "result": "L",
+          "gf": 0,
+          "ga": 5,
+          "notes": "Away GameSheet regular season box score"
+        },
         {
           "date": "Nov 10, 2026",
           "opp": "Caledon Hawks",
@@ -957,16 +973,6 @@
           "result": "L",
           "gf": 0,
           "ga": 9,
-          "notes": "Home GameSheet regular season box score"
-        },
-        {
-          "date": "Oct 6, 2026",
-          "opp": "Orillia Terriers",
-          "vsAt": "vs",
-          "score": "1-13",
-          "result": "L",
-          "gf": 1,
-          "ga": 13,
           "notes": "Home GameSheet regular season box score"
         }
       ],
@@ -1849,5 +1855,5 @@
       ]
     }
   },
-  "lastSynced": "2026-11-11T18:30:53.177001Z"
+  "lastSynced": "2026-11-12T01:26:19.457569Z"
 }

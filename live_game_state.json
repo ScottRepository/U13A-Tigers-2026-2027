@@ -1,12 +1,12 @@
 {
-  "gameCode": "U13A-RS-168",
-  "gameId": 3160514,
-  "date": "Nov 11, 2026",
-  "time": "6:00 PM",
-  "location": "Centennial (Centennial)",
+  "gameCode": "U13A-RS-174",
+  "gameId": 3173778,
+  "date": "Nov 16, 2026",
+  "time": "6:20 PM",
+  "location": "Peggy Hill (Arena 2)",
   "status": "scheduled",
   "isLive": false,
-  "homeTeam": "Markham Waxers U13 A",
+  "homeTeam": "Barrie Colts U13-1 A White",
   "homeScore": 0,
   "homeShots": 0,
   "awayTeam": "Aurora Tigers U13 A",
@@ -15,5 +15,5 @@
   "period": "1",
   "clock": "15:00",
   "events": [],
-  "lastUpdated": "2026-11-11T18:30:53.286168Z"
+  "lastUpdated": "2026-11-12T01:26:19.558705Z"
 }
