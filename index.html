@@ -5101,6 +5101,11 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
                 <button type="button" onclick="toggleLiveClockRunning()" class="px-2 py-1 rounded-lg bg-amber-400 hover:bg-amber-300 text-slate-950 font-black text-[10px] cursor-pointer transition flex items-center gap-1 active:scale-95 shadow-xs" title="Toggle clock run / whistle pause (or press Spacebar)">
                   <span>⏸️</span> <span>Whistle / Play</span>
                 </button>
+                <button type="button" id="auto-whistle-mic-btn" onclick="toggleLiveWhistleAudioDetector()" class="px-2 py-1 rounded-lg bg-slate-800 hover:bg-slate-700 text-sky-300 border border-sky-400/40 text-[10px] font-bold cursor-pointer transition flex items-center gap-1 active:scale-95" title="Listen for referee Fox 40 whistle via microphone audio (Web Audio FFT) to auto-pause clock">
+                  <span id="auto-whistle-mic-icon">🎙️</span>
+                  <span id="auto-whistle-mic-label">Whistle Ear: OFF</span>
+                  <span id="auto-whistle-audio-level" class="hidden w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+                </button>
                 <button type="button" onclick="checkActiveLivestreamJson(true);" class="px-2 py-1 rounded-lg bg-slate-800 hover:bg-slate-700 text-rose-300 border border-rose-500/40 text-[10px] font-bold cursor-pointer transition flex items-center gap-1" title="Auto-detect current live stream via Scott's Google Live Stream API">
                   <span>⚡</span> <span>Auto-Detect Live</span>
                 </button>
@@ -6017,7 +6022,7 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
               <!-- Opponent Score -->
               <div class="p-2 rounded-lg bg-slate-900 border border-rose-500/30 flex items-center justify-between">
                 <div>
-                  <div class="text-[9px] font-bold text-rose-400 uppercase">🏒 ORILLIA (HOME)</div>
+                  <div id="live-ctrl-opp-label" class="text-[9px] font-bold text-rose-400 uppercase">🏒 OPPONENT (HOME)</div>
                   <div id="live-ctrl-score-away" class="text-lg font-black font-mono text-white">0</div>
                 </div>
                 <div class="flex items-center gap-1">
@@ -6027,6 +6032,18 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
                   </button>
                 </div>
               </div>
+            </div>
+
+            <!-- Online Cloud Sync Status & Whistle Ear Row -->
+            <div class="flex items-center justify-between text-[10px] pt-1.5 pb-0.5 border-t border-slate-900">
+              <div class="flex items-center gap-1.5">
+                <span id="live-cloud-sync-dot" class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+                <span id="live-cloud-sync-status" class="text-[9px] font-mono text-emerald-400 font-bold">☁️ Online Live Sync: Active</span>
+              </div>
+              <button type="button" onclick="toggleLiveWhistleAudioDetector()" id="live-sidebar-whistle-mic-btn" class="px-2 py-0.5 rounded bg-slate-900 hover:bg-slate-800 text-sky-300 border border-sky-400/30 text-[9px] font-bold flex items-center gap-1 cursor-pointer transition active:scale-95" title="Auto-pause clock when referee blows Fox 40 whistle">
+                <span id="live-sidebar-whistle-mic-icon">🎙️</span>
+                <span id="live-sidebar-whistle-mic-label">Whistle Ear: OFF</span>
+              </button>
             </div>
 
             <!-- Period Buttons -->
@@ -52342,22 +52359,262 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
       } catch(e){}
     });
 
+
+    // =========================================================================
+    // REAL-TIME ACOUSTIC FOX 40 WHISTLE DETECTOR (WEB AUDIO API FFT ENGINE)
+    // =========================================================================
+
+    let whistleAudioContext = null;
+    let whistleMediaStream = null;
+    let whistleAnalyser = null;
+    let whistleDetectInterval = null;
+    let isWhistleListening = false;
+    let whistleCooldownUntil = 0;
+
+    async function toggleLiveWhistleAudioDetector() {
+      if (isWhistleListening) {
+        stopLiveWhistleAudioDetector();
+        showToast("🎙️ Whistle Ear Listener Stopped.");
+        return;
+      }
+      startLiveWhistleAudioDetector();
+    }
+
+    async function startLiveWhistleAudioDetector() {
+      try {
+        const AudioContext = window.AudioContext || window.webkitAudioContext;
+        if (!AudioContext) {
+          showToast("⚠️ Web Audio API is not supported in this browser.");
+          return;
+        }
+        if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+          showToast("⚠️ Microphone access is not supported in this browser environment.");
+          return;
+        }
+
+        whistleMediaStream = await navigator.mediaDevices.getUserMedia({
+          audio: {
+            echoCancellation: false,
+            noiseSuppression: false,
+            autoGainControl: false
+          }
+        });
+
+        whistleAudioContext = new AudioContext();
+        if (whistleAudioContext.state === 'suspended') {
+          await whistleAudioContext.resume();
+        }
+
+        const source = whistleAudioContext.createMediaStreamSource(whistleMediaStream);
+        whistleAnalyser = whistleAudioContext.createAnalyser();
+        whistleAnalyser.fftSize = 1024;
+        whistleAnalyser.smoothingTimeConstant = 0.2;
+
+        // Bandpass filter centered at referee whistle frequency (3,300 Hz)
+        const filter = whistleAudioContext.createBiquadFilter();
+        filter.type = "bandpass";
+        filter.frequency.value = 3300;
+        filter.Q.value = 3.0;
+
+        source.connect(filter);
+        filter.connect(whistleAnalyser);
+
+        isWhistleListening = true;
+        updateWhistleEarUI(true);
+        showToast("🎙️ Fox 40 Whistle Ear Active! Listening to audio to auto-pause clock on referee whistles.");
+
+        const bufferLength = whistleAnalyser.frequencyBinCount;
+        const dataArray = new Uint8Array(bufferLength);
+        const sampleRate = whistleAudioContext.sampleRate;
+        const binSize = sampleRate / whistleAnalyser.fftSize;
+
+        // Bin range for referee Fox 40 whistle: 2,800 Hz to 4,000 Hz
+        const minBin = Math.floor(2800 / binSize);
+        const maxBin = Math.ceil(4000 / binSize);
+
+        whistleDetectInterval = setInterval(() => {
+          if (!isWhistleListening || !whistleAnalyser) return;
+          whistleAnalyser.getByteFrequencyData(dataArray);
+
+          // Calculate energy in whistle band vs low-end crowd/rink noise
+          let whistleEnergy = 0;
+          for (let i = minBin; i <= maxBin; i++) {
+            whistleEnergy += dataArray[i];
+          }
+          const avgWhistle = whistleEnergy / (maxBin - minBin + 1);
+
+          // Low end baseline (100 Hz to 1,000 Hz)
+          let lowEnergy = 0;
+          const lowMax = Math.max(1, Math.floor(1000 / binSize));
+          for (let i = 1; i <= lowMax; i++) {
+            lowEnergy += dataArray[i];
+          }
+          const avgLow = lowEnergy / lowMax;
+
+          // Pulse visual meter
+          const levelDot = document.getElementById('auto-whistle-audio-level');
+          if (levelDot) {
+            if (avgWhistle > 40) {
+              levelDot.classList.remove('hidden');
+              levelDot.style.opacity = Math.min(1, avgWhistle / 180);
+            } else {
+              levelDot.classList.add('hidden');
+            }
+          }
+
+          // Whistle detection threshold: sharp resonant spike
+          const now = Date.now();
+          if (now > whistleCooldownUntil && avgWhistle > 130 && avgWhistle > (avgLow * 1.3)) {
+            whistleCooldownUntil = now + 2500; // 2.5s debounce
+            triggerAcousticWhistlePause();
+          }
+        }, 40);
+
+      } catch (err) {
+        console.warn("Whistle detector mic access error:", err);
+        isWhistleListening = false;
+        updateWhistleEarUI(false);
+        showToast("⚠️ Microphone permission required for automated whistle detection (or use Spacebar / 'Whistle' button).");
+      }
+    }
+
+    function stopLiveWhistleAudioDetector() {
+      isWhistleListening = false;
+      if (whistleDetectInterval) {
+        clearInterval(whistleDetectInterval);
+        whistleDetectInterval = null;
+      }
+      if (whistleMediaStream) {
+        whistleMediaStream.getTracks().forEach(t => t.stop());
+        whistleMediaStream = null;
+      }
+      if (whistleAudioContext) {
+        try { whistleAudioContext.close(); } catch(e){}
+        whistleAudioContext = null;
+      }
+      updateWhistleEarUI(false);
+    }
+
+    function triggerAcousticWhistlePause() {
+      if (!liveGameSheetState.running || liveGameSheetState.period === 'FINAL') return;
+      liveGameSheetState.running = false;
+      renderLiveScoreboardHud();
+      syncLiveScoreToCloud();
+
+      showToast("📯 WHISTLE DETECTED! Clock auto-paused. (Press Spacebar or 'Whistle/Play' to resume puck drop)");
+      const pill = document.getElementById('live-stream-status-pill');
+      if (pill) {
+        const origText = pill.innerText;
+        pill.innerText = "⏸️ WHISTLE STOP";
+        pill.className = "px-2 py-0.5 rounded-full text-[9px] font-mono font-bold bg-amber-500/30 text-amber-300 border border-amber-400 animate-pulse";
+        setTimeout(() => {
+          pill.innerText = origText;
+          pill.className = "px-2 py-0.5 rounded-full text-[9px] font-mono font-bold bg-rose-500/20 text-rose-300 border border-rose-500/40 animate-pulse";
+        }, 2500);
+      }
+    }
+
+    function updateWhistleEarUI(active) {
+      const tBtn = document.getElementById('auto-whistle-mic-btn');
+      const tIcon = document.getElementById('auto-whistle-mic-icon');
+      const tLabel = document.getElementById('auto-whistle-mic-label');
+
+      const sBtn = document.getElementById('live-sidebar-whistle-mic-btn');
+      const sIcon = document.getElementById('live-sidebar-whistle-mic-icon');
+      const sLabel = document.getElementById('live-sidebar-whistle-mic-label');
+
+      if (active) {
+        if (tBtn) {
+          tBtn.className = "px-2 py-1 rounded-lg bg-emerald-600/30 text-emerald-300 border border-emerald-400 font-bold text-[10px] cursor-pointer transition flex items-center gap-1 active:scale-95 shadow-xs";
+        }
+        if (tIcon) tIcon.innerText = "🔊";
+        if (tLabel) tLabel.innerText = "Whistle Ear: ON";
+
+        if (sBtn) {
+          sBtn.className = "px-2 py-0.5 rounded bg-emerald-600/30 text-emerald-300 border border-emerald-400 text-[9px] font-bold flex items-center gap-1 cursor-pointer transition";
+        }
+        if (sIcon) sIcon.innerText = "🔊";
+        if (sLabel) sLabel.innerText = "Whistle Ear: ON";
+      } else {
+        if (tBtn) {
+          tBtn.className = "px-2 py-1 rounded-lg bg-slate-800 hover:bg-slate-700 text-sky-300 border border-sky-400/40 text-[10px] font-bold cursor-pointer transition flex items-center gap-1 active:scale-95";
+        }
+        if (tIcon) tIcon.innerText = "🎙️";
+        if (tLabel) tLabel.innerText = "Whistle Ear: OFF";
+
+        if (sBtn) {
+          sBtn.className = "px-2 py-0.5 rounded bg-slate-900 hover:bg-slate-800 text-sky-300 border border-sky-400/30 text-[9px] font-bold flex items-center gap-1 cursor-pointer transition";
+        }
+        if (sIcon) sIcon.innerText = "🎙️";
+        if (sLabel) sLabel.innerText = "Whistle Ear: OFF";
+      }
+    }
+
+    // =========================================================================
+    // REAL-TIME CLOUD SCORE SYNCHRONIZATION (FIREBASE FIRESTORE SYNC)
+    // =========================================================================
+
+    function syncLiveScoreToCloud() {
+      const oppName = liveGameSheetState.opponent || "Opponent";
+      const oppAbbr = liveGameSheetState.oppAbbr || "OPP";
+      const payload = {
+        homeScore: liveGameSheetState.homeScore,
+        awayScore: liveGameSheetState.awayScore,
+        period: liveGameSheetState.period,
+        clockSec: liveGameSheetState.clockSec,
+        running: liveGameSheetState.running,
+        opponent: oppName,
+        oppAbbr: oppAbbr,
+        matchTitle: liveGameSheetState.matchTitle || `Aurora Tigers vs ${oppName}`,
+        lastScorekeeperUpdate: new Date().toISOString()
+      };
+
+      try {
+        localStorage.setItem('tigers_live_score_state', JSON.stringify(payload));
+      } catch(e){}
+
+      // Broadcast live to all team parents & spectators via Firebase Firestore
+      if (typeof window.db !== 'undefined' && window.db) {
+        try {
+          window.db.collection("live_broadcast").doc("active").set({
+            ...payload,
+            serverTimestamp: firebase.firestore.FieldValue.serverTimestamp()
+          }, { merge: true }).then(() => {
+            const statusEl = document.getElementById('live-cloud-sync-status');
+            const dotEl = document.getElementById('live-cloud-sync-dot');
+            if (statusEl) statusEl.innerText = "☁️ Online Live Sync: Active";
+            if (dotEl) dotEl.className = "w-2 h-2 rounded-full bg-emerald-400";
+          }).catch(err => {
+            console.log("Live score cloud sync notice:", err);
+          });
+        } catch(e){}
+      }
+    }
+
     function adjustLiveScore(team, delta) {
+      const oppName = liveGameSheetState.opponent || "Opponent";
+      const oppShort = liveGameSheetState.oppAbbr || "OPP";
+
       if (team === 'home' || team === 'tigers') {
         liveGameSheetState.homeScore = Math.max(0, liveGameSheetState.homeScore + delta);
-        if (delta > 0 && typeof playArenaGoalHornSound === 'function') {
-          playArenaGoalHornSound();
-          showToast(`🚨 GOAL AURORA TIGERS! (Tigers ${liveGameSheetState.homeScore} - ${liveGameSheetState.awayScore} Orillia)`);
-          addLiveTickerEvent(`🚨 GOAL! Aurora Tigers score! (Tigers ${liveGameSheetState.homeScore} - ${liveGameSheetState.awayScore} Orillia)`);
+        if (delta > 0) {
+          if (typeof playArenaGoalHornSound === 'function') playArenaGoalHornSound();
+          showToast(`🚨 GOAL AURORA TIGERS! (Tigers ${liveGameSheetState.homeScore} - ${liveGameSheetState.awayScore} ${oppShort}) • Synced Online ☁️`);
+          addLiveTickerEvent(`🚨 GOAL! Aurora Tigers score! (Tigers ${liveGameSheetState.homeScore} - ${liveGameSheetState.awayScore} ${oppShort})`);
+        } else {
+          showToast(`Score adjusted: Tigers ${liveGameSheetState.homeScore} - ${liveGameSheetState.awayScore} ${oppShort} • Synced Online ☁️`);
         }
       } else {
         liveGameSheetState.awayScore = Math.max(0, liveGameSheetState.awayScore + delta);
         if (delta > 0) {
-          showToast(`Goal Orillia Terriers (Tigers ${liveGameSheetState.homeScore} - ${liveGameSheetState.awayScore} Orillia)`);
-          addLiveTickerEvent(`Goal Orillia Terriers (Tigers ${liveGameSheetState.homeScore} - ${liveGameSheetState.awayScore} Orillia)`);
+          showToast(`Goal ${oppName} (Tigers ${liveGameSheetState.homeScore} - ${liveGameSheetState.awayScore} ${oppShort}) • Synced Online ☁️`);
+          addLiveTickerEvent(`Goal ${oppName} (Tigers ${liveGameSheetState.homeScore} - ${liveGameSheetState.awayScore} ${oppShort})`);
+        } else {
+          showToast(`Score adjusted: Tigers ${liveGameSheetState.homeScore} - ${liveGameSheetState.awayScore} ${oppShort} • Synced Online ☁️`);
         }
       }
       renderLiveScoreboardHud();
+      syncLiveScoreToCloud();
     }
 
     function addLiveTickerEvent(text) {
@@ -52374,10 +52631,12 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
 
     function setLivePeriod(p) {
       liveGameSheetState.period = p;
-      if (p === 'FINAL') {
+      const oppName = liveGameSheetState.opponent || "Opponent";
+      if (p === 'FINAL' || p === 'final') {
+        liveGameSheetState.period = 'FINAL';
         liveGameSheetState.running = false;
         liveGameSheetState.clockSec = 0;
-        addLiveTickerEvent("Game Final: Aurora Tigers vs Orillia Terriers");
+        addLiveTickerEvent(`Game Final: Aurora Tigers vs ${oppName}`);
         showPostGameSummary();
       } else {
         // OMHA / YSMHL standard period lengths:
@@ -52395,7 +52654,8 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
         addLiveTickerEvent(`Period ${p} started`);
       }
       renderLiveScoreboardHud();
-      showToast(`Period set to ${p}`);
+      syncLiveScoreToCloud();
+      showToast(`Period set to ${p} • Synced Online ☁️`);
     }
 
     function renderLiveScoreboardHud() {
@@ -52799,13 +53059,15 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
 
       const clockDisplay = `${min}:${sec.toString().padStart(2, '0')}`;
       const opp = liveGameSheetState.oppAbbr || 'OPP';
-      showToast(`⏱️ Synchronized! P${liveGameSheetState.period} ${clockDisplay} • Tigers ${liveGameSheetState.homeScore} - ${liveGameSheetState.awayScore} ${opp}`);
+      syncLiveScoreToCloud();
+      showToast(`⏱️ Synchronized! P${liveGameSheetState.period} ${clockDisplay} • Tigers ${liveGameSheetState.homeScore} - ${liveGameSheetState.awayScore} ${opp} • Synced Online ☁️`);
       closeMasterScoreboardSyncModal();
     }
 
     function nudgeLiveClock(secDelta) {
       liveGameSheetState.clockSec = Math.max(0, liveGameSheetState.clockSec + secDelta);
       renderLiveScoreboardHud();
+      syncLiveScoreToCloud();
       const m = Math.floor(liveGameSheetState.clockSec / 60);
       const s = (liveGameSheetState.clockSec % 60).toString().padStart(2, '0');
       showToast(`⏱️ Clock set to ${m}:${s}`);
@@ -52815,6 +53077,7 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
       if (liveGameSheetState.period === 'FINAL') return;
       liveGameSheetState.running = !liveGameSheetState.running;
       renderLiveScoreboardHud();
+      syncLiveScoreToCloud();
       showToast(liveGameSheetState.running ? "▶ Play Active • Clock Running" : "⏸️ Whistle Stoppage • Clock Paused");
     }
 
@@ -54681,7 +54944,7 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
 
       // 4. Update 1-Touch Adjuster Labels
       const ctrlHomeLabel = document.querySelector('#live-ctrl-score-home')?.parentElement?.querySelector('.text-\\[9px\\]');
-      const ctrlAwayLabel = document.querySelector('#live-ctrl-score-away')?.parentElement?.querySelector('.text-\\[9px\\]');
+      const ctrlAwayLabel = document.getElementById('live-ctrl-opp-label') || document.querySelector('#live-ctrl-score-away')?.parentElement?.querySelector('.text-\[9px\]');
       if (ctrlHomeLabel) ctrlHomeLabel.innerText = match.isHome ? '🐯 TIGERS (HOME)' : '🐯 TIGERS (AWAY)';
       if (ctrlAwayLabel) ctrlAwayLabel.innerText = match.isHome ? `🏒 ${oppShort} (AWAY)` : `🏒 ${oppShort} (HOME)`;
 
@@ -59335,9 +59598,24 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
           window.db.collection("live_broadcast").doc("active").onSnapshot(doc => {
             if (doc && doc.exists) {
               const data = doc.data();
-              if (data && data.isLive && data.videoId && data.videoId !== liveStreamVideoId && data.videoId !== 'channel') {
-                console.log("☁️ Cloud Live Broadcast Detected:", data.videoId);
-                tuneLiveStreamId(data.videoId);
+              if (data) {
+                if (data.isLive && data.videoId && data.videoId !== liveStreamVideoId && data.videoId !== 'channel') {
+                  console.log("☁️ Cloud Live Broadcast Detected:", data.videoId);
+                  tuneLiveStreamId(data.videoId);
+                }
+                // Synchronize real-time score updates across all spectators / parent devices
+                if (typeof data.homeScore === 'number' && typeof data.awayScore === 'number') {
+                  const scoreChanged = (data.homeScore !== liveGameSheetState.homeScore || data.awayScore !== liveGameSheetState.awayScore);
+                  liveGameSheetState.homeScore = data.homeScore;
+                  liveGameSheetState.awayScore = data.awayScore;
+                  if (data.period !== undefined) liveGameSheetState.period = data.period;
+                  if (data.opponent && !liveGameSheetState.opponent) liveGameSheetState.opponent = data.opponent;
+                  if (data.oppAbbr && !liveGameSheetState.oppAbbr) liveGameSheetState.oppAbbr = data.oppAbbr;
+                  renderLiveScoreboardHud();
+                  if (scoreChanged) {
+                    console.log("☁️ Real-time cloud score updated:", data.homeScore, "-", data.awayScore);
+                  }
+                }
               }
             }
           }, err => console.log("Live broadcast cloud listener notice:", err));
