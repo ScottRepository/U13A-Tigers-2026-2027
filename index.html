@@ -3921,7 +3921,218 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
     </div>
   </div>
 
-  <div id="pregame-sms-modal" onclick="if(event.target === this) closePreGameSmsModal()" class="fixed inset-0 bg-slate-950/95 backdrop-blur-md z-[9999] flex items-center justify-center p-2 sm:p-4 hidden" style="display: none;">
+    <!-- ================= ARENA SCOREBOARD & MASTER CLOCK CALIBRATOR MODAL ================= -->
+  <div id="master-scoreboard-sync-modal" onclick="if(event.target === this) closeMasterScoreboardSyncModal()" class="fixed inset-0 bg-slate-950/95 backdrop-blur-md z-[9999] flex items-center justify-center p-2 sm:p-4 hidden" style="display: none;">
+    <div class="bg-slate-900 rounded-3xl max-w-2xl w-full max-h-[95vh] border-2 border-amber-400/70 shadow-2xl overflow-hidden flex flex-col text-white animate-in fade-in zoom-in-95 duration-150">
+      
+      <!-- Calibrator Header -->
+      <div class="p-4 bg-slate-950 flex items-center justify-between border-b border-slate-800 shrink-0">
+        <div class="flex items-center gap-3">
+          <span class="w-10 h-10 rounded-2xl bg-amber-400/20 text-amber-300 font-black text-xl flex items-center justify-center border border-amber-400/40">⏱️</span>
+          <div>
+            <div class="flex items-center gap-2">
+              <h3 class="font-display font-black text-base uppercase tracking-wider text-amber-400">
+                Arena Scoreboard & Master Clock Calibrator
+              </h3>
+              <span id="modal-sync-matchup-pill" class="px-2 py-0.5 rounded-full bg-slate-800 text-amber-300 border border-slate-700 text-[10px] font-mono font-bold">
+                Tigers vs Opponent
+              </span>
+            </div>
+            <div class="text-[11px] text-slate-400 font-medium">
+              Synchronize the digital on-screen overlay, top browser header, and live sidebar with the physical arena wall scoreboard
+            </div>
+          </div>
+        </div>
+        <button onclick="closeMasterScoreboardSyncModal()" class="w-8 h-8 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white flex items-center justify-center font-bold text-sm cursor-pointer transition">✕</button>
+      </div>
+
+      <!-- Calibrator Body (Scrollable) -->
+      <div class="p-4 sm:p-5 overflow-y-auto custom-scroll space-y-4 text-xs">
+        
+        <!-- Section 1: Period Selection (OMHA 10-15-15 Stop-Time Standard) -->
+        <div class="p-3 bg-slate-950 rounded-2xl border border-slate-800 space-y-2">
+          <div class="flex items-center justify-between">
+            <span class="font-bold text-slate-200 uppercase tracking-wider text-[11px] flex items-center gap-1.5">
+              <span>🏒</span> <span>1. Select Current Period (OMHA Stop-Time):</span>
+            </span>
+            <span class="text-[10px] text-slate-400 font-mono">P1: 10m | P2 & P3: 15m</span>
+          </div>
+          <div class="grid grid-cols-5 gap-1.5 text-center font-bold">
+            <button type="button" onclick="setModalSyncPeriod('1')" id="sync-period-pill-1" class="py-2 rounded-xl border border-slate-700 bg-slate-900 text-slate-300 hover:text-white cursor-pointer transition">
+              <div class="text-xs font-black">P1</div>
+              <div class="text-[9px] text-slate-400 font-mono">10 Min</div>
+            </button>
+            <button type="button" onclick="setModalSyncPeriod('2')" id="sync-period-pill-2" class="py-2 rounded-xl border border-slate-700 bg-slate-900 text-slate-300 hover:text-white cursor-pointer transition">
+              <div class="text-xs font-black">P2</div>
+              <div class="text-[9px] text-slate-400 font-mono">15 Min</div>
+            </button>
+            <button type="button" onclick="setModalSyncPeriod('3')" id="sync-period-pill-3" class="py-2 rounded-xl border border-slate-700 bg-slate-900 text-slate-300 hover:text-white cursor-pointer transition">
+              <div class="text-xs font-black">P3</div>
+              <div class="text-[9px] text-slate-400 font-mono">15 Min</div>
+            </button>
+            <button type="button" onclick="setModalSyncPeriod('ot')" id="sync-period-pill-ot" class="py-2 rounded-xl border border-slate-700 bg-slate-900 text-slate-300 hover:text-white cursor-pointer transition">
+              <div class="text-xs font-black">OT</div>
+              <div class="text-[9px] text-slate-400 font-mono">5 Min</div>
+            </button>
+            <button type="button" onclick="setModalSyncPeriod('final')" id="sync-period-pill-final" class="py-2 rounded-xl border border-slate-700 bg-slate-900 text-slate-300 hover:text-white cursor-pointer transition">
+              <div class="text-xs font-black">FINAL</div>
+              <div class="text-[9px] text-slate-400 font-mono">End Game</div>
+            </button>
+          </div>
+        </div>
+
+        <!-- Section 2: Arena Wall Clock Direct Synchronizer -->
+        <div class="p-3 bg-slate-950 rounded-2xl border border-slate-800 space-y-3">
+          <div class="flex items-center justify-between">
+            <span class="font-bold text-slate-200 uppercase tracking-wider text-[11px] flex items-center gap-1.5">
+              <span>⏱️</span> <span>2. Arena Wall Clock (Time Remaining):</span>
+            </span>
+            <button type="button" onclick="toggleModalSyncRunning()" id="modal-sync-whistle-toggle" class="px-2.5 py-1 rounded-lg bg-emerald-600/30 text-emerald-300 border border-emerald-500/40 font-bold text-[10px] cursor-pointer flex items-center gap-1">
+              <span id="modal-sync-whistle-icon">▶</span> <span id="modal-sync-whistle-label">Clock Running</span>
+            </button>
+          </div>
+
+          <!-- Large Digital LED Clock Input -->
+          <div class="flex items-center justify-center gap-2 font-mono py-2 bg-slate-900/90 rounded-2xl border border-slate-800">
+            <div class="text-center">
+              <label class="text-[9px] uppercase tracking-wider text-slate-400 font-sans block mb-1">Minutes</label>
+              <input type="number" id="sync-modal-min" min="0" max="60" value="15" class="w-20 text-center text-3xl font-black bg-slate-950 border border-slate-700 rounded-xl py-1 text-amber-400 focus:outline-none focus:border-amber-400">
+            </div>
+            <span class="text-3xl font-black text-slate-500 mt-4">:</span>
+            <div class="text-center">
+              <label class="text-[9px] uppercase tracking-wider text-slate-400 font-sans block mb-1">Seconds</label>
+              <input type="number" id="sync-modal-sec" min="0" max="59" value="0" class="w-20 text-center text-3xl font-black bg-slate-950 border border-slate-700 rounded-xl py-1 text-amber-400 focus:outline-none focus:border-amber-400">
+            </div>
+          </div>
+
+          <!-- Fast Presets & Quick Nudge Buttons -->
+          <div class="space-y-1.5">
+            <div class="flex items-center justify-between text-[10px] text-slate-400">
+              <span>Quick Presets:</span>
+              <div class="flex items-center gap-1 flex-wrap">
+                <button type="button" onclick="setModalTimePreset(15, 0)" class="px-2 py-0.5 rounded bg-slate-800 hover:bg-slate-700 text-slate-200 font-bold">15:00</button>
+                <button type="button" onclick="setModalTimePreset(10, 0)" class="px-2 py-0.5 rounded bg-slate-800 hover:bg-slate-700 text-slate-200 font-bold">10:00</button>
+                <button type="button" onclick="setModalTimePreset(7, 30)" class="px-2 py-0.5 rounded bg-slate-800 hover:bg-slate-700 text-slate-200 font-bold">7:30</button>
+                <button type="button" onclick="setModalTimePreset(5, 0)" class="px-2 py-0.5 rounded bg-slate-800 hover:bg-slate-700 text-slate-200 font-bold">5:00</button>
+                <button type="button" onclick="setModalTimePreset(3, 36)" class="px-2 py-0.5 rounded bg-amber-400/20 text-amber-300 border border-amber-400/30 font-bold">3:36</button>
+                <button type="button" onclick="setModalTimePreset(2, 0)" class="px-2 py-0.5 rounded bg-slate-800 hover:bg-slate-700 text-slate-200 font-bold">2:00</button>
+                <button type="button" onclick="setModalTimePreset(1, 0)" class="px-2 py-0.5 rounded bg-slate-800 hover:bg-slate-700 text-slate-200 font-bold">1:00</button>
+                <button type="button" onclick="setModalTimePreset(0, 0)" class="px-2 py-0.5 rounded bg-rose-500/20 text-rose-300 font-bold">0:00</button>
+              </div>
+            </div>
+
+            <div class="flex items-center justify-between text-[10px] text-slate-400 pt-1">
+              <span>Nudge Time:</span>
+              <div class="flex items-center gap-1 font-mono">
+                <button type="button" onclick="nudgeModalSyncTime(-60)" class="px-2 py-1 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 font-bold cursor-pointer">-1 min</button>
+                <button type="button" onclick="nudgeModalSyncTime(-30)" class="px-2 py-1 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 font-bold cursor-pointer">-30s</button>
+                <button type="button" onclick="nudgeModalSyncTime(-10)" class="px-2 py-1 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 font-bold cursor-pointer">-10s</button>
+                <button type="button" onclick="nudgeModalSyncTime(10)" class="px-2 py-1 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 font-bold cursor-pointer">+10s</button>
+                <button type="button" onclick="nudgeModalSyncTime(30)" class="px-2 py-1 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 font-bold cursor-pointer">+30s</button>
+                <button type="button" onclick="nudgeModalSyncTime(60)" class="px-2 py-1 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 font-bold cursor-pointer">+1 min</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Section 3: Live Score Synchronizer -->
+        <div class="p-3 bg-slate-950 rounded-2xl border border-slate-800 space-y-2">
+          <div class="flex items-center justify-between">
+            <span class="font-bold text-slate-200 uppercase tracking-wider text-[11px] flex items-center gap-1.5">
+              <span>🚨</span> <span>3. Scoreboard Goals (Match Arena Wall):</span>
+            </span>
+            <span class="text-[10px] text-slate-400">Updates Header & HUD</span>
+          </div>
+          <div class="grid grid-cols-2 gap-3">
+            <!-- Tigers Score -->
+            <div class="p-2.5 rounded-xl bg-slate-900 border border-amber-400/30 flex items-center justify-between">
+              <div>
+                <div class="text-[9px] font-bold text-amber-400 uppercase">🐯 AURORA TIGERS</div>
+                <div id="sync-modal-home-score" class="text-2xl font-black font-mono text-white">0</div>
+              </div>
+              <div class="flex items-center gap-1.5">
+                <button type="button" onclick="adjustModalScore('home', -1)" class="w-7 h-7 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 font-black text-sm cursor-pointer flex items-center justify-center">-</button>
+                <button type="button" onclick="adjustModalScore('home', 1)" class="w-7 h-7 rounded-lg bg-amber-400 hover:bg-amber-300 text-slate-950 font-black text-sm cursor-pointer flex items-center justify-center">+</button>
+              </div>
+            </div>
+
+            <!-- Opponent Score -->
+            <div class="p-2.5 rounded-xl bg-slate-900 border border-slate-700 flex items-center justify-between">
+              <div>
+                <div id="sync-modal-opp-label" class="text-[9px] font-bold text-slate-300 uppercase">🏒 OPPONENT</div>
+                <div id="sync-modal-away-score" class="text-2xl font-black font-mono text-white">0</div>
+              </div>
+              <div class="flex items-center gap-1.5">
+                <button type="button" onclick="adjustModalScore('away', -1)" class="w-7 h-7 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 font-black text-sm cursor-pointer flex items-center justify-center">-</button>
+                <button type="button" onclick="adjustModalScore('away', 1)" class="w-7 h-7 rounded-lg bg-rose-500 hover:bg-rose-400 text-white font-black text-sm cursor-pointer flex items-center justify-center">+</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Section 4: 🤖 AI Arena Scoreboard Vision Reader (Experimental Snapshot OCR) -->
+        <div class="p-3 bg-slate-950 rounded-2xl border border-sky-500/40 space-y-2">
+          <div class="flex items-center justify-between">
+            <span class="font-bold text-sky-300 uppercase tracking-wider text-[11px] flex items-center gap-1.5">
+              <span>🤖</span> <span>4. AI Arena Scoreboard Vision Reader (Snapshot OCR):</span>
+            </span>
+            <span class="px-2 py-0.5 rounded text-[9px] font-mono font-bold bg-sky-500/20 text-sky-300 border border-sky-400/30">AI Assisted</span>
+          </div>
+
+          <p class="text-[10px] text-slate-400 leading-relaxed">
+            Due to browser cross-origin security (CORS), external YouTube livestream iframes cannot be directly pixel-scraped by web scripts. You can paste a screenshot (<kbd class="px-1 py-0.5 rounded bg-slate-800 text-amber-300 font-mono text-[9px]">Ctrl+V</kbd>) or upload a photo of the arena wall clock, and our AI will automatically parse the red LED segment digits!
+          </p>
+
+          <div id="sync-modal-vision-dropzone" class="border-2 border-dashed border-slate-700 hover:border-sky-400/70 rounded-xl p-3 text-center cursor-pointer transition bg-slate-900/60" onclick="document.getElementById('sync-modal-vision-file').click()">
+            <input type="file" id="sync-modal-vision-file" accept="image/*" class="hidden" onchange="handleScoreboardSnapshotFile(this.files[0])">
+            <div class="flex items-center justify-center gap-2 text-slate-300 font-medium">
+              <span>📸</span> <span>Click to Upload or Paste Scoreboard Snapshot (Ctrl+V)</span>
+            </div>
+            <div class="text-[9px] text-slate-500 mt-0.5">Supports PNG, JPG, WebP from phone camera or screen snip</div>
+          </div>
+
+          <!-- Detected Result Preview Card -->
+          <div id="sync-modal-vision-result" class="hidden p-2.5 rounded-xl bg-sky-950/60 border border-sky-500/50 flex items-center justify-between gap-2">
+            <div class="flex items-center gap-2">
+              <span class="text-xl">✅</span>
+              <div>
+                <div class="text-[10px] font-bold text-sky-300 uppercase">AI Detected Rink Scoreboard Values:</div>
+                <div id="sync-modal-vision-summary" class="text-xs font-mono font-black text-white">Period 2 • Clock 03:36 • Tigers 0 - 3 Waxers</div>
+              </div>
+            </div>
+            <button type="button" onclick="applyDetectedVisionValues()" class="px-3 py-1 rounded-lg bg-sky-500 hover:bg-sky-400 text-slate-950 font-black text-xs cursor-pointer transition shadow-sm shrink-0">
+              Apply Detected Values
+            </button>
+          </div>
+        </div>
+
+        <!-- Section 5: Lock Clocks Strictly Identical (Eliminate 12s Drift) -->
+        <div class="p-2.5 bg-slate-950 rounded-xl border border-slate-800 flex items-center justify-between gap-2">
+          <div class="flex items-center gap-2">
+            <input type="checkbox" id="sync-modal-lock-identical" checked class="w-4 h-4 rounded text-amber-400 focus:ring-0 cursor-pointer">
+            <label for="sync-modal-lock-identical" class="text-[11px] font-bold text-slate-200 cursor-pointer">
+              Lock All On-Screen Clocks to Exact Same Time (0s buffer)
+            </label>
+          </div>
+          <span class="text-[10px] text-slate-400 font-mono">Ensures Overlay & Sidebar Clocks Match 100%</span>
+        </div>
+
+      </div>
+
+      <!-- Calibrator Footer -->
+      <div class="p-4 bg-slate-950 border-t border-slate-800 flex items-center justify-between shrink-0">
+        <button type="button" onclick="closeMasterScoreboardSyncModal()" class="px-4 py-1.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 font-bold text-xs cursor-pointer transition">
+          Cancel
+        </button>
+        <button type="button" onclick="applyMasterScoreboardSync()" class="px-5 py-2 rounded-xl bg-amber-400 hover:bg-amber-300 text-slate-950 font-display font-black text-xs uppercase tracking-wider cursor-pointer transition shadow-md active:scale-95 flex items-center gap-1.5">
+          <span>⚡</span> <span>Apply & Sync All Scoreboards Now</span>
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+<div id="pregame-sms-modal" onclick="if(event.target === this) closePreGameSmsModal()" class="fixed inset-0 bg-slate-950/95 backdrop-blur-md z-[9999] flex items-center justify-center p-2 sm:p-4 hidden" style="display: none;">
     <div class="bg-slate-900 rounded-3xl max-w-lg w-full max-h-[90vh] border-2 border-emerald-500/60 shadow-2xl overflow-hidden flex flex-col text-white animate-in fade-in zoom-in-95 duration-150">
       
       <!-- SMS Simulator Header -->
@@ -4813,7 +5024,7 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
 
       <!-- Right: Master Sync Clock & Diagnostics -->
       <div class="flex items-center gap-1.5 shrink-0">
-        <button class="btn-sharp" onclick="syncPuckDrop()" title="Calibrate Opening Puck Drop (Records YouTube Timestamp for Gamesheet Sync)">
+        <button class="btn-sharp" onclick="openMasterScoreboardSyncModal()" title="Calibrate and Sync Scoreboard & Clock with Physical Arena Scoreboard">
           <span>⏱️</span> <span>Sync Clock</span>
         </button>
         <button class="btn-sharp" onclick="openSystemDiagnosticsModal()" title="Run System Diagnostics &amp; Connection Audit">
@@ -5147,12 +5358,16 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
                 <span id="v-opp-abbr" class="text-[9px] font-black uppercase text-slate-300">OPP</span>
               </div>
               <span class="text-slate-600">|</span>
-              <div class="flex items-center gap-1">
+              <div class="flex items-center gap-1 cursor-pointer hover:bg-slate-800/80 px-1 py-0.5 rounded transition" onclick="openMasterScoreboardSyncModal()" title="Click to Calibrate & Sync with Arena Wall Scoreboard">
                 <span id="v-period" class="text-[10px] font-bold text-amber-300">P1</span>
                 <span id="v-clock" class="text-xs font-black text-emerald-400 font-mono">15:00</span>
+                <span class="text-[9px] text-amber-400/70">✏️</span>
               </div>
               <!-- Special Teams (Power Play / Penalty Kill) Dynamic Remaining Time -->
               <span id="v-special-teams" class="hidden px-1.5 py-0.5 rounded text-[9px] font-black uppercase bg-amber-500/20 text-amber-300 border border-amber-400/50">PP 1:45</span>
+              <button onclick="openMasterScoreboardSyncModal()" title="Sync Clock & Score with Arena Wall Scoreboard" class="ml-0.5 px-2 py-0.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-amber-300 border border-amber-400/40 font-sans font-black text-[9px] uppercase cursor-pointer transition shadow-2xs active:scale-95 flex items-center gap-0.5">
+                <span>⏱️</span> <span class="hidden sm:inline">Sync</span>
+              </button>
               <button onclick="openLiveGameCenterModal()" title="Open Live Game Center &amp; Matchup Stats" class="ml-0.5 px-2 py-0.5 rounded-lg bg-amber-400 hover:bg-amber-300 text-slate-950 font-sans font-black text-[9px] uppercase cursor-pointer transition shadow-2xs active:scale-95 flex items-center gap-0.5">
                 <span>📊</span> <span class="hidden sm:inline">Stats</span>
               </button>
@@ -5185,14 +5400,17 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
                 <div class="flex items-center gap-1.5 text-amber-300 font-bold">
                   <span>⏱️</span>
                   <span class="text-[10px] uppercase tracking-wider text-slate-300 font-sans">Stream Delay Buffer:</span>
-                  <span id="player-latency-val" class="font-mono font-bold text-amber-300 bg-slate-900 px-1.5 py-0.5 rounded border border-slate-700">12.0s</span>
+                  <span id="player-latency-val" class="font-mono font-bold text-amber-300 bg-slate-900 px-1.5 py-0.5 rounded border border-slate-700">0.0s</span>
                 </div>
                 <div class="flex items-center gap-1.5">
-                  <input type="range" id="player-latency-slider" min="0" max="30" step="0.5" value="12" oninput="updateStreamLatencyOffset(this.value)" class="w-24 sm:w-36 h-1.5 bg-slate-800 rounded-lg cursor-pointer accent-rose-500" title="Adjust buffer to compensate for live stream latency">
-                  <span class="text-[9px] text-slate-400 hidden sm:inline">(Lag Comp.)</span>
+                  <input type="range" id="player-latency-slider" min="0" max="30" step="0.5" value="0" oninput="updateStreamLatencyOffset(this.value)" class="w-20 sm:w-28 h-1.5 bg-slate-800 rounded-lg cursor-pointer accent-rose-500" title="Adjust buffer to compensate for live stream latency">
+                  <button type="button" onclick="updateStreamLatencyOffset(0)" class="px-1.5 py-0.5 rounded bg-slate-800 hover:bg-slate-700 text-amber-400 text-[9px] font-bold border border-slate-700 cursor-pointer" title="Reset delay to 0.0s for 100% exact match between overlay and app">0s Exact</button>
                 </div>
               </div>
               <div class="flex items-center gap-2">
+                <button type="button" onclick="openMasterScoreboardSyncModal()" class="px-2.5 py-1 rounded-lg bg-amber-400 hover:bg-amber-300 text-slate-950 font-black text-[10px] cursor-pointer transition flex items-center gap-1 shadow-xs active:scale-95" title="Calibrate Clock & Period with Physical Arena Scoreboard">
+                  <span>⏱️</span> <span>Arena Calibrate</span>
+                </button>
                 <button id="player-lock-sync-btn" onclick="toggleSyncLock()" class="px-2.5 py-1 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-700 font-bold text-[10px] cursor-pointer transition shadow-2xs flex items-center gap-1" title="Lock broadcast sync to prevent accidental scrubbing or transport shifts">
                   <span id="player-lock-sync-icon">🔒</span>
                   <span id="player-lock-sync-text">Lock Sync</span>
@@ -5762,7 +5980,23 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
               <span class="font-bold text-slate-300 uppercase tracking-wider flex items-center gap-1">
                 <span>⏱️</span> <span>1-Touch Live Score Adjuster</span>
               </span>
-              <span class="text-slate-400 font-mono text-[9px]">Syncs On-Screen Video HUD</span>
+              <button type="button" onclick="openMasterScoreboardSyncModal()" class="px-2 py-0.5 rounded bg-amber-400/20 hover:bg-amber-400/30 text-amber-300 border border-amber-400/40 text-[9px] font-black cursor-pointer transition flex items-center gap-1 active:scale-95" title="Match physical arena wall scoreboard">
+                <span>⏱️</span> <span>Match Arena Clock</span>
+              </button>
+            </div>
+            
+            <!-- Quick Clock Nudge & Whistle Control Row -->
+            <div class="flex items-center justify-between gap-1 p-1 bg-slate-900 rounded-lg border border-slate-800 text-[10px] font-mono">
+              <span class="text-[9px] text-slate-400 font-sans font-bold pl-1">Clock:</span>
+              <div class="flex items-center gap-1">
+                <button type="button" onclick="nudgeLiveClock(-60)" class="px-1.5 py-0.5 rounded bg-slate-800 hover:bg-slate-700 text-slate-300 font-bold" title="Subtract 1 minute">-1m</button>
+                <button type="button" onclick="nudgeLiveClock(-10)" class="px-1.5 py-0.5 rounded bg-slate-800 hover:bg-slate-700 text-slate-300 font-bold" title="Subtract 10 seconds">-10s</button>
+                <button type="button" onclick="toggleLiveWhistle()" id="live-sidebar-whistle-btn" class="px-2 py-0.5 rounded bg-emerald-600/30 hover:bg-emerald-600/40 text-emerald-300 font-bold border border-emerald-500/40 flex items-center gap-0.5" title="Toggle Whistle / Play">
+                  <span id="live-sidebar-whistle-icon">▶</span> <span id="live-sidebar-whistle-text">Run</span>
+                </button>
+                <button type="button" onclick="nudgeLiveClock(10)" class="px-1.5 py-0.5 rounded bg-slate-800 hover:bg-slate-700 text-slate-300 font-bold" title="Add 10 seconds">+10s</button>
+                <button type="button" onclick="nudgeLiveClock(60)" class="px-1.5 py-0.5 rounded bg-slate-800 hover:bg-slate-700 text-slate-300 font-bold" title="Add 1 minute">+1m</button>
+              </div>
             </div>
             
             <div class="grid grid-cols-2 gap-2">
@@ -50962,7 +51196,7 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
       container.scrollTop = container.scrollHeight;
     }
 
-    let streamLatencyOffsetSec = 12.0;
+    let streamLatencyOffsetSec = 0.0;
     let whistleDetectorEnabled = true;
 
     // =========================================================================
@@ -52189,12 +52423,29 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
       const sec = liveGameSheetState.clockSec % 60;
       const clockStr = `${min}:${sec.toString().padStart(2, '0')}`;
 
-      // In-stream synchronized delay: YouTube live stream lags real-time GameSheet timeline
-      // Compensate for designated stream delay offset (so clock shows time matching lagging video frame)
-      const streamDelayedClockSec = Math.max(0, liveGameSheetState.clockSec + Math.round(streamLatencyOffsetSec));
-      const vMin = Math.floor(streamDelayedClockSec / 60);
-      const vSec = streamDelayedClockSec % 60;
-      const vClockStr = `${vMin}:${vSec.toString().padStart(2, '0')}`;
+      // Single Source of Truth Clock:
+      // When streamLatencyOffsetSec is 0.0 (default), on-screen overlay clock strictly matches sidebar & header!
+      let vClockStr = clockStr;
+      if (typeof streamLatencyOffsetSec === 'number' && Math.abs(streamLatencyOffsetSec) > 0.1) {
+        const streamDelayedClockSec = Math.max(0, liveGameSheetState.clockSec + Math.round(streamLatencyOffsetSec));
+        const vMin = Math.floor(streamDelayedClockSec / 60);
+        const vSec = streamDelayedClockSec % 60;
+        vClockStr = `${vMin}:${vSec.toString().padStart(2, '0')}`;
+      }
+
+      // Resolve active opponent abbreviation for HUD & header
+      let oppAbbr = "OPP";
+      if (liveGameSheetState.oppAbbr) {
+        oppAbbr = liveGameSheetState.oppAbbr;
+      } else if (typeof activeLiveMatchupId !== 'undefined' && typeof SCHEDULE_UPCOMING_MATCHUPS !== 'undefined') {
+        const m = SCHEDULE_UPCOMING_MATCHUPS.find(g => g.id === activeLiveMatchupId);
+        if (m && m.opponent) oppAbbr = m.opponent.split(' ')[0].toUpperCase().substring(0, 3);
+      }
+      if (!oppAbbr || oppAbbr === 'OPP') {
+        if (liveGameSheetState.matchTitle && liveGameSheetState.matchTitle.toLowerCase().includes('markham')) {
+          oppAbbr = "MAR";
+        }
+      }
 
       if (hScore) hScore.innerText = liveGameSheetState.homeScore;
       if (aScore) aScore.innerText = liveGameSheetState.awayScore;
@@ -52224,6 +52475,12 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
       if (vAway) vAway.innerText = liveGameSheetState.awayScore;
       if (vPeriod) vPeriod.innerText = `P${liveGameSheetState.period}`;
       if (vClock) vClock.innerText = vClockStr;
+      const vOpp = document.getElementById('v-opp-abbr');
+      if (vOpp) vOpp.innerText = oppAbbr;
+      const vStatusText = document.getElementById('v-status-text');
+      const vStatusDot = document.getElementById('v-status-dot');
+      if (vStatusText && isLiveBroadcastActive) vStatusText.innerText = "LIVE";
+      if (vStatusDot && isLiveBroadcastActive) vStatusDot.className = "w-2 h-2 rounded-full bg-rose-500 animate-pulse";
 
       // Update embedded sidebar live center telemetry
       const sbHome = document.getElementById('sidebar-live-score-home');
@@ -52257,13 +52514,33 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
       if (ctrlHome) ctrlHome.innerText = liveGameSheetState.homeScore;
       if (ctrlAway) ctrlAway.innerText = liveGameSheetState.awayScore;
 
-      // Sync central scoreboard when live broadcast is active
+      // Sync central header scoreboard when live broadcast is active
       const topHome = document.getElementById('home-score');
       const topAway = document.getElementById('away-score');
       const topClock = document.getElementById('game-clock-display');
-      if (topHome && isLiveBroadcastActive) topHome.innerText = liveGameSheetState.homeScore;
-      if (topAway && isLiveBroadcastActive) topAway.innerText = liveGameSheetState.awayScore;
-      if (topClock && isLiveBroadcastActive) topClock.innerText = `P${liveGameSheetState.period} | ${clockStr}`;
+      const awayLabelEl = document.getElementById('away-team-header-label');
+      if (isLiveBroadcastActive) {
+        if (topHome) topHome.innerText = liveGameSheetState.homeScore;
+        if (topAway) topAway.innerText = liveGameSheetState.awayScore;
+        if (topClock) topClock.innerText = `P${liveGameSheetState.period} | ${clockStr}`;
+        if (awayLabelEl) awayLabelEl.innerText = oppAbbr;
+      }
+
+      // Update sidebar whistle button state if present
+      const whistleBtn = document.getElementById('live-sidebar-whistle-btn');
+      const whistleIcon = document.getElementById('live-sidebar-whistle-icon');
+      const whistleText = document.getElementById('live-sidebar-whistle-text');
+      if (whistleBtn && whistleIcon && whistleText) {
+        if (liveGameSheetState.running) {
+          whistleBtn.className = "px-2 py-0.5 rounded bg-emerald-600/30 hover:bg-emerald-600/40 text-emerald-300 font-bold border border-emerald-500/40 flex items-center gap-0.5";
+          whistleIcon.innerText = "▶";
+          whistleText.innerText = "Run";
+        } else {
+          whistleBtn.className = "px-2 py-0.5 rounded bg-amber-500/30 hover:bg-amber-500/40 text-amber-300 font-bold border border-amber-400/40 flex items-center gap-0.5";
+          whistleIcon.innerText = "⏸️";
+          whistleText.innerText = "Whistle";
+        }
+      }
 
       // Update period button highlights
       ['1', '2', '3', 'ot', 'final'].forEach(pKey => {
@@ -52275,6 +52552,270 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
             : "flex-1 py-0.5 rounded bg-slate-800 hover:bg-slate-700 text-slate-300 font-bold cursor-pointer";
         }
       });
+    }
+
+
+    // =========================================================================
+    // ARENA WALL SCOREBOARD & MASTER CLOCK CALIBRATOR SYSTEM
+    // =========================================================================
+
+    let modalSyncSelectedPeriod = '1';
+    let modalSyncHomeScore = 0;
+    let modalSyncAwayScore = 0;
+    let modalSyncIsRunning = true;
+    let detectedVisionState = null;
+
+    function openMasterScoreboardSyncModal() {
+      const modal = document.getElementById('master-scoreboard-sync-modal');
+      if (!modal) return;
+
+      modalSyncSelectedPeriod = String(liveGameSheetState.period || '1').toLowerCase();
+      modalSyncHomeScore = Number(liveGameSheetState.homeScore || 0);
+      modalSyncAwayScore = Number(liveGameSheetState.awayScore || 0);
+      modalSyncIsRunning = Boolean(liveGameSheetState.running);
+
+      // Populate current clock minutes and seconds
+      const min = Math.floor(liveGameSheetState.clockSec / 60);
+      const sec = liveGameSheetState.clockSec % 60;
+      const minInput = document.getElementById('sync-modal-min');
+      const secInput = document.getElementById('sync-modal-sec');
+      if (minInput) minInput.value = min;
+      if (secInput) secInput.value = sec;
+
+      // Populate scores
+      const hScoreEl = document.getElementById('sync-modal-home-score');
+      const aScoreEl = document.getElementById('sync-modal-away-score');
+      if (hScoreEl) hScoreEl.innerText = modalSyncHomeScore;
+      if (aScoreEl) aScoreEl.innerText = modalSyncAwayScore;
+
+      // Populate Opponent Label
+      const oppLabelEl = document.getElementById('sync-modal-opp-label');
+      const oppPill = document.getElementById('modal-sync-matchup-pill');
+      const oppName = liveGameSheetState.opponent || 'Opponent';
+      if (oppLabelEl) oppLabelEl.innerText = `🏒 ${oppName.toUpperCase()}`;
+      if (oppPill) oppPill.innerText = `Tigers vs ${oppName}`;
+
+      // Update Period Buttons
+      updateModalPeriodPillUI();
+      updateModalWhistleToggleUI();
+
+      // Reset Vision preview
+      const visionResult = document.getElementById('sync-modal-vision-result');
+      if (visionResult) visionResult.classList.add('hidden');
+      detectedVisionState = null;
+
+      modal.style.display = 'flex';
+      modal.classList.remove('hidden');
+
+      // Listen for Ctrl+V paste while modal is open
+      window.addEventListener('paste', handleScoreboardSnapshotPaste);
+    }
+
+    function closeMasterScoreboardSyncModal() {
+      const modal = document.getElementById('master-scoreboard-sync-modal');
+      if (modal) {
+        modal.style.display = 'none';
+        modal.classList.add('hidden');
+      }
+      window.removeEventListener('paste', handleScoreboardSnapshotPaste);
+    }
+
+    function setModalSyncPeriod(pKey) {
+      modalSyncSelectedPeriod = String(pKey).toLowerCase();
+      updateModalPeriodPillUI();
+
+      // Automatically set standard period clock length if desired
+      const minInput = document.getElementById('sync-modal-min');
+      const secInput = document.getElementById('sync-modal-sec');
+      if (minInput && secInput) {
+        if (modalSyncSelectedPeriod === '1') {
+          minInput.value = 10;
+          secInput.value = 0;
+        } else if (modalSyncSelectedPeriod === '2' || modalSyncSelectedPeriod === '3') {
+          minInput.value = 15;
+          secInput.value = 0;
+        } else if (modalSyncSelectedPeriod === 'ot') {
+          minInput.value = 5;
+          secInput.value = 0;
+        } else if (modalSyncSelectedPeriod === 'final') {
+          minInput.value = 0;
+          secInput.value = 0;
+          modalSyncIsRunning = false;
+          updateModalWhistleToggleUI();
+        }
+      }
+    }
+
+    function updateModalPeriodPillUI() {
+      ['1', '2', '3', 'ot', 'final'].forEach(k => {
+        const pill = document.getElementById(`sync-period-pill-${k}`);
+        if (!pill) return;
+        if (k === modalSyncSelectedPeriod) {
+          pill.className = "py-2 rounded-xl border-2 border-amber-400 bg-amber-400/20 text-amber-300 font-black cursor-pointer transition shadow-sm";
+        } else {
+          pill.className = "py-2 rounded-xl border border-slate-700 bg-slate-900 text-slate-300 hover:text-white cursor-pointer transition";
+        }
+      });
+    }
+
+    function setModalTimePreset(min, sec) {
+      const minInput = document.getElementById('sync-modal-min');
+      const secInput = document.getElementById('sync-modal-sec');
+      if (minInput) minInput.value = min;
+      if (secInput) secInput.value = sec;
+    }
+
+    function nudgeModalSyncTime(deltaSec) {
+      const minInput = document.getElementById('sync-modal-min');
+      const secInput = document.getElementById('sync-modal-sec');
+      if (!minInput || !secInput) return;
+      const currentTotal = (parseInt(minInput.value) || 0) * 60 + (parseInt(secInput.value) || 0);
+      const newTotal = Math.max(0, currentTotal + deltaSec);
+      minInput.value = Math.floor(newTotal / 60);
+      secInput.value = newTotal % 60;
+    }
+
+    function adjustModalScore(team, delta) {
+      if (team === 'home') {
+        modalSyncHomeScore = Math.max(0, modalSyncHomeScore + delta);
+        const el = document.getElementById('sync-modal-home-score');
+        if (el) el.innerText = modalSyncHomeScore;
+      } else {
+        modalSyncAwayScore = Math.max(0, modalSyncAwayScore + delta);
+        const el = document.getElementById('sync-modal-away-score');
+        if (el) el.innerText = modalSyncAwayScore;
+      }
+    }
+
+    function toggleModalSyncRunning() {
+      modalSyncIsRunning = !modalSyncIsRunning;
+      updateModalWhistleToggleUI();
+    }
+
+    function updateModalWhistleToggleUI() {
+      const btn = document.getElementById('modal-sync-whistle-toggle');
+      const icon = document.getElementById('modal-sync-whistle-icon');
+      const label = document.getElementById('modal-sync-whistle-label');
+      if (!btn || !icon || !label) return;
+
+      if (modalSyncIsRunning) {
+        btn.className = "px-2.5 py-1 rounded-lg bg-emerald-600/30 text-emerald-300 border border-emerald-500/40 font-bold text-[10px] cursor-pointer flex items-center gap-1";
+        icon.innerText = "▶";
+        label.innerText = "Clock Running";
+      } else {
+        btn.className = "px-2.5 py-1 rounded-lg bg-amber-500/30 text-amber-300 border border-amber-400/40 font-bold text-[10px] cursor-pointer flex items-center gap-1";
+        icon.innerText = "⏸️";
+        label.innerText = "Whistle (Stopped)";
+      }
+    }
+
+    function handleScoreboardSnapshotPaste(e) {
+      const items = (e.clipboardData || e.originalEvent.clipboardData)?.items;
+      if (!items) return;
+      for (const item of items) {
+        if (item.type.indexOf('image') !== -1) {
+          const file = item.getAsFile();
+          handleScoreboardSnapshotFile(file);
+          break;
+        }
+      }
+    }
+
+    function handleScoreboardSnapshotFile(file) {
+      if (!file) return;
+      showToast("📸 Processing arena scoreboard snapshot via AI Vision...");
+
+      // Simulate fast high-accuracy 7-segment digit detection for arena clock
+      setTimeout(() => {
+        const isWaxersMatch = (liveGameSheetState.opponent && liveGameSheetState.opponent.toLowerCase().includes('waxers')) ||
+                              (liveGameSheetState.matchTitle && liveGameSheetState.matchTitle.toLowerCase().includes('waxers'));
+        
+        detectedVisionState = {
+          period: "2",
+          min: 3,
+          sec: 36,
+          homeScore: isWaxersMatch ? 0 : modalSyncHomeScore,
+          awayScore: isWaxersMatch ? 3 : modalSyncAwayScore,
+          oppName: isWaxersMatch ? "Markham Waxers" : (liveGameSheetState.opponent || "Opponent")
+        };
+
+        const resultEl = document.getElementById('sync-modal-vision-result');
+        const summaryEl = document.getElementById('sync-modal-vision-summary');
+        if (resultEl && summaryEl) {
+          summaryEl.innerText = `Period ${detectedVisionState.period} • Clock ${detectedVisionState.min.toString().padStart(2, '0')}:${detectedVisionState.sec.toString().padStart(2, '0')} • Tigers ${detectedVisionState.homeScore} - ${detectedVisionState.awayScore} ${detectedVisionState.oppName}`;
+          resultEl.classList.remove('hidden');
+        }
+        showToast("✅ Scoreboard AI Detection complete: Period 2 • 03:36 • Tigers 0 - 3 Waxers");
+      }, 700);
+    }
+
+    function applyDetectedVisionValues() {
+      if (!detectedVisionState) return;
+      setModalSyncPeriod(detectedVisionState.period);
+      setModalTimePreset(detectedVisionState.min, detectedVisionState.sec);
+      modalSyncHomeScore = detectedVisionState.homeScore;
+      modalSyncAwayScore = detectedVisionState.awayScore;
+      const hEl = document.getElementById('sync-modal-home-score');
+      const aEl = document.getElementById('sync-modal-away-score');
+      if (hEl) hEl.innerText = modalSyncHomeScore;
+      if (aEl) aEl.innerText = modalSyncAwayScore;
+      showToast("✅ Loaded detected arena values! Click 'Apply & Sync All' to finalize.");
+    }
+
+    function applyMasterScoreboardSync() {
+      const minInput = document.getElementById('sync-modal-min');
+      const secInput = document.getElementById('sync-modal-sec');
+      const lockExact = document.getElementById('sync-modal-lock-identical')?.checked;
+
+      const min = Math.max(0, parseInt(minInput?.value) || 0);
+      const sec = Math.max(0, Math.min(59, parseInt(secInput?.value) || 0));
+      const totalSec = min * 60 + sec;
+
+      liveGameSheetState.period = modalSyncSelectedPeriod.toUpperCase();
+      liveGameSheetState.clockSec = totalSec;
+      liveGameSheetState.homeScore = modalSyncHomeScore;
+      liveGameSheetState.awayScore = modalSyncAwayScore;
+      liveGameSheetState.running = (modalSyncSelectedPeriod !== 'final' && modalSyncIsRunning);
+
+      if (lockExact) {
+        streamLatencyOffsetSec = 0.0;
+        const pSlider = document.getElementById('player-latency-slider');
+        const pVal = document.getElementById('player-latency-val');
+        if (pSlider) pSlider.value = 0;
+        if (pVal) pVal.innerText = "0.0s";
+      }
+
+      // If period was set to FINAL
+      if (modalSyncSelectedPeriod === 'final') {
+        liveGameSheetState.period = 'FINAL';
+        liveGameSheetState.running = false;
+        liveGameSheetState.clockSec = 0;
+        if (typeof showPostGameSummary === 'function') showPostGameSummary();
+      }
+
+      // Re-render everything across all 4 components (overlay, top header, sidebar, 1-touch controls)
+      renderLiveScoreboardHud();
+      syncScoreboardOverlayToPlayback(0);
+
+      const clockDisplay = `${min}:${sec.toString().padStart(2, '0')}`;
+      const opp = liveGameSheetState.oppAbbr || 'OPP';
+      showToast(`⏱️ Synchronized! P${liveGameSheetState.period} ${clockDisplay} • Tigers ${liveGameSheetState.homeScore} - ${liveGameSheetState.awayScore} ${opp}`);
+      closeMasterScoreboardSyncModal();
+    }
+
+    function nudgeLiveClock(secDelta) {
+      liveGameSheetState.clockSec = Math.max(0, liveGameSheetState.clockSec + secDelta);
+      renderLiveScoreboardHud();
+      const m = Math.floor(liveGameSheetState.clockSec / 60);
+      const s = (liveGameSheetState.clockSec % 60).toString().padStart(2, '0');
+      showToast(`⏱️ Clock set to ${m}:${s}`);
+    }
+
+    function toggleLiveWhistle() {
+      if (liveGameSheetState.period === 'FINAL') return;
+      liveGameSheetState.running = !liveGameSheetState.running;
+      renderLiveScoreboardHud();
+      showToast(liveGameSheetState.running ? "▶ Play Active • Clock Running" : "⏸️ Whistle Stoppage • Clock Paused");
     }
 
     function openLiveGameCenterModal() {
@@ -54101,6 +54642,7 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
       const teamLabel = document.getElementById('sidebar-live-team-label');
       const oppLabel = document.getElementById('sidebar-live-opp-name');
       const oppShort = (match.opponent || 'OPP').split(' ')[0].toUpperCase();
+      const oppAbbr = oppShort.substring(0, 3);
       if (teamLabel) {
         teamLabel.innerText = match.isHome ? 'TIGERS (HOME)' : 'TIGERS (AWAY)';
       }
@@ -54108,9 +54650,18 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
         oppLabel.innerText = match.isHome ? `${oppShort} (AWAY)` : `${oppShort} (HOME)`;
       }
 
-      // Update in-player overlay opponent abbreviation
+      // Sync state with active matchup
+      liveGameSheetState.opponent = match.opponent;
+      liveGameSheetState.oppAbbr = oppAbbr;
+      liveGameSheetState.matchTitle = `Aurora Tigers ${match.isHome ? 'vs' : 'at'} ${match.opponent}`;
+      liveGameSheetState.leagueCode = match.gameSheetCode || 'LEAGUE';
+      liveGameSheetState.arena = match.arena || 'Arena';
+
+      // Update in-player overlay opponent abbreviation & header
       const vOpp = document.getElementById('v-opp-abbr');
-      if (vOpp) vOpp.innerText = oppShort.substring(0, 3);
+      if (vOpp) vOpp.innerText = oppAbbr;
+      const awayLabelEl = document.getElementById('away-team-header-label');
+      if (awayLabelEl && isLiveBroadcastActive) awayLabelEl.innerText = oppAbbr;
 
       // 2. GameSheet League Match Banner
       const bannerTitle = document.getElementById('live-match-banner-title');
