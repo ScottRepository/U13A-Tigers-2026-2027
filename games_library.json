@@ -44,7 +44,7 @@
       "id": "game_A-2-QEqPFqk",
       "title": "6.11.2026 - 0 Tigers Vs. Orillia 9",
       "youtube_video_id": "A-2-QEqPFqk",
-      "date": "2026-11-12",
+      "date": "2026-11-13",
       "opponent": "League Match",
       "periods": {
         "1": 294,
@@ -53,14 +53,14 @@
       },
       "ai_engine": "Google Gemini 3 (gemini-3.5-flash - Visual Anchored)",
       "teamsnap": {
-        "date": "2026-11-11",
-        "time": "6:00 PM",
-        "arena": "8600 McCowan Rd., Markham, ON, L3P3M2, Canada",
-        "address": "8600 McCowan Rd., Markham, ON, L3P3M2, Canada",
-        "maps_url": "https://maps.google.com/?q=8600%20McCowan%20Rd.%2C%20Markham%2C%20ON%2C%20L3P3M2%2C%20Canada",
-        "home_away": "Away",
-        "jersey": "Away (Black)",
-        "is_home": false
+        "date": "2026-11-13",
+        "time": "Game Time",
+        "arena": "Aurora Community Centre - Pad 1",
+        "address": "1 Community Centre Ln, Aurora, ON L4G 7B1",
+        "maps_url": "https://maps.google.com/?q=Aurora+Community+Centre",
+        "home_away": "Home",
+        "jersey": "Home (White)",
+        "is_home": true
       },
       "shifts": [
         {
@@ -2754,7 +2754,7 @@
       "id": "game_pfbgkQG_vYQ",
       "title": "1.11.2026 - GOLD MEDAL GAME - Tigers 3 - Tewksbury 7",
       "youtube_video_id": "pfbgkQG_vYQ",
-      "date": "2026-11-12",
+      "date": "2026-11-13",
       "opponent": "League Match",
       "periods": {
         "1": 1284,
@@ -2763,14 +2763,14 @@
       },
       "ai_engine": "Google Gemini 3 (gemini-3.5-flash - Visual Anchored)",
       "teamsnap": {
-        "date": "2026-11-11",
-        "time": "6:00 PM",
-        "arena": "8600 McCowan Rd., Markham, ON, L3P3M2, Canada",
-        "address": "8600 McCowan Rd., Markham, ON, L3P3M2, Canada",
-        "maps_url": "https://maps.google.com/?q=8600%20McCowan%20Rd.%2C%20Markham%2C%20ON%2C%20L3P3M2%2C%20Canada",
-        "home_away": "Away",
-        "jersey": "Away (Black)",
-        "is_home": false
+        "date": "2026-11-13",
+        "time": "Game Time",
+        "arena": "Aurora Community Centre - Pad 1",
+        "address": "1 Community Centre Ln, Aurora, ON L4G 7B1",
+        "maps_url": "https://maps.google.com/?q=Aurora+Community+Centre",
+        "home_away": "Home",
+        "jersey": "Home (White)",
+        "is_home": true
       },
       "shifts": [
         {
@@ -4906,7 +4906,7 @@
       "id": "game_BYQB0f5l8IY",
       "title": "6.11.2026 - 0 Tigers Vs. Orillia 9",
       "youtube_video_id": "BYQB0f5l8IY",
-      "date": "2026-11-11",
+      "date": "2026-11-13",
       "opponent": "League Match",
       "periods": {
         "1": 0,
@@ -4915,14 +4915,14 @@
       },
       "ai_engine": "Proportional Line Engine",
       "teamsnap": {
-        "date": "2026-11-11",
-        "time": "6:00 PM",
-        "arena": "8600 McCowan Rd., Markham, ON, L3P3M2, Canada",
-        "address": "8600 McCowan Rd., Markham, ON, L3P3M2, Canada",
-        "maps_url": "https://maps.google.com/?q=8600%20McCowan%20Rd.%2C%20Markham%2C%20ON%2C%20L3P3M2%2C%20Canada",
-        "home_away": "Away",
-        "jersey": "Away (Black)",
-        "is_home": false
+        "date": "2026-11-13",
+        "time": "Game Time",
+        "arena": "Aurora Community Centre - Pad 1",
+        "address": "1 Community Centre Ln, Aurora, ON L4G 7B1",
+        "maps_url": "https://maps.google.com/?q=Aurora+Community+Centre",
+        "home_away": "Home",
+        "jersey": "Home (White)",
+        "is_home": true
       },
       "shifts": [
         {
