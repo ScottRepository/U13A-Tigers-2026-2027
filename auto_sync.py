@@ -306,13 +306,17 @@ GEMINI_RESPONSE_SCHEMA = {
                         },
                         "required": ["attempted", "successful", "breakout_type", "turnover_location"]
                     },
+                    "goal_scored": {
+                        "type": "string",
+                        "enum": ["None", "Tigers Goal", "Opponent Goal"]
+                    },
                     "confidence": {"type": "integer"},
                     "coach_notes": {"type": "string"}
                 },
                 "required": [
                     "shift_id", "period", "start_seconds", "end_seconds",
                     "display_time", "player_ids", "strength_state",
-                    "primary_zone", "breakout", "confidence", "coach_notes"
+                    "primary_zone", "breakout", "goal_scored", "confidence", "coach_notes"
                 ]
             }
         }
@@ -415,7 +419,15 @@ DETECTION & CLASSIFICATION RULES:
    - breakout_type: "Rim", "D-to-D", "Wheel", "Chip Off Glass", or "None".
    - turnover_location: "Behind Goal Line", "Half-Wall", "Blue Line", or "None".
 
-6. COACHING NOTES:
+6. GOAL DETECTION & VERIFICATION (`goal_scored`: "None", "Tigers Goal", or "Opponent Goal"):
+   - Determine whether a goal was scored at the end of the shift using these 4 visual & scoreboard anchors:
+     * Anchor A (XbotGo Falcon On-Screen Scoreboard): Many game videos have a burned-in bottom scoreboard (`u13A Tigers [X] | [Period] | [Y] [Opponent]`). Watch for the exact timestamp where either score increments!
+     * Anchor B (Net & Goalie Pad Anchor): A goal in the Offensive Zone (opposing goalie's net) is a `"Tigers Goal"`. A goal in the Defensive Zone (net guarded by Tigers goalie #13 in Yellow/White pads or #98 in Red/White pads) is an `"Opponent Goal"`.
+     * Anchor C (Referee Signal & Celebration): Referee pointing arm directly at the net + 5 skaters grouping together for glove bumps.
+     * Anchor D (Center Ice Faceoff Proof): Every goal in hockey is immediately followed by a puck drop at the Center Ice red dot (`faceoff_location = "Center Ice"`).
+   - Also ensure the total number of `"Tigers Goal"` and `"Opponent Goal"` shifts across the game matches the final score in `{game_title}`.
+
+7. COACHING NOTES:
    - Provide 1 concise, actionable coaching sentence summarizing tactical execution on that shift.
 
 Return strictly valid JSON adhering to the configured schema.
@@ -423,14 +435,16 @@ Return strictly valid JSON adhering to the configured schema.
 
 def select_latest_gemini_model(client: Any) -> List[str]:
     """
-    Returns prioritized list of the latest Gemini 3.x / 3.1 models available on the API key,
-    falling back to gemini-3-flash-preview and gemini-2.5-flash.
+    Returns prioritized list of the latest Gemini models available on the API key,
+    preferring Gemini 4 and latest Gemini 3.x releases before falling back.
     """
     preferred = [
-        "gemini-3.5-flash",
+        "gemini-4-hydrogen",
+        "gemini-4-argon",
         "gemini-3.8-flash",
         "gemini-3.7-flash",
         "gemini-3.6-flash",
+        "gemini-3.5-flash",
         "gemini-3.1-pro-preview",
         "gemini-2.5-pro",
         "gemini-2.5-flash",
@@ -441,14 +455,14 @@ def select_latest_gemini_model(client: Any) -> List[str]:
             name = getattr(m, "name", "") or ""
             if name.startswith("models/"):
                 name = name.replace("models/", "", 1)
-            if "gemini-3" in name or "gemini-2.5" in name:
+            if "gemini-4" in name or "gemini-3" in name or "gemini-2.5" in name:
                 available.add(name)
         ranked = [m for m in preferred if m in available]
         if ranked:
             return ranked
     except Exception:
         pass
-    return ["gemini-3.5-flash", "gemini-3.8-flash", "gemini-2.5-flash"]
+    return ["gemini-4-hydrogen", "gemini-3.8-flash", "gemini-3.5-flash", "gemini-2.5-flash"]
 
 def invoke_gemini_with_retry(client: Any, video_part: Any, prompt: str) -> tuple[Optional[Dict[str, Any]], str]:
     from google.genai import types
@@ -534,7 +548,7 @@ def process_video_with_gemini(
         ]
         segmented_shifts: List[Dict[str, Any]] = []
         segmented_periods: Dict[str, int] = {"1": warmup_trim, "2": p2_start, "3": p3_start}
-        model_used_final = "gemini-3.5-flash"
+        model_used_final = select_latest_gemini_model(client)[0]
 
         for p_num, st_off, en_off in segments:
             seg_part = types.Part(
@@ -669,6 +683,9 @@ def transform_gemini_to_library_schema(
             "breakout_type": bo_raw.get("breakout_type") or "None",
             "turnover_location": bo_raw.get("turnover_location") or "None",
         }
+        goal_scored = s.get("goal_scored") or "None"
+        is_tigers_goal = (goal_scored == "Tigers Goal")
+        is_opp_goal = (goal_scored == "Opponent Goal")
         shifts.append({
             "shift_id": idx,
             "period": period_num,
@@ -680,6 +697,10 @@ def transform_gemini_to_library_schema(
             "strength_state": s.get("strength_state") or "5v5",
             "primary_zone": s.get("primary_zone") or "Neutral Zone",
             "breakout": bo,
+            "goal_scored": goal_scored,
+            "is_tigers_goal": is_tigers_goal,
+            "is_opp_goal": is_opp_goal,
+            "goal_verified": bool(is_tigers_goal or is_opp_goal),
             "confidence": max(1, min(100, int(s.get("confidence") or 85))),
             "coach_notes": s.get("coach_notes") or f"Period {period_num} shift sequence",
         })
@@ -1155,8 +1176,9 @@ def run_sync():
             periods_detected, shifts_list, players_matrix, clips_matrix, analytics_matrix = transform_gemini_to_library_schema(
                 gemini_result, true_duration
             )
-            model_used = gemini_result.get("_model_used") or "gemini-3.5-flash"
-            ai_engine_used = f"Google Gemini 3 ({model_used} - Visual Anchored)"
+            model_used = gemini_result.get("_model_used") or "gemini-3.8-flash"
+            engine_gen = "Gemini 4" if "gemini-4" in model_used else "Gemini 3"
+            ai_engine_used = f"Google {engine_gen} ({model_used} - Visual Anchored)"
             logger.info(f"🎯 Successfully parsed {len(shifts_list)} shifts via {model_used} for {vid_id} ({real_title})!")
         else:
             existing_g = existing_games_by_vid.get(vid_id)
