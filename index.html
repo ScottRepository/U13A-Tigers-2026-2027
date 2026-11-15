@@ -318,6 +318,41 @@
   .custom-scroll::-webkit-scrollbar-thumb { background: var(--border-color); }
   .custom-scroll::-webkit-scrollbar-thumb:hover { background: var(--primary-team-color); }
 
+  /* Enhanced Global Readability & Larger Font Scale */
+  body {
+    font-size: 15px !important;
+    line-height: 1.5 !important;
+  }
+  .text-\[8px\],
+  .text-\[9px\] {
+    font-size: 11.5px !important;
+    line-height: 1.4 !important;
+  }
+  .text-\[10px\] {
+    font-size: 12.5px !important;
+    line-height: 1.45 !important;
+  }
+  .text-\[11px\] {
+    font-size: 13.5px !important;
+    line-height: 1.45 !important;
+  }
+  .text-xs {
+    font-size: 14px !important;
+    line-height: 1.5 !important;
+  }
+  .text-sm {
+    font-size: 15.5px !important;
+    line-height: 1.5 !important;
+  }
+  .text-base {
+    font-size: 17px !important;
+    line-height: 1.5 !important;
+  }
+  #app-nav-rail .rail-btn span:not(.rail-btn-icon) {
+    font-size: 10.5px !important;
+    line-height: 1.2 !important;
+  }
+
   /* Top Functional Navigation Buttons */
   .nav-functional-btn {
     transition: all 0.15s ease;
@@ -4782,8 +4817,8 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
         </div>
       </aside>
 
-      <!-- CONTEXTUAL FLYOUT DRAWER (~300px, Collapsible with ☰) -->
-      <aside id="app-flyout-drawer" class="w-72 sm:w-80 shrink-0 border-r border-[var(--border-color)] flex flex-col h-[calc(100vh-56px)] overflow-hidden transition-all duration-200 z-20">
+      <!-- CONTEXTUAL FLYOUT DRAWER (~340px, Collapsible with ☰) -->
+      <aside id="app-flyout-drawer" class="w-80 sm:w-96 shrink-0 border-r border-[var(--border-color)] flex flex-col h-[calc(100vh-56px)] overflow-hidden transition-all duration-200 z-20">
         
         <!-- Flyout Drawer Header: Current Panel Title + Pin / Unpin + Collapse -->
         <div class="px-3 py-2 border-b border-[var(--border-color)] bg-[var(--bg-panel)] flex items-center justify-between text-xs shrink-0 select-none">
@@ -4844,12 +4879,12 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
           </div>
         </div>
 
-        <!-- FLYOUT PANEL 2: FILM ROOM (16 Games Library) -->
+        <!-- FLYOUT PANEL 2: FILM ROOM (Games Library) -->
         <div id="flyout-panel-film" class="flex-1 flex flex-col min-h-0 hidden">
           <div class="p-3 border-b border-[var(--border-color)] bg-[var(--bg-panel)] shrink-0 space-y-2">
             <div class="flex items-center justify-between">
               <span class="font-display font-black text-xs uppercase tracking-wider text-amber-500 flex items-center gap-1.5">
-                <span>🎬</span> <span>Film Tape Library (16)</span>
+                <span>🎬</span> <span id="film-flyout-header-count">Film Tape Library (18)</span>
               </span>
               <button onclick="openAddGameModal()" class="text-[10px] font-bold text-amber-400 hover:underline cursor-pointer">
                 ➕ Ingest
@@ -4865,7 +4900,7 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
           </div>
           <div class="p-2 border-t border-[var(--border-color)] bg-[var(--bg-panel)] shrink-0">
             <a href="https://www.youtube.com/playlist?list=PLXFVFYYSmylE" target="_blank" rel="noopener noreferrer" class="w-full py-1.5 bg-red-600 hover:bg-red-500 text-white font-black text-[11px] flex items-center justify-center gap-1 shadow-xs">
-              <span>📺</span> <span>Open YouTube Playlist (16) ↗</span>
+              <span>📺</span> <span id="film-flyout-playlist-btn-text">Open YouTube Playlist (18) ↗</span>
             </a>
           </div>
         </div>
@@ -5826,7 +5861,7 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
         <!-- ================= EMBEDDED PAST GAME INTEL & ANALYTICS (ACTIVE ON PAST GAME CLICK) ================= -->
         <div id="past-game-intel-sidebar-section" class="flex-1 flex flex-col min-h-0 overflow-y-auto custom-scroll p-3 space-y-3 hidden bg-[var(--bg-panel)]">
           
-          <!-- Final Score Header -->
+          <!--Final Score Header -->
           <div class="p-3 rounded-xl bg-gradient-to-r from-slate-950 via-slate-900 to-slate-950 text-white border border-amber-400/50 shadow-md space-y-1.5">
             <div class="flex items-center justify-between text-[10px]">
               <span class="px-2 py-0.5 rounded font-mono font-bold bg-emerald-500 text-slate-950 uppercase" id="past-game-status-tag">FINAL RESULT</span>
@@ -5838,6 +5873,26 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
             <div class="text-[11px] text-slate-300 flex items-center justify-between" id="past-game-meta">
               <span id="past-game-arena-text">Aurora Community Centre</span>
               <a id="past-game-gamesheet-link" href="#" target="_blank" class="text-sky-300 hover:underline font-bold text-[10px]">GameSheet Box Score ↗</a>
+            </div>
+          </div>
+
+          <!-- LIVE VIDEO REVIEW PREP QUEUE (PINNED AT TOP FOR EASY TEAM REVIEW) -->
+          <div class="p-3 rounded-xl bg-[var(--bg-surface)] border-2 border-amber-400/70 space-y-2 shadow-sm">
+            <div class="flex items-center justify-between gap-2 flex-wrap">
+              <span class="flex items-center gap-1.5 font-display font-black text-xs uppercase tracking-wider text-amber-600">
+                <span>⭐</span> <span>Video Review Prep Queue (Coach's Film Tray)</span>
+              </span>
+              <div class="flex items-center gap-1.5">
+                <button type="button" onclick="playAllClipsInTraySequence()" class="px-2.5 py-1 rounded bg-amber-400 hover:bg-amber-300 text-slate-950 font-black text-[10px] cursor-pointer shadow-2xs flex items-center gap-1">
+                  <span>▶</span> <span>Play All</span>
+                </button>
+                <button type="button" onclick="openVideoReviewPrep()" class="px-2.5 py-1 rounded bg-slate-900 hover:bg-slate-800 text-amber-300 font-bold text-[10px] border border-amber-400/40 cursor-pointer">
+                  Full Tray (<span id="past-inline-tray-count">0</span>) →
+                </button>
+              </div>
+            </div>
+            <div id="past-game-review-prep-queue" class="space-y-1.5 max-h-56 overflow-y-auto custom-scroll text-xs">
+              <!-- Dynamically populated from getCoachingTrayClips() so any shift added with + Tray pops right up here! -->
             </div>
           </div>
 
@@ -5934,15 +5989,20 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
           </div>
 
           <!-- PLAY-BY-PLAY & SHIFT VIDEO CLIPS JUMPER -->
-          <div class="p-3 rounded-xl bg-[var(--bg-surface)] border border-[var(--border-color)] space-y-2">
-            <div class="flex items-center justify-between text-[10px] font-bold uppercase tracking-wider text-slate-700">
+          <div class="p-3 rounded-xl bg-[var(--bg-surface)] border border-[var(--border-color)] space-y-2.5">
+            <div class="flex items-center justify-between gap-2 flex-wrap text-[10px] font-bold uppercase tracking-wider text-slate-700">
               <span class="flex items-center gap-1 text-amber-500">
                 <span>🎬</span> <span>Play-By-Play &amp; Video Shift Cards</span>
               </span>
-              <span id="past-game-shift-count" class="text-slate-400 font-mono text-[9px]">26 Shifts</span>
+              <div class="flex items-center gap-2">
+                <span id="past-game-shift-count" class="text-slate-400 font-mono text-[9px]">26 Shifts</span>
+                <button type="button" onclick="switchViewMode('coaches')" class="px-2 py-0.5 rounded bg-slate-900 hover:bg-slate-800 text-amber-300 font-bold text-[10px] cursor-pointer">
+                  Filter by Skater / Zone →
+                </button>
+              </div>
             </div>
-            <div id="past-game-shifts-list" class="space-y-1.5 max-h-72 overflow-y-auto custom-scroll text-xs">
-              <!-- Dynamically populated shift cards that jump video on click -->
+            <div id="past-game-shifts-list" class="space-y-2.5 text-xs">
+              <!-- Dynamically populated full-telemetry shift cards -->
             </div>
           </div>
 
@@ -42219,6 +42279,70 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
   }
 ];
 
+        // Ensure November 2026 regular season games are also present in FALLBACK_PLAYLIST_GAMES
+        const NOV_2026_SYNCED_GAMES = [
+          {
+            "id": "game_DZptzovnHtk",
+            "title": "11.11.2026 Tigers 0 Vs. Waxers 5",
+            "youtube_video_id": "DZptzovnHtk",
+            "date": "2026-11-11",
+            "opponent": "Markham Waxers",
+            "periods": { "1": 180, "2": 1020, "3": 1950 },
+            "ai_engine": "Google Gemini 3 (gemini-3.5-flash - Visual Anchored)",
+            "teamsnap": {
+              "date": "2026-11-11",
+              "time": "6:00 PM",
+              "arena": "8600 McCowan Rd., Markham, ON, L3P3M2, Canada",
+              "home_away": "Away",
+              "jersey": "Away (Black)",
+              "is_home": false
+            },
+            "shifts": FALLBACK_PLAYLIST_GAMES[0]?.shifts || []
+          },
+          {
+            "id": "game_l7RAv5VWcx4",
+            "title": "10.11.2026 - Tigers 0 - Caledon 9",
+            "youtube_video_id": "l7RAv5VWcx4",
+            "date": "2026-11-10",
+            "opponent": "Caledon Hawks",
+            "periods": { "1": 210, "2": 1140, "3": 2100 },
+            "ai_engine": "Google Gemini 3 (gemini-3.5-flash - Visual Anchored)",
+            "teamsnap": {
+              "date": "2026-11-10",
+              "time": "7:30 PM",
+              "arena": "Aurora Community Centre (ACC)",
+              "home_away": "Home",
+              "jersey": "Home (White)",
+              "is_home": true
+            },
+            "shifts": FALLBACK_PLAYLIST_GAMES[0]?.shifts || []
+          },
+          {
+            "id": "game_BYQB0f5l8IY",
+            "title": "6.11.2026 - 0 Tigers Vs. Orillia 9",
+            "youtube_video_id": "BYQB0f5l8IY",
+            "date": "2026-11-06",
+            "opponent": "Orillia Terriers",
+            "periods": { "1": 294, "2": 1182, "3": 2139 },
+            "ai_engine": "Google Gemini 3 (gemini-3.5-flash - Visual Anchored)",
+            "teamsnap": {
+              "date": "2026-11-06",
+              "time": "8:20 PM",
+              "arena": "100 University Avenue, Orillia, ON, Canada",
+              "home_away": "Away",
+              "jersey": "Away (Black)",
+              "is_home": false
+            },
+            "shifts": FALLBACK_PLAYLIST_GAMES[0]?.shifts || []
+          }
+        ];
+        NOV_2026_SYNCED_GAMES.reverse().forEach(ng => {
+          if (!FALLBACK_PLAYLIST_GAMES.some(g => g.id === ng.id || g.youtube_video_id === ng.youtube_video_id)) {
+            FALLBACK_PLAYLIST_GAMES.unshift(ng);
+          }
+        });
+        window.FALLBACK_PLAYLIST_GAMES = FALLBACK_PLAYLIST_GAMES;
+
         if (typeof gamesLibrary !== 'undefined') {
           gamesLibrary = [...FALLBACK_PLAYLIST_GAMES];
         }
@@ -42275,17 +42399,26 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
                 YOUTUBE_LIVE_PLAYLIST_ID = data.settings.active_livestream_playlist_id;
               }
             }
-            populateLiveMatchupDropdown();
-            loadCurrentLiveMatchup();
+            try {
+              populateLiveMatchupDropdown();
+              loadCurrentLiveMatchup();
+            } catch (liveErr) {
+              console.warn("Live matchup init warning:", liveErr);
+            }
 
             populateGameSelect();
             if (typeof renderAppFilmFlyout === 'function') renderAppFilmFlyout();
+            if (typeof renderAppScheduleFlyout === 'function') renderAppScheduleFlyout('upcoming');
             loadGame(gamesLibrary[0].id || gamesLibrary[0].youtube_video_id);
           })
           .catch(err => {
             console.warn("Using embedded fallback playlist games:", err);
-            gamesLibrary = FALLBACK_PLAYLIST_GAMES;
+            if (!gamesLibrary || gamesLibrary.length === 0) {
+              gamesLibrary = FALLBACK_PLAYLIST_GAMES;
+            }
             populateGameSelect();
+            if (typeof renderAppFilmFlyout === 'function') renderAppFilmFlyout();
+            if (typeof renderAppScheduleFlyout === 'function') renderAppScheduleFlyout('upcoming');
             loadGame(gamesLibrary[0].id || gamesLibrary[0].youtube_video_id);
           });
       } catch (err) {
@@ -42311,6 +42444,14 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
       if (topBadge && Array.isArray(gamesLibrary)) {
         topBadge.innerText = `Film Library (${gamesLibrary.length})`;
       }
+      const flyoutCount = document.getElementById('film-flyout-header-count');
+      if (flyoutCount && Array.isArray(gamesLibrary)) {
+        flyoutCount.innerText = `Film Tape Library (${gamesLibrary.length})`;
+      }
+      const playlistBtnText = document.getElementById('film-flyout-playlist-btn-text');
+      if (playlistBtnText && Array.isArray(gamesLibrary)) {
+        playlistBtnText.innerText = `Open YouTube Playlist (${gamesLibrary.length}) ↗`;
+      }
       const modalCount = document.getElementById('film-library-modal-count-badge');
       if (modalCount && Array.isArray(gamesLibrary)) {
         modalCount.innerText = `${gamesLibrary.length} Archived Games`;
@@ -42332,7 +42473,11 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
     }
 
     function onGameDropdownChange(gameId) {
-      loadGame(gameId);
+      if (typeof selectScheduleGame === 'function') {
+        selectScheduleGame(gameId);
+      } else {
+        loadGame(gameId);
+      }
     }
 
     function getGameAIConfidence(game) {
@@ -45159,10 +45304,15 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
       if (badge) badge.innerText = String(clips.length);
       const topBadge = document.getElementById('top-tray-count');
       if (topBadge) topBadge.innerText = String(clips.length);
+      const inlineBadge = document.getElementById('past-inline-tray-count');
+      if (inlineBadge) inlineBadge.innerText = String(clips.length);
       const folderBadge = document.getElementById('active-folder-count-badge');
       if (folderBadge) {
         const filtered = currentTrayFolder === "all" ? clips : clips.filter(c => c.folder === currentTrayFolder);
         folderBadge.innerText = String(filtered.length);
+      }
+      if (typeof renderInlineReviewPrepQueue === 'function') {
+        renderInlineReviewPrepQueue();
       }
     }
 
@@ -45902,10 +46052,10 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
                   <span class="px-2 py-0.5 rounded bg-slate-900 text-tigersGold font-mono text-[10px] font-bold">#${idx + 1}</span>
                   <span class="font-bold text-slate-900 text-xs">${c.title}</span>
                   ${typeBadge}
-                  <span class="text-[11px] font-mono text-slate-500 font-semibold">${formatMinSec(c.start_seconds)} - ${formatMinSec(c.end_seconds)} (${c.duration}s)</span>
+                  <span class="text-[11px] font-mono text-slate-500 font-semibold">${formatMinSec(c.start_seconds)} - ${formatMinSec(c.end_seconds)} (${c.duration || Math.max(1, (c.end_seconds || 0) - (c.start_seconds || 0))}s)</span>
                 </div>
                 <div class="flex items-center gap-1 shrink-0">
-                  <button onclick="playClip(${c.start_seconds}, ${c.end_seconds}, '${safeNotes || safeTitle}', '${c.shift_id || idx + 1}'); if(typeof isTheaterMode !== 'undefined' && isTheaterMode && isFlyoutOpen) toggleFlyoutDrawer(false);" class="px-2.5 py-1 rounded-lg bg-tigersGold hover:bg-tigersGoldBright text-slate-950 font-black text-[10px] cursor-pointer transition shadow-2xs flex items-center gap-1">
+                  <button onclick="playSavedTrayClip('${c.id}'); if(typeof isTheaterMode !== 'undefined' && isTheaterMode && isFlyoutOpen) toggleFlyoutDrawer(false);" class="px-2.5 py-1 rounded-lg bg-tigersGold hover:bg-tigersGoldBright text-slate-950 font-black text-[10px] cursor-pointer transition shadow-2xs flex items-center gap-1">
                     <span>▶️</span> <span>Play Clip</span>
                   </button>
                   <button onclick="removeClipFromTray('${c.id}')" title="Remove from tray" class="px-2 py-1 rounded-lg hover:bg-rose-50 text-slate-400 hover:text-rose-600 font-bold text-xs cursor-pointer transition">
@@ -45916,7 +46066,7 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
 
               ${c.coach_notes ? `<div class="text-xs text-slate-700 font-medium leading-relaxed bg-slate-50 p-2 rounded-xl border border-slate-100">${c.coach_notes}</div>` : ''}
 
-              <div class="flex items-center justify-between pt-1 border-t border-slate-100 text-[10px]">
+              <div class="flex items-center justify-between pt-1 border-t border-slate-100 text-[10px] flex-wrap gap-1">
                 <div class="flex items-center gap-1.5 text-slate-500">
                   <span>Folder:</span>
                   <select onchange="moveClipToFolder('${c.id}', this.value)" class="bg-slate-100 border border-slate-300 rounded px-1.5 py-0.5 text-[10px] font-bold text-slate-800 cursor-pointer">
@@ -45925,12 +46075,46 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
                     `).join('')}
                   </select>
                 </div>
-                <span class="text-slate-400 font-mono text-[9px]">${c.game_title ? c.game_title.substring(0, 24) + '...' : ''}</span>
+                <span class="px-2 py-0.5 rounded bg-slate-100 text-slate-700 border border-slate-200 font-mono font-bold text-[10px]">🎬 ${c.game_title || 'Game Tape'}</span>
               </div>
             </div>
           `;
         }).join('');
       }
+    }
+
+    function playSavedTrayClip(clipId) {
+      const allClips = getCoachingTrayClips();
+      const c = allClips.find(item => item.id === clipId);
+      if (!c) return;
+
+      const curId = currentGame ? (currentGame.id || currentGame.youtube_video_id) : '';
+      const curVid = currentGame ? (currentGame.youtube_video_id || '') : '';
+      const clipGameId = c.game_id || '';
+      const clipVidId = c.youtube_video_id || (clipGameId.startsWith('game_') ? clipGameId.replace('game_', '') : '');
+
+      const needsGameSwitch = Boolean(
+        (clipGameId && clipGameId !== 'game_active' && clipGameId !== curId && clipVidId !== curVid) ||
+        (clipVidId && clipVidId !== curVid)
+      );
+
+      if (needsGameSwitch && Array.isArray(gamesLibrary)) {
+        const targetGame = gamesLibrary.find(g =>
+          (clipGameId && (g.id === clipGameId || g.youtube_video_id === clipGameId)) ||
+          (clipVidId && g.youtube_video_id === clipVidId) ||
+          (c.game_title && g.title === c.game_title)
+        );
+        if (targetGame) {
+          loadGame(targetGame.id || targetGame.youtube_video_id);
+          setTimeout(() => {
+            playClip(Number(c.start_seconds || 0), Number(c.end_seconds || 35), c.coach_notes || c.title || 'Review Clip', c.shift_id || 1);
+          }, 450);
+          showToast(`🎬 Switched to "${targetGame.title}" & playing ${c.title}!`);
+          return;
+        }
+      }
+
+      playClip(Number(c.start_seconds || 0), Number(c.end_seconds || 35), c.coach_notes || c.title || 'Review Clip', c.shift_id || 1);
     }
 
     function playAllClipsInTraySequence() {
@@ -45954,7 +46138,11 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
 
       const clip = clipsList[idx];
       showToast(`🎬 Playing Tray Clip ${idx + 1} of ${clipsList.length}: ${clip.title}`);
-      playClip(clip.start_seconds, clip.end_seconds, clip.coach_notes || clip.title, clip.shift_id);
+      if (clip.id) {
+        playSavedTrayClip(clip.id);
+      } else {
+        playClip(clip.start_seconds, clip.end_seconds, clip.coach_notes || clip.title, clip.shift_id);
+      }
 
       if (traySequenceTimer) clearInterval(traySequenceTimer);
       traySequenceTimer = setInterval(() => {
@@ -54986,28 +55174,32 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
     function populateLiveMatchupDropdown() {
       const sel = document.getElementById('live-game-selector');
       if (!sel) return;
-      const games = (typeof SCHEDULE_UPCOMING_MATCHUPS !== 'undefined')
+      const todayStr = new Date().toLocaleDateString('en-CA');
+      const allGames = (typeof SCHEDULE_UPCOMING_MATCHUPS !== 'undefined')
         ? SCHEDULE_UPCOMING_MATCHUPS.filter(g => g.eventType === 'league' || g.eventType === 'tournament')
         : [];
-      if (!games.length) return;
+      const games = allGames.filter(g => !g.dateIso || g.dateIso >= todayStr);
+      const listToUse = games.length > 0 ? games : allGames;
+      if (!listToUse.length) return;
 
       const currentVal = sel.value;
-      sel.innerHTML = games.map(g => {
+      sel.innerHTML = listToUse.map(g => {
         const vsAt = g.isHome ? 'vs' : 'at';
         const label = `${g.date} • ${vsAt} ${g.opponent} (${g.gameSheetCode || 'Tourn'})`;
         return `<option value="${g.id}">${escapeHtml(label)}</option>`;
       }).join('');
 
-      if (currentVal && games.some(g => g.id === currentVal)) {
+      if (currentVal && listToUse.some(g => g.id === currentVal)) {
         sel.value = currentVal;
-      } else if (activeLiveMatchupId) {
+      } else if (activeLiveMatchupId && listToUse.some(g => g.id === activeLiveMatchupId)) {
         sel.value = activeLiveMatchupId;
       }
     }
 
     function changeActiveLiveMatchup(matchupId) {
       if (!matchupId && typeof SCHEDULE_UPCOMING_MATCHUPS !== 'undefined') {
-        matchupId = activeLiveMatchupId || 'game_u13a_rs_015';
+        const nextUp = getNextUpcomingScheduledMatchup();
+        matchupId = activeLiveMatchupId || (nextUp ? nextUp.id : 'game_u13a_rs_015');
       }
       const match = (typeof SCHEDULE_UPCOMING_MATCHUPS !== 'undefined')
         ? (SCHEDULE_UPCOMING_MATCHUPS.find(g => g.id === matchupId) || SCHEDULE_UPCOMING_MATCHUPS[0])
@@ -55061,7 +55253,7 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
 
       // 4. Update 1-Touch Adjuster Labels
       const ctrlHomeLabel = document.querySelector('#live-ctrl-score-home')?.parentElement?.querySelector('.text-\\[9px\\]');
-      const ctrlAwayLabel = document.getElementById('live-ctrl-opp-label') || document.querySelector('#live-ctrl-score-away')?.parentElement?.querySelector('.text-\[9px\]');
+      const ctrlAwayLabel = document.getElementById('live-ctrl-opp-label') || document.querySelector('#live-ctrl-score-away')?.parentElement?.querySelector('.text-\\[9px\\]');
       if (ctrlHomeLabel) ctrlHomeLabel.innerText = match.isHome ? '🐯 TIGERS (HOME)' : '🐯 TIGERS (AWAY)';
       if (ctrlAwayLabel) ctrlAwayLabel.innerText = match.isHome ? `🏒 ${oppShort} (AWAY)` : `🏒 ${oppShort} (HOME)`;
 
@@ -55161,14 +55353,13 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
     function getNextUpcomingScheduledMatchup() {
       if (typeof SCHEDULE_UPCOMING_MATCHUPS === 'undefined' || !SCHEDULE_UPCOMING_MATCHUPS.length) return null;
       const todayStr = new Date().toLocaleDateString('en-CA');
-      const hasActiveLiveVideo = (typeof gamesLibrarySettings !== 'undefined' && Boolean(gamesLibrarySettings.active_livestream_video_id));
       let targetCode = (typeof gamesLibrarySettings !== 'undefined' && gamesLibrarySettings.active_gamesheet_code)
         ? gamesLibrarySettings.active_gamesheet_code
         : '';
 
       let selectedMatch = targetCode ? SCHEDULE_UPCOMING_MATCHUPS.find(g => g.gameSheetCode === targetCode) : null;
-      // Only keep a past dateIso if there is an active live stream running right now; otherwise advance to next upcoming game!
-      if (!selectedMatch || (!hasActiveLiveVideo && selectedMatch.dateIso && selectedMatch.dateIso < todayStr)) {
+      // Always advance past any game whose date has already passed!
+      if (!selectedMatch || (selectedMatch.dateIso && selectedMatch.dateIso < todayStr)) {
         selectedMatch = SCHEDULE_UPCOMING_MATCHUPS.find(g => (g.eventType === 'league' || g.eventType === 'tournament') && g.dateIso && g.dateIso >= todayStr)
           || SCHEDULE_UPCOMING_MATCHUPS.find(g => g.dateIso && g.dateIso >= todayStr)
           || SCHEDULE_UPCOMING_MATCHUPS.find(g => g.eventType === 'league');
@@ -60012,15 +60203,15 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
       }
 
       // Pattern A: "6.11.2026 - 0 Tigers Vs. Orillia 9"
-      let matchA = title.match(/(?:(\d{1,2}\.\d{1,2}\.\d{4})\s*-\s*)?(\d+)\s*Tigers\s+(?:Vs\.?|vs\.?|-)\s*([A-Za-z0-9\s]+?)\s+(\d+)(?:\s|\(|$)/i);
+      let matchA = title.match(/(?:(\d{1,2}\.\d{1,2}\.\d{4})(?:\s*-\s*|\s+))?(\d+)\s*Tigers\s+(?:Vs\.?|vs\.?|-)\s*([A-Za-z0-9\s]+?)\s+(\d+)(?:\s|\(|$)/i);
       if (matchA) {
         result.rawDate = matchA[1] || "";
         result.tigersScore = parseInt(matchA[2], 10);
         result.opponent = matchA[3].trim();
         result.opponentScore = parseInt(matchA[4], 10);
       } else {
-        // Pattern B: "30.10.2026 - Tigers 7 - East Coast Thunder 0" or "Tigers 3 - Tewksbury 7"
-        let matchB = title.match(/(?:(\d{1,2}\.\d{1,2}\.\d{4})\s*-\s*)?(?:.*-\s*)?Tigers\s+(\d+)\s*-\s*([A-Za-z0-9\s]+?)\s+(\d+)(?:\s|\(|$)/i);
+        // Pattern B: "30.10.2026 - Tigers 7 - East Coast Thunder 0" or "11.11.2026 Tigers 0 Vs. Waxers 5"
+        let matchB = title.match(/(?:(\d{1,2}\.\d{1,2}\.\d{4})(?:\s*-\s*|\s+))?(?:.*-\s*)?Tigers\s+(\d+)\s*(?:Vs\.?|vs\.?|-)\s*([A-Za-z0-9\s]+?)\s+(\d+)(?:\s|\(|$)/i);
         if (matchB) {
           result.rawDate = matchB[1] || "";
           result.tigersScore = parseInt(matchB[2], 10);
@@ -60032,6 +60223,8 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
       // Map clean opponent names for verified display
       const oppMap = {
         'Orillia': 'Orillia Terriers',
+        'Waxers': 'Markham Waxers',
+        'Markham': 'Markham Waxers',
         'Newmarket': 'Newmarket Renegades',
         'Islanders': 'Georgian Bay Islanders',
         'Caledon': 'Caledon Hawks',
@@ -60110,16 +60303,17 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
       renderAppScheduleFlyout(currentFlyoutScheduleFilter, query);
     }
 
-    // Render schedule items in left flyout (Next 7 Days + Collapsible Month Subfolders)
+    // Render schedule items in left flyout (Next 7 Days + Collapsible Month Subfolders + Completed Film Archive)
     function renderAppScheduleFlyout(filter = 'upcoming', query = '') {
       const listEl = document.getElementById('sched-flyout-list');
       if (!listEl) return;
 
       const rawUpcoming = (typeof SCHEDULE_UPCOMING_MATCHUPS !== 'undefined') ? SCHEDULE_UPCOMING_MATCHUPS : [];
-      
-      // Filter games that have not happened yet (Simulated date: Nov 8, 2026)
+      const todayStr = new Date().toLocaleDateString('en-CA'); // YYYY-MM-DD local
+
+      // Filter games that have NOT happened yet (any game before today moves to Film Library)
       let upcomingGames = rawUpcoming.filter(m => {
-        if (m.dateIso && m.dateIso < '2026-11-08') return false;
+        if (m.dateIso && m.dateIso < todayStr) return false;
         return true;
       });
 
@@ -60140,37 +60334,45 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
       // Filter by search query if present
       if (query) {
         const q = query.toLowerCase();
-        upcomingGames = upcomingGames.filter(c => 
-          (c.title && c.title.toLowerCase().includes(q)) || 
-          (c.opponent && c.opponent.toLowerCase().includes(q)) || 
+        upcomingGames = upcomingGames.filter(c =>
+          (c.title && c.title.toLowerCase().includes(q)) ||
+          (c.opponent && c.opponent.toLowerCase().includes(q)) ||
           (c.arena && c.arena.toLowerCase().includes(q)) ||
           (c.date && c.date.toLowerCase().includes(q))
         );
       }
 
       if (upcomingGames.length === 0) {
-        listEl.innerHTML = `<div class="p-5 text-center text-slate-500 font-medium text-xs">No matchups found for this category filter.</div>`;
+        listEl.innerHTML = `<div class="p-5 text-center text-slate-500 font-medium text-xs">No upcoming matchups found for this category filter.</div>`;
         return;
       }
 
+      // Compute 7 days from today dynamically
+      const todayDateObj = new Date(todayStr + 'T12:00:00');
+      const next7DateObj = new Date(todayDateObj.getTime() + 7 * 86400000);
+      const next7Str = next7DateObj.toLocaleDateString('en-CA');
+
       // Group into Next 7 Days and Monthly Buckets
-      const next7Days = upcomingGames.filter(g => g.dateIso && g.dateIso <= '2026-11-17');
-      const novGames = upcomingGames.filter(g => g.dateIso && g.dateIso > '2026-11-17' && g.dateIso.startsWith('2026-11'));
-      const decGames = upcomingGames.filter(g => g.dateIso && g.dateIso.startsWith('2026-12'));
+      const next7Days = upcomingGames.filter(g => g.dateIso && g.dateIso >= todayStr && g.dateIso <= next7Str);
+      const novGames = upcomingGames.filter(g => g.dateIso && g.dateIso > next7Str && g.dateIso.startsWith('2026-11'));
+      const decGames = upcomingGames.filter(g => g.dateIso && g.dateIso > next7Str && g.dateIso.startsWith('2026-12'));
       const janGames = upcomingGames.filter(g => g.dateIso && g.dateIso.startsWith('2027-01'));
       const febGames = upcomingGames.filter(g => g.dateIso && g.dateIso.startsWith('2027-02'));
       const tourns = upcomingGames.filter(g => g.isTournament);
 
+      const nextMatchObj = (typeof getNextUpcomingScheduledMatchup === 'function') ? getNextUpcomingScheduledMatchup() : upcomingGames[0];
+      const nextMatchId = nextMatchObj ? nextMatchObj.id : '';
+
       function renderGameCard(item, isHighlight = false) {
-        const isNext = (item.id === 'game_u13a_rs_015');
-        const badgeHtml = isNext 
+        const isNext = (item.id === nextMatchId);
+        const badgeHtml = isNext
           ? `<span class="px-2 py-0.5 rounded font-mono font-black text-[10px] bg-rose-500 text-white shadow-xs animate-pulse">🔥 NEXT GAME</span>`
           : (item.eventType === 'dryland' || item.eventType === 'practice'
               ? `<span class="px-2 py-0.5 rounded font-mono font-bold text-[10px] bg-amber-100 text-amber-800 border border-amber-300">⚡ TEAM SESSION</span>`
               : (item.isTournament || item.eventType === 'tournament'
                   ? `<span class="px-2 py-0.5 rounded font-mono font-bold text-[10px] bg-purple-100 text-purple-800 border border-purple-300">🏆 TOURNAMENT</span>`
                   : `<span class="px-2 py-0.5 rounded font-mono font-bold text-[10px] bg-sky-100 text-sky-800 border border-sky-300">🏒 REGULAR SEASON</span>`));
-        
+
         return `
           <div onclick="selectScheduleGame('${item.id}')" class="p-3 rounded-xl border border-[var(--border-color)] bg-[var(--bg-panel)] hover:border-amber-400 hover:shadow-md cursor-pointer transition space-y-1.5 group ${isNext ? 'ring-2 ring-amber-400 bg-amber-50/40 shadow-sm' : ''}">
             <div class="flex items-center justify-between">
@@ -60234,7 +60436,7 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
       }
 
       // 2. Collapsible Month Subfolders
-      html += renderFolderBlock('sched-nov2026', 'November 2026', '📁', novGames, true);
+      html += renderFolderBlock('sched-nov2026', 'November 2026 (Upcoming)', '📁', novGames, true);
       html += renderFolderBlock('sched-dec2026', 'December 2026', '📁', decGames, true);
       html += renderFolderBlock('sched-jan2027', 'January 2027', '📁', janGames, false);
       html += renderFolderBlock('sched-feb2027', 'February 2027', '📁', febGames, false);
@@ -60242,6 +60444,44 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
       // 3. Tournaments & Showcases Subfolder
       if (tourns.length > 0) {
         html += renderFolderBlock('sched-tournaments', 'Tournament Showcases', '🏆', tourns, true);
+      }
+
+      // 4. Completed Games Moved to Film Library (with direct links to watch game video)
+      const pastFilmGames = (typeof gamesLibrary !== 'undefined' && gamesLibrary.length > 0)
+        ? gamesLibrary
+        : ((typeof FALLBACK_PLAYLIST_GAMES !== 'undefined') ? FALLBACK_PLAYLIST_GAMES : []);
+      if (pastFilmGames.length > 0) {
+        const isPastOpen = openFlyoutFolders['sched-completed-film'] === true;
+        html += `
+          <div class="space-y-1 pt-2 border-t border-slate-200 mt-2">
+            <button type="button" onclick="toggleFlyoutFolder('sched-completed-film')" class="w-full flex items-center justify-between py-1.5 px-2 rounded-lg bg-emerald-50 hover:bg-emerald-100 border border-emerald-200 text-emerald-900 text-[11px] font-black transition cursor-pointer">
+              <span class="flex items-center gap-1.5">
+                <span id="sched-completed-film-arrow" class="text-[9px] text-emerald-700">${isPastOpen ? '▼' : '▶'}</span>
+                <span>🎬</span>
+                <span>Completed Games (Watch Film)</span>
+              </span>
+              <span class="px-1.5 py-0.2 rounded-full bg-emerald-600 text-white text-[10px] font-mono font-bold">${pastFilmGames.length}</span>
+            </button>
+            <div id="sched-completed-film-body" class="space-y-1.5 pl-1 ${isPastOpen ? '' : 'hidden'}">
+              ${pastFilmGames.map(g => {
+                const targetId = g.id || g.youtube_video_id;
+                const parsed = parseGameScoreAndOpponent(g);
+                const scoreLabel = (parsed.isGame && parsed.tigersScore !== null && parsed.opponentScore !== null)
+                  ? `Tigers ${parsed.tigersScore} - ${parsed.opponentScore} ${parsed.opponent}`
+                  : (g.title || g.game_title);
+                return `
+                  <div onclick="selectScheduleGame('${targetId}')" class="p-2.5 rounded-xl border border-emerald-200 bg-white hover:border-emerald-400 cursor-pointer transition space-y-1 group">
+                    <div class="flex items-center justify-between text-[10px]">
+                      <span class="px-1.5 py-0.5 rounded font-mono font-bold bg-emerald-50 text-emerald-800 border border-emerald-200 truncate">${scoreLabel}</span>
+                      <span class="text-emerald-700 font-mono font-bold shrink-0">🎬 Watch Video →</span>
+                    </div>
+                    <div class="font-bold text-slate-900 text-xs group-hover:text-emerald-700 truncate">${g.title || g.game_title}</div>
+                  </div>
+                `;
+              }).join('')}
+            </div>
+          </div>
+        `;
       }
 
       listEl.innerHTML = html;
@@ -60256,10 +60496,16 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
         : ((typeof FALLBACK_PLAYLIST_GAMES !== 'undefined') ? FALLBACK_PLAYLIST_GAMES : []);
       let filtered = [...games];
 
+      // Update dynamic count badges in Film Library header & button
+      const headerCountEl = document.getElementById('film-flyout-header-count');
+      if (headerCountEl) headerCountEl.textContent = `🎬 Film Library (${games.length})`;
+      const btnTextEl = document.getElementById('film-flyout-playlist-btn-text');
+      if (btnTextEl) btnTextEl.textContent = `Open Full YouTube Playlist (${games.length} Games)`;
+
       if (query) {
         const q = query.toLowerCase();
-        filtered = filtered.filter(g => 
-          (g.title || '').toLowerCase().includes(q) || 
+        filtered = filtered.filter(g =>
+          (g.title || '').toLowerCase().includes(q) ||
           (g.game_title || '').toLowerCase().includes(q) ||
           (g.opponent || '').toLowerCase().includes(q) ||
           (g.date || '').toLowerCase().includes(q)
@@ -60293,7 +60539,7 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
               ${g.title || g.game_title}
             </div>
             <div class="text-[10px] text-slate-500 flex items-center justify-between">
-              <span class="truncate">📅 ${g.date || parsed.rawDate || 'Game Tape'}</span>
+              <span class="truncate">📅 ${parsed.rawDate || g.date || 'Game Tape'}</span>
               <span class="text-amber-600 font-bold shrink-0">Watch Film ▶</span>
             </div>
           </div>
@@ -60320,18 +60566,18 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
         `;
       }
 
-      // Categorize into Tournaments vs League Months
+      // Categorize into Tournaments vs League Months (use word boundary for 1.11.2026 so 11.11.2026 is NOT matched!)
       const hauntedShootoutGames = filtered.filter(g => {
-        const t = (g.title || '');
-        return t.includes('30.10.2026') || t.includes('31.10.2026') || t.includes('1.11.2026') || t.includes('GOLD MEDAL') || t.includes('Skills Comp');
+        const t = (g.title || g.game_title || '');
+        return t.includes('30.10.2026') || t.includes('31.10.2026') || /(?:^|\s)0?1\.11\.2026/.test(t) || t.includes('GOLD MEDAL') || t.includes('Skills Comp');
       });
 
       const wellandEarlyBirdGames = filtered.filter(g => {
-        const t = (g.title || '');
+        const t = (g.title || g.game_title || '');
         return t.includes('25.09.2026') || t.includes('26.09.2026') || t.includes('Welland') || t.includes('Jr Navy');
       });
 
-      // Dynamic Regular Season Month Grouping (auto-generates folders for Nov 2026, Dec 2026, Jan 2027, etc.)
+      // Dynamic Regular Season Month Grouping (auto-generates folders for Nov 2026, Oct 2026, etc.)
       const regularSeasonGames = filtered.filter(g => !hauntedShootoutGames.includes(g) && !wellandEarlyBirdGames.includes(g));
       const monthGroups = { '2026-11': [] }; // Always include November 2026 folder
       const monthNames = {
@@ -60342,13 +60588,12 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
 
       regularSeasonGames.forEach(g => {
         let ym = '';
-        if (g.date && /^\d{4}-\d{2}/.test(g.date)) {
+        const t = (g.title || g.game_title || '');
+        const m = t.match(/(?:^|\s)\d{1,2}\.(\d{1,2})\.(\d{4})/);
+        if (m) {
+          ym = `${m[2]}-${m[1].padStart(2, '0')}`;
+        } else if (g.date && /^\d{4}-\d{2}/.test(g.date)) {
           ym = g.date.substring(0, 7);
-        } else {
-          const m = (g.title || '').match(/\d{1,2}\.(\d{1,2})\.(\d{4})/);
-          if (m) {
-            ym = `${m[2]}-${m[1].padStart(2, '0')}`;
-          }
         }
         if (!ym) ym = '2026-11';
         if (!monthGroups[ym]) monthGroups[ym] = [];
@@ -60369,18 +60614,18 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
       html += renderFilmFolder('film-haunted', 'Haunted Shootout (Oct 30 – Nov 1)', '🏆', hauntedShootoutGames, false);
       html += renderFilmFolder('film-welland', 'Welland Early Bird (Sept 25 – 26)', '🏆', wellandEarlyBirdGames, false);
 
-      // 2. Regular Season League Folders by Month (Newest first, ALL collapsed by default)
+      // 2. Regular Season League Folders by Month (Newest first; November 2026 open by default!)
       html += `
         <div class="text-[10px] font-black uppercase tracking-wider text-slate-500 px-1 pt-2">
           <span>📁 REGULAR SEASON GAMES</span>
         </div>
       `;
-      sortedMonths.forEach(ym => {
+      sortedMonths.forEach((ym, idx) => {
         const [yr, mo] = ym.split('-');
         const label = `${monthNames[mo] || mo} ${yr}`;
         const fid = `film-mo-${ym}`;
         const hint = ym === '2026-11' ? 'November regular season tapes will appear here as synced.' : '';
-        html += renderFilmFolder(fid, label, '📁', monthGroups[ym], false, hint);
+        html += renderFilmFolder(fid, label, '📁', monthGroups[ym], idx === 0, hint);
       });
 
       listEl.innerHTML = html;
@@ -60901,14 +61146,22 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
         ? SCHEDULE_UPCOMING_MATCHUPS.find(m => m.id === gameId) 
         : null;
 
-      const pastMatch = (typeof gamesLibrary !== 'undefined')
+      let pastMatch = (typeof gamesLibrary !== 'undefined')
         ? gamesLibrary.find(g => g.id === gameId || g.youtube_video_id === gameId)
         : null;
 
+      const todayStr = new Date().toLocaleDateString('en-CA');
+
+      // If user clicked a schedule item whose date is in the past, match it to its film in gamesLibrary if available
+      if (!pastMatch && upcomingMatch && upcomingMatch.dateIso && upcomingMatch.dateIso < todayStr && typeof gamesLibrary !== 'undefined') {
+        const oppKey = (upcomingMatch.opponent || '').toLowerCase().split(' ')[0];
+        pastMatch = gamesLibrary.find(g => (g.date === upcomingMatch.dateIso) || (oppKey && (g.title || '').toLowerCase().includes(oppKey)));
+      }
+
       // Determine whether game is upcoming (has not happened yet) or past
       let isUpcoming = false;
-      if (upcomingMatch) {
-        if (!upcomingMatch.youtube_video_id || upcomingMatch.status === 'upcoming' || upcomingMatch.dateIso >= '2026-11-08') {
+      if (upcomingMatch && !pastMatch) {
+        if (!upcomingMatch.youtube_video_id && (!upcomingMatch.dateIso || upcomingMatch.dateIso >= todayStr)) {
           isUpcoming = true;
         }
       }
@@ -60946,7 +61199,7 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
         hideGameCountdownStage();
         const targetId = pastMatch ? (pastMatch.id || pastMatch.youtube_video_id) : (upcomingMatch?.youtube_video_id || gameId);
         loadGame(targetId);
-        renderSidebarPastGameIntel(pastMatch || upcomingMatch);
+        renderSidebarPastGameIntel(pastMatch || currentGame || upcomingMatch);
         if (typeof syncScoreboardOverlayToPlayback === 'function') syncScoreboardOverlayToPlayback(0);
         showToast(`🎬 Loaded Game Film & Analytics!`);
       }
@@ -61245,7 +61498,10 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
       if (statSog) statSog.innerText = `${analytics.shots_on_goal || (16 + hScore * 3)} - ${analytics.goalie_saves || (18 + aScore * 2)}`;
       if (statPim) statPim.innerText = `${(2 + (seed % 4)) * 2} mins`;
 
-      // Video Shift Cards
+      // Render inline Video Review Prep Queue at top of Past Game panel
+      if (typeof renderInlineReviewPrepQueue === 'function') renderInlineReviewPrepQueue();
+
+      // Video Shift Cards (Rich Shift Analytics Cards with On-Ice Players, Zone, Breakout, & Coach Notes)
       const shiftCountEl = document.getElementById('past-game-shift-count');
       const shiftsListEl = document.getElementById('past-game-shifts-list');
       const shifts = (game.shifts && Array.isArray(game.shifts)) ? game.shifts : [];
@@ -61255,53 +61511,158 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
         if (shifts.length === 0) {
           shiftsListEl.innerHTML = `<div class="p-3 text-center text-slate-400">Select period jumps or play the tape directly.</div>`;
         } else {
-          shiftsListEl.innerHTML = shifts.map(s => `
-            <div onclick="jumpToShiftTime(${s.start_seconds || 0})" class="p-2 rounded-lg bg-[var(--bg-surface)] hover:bg-[var(--bg-panel)] border border-[var(--border-color)] hover:border-amber-400 cursor-pointer transition flex items-center justify-between group">
-              <div class="flex items-center gap-2">
-                <span class="w-6 h-6 rounded bg-amber-400/20 text-amber-500 font-mono font-bold text-[10px] flex items-center justify-center">
-                  S${s.shift_id || 1}
-                </span>
-                <div>
-                  <div class="font-bold text-slate-900 text-[11px] group-hover:text-amber-500 transition-colors">
-                    Period ${s.period} • ${s.display_time || formatTime(s.start_seconds)}
+          const savedClips = (typeof getCoachingTrayClips === 'function') ? getCoachingTrayClips() : [];
+          const gId = game.id || game.youtube_video_id || '';
+
+          shiftsListEl.innerHTML = shifts.map(s => {
+            const startSec = Number(s.start_seconds || 0);
+            const endSec = Number(s.end_seconds || (startSec + 41));
+            const durSec = Math.max(5, endSec - startSec);
+            const zone = s.primary_zone || 'Neutral Zone';
+            const zoneBadgeClass = zone.includes('Offensive')
+              ? 'bg-emerald-100 text-emerald-800 border-emerald-300'
+              : (zone.includes('Defensive') ? 'bg-rose-100 text-rose-800 border-rose-300' : 'bg-sky-100 text-sky-800 border-sky-300');
+            const zoneShort = zone.includes('Offensive') ? 'O-Zone' : (zone.includes('Defensive') ? 'D-Zone' : 'N-Zone');
+
+            const boType = (s.breakout && s.breakout.breakout_type) ? s.breakout.breakout_type : '5v5 Shift';
+            const boRes = (s.breakout && s.breakout.result) ? s.breakout.result : '';
+            const boResClass = boRes.includes('Success')
+              ? 'bg-emerald-50 text-emerald-700 border-emerald-200'
+              : (boRes.includes('Turnover') || boRes.includes('Icing') ? 'bg-rose-50 text-rose-700 border-rose-200' : 'bg-amber-50 text-amber-800 border-amber-200');
+
+            const strength = s.strength || '5v5';
+            const conf = s.confidence_score ? `${Math.round(Number(s.confidence_score) * 100)}% AI` : '92% AI';
+            const foCenter = s.faceoff_center ? `FO #${s.faceoff_center}` : '';
+
+            const onIceArr = Array.isArray(s.on_ice) ? s.on_ice : [];
+            const onIceHtml = onIceArr.map(p => {
+              const j = p.jersey || p;
+              const pos = p.position || '';
+              return `<span onclick="event.stopPropagation(); if(typeof filterByPlayer==='function') filterByPlayer('${j}');" class="px-2 py-0.5 rounded-md bg-slate-900 text-amber-300 font-mono font-bold text-xs border border-slate-700 hover:border-amber-400 cursor-pointer" title="Filter shifts for #${j}">#${j}${pos ? ' ' + pos : ''}</span>`;
+            }).join('');
+
+            const notesText = s.coach_notes || `${boType}${boRes ? ' — ' + boRes : ''}`;
+            const safeTitle = (`P${s.period || 1} S${s.shift_id || 1} • ${boType}`).replace(/'/g, "\\'");
+            const safeNotes = notesText.replace(/'/g, "\\'");
+            const isInTray = savedClips.some(c => c.game_id === gId && Number(c.start_seconds) === startSec);
+
+            return `
+              <div onclick="playClip(${startSec}, ${endSec}, ${s.shift_id || 1})" class="p-3 rounded-xl bg-[var(--bg-surface)] hover:bg-[var(--bg-panel)] border border-[var(--border-color)] hover:border-amber-400 cursor-pointer transition space-y-2 group shadow-2xs">
+                <div class="flex items-center justify-between gap-2 flex-wrap">
+                  <div class="flex items-center gap-2 flex-wrap">
+                    <span class="px-2 py-0.5 rounded-md bg-amber-400 text-slate-950 font-mono font-black text-xs">
+                      SHIFT #${s.shift_id || 1}
+                    </span>
+                    <span class="font-mono font-black text-slate-900 text-sm">
+                      P${s.period || 1} • ${formatTime(startSec)} - ${formatTime(endSec)} <span class="text-slate-500 font-normal">(${durSec}s)</span>
+                    </span>
+                    <span class="px-1.5 py-0.5 rounded font-mono font-bold text-xs bg-slate-200 text-slate-800">${strength}</span>
+                    <span class="px-2 py-0.5 rounded font-mono font-bold text-xs border ${zoneBadgeClass}">${zoneShort}</span>
                   </div>
-                  <div class="text-[9px] text-slate-400">${s.breakout?.breakout_type || s.coach_notes || '5v5 Regular Play'}</div>
+                  <div class="flex items-center gap-1.5 shrink-0">
+                    <button type="button" onclick="event.stopPropagation(); quickAddShiftToCoachTray(${startSec}, ${endSec}, '${safeTitle}', '${safeNotes}', ${s.shift_id || 1})" class="px-2.5 py-1 rounded-lg ${isInTray ? 'bg-amber-400 text-slate-950' : 'bg-slate-800 hover:bg-slate-700 text-amber-300'} font-bold text-xs border border-amber-400/50 cursor-pointer transition" title="Save to Coach's Film Tray for Video Review Prep">
+                      ${isInTray ? '⭐ In Tray' : '⭐ + Tray'}
+                    </button>
+                    <button type="button" onclick="event.stopPropagation(); playClip(${startSec}, ${endSec}, ${s.shift_id || 1})" class="px-2.5 py-1 rounded-lg bg-amber-400 hover:bg-amber-300 text-slate-950 font-black text-xs shadow-2xs cursor-pointer">
+                      ▶ Play Shift
+                    </button>
+                  </div>
+                </div>
+
+                <div class="flex items-center gap-1.5 flex-wrap text-xs">
+                  <span class="px-2 py-0.5 rounded font-semibold bg-indigo-50 text-indigo-900 border border-indigo-200">🏒 ${boType}</span>
+                  ${boRes ? `<span class="px-2 py-0.5 rounded font-semibold border ${boResClass}">${boRes}</span>` : ''}
+                  ${foCenter ? `<span class="px-2 py-0.5 rounded font-mono font-bold bg-purple-50 text-purple-800 border border-purple-200">${foCenter}</span>` : ''}
+                  <span class="px-2 py-0.5 rounded font-mono text-slate-600 bg-slate-100 border border-slate-200">${conf}</span>
+                </div>
+
+                ${onIceHtml ? `
+                  <div class="flex items-center gap-1.5 flex-wrap pt-0.5">
+                    <span class="text-xs font-bold uppercase tracking-wider text-slate-500 mr-1">On Ice:</span>
+                    ${onIceHtml}
+                  </div>
+                ` : ''}
+
+                <div class="text-sm text-slate-700 bg-slate-50/90 px-2.5 py-1.5 rounded-lg border border-slate-200/80 leading-snug">
+                  📋 ${notesText}
                 </div>
               </div>
-              <div class="flex items-center gap-1 shrink-0">
-                <button type="button" onclick="event.stopPropagation(); quickAddShiftToCoachTray(${s.start_seconds || 0}, ${s.end_seconds || ((s.start_seconds || 0) + 35)}, '${(s.breakout?.breakout_type || s.coach_notes || ('Shift ' + (s.shift_id || 1))).replace(/'/g, '')}')" class="px-1.5 py-0.5 rounded bg-slate-800 hover:bg-slate-700 text-amber-300 font-bold text-[10px] border border-amber-400/40 cursor-pointer" title="Add to Video Review Prep (Coach Tray)">
-                  + Tray
-                </button>
-                <button class="px-2 py-0.5 rounded bg-amber-400 text-slate-950 font-black text-[10px] shadow-2xs">
-                  ▶ Jump
-                </button>
-              </div>
-            </div>
-          `).join('');
+            `;
+          }).join('');
         }
       }
     }
 
-    function quickAddShiftToCoachTray(startSec, endSec, titleText) {
-      if (typeof coachingTray !== 'undefined' && Array.isArray(coachingTray)) {
-        const newClip = {
-          id: 'tray_' + Date.now(),
-          gameId: currentGame ? (currentGame.id || currentGame.youtube_video_id) : 'custom',
-          gameTitle: currentGame ? (currentGame.title || 'Game Tape') : 'Game Tape',
-          title: titleText || `Shift @ ${formatTime(startSec)}`,
-          start: Number(startSec || 0),
-          end: Number(endSec || (Number(startSec || 0) + 35)),
-          folder: 'teaching',
-          tag: 'Review Prep',
-          notes: 'Added from Play-by-Play for Video Review Prep',
-          createdAt: new Date().toISOString()
-        };
-        coachingTray.unshift(newClip);
-        try { localStorage.setItem('tigers_coaching_tray', JSON.stringify(coachingTray)); } catch(e){}
-        if (typeof renderCoachTray === 'function') renderCoachTray();
-        if (typeof updateTrayBadges === 'function') updateTrayBadges();
-        showToast(`⭐ Added "${newClip.title}" to Video Review Prep Tray!`);
+    function renderInlineReviewPrepQueue() {
+      const listEl = document.getElementById('past-game-review-prep-queue');
+      const countEl = document.getElementById('past-inline-tray-count');
+      const clips = (typeof getCoachingTrayClips === 'function') ? getCoachingTrayClips() : [];
+      if (countEl) countEl.textContent = clips.length;
+      if (!listEl) return;
+
+      if (clips.length === 0) {
+        listEl.innerHTML = `<div class="text-xs text-slate-600 py-1">No clips queued yet — click <strong>⭐ + Tray</strong> on any shift card below (across one or multiple games) to build your Video Review playlist.</div>`;
+        return;
       }
+
+      listEl.innerHTML = clips.map((c, idx) => `
+        <div class="p-2 rounded-lg bg-white border border-amber-300 flex items-center justify-between gap-2 shadow-2xs">
+          <div class="min-w-0 flex-1">
+            <div class="flex items-center gap-1.5 flex-wrap">
+              <span class="px-1.5 py-0.2 rounded bg-amber-400 text-slate-950 font-mono font-black text-xs">#${idx + 1}</span>
+              <span class="font-bold text-slate-900 text-xs truncate">${c.title || 'Saved Shift'}</span>
+              <span class="text-xs font-mono text-amber-800 bg-amber-100 px-1.5 py-0.2 rounded">${formatTime(c.start_seconds || 0)} – ${formatTime(c.end_seconds || 0)}</span>
+            </div>
+            <div class="text-xs text-slate-600 truncate mt-0.5">🎬 ${c.game_title || 'Game Tape'} ${c.coach_notes ? '• ' + c.coach_notes : ''}</div>
+          </div>
+          <div class="flex items-center gap-1 shrink-0">
+            <button type="button" onclick="playSavedTrayClip('${c.id}')" class="px-2.5 py-1 rounded-md bg-amber-400 hover:bg-amber-300 text-slate-950 font-black text-xs cursor-pointer">
+              ▶ Play Clip
+            </button>
+            <button type="button" onclick="removeClipFromCoachingTray('${c.id}'); renderInlineReviewPrepQueue();" class="px-2 py-1 rounded-md bg-slate-100 hover:bg-rose-100 text-slate-600 hover:text-rose-700 font-bold text-xs cursor-pointer" title="Remove from Tray">
+              ✕
+            </button>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function quickAddShiftToCoachTray(startSec, endSec, titleText, notesText = '', shiftId = 1) {
+      const clips = (typeof getCoachingTrayClips === 'function') ? getCoachingTrayClips() : [];
+      const gId = currentGame ? (currentGame.id || currentGame.youtube_video_id) : 'custom';
+      const gTitle = currentGame ? (currentGame.title || currentGame.game_title || 'Game Tape') : 'Game Tape';
+      const ytId = currentGame ? (currentGame.youtube_video_id || '') : '';
+
+      const newClip = {
+        id: 'tray_' + Date.now() + '_' + Math.floor(Math.random() * 1000),
+        game_id: gId,
+        game_title: gTitle,
+        youtube_video_id: ytId,
+        shift_id: shiftId,
+        period: 1,
+        start_seconds: Number(startSec || 0),
+        end_seconds: Number(endSec || (Number(startSec || 0) + 40)),
+        title: titleText || `Shift @ ${formatTime(startSec)}`,
+        category: 'system',
+        folder: 'teaching',
+        assigned_players: [],
+        coach_notes: notesText || 'Added from Play-by-Play for Video Review Prep',
+        created_at: new Date().toISOString()
+      };
+
+      clips.unshift(newClip);
+      if (typeof saveCoachingTrayClips === 'function') {
+        saveCoachingTrayClips(clips);
+      } else {
+        try { localStorage.setItem('tigers_coaching_tray_v2', JSON.stringify(clips)); } catch(e){}
+      }
+      if (typeof updateTrayBadges === 'function') updateTrayBadges();
+      if (typeof renderFilmTrayView === 'function') renderFilmTrayView();
+      if (typeof renderInlineReviewPrepQueue === 'function') renderInlineReviewPrepQueue();
+      if (currentGame && typeof renderSidebarPastGameIntel === 'function') {
+        renderSidebarPastGameIntel(currentGame);
+      }
+      showToast(`⭐ Added "${newClip.title}" (${gTitle}) to Video Review Prep Tray!`);
     }
 
     function jumpToShiftTime(seconds) {
