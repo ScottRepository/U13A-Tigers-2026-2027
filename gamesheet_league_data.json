@@ -15,26 +15,26 @@
       "gameSheetCode": "U13A-RS-015",
       "gameSheetUrl": "https://gamesheetstats.com/seasons/15490/teams/534275/schedule",
       "record": {
-        "gp": 8,
-        "w": 7,
+        "gp": 9,
+        "w": 8,
         "l": 0,
         "t": 1,
-        "pts": 15,
-        "winPct": ".875"
+        "pts": 17,
+        "winPct": ".889"
       },
       "stats": {
-        "gf": 44,
+        "gf": 48,
         "ga": 6,
-        "diff": "+38",
-        "gpg": "5.50",
-        "gapg": "0.75",
-        "pim": 48,
+        "diff": "+42",
+        "gpg": "5.33",
+        "gapg": "0.67",
+        "pim": 54,
         "pimPg": "6.0"
       },
       "specialTeams": {
         "ppPct": "33.3%",
-        "ppGoals": 7,
-        "ppOpps": 21,
+        "ppGoals": 8,
+        "ppOpps": 24,
         "ppGpg": "0.86",
         "pkPct": "100.0%",
         "shGoals": 1,
@@ -42,6 +42,16 @@
         "tendency": "Lethal 35.3% power play and perfect 100.0% penalty kill. Dangerous transition rush with high slot support."
       },
       "last5Games": [
+        {
+          "date": "Nov 14, 2026",
+          "opp": "Markham Waxers",
+          "vsAt": "vs",
+          "score": "4-0",
+          "result": "W",
+          "gf": 4,
+          "ga": 0,
+          "notes": "Home GameSheet regular season box score"
+        },
         {
           "date": "Nov 10, 2026",
           "opp": "Aurora Tigers",
@@ -80,16 +90,6 @@
           "result": "W",
           "gf": 4,
           "ga": 1,
-          "notes": "Away GameSheet regular season box score"
-        },
-        {
-          "date": "Oct 18, 2026",
-          "opp": "Richmond Hill Jaguars",
-          "vsAt": "@",
-          "score": "4-0",
-          "result": "W",
-          "gf": 4,
-          "ga": 0,
           "notes": "Away GameSheet regular season box score"
         }
       ],
@@ -428,32 +428,42 @@
       "gameSheetCode": "U13A-RS-168",
       "gameSheetUrl": "https://gamesheetstats.com/seasons/15490/teams/534252/schedule",
       "record": {
-        "gp": 10,
+        "gp": 11,
         "w": 2,
-        "l": 7,
+        "l": 8,
         "t": 1,
         "pts": 5,
-        "winPct": ".200"
+        "winPct": ".182"
       },
       "stats": {
         "gf": 19,
-        "ga": 50,
-        "diff": "-31",
-        "gpg": "1.90",
-        "gapg": "5.00",
-        "pim": 60,
+        "ga": 54,
+        "diff": "-35",
+        "gpg": "1.73",
+        "gapg": "4.91",
+        "pim": 66,
         "pimPg": "6.0"
       },
       "specialTeams": {
-        "ppPct": "15.0%",
+        "ppPct": "13.6%",
         "ppGoals": 3,
-        "ppOpps": 20,
-        "pkPct": "50.0%",
+        "ppOpps": 22,
+        "pkPct": "52.9%",
         "shGoals": 2,
         "shAllowed": 7,
         "tendency": "Strong cycle game below hash marks; uses D for point shots with heavy screens."
       },
       "last5Games": [
+        {
+          "date": "Nov 14, 2026",
+          "opp": "Caledon Hawks",
+          "vsAt": "@",
+          "score": "0-4",
+          "result": "L",
+          "gf": 0,
+          "ga": 4,
+          "notes": "Away GameSheet regular season box score"
+        },
         {
           "date": "Nov 11, 2026",
           "opp": "Aurora Tigers",
@@ -492,16 +502,6 @@
           "result": "W",
           "gf": 8,
           "ga": 3,
-          "notes": "Home GameSheet regular season box score"
-        },
-        {
-          "date": "Nov 1, 2026",
-          "opp": "Orillia Terriers",
-          "vsAt": "vs",
-          "score": "0-8",
-          "result": "L",
-          "gf": 0,
-          "ga": 8,
           "notes": "Home GameSheet regular season box score"
         }
       ],
@@ -1855,5 +1855,5 @@
       ]
     }
   },
-  "lastSynced": "2026-11-14T21:15:32.227225Z"
+  "lastSynced": "2026-11-15T01:39:07.135440Z"
 }
