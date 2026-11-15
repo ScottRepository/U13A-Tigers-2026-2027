@@ -46315,7 +46315,23 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
 
     function playAllClipsInTraySequence() {
       const allClips = getCoachingTrayClips();
-      const filtered = currentTrayFolder === "all" ? allClips : allClips.filter(c => c.folder === currentTrayFolder);
+      let filtered = currentTrayFolder === "all"
+        ? allClips
+        : allClips.filter(c => clipMatchesTrayFolder(c, currentTrayFolder));
+
+      // If no clips are manually pinned to this folder yet, play the active game's broken-down clips for this category!
+      if (filtered.length === 0 && currentGame) {
+        const gameSuggestions = generateAiClipSuggestions(currentGame).filter(s => suggestionMatchesAiFilter(s, currentTrayFolder));
+        filtered = gameSuggestions.map(s => ({
+          is_ai_suggestion: true,
+          title: s.title,
+          start_seconds: s.startSec,
+          end_seconds: s.endSec,
+          coach_notes: s.tactical_insight,
+          shift_id: s.shift_id || 1
+        }));
+      }
+
       if (filtered.length === 0) {
         showToast("⚠️ No clips in this folder to play.");
         return;
@@ -46333,8 +46349,8 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
       }
 
       const clip = clipsList[idx];
-      showToast(`🎬 Playing Tray Clip ${idx + 1} of ${clipsList.length}: ${clip.title}`);
-      if (clip.id) {
+      showToast(`🎬 Playing Clip ${idx + 1} of ${clipsList.length}: ${clip.title}`);
+      if (clip.id && !clip.is_ai_suggestion) {
         playSavedTrayClip(clip.id);
       } else {
         playClip(clip.start_seconds, clip.end_seconds, clip.coach_notes || clip.title, clip.shift_id);
@@ -51985,8 +52001,12 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
     // =========================================================================
 
     let isLiveBroadcastActive = false;
-    const YOUTUBE_LIVE_PLAYLIST_ID = "PLXFVFYYSmylE";
+    let YOUTUBE_LIVE_PLAYLIST_ID = "PLXFVFYYSmylE";
     let liveStreamVideoId = "JJd6PGgJeG8"; // Default latest game in playlist; will load playlist by default
+
+    function getLocalIsoDateStr(d = new Date()) {
+      return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
+    }
     let liveGameSheetState = {
       matchTitle: "Aurora Tigers U13A at Orillia Terriers",
       leagueCode: "U13A-RS-056",
@@ -52026,11 +52046,12 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
 
     function getNextScheduledGameSummary() {
       const upcoming = (typeof SCHEDULE_UPCOMING_MATCHUPS !== 'undefined') ? SCHEDULE_UPCOMING_MATCHUPS : [];
-      const nextMatch = upcoming.find(g => (g.dateIso >= '2026-11-08' || g.status === 'upcoming') && (g.eventType === 'league' || g.eventType === 'tournament')) || upcoming.find(g => g.id === 'game_u13a_rs_015');
+      const todayStr = getLocalIsoDateStr();
+      const nextMatch = upcoming.find(g => (g.dateIso && g.dateIso >= todayStr) && (g.eventType === 'league' || g.eventType === 'tournament')) || upcoming.find(g => g.dateIso && g.dateIso >= todayStr);
       if (nextMatch) {
-        return `${nextMatch.date || 'Tuesday, Nov 10, 2026'} at ${nextMatch.time || '7:30 PM EST'} • ${nextMatch.title || 'Caledon Hawks vs Aurora Tigers'} @ ${nextMatch.arena || 'Aurora Community Centre (ACC)'}`;
+        return `${nextMatch.date || 'Upcoming Game'} at ${nextMatch.time || '7:30 PM EST'} • ${nextMatch.title || nextMatch.opponent} @ ${nextMatch.arena || 'Aurora Community Centre (ACC)'}`;
       }
-      return "Tuesday, Nov 10, 2026 at 7:30 PM EST • Caledon Hawks vs Aurora Tigers @ Aurora Community Centre (Game #U13A-RS-015)";
+      return "Upcoming York Simcoe League Match @ Aurora Community Centre";
     }
 
     function switchSidebarLiveTab(tab) {
@@ -52652,7 +52673,7 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
       }
 
       // Update Next Game Banner in post-game card
-      const todayStr = new Date().toLocaleDateString('en-CA');
+      const todayStr = getLocalIsoDateStr();
       const nextMatch = (typeof SCHEDULE_UPCOMING_MATCHUPS !== 'undefined')
         ? SCHEDULE_UPCOMING_MATCHUPS.find(m => m.dateIso >= todayStr && m.id !== activeLiveMatchupId) || SCHEDULE_UPCOMING_MATCHUPS.find(m => m.dateIso >= todayStr)
         : null;
@@ -55516,7 +55537,7 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
     function populateLiveMatchupDropdown() {
       const sel = document.getElementById('live-game-selector');
       if (!sel) return;
-      const todayStr = new Date().toLocaleDateString('en-CA');
+      const todayStr = getLocalIsoDateStr();
       const allGames = (typeof SCHEDULE_UPCOMING_MATCHUPS !== 'undefined')
         ? SCHEDULE_UPCOMING_MATCHUPS.filter(g => g.eventType === 'league' || g.eventType === 'tournament')
         : [];
@@ -55694,7 +55715,7 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
 
     function getNextUpcomingScheduledMatchup() {
       if (typeof SCHEDULE_UPCOMING_MATCHUPS === 'undefined' || !SCHEDULE_UPCOMING_MATCHUPS.length) return null;
-      const todayStr = new Date().toLocaleDateString('en-CA');
+      const todayStr = getLocalIsoDateStr();
       let targetCode = (typeof gamesLibrarySettings !== 'undefined' && gamesLibrarySettings.active_gamesheet_code)
         ? gamesLibrarySettings.active_gamesheet_code
         : '';
@@ -60651,7 +60672,7 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
       if (!listEl) return;
 
       const rawUpcoming = (typeof SCHEDULE_UPCOMING_MATCHUPS !== 'undefined') ? SCHEDULE_UPCOMING_MATCHUPS : [];
-      const todayStr = new Date().toLocaleDateString('en-CA'); // YYYY-MM-DD local
+      const todayStr = getLocalIsoDateStr(); // YYYY-MM-DD local
 
       // Filter games that have NOT happened yet (any game before today moves to Film Library)
       let upcomingGames = rawUpcoming.filter(m => {
@@ -60692,7 +60713,7 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
       // Compute 7 days from today dynamically
       const todayDateObj = new Date(todayStr + 'T12:00:00');
       const next7DateObj = new Date(todayDateObj.getTime() + 7 * 86400000);
-      const next7Str = next7DateObj.toLocaleDateString('en-CA');
+      const next7Str = getLocalIsoDateStr(next7DateObj);
 
       // Group into Next 7 Days and Monthly Buckets
       const next7Days = upcomingGames.filter(g => g.dateIso && g.dateIso >= todayStr && g.dateIso <= next7Str);
@@ -61492,7 +61513,7 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
         ? gamesLibrary.find(g => g.id === gameId || g.youtube_video_id === gameId)
         : null;
 
-      const todayStr = new Date().toLocaleDateString('en-CA');
+      const todayStr = getLocalIsoDateStr();
 
       // If user clicked a schedule item whose date is in the past, match it to its film in gamesLibrary if available
       if (!pastMatch && upcomingMatch && upcomingMatch.dateIso && upcomingMatch.dateIso < todayStr && typeof gamesLibrary !== 'undefined') {
