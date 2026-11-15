@@ -161,33 +161,53 @@
       "gameSheetCode": "U13A-RS-056",
       "gameSheetUrl": "https://gamesheetstats.com/seasons/15490/teams/534290/schedule",
       "record": {
-        "gp": 10,
-        "w": 9,
-        "l": 1,
+        "gp": 12,
+        "w": 10,
+        "l": 2,
         "t": 0,
-        "pts": 18,
-        "winPct": ".900"
+        "pts": 20,
+        "winPct": ".833"
       },
       "stats": {
-        "gf": 63,
-        "ga": 14,
+        "gf": 71,
+        "ga": 22,
         "diff": "+49",
-        "gpg": "6.30",
-        "gapg": "1.40",
-        "pim": 60,
+        "gpg": "5.92",
+        "gapg": "1.83",
+        "pim": 72,
         "pimPg": "6.0"
       },
       "specialTeams": {
-        "ppPct": "29.4%",
-        "ppGoals": 10,
-        "ppOpps": 34,
+        "ppPct": "31.7%",
+        "ppGoals": 13,
+        "ppOpps": 41,
         "ppGpg": "0.74",
-        "pkPct": "87.1%",
+        "pkPct": "82.1%",
         "shGoals": 3,
         "shAllowed": 6,
         "tendency": "Lethal one-timer from left circle off faceoff wins; aggressive 2-man forecheck on PK."
       },
       "last5Games": [
+        {
+          "date": "Nov 15, 2026",
+          "opp": "Barrie Colts",
+          "vsAt": "vs",
+          "score": "3-5",
+          "result": "L",
+          "gf": 3,
+          "ga": 5,
+          "notes": "Home GameSheet regular season box score"
+        },
+        {
+          "date": "Nov 14, 2026",
+          "opp": "Stouffville Clippers",
+          "vsAt": "vs",
+          "score": "5-3",
+          "result": "W",
+          "gf": 5,
+          "ga": 3,
+          "notes": "Home GameSheet regular season box score"
+        },
         {
           "date": "Nov 6, 2026",
           "opp": "Aurora Tigers",
@@ -217,26 +237,6 @@
           "gf": 8,
           "ga": 0,
           "notes": "Away GameSheet regular season box score"
-        },
-        {
-          "date": "Oct 25, 2026",
-          "opp": "Upper York Admirals",
-          "vsAt": "@",
-          "score": "3-5",
-          "result": "L",
-          "gf": 3,
-          "ga": 5,
-          "notes": "Away GameSheet regular season box score"
-        },
-        {
-          "date": "Oct 24, 2026",
-          "opp": "TNT Tornados",
-          "vsAt": "vs",
-          "score": "1-0",
-          "result": "W",
-          "gf": 1,
-          "ga": 0,
-          "notes": "Home GameSheet regular season box score"
         }
       ],
       "dangerPlayers": [
@@ -549,32 +549,42 @@
       "gameSheetCode": "U13A-RS-174",
       "gameSheetUrl": "https://gamesheetstats.com/seasons/15490/teams/534191/schedule",
       "record": {
-        "gp": 10,
-        "w": 6,
+        "gp": 11,
+        "w": 7,
         "l": 3,
         "t": 1,
-        "pts": 13,
-        "winPct": ".600"
+        "pts": 15,
+        "winPct": ".636"
       },
       "stats": {
-        "gf": 31,
-        "ga": 20,
-        "diff": "+11",
-        "gpg": "3.10",
-        "gapg": "2.00",
-        "pim": 60,
+        "gf": 36,
+        "ga": 23,
+        "diff": "+13",
+        "gpg": "3.27",
+        "gapg": "2.09",
+        "pim": 66,
         "pimPg": "6.0"
       },
       "specialTeams": {
-        "ppPct": "26.1%",
-        "ppGoals": 6,
-        "ppOpps": 23,
-        "pkPct": "95.0%",
+        "ppPct": "29.6%",
+        "ppGoals": 8,
+        "ppOpps": 27,
+        "pkPct": "88.5%",
         "shGoals": 3,
         "shAllowed": 6,
         "tendency": "Fast-paced offensive transitions and high forecheck pressure."
       },
       "last5Games": [
+        {
+          "date": "Nov 15, 2026",
+          "opp": "Orillia Terriers",
+          "vsAt": "@",
+          "score": "5-3",
+          "result": "W",
+          "gf": 5,
+          "ga": 3,
+          "notes": "Away GameSheet regular season box score"
+        },
         {
           "date": "Nov 11, 2026",
           "opp": "Upper York Admirals",
@@ -614,16 +624,6 @@
           "gf": 5,
           "ga": 1,
           "notes": "Away GameSheet regular season box score"
-        },
-        {
-          "date": "Oct 28, 2026",
-          "opp": "TNT Tornados",
-          "vsAt": "vs",
-          "score": "2-2",
-          "result": "T",
-          "gf": 2,
-          "ga": 2,
-          "notes": "Home GameSheet regular season box score"
         }
       ],
       "dangerPlayers": [
@@ -664,32 +664,42 @@
       "gameSheetCode": "U13A-RS-083",
       "gameSheetUrl": "https://gamesheetstats.com/seasons/15490/teams/534243/schedule",
       "record": {
-        "gp": 8,
-        "w": 4,
+        "gp": 9,
+        "w": 5,
         "l": 3,
         "t": 1,
-        "pts": 9,
-        "winPct": ".500"
+        "pts": 11,
+        "winPct": ".556"
       },
       "stats": {
-        "gf": 32,
-        "ga": 24,
-        "diff": "+8",
+        "gf": 36,
+        "ga": 25,
+        "diff": "+11",
         "gpg": "4.00",
-        "gapg": "3.00",
-        "pim": 48,
+        "gapg": "2.78",
+        "pim": 54,
         "pimPg": "6.0"
       },
       "specialTeams": {
-        "ppPct": "29.6%",
-        "ppGoals": 8,
-        "ppOpps": 27,
-        "pkPct": "81.2%",
+        "ppPct": "26.5%",
+        "ppGoals": 9,
+        "ppOpps": 34,
+        "pkPct": "83.8%",
         "shGoals": 1,
         "shAllowed": 10,
         "tendency": "Physical grinding squad; heavy hits along boards."
       },
       "last5Games": [
+        {
+          "date": "Nov 15, 2026",
+          "opp": "Orangeville Flyers",
+          "vsAt": "vs",
+          "score": "4-1",
+          "result": "W",
+          "gf": 4,
+          "ga": 1,
+          "notes": "Home GameSheet regular season box score"
+        },
         {
           "date": "Nov 11, 2026",
           "opp": "Barrie Colts",
@@ -727,16 +737,6 @@
           "score": "3-3",
           "result": "T",
           "gf": 3,
-          "ga": 3,
-          "notes": "Home GameSheet regular season box score"
-        },
-        {
-          "date": "Oct 25, 2026",
-          "opp": "Orillia Terriers",
-          "vsAt": "vs",
-          "score": "5-3",
-          "result": "W",
-          "gf": 5,
           "ga": 3,
           "notes": "Home GameSheet regular season box score"
         }
@@ -1233,32 +1233,42 @@
       "gameSheetCode": "U13A-RS-043",
       "gameSheetUrl": "https://gamesheetstats.com/seasons/15490/teams/534261/schedule",
       "record": {
-        "gp": 11,
+        "gp": 12,
         "w": 4,
-        "l": 6,
+        "l": 7,
         "t": 1,
         "pts": 9,
-        "winPct": ".364"
+        "winPct": ".333"
       },
       "stats": {
-        "gf": 36,
-        "ga": 40,
-        "diff": "-4",
-        "gpg": "3.27",
-        "gapg": "3.64",
-        "pim": 66,
+        "gf": 37,
+        "ga": 44,
+        "diff": "-7",
+        "gpg": "3.08",
+        "gapg": "3.67",
+        "pim": 72,
         "pimPg": "6.0"
       },
       "specialTeams": {
-        "ppPct": "25.0%",
+        "ppPct": "21.2%",
         "ppGoals": 7,
-        "ppOpps": 28,
-        "pkPct": "84.1%",
+        "ppOpps": 33,
+        "pkPct": "84.3%",
         "shGoals": 0,
         "shAllowed": 10,
         "tendency": "Gritty, physical forechecking style; dumps puck deep and pursues with 2 men."
       },
       "last5Games": [
+        {
+          "date": "Nov 15, 2026",
+          "opp": "Upper York Admirals",
+          "vsAt": "@",
+          "score": "1-4",
+          "result": "L",
+          "gf": 1,
+          "ga": 4,
+          "notes": "Away GameSheet regular season box score"
+        },
         {
           "date": "Nov 12, 2026",
           "opp": "Stouffville Clippers",
@@ -1298,16 +1308,6 @@
           "gf": 1,
           "ga": 10,
           "notes": "Home GameSheet regular season box score"
-        },
-        {
-          "date": "Oct 25, 2026",
-          "opp": "Caledon Hawks",
-          "vsAt": "@",
-          "score": "0-3",
-          "result": "L",
-          "gf": 0,
-          "ga": 3,
-          "notes": "Away GameSheet regular season box score"
         }
       ],
       "dangerPlayers": [
@@ -1778,30 +1778,40 @@
       "teamId": "534226",
       "gameSheetUrl": "https://gamesheetstats.com/seasons/15490/teams/534226/schedule",
       "record": {
-        "gp": 10,
+        "gp": 11,
         "w": 2,
-        "l": 5,
+        "l": 6,
         "t": 3,
         "pts": 7,
-        "winPct": ".200"
+        "winPct": ".182"
       },
       "stats": {
-        "gf": 25,
-        "ga": 36,
-        "diff": "-11",
-        "gpg": "2.50",
-        "gapg": "3.60",
-        "pim": 60,
+        "gf": 28,
+        "ga": 41,
+        "diff": "-13",
+        "gpg": "2.55",
+        "gapg": "3.73",
+        "pim": 66,
         "pimPg": "6.0"
       },
       "specialTeams": {
-        "ppPct": "15.0%",
-        "ppGoals": 3,
-        "ppOpps": 20,
-        "pkPct": "72.0%",
+        "ppPct": "16.7%",
+        "ppGoals": 4,
+        "ppOpps": 24,
+        "pkPct": "69.2%",
         "tendency": "Official GameSheet regular season special teams metrics."
       },
       "last5Games": [
+        {
+          "date": "Nov 14, 2026",
+          "opp": "Orillia Terriers",
+          "vsAt": "@",
+          "score": "3-5",
+          "result": "L",
+          "gf": 3,
+          "ga": 5,
+          "notes": "Away GameSheet regular season box score"
+        },
         {
           "date": "Nov 12, 2026",
           "opp": "Orangeville Flyers",
@@ -1841,19 +1851,9 @@
           "gf": 2,
           "ga": 4,
           "notes": "Home GameSheet regular season box score"
-        },
-        {
-          "date": "Oct 25, 2026",
-          "opp": "Barrie Colts U13-2 A Blue",
-          "vsAt": "vs",
-          "score": "2-3",
-          "result": "L",
-          "gf": 2,
-          "ga": 3,
-          "notes": "Home GameSheet regular season box score"
         }
       ]
     }
   },
-  "lastSynced": "2026-11-15T16:18:17.255151Z"
+  "lastSynced": "2026-11-15T21:36:01.133390Z"
 }
