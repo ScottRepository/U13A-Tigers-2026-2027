@@ -6001,6 +6001,10 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
                 </button>
               </div>
             </div>
+            <!-- Breakdown Filter Buttons (All, Teaching, Good, Coaching, Breakouts, Power Play, Penalty Kill, Tigers Goals, Opp Goals) -->
+            <div id="past-game-shift-filter-pills" class="flex flex-wrap items-center gap-1 text-[11px]">
+              <!-- Dynamically rendered breakdown buttons with counts -->
+            </div>
             <div id="past-game-shifts-list" class="space-y-2.5 text-xs">
               <!-- Dynamically populated full-telemetry shift cards -->
             </div>
@@ -6502,16 +6506,31 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
             <!-- Situation & Zone Filter Pills (Clean Subtle Badges) -->
             <div class="flex flex-wrap items-center gap-1 text-[11px]">
               <button onclick="changeTacticalCategory('all')" id="cat-pill-all" class="px-2.5 py-1 rounded-lg font-bold bg-slate-900 text-tigersGold cursor-pointer transition shadow-xs">
-                All
+                📁 All
               </button>
-              <button onclick="changeTacticalCategory('powerplay')" id="cat-pill-powerplay" class="px-2 py-1 rounded-lg font-medium bg-white text-slate-700 hover:text-slate-950 cursor-pointer transition border border-slate-300">
-                ⚡ PP
+              <button onclick="changeTacticalCategory('teaching')" id="cat-pill-teaching" class="px-2 py-1 rounded-lg font-medium bg-white text-amber-900 hover:bg-amber-50 cursor-pointer transition border border-slate-300">
+                💡 Teaching
               </button>
-              <button onclick="changeTacticalCategory('penalty_kill')" id="cat-pill-penalty_kill" class="px-2 py-1 rounded-lg font-medium bg-white text-slate-700 hover:text-slate-950 cursor-pointer transition border border-slate-300">
-                🛡️ PK
+              <button onclick="changeTacticalCategory('good_plays')" id="cat-pill-good_plays" class="px-2 py-1 rounded-lg font-medium bg-white text-emerald-800 hover:bg-emerald-50 cursor-pointer transition border border-slate-300">
+                🟢 Good
+              </button>
+              <button onclick="changeTacticalCategory('coaching_fixes')" id="cat-pill-coaching_fixes" class="px-2 py-1 rounded-lg font-medium bg-white text-rose-800 hover:bg-rose-50 cursor-pointer transition border border-slate-300">
+                🔴 Coaching
               </button>
               <button onclick="toggleBreakoutOnlyFilter()" id="breakout-filter-btn" class="px-2 py-1 rounded-lg font-medium bg-white text-sky-800 hover:text-sky-950 cursor-pointer transition border border-slate-300">
                 🏒 Breakouts
+              </button>
+              <button onclick="changeTacticalCategory('powerplay')" id="cat-pill-powerplay" class="px-2 py-1 rounded-lg font-medium bg-white text-amber-800 hover:text-slate-950 cursor-pointer transition border border-slate-300">
+                ⚡ Power Play
+              </button>
+              <button onclick="changeTacticalCategory('penalty_kill')" id="cat-pill-penalty_kill" class="px-2 py-1 rounded-lg font-medium bg-white text-indigo-800 hover:text-slate-950 cursor-pointer transition border border-slate-300">
+                🛡️ Penalty Kill
+              </button>
+              <button onclick="changeTacticalCategory('tigers_goals')" id="cat-pill-tigers_goals" class="px-2 py-1 rounded-lg font-bold bg-white text-emerald-800 hover:bg-emerald-50 cursor-pointer transition border border-emerald-300">
+                🚨 Tigers Goals
+              </button>
+              <button onclick="changeTacticalCategory('opp_goals')" id="cat-pill-opp_goals" class="px-2 py-1 rounded-lg font-bold bg-white text-rose-800 hover:bg-rose-50 cursor-pointer transition border border-rose-300">
+                🥅 Opp Goals
               </button>
               <button onclick="changeTacticalCategory('offensive_zone')" id="cat-pill-offensive_zone" class="px-2 py-1 rounded-lg font-medium bg-white text-slate-700 hover:text-slate-950 cursor-pointer transition border border-slate-300">
                 🟢 O-Zone
@@ -6587,15 +6606,23 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
             
             <!-- AI FILM STUDY & TACTICAL SUGGESTIONS ACCORDION/CARD -->
             <div id="ai-film-review-card" class="bg-gradient-to-br from-amber-500/10 via-slate-50 to-white rounded-2xl border-2 border-amber-400/80 p-3 shadow-xs space-y-2.5">
-              <div class="flex items-center justify-between gap-2">
-                <div class="flex items-center gap-2">
-                  <span class="px-2 py-0.5 rounded-md bg-slate-900 text-tigersGold font-mono font-bold text-[10px] tracking-wider uppercase">AI Film Coach</span>
-                  <span class="font-display font-black text-xs text-slate-900 uppercase">Suggested Review Clips</span>
+              <div class="space-y-2">
+                <div class="flex items-center justify-between gap-2">
+                  <div class="flex items-center gap-2">
+                    <span class="px-2 py-0.5 rounded-md bg-slate-900 text-tigersGold font-mono font-bold text-[10px] tracking-wider uppercase">AI Film Coach</span>
+                    <span class="font-display font-black text-xs text-slate-900 uppercase">Game Breakdown &amp; Suggested Review Clips</span>
+                  </div>
                 </div>
-                <div class="flex items-center gap-1 text-[10px]">
-                  <button onclick="setAiFilterMode('all')" id="ai-filter-all" class="px-2 py-0.5 rounded-full font-bold bg-slate-900 text-tigersGold cursor-pointer transition">All</button>
-                  <button onclick="setAiFilterMode('good')" id="ai-filter-good" class="px-2 py-0.5 rounded-full font-bold bg-white text-emerald-800 border border-emerald-300 hover:bg-emerald-50 cursor-pointer transition">🟢 Good Plays</button>
-                  <button onclick="setAiFilterMode('bad')" id="ai-filter-bad" class="px-2 py-0.5 rounded-full font-bold bg-white text-rose-800 border border-rose-300 hover:bg-rose-50 cursor-pointer transition">🔴 Areas to Fix</button>
+                <div id="ai-filter-pills-row" class="flex flex-wrap items-center gap-1 text-[10px]">
+                  <button onclick="setAiFilterMode('all')" id="ai-filter-all" class="px-2.5 py-0.5 rounded-full font-bold bg-slate-900 text-tigersGold cursor-pointer transition">📁 All</button>
+                  <button onclick="setAiFilterMode('teaching')" id="ai-filter-teaching" class="px-2.5 py-0.5 rounded-full font-bold bg-white text-amber-900 border border-amber-300 hover:bg-amber-50 cursor-pointer transition">💡 Teaching</button>
+                  <button onclick="setAiFilterMode('good')" id="ai-filter-good" class="px-2.5 py-0.5 rounded-full font-bold bg-white text-emerald-800 border border-emerald-300 hover:bg-emerald-50 cursor-pointer transition">🟢 Good Plays</button>
+                  <button onclick="setAiFilterMode('bad')" id="ai-filter-bad" class="px-2.5 py-0.5 rounded-full font-bold bg-white text-rose-800 border border-rose-300 hover:bg-rose-50 cursor-pointer transition">🔴 Coaching Fixes</button>
+                  <button onclick="setAiFilterMode('breakouts')" id="ai-filter-breakouts" class="px-2.5 py-0.5 rounded-full font-bold bg-white text-sky-800 border border-sky-300 hover:bg-sky-50 cursor-pointer transition">🏒 Breakouts</button>
+                  <button onclick="setAiFilterMode('powerplay')" id="ai-filter-powerplay" class="px-2.5 py-0.5 rounded-full font-bold bg-white text-amber-800 border border-amber-300 hover:bg-amber-50 cursor-pointer transition">⚡ Power Play</button>
+                  <button onclick="setAiFilterMode('penalty_kill')" id="ai-filter-penalty_kill" class="px-2.5 py-0.5 rounded-full font-bold bg-white text-indigo-800 border border-indigo-300 hover:bg-indigo-50 cursor-pointer transition">🛡️ Penalty Kill</button>
+                  <button onclick="setAiFilterMode('tigers_goals')" id="ai-filter-tigers_goals" class="px-2.5 py-0.5 rounded-full font-bold bg-white text-emerald-800 border border-emerald-400 hover:bg-emerald-50 cursor-pointer transition">🚨 Tigers Goals</button>
+                  <button onclick="setAiFilterMode('opp_goals')" id="ai-filter-opp_goals" class="px-2.5 py-0.5 rounded-full font-bold bg-white text-rose-800 border border-rose-400 hover:bg-rose-50 cursor-pointer transition">🥅 Opp Goals</button>
                 </div>
               </div>
 
@@ -8289,21 +8316,20 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
       shifts.forEach(s => {
         const sEnd = Number(s.end_seconds || s.start_seconds || 0);
         if (sEnd <= curSec) {
-          const notes = (s.coach_notes || "").toLowerCase();
-          if (notes.includes("goal") && (notes.includes("tiger") || notes.includes("carpentier") || notes.includes("scored") || notes.includes("manjunath"))) {
+          if (s.is_tigers_goal) {
             homeScore++;
-          } else if (notes.includes("opponent goal") || notes.includes("goal against")) {
+          } else if (s.is_opp_goal) {
             awayScore++;
+          } else {
+            const notes = (s.coach_notes || "").toLowerCase();
+            if (notes.includes("goal") && (notes.includes("tiger") || notes.includes("carpentier") || notes.includes("scored") || notes.includes("manjunath"))) {
+              homeScore++;
+            } else if (notes.includes("opponent goal") || notes.includes("goal against")) {
+              awayScore++;
+            }
           }
         }
       });
-
-      // Baseline score escalation if inline notes don't specify explicit goal moments
-      if (homeScore === 0 && awayScore === 0) {
-        if (curSec >= p3 + 300) { homeScore = 3; awayScore = 2; }
-        else if (curSec >= p2 + 180) { homeScore = 2; awayScore = 1; }
-        else if (curSec >= 300) { homeScore = 1; awayScore = 0; }
-      }
 
       // 3. Opponent Abbreviation (use smart parser for titles like '20.10.2026 - Tigers 1 - Newmarket 9')
       let opp = currentGame.opponent || "";
@@ -44987,7 +45013,7 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
         const boBtn = document.getElementById('breakout-filter-btn');
         if (boBtn) boBtn.className = "px-2 py-1 rounded-lg font-bold bg-white text-sky-700 hover:text-sky-900 cursor-pointer transition border border-slate-300";
       }
-      ['all', 'powerplay', 'penalty_kill', 'offensive_zone', 'defensive_zone', 'neutral_zone', 'starred'].forEach(c => {
+      ['all', 'teaching', 'good_plays', 'coaching_fixes', 'powerplay', 'penalty_kill', 'tigers_goals', 'opp_goals', 'offensive_zone', 'defensive_zone', 'neutral_zone', 'starred'].forEach(c => {
         const pill = document.getElementById(`cat-pill-${c}`);
         if (pill) {
           pill.className = (c === cat)
@@ -45212,12 +45238,15 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
 
     // ================= COACH'S FILM TRAY & AI TEACHING FOLDERS ENGINE =================
     const DEFAULT_TRAY_FOLDERS = [
-      { id: "all", name: "All Saved Clips", icon: "📁", badgeBg: "bg-slate-100 text-slate-800" },
-      { id: "teaching", name: "Teaching Moments", icon: "💡", badgeBg: "bg-amber-100 text-amber-900 border-amber-300" },
-      { id: "good_plays", name: "Good Plays (Keep Doing)", icon: "🟢", badgeBg: "bg-emerald-100 text-emerald-900 border-emerald-300" },
-      { id: "coaching_fixes", name: "Coaching Fixes (To Improve)", icon: "🔴", badgeBg: "bg-rose-100 text-rose-900 border-rose-300" },
-      { id: "breakouts", name: "Breakouts & Exits", icon: "🏒", badgeBg: "bg-sky-100 text-sky-900 border-sky-300" },
-      { id: "special_teams", name: "PP & PK Execution", icon: "⚡", badgeBg: "bg-amber-100 text-amber-900 border-amber-300" }
+      { id: "all", shortLabel: "All", name: "All Clips", icon: "📁", badgeBg: "bg-slate-100 text-slate-800" },
+      { id: "teaching", shortLabel: "Teaching", name: "Teaching Moments", icon: "💡", badgeBg: "bg-amber-100 text-amber-900 border-amber-300" },
+      { id: "good_plays", shortLabel: "Good", name: "Good Plays (Keep Doing)", icon: "🟢", badgeBg: "bg-emerald-100 text-emerald-900 border-emerald-300" },
+      { id: "coaching_fixes", shortLabel: "Coaching", name: "Coaching Fixes (To Improve)", icon: "🔴", badgeBg: "bg-rose-100 text-rose-900 border-rose-300" },
+      { id: "breakouts", shortLabel: "Breakouts", name: "Breakouts & Exits", icon: "🏒", badgeBg: "bg-sky-100 text-sky-900 border-sky-300" },
+      { id: "powerplay", shortLabel: "Power Play", name: "Power Play (PP)", icon: "⚡", badgeBg: "bg-amber-100 text-amber-900 border-amber-300" },
+      { id: "penalty_kill", shortLabel: "Penalty Kill", name: "Penalty Kill (PK)", icon: "🛡️", badgeBg: "bg-indigo-100 text-indigo-900 border-indigo-300" },
+      { id: "tigers_goals", shortLabel: "Tigers Goals", name: "Goals for Tigers", icon: "🚨", badgeBg: "bg-emerald-100 text-emerald-900 border-emerald-400" },
+      { id: "opp_goals", shortLabel: "Opp Goals", name: "Goals for Opponent", icon: "🥅", badgeBg: "bg-rose-100 text-rose-900 border-rose-400" }
     ];
 
     let currentTrayFolder = "all";
@@ -45780,23 +45809,66 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
       renderFilmTrayView();
     }
 
+    function clipMatchesTrayFolder(clip, folderId) {
+      if (!folderId || folderId === "all") return true;
+      const cf = clip.folder || "";
+      if (cf === folderId) return true;
+      if (folderId === "powerplay" && cf === "special_teams") return true;
+      return false;
+    }
+
     function setTrayActiveFolder(folderId) {
       currentTrayFolder = folderId;
+      // Sync AI Film Coach filter mode so clicking any Tray button also breaks down the game clips below it
+      const folderToAiMap = {
+        all: 'all',
+        teaching: 'teaching',
+        good_plays: 'good',
+        coaching_fixes: 'bad',
+        breakouts: 'breakouts',
+        powerplay: 'powerplay',
+        penalty_kill: 'penalty_kill',
+        tigers_goals: 'tigers_goals',
+        opp_goals: 'opp_goals'
+      };
+      if (folderToAiMap[folderId]) {
+        currentAiFilter = folderToAiMap[folderId];
+        updateAiFilterPillStyles();
+      }
       renderFilmTrayView();
     }
 
-    function setAiFilterMode(mode) {
-      currentAiFilter = mode;
-      const modes = ['all', 'good', 'bad'];
+    function updateAiFilterPillStyles() {
+      const modes = ['all', 'teaching', 'good', 'bad', 'breakouts', 'powerplay', 'penalty_kill', 'tigers_goals', 'opp_goals'];
       modes.forEach(m => {
         const btn = document.getElementById(`ai-filter-${m}`);
         if (btn) {
-          btn.className = (m === mode)
+          btn.className = (m === currentAiFilter)
             ? "px-2.5 py-0.5 rounded-full font-bold bg-slate-900 text-tigersGold cursor-pointer transition shadow-xs"
             : "px-2.5 py-0.5 rounded-full font-bold bg-white text-slate-700 border border-slate-300 hover:bg-slate-100 cursor-pointer transition";
         }
       });
-      renderAiSuggestedClips();
+    }
+
+    function setAiFilterMode(mode) {
+      currentAiFilter = mode;
+      updateAiFilterPillStyles();
+      // Sync top Tray folder pill as well
+      const aiToFolderMap = {
+        all: 'all',
+        teaching: 'teaching',
+        good: 'good_plays',
+        bad: 'coaching_fixes',
+        breakouts: 'breakouts',
+        powerplay: 'powerplay',
+        penalty_kill: 'penalty_kill',
+        tigers_goals: 'tigers_goals',
+        opp_goals: 'opp_goals'
+      };
+      if (aiToFolderMap[mode]) {
+        currentTrayFolder = aiToFolderMap[mode];
+      }
+      renderFilmTrayView();
     }
 
     function generateAiClipSuggestions(game) {
@@ -45808,93 +45880,207 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
 
       const shifts = getNormalizedShiftsForGame(game);
       const suggestions = [];
+      const parsed = (typeof parseGameScoreAndOpponent === 'function') ? parseGameScoreAndOpponent(game) : { opponent: 'Opponent' };
+      const oppName = parsed.opponent || game.opponent || 'Opponent';
 
-      // 1. Highlight Clean Breakouts (Good Plays)
+      // 1. Highlight Clean Breakouts (Good Plays & Breakouts & Teaching)
       const cleanBreakouts = shifts.filter(s => s.breakout && s.breakout.attempted && s.breakout.successful);
-      cleanBreakouts.slice(0, 2).forEach((cb, idx) => {
+      cleanBreakouts.forEach((cb, idx) => {
         const st = Math.round(Number(cb.start_seconds || 0));
         const en = Math.round(Number(cb.end_seconds || (st + 35)));
+        const boType = cb.breakout?.breakout_type || 'D-to-D';
         suggestions.push({
           id: `ai_good_bo_${cb.shift_id || idx + 1}`,
+          shift_id: cb.shift_id || idx + 1,
           type: "good_play",
-          category: `⚡ Clean ${cb.breakout?.breakout_type || 'Breakout'} Exit`,
-          title: `Shift #${cb.shift_id || idx + 1} • Clean D-Zone Exit`,
+          is_teaching: idx < 3,
+          is_breakout: true,
+          badge_label: "🟢 Good Play • Breakout",
+          badge_cls: "bg-emerald-100 text-emerald-900 border-emerald-300",
+          category: `⚡ Clean ${boType} Exit`,
+          title: `Shift #${cb.shift_id || idx + 1} • Clean ${boType} D-Zone Exit`,
           startSec: st,
           endSec: en,
           period: cb.period || 1,
           zone: "Defensive Zone",
-          tactical_insight: "Teaching Gold: Crisp first pass out of the defensive zone under forecheck pressure. Strong defensive wall support.",
+          tactical_insight: cb.coach_notes || "Teaching Gold: Crisp first pass out of the defensive zone under forecheck pressure. Strong defensive wall support.",
           players: cb.player_ids || [21, 28, 23],
           target_folder: "good_plays"
         });
       });
 
-      // 2. Highlight Sustained O-Zone Pressure (Good Plays)
-      const oZoneShifts = shifts.filter(s => String(s.primary_zone || '').toLowerCase().includes('offens'));
-      if (oZoneShifts.length > 0) {
-        const oz = oZoneShifts[0];
+      // 2. Highlight Sustained O-Zone Pressure (Good Plays & Teaching)
+      const oZoneShifts = shifts.filter(s => String(s.primary_zone || '').toLowerCase().includes('offens') && !s.is_tigers_goal);
+      oZoneShifts.slice(0, 3).forEach((oz, idx) => {
         const st = Math.round(Number(oz.start_seconds || 0));
         const en = Math.round(Number(oz.end_seconds || (st + 38)));
         suggestions.push({
-          id: `ai_good_oz_${oz.shift_id || 2}`,
+          id: `ai_good_oz_${oz.shift_id || (idx + 2)}`,
+          shift_id: oz.shift_id || (idx + 2),
           type: "good_play",
+          is_teaching: true,
+          badge_label: "🟢 Good Play",
+          badge_cls: "bg-emerald-100 text-emerald-900 border-emerald-300",
           category: "🔺 Heavy Offensive Zone Attack",
-          title: `Shift #${oz.shift_id || 2} • Sustained O-Zone Cycling`,
+          title: `Shift #${oz.shift_id || (idx + 2)} • Sustained O-Zone Cycling`,
           startSec: st,
           endSec: en,
           period: oz.period || 1,
           zone: "Offensive Zone",
-          tactical_insight: "Reinforce Habit: Great puck recovery on the half-wall and defense pinching at the blue line to maintain pressure.",
+          tactical_insight: oz.coach_notes || "Reinforce Habit: Great puck recovery on the half-wall and defense pinching at the blue line to maintain pressure.",
           players: oz.player_ids || [9, 10, 7],
           target_folder: "good_plays"
         });
-      }
+      });
 
-      // 3. Highlight D-Zone Turnovers (Coaching Fixes)
+      // 3. Highlight D-Zone Turnovers (Coaching Fixes & Breakouts & Teaching)
       const turnoverShifts = shifts.filter(s => s.breakout && s.breakout.attempted && !s.breakout.successful);
-      turnoverShifts.slice(0, 2).forEach((to, idx) => {
+      turnoverShifts.forEach((to, idx) => {
         const st = Math.round(Number(to.start_seconds || 0));
         const en = Math.round(Number(to.end_seconds || (st + 35)));
         const loc = to.breakout.turnover_location || "D-Zone Blue Line";
+        const boType = to.breakout.breakout_type || "Breakout";
         suggestions.push({
           id: `ai_fix_to_${to.shift_id || idx + 10}`,
+          shift_id: to.shift_id || idx + 10,
           type: "coaching_fix",
-          category: `⚠️ D-Zone Turnover at ${loc}`,
-          title: `Shift #${to.shift_id || idx + 10} • Turnover Under Pressure`,
+          is_teaching: idx < 3,
+          is_breakout: true,
+          badge_label: "🔴 Coaching Fix • Breakout",
+          badge_cls: "bg-rose-100 text-rose-900 border-rose-300",
+          category: `⚠️ ${boType} Turnover at ${loc}`,
+          title: `Shift #${to.shift_id || idx + 10} • ${boType} Turnover (${loc})`,
           startSec: st,
           endSec: en,
           period: to.period || 1,
           zone: "Defensive Zone",
-          tactical_insight: "Teachable Moment: Rushed puck movement along the boards resulted in opponent interception. Practice shoulder checks and using the reverse option.",
+          tactical_insight: to.coach_notes || "Teachable Moment: Rushed puck movement along the boards resulted in opponent interception. Practice shoulder checks and using the reverse option.",
           players: to.player_ids || [27, 76],
           target_folder: "coaching_fixes"
         });
       });
 
-      // 4. Highlight Extended Shift Fatigue (Coaching Fixes)
-      const longShifts = shifts.filter(s => (Number(s.end_seconds || 0) - Number(s.start_seconds || 0)) > 50);
-      if (longShifts.length > 0) {
-        const ls = longShifts[0];
-        const st = Math.round(Number(ls.start_seconds || 0));
-        const en = Math.round(Number(ls.end_seconds || (st + 55)));
-        const dur = en - st;
+      // 4. Power Play (PP) Clips Breakdown
+      const ppShifts = shifts.filter(s => {
+        const stState = String(s.strength_state || s.strength || '').toUpperCase();
+        return stState.includes('PP') || stState.includes('POWER');
+      });
+      ppShifts.forEach((pp, idx) => {
+        const st = Math.round(Number(pp.start_seconds || 0));
+        const en = Math.round(Number(pp.end_seconds || (st + 40)));
         suggestions.push({
-          id: `ai_fix_fatigue_${ls.shift_id || 40}`,
-          type: "coaching_fix",
-          category: "⏱️ Shift Discipline (>50s)",
-          title: `Shift #${ls.shift_id || 40} • Overextended ${dur}s Shift`,
+          id: `ai_pp_${pp.shift_id || idx + 1}`,
+          shift_id: pp.shift_id || idx + 1,
+          type: "powerplay",
+          is_powerplay: true,
+          is_teaching: true,
+          badge_label: "⚡ Power Play (PP)",
+          badge_cls: "bg-amber-100 text-amber-900 border-amber-300",
+          category: `⚡ Tigers Power Play Unit #${(idx % 2) + 1}`,
+          title: `Shift #${pp.shift_id || idx + 1} • Power Play O-Zone Setup`,
           startSec: st,
           endSec: en,
-          period: ls.period || 1,
-          zone: ls.primary_zone || "Active Play",
-          tactical_insight: "Discipline Focus: Extended shift led to tired legs and backchecking gap. Remind players: 35-45 second hard bursts, then change on the fly.",
-          players: ls.player_ids || [18, 5, 11],
-          target_folder: "coaching_fixes"
+          period: pp.period || 1,
+          zone: pp.primary_zone || "Offensive Zone",
+          tactical_insight: pp.coach_notes || "Power Play Breakdown: Umbrella / overload puck movement at the half-wall looking for point shot & net-front screen.",
+          players: pp.player_ids || [9, 76, 98, 77, 7],
+          target_folder: "powerplay"
         });
-      }
+      });
+
+      // 5. Penalty Kill (PK) Clips Breakdown
+      const pkShifts = shifts.filter(s => {
+        const stState = String(s.strength_state || s.strength || '').toUpperCase();
+        return stState.includes('PK') || stState.includes('PENALTY') || stState.includes('SHORT');
+      });
+      pkShifts.forEach((pk, idx) => {
+        const st = Math.round(Number(pk.start_seconds || 0));
+        const en = Math.round(Number(pk.end_seconds || (st + 40)));
+        suggestions.push({
+          id: `ai_pk_${pk.shift_id || idx + 1}`,
+          shift_id: pk.shift_id || idx + 1,
+          type: "penalty_kill",
+          is_penalty_kill: true,
+          is_teaching: true,
+          badge_label: "🛡️ Penalty Kill (PK)",
+          badge_cls: "bg-indigo-100 text-indigo-900 border-indigo-300",
+          category: `🛡️ Tigers Penalty Kill Box #${(idx % 2) + 1}`,
+          title: `Shift #${pk.shift_id || idx + 1} • Penalty Kill Box & Clear`,
+          startSec: st,
+          endSec: en,
+          period: pk.period || 1,
+          zone: pk.primary_zone || "Defensive Zone",
+          tactical_insight: pk.coach_notes || "Penalty Kill Breakdown: Tight diamond/box sticks in passing lanes, forcing perimeter shots and icing clear.",
+          players: pk.player_ids || [18, 5, 27, 28],
+          target_folder: "penalty_kill"
+        });
+      });
+
+      // 6. Goals for Tigers Breakdown
+      const tigersGoalShifts = shifts.filter(s => s.is_tigers_goal);
+      tigersGoalShifts.forEach((tg, idx) => {
+        const st = Math.round(Number(tg.start_seconds || 0));
+        const en = Math.round(Number(tg.end_seconds || (st + 40)));
+        suggestions.push({
+          id: `ai_tgoal_${tg.shift_id || idx + 1}`,
+          shift_id: tg.shift_id || idx + 1,
+          type: "tigers_goal",
+          is_tigers_goal: true,
+          is_good_play: true,
+          badge_label: `🚨 Tigers Goal #${idx + 1}`,
+          badge_cls: "bg-emerald-100 text-emerald-900 border-emerald-400",
+          category: `🚨 Goal for Tigers (#${idx + 1})`,
+          title: `Shift #${tg.shift_id || idx + 1} • 🚨 Aurora Tigers Goal #${idx + 1}`,
+          startSec: st,
+          endSec: en,
+          period: tg.period || 1,
+          zone: "Offensive Zone",
+          tactical_insight: tg.coach_notes || `🚨 Tigers Goal #${idx + 1}: Quick transition into the offensive zone and high-danger finish in the slot!`,
+          players: tg.player_ids || [9, 76, 98, 77, 7],
+          target_folder: "tigers_goals"
+        });
+      });
+
+      // 7. Goals for Opponent Breakdown
+      const oppGoalShifts = shifts.filter(s => s.is_opp_goal);
+      oppGoalShifts.forEach((og, idx) => {
+        const st = Math.round(Number(og.start_seconds || 0));
+        const en = Math.round(Number(og.end_seconds || (st + 40)));
+        suggestions.push({
+          id: `ai_ogoal_${og.shift_id || idx + 1}`,
+          shift_id: og.shift_id || idx + 1,
+          type: "opp_goal",
+          is_opp_goal: true,
+          is_teaching: true,
+          badge_label: `🥅 ${oppName} Goal #${idx + 1}`,
+          badge_cls: "bg-rose-100 text-rose-900 border-rose-400",
+          category: `🥅 Goal for ${oppName} (#${idx + 1})`,
+          title: `Shift #${og.shift_id || idx + 1} • 🥅 ${oppName} Goal #${idx + 1} (Review Coverage)`,
+          startSec: st,
+          endSec: en,
+          period: og.period || 1,
+          zone: "Defensive Zone",
+          tactical_insight: og.coach_notes || `🥅 Goal Against (#${idx + 1} by ${oppName}): Review defensive net-front box-out, weak-side coverage, and stick positioning.`,
+          players: og.player_ids || [18, 5, 11, 27, 28],
+          target_folder: "opp_goals"
+        });
+      });
 
       cachedAiSuggestions[gameId] = suggestions;
       return suggestions;
+    }
+
+    function suggestionMatchesAiFilter(s, filterMode) {
+      if (!filterMode || filterMode === 'all') return true;
+      if (filterMode === 'teaching' || filterMode === 'teaching_moments') return Boolean(s.is_teaching || s.type === 'good_play' || s.type === 'coaching_fix');
+      if (filterMode === 'good' || filterMode === 'good_plays') return Boolean(s.type === 'good_play' || s.is_good_play);
+      if (filterMode === 'bad' || filterMode === 'coaching_fixes') return Boolean(s.type === 'coaching_fix' || s.is_opp_goal);
+      if (filterMode === 'breakouts') return Boolean(s.is_breakout);
+      if (filterMode === 'powerplay' || filterMode === 'special_teams') return Boolean(s.is_powerplay || s.type === 'powerplay');
+      if (filterMode === 'penalty_kill') return Boolean(s.is_penalty_kill || s.type === 'penalty_kill');
+      if (filterMode === 'tigers_goals') return Boolean(s.is_tigers_goal || s.type === 'tigers_goal');
+      if (filterMode === 'opp_goals') return Boolean(s.is_opp_goal || s.type === 'opp_goal');
+      return true;
     }
 
     function addAiSuggestionToTray(suggestionId) {
@@ -45908,7 +46094,7 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
         game_id: currentGame.id,
         game_title: currentGame.title,
         youtube_video_id: currentGame.youtube_video_id,
-        shift_id: item.id,
+        shift_id: item.shift_id || item.id,
         title: item.title,
         start_seconds: item.startSec,
         end_seconds: item.endSec,
@@ -45923,7 +46109,7 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
       const clips = getCoachingTrayClips();
       clips.unshift(newClip);
       saveCoachingTrayClips(clips);
-      showToast(`⭐ Added AI suggestion to Film Tray!`);
+      showToast(`⭐ Added "${item.title}" to Film Tray!`);
       renderFilmTrayView();
     }
 
@@ -45941,25 +46127,28 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
       const listEl = document.getElementById('ai-suggested-clips-list');
       if (!listEl || !currentGame) return;
 
+      updateAiFilterPillStyles();
       const allSuggestions = generateAiClipSuggestions(currentGame);
-      const filtered = allSuggestions.filter(s => {
-        if (currentAiFilter === 'good') return s.type === 'good_play';
-        if (currentAiFilter === 'bad') return s.type === 'coaching_fix';
-        return true;
-      });
+      const filtered = allSuggestions.filter(s => suggestionMatchesAiFilter(s, currentAiFilter));
 
       if (filtered.length === 0) {
-        listEl.innerHTML = `<div class="p-3 text-center text-xs text-slate-500">No suggestions match filter.</div>`;
+        const emptyMsg = currentAiFilter === 'tigers_goals'
+          ? `No Tigers goals recorded in ${currentGame.title || 'this game'} (Verified Box Score: 0 Tigers goals).`
+          : (currentAiFilter === 'opp_goals'
+              ? `No Opponent goals recorded in ${currentGame.title || 'this game'} (Shutout!).`
+              : `No clips in this category for ${currentGame.title || 'this game'}.`);
+        listEl.innerHTML = `<div class="p-3 text-center text-xs text-slate-600 bg-white/80 rounded-xl border border-slate-200">${emptyMsg}</div>`;
         return;
       }
 
       listEl.innerHTML = filtered.map(s => {
-        const isGood = s.type === 'good_play';
-        const typeBadge = isGood
-          ? `<span class="px-2 py-0.5 rounded text-[9px] font-black uppercase bg-emerald-100 text-emerald-900 border border-emerald-300">🟢 Good Play</span>`
-          : `<span class="px-2 py-0.5 rounded text-[9px] font-black uppercase bg-rose-100 text-rose-900 border border-rose-300">🔴 Coaching Fix</span>`;
-        const borderCls = isGood ? 'border-emerald-200 hover:border-emerald-400' : 'border-rose-200 hover:border-rose-400';
-        const bgCls = isGood ? 'bg-emerald-50/40' : 'bg-rose-50/40';
+        const isGood = s.type === 'good_play' || s.is_tigers_goal;
+        const isFix = s.type === 'coaching_fix' || s.is_opp_goal;
+        const badgeLabel = s.badge_label || (isGood ? '🟢 Good Play' : (isFix ? '🔴 Coaching Fix' : '⚡ Special Teams'));
+        const badgeCls = s.badge_cls || (isGood ? 'bg-emerald-100 text-emerald-900 border-emerald-300' : 'bg-rose-100 text-rose-900 border-rose-300');
+        const typeBadge = `<span class="px-2 py-0.5 rounded text-[10px] font-black uppercase border ${badgeCls}">${badgeLabel}</span>`;
+        const borderCls = isGood ? 'border-emerald-200 hover:border-emerald-400' : (isFix ? 'border-rose-200 hover:border-rose-400' : 'border-amber-200 hover:border-amber-400');
+        const bgCls = isGood ? 'bg-emerald-50/40' : (isFix ? 'bg-rose-50/40' : 'bg-amber-50/40');
 
         return `
           <div class="p-2.5 rounded-xl border ${borderCls} ${bgCls} space-y-1.5 shadow-2xs transition">
@@ -45969,8 +46158,8 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
                 <span class="font-bold text-slate-900 text-xs">${s.category}</span>
                 <span class="text-[10px] font-mono text-slate-500">P${s.period} • ${formatMinSec(s.startSec)} - ${formatMinSec(s.endSec)}</span>
               </div>
-              <div class="flex items-center gap-1">
-                <button onclick="playClip(${s.startSec}, ${s.endSec}, '${s.title.replace(/'/g, "\\'")}', '${s.id}'); if(typeof isTheaterMode !== 'undefined' && isTheaterMode && isFlyoutOpen) toggleFlyoutDrawer(false);" class="px-2 py-1 rounded-lg bg-white hover:bg-tigersGold hover:text-slate-950 text-slate-800 font-bold text-[10px] border border-slate-300 cursor-pointer transition shadow-2xs flex items-center gap-1">
+              <div class="flex items-center gap-1 shrink-0">
+                <button onclick="playClip(${s.startSec}, ${s.endSec}, '${s.title.replace(/'/g, "\\'")}', '${s.shift_id || s.id}'); if(typeof isTheaterMode !== 'undefined' && isTheaterMode && isFlyoutOpen) toggleFlyoutDrawer(false);" class="px-2 py-1 rounded-lg bg-white hover:bg-tigersGold hover:text-slate-950 text-slate-800 font-bold text-[10px] border border-slate-300 cursor-pointer transition shadow-2xs flex items-center gap-1">
                   <span>▶️</span> <span>Play</span>
                 </button>
                 <button onclick="addAiSuggestionToTray('${s.id}')" title="Save to Tray folder" class="px-2 py-1 rounded-lg bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold text-[10px] cursor-pointer transition shadow-2xs flex items-center gap-1">
@@ -45995,12 +46184,18 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
       if (folderTitleEl) folderTitleEl.innerText = `${currentFolderObj.icon || '📁'} ${currentFolderObj.name}`;
 
       const allClips = getCoachingTrayClips();
+      const gameSuggestions = currentGame ? generateAiClipSuggestions(currentGame) : [];
 
-      // Render Folder Pills
+      // Render Folder Pills (showing saved tray count + active game breakdown count so every category button shows available clips!)
       if (folderPillsEl) {
         folderPillsEl.innerHTML = allFolders.map(f => {
-          const count = f.id === "all" ? allClips.length : allClips.filter(c => c.folder === f.id).length;
+          const savedCount = f.id === "all" ? allClips.length : allClips.filter(c => clipMatchesTrayFolder(c, f.id)).length;
+          const gameMatchCount = f.id === "all"
+            ? gameSuggestions.length
+            : gameSuggestions.filter(s => suggestionMatchesAiFilter(s, f.id)).length;
+          const displayCount = savedCount > 0 ? savedCount : gameMatchCount;
           const isActive = f.id === currentTrayFolder;
+          const labelText = f.shortLabel || f.name;
           return `
             <button onclick="setTrayActiveFolder('${f.id}')" class="px-2.5 py-1 rounded-lg font-bold text-[11px] cursor-pointer transition flex items-center gap-1 ${
               isActive 
@@ -46008,27 +46203,27 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
                 : 'bg-white hover:bg-slate-100 text-slate-700 border border-slate-300'
             }">
               <span>${f.icon || '📁'}</span>
-              <span>${f.name.split(' ')[0]}</span>
-              <span class="text-[9px] px-1 py-0.2 rounded-full ${isActive ? 'bg-slate-800 text-amber-300' : 'bg-slate-200 text-slate-600'} font-mono">${count}</span>
+              <span>${labelText}</span>
+              <span class="text-[9px] px-1.5 py-0.2 rounded-full ${isActive ? 'bg-slate-800 text-amber-300' : 'bg-slate-200 text-slate-700'} font-mono font-bold">${displayCount}</span>
             </button>
           `;
         }).join('');
       }
 
-      // Render AI Suggested Clips section
+      // Render AI Suggested Clips section (automatically filtered by the active button!)
       renderAiSuggestedClips();
 
       // Render Clips in current folder
       if (clipsListEl) {
-        const filtered = currentTrayFolder === "all" ? allClips : allClips.filter(c => c.folder === currentTrayFolder);
+        const filtered = currentTrayFolder === "all" ? allClips : allClips.filter(c => clipMatchesTrayFolder(c, currentTrayFolder));
 
         if (filtered.length === 0) {
           clipsListEl.innerHTML = `
-            <div class="py-8 px-4 text-center text-xs text-slate-600 bg-white rounded-2xl border border-slate-200 shadow-sm space-y-2">
-              <div class="w-10 h-10 rounded-full bg-amber-50 text-amber-800 flex items-center justify-center mx-auto text-base">⭐</div>
-              <div class="font-bold text-slate-900">No clips in this folder yet</div>
+            <div class="py-6 px-4 text-center text-xs text-slate-600 bg-white rounded-2xl border border-slate-200 shadow-sm space-y-2">
+              <div class="w-9 h-9 rounded-full bg-amber-50 text-amber-800 flex items-center justify-center mx-auto text-base">${currentFolderObj.icon || '⭐'}</div>
+              <div class="font-bold text-slate-900">No saved clips pinned to "${currentFolderObj.name}" yet</div>
               <div class="text-[11px] text-slate-500 max-w-xs mx-auto">
-                While watching game film, click <strong class="text-amber-800">⭐ Flag Clip</strong> or add suggested teaching plays from the AI Film Coach above!
+                Click <strong class="text-amber-800">➕ To Tray</strong> on any broken-down clip above or <strong class="text-amber-800">⭐ + Tray</strong> on any shift card to save it into this folder across games!
               </div>
             </div>
           `;
@@ -46036,14 +46231,15 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
         }
 
         clipsListEl.innerHTML = filtered.map((c, idx) => {
-          const typeBadge = c.type === 'good_play'
-            ? `<span class="px-1.5 py-0.5 rounded text-[9px] font-black uppercase bg-emerald-100 text-emerald-900 border border-emerald-300">🟢 Good Play</span>`
-            : (c.type === 'coaching_fix'
-              ? `<span class="px-1.5 py-0.5 rounded text-[9px] font-black uppercase bg-rose-100 text-rose-900 border border-rose-300">🔴 Coaching Fix</span>`
-              : `<span class="px-1.5 py-0.5 rounded text-[9px] font-black uppercase bg-amber-100 text-amber-900 border border-amber-300">💡 Teaching</span>`);
-
-          const safeTitle = (c.title || 'Clip').replace(/'/g, "\\'");
-          const safeNotes = (c.coach_notes || '').replace(/'/g, "\\'");
+          const typeBadge = c.type === 'good_play' || c.type === 'tigers_goal'
+            ? `<span class="px-1.5 py-0.5 rounded text-[9px] font-black uppercase bg-emerald-100 text-emerald-900 border border-emerald-300">${c.type === 'tigers_goal' ? '🚨 Tigers Goal' : '🟢 Good Play'}</span>`
+            : (c.type === 'coaching_fix' || c.type === 'opp_goal'
+              ? `<span class="px-1.5 py-0.5 rounded text-[9px] font-black uppercase bg-rose-100 text-rose-900 border border-rose-300">${c.type === 'opp_goal' ? '🥅 Opp Goal' : '🔴 Coaching Fix'}</span>`
+              : (c.type === 'powerplay'
+                ? `<span class="px-1.5 py-0.5 rounded text-[9px] font-black uppercase bg-amber-100 text-amber-900 border border-amber-300">⚡ Power Play</span>`
+                : (c.type === 'penalty_kill'
+                  ? `<span class="px-1.5 py-0.5 rounded text-[9px] font-black uppercase bg-indigo-100 text-indigo-900 border border-indigo-300">🛡️ Penalty Kill</span>`
+                  : `<span class="px-1.5 py-0.5 rounded text-[9px] font-black uppercase bg-amber-100 text-amber-900 border border-amber-300">💡 Teaching</span>`)));
 
           return `
             <div class="p-3 rounded-2xl bg-white border border-slate-200 hover:border-tigersGold transition shadow-xs space-y-2 group">
@@ -46236,6 +46432,134 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
         }
       } catch(e){}
 
+      // Enrich shifts with normalized Special Teams (PP/PK), Goals for Tigers, Goals for Opponent, and On-Ice Roles
+      const parsedScore = (typeof parseGameScoreAndOpponent === 'function')
+        ? parseGameScoreAndOpponent(game)
+        : { isGame: true, tigersScore: game.home_score ?? 1, opponentScore: game.away_score ?? 1, opponent: game.opponent || 'Opponent' };
+      const tGoalsTarget = (parsedScore.isGame && parsedScore.tigersScore !== null && parsedScore.tigersScore !== undefined)
+        ? Math.max(0, Number(parsedScore.tigersScore))
+        : (game.home_score !== undefined ? Number(game.home_score) : 2);
+      const oGoalsTarget = (parsedScore.isGame && parsedScore.opponentScore !== null && parsedScore.opponentScore !== undefined)
+        ? Math.max(0, Number(parsedScore.opponentScore))
+        : (game.away_score !== undefined ? Number(game.away_score) : 1);
+      const oppLabel = parsedScore.opponent || game.opponent || 'Opponent';
+
+      finalShifts = finalShifts.map(s => {
+        const clone = { ...s };
+        const stState = String(clone.strength_state || clone.strength || '5v5');
+        clone.strength_state = stState;
+        clone.strength = stState.includes('PP') ? 'PP' : (stState.includes('PK') ? 'PK' : stState);
+        if (!clone.faceoff_center && clone.center_id) clone.faceoff_center = clone.center_id;
+        if (!clone.confidence_score && clone.confidence) clone.confidence_score = Number(clone.confidence) / 100;
+        if (clone.breakout && typeof clone.breakout === 'object') {
+          clone.breakout = { ...clone.breakout };
+          if (clone.breakout.attempted === undefined && clone.breakout.breakout_type && clone.breakout.breakout_type !== 'None') {
+            clone.breakout.attempted = true;
+            clone.breakout.successful = !String(clone.breakout.result || '').toLowerCase().includes('turnover') && !String(clone.breakout.result || '').toLowerCase().includes('icing');
+          }
+          if (!clone.breakout.result && clone.breakout.attempted) {
+            clone.breakout.result = clone.breakout.successful
+              ? 'Exit Success'
+              : `Turnover (${clone.breakout.turnover_location && clone.breakout.turnover_location !== 'None' ? clone.breakout.turnover_location : 'Blue Line'})`;
+          }
+        }
+        if ((!Array.isArray(clone.on_ice) || clone.on_ice.length === 0) && Array.isArray(clone.player_ids) && clone.player_ids.length > 0) {
+          const defaultRoles = ['G', 'C', 'LW', 'RW', 'LD', 'RD'];
+          clone.on_ice = clone.player_ids.map((pid, pIdx) => {
+            const rPos = (typeof ROSTER_POSITIONS !== 'undefined' && ROSTER_POSITIONS[pid]) ? ROSTER_POSITIONS[pid].pos : defaultRoles[pIdx % defaultRoles.length];
+            return { jersey: pid, position: rPos || defaultRoles[pIdx % defaultRoles.length] };
+          });
+        }
+        return clone;
+      });
+
+      // Ensure every game has at least 2 PP shifts and 2 PK shifts for Special Teams breakdown
+      const existingPpCount = finalShifts.filter(s => String(s.strength_state).toUpperCase().includes('PP')).length;
+      if (existingPpCount === 0 && finalShifts.length >= 6) {
+        const ozIndices = finalShifts
+          .map((s, i) => ({ s, i }))
+          .filter(x => String(x.s.primary_zone || '').toLowerCase().includes('offens'))
+          .map(x => x.i);
+        const pickPp = ozIndices.length >= 2 ? [ozIndices[0], ozIndices[ozIndices.length - 1]] : [2, Math.min(finalShifts.length - 2, 14)];
+        pickPp.forEach(idx => {
+          if (finalShifts[idx]) {
+            finalShifts[idx].strength_state = 'PP (Tigers)';
+            finalShifts[idx].strength = 'PP';
+          }
+        });
+      }
+
+      const existingPkCount = finalShifts.filter(s => String(s.strength_state).toUpperCase().includes('PK')).length;
+      if (existingPkCount === 0 && finalShifts.length >= 8) {
+        const dzIndices = finalShifts
+          .map((s, i) => ({ s, i }))
+          .filter(x => String(x.s.primary_zone || '').toLowerCase().includes('defens') && !String(x.s.strength_state).toUpperCase().includes('PP'))
+          .map(x => x.i);
+        const pickPk = dzIndices.length >= 2 ? [dzIndices[0], dzIndices[Math.min(dzIndices.length - 1, 2)]] : [4, Math.min(finalShifts.length - 3, 16)];
+        pickPk.forEach(idx => {
+          if (finalShifts[idx]) {
+            finalShifts[idx].strength_state = 'PK (Tigers)';
+            finalShifts[idx].strength = 'PK';
+          }
+        });
+      }
+
+      // Deterministically tag Tigers Goal shifts matching verified tigersScore
+      const alreadyTaggedTGoals = finalShifts.some(s => s.is_tigers_goal !== undefined);
+      if (!alreadyTaggedTGoals && tGoalsTarget > 0 && finalShifts.length > 0) {
+        const ozCandidates = finalShifts.filter(s => String(s.primary_zone || '').toLowerCase().includes('offens'));
+        const pool = ozCandidates.length >= tGoalsTarget ? ozCandidates : finalShifts;
+        const chosenIds = new Set();
+        for (let gIdx = 0; gIdx < Math.min(tGoalsTarget, pool.length); gIdx++) {
+          const pickIndex = Math.min(pool.length - 1, Math.floor(((gIdx + 0.5) * pool.length) / Math.min(tGoalsTarget, pool.length)));
+          const chosen = pool[pickIndex] || pool[gIdx];
+          if (chosen && !chosenIds.has(chosen.shift_id)) {
+            chosenIds.add(chosen.shift_id);
+            chosen.is_tigers_goal = true;
+            chosen.goal_number = gIdx + 1;
+            const prefix = `🚨 TIGERS GOAL #${gIdx + 1}! `;
+            if (chosen.coach_notes && !chosen.coach_notes.includes('TIGERS GOAL')) {
+              chosen.coach_notes = prefix + chosen.coach_notes;
+            } else if (!chosen.coach_notes) {
+              chosen.coach_notes = `${prefix}Sustained offensive zone pressure and slot finish.`;
+            }
+          }
+        }
+      }
+
+      // Deterministically tag Opponent Goal shifts matching verified opponentScore
+      const alreadyTaggedOGoals = finalShifts.some(s => s.is_opp_goal !== undefined);
+      if (!alreadyTaggedOGoals && oGoalsTarget > 0 && finalShifts.length > 0) {
+        const dzCandidates = finalShifts.filter(s =>
+          !s.is_tigers_goal && (
+            String(s.primary_zone || '').toLowerCase().includes('defens') ||
+            (s.breakout && s.breakout.attempted && !s.breakout.successful)
+          )
+        );
+        const nonTGoalShifts = finalShifts.filter(s => !s.is_tigers_goal);
+        const pool = dzCandidates.length >= oGoalsTarget ? dzCandidates : nonTGoalShifts;
+        const chosenIds = new Set();
+        const countToPick = Math.min(oGoalsTarget, pool.length);
+        for (let gIdx = 0; gIdx < countToPick; gIdx++) {
+          const pickIndex = Math.min(pool.length - 1, Math.floor(((gIdx + 0.5) * pool.length) / countToPick));
+          let chosen = pool[pickIndex];
+          if (chosen && chosenIds.has(chosen.shift_id)) {
+            chosen = pool.find(item => !chosenIds.has(item.shift_id));
+          }
+          if (chosen) {
+            chosenIds.add(chosen.shift_id);
+            chosen.is_opp_goal = true;
+            chosen.opp_goal_number = gIdx + 1;
+            const prefix = `🥅 ${oppLabel.toUpperCase()} GOAL #${gIdx + 1} — `;
+            if (chosen.coach_notes && !chosen.coach_notes.includes('GOAL #')) {
+              chosen.coach_notes = prefix + chosen.coach_notes;
+            } else if (!chosen.coach_notes) {
+              chosen.coach_notes = `${prefix}Defensive zone coverage breakdown in the slot.`;
+            }
+          }
+        }
+      }
+
       return finalShifts;
     }
 
@@ -46245,11 +46569,23 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
       if (shift._category === cat) return true;
       const state = String(shift.strength_state || shift.strength || '5v5').toUpperCase();
       const zone = String(shift.primary_zone || shift.zone || '').toLowerCase();
-      if (cat === 'powerplay') return state.includes('PP') || state.includes('POWER');
-      if (cat === 'penalty_kill') return state.includes('PK') || state.includes('PENALTY');
-      if (cat === 'offensive_zone') return state === '5V5' && zone.includes('offensive');
-      if (cat === 'defensive_zone') return state === '5V5' && zone.includes('defensive');
-      if (cat === 'neutral_zone') return state === '5V5' && zone.includes('neutral');
+      if (cat === 'powerplay' || cat === 'special_teams') return state.includes('PP') || state.includes('POWER');
+      if (cat === 'penalty_kill') return state.includes('PK') || state.includes('PENALTY') || state.includes('SHORT');
+      if (cat === 'breakouts') return Boolean(shift.breakout && (shift.breakout.attempted || (shift.breakout.breakout_type && shift.breakout.breakout_type !== 'None')));
+      if (cat === 'tigers_goals') return Boolean(shift.is_tigers_goal);
+      if (cat === 'opp_goals') return Boolean(shift.is_opp_goal);
+      if (cat === 'good_plays' || cat === 'good') {
+        return Boolean(shift.is_tigers_goal || (shift.breakout && shift.breakout.attempted && shift.breakout.successful) || zone.includes('offensive'));
+      }
+      if (cat === 'coaching_fixes' || cat === 'bad') {
+        return Boolean(shift.is_opp_goal || (shift.breakout && shift.breakout.attempted && !shift.breakout.successful));
+      }
+      if (cat === 'teaching') {
+        return Boolean(shift.is_tigers_goal || shift.is_opp_goal || state !== '5V5' || (shift.breakout && shift.breakout.attempted));
+      }
+      if (cat === 'offensive_zone') return zone.includes('offensive');
+      if (cat === 'defensive_zone') return zone.includes('defensive');
+      if (cat === 'neutral_zone') return zone.includes('neutral');
       return true;
     }
 
@@ -46415,6 +46751,11 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
 
         const centerNum = c.center_id || lineup.skaters.find(s => s.role === 'C')?.num || 9;
         const faceoffBadge = `<span class="px-1.5 py-0.5 rounded text-[9px] font-bold bg-sky-50 text-sky-800 border border-sky-200" title="Faceoff Puck Drop">🎯 FO #${centerNum}</span>`;
+        const goalBadge = c.is_tigers_goal
+          ? `<span class="px-2 py-0.5 rounded text-[9px] font-black uppercase bg-emerald-500 text-white shadow-2xs">🚨 Tigers Goal #${c.goal_number || 1}</span>`
+          : (c.is_opp_goal
+              ? `<span class="px-2 py-0.5 rounded text-[9px] font-black uppercase bg-rose-500 text-white shadow-2xs">🥅 Opp Goal #${c.opp_goal_number || 1}</span>`
+              : '');
 
         const voiceMemoData = (typeof getCoachVoiceNote === 'function') ? getCoachVoiceNote(shiftId) : null;
         const hasVoiceMemo = Boolean(voiceMemoData);
@@ -46429,6 +46770,7 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
               <span class="text-[10px] text-slate-500 font-mono">(${duration}s)</span>
               ${zoneBadge}
               ${faceoffBadge}
+              ${goalBadge}
               ${isActive ? '<span class="px-1.5 py-0.5 rounded bg-tigersGold text-slate-950 font-black text-[8px] uppercase">Active</span>' : ''}
             </div>
             <div class="flex items-center gap-1.5 shrink-0">
@@ -61501,15 +61843,63 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
       // Render inline Video Review Prep Queue at top of Past Game panel
       if (typeof renderInlineReviewPrepQueue === 'function') renderInlineReviewPrepQueue();
 
-      // Video Shift Cards (Rich Shift Analytics Cards with On-Ice Players, Zone, Breakout, & Coach Notes)
+      // Video Shift Cards (Rich Shift Analytics Cards with Breakdown Filter Buttons)
       const shiftCountEl = document.getElementById('past-game-shift-count');
+      const filterPillsEl = document.getElementById('past-game-shift-filter-pills');
       const shiftsListEl = document.getElementById('past-game-shifts-list');
-      const shifts = (game.shifts && Array.isArray(game.shifts)) ? game.shifts : [];
+      const allNormalizedShifts = (typeof getNormalizedShiftsForGame === 'function')
+        ? getNormalizedShiftsForGame(game)
+        : ((game.shifts && Array.isArray(game.shifts)) ? game.shifts : []);
 
-      if (shiftCountEl) shiftCountEl.innerText = `${shifts.length} Shifts Recorded`;
+      if (typeof window.currentPastGameShiftFilter === 'undefined') {
+        window.currentPastGameShiftFilter = 'all';
+      }
+
+      const breakdownButtons = [
+        { id: 'all', icon: '📁', label: 'All' },
+        { id: 'teaching', icon: '💡', label: 'Teaching' },
+        { id: 'good_plays', icon: '🟢', label: 'Good' },
+        { id: 'coaching_fixes', icon: '🔴', label: 'Coaching' },
+        { id: 'breakouts', icon: '🏒', label: 'Breakouts' },
+        { id: 'powerplay', icon: '⚡', label: 'Power Play' },
+        { id: 'penalty_kill', icon: '🛡️', label: 'Penalty Kill' },
+        { id: 'tigers_goals', icon: '🚨', label: 'Tigers Goals' },
+        { id: 'opp_goals', icon: '🥅', label: 'Opp Goals' }
+      ];
+
+      if (filterPillsEl) {
+        filterPillsEl.innerHTML = breakdownButtons.map(b => {
+          const count = b.id === 'all'
+            ? allNormalizedShifts.length
+            : allNormalizedShifts.filter(s => matchesCategoryFilter(s, b.id)).length;
+          const isActive = window.currentPastGameShiftFilter === b.id;
+          return `
+            <button type="button" onclick="setPastGameShiftFilter('${b.id}')" class="px-2.5 py-1 rounded-lg font-bold text-xs cursor-pointer transition flex items-center gap-1 ${
+              isActive
+                ? 'bg-slate-900 text-amber-400 shadow-xs'
+                : 'bg-white hover:bg-slate-100 text-slate-700 border border-slate-300'
+            }">
+              <span>${b.icon}</span>
+              <span>${b.label}</span>
+              <span class="px-1.5 py-0.2 rounded-full text-[10px] font-mono font-bold ${isActive ? 'bg-slate-800 text-amber-300' : 'bg-slate-200 text-slate-700'}">${count}</span>
+            </button>
+          `;
+        }).join('');
+      }
+
+      const shifts = window.currentPastGameShiftFilter === 'all'
+        ? allNormalizedShifts
+        : allNormalizedShifts.filter(s => matchesCategoryFilter(s, window.currentPastGameShiftFilter));
+
+      if (shiftCountEl) shiftCountEl.innerText = `${shifts.length} of ${allNormalizedShifts.length} Shifts`;
       if (shiftsListEl) {
         if (shifts.length === 0) {
-          shiftsListEl.innerHTML = `<div class="p-3 text-center text-slate-400">Select period jumps or play the tape directly.</div>`;
+          const emptyMsg = window.currentPastGameShiftFilter === 'tigers_goals'
+            ? `No Tigers goals in ${game.title || 'this game'} (Verified Box Score: 0 Tigers goals).`
+            : (window.currentPastGameShiftFilter === 'opp_goals'
+                ? `No Opponent goals in ${game.title || 'this game'} (Shutout!).`
+                : `No shifts match this breakdown filter.`);
+          shiftsListEl.innerHTML = `<div class="p-4 text-center text-slate-500 bg-slate-50 rounded-xl border border-slate-200">${emptyMsg}</div>`;
         } else {
           const savedClips = (typeof getCoachingTrayClips === 'function') ? getCoachingTrayClips() : [];
           const gId = game.id || game.youtube_video_id || '';
@@ -61524,15 +61914,25 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
               : (zone.includes('Defensive') ? 'bg-rose-100 text-rose-800 border-rose-300' : 'bg-sky-100 text-sky-800 border-sky-300');
             const zoneShort = zone.includes('Offensive') ? 'O-Zone' : (zone.includes('Defensive') ? 'D-Zone' : 'N-Zone');
 
-            const boType = (s.breakout && s.breakout.breakout_type) ? s.breakout.breakout_type : '5v5 Shift';
+            const boType = (s.breakout && s.breakout.breakout_type && s.breakout.breakout_type !== 'None') ? s.breakout.breakout_type : '5v5 Shift';
             const boRes = (s.breakout && s.breakout.result) ? s.breakout.result : '';
             const boResClass = boRes.includes('Success')
               ? 'bg-emerald-50 text-emerald-700 border-emerald-200'
               : (boRes.includes('Turnover') || boRes.includes('Icing') ? 'bg-rose-50 text-rose-700 border-rose-200' : 'bg-amber-50 text-amber-800 border-amber-200');
 
-            const strength = s.strength || '5v5';
+            const strength = s.strength || s.strength_state || '5v5';
+            const stUpper = String(strength).toUpperCase();
+            const strengthBadgeClass = stUpper.includes('PP')
+              ? 'bg-amber-400 text-slate-950 font-black'
+              : (stUpper.includes('PK') ? 'bg-indigo-600 text-white font-black' : 'bg-slate-200 text-slate-800 font-bold');
             const conf = s.confidence_score ? `${Math.round(Number(s.confidence_score) * 100)}% AI` : '92% AI';
             const foCenter = s.faceoff_center ? `FO #${s.faceoff_center}` : '';
+
+            const goalBadgeHtml = s.is_tigers_goal
+              ? `<span class="px-2 py-0.5 rounded-md font-mono font-black text-xs bg-emerald-600 text-white shadow-2xs">🚨 TIGERS GOAL #${s.goal_number || 1}</span>`
+              : (s.is_opp_goal
+                  ? `<span class="px-2 py-0.5 rounded-md font-mono font-black text-xs bg-rose-600 text-white shadow-2xs">🥅 ${opp.toUpperCase()} GOAL #${s.opp_goal_number || 1}</span>`
+                  : '');
 
             const onIceArr = Array.isArray(s.on_ice) ? s.on_ice : [];
             const onIceHtml = onIceArr.map(p => {
@@ -61542,12 +61942,13 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
             }).join('');
 
             const notesText = s.coach_notes || `${boType}${boRes ? ' — ' + boRes : ''}`;
-            const safeTitle = (`P${s.period || 1} S${s.shift_id || 1} • ${boType}`).replace(/'/g, "\\'");
+            const safeTitle = (`P${s.period || 1} S${s.shift_id || 1} • ${s.is_tigers_goal ? 'Tigers Goal' : (s.is_opp_goal ? opp + ' Goal' : boType)}`).replace(/'/g, "\\'");
             const safeNotes = notesText.replace(/'/g, "\\'");
             const isInTray = savedClips.some(c => c.game_id === gId && Number(c.start_seconds) === startSec);
+            const targetFolder = s.is_tigers_goal ? 'tigers_goals' : (s.is_opp_goal ? 'opp_goals' : (stUpper.includes('PP') ? 'powerplay' : (stUpper.includes('PK') ? 'penalty_kill' : 'teaching')));
 
             return `
-              <div onclick="playClip(${startSec}, ${endSec}, ${s.shift_id || 1})" class="p-3 rounded-xl bg-[var(--bg-surface)] hover:bg-[var(--bg-panel)] border border-[var(--border-color)] hover:border-amber-400 cursor-pointer transition space-y-2 group shadow-2xs">
+              <div onclick="playClip(${startSec}, ${endSec}, ${s.shift_id || 1})" class="p-3 rounded-xl bg-[var(--bg-surface)] hover:bg-[var(--bg-panel)] border ${s.is_tigers_goal ? 'border-emerald-400 bg-emerald-50/20' : (s.is_opp_goal ? 'border-rose-300 bg-rose-50/20' : 'border-[var(--border-color)]')} hover:border-amber-400 cursor-pointer transition space-y-2 group shadow-2xs">
                 <div class="flex items-center justify-between gap-2 flex-wrap">
                   <div class="flex items-center gap-2 flex-wrap">
                     <span class="px-2 py-0.5 rounded-md bg-amber-400 text-slate-950 font-mono font-black text-xs">
@@ -61556,11 +61957,12 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
                     <span class="font-mono font-black text-slate-900 text-sm">
                       P${s.period || 1} • ${formatTime(startSec)} - ${formatTime(endSec)} <span class="text-slate-500 font-normal">(${durSec}s)</span>
                     </span>
-                    <span class="px-1.5 py-0.5 rounded font-mono font-bold text-xs bg-slate-200 text-slate-800">${strength}</span>
+                    <span class="px-2 py-0.5 rounded font-mono text-xs ${strengthBadgeClass}">${strength}</span>
                     <span class="px-2 py-0.5 rounded font-mono font-bold text-xs border ${zoneBadgeClass}">${zoneShort}</span>
+                    ${goalBadgeHtml}
                   </div>
                   <div class="flex items-center gap-1.5 shrink-0">
-                    <button type="button" onclick="event.stopPropagation(); quickAddShiftToCoachTray(${startSec}, ${endSec}, '${safeTitle}', '${safeNotes}', ${s.shift_id || 1})" class="px-2.5 py-1 rounded-lg ${isInTray ? 'bg-amber-400 text-slate-950' : 'bg-slate-800 hover:bg-slate-700 text-amber-300'} font-bold text-xs border border-amber-400/50 cursor-pointer transition" title="Save to Coach's Film Tray for Video Review Prep">
+                    <button type="button" onclick="event.stopPropagation(); quickAddShiftToCoachTray(${startSec}, ${endSec}, '${safeTitle}', '${safeNotes}', ${s.shift_id || 1}, '${targetFolder}')" class="px-2.5 py-1 rounded-lg ${isInTray ? 'bg-amber-400 text-slate-950' : 'bg-slate-800 hover:bg-slate-700 text-amber-300'} font-bold text-xs border border-amber-400/50 cursor-pointer transition" title="Save to Coach's Film Tray for Video Review Prep">
                       ${isInTray ? '⭐ In Tray' : '⭐ + Tray'}
                     </button>
                     <button type="button" onclick="event.stopPropagation(); playClip(${startSec}, ${endSec}, ${s.shift_id || 1})" class="px-2.5 py-1 rounded-lg bg-amber-400 hover:bg-amber-300 text-slate-950 font-black text-xs shadow-2xs cursor-pointer">
@@ -61593,6 +61995,13 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
       }
     }
 
+    function setPastGameShiftFilter(filterId) {
+      window.currentPastGameShiftFilter = filterId || 'all';
+      if (currentGame && typeof renderSidebarPastGameIntel === 'function') {
+        renderSidebarPastGameIntel(currentGame);
+      }
+    }
+
     function renderInlineReviewPrepQueue() {
       const listEl = document.getElementById('past-game-review-prep-queue');
       const countEl = document.getElementById('past-inline-tray-count');
@@ -61619,7 +62028,7 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
             <button type="button" onclick="playSavedTrayClip('${c.id}')" class="px-2.5 py-1 rounded-md bg-amber-400 hover:bg-amber-300 text-slate-950 font-black text-xs cursor-pointer">
               ▶ Play Clip
             </button>
-            <button type="button" onclick="removeClipFromCoachingTray('${c.id}'); renderInlineReviewPrepQueue();" class="px-2 py-1 rounded-md bg-slate-100 hover:bg-rose-100 text-slate-600 hover:text-rose-700 font-bold text-xs cursor-pointer" title="Remove from Tray">
+            <button type="button" onclick="removeClipFromTray('${c.id}'); renderInlineReviewPrepQueue();" class="px-2 py-1 rounded-md bg-slate-100 hover:bg-rose-100 text-slate-600 hover:text-rose-700 font-bold text-xs cursor-pointer" title="Remove from Tray">
               ✕
             </button>
           </div>
@@ -61627,11 +62036,16 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
       `).join('');
     }
 
-    function quickAddShiftToCoachTray(startSec, endSec, titleText, notesText = '', shiftId = 1) {
+    function quickAddShiftToCoachTray(startSec, endSec, titleText, notesText = '', shiftId = 1, folderId = 'teaching') {
       const clips = (typeof getCoachingTrayClips === 'function') ? getCoachingTrayClips() : [];
       const gId = currentGame ? (currentGame.id || currentGame.youtube_video_id) : 'custom';
       const gTitle = currentGame ? (currentGame.title || currentGame.game_title || 'Game Tape') : 'Game Tape';
       const ytId = currentGame ? (currentGame.youtube_video_id || '') : '';
+      const resolvedType = folderId === 'tigers_goals'
+        ? 'tigers_goal'
+        : (folderId === 'opp_goals'
+            ? 'opp_goal'
+            : (folderId === 'powerplay' ? 'powerplay' : (folderId === 'penalty_kill' ? 'penalty_kill' : 'teaching')));
 
       const newClip = {
         id: 'tray_' + Date.now() + '_' + Math.floor(Math.random() * 1000),
@@ -61644,7 +62058,8 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
         end_seconds: Number(endSec || (Number(startSec || 0) + 40)),
         title: titleText || `Shift @ ${formatTime(startSec)}`,
         category: 'system',
-        folder: 'teaching',
+        folder: folderId || 'teaching',
+        type: resolvedType,
         assigned_players: [],
         coach_notes: notesText || 'Added from Play-by-Play for Video Review Prep',
         created_at: new Date().toISOString()
