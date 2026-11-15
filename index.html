@@ -8285,6 +8285,98 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
     // SYNCHRONIZED ARCHIVE & LIVE SCOREBOARD OVERLAY ENGINE
     // =========================================================================
 
+    function parseClockStrToSec(clockStr) {
+      if (!clockStr) return 0;
+      const parts = String(clockStr).trim().split(':');
+      if (parts.length !== 2) return 0;
+      return (parseInt(parts[0], 10) || 0) * 60 + (parseInt(parts[1], 10) || 0);
+    }
+
+    function getGamePeriodLengths(game, gsEvents) {
+      const defaults = { 1: 600, 2: 600, 3: 900 };
+      if (game && game.period_lengths) {
+        defaults[1] = Number(game.period_lengths[1] ?? game.period_lengths["1"] ?? 600);
+        defaults[2] = Number(game.period_lengths[2] ?? game.period_lengths["2"] ?? 600);
+        defaults[3] = Number(game.period_lengths[3] ?? game.period_lengths["3"] ?? 900);
+      }
+      if (Array.isArray(gsEvents)) {
+        for (const ev of gsEvents) {
+          const p = Number(ev.period || 1);
+          const rem = parseClockStrToSec(ev.clockTime || ev.time);
+          if (p === 2 && rem > 600) defaults[2] = 900;
+          if (p === 1 && rem > 600) defaults[1] = 900;
+        }
+      }
+      return defaults;
+    }
+
+    function resolveGameSheetEventsForGame(game) {
+      if (!game) return [];
+      if (Array.isArray(game.gamesheet_events) && game.gamesheet_events.length > 0) {
+        return game.gamesheet_events;
+      }
+      if (Array.isArray(game._cachedGsEvents)) return game._cachedGsEvents;
+
+      const gsTigers = (typeof GAMESHEET_DATABASE !== 'undefined' && GAMESHEET_DATABASE?.teams?.tigers?.allCompletedGames) || [];
+      if (!gsTigers.length) return [];
+
+      const titleLower = String(game.title || '').toLowerCase();
+      const dateStr = String(game.date || '');
+      const matched = gsTigers.find(gsg => {
+        const oppWords = String(gsg.opp || '').toLowerCase().split(/\s+/).filter(w => w.length > 3);
+        const oppMatch = oppWords.some(w => titleLower.includes(w));
+        if (!oppMatch) return false;
+        // Match date if possible (e.g., "Nov 11, 2026" vs "2026-11-11" or "11.11.2026")
+        if (gsg.date && dateStr) {
+          const parsedGs = new Date(gsg.date);
+          if (!isNaN(parsedGs.getTime())) {
+            const iso = parsedGs.toISOString().slice(0, 10);
+            if (dateStr === iso) return true;
+          }
+        }
+        return oppMatch;
+      });
+
+      if (!matched) {
+        game._cachedGsEvents = [];
+        return [];
+      }
+
+      const combined = [...(matched.goalLog || []), ...(matched.penaltyLog || [])];
+      const pLengths = getGamePeriodLengths(game, combined);
+      const pTimes = game.periods || { 1: 0, 2: 900, 3: 1800 };
+      const pEnds = game.period_ends || {};
+      const p1 = Number(pTimes[1] ?? pTimes["1"] ?? 0);
+      const p2 = Number(pTimes[2] ?? pTimes["2"] ?? 900);
+      const p3 = Number(pTimes[3] ?? pTimes["3"] ?? 1800);
+      const estTotal = Math.max(p3 + 900, Number(game.duration_seconds || (p3 + 1150)));
+
+      const spans = {
+        1: Math.max(600, Number(pEnds[1] ?? pEnds["1"] ?? p2) - p1),
+        2: Math.max(600, Number(pEnds[2] ?? pEnds["2"] ?? p3) - p2),
+        3: Math.max(900, Number(pEnds[3] ?? pEnds["3"] ?? estTotal) - p3)
+      };
+      const starts = { 1: p1, 2: p2, 3: p3 };
+
+      const mapped = combined.map(ev => {
+        const p = Math.min(3, Math.max(1, Number(ev.period || 1)));
+        const remSec = parseClockStrToSec(ev.clockTime || ev.time);
+        const pLen = pLengths[p] || 600;
+        const elapsedInPeriod = Math.max(0, pLen - remSec);
+        const videoSec = Math.round((starts[p] || 0) + elapsedInPeriod * ((spans[p] || pLen) / pLen));
+        return {
+          ...ev,
+          period: p,
+          remSec,
+          videoSec,
+          durationSec: Math.round((Number(ev.durationMin || 2)) * 60)
+        };
+      });
+
+      game._cachedGsEvents = mapped;
+      return mapped;
+    }
+
     function syncScoreboardOverlayToPlayback(currentTime) {
       if (isLiveBroadcastActive) return; // In live broadcast mode, liveGameSheetState timer drives HUD
       if (!currentGame) return;
@@ -8293,57 +8385,97 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
       if (curSec === lastScoreboardSyncSec) return;
       lastScoreboardSyncSec = curSec;
 
+      const gsEvents = resolveGameSheetEventsForGame(currentGame);
+      const pLengths = getGamePeriodLengths(currentGame, gsEvents);
+
       const pTimes = currentGame.periods || { 1: 0, 2: 900, 3: 1800 };
+      const pEnds = currentGame.period_ends || {};
       const p1 = Number(pTimes[1] ?? pTimes["1"] ?? 0);
       const p2 = Number(pTimes[2] ?? pTimes["2"] ?? 900);
       const p3 = Number(pTimes[3] ?? pTimes["3"] ?? 1800);
 
-      // 1. Period and OMHA Stop-Time Clock Calculation (P1: 10:00, P2: 15:00, P3: 15:00)
+      // 1. Period and Stop-Time Clock Calculation
       let periodNum = 1;
       let periodStart = p1;
-      let periodVideoSpan = Math.max(600, p2 - p1);
+      let periodVideoSpan = Math.max(600, Number(pEnds[1] ?? pEnds["1"] ?? p2) - p1);
       if (curSec >= p3) {
         periodNum = 3;
         periodStart = p3;
         const estTotal = Math.max(p3 + 900, Number(currentGame.duration_seconds || (p3 + 1150)));
-        periodVideoSpan = Math.max(900, estTotal - p3);
+        periodVideoSpan = Math.max(900, Number(pEnds[3] ?? pEnds["3"] ?? estTotal) - p3);
       } else if (curSec >= p2) {
         periodNum = 2;
         periodStart = p2;
-        periodVideoSpan = Math.max(900, p3 - p2);
+        periodVideoSpan = Math.max(600, Number(pEnds[2] ?? pEnds["2"] ?? p3) - p2);
       }
 
-      const periodLengthSec = (periodNum === 1) ? 600 : 900; // OMHA U13A: P1=10:00, P2=15:00, P3=15:00
+      const periodLengthSec = pLengths[periodNum] || 600;
       const rawElapsed = Math.max(0, curSec - periodStart);
-      // Scale elapsed video time by whistle/stoppage span so clock counts down smoothly across the period
       const scaledElapsed = Math.round(rawElapsed * (periodLengthSec / periodVideoSpan));
-      const remainingSec = Math.max(0, periodLengthSec - scaledElapsed);
+      let remainingSec = Math.max(0, periodLengthSec - scaledElapsed);
+
+      // Restore saved film calibration from localStorage if not yet loaded on currentGame
+      if (currentGame.filmScoreboardCalibration === undefined) {
+        try {
+          const savedCal = localStorage.getItem(`tigers_film_cal_${currentGame.id}`);
+          currentGame.filmScoreboardCalibration = savedCal ? JSON.parse(savedCal) : null;
+        } catch(e) {
+          currentGame.filmScoreboardCalibration = null;
+        }
+      }
+
+      // Apply manual viewer calibration if present on currentGame
+      let homeScore = 0;
+      let awayScore = 0;
+      const cal = currentGame.filmScoreboardCalibration;
+      if (cal && typeof cal.calibratedAtVideoSec === 'number') {
+        const calPeriod = parseInt(cal.period, 10) || periodNum;
+        periodNum = calPeriod;
+        const calSpan = (calPeriod === 3) ? Math.max(900, periodVideoSpan) : Math.max(600, periodVideoSpan);
+        const deltaVideo = curSec - cal.calibratedAtVideoSec;
+        const scaledDelta = Math.round(deltaVideo * ((pLengths[calPeriod] || 600) / calSpan));
+        remainingSec = Math.max(0, Number(cal.clockSec || 0) - scaledDelta);
+      }
+
       const min = Math.floor(remainingSec / 60);
       const sec = remainingSec % 60;
       const clockStr = `${min}:${sec.toString().padStart(2, '0')}`;
 
-      // 2. Score Calculation from Shifts & Goals up to curSec
-      let homeScore = 0;
-      let awayScore = 0;
+      // 2. Score Calculation: prefer official GameSheet goal log, fallback to shift goal tags
+      const gsGoals = gsEvents.filter(e => e.type === 'goal');
       const shifts = getNormalizedShiftsForGame(currentGame);
 
-      shifts.forEach(s => {
-        const sEnd = Number(s.end_seconds || s.start_seconds || 0);
-        if (sEnd <= curSec) {
-          if (s.is_tigers_goal) {
-            homeScore++;
-          } else if (s.is_opp_goal) {
-            awayScore++;
-          } else {
-            const notes = (s.coach_notes || "").toLowerCase();
-            if (notes.includes("goal") && (notes.includes("tiger") || notes.includes("carpentier") || notes.includes("scored") || notes.includes("manjunath"))) {
+      if (gsGoals.length > 0) {
+        gsGoals.forEach(g => {
+          const evSec = Number(g.videoSec ?? g.alignedVideoSec ?? 0);
+          if (evSec <= curSec) {
+            if (g.team === 'tigers' || g.team === 'home') homeScore++;
+            else awayScore++;
+          }
+        });
+      } else {
+        shifts.forEach(s => {
+          const sEnd = Number(s.end_seconds || s.start_seconds || 0);
+          if (sEnd <= curSec) {
+            if (s.is_tigers_goal) {
               homeScore++;
-            } else if (notes.includes("opponent goal") || notes.includes("goal against")) {
+            } else if (s.is_opp_goal) {
               awayScore++;
+            } else {
+              const notes = (s.coach_notes || "").toLowerCase();
+              if (notes.includes("goal") && (notes.includes("tiger") || notes.includes("carpentier") || notes.includes("scored") || notes.includes("manjunath"))) {
+                homeScore++;
+              } else if (notes.includes("opponent goal") || notes.includes("goal against")) {
+                awayScore++;
+              }
             }
           }
-        }
-      });
+        });
+      }
+
+      // Apply score offset from manual viewer calibration if set
+      if (cal && typeof cal.homeScoreDelta === 'number') homeScore = Math.max(0, homeScore + cal.homeScoreDelta);
+      if (cal && typeof cal.awayScoreDelta === 'number') awayScore = Math.max(0, awayScore + cal.awayScoreDelta);
 
       // 3. Opponent Abbreviation (use smart parser for titles like '20.10.2026 - Tigers 1 - Newmarket 9')
       let opp = currentGame.opponent || "";
@@ -8356,25 +8488,41 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
       if (!opp) opp = (currentGame.title?.split('vs')?.[1]?.trim()) || "OPP";
       const oppAbbr = opp.replace(/[^A-Za-z]/g, '').substring(0, 3).toUpperCase() || "OPP";
 
-      // 4. Special Teams Penalty Clock (Power Play / Penalty Kill)
+      // 4. Special Teams Penalty Clock: prefer official GameSheet penalty log, fallback to shift strength_state
       let activeSpecialTeams = null;
-      for (const s of shifts) {
-        const st = Number(s.start_seconds || 0);
-        const en = Number(s.end_seconds || (st + 35));
-        if (curSec >= st && curSec <= en) {
-          const state = String(s.strength_state || s.strength || '5v5').toUpperCase();
-          if (state.includes('PP') || state.includes('POWER')) {
-            const penRemaining = Math.max(0, 120 - (curSec - st));
-            const pMin = Math.floor(penRemaining / 60);
-            const pSec = penRemaining % 60;
-            activeSpecialTeams = `PP ${pMin}:${pSec.toString().padStart(2, '0')}`;
-          } else if (state.includes('PK') || state.includes('PENALTY') || state.includes('SHORT')) {
-            const penRemaining = Math.max(0, 120 - (curSec - st));
-            const pMin = Math.floor(penRemaining / 60);
-            const pSec = penRemaining % 60;
-            activeSpecialTeams = `PK ${pMin}:${pSec.toString().padStart(2, '0')}`;
+      const gsPenalties = gsEvents.filter(e => e.type === 'penalty');
+      if (gsPenalties.length > 0) {
+        for (const pen of gsPenalties) {
+          const pStart = Number(pen.videoSec ?? pen.alignedVideoSec ?? 0);
+          const pDur = Number(pen.durationSec || 120);
+          if (curSec >= pStart && curSec <= pStart + pDur) {
+            const penRem = Math.max(0, pDur - (curSec - pStart));
+            const pMin = Math.floor(penRem / 60);
+            const pSec = penRem % 60;
+            const isTigersPen = (pen.team === 'tigers' || pen.team === 'home');
+            activeSpecialTeams = `${isTigersPen ? 'PK' : 'PP'} ${pMin}:${pSec.toString().padStart(2, '0')}`;
+            break;
           }
-          break;
+        }
+      } else {
+        for (const s of shifts) {
+          const st = Number(s.start_seconds || 0);
+          const en = Number(s.end_seconds || (st + 35));
+          if (curSec >= st && curSec <= en) {
+            const state = String(s.strength_state || s.strength || '5v5').toUpperCase();
+            if (state.includes('PP') || state.includes('POWER')) {
+              const penRemaining = Math.max(0, 120 - (curSec - st));
+              const pMin = Math.floor(penRemaining / 60);
+              const pSec = penRemaining % 60;
+              activeSpecialTeams = `PP ${pMin}:${pSec.toString().padStart(2, '0')}`;
+            } else if (state.includes('PK') || state.includes('PENALTY') || state.includes('SHORT')) {
+              const penRemaining = Math.max(0, 120 - (curSec - st));
+              const pMin = Math.floor(penRemaining / 60);
+              const pSec = penRemaining % 60;
+              activeSpecialTeams = `PK ${pMin}:${pSec.toString().padStart(2, '0')}`;
+            }
+            break;
+          }
         }
       }
 
@@ -53577,18 +53725,31 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
       const modal = document.getElementById('master-scoreboard-sync-modal');
       if (!modal) return;
 
-      modalSyncSelectedPeriod = String(liveGameSheetState.period || '1').toLowerCase();
-      modalSyncHomeScore = Number(liveGameSheetState.homeScore || 0);
-      modalSyncAwayScore = Number(liveGameSheetState.awayScore || 0);
-      modalSyncIsRunning = Boolean(liveGameSheetState.running);
+      if (!isLiveBroadcastActive && currentGame) {
+        const curP = (document.getElementById('v-period')?.innerText || 'P1').replace(/[^0-9a-zA-Z]/g, '').replace(/^P/i, '');
+        const curClk = (document.getElementById('v-clock')?.innerText || '10:00').split(':');
+        modalSyncSelectedPeriod = (curP || '1').toLowerCase();
+        modalSyncHomeScore = parseInt(document.getElementById('v-score-home')?.innerText || '0', 10) || 0;
+        modalSyncAwayScore = parseInt(document.getElementById('v-score-away')?.innerText || '0', 10) || 0;
+        modalSyncIsRunning = true;
+        const minInput = document.getElementById('sync-modal-min');
+        const secInput = document.getElementById('sync-modal-sec');
+        if (minInput) minInput.value = parseInt(curClk[0], 10) || 0;
+        if (secInput) secInput.value = parseInt(curClk[1], 10) || 0;
+      } else {
+        modalSyncSelectedPeriod = String(liveGameSheetState.period || '1').toLowerCase();
+        modalSyncHomeScore = Number(liveGameSheetState.homeScore || 0);
+        modalSyncAwayScore = Number(liveGameSheetState.awayScore || 0);
+        modalSyncIsRunning = Boolean(liveGameSheetState.running);
 
-      // Populate current clock minutes and seconds
-      const min = Math.floor(liveGameSheetState.clockSec / 60);
-      const sec = liveGameSheetState.clockSec % 60;
-      const minInput = document.getElementById('sync-modal-min');
-      const secInput = document.getElementById('sync-modal-sec');
-      if (minInput) minInput.value = min;
-      if (secInput) secInput.value = sec;
+        // Populate current clock minutes and seconds
+        const min = Math.floor(liveGameSheetState.clockSec / 60);
+        const sec = liveGameSheetState.clockSec % 60;
+        const minInput = document.getElementById('sync-modal-min');
+        const secInput = document.getElementById('sync-modal-sec');
+        if (minInput) minInput.value = min;
+        if (secInput) secInput.value = sec;
+      }
 
       // Populate scores
       const hScoreEl = document.getElementById('sync-modal-home-score');
@@ -53801,9 +53962,28 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
         if (typeof showPostGameSummary === 'function') showPostGameSummary();
       }
 
+      // If in Film playback mode, persist viewer's global scoreboard calibration on currentGame
+      if (!isLiveBroadcastActive && currentGame) {
+        const curVideoSec = Math.max(0, Math.round(Number(getThrottledPlayerTime() || 0)));
+        const curDomHome = parseInt(document.getElementById('v-score-home')?.innerText || '0', 10) || 0;
+        const curDomAway = parseInt(document.getElementById('v-score-away')?.innerText || '0', 10) || 0;
+        const prevCal = currentGame.filmScoreboardCalibration || {};
+        currentGame.filmScoreboardCalibration = {
+          calibratedAtVideoSec: curVideoSec,
+          period: modalSyncSelectedPeriod === 'final' ? 3 : (parseInt(modalSyncSelectedPeriod, 10) || 1),
+          clockSec: totalSec,
+          homeScoreDelta: (prevCal.homeScoreDelta || 0) + (modalSyncHomeScore - curDomHome),
+          awayScoreDelta: (prevCal.awayScoreDelta || 0) + (modalSyncAwayScore - curDomAway),
+        };
+        try {
+          localStorage.setItem(`tigers_film_cal_${currentGame.id}`, JSON.stringify(currentGame.filmScoreboardCalibration));
+        } catch(e){}
+        lastScoreboardSyncSec = -1;
+      }
+
       // Re-render everything across all 4 components (overlay, top header, sidebar, 1-touch controls)
       renderLiveScoreboardHud();
-      syncScoreboardOverlayToPlayback(0);
+      syncScoreboardOverlayToPlayback(isLiveBroadcastActive ? 0 : (getThrottledPlayerTime() || 0));
 
       const clockDisplay = `${min}:${sec.toString().padStart(2, '0')}`;
       const opp = liveGameSheetState.oppAbbr || 'OPP';
@@ -58241,34 +58421,105 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
       "gameSheetCode": "U13A-RS-015",
       "gameSheetUrl": "https://gamesheetstats.com/seasons/15490/teams/534275/schedule",
       "record": {
-        "gp": 9,
+        "gp": 10,
         "w": 8,
-        "l": 0,
+        "l": 1,
         "t": 1,
         "pts": 17,
-        "winPct": ".889"
+        "winPct": ".800"
       },
       "stats": {
-        "gf": 48,
-        "ga": 6,
-        "diff": "+42",
-        "gpg": "5.33",
-        "gapg": "0.67",
-        "pim": 54,
+        "gf": 49,
+        "ga": 12,
+        "diff": "+37",
+        "gpg": "4.90",
+        "gapg": "1.20",
+        "pim": 60,
         "pimPg": "6.0"
       },
       "specialTeams": {
-        "ppPct": "33.3%",
+        "ppPct": "30.8%",
         "ppGoals": 8,
-        "ppOpps": 24,
+        "ppOpps": 26,
         "ppGpg": "0.86",
-        "pkPct": "100.0%",
+        "pkPct": "86.7%",
         "shGoals": 1,
         "shAllowed": 0,
         "tendency": "Lethal 35.3% power play and perfect 100.0% penalty kill. Dangerous transition rush with high slot support."
       },
       "last5Games": [
         {
+          "gameId": 3170148,
+          "date": "Nov 15, 2026",
+          "opp": "Georgian Bay Islanders",
+          "vsAt": "@",
+          "score": "1-6",
+          "result": "L",
+          "gf": 1,
+          "ga": 6,
+          "goalLog": [
+            {
+              "type": "goal",
+              "period": 1,
+              "clockTime": "09:46",
+              "team": "self",
+              "teamName": "Caledon Hawks 13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 2,
+              "clockTime": "12:29",
+              "team": "opp",
+              "teamName": "Georgian Bay Islanders U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 2,
+              "clockTime": "06:22",
+              "team": "opp",
+              "teamName": "Georgian Bay Islanders U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 3,
+              "clockTime": "12:28",
+              "team": "opp",
+              "teamName": "Georgian Bay Islanders U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 3,
+              "clockTime": "10:09",
+              "team": "opp",
+              "teamName": "Georgian Bay Islanders U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 3,
+              "clockTime": "05:14",
+              "team": "opp",
+              "teamName": "Georgian Bay Islanders U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 3,
+              "clockTime": "04:51",
+              "team": "opp",
+              "teamName": "Georgian Bay Islanders U13 A",
+              "scorer": ""
+            }
+          ],
+          "penaltyLog": [],
+          "notes": "Away GameSheet regular season box score"
+        },
+        {
+          "gameId": 3166642,
           "date": "Nov 14, 2026",
           "opp": "Markham Waxers",
           "vsAt": "vs",
@@ -58276,9 +58527,45 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
           "result": "W",
           "gf": 4,
           "ga": 0,
+          "goalLog": [
+            {
+              "type": "goal",
+              "period": 3,
+              "clockTime": "14:19",
+              "team": "self",
+              "teamName": "Caledon Hawks 13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 3,
+              "clockTime": "12:11",
+              "team": "self",
+              "teamName": "Caledon Hawks 13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 3,
+              "clockTime": "08:17",
+              "team": "self",
+              "teamName": "Caledon Hawks 13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 3,
+              "clockTime": "02:01",
+              "team": "self",
+              "teamName": "Caledon Hawks 13 A",
+              "scorer": ""
+            }
+          ],
+          "penaltyLog": [],
           "notes": "Home GameSheet regular season box score"
         },
         {
+          "gameId": 3156645,
           "date": "Nov 10, 2026",
           "opp": "Aurora Tigers",
           "vsAt": "@",
@@ -58286,9 +58573,77 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
           "result": "W",
           "gf": 8,
           "ga": 0,
+          "goalLog": [
+            {
+              "type": "goal",
+              "period": 1,
+              "clockTime": "04:16",
+              "team": "self",
+              "teamName": "Caledon Hawks 13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 1,
+              "clockTime": "01:00",
+              "team": "self",
+              "teamName": "Caledon Hawks 13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 2,
+              "clockTime": "07:21",
+              "team": "self",
+              "teamName": "Caledon Hawks 13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 3,
+              "clockTime": "14:50",
+              "team": "self",
+              "teamName": "Caledon Hawks 13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 3,
+              "clockTime": "13:56",
+              "team": "self",
+              "teamName": "Caledon Hawks 13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 3,
+              "clockTime": "10:16",
+              "team": "self",
+              "teamName": "Caledon Hawks 13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 3,
+              "clockTime": "07:25",
+              "team": "self",
+              "teamName": "Caledon Hawks 13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 3,
+              "clockTime": "05:20",
+              "team": "self",
+              "teamName": "Caledon Hawks 13 A",
+              "scorer": ""
+            }
+          ],
+          "penaltyLog": [],
           "notes": "Away GameSheet regular season box score"
         },
         {
+          "gameId": 3098848,
           "date": "Oct 25, 2026",
           "opp": "Orangeville Flyers",
           "vsAt": "vs",
@@ -58296,9 +58651,37 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
           "result": "W",
           "gf": 3,
           "ga": 0,
+          "goalLog": [
+            {
+              "type": "goal",
+              "period": 1,
+              "clockTime": "05:15",
+              "team": "self",
+              "teamName": "Caledon Hawks 13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 2,
+              "clockTime": "13:33",
+              "team": "self",
+              "teamName": "Caledon Hawks 13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 3,
+              "clockTime": "00:05",
+              "team": "self",
+              "teamName": "Caledon Hawks 13 A",
+              "scorer": ""
+            }
+          ],
+          "penaltyLog": [],
           "notes": "Home GameSheet regular season box score"
         },
         {
+          "gameId": 3096089,
           "date": "Oct 24, 2026",
           "opp": "Stouffville Clippers",
           "vsAt": "vs",
@@ -58306,17 +58689,58 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
           "result": "T",
           "gf": 3,
           "ga": 3,
+          "goalLog": [
+            {
+              "type": "goal",
+              "period": 1,
+              "clockTime": "04:03",
+              "team": "self",
+              "teamName": "Caledon Hawks 13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 2,
+              "clockTime": "07:46",
+              "team": "self",
+              "teamName": "Caledon Hawks 13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 3,
+              "clockTime": "02:48",
+              "team": "self",
+              "teamName": "Caledon Hawks 13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 2,
+              "clockTime": "00:16",
+              "team": "opp",
+              "teamName": "Stouffville Clippers U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 3,
+              "clockTime": "12:09",
+              "team": "opp",
+              "teamName": "Stouffville Clippers U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 3,
+              "clockTime": "02:24",
+              "team": "opp",
+              "teamName": "Stouffville Clippers U13 A",
+              "scorer": ""
+            }
+          ],
+          "penaltyLog": [],
           "notes": "Home GameSheet regular season box score"
-        },
-        {
-          "date": "Oct 20, 2026",
-          "opp": "Barrie Colts",
-          "vsAt": "@",
-          "score": "4-1",
-          "result": "W",
-          "gf": 4,
-          "ga": 1,
-          "notes": "Away GameSheet regular season box score"
         }
       ],
       "dangerPlayers": [
@@ -58415,6 +58839,7 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
       },
       "last5Games": [
         {
+          "gameId": 3169974,
           "date": "Nov 15, 2026",
           "opp": "Barrie Colts",
           "vsAt": "vs",
@@ -58422,9 +58847,77 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
           "result": "L",
           "gf": 3,
           "ga": 5,
+          "goalLog": [
+            {
+              "type": "goal",
+              "period": 2,
+              "clockTime": "10:13",
+              "team": "self",
+              "teamName": "Orillia Terriers U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 2,
+              "clockTime": "08:05",
+              "team": "self",
+              "teamName": "Orillia Terriers U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 2,
+              "clockTime": "01:30",
+              "team": "self",
+              "teamName": "Orillia Terriers U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 1,
+              "clockTime": "05:49",
+              "team": "opp",
+              "teamName": "Barrie Colts U13-1 A White",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 2,
+              "clockTime": "05:19",
+              "team": "opp",
+              "teamName": "Barrie Colts U13-1 A White",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 3,
+              "clockTime": "11:47",
+              "team": "opp",
+              "teamName": "Barrie Colts U13-1 A White",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 3,
+              "clockTime": "04:58",
+              "team": "opp",
+              "teamName": "Barrie Colts U13-1 A White",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 3,
+              "clockTime": "03:29",
+              "team": "opp",
+              "teamName": "Barrie Colts U13-1 A White",
+              "scorer": ""
+            }
+          ],
+          "penaltyLog": [],
           "notes": "Home GameSheet regular season box score"
         },
         {
+          "gameId": 3166191,
           "date": "Nov 14, 2026",
           "opp": "Stouffville Clippers",
           "vsAt": "vs",
@@ -58432,9 +58925,77 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
           "result": "W",
           "gf": 5,
           "ga": 3,
+          "goalLog": [
+            {
+              "type": "goal",
+              "period": 1,
+              "clockTime": "03:02",
+              "team": "self",
+              "teamName": "Orillia Terriers U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 2,
+              "clockTime": "06:39",
+              "team": "self",
+              "teamName": "Orillia Terriers U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 3,
+              "clockTime": "11:06",
+              "team": "self",
+              "teamName": "Orillia Terriers U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 3,
+              "clockTime": "01:34",
+              "team": "self",
+              "teamName": "Orillia Terriers U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 3,
+              "clockTime": "00:38",
+              "team": "self",
+              "teamName": "Orillia Terriers U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 2,
+              "clockTime": "08:41",
+              "team": "opp",
+              "teamName": "Stouffville Clippers U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 2,
+              "clockTime": "05:38",
+              "team": "opp",
+              "teamName": "Stouffville Clippers U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 3,
+              "clockTime": "10:36",
+              "team": "opp",
+              "teamName": "Stouffville Clippers U13 A",
+              "scorer": ""
+            }
+          ],
+          "penaltyLog": [],
           "notes": "Home GameSheet regular season box score"
         },
         {
+          "gameId": 3143846,
           "date": "Nov 6, 2026",
           "opp": "Aurora Tigers",
           "vsAt": "vs",
@@ -58442,9 +59003,85 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
           "result": "W",
           "gf": 9,
           "ga": 0,
+          "goalLog": [
+            {
+              "type": "goal",
+              "period": 1,
+              "clockTime": "03:06",
+              "team": "self",
+              "teamName": "Orillia Terriers U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 1,
+              "clockTime": "00:51",
+              "team": "self",
+              "teamName": "Orillia Terriers U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 2,
+              "clockTime": "08:45",
+              "team": "self",
+              "teamName": "Orillia Terriers U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 2,
+              "clockTime": "08:23",
+              "team": "self",
+              "teamName": "Orillia Terriers U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 2,
+              "clockTime": "06:45",
+              "team": "self",
+              "teamName": "Orillia Terriers U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 2,
+              "clockTime": "04:41",
+              "team": "self",
+              "teamName": "Orillia Terriers U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 2,
+              "clockTime": "00:52",
+              "team": "self",
+              "teamName": "Orillia Terriers U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 3,
+              "clockTime": "13:04",
+              "team": "self",
+              "teamName": "Orillia Terriers U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 3,
+              "clockTime": "04:34",
+              "team": "self",
+              "teamName": "Orillia Terriers U13 A",
+              "scorer": ""
+            }
+          ],
+          "penaltyLog": [],
           "notes": "Home GameSheet regular season box score"
         },
         {
+          "gameId": 3139395,
           "date": "Nov 4, 2026",
           "opp": "Barrie Colts",
           "vsAt": "@",
@@ -58452,9 +59089,69 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
           "result": "W",
           "gf": 6,
           "ga": 1,
+          "goalLog": [
+            {
+              "type": "goal",
+              "period": 1,
+              "clockTime": "09:01",
+              "team": "self",
+              "teamName": "Orillia Terriers U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 2,
+              "clockTime": "13:20",
+              "team": "self",
+              "teamName": "Orillia Terriers U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 2,
+              "clockTime": "08:18",
+              "team": "self",
+              "teamName": "Orillia Terriers U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 2,
+              "clockTime": "01:16",
+              "team": "self",
+              "teamName": "Orillia Terriers U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 3,
+              "clockTime": "13:55",
+              "team": "self",
+              "teamName": "Orillia Terriers U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 3,
+              "clockTime": "09:19",
+              "team": "self",
+              "teamName": "Orillia Terriers U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 3,
+              "clockTime": "05:59",
+              "team": "opp",
+              "teamName": "Barrie Colts U13-1 A White",
+              "scorer": ""
+            }
+          ],
+          "penaltyLog": [],
           "notes": "Away GameSheet regular season box score"
         },
         {
+          "gameId": 3120089,
           "date": "Nov 1, 2026",
           "opp": "Markham Waxers",
           "vsAt": "@",
@@ -58462,6 +59159,73 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
           "result": "W",
           "gf": 8,
           "ga": 0,
+          "goalLog": [
+            {
+              "type": "goal",
+              "period": 1,
+              "clockTime": "04:24",
+              "team": "self",
+              "teamName": "Orillia Terriers U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 1,
+              "clockTime": "00:57",
+              "team": "self",
+              "teamName": "Orillia Terriers U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 2,
+              "clockTime": "09:01",
+              "team": "self",
+              "teamName": "Orillia Terriers U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 3,
+              "clockTime": "14:08",
+              "team": "self",
+              "teamName": "Orillia Terriers U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 3,
+              "clockTime": "11:55",
+              "team": "self",
+              "teamName": "Orillia Terriers U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 3,
+              "clockTime": "10:38",
+              "team": "self",
+              "teamName": "Orillia Terriers U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 3,
+              "clockTime": "06:35",
+              "team": "self",
+              "teamName": "Orillia Terriers U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 3,
+              "clockTime": "02:37",
+              "team": "self",
+              "teamName": "Orillia Terriers U13 A",
+              "scorer": ""
+            }
+          ],
+          "penaltyLog": [],
           "notes": "Away GameSheet regular season box score"
         }
       ],
@@ -58560,6 +59324,7 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
       },
       "last5Games": [
         {
+          "gameId": 3148127,
           "date": "Nov 8, 2026",
           "opp": "Richmond Hill Jaguars",
           "vsAt": "vs",
@@ -58567,9 +59332,69 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
           "result": "W",
           "gf": 6,
           "ga": 1,
+          "goalLog": [
+            {
+              "type": "goal",
+              "period": 2,
+              "clockTime": "10:54",
+              "team": "self",
+              "teamName": "Newmarket Renegades U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 2,
+              "clockTime": "03:48",
+              "team": "self",
+              "teamName": "Newmarket Renegades U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 2,
+              "clockTime": "03:16",
+              "team": "self",
+              "teamName": "Newmarket Renegades U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 2,
+              "clockTime": "02:28",
+              "team": "self",
+              "teamName": "Newmarket Renegades U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 3,
+              "clockTime": "05:51",
+              "team": "self",
+              "teamName": "Newmarket Renegades U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 3,
+              "clockTime": "02:37",
+              "team": "self",
+              "teamName": "Newmarket Renegades U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 3,
+              "clockTime": "11:48",
+              "team": "opp",
+              "teamName": "Richmond Hill Jaguars U13 A",
+              "scorer": ""
+            }
+          ],
+          "penaltyLog": [],
           "notes": "Home GameSheet regular season box score"
         },
         {
+          "gameId": 3146846,
           "date": "Nov 7, 2026",
           "opp": "Richmond Hill Jaguars",
           "vsAt": "@",
@@ -58577,9 +59402,45 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
           "result": "W",
           "gf": 4,
           "ga": 0,
+          "goalLog": [
+            {
+              "type": "goal",
+              "period": 1,
+              "clockTime": "01:19",
+              "team": "self",
+              "teamName": "Newmarket Renegades U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 2,
+              "clockTime": "10:32",
+              "team": "self",
+              "teamName": "Newmarket Renegades U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 2,
+              "clockTime": "03:48",
+              "team": "self",
+              "teamName": "Newmarket Renegades U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 2,
+              "clockTime": "00:03",
+              "team": "self",
+              "teamName": "Newmarket Renegades U13 A",
+              "scorer": ""
+            }
+          ],
+          "penaltyLog": [],
           "notes": "Away GameSheet regular season box score"
         },
         {
+          "gameId": 3141092,
           "date": "Nov 5, 2026",
           "opp": "Upper York Admirals",
           "vsAt": "vs",
@@ -58587,9 +59448,45 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
           "result": "L",
           "gf": 1,
           "ga": 3,
+          "goalLog": [
+            {
+              "type": "goal",
+              "period": 3,
+              "clockTime": "05:22",
+              "team": "self",
+              "teamName": "Newmarket Renegades U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 1,
+              "clockTime": "07:09",
+              "team": "opp",
+              "teamName": "Upper York Admirals U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 2,
+              "clockTime": "09:29",
+              "team": "opp",
+              "teamName": "Upper York Admirals U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 3,
+              "clockTime": "09:15",
+              "team": "opp",
+              "teamName": "Upper York Admirals U13 A",
+              "scorer": ""
+            }
+          ],
+          "penaltyLog": [],
           "notes": "Home GameSheet regular season box score"
         },
         {
+          "gameId": 3120086,
           "date": "Nov 1, 2026",
           "opp": "Upper York Admirals",
           "vsAt": "@",
@@ -58597,9 +59494,61 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
           "result": "T",
           "gf": 3,
           "ga": 3,
+          "goalLog": [
+            {
+              "type": "goal",
+              "period": 2,
+              "clockTime": "13:08",
+              "team": "self",
+              "teamName": "Newmarket Renegades U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 3,
+              "clockTime": "13:40",
+              "team": "self",
+              "teamName": "Newmarket Renegades U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 3,
+              "clockTime": "00:14",
+              "team": "self",
+              "teamName": "Newmarket Renegades U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 2,
+              "clockTime": "10:50",
+              "team": "opp",
+              "teamName": "Upper York Admirals U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 2,
+              "clockTime": "07:15",
+              "team": "opp",
+              "teamName": "Upper York Admirals U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 3,
+              "clockTime": "00:52",
+              "team": "opp",
+              "teamName": "Upper York Admirals U13 A",
+              "scorer": ""
+            }
+          ],
+          "penaltyLog": [],
           "notes": "Away GameSheet regular season box score"
         },
         {
+          "gameId": 3096086,
           "date": "Oct 24, 2026",
           "opp": "Barrie Colts U13-2 A Blue",
           "vsAt": "@",
@@ -58607,6 +59556,65 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
           "result": "L",
           "gf": 2,
           "ga": 5,
+          "goalLog": [
+            {
+              "type": "goal",
+              "period": 3,
+              "clockTime": "06:00",
+              "team": "self",
+              "teamName": "Newmarket Renegades U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 3,
+              "clockTime": "00:45",
+              "team": "self",
+              "teamName": "Newmarket Renegades U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 1,
+              "clockTime": "07:02",
+              "team": "opp",
+              "teamName": "Barrie Colts U13-2 A Blue",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 1,
+              "clockTime": "00:17",
+              "team": "opp",
+              "teamName": "Barrie Colts U13-2 A Blue",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 2,
+              "clockTime": "07:31",
+              "team": "opp",
+              "teamName": "Barrie Colts U13-2 A Blue",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 2,
+              "clockTime": "05:53",
+              "team": "opp",
+              "teamName": "Barrie Colts U13-2 A Blue",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 3,
+              "clockTime": "08:34",
+              "team": "opp",
+              "teamName": "Barrie Colts U13-2 A Blue",
+              "scorer": ""
+            }
+          ],
+          "penaltyLog": [],
           "notes": "Away GameSheet regular season box score"
         }
       ],
@@ -58654,33 +59662,96 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
       "gameSheetCode": "U13A-RS-168",
       "gameSheetUrl": "https://gamesheetstats.com/seasons/15490/teams/534252/schedule",
       "record": {
-        "gp": 11,
+        "gp": 12,
         "w": 2,
-        "l": 8,
+        "l": 9,
         "t": 1,
         "pts": 5,
-        "winPct": ".182"
+        "winPct": ".167"
       },
       "stats": {
-        "gf": 19,
-        "ga": 54,
-        "diff": "-35",
-        "gpg": "1.73",
-        "gapg": "4.91",
-        "pim": 66,
+        "gf": 21,
+        "ga": 58,
+        "diff": "-37",
+        "gpg": "1.75",
+        "gapg": "4.83",
+        "pim": 72,
         "pimPg": "6.0"
       },
       "specialTeams": {
-        "ppPct": "13.6%",
+        "ppPct": "11.5%",
         "ppGoals": 3,
-        "ppOpps": 22,
-        "pkPct": "52.9%",
+        "ppOpps": 26,
+        "pkPct": "57.9%",
         "shGoals": 2,
         "shAllowed": 7,
         "tendency": "Strong cycle game below hash marks; uses D for point shots with heavy screens."
       },
       "last5Games": [
         {
+          "gameId": 3170147,
+          "date": "Nov 15, 2026",
+          "opp": "Barrie Colts U13-2 A Blue",
+          "vsAt": "vs",
+          "score": "2-4",
+          "result": "L",
+          "gf": 2,
+          "ga": 4,
+          "goalLog": [
+            {
+              "type": "goal",
+              "period": 2,
+              "clockTime": "06:31",
+              "team": "self",
+              "teamName": "Markham Waxers U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 3,
+              "clockTime": "13:47",
+              "team": "self",
+              "teamName": "Markham Waxers U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 2,
+              "clockTime": "13:40",
+              "team": "opp",
+              "teamName": "Barrie Colts U13-2 A Blue",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 2,
+              "clockTime": "03:07",
+              "team": "opp",
+              "teamName": "Barrie Colts U13-2 A Blue",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 3,
+              "clockTime": "07:18",
+              "team": "opp",
+              "teamName": "Barrie Colts U13-2 A Blue",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 3,
+              "clockTime": "00:01",
+              "team": "opp",
+              "teamName": "Barrie Colts U13-2 A Blue",
+              "scorer": ""
+            }
+          ],
+          "penaltyLog": [],
+          "notes": "Home GameSheet regular season box score"
+        },
+        {
+          "gameId": 3166642,
           "date": "Nov 14, 2026",
           "opp": "Caledon Hawks",
           "vsAt": "@",
@@ -58688,9 +59759,45 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
           "result": "L",
           "gf": 0,
           "ga": 4,
+          "goalLog": [
+            {
+              "type": "goal",
+              "period": 3,
+              "clockTime": "14:19",
+              "team": "opp",
+              "teamName": "Caledon Hawks 13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 3,
+              "clockTime": "12:11",
+              "team": "opp",
+              "teamName": "Caledon Hawks 13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 3,
+              "clockTime": "08:17",
+              "team": "opp",
+              "teamName": "Caledon Hawks 13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 3,
+              "clockTime": "02:01",
+              "team": "opp",
+              "teamName": "Caledon Hawks 13 A",
+              "scorer": ""
+            }
+          ],
+          "penaltyLog": [],
           "notes": "Away GameSheet regular season box score"
         },
         {
+          "gameId": 3160514,
           "date": "Nov 11, 2026",
           "opp": "Aurora Tigers",
           "vsAt": "vs",
@@ -58698,9 +59805,53 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
           "result": "W",
           "gf": 5,
           "ga": 0,
+          "goalLog": [
+            {
+              "type": "goal",
+              "period": 1,
+              "clockTime": "01:44",
+              "team": "self",
+              "teamName": "Markham Waxers U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 2,
+              "clockTime": "11:17",
+              "team": "self",
+              "teamName": "Markham Waxers U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 2,
+              "clockTime": "09:55",
+              "team": "self",
+              "teamName": "Markham Waxers U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 2,
+              "clockTime": "03:32",
+              "team": "self",
+              "teamName": "Markham Waxers U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 3,
+              "clockTime": "09:54",
+              "team": "self",
+              "teamName": "Markham Waxers U13 A",
+              "scorer": ""
+            }
+          ],
+          "penaltyLog": [],
           "notes": "Home GameSheet regular season box score"
         },
         {
+          "gameId": 3148266,
           "date": "Nov 8, 2026",
           "opp": "Barrie Colts",
           "vsAt": "vs",
@@ -58708,9 +59859,61 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
           "result": "L",
           "gf": 0,
           "ga": 6,
+          "goalLog": [
+            {
+              "type": "goal",
+              "period": 2,
+              "clockTime": "07:24",
+              "team": "opp",
+              "teamName": "Barrie Colts U13-1 A White",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 2,
+              "clockTime": "05:01",
+              "team": "opp",
+              "teamName": "Barrie Colts U13-1 A White",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 3,
+              "clockTime": "08:34",
+              "team": "opp",
+              "teamName": "Barrie Colts U13-1 A White",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 3,
+              "clockTime": "07:35",
+              "team": "opp",
+              "teamName": "Barrie Colts U13-1 A White",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 3,
+              "clockTime": "04:11",
+              "team": "opp",
+              "teamName": "Barrie Colts U13-1 A White",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 3,
+              "clockTime": "02:40",
+              "team": "opp",
+              "teamName": "Barrie Colts U13-1 A White",
+              "scorer": ""
+            }
+          ],
+          "penaltyLog": [],
           "notes": "Home GameSheet regular season box score"
         },
         {
+          "gameId": 3146847,
           "date": "Nov 7, 2026",
           "opp": "Barrie Colts U13-2 A Blue",
           "vsAt": "@",
@@ -58718,17 +59921,66 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
           "result": "L",
           "gf": 0,
           "ga": 7,
+          "goalLog": [
+            {
+              "type": "goal",
+              "period": 1,
+              "clockTime": "07:24",
+              "team": "opp",
+              "teamName": "Barrie Colts U13-2 A Blue",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 1,
+              "clockTime": "07:15",
+              "team": "opp",
+              "teamName": "Barrie Colts U13-2 A Blue",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 2,
+              "clockTime": "14:42",
+              "team": "opp",
+              "teamName": "Barrie Colts U13-2 A Blue",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 2,
+              "clockTime": "10:50",
+              "team": "opp",
+              "teamName": "Barrie Colts U13-2 A Blue",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 2,
+              "clockTime": "02:47",
+              "team": "opp",
+              "teamName": "Barrie Colts U13-2 A Blue",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 3,
+              "clockTime": "14:14",
+              "team": "opp",
+              "teamName": "Barrie Colts U13-2 A Blue",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 3,
+              "clockTime": "03:44",
+              "team": "opp",
+              "teamName": "Barrie Colts U13-2 A Blue",
+              "scorer": ""
+            }
+          ],
+          "penaltyLog": [],
           "notes": "Away GameSheet regular season box score"
-        },
-        {
-          "date": "Nov 4, 2026",
-          "opp": "King Rebellion",
-          "vsAt": "vs",
-          "score": "8-3",
-          "result": "W",
-          "gf": 8,
-          "ga": 3,
-          "notes": "Home GameSheet regular season box score"
         }
       ],
       "dangerPlayers": [
@@ -58802,6 +60054,7 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
       },
       "last5Games": [
         {
+          "gameId": 3169974,
           "date": "Nov 15, 2026",
           "opp": "Orillia Terriers",
           "vsAt": "@",
@@ -58809,9 +60062,77 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
           "result": "W",
           "gf": 5,
           "ga": 3,
+          "goalLog": [
+            {
+              "type": "goal",
+              "period": 1,
+              "clockTime": "05:49",
+              "team": "self",
+              "teamName": "Barrie Colts U13-1 A White",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 2,
+              "clockTime": "05:19",
+              "team": "self",
+              "teamName": "Barrie Colts U13-1 A White",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 3,
+              "clockTime": "11:47",
+              "team": "self",
+              "teamName": "Barrie Colts U13-1 A White",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 3,
+              "clockTime": "04:58",
+              "team": "self",
+              "teamName": "Barrie Colts U13-1 A White",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 3,
+              "clockTime": "03:29",
+              "team": "self",
+              "teamName": "Barrie Colts U13-1 A White",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 2,
+              "clockTime": "10:13",
+              "team": "opp",
+              "teamName": "Orillia Terriers U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 2,
+              "clockTime": "08:05",
+              "team": "opp",
+              "teamName": "Orillia Terriers U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 2,
+              "clockTime": "01:30",
+              "team": "opp",
+              "teamName": "Orillia Terriers U13 A",
+              "scorer": ""
+            }
+          ],
+          "penaltyLog": [],
           "notes": "Away GameSheet regular season box score"
         },
         {
+          "gameId": 3160515,
           "date": "Nov 11, 2026",
           "opp": "Upper York Admirals",
           "vsAt": "@",
@@ -58819,9 +60140,37 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
           "result": "W",
           "gf": 3,
           "ga": 0,
+          "goalLog": [
+            {
+              "type": "goal",
+              "period": 1,
+              "clockTime": "04:44",
+              "team": "self",
+              "teamName": "Barrie Colts U13-1 A White",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 2,
+              "clockTime": "07:41",
+              "team": "self",
+              "teamName": "Barrie Colts U13-1 A White",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 3,
+              "clockTime": "06:05",
+              "team": "self",
+              "teamName": "Barrie Colts U13-1 A White",
+              "scorer": ""
+            }
+          ],
+          "penaltyLog": [],
           "notes": "Away GameSheet regular season box score"
         },
         {
+          "gameId": 3148266,
           "date": "Nov 8, 2026",
           "opp": "Markham Waxers",
           "vsAt": "@",
@@ -58829,9 +60178,61 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
           "result": "W",
           "gf": 6,
           "ga": 0,
+          "goalLog": [
+            {
+              "type": "goal",
+              "period": 2,
+              "clockTime": "07:24",
+              "team": "self",
+              "teamName": "Barrie Colts U13-1 A White",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 2,
+              "clockTime": "05:01",
+              "team": "self",
+              "teamName": "Barrie Colts U13-1 A White",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 3,
+              "clockTime": "08:34",
+              "team": "self",
+              "teamName": "Barrie Colts U13-1 A White",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 3,
+              "clockTime": "07:35",
+              "team": "self",
+              "teamName": "Barrie Colts U13-1 A White",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 3,
+              "clockTime": "04:11",
+              "team": "self",
+              "teamName": "Barrie Colts U13-1 A White",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 3,
+              "clockTime": "02:40",
+              "team": "self",
+              "teamName": "Barrie Colts U13-1 A White",
+              "scorer": ""
+            }
+          ],
+          "penaltyLog": [],
           "notes": "Away GameSheet regular season box score"
         },
         {
+          "gameId": 3139395,
           "date": "Nov 4, 2026",
           "opp": "Orillia Terriers",
           "vsAt": "vs",
@@ -58839,9 +60240,69 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
           "result": "L",
           "gf": 1,
           "ga": 6,
+          "goalLog": [
+            {
+              "type": "goal",
+              "period": 3,
+              "clockTime": "05:59",
+              "team": "self",
+              "teamName": "Barrie Colts U13-1 A White",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 1,
+              "clockTime": "09:01",
+              "team": "opp",
+              "teamName": "Orillia Terriers U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 2,
+              "clockTime": "13:20",
+              "team": "opp",
+              "teamName": "Orillia Terriers U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 2,
+              "clockTime": "08:18",
+              "team": "opp",
+              "teamName": "Orillia Terriers U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 2,
+              "clockTime": "01:16",
+              "team": "opp",
+              "teamName": "Orillia Terriers U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 3,
+              "clockTime": "13:55",
+              "team": "opp",
+              "teamName": "Orillia Terriers U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 3,
+              "clockTime": "09:19",
+              "team": "opp",
+              "teamName": "Orillia Terriers U13 A",
+              "scorer": ""
+            }
+          ],
+          "penaltyLog": [],
           "notes": "Home GameSheet regular season box score"
         },
         {
+          "gameId": 3120084,
           "date": "Nov 1, 2026",
           "opp": "Georgian Bay Islanders",
           "vsAt": "@",
@@ -58849,6 +60310,57 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
           "result": "W",
           "gf": 5,
           "ga": 1,
+          "goalLog": [
+            {
+              "type": "goal",
+              "period": 1,
+              "clockTime": "01:59",
+              "team": "self",
+              "teamName": "Barrie Colts U13-1 A White",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 1,
+              "clockTime": "01:31",
+              "team": "self",
+              "teamName": "Barrie Colts U13-1 A White",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 2,
+              "clockTime": "04:10",
+              "team": "self",
+              "teamName": "Barrie Colts U13-1 A White",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 3,
+              "clockTime": "13:10",
+              "team": "self",
+              "teamName": "Barrie Colts U13-1 A White",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 3,
+              "clockTime": "01:47",
+              "team": "self",
+              "teamName": "Barrie Colts U13-1 A White",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 2,
+              "clockTime": "00:20",
+              "team": "opp",
+              "teamName": "Georgian Bay Islanders U13 A",
+              "scorer": ""
+            }
+          ],
+          "penaltyLog": [],
           "notes": "Away GameSheet regular season box score"
         }
       ],
@@ -58917,6 +60429,7 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
       },
       "last5Games": [
         {
+          "gameId": 3169951,
           "date": "Nov 15, 2026",
           "opp": "Orangeville Flyers",
           "vsAt": "vs",
@@ -58924,9 +60437,53 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
           "result": "W",
           "gf": 4,
           "ga": 1,
+          "goalLog": [
+            {
+              "type": "goal",
+              "period": 1,
+              "clockTime": "08:23",
+              "team": "self",
+              "teamName": "Upper York Admirals U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 2,
+              "clockTime": "11:18",
+              "team": "self",
+              "teamName": "Upper York Admirals U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 3,
+              "clockTime": "08:16",
+              "team": "self",
+              "teamName": "Upper York Admirals U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 3,
+              "clockTime": "01:17",
+              "team": "self",
+              "teamName": "Upper York Admirals U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 3,
+              "clockTime": "11:15",
+              "team": "opp",
+              "teamName": "Orangeville Flyers U13 A",
+              "scorer": ""
+            }
+          ],
+          "penaltyLog": [],
           "notes": "Home GameSheet regular season box score"
         },
         {
+          "gameId": 3160515,
           "date": "Nov 11, 2026",
           "opp": "Barrie Colts",
           "vsAt": "vs",
@@ -58934,9 +60491,37 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
           "result": "L",
           "gf": 0,
           "ga": 3,
+          "goalLog": [
+            {
+              "type": "goal",
+              "period": 1,
+              "clockTime": "04:44",
+              "team": "opp",
+              "teamName": "Barrie Colts U13-1 A White",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 2,
+              "clockTime": "07:41",
+              "team": "opp",
+              "teamName": "Barrie Colts U13-1 A White",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 3,
+              "clockTime": "06:05",
+              "team": "opp",
+              "teamName": "Barrie Colts U13-1 A White",
+              "scorer": ""
+            }
+          ],
+          "penaltyLog": [],
           "notes": "Home GameSheet regular season box score"
         },
         {
+          "gameId": 3147450,
           "date": "Nov 8, 2026",
           "opp": "King Rebellion",
           "vsAt": "@",
@@ -58944,9 +60529,77 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
           "result": "W",
           "gf": 7,
           "ga": 1,
+          "goalLog": [
+            {
+              "type": "goal",
+              "period": 1,
+              "clockTime": "04:01",
+              "team": "self",
+              "teamName": "Upper York Admirals U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 1,
+              "clockTime": "00:51",
+              "team": "self",
+              "teamName": "Upper York Admirals U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 2,
+              "clockTime": "14:28",
+              "team": "self",
+              "teamName": "Upper York Admirals U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 2,
+              "clockTime": "12:11",
+              "team": "self",
+              "teamName": "Upper York Admirals U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 2,
+              "clockTime": "05:09",
+              "team": "self",
+              "teamName": "Upper York Admirals U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 2,
+              "clockTime": "01:04",
+              "team": "self",
+              "teamName": "Upper York Admirals U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 3,
+              "clockTime": "00:05",
+              "team": "self",
+              "teamName": "Upper York Admirals U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 2,
+              "clockTime": "10:17",
+              "team": "opp",
+              "teamName": "King Rebellion 13 A",
+              "scorer": ""
+            }
+          ],
+          "penaltyLog": [],
           "notes": "Away GameSheet regular season box score"
         },
         {
+          "gameId": 3141092,
           "date": "Nov 5, 2026",
           "opp": "Newmarket Renegades",
           "vsAt": "@",
@@ -58954,9 +60607,45 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
           "result": "W",
           "gf": 3,
           "ga": 1,
+          "goalLog": [
+            {
+              "type": "goal",
+              "period": 1,
+              "clockTime": "07:09",
+              "team": "self",
+              "teamName": "Upper York Admirals U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 2,
+              "clockTime": "09:29",
+              "team": "self",
+              "teamName": "Upper York Admirals U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 3,
+              "clockTime": "09:15",
+              "team": "self",
+              "teamName": "Upper York Admirals U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 3,
+              "clockTime": "05:22",
+              "team": "opp",
+              "teamName": "Newmarket Renegades U13 A",
+              "scorer": ""
+            }
+          ],
+          "penaltyLog": [],
           "notes": "Away GameSheet regular season box score"
         },
         {
+          "gameId": 3120086,
           "date": "Nov 1, 2026",
           "opp": "Newmarket Renegades",
           "vsAt": "vs",
@@ -58964,6 +60653,57 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
           "result": "T",
           "gf": 3,
           "ga": 3,
+          "goalLog": [
+            {
+              "type": "goal",
+              "period": 2,
+              "clockTime": "10:50",
+              "team": "self",
+              "teamName": "Upper York Admirals U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 2,
+              "clockTime": "07:15",
+              "team": "self",
+              "teamName": "Upper York Admirals U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 3,
+              "clockTime": "00:52",
+              "team": "self",
+              "teamName": "Upper York Admirals U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 2,
+              "clockTime": "13:08",
+              "team": "opp",
+              "teamName": "Newmarket Renegades U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 3,
+              "clockTime": "13:40",
+              "team": "opp",
+              "teamName": "Newmarket Renegades U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 3,
+              "clockTime": "00:14",
+              "team": "opp",
+              "teamName": "Newmarket Renegades U13 A",
+              "scorer": ""
+            }
+          ],
+          "penaltyLog": [],
           "notes": "Home GameSheet regular season box score"
         }
       ],
@@ -59152,6 +60892,7 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
       },
       "last5Games": [
         {
+          "gameId": 3160514,
           "date": "Nov 11, 2026",
           "opp": "Markham Waxers",
           "vsAt": "@",
@@ -59159,9 +60900,53 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
           "result": "L",
           "gf": 0,
           "ga": 5,
+          "goalLog": [
+            {
+              "type": "goal",
+              "period": 1,
+              "clockTime": "01:44",
+              "team": "opp",
+              "teamName": "Markham Waxers U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 2,
+              "clockTime": "11:17",
+              "team": "opp",
+              "teamName": "Markham Waxers U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 2,
+              "clockTime": "09:55",
+              "team": "opp",
+              "teamName": "Markham Waxers U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 2,
+              "clockTime": "03:32",
+              "team": "opp",
+              "teamName": "Markham Waxers U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 3,
+              "clockTime": "09:54",
+              "team": "opp",
+              "teamName": "Markham Waxers U13 A",
+              "scorer": ""
+            }
+          ],
+          "penaltyLog": [],
           "notes": "Away GameSheet regular season box score"
         },
         {
+          "gameId": 3156645,
           "date": "Nov 10, 2026",
           "opp": "Caledon Hawks",
           "vsAt": "vs",
@@ -59169,9 +60954,77 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
           "result": "L",
           "gf": 0,
           "ga": 8,
+          "goalLog": [
+            {
+              "type": "goal",
+              "period": 1,
+              "clockTime": "04:16",
+              "team": "opp",
+              "teamName": "Caledon Hawks 13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 1,
+              "clockTime": "01:00",
+              "team": "opp",
+              "teamName": "Caledon Hawks 13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 2,
+              "clockTime": "07:21",
+              "team": "opp",
+              "teamName": "Caledon Hawks 13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 3,
+              "clockTime": "14:50",
+              "team": "opp",
+              "teamName": "Caledon Hawks 13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 3,
+              "clockTime": "13:56",
+              "team": "opp",
+              "teamName": "Caledon Hawks 13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 3,
+              "clockTime": "10:16",
+              "team": "opp",
+              "teamName": "Caledon Hawks 13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 3,
+              "clockTime": "07:25",
+              "team": "opp",
+              "teamName": "Caledon Hawks 13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 3,
+              "clockTime": "05:20",
+              "team": "opp",
+              "teamName": "Caledon Hawks 13 A",
+              "scorer": ""
+            }
+          ],
+          "penaltyLog": [],
           "notes": "Home GameSheet regular season box score"
         },
         {
+          "gameId": 3143846,
           "date": "Nov 6, 2026",
           "opp": "Orillia Terriers",
           "vsAt": "@",
@@ -59179,9 +61032,85 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
           "result": "L",
           "gf": 0,
           "ga": 9,
+          "goalLog": [
+            {
+              "type": "goal",
+              "period": 1,
+              "clockTime": "03:06",
+              "team": "opp",
+              "teamName": "Orillia Terriers U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 1,
+              "clockTime": "00:51",
+              "team": "opp",
+              "teamName": "Orillia Terriers U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 2,
+              "clockTime": "08:45",
+              "team": "opp",
+              "teamName": "Orillia Terriers U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 2,
+              "clockTime": "08:23",
+              "team": "opp",
+              "teamName": "Orillia Terriers U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 2,
+              "clockTime": "06:45",
+              "team": "opp",
+              "teamName": "Orillia Terriers U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 2,
+              "clockTime": "04:41",
+              "team": "opp",
+              "teamName": "Orillia Terriers U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 2,
+              "clockTime": "00:52",
+              "team": "opp",
+              "teamName": "Orillia Terriers U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 3,
+              "clockTime": "13:04",
+              "team": "opp",
+              "teamName": "Orillia Terriers U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 3,
+              "clockTime": "04:34",
+              "team": "opp",
+              "teamName": "Orillia Terriers U13 A",
+              "scorer": ""
+            }
+          ],
+          "penaltyLog": [],
           "notes": "Away GameSheet regular season box score"
         },
         {
+          "gameId": 3087227,
           "date": "Oct 20, 2026",
           "opp": "Newmarket Renegades",
           "vsAt": "@",
@@ -59189,9 +61118,85 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
           "result": "L",
           "gf": 1,
           "ga": 8,
+          "goalLog": [
+            {
+              "type": "goal",
+              "period": 2,
+              "clockTime": "04:06",
+              "team": "tigers",
+              "teamName": "Aurora Tigers U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 1,
+              "clockTime": "07:46",
+              "team": "opp",
+              "teamName": "Newmarket Renegades U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 2,
+              "clockTime": "10:45",
+              "team": "opp",
+              "teamName": "Newmarket Renegades U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 2,
+              "clockTime": "10:17",
+              "team": "opp",
+              "teamName": "Newmarket Renegades U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 2,
+              "clockTime": "07:51",
+              "team": "opp",
+              "teamName": "Newmarket Renegades U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 2,
+              "clockTime": "06:54",
+              "team": "opp",
+              "teamName": "Newmarket Renegades U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 2,
+              "clockTime": "05:34",
+              "team": "opp",
+              "teamName": "Newmarket Renegades U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 2,
+              "clockTime": "00:32",
+              "team": "opp",
+              "teamName": "Newmarket Renegades U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 3,
+              "clockTime": "06:55",
+              "team": "opp",
+              "teamName": "Newmarket Renegades U13 A",
+              "scorer": ""
+            }
+          ],
+          "penaltyLog": [],
           "notes": "Away GameSheet regular season box score"
         },
         {
+          "gameId": 3057628,
           "date": "Oct 10, 2026",
           "opp": "Georgian Bay Islanders",
           "vsAt": "vs",
@@ -59199,6 +61204,81 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
           "result": "L",
           "gf": 0,
           "ga": 9,
+          "goalLog": [
+            {
+              "type": "goal",
+              "period": 1,
+              "clockTime": "07:10",
+              "team": "opp",
+              "teamName": "Georgian Bay Islanders U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 2,
+              "clockTime": "09:00",
+              "team": "opp",
+              "teamName": "Georgian Bay Islanders U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 2,
+              "clockTime": "04:25",
+              "team": "opp",
+              "teamName": "Georgian Bay Islanders U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 2,
+              "clockTime": "02:05",
+              "team": "opp",
+              "teamName": "Georgian Bay Islanders U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 3,
+              "clockTime": "10:49",
+              "team": "opp",
+              "teamName": "Georgian Bay Islanders U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 3,
+              "clockTime": "08:52",
+              "team": "opp",
+              "teamName": "Georgian Bay Islanders U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 3,
+              "clockTime": "07:59",
+              "team": "opp",
+              "teamName": "Georgian Bay Islanders U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 3,
+              "clockTime": "05:40",
+              "team": "opp",
+              "teamName": "Georgian Bay Islanders U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 3,
+              "clockTime": "02:25",
+              "team": "opp",
+              "teamName": "Georgian Bay Islanders U13 A",
+              "scorer": ""
+            }
+          ],
+          "penaltyLog": [],
           "notes": "Home GameSheet regular season box score"
         }
       ],
@@ -59219,7 +61299,745 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
         "summary": "Oct 3, 2026: Caledon Hawks 12, Aurora Tigers 0",
         "date": "2026-10-03",
         "score": "0-12"
-      }
+      },
+      "allCompletedGames": [
+        {
+          "gameId": 3160514,
+          "date": "Nov 11, 2026",
+          "opp": "Markham Waxers",
+          "vsAt": "@",
+          "score": "0-5",
+          "result": "L",
+          "gf": 0,
+          "ga": 5,
+          "goalLog": [
+            {
+              "type": "goal",
+              "period": 1,
+              "clockTime": "01:44",
+              "team": "opp",
+              "teamName": "Markham Waxers U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 2,
+              "clockTime": "11:17",
+              "team": "opp",
+              "teamName": "Markham Waxers U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 2,
+              "clockTime": "09:55",
+              "team": "opp",
+              "teamName": "Markham Waxers U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 2,
+              "clockTime": "03:32",
+              "team": "opp",
+              "teamName": "Markham Waxers U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 3,
+              "clockTime": "09:54",
+              "team": "opp",
+              "teamName": "Markham Waxers U13 A",
+              "scorer": ""
+            }
+          ],
+          "penaltyLog": [],
+          "notes": "Away GameSheet regular season box score"
+        },
+        {
+          "gameId": 3156645,
+          "date": "Nov 10, 2026",
+          "opp": "Caledon Hawks",
+          "vsAt": "vs",
+          "score": "0-8",
+          "result": "L",
+          "gf": 0,
+          "ga": 8,
+          "goalLog": [
+            {
+              "type": "goal",
+              "period": 1,
+              "clockTime": "04:16",
+              "team": "opp",
+              "teamName": "Caledon Hawks 13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 1,
+              "clockTime": "01:00",
+              "team": "opp",
+              "teamName": "Caledon Hawks 13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 2,
+              "clockTime": "07:21",
+              "team": "opp",
+              "teamName": "Caledon Hawks 13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 3,
+              "clockTime": "14:50",
+              "team": "opp",
+              "teamName": "Caledon Hawks 13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 3,
+              "clockTime": "13:56",
+              "team": "opp",
+              "teamName": "Caledon Hawks 13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 3,
+              "clockTime": "10:16",
+              "team": "opp",
+              "teamName": "Caledon Hawks 13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 3,
+              "clockTime": "07:25",
+              "team": "opp",
+              "teamName": "Caledon Hawks 13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 3,
+              "clockTime": "05:20",
+              "team": "opp",
+              "teamName": "Caledon Hawks 13 A",
+              "scorer": ""
+            }
+          ],
+          "penaltyLog": [],
+          "notes": "Home GameSheet regular season box score"
+        },
+        {
+          "gameId": 3143846,
+          "date": "Nov 6, 2026",
+          "opp": "Orillia Terriers",
+          "vsAt": "@",
+          "score": "0-9",
+          "result": "L",
+          "gf": 0,
+          "ga": 9,
+          "goalLog": [
+            {
+              "type": "goal",
+              "period": 1,
+              "clockTime": "03:06",
+              "team": "opp",
+              "teamName": "Orillia Terriers U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 1,
+              "clockTime": "00:51",
+              "team": "opp",
+              "teamName": "Orillia Terriers U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 2,
+              "clockTime": "08:45",
+              "team": "opp",
+              "teamName": "Orillia Terriers U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 2,
+              "clockTime": "08:23",
+              "team": "opp",
+              "teamName": "Orillia Terriers U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 2,
+              "clockTime": "06:45",
+              "team": "opp",
+              "teamName": "Orillia Terriers U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 2,
+              "clockTime": "04:41",
+              "team": "opp",
+              "teamName": "Orillia Terriers U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 2,
+              "clockTime": "00:52",
+              "team": "opp",
+              "teamName": "Orillia Terriers U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 3,
+              "clockTime": "13:04",
+              "team": "opp",
+              "teamName": "Orillia Terriers U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 3,
+              "clockTime": "04:34",
+              "team": "opp",
+              "teamName": "Orillia Terriers U13 A",
+              "scorer": ""
+            }
+          ],
+          "penaltyLog": [],
+          "notes": "Away GameSheet regular season box score"
+        },
+        {
+          "gameId": 3087227,
+          "date": "Oct 20, 2026",
+          "opp": "Newmarket Renegades",
+          "vsAt": "@",
+          "score": "1-8",
+          "result": "L",
+          "gf": 1,
+          "ga": 8,
+          "goalLog": [
+            {
+              "type": "goal",
+              "period": 2,
+              "clockTime": "04:06",
+              "team": "tigers",
+              "teamName": "Aurora Tigers U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 1,
+              "clockTime": "07:46",
+              "team": "opp",
+              "teamName": "Newmarket Renegades U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 2,
+              "clockTime": "10:45",
+              "team": "opp",
+              "teamName": "Newmarket Renegades U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 2,
+              "clockTime": "10:17",
+              "team": "opp",
+              "teamName": "Newmarket Renegades U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 2,
+              "clockTime": "07:51",
+              "team": "opp",
+              "teamName": "Newmarket Renegades U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 2,
+              "clockTime": "06:54",
+              "team": "opp",
+              "teamName": "Newmarket Renegades U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 2,
+              "clockTime": "05:34",
+              "team": "opp",
+              "teamName": "Newmarket Renegades U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 2,
+              "clockTime": "00:32",
+              "team": "opp",
+              "teamName": "Newmarket Renegades U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 3,
+              "clockTime": "06:55",
+              "team": "opp",
+              "teamName": "Newmarket Renegades U13 A",
+              "scorer": ""
+            }
+          ],
+          "penaltyLog": [],
+          "notes": "Away GameSheet regular season box score"
+        },
+        {
+          "gameId": 3057628,
+          "date": "Oct 10, 2026",
+          "opp": "Georgian Bay Islanders",
+          "vsAt": "vs",
+          "score": "0-9",
+          "result": "L",
+          "gf": 0,
+          "ga": 9,
+          "goalLog": [
+            {
+              "type": "goal",
+              "period": 1,
+              "clockTime": "07:10",
+              "team": "opp",
+              "teamName": "Georgian Bay Islanders U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 2,
+              "clockTime": "09:00",
+              "team": "opp",
+              "teamName": "Georgian Bay Islanders U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 2,
+              "clockTime": "04:25",
+              "team": "opp",
+              "teamName": "Georgian Bay Islanders U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 2,
+              "clockTime": "02:05",
+              "team": "opp",
+              "teamName": "Georgian Bay Islanders U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 3,
+              "clockTime": "10:49",
+              "team": "opp",
+              "teamName": "Georgian Bay Islanders U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 3,
+              "clockTime": "08:52",
+              "team": "opp",
+              "teamName": "Georgian Bay Islanders U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 3,
+              "clockTime": "07:59",
+              "team": "opp",
+              "teamName": "Georgian Bay Islanders U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 3,
+              "clockTime": "05:40",
+              "team": "opp",
+              "teamName": "Georgian Bay Islanders U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 3,
+              "clockTime": "02:25",
+              "team": "opp",
+              "teamName": "Georgian Bay Islanders U13 A",
+              "scorer": ""
+            }
+          ],
+          "penaltyLog": [],
+          "notes": "Home GameSheet regular season box score"
+        },
+        {
+          "gameId": 3043454,
+          "date": "Oct 6, 2026",
+          "opp": "Orillia Terriers",
+          "vsAt": "vs",
+          "score": "1-13",
+          "result": "L",
+          "gf": 1,
+          "ga": 13,
+          "goalLog": [
+            {
+              "type": "goal",
+              "period": 1,
+              "clockTime": "00:51",
+              "team": "tigers",
+              "teamName": "Aurora Tigers U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 1,
+              "clockTime": "01:20",
+              "team": "opp",
+              "teamName": "Orillia Terriers U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 2,
+              "clockTime": "14:50",
+              "team": "opp",
+              "teamName": "Orillia Terriers U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 2,
+              "clockTime": "12:29",
+              "team": "opp",
+              "teamName": "Orillia Terriers U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 2,
+              "clockTime": "10:11",
+              "team": "opp",
+              "teamName": "Orillia Terriers U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 2,
+              "clockTime": "09:45",
+              "team": "opp",
+              "teamName": "Orillia Terriers U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 2,
+              "clockTime": "08:12",
+              "team": "opp",
+              "teamName": "Orillia Terriers U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 2,
+              "clockTime": "05:30",
+              "team": "opp",
+              "teamName": "Orillia Terriers U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 2,
+              "clockTime": "04:55",
+              "team": "opp",
+              "teamName": "Orillia Terriers U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 3,
+              "clockTime": "10:28",
+              "team": "opp",
+              "teamName": "Orillia Terriers U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 3,
+              "clockTime": "09:02",
+              "team": "opp",
+              "teamName": "Orillia Terriers U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 3,
+              "clockTime": "07:57",
+              "team": "opp",
+              "teamName": "Orillia Terriers U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 3,
+              "clockTime": "06:00",
+              "team": "opp",
+              "teamName": "Orillia Terriers U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 3,
+              "clockTime": "03:11",
+              "team": "opp",
+              "teamName": "Orillia Terriers U13 A",
+              "scorer": ""
+            }
+          ],
+          "penaltyLog": [],
+          "notes": "Home GameSheet regular season box score"
+        },
+        {
+          "gameId": 3035362,
+          "date": "Oct 4, 2026",
+          "opp": "Upper York Admirals",
+          "vsAt": "@",
+          "score": "1-11",
+          "result": "L",
+          "gf": 1,
+          "ga": 11,
+          "goalLog": [
+            {
+              "type": "goal",
+              "period": 2,
+              "clockTime": "02:51",
+              "team": "tigers",
+              "teamName": "Aurora Tigers U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 1,
+              "clockTime": "10:00",
+              "team": "opp",
+              "teamName": "Upper York Admirals U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 1,
+              "clockTime": "04:11",
+              "team": "opp",
+              "teamName": "Upper York Admirals U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 2,
+              "clockTime": "13:29",
+              "team": "opp",
+              "teamName": "Upper York Admirals U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 2,
+              "clockTime": "12:34",
+              "team": "opp",
+              "teamName": "Upper York Admirals U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 2,
+              "clockTime": "07:55",
+              "team": "opp",
+              "teamName": "Upper York Admirals U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 2,
+              "clockTime": "06:08",
+              "team": "opp",
+              "teamName": "Upper York Admirals U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 2,
+              "clockTime": "05:50",
+              "team": "opp",
+              "teamName": "Upper York Admirals U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 2,
+              "clockTime": "00:46",
+              "team": "opp",
+              "teamName": "Upper York Admirals U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 2,
+              "clockTime": "00:05",
+              "team": "opp",
+              "teamName": "Upper York Admirals U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 3,
+              "clockTime": "08:20",
+              "team": "opp",
+              "teamName": "Upper York Admirals U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 3,
+              "clockTime": "02:48",
+              "team": "opp",
+              "teamName": "Upper York Admirals U13 A",
+              "scorer": ""
+            }
+          ],
+          "penaltyLog": [],
+          "notes": "Away GameSheet regular season box score"
+        },
+        {
+          "gameId": 3034266,
+          "date": "Oct 3, 2026",
+          "opp": "Caledon Hawks",
+          "vsAt": "@",
+          "score": "0-12",
+          "result": "L",
+          "gf": 0,
+          "ga": 12,
+          "goalLog": [
+            {
+              "type": "goal",
+              "period": 1,
+              "clockTime": "08:49",
+              "team": "opp",
+              "teamName": "Caledon Hawks 13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 1,
+              "clockTime": "07:37",
+              "team": "opp",
+              "teamName": "Caledon Hawks 13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 2,
+              "clockTime": "08:23",
+              "team": "opp",
+              "teamName": "Caledon Hawks 13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 2,
+              "clockTime": "07:45",
+              "team": "opp",
+              "teamName": "Caledon Hawks 13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 2,
+              "clockTime": "05:51",
+              "team": "opp",
+              "teamName": "Caledon Hawks 13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 2,
+              "clockTime": "05:34",
+              "team": "opp",
+              "teamName": "Caledon Hawks 13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 2,
+              "clockTime": "01:09",
+              "team": "opp",
+              "teamName": "Caledon Hawks 13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 3,
+              "clockTime": "13:24",
+              "team": "opp",
+              "teamName": "Caledon Hawks 13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 3,
+              "clockTime": "11:52",
+              "team": "opp",
+              "teamName": "Caledon Hawks 13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 3,
+              "clockTime": "06:22",
+              "team": "opp",
+              "teamName": "Caledon Hawks 13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 3,
+              "clockTime": "04:33",
+              "team": "opp",
+              "teamName": "Caledon Hawks 13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 3,
+              "clockTime": "02:11",
+              "team": "opp",
+              "teamName": "Caledon Hawks 13 A",
+              "scorer": ""
+            }
+          ],
+          "penaltyLog": [],
+          "notes": "Away GameSheet regular season box score"
+        }
+      ]
     },
     "south_simcoe": {
       "teamName": "South Simcoe Storm",
@@ -59256,6 +62074,7 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
       },
       "last5Games": [
         {
+          "gameId": 3148126,
           "date": "Nov 8, 2026",
           "opp": "Stouffville Clippers",
           "vsAt": "@",
@@ -59263,9 +62082,61 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
           "result": "W",
           "gf": 4,
           "ga": 2,
+          "goalLog": [
+            {
+              "type": "goal",
+              "period": 2,
+              "clockTime": "06:01",
+              "team": "self",
+              "teamName": "South Simcoe Storm U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 3,
+              "clockTime": "14:26",
+              "team": "self",
+              "teamName": "South Simcoe Storm U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 3,
+              "clockTime": "04:51",
+              "team": "self",
+              "teamName": "South Simcoe Storm U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 3,
+              "clockTime": "02:15",
+              "team": "self",
+              "teamName": "South Simcoe Storm U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 2,
+              "clockTime": "08:40",
+              "team": "opp",
+              "teamName": "Stouffville Clippers U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 3,
+              "clockTime": "00:32",
+              "team": "opp",
+              "teamName": "Stouffville Clippers U13 A",
+              "scorer": ""
+            }
+          ],
+          "penaltyLog": [],
           "notes": "Away GameSheet regular season box score"
         },
         {
+          "gameId": 3144851,
           "date": "Nov 7, 2026",
           "opp": "Stouffville Clippers",
           "vsAt": "vs",
@@ -59273,9 +62144,77 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
           "result": "T",
           "gf": 4,
           "ga": 4,
+          "goalLog": [
+            {
+              "type": "goal",
+              "period": 2,
+              "clockTime": "09:13",
+              "team": "self",
+              "teamName": "South Simcoe Storm U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 2,
+              "clockTime": "04:32",
+              "team": "self",
+              "teamName": "South Simcoe Storm U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 2,
+              "clockTime": "02:41",
+              "team": "self",
+              "teamName": "South Simcoe Storm U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 3,
+              "clockTime": "08:00",
+              "team": "self",
+              "teamName": "South Simcoe Storm U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 1,
+              "clockTime": "09:18",
+              "team": "opp",
+              "teamName": "Stouffville Clippers U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 2,
+              "clockTime": "11:00",
+              "team": "opp",
+              "teamName": "Stouffville Clippers U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 3,
+              "clockTime": "13:33",
+              "team": "opp",
+              "teamName": "Stouffville Clippers U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 3,
+              "clockTime": "08:38",
+              "team": "opp",
+              "teamName": "Stouffville Clippers U13 A",
+              "scorer": ""
+            }
+          ],
+          "penaltyLog": [],
           "notes": "Home GameSheet regular season box score"
         },
         {
+          "gameId": 3120088,
           "date": "Nov 1, 2026",
           "opp": "Richmond Hill Jaguars",
           "vsAt": "@",
@@ -59283,9 +62222,61 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
           "result": "W",
           "gf": 6,
           "ga": 0,
+          "goalLog": [
+            {
+              "type": "goal",
+              "period": 1,
+              "clockTime": "08:30",
+              "team": "self",
+              "teamName": "South Simcoe Storm U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 2,
+              "clockTime": "12:45",
+              "team": "self",
+              "teamName": "South Simcoe Storm U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 2,
+              "clockTime": "08:57",
+              "team": "self",
+              "teamName": "South Simcoe Storm U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 2,
+              "clockTime": "08:28",
+              "team": "self",
+              "teamName": "South Simcoe Storm U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 2,
+              "clockTime": "07:45",
+              "team": "self",
+              "teamName": "South Simcoe Storm U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 2,
+              "clockTime": "04:11",
+              "team": "self",
+              "teamName": "South Simcoe Storm U13 A",
+              "scorer": ""
+            }
+          ],
+          "penaltyLog": [],
           "notes": "Away GameSheet regular season box score"
         },
         {
+          "gameId": 3098846,
           "date": "Oct 25, 2026",
           "opp": "Richmond Hill Jaguars",
           "vsAt": "vs",
@@ -59293,9 +62284,45 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
           "result": "T",
           "gf": 2,
           "ga": 2,
+          "goalLog": [
+            {
+              "type": "goal",
+              "period": 1,
+              "clockTime": "09:08",
+              "team": "self",
+              "teamName": "South Simcoe Storm U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 3,
+              "clockTime": "01:43",
+              "team": "self",
+              "teamName": "South Simcoe Storm U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 2,
+              "clockTime": "00:01",
+              "team": "opp",
+              "teamName": "Richmond Hill Jaguars U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 3,
+              "clockTime": "09:37",
+              "team": "opp",
+              "teamName": "Richmond Hill Jaguars U13 A",
+              "scorer": ""
+            }
+          ],
+          "penaltyLog": [],
           "notes": "Home GameSheet regular season box score"
         },
         {
+          "gameId": 3096090,
           "date": "Oct 24, 2026",
           "opp": "Upper York Admirals",
           "vsAt": "vs",
@@ -59303,6 +62330,57 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
           "result": "W",
           "gf": 4,
           "ga": 2,
+          "goalLog": [
+            {
+              "type": "goal",
+              "period": 1,
+              "clockTime": "07:47",
+              "team": "self",
+              "teamName": "South Simcoe Storm U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 1,
+              "clockTime": "07:35",
+              "team": "self",
+              "teamName": "South Simcoe Storm U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 2,
+              "clockTime": "07:03",
+              "team": "self",
+              "teamName": "South Simcoe Storm U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 2,
+              "clockTime": "05:30",
+              "team": "self",
+              "teamName": "South Simcoe Storm U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 2,
+              "clockTime": "01:46",
+              "team": "opp",
+              "teamName": "Upper York Admirals U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 3,
+              "clockTime": "09:48",
+              "team": "opp",
+              "teamName": "Upper York Admirals U13 A",
+              "scorer": ""
+            }
+          ],
+          "penaltyLog": [],
           "notes": "Home GameSheet regular season box score"
         }
       ],
@@ -59371,6 +62449,7 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
       },
       "last5Games": [
         {
+          "gameId": 3148127,
           "date": "Nov 8, 2026",
           "opp": "Newmarket Renegades",
           "vsAt": "@",
@@ -59378,9 +62457,69 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
           "result": "L",
           "gf": 1,
           "ga": 6,
+          "goalLog": [
+            {
+              "type": "goal",
+              "period": 3,
+              "clockTime": "11:48",
+              "team": "self",
+              "teamName": "Richmond Hill Jaguars U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 2,
+              "clockTime": "10:54",
+              "team": "opp",
+              "teamName": "Newmarket Renegades U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 2,
+              "clockTime": "03:48",
+              "team": "opp",
+              "teamName": "Newmarket Renegades U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 2,
+              "clockTime": "03:16",
+              "team": "opp",
+              "teamName": "Newmarket Renegades U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 2,
+              "clockTime": "02:28",
+              "team": "opp",
+              "teamName": "Newmarket Renegades U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 3,
+              "clockTime": "05:51",
+              "team": "opp",
+              "teamName": "Newmarket Renegades U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 3,
+              "clockTime": "02:37",
+              "team": "opp",
+              "teamName": "Newmarket Renegades U13 A",
+              "scorer": ""
+            }
+          ],
+          "penaltyLog": [],
           "notes": "Away GameSheet regular season box score"
         },
         {
+          "gameId": 3146846,
           "date": "Nov 7, 2026",
           "opp": "Newmarket Renegades",
           "vsAt": "vs",
@@ -59388,9 +62527,45 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
           "result": "L",
           "gf": 0,
           "ga": 4,
+          "goalLog": [
+            {
+              "type": "goal",
+              "period": 1,
+              "clockTime": "01:19",
+              "team": "opp",
+              "teamName": "Newmarket Renegades U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 2,
+              "clockTime": "10:32",
+              "team": "opp",
+              "teamName": "Newmarket Renegades U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 2,
+              "clockTime": "03:48",
+              "team": "opp",
+              "teamName": "Newmarket Renegades U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 2,
+              "clockTime": "00:03",
+              "team": "opp",
+              "teamName": "Newmarket Renegades U13 A",
+              "scorer": ""
+            }
+          ],
+          "penaltyLog": [],
           "notes": "Home GameSheet regular season box score"
         },
         {
+          "gameId": 3120088,
           "date": "Nov 1, 2026",
           "opp": "South Simcoe Storm",
           "vsAt": "vs",
@@ -59398,9 +62573,61 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
           "result": "L",
           "gf": 0,
           "ga": 6,
+          "goalLog": [
+            {
+              "type": "goal",
+              "period": 1,
+              "clockTime": "08:30",
+              "team": "opp",
+              "teamName": "South Simcoe Storm U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 2,
+              "clockTime": "12:45",
+              "team": "opp",
+              "teamName": "South Simcoe Storm U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 2,
+              "clockTime": "08:57",
+              "team": "opp",
+              "teamName": "South Simcoe Storm U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 2,
+              "clockTime": "08:28",
+              "team": "opp",
+              "teamName": "South Simcoe Storm U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 2,
+              "clockTime": "07:45",
+              "team": "opp",
+              "teamName": "South Simcoe Storm U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 2,
+              "clockTime": "04:11",
+              "team": "opp",
+              "teamName": "South Simcoe Storm U13 A",
+              "scorer": ""
+            }
+          ],
+          "penaltyLog": [],
           "notes": "Home GameSheet regular season box score"
         },
         {
+          "gameId": 3108425,
           "date": "Oct 27, 2026",
           "opp": "King Rebellion",
           "vsAt": "vs",
@@ -59408,9 +62635,69 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
           "result": "L",
           "gf": 3,
           "ga": 4,
+          "goalLog": [
+            {
+              "type": "goal",
+              "period": 3,
+              "clockTime": "09:33",
+              "team": "self",
+              "teamName": "Richmond Hill Jaguars U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 3,
+              "clockTime": "08:17",
+              "team": "self",
+              "teamName": "Richmond Hill Jaguars U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 3,
+              "clockTime": "01:50",
+              "team": "self",
+              "teamName": "Richmond Hill Jaguars U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 2,
+              "clockTime": "12:39",
+              "team": "opp",
+              "teamName": "King Rebellion 13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 2,
+              "clockTime": "05:22",
+              "team": "opp",
+              "teamName": "King Rebellion 13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 3,
+              "clockTime": "14:40",
+              "team": "opp",
+              "teamName": "King Rebellion 13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 3,
+              "clockTime": "02:56",
+              "team": "opp",
+              "teamName": "King Rebellion 13 A",
+              "scorer": ""
+            }
+          ],
+          "penaltyLog": [],
           "notes": "Home GameSheet regular season box score"
         },
         {
+          "gameId": 3098846,
           "date": "Oct 25, 2026",
           "opp": "South Simcoe Storm",
           "vsAt": "@",
@@ -59418,6 +62705,41 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
           "result": "T",
           "gf": 2,
           "ga": 2,
+          "goalLog": [
+            {
+              "type": "goal",
+              "period": 2,
+              "clockTime": "00:01",
+              "team": "self",
+              "teamName": "Richmond Hill Jaguars U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 3,
+              "clockTime": "09:37",
+              "team": "self",
+              "teamName": "Richmond Hill Jaguars U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 1,
+              "clockTime": "09:08",
+              "team": "opp",
+              "teamName": "South Simcoe Storm U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 3,
+              "clockTime": "01:43",
+              "team": "opp",
+              "teamName": "South Simcoe Storm U13 A",
+              "scorer": ""
+            }
+          ],
+          "penaltyLog": [],
           "notes": "Away GameSheet regular season box score"
         }
       ],
@@ -59486,6 +62808,7 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
       },
       "last5Games": [
         {
+          "gameId": 3169951,
           "date": "Nov 15, 2026",
           "opp": "Upper York Admirals",
           "vsAt": "@",
@@ -59493,9 +62816,53 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
           "result": "L",
           "gf": 1,
           "ga": 4,
+          "goalLog": [
+            {
+              "type": "goal",
+              "period": 3,
+              "clockTime": "11:15",
+              "team": "self",
+              "teamName": "Orangeville Flyers U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 1,
+              "clockTime": "08:23",
+              "team": "opp",
+              "teamName": "Upper York Admirals U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 2,
+              "clockTime": "11:18",
+              "team": "opp",
+              "teamName": "Upper York Admirals U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 3,
+              "clockTime": "08:16",
+              "team": "opp",
+              "teamName": "Upper York Admirals U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 3,
+              "clockTime": "01:17",
+              "team": "opp",
+              "teamName": "Upper York Admirals U13 A",
+              "scorer": ""
+            }
+          ],
+          "penaltyLog": [],
           "notes": "Away GameSheet regular season box score"
         },
         {
+          "gameId": 3163300,
           "date": "Nov 12, 2026",
           "opp": "Stouffville Clippers",
           "vsAt": "vs",
@@ -59503,9 +62870,61 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
           "result": "W",
           "gf": 5,
           "ga": 1,
+          "goalLog": [
+            {
+              "type": "goal",
+              "period": 1,
+              "clockTime": "02:54",
+              "team": "self",
+              "teamName": "Orangeville Flyers U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 2,
+              "clockTime": "08:14",
+              "team": "self",
+              "teamName": "Orangeville Flyers U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 2,
+              "clockTime": "06:52",
+              "team": "self",
+              "teamName": "Orangeville Flyers U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 3,
+              "clockTime": "10:15",
+              "team": "self",
+              "teamName": "Orangeville Flyers U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 3,
+              "clockTime": "06:37",
+              "team": "self",
+              "teamName": "Orangeville Flyers U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 3,
+              "clockTime": "00:36",
+              "team": "opp",
+              "teamName": "Stouffville Clippers U13 A",
+              "scorer": ""
+            }
+          ],
+          "penaltyLog": [],
           "notes": "Home GameSheet regular season box score"
         },
         {
+          "gameId": 3130624,
           "date": "Nov 2, 2026",
           "opp": "Barrie Colts U13-2 A Blue",
           "vsAt": "vs",
@@ -59513,9 +62932,61 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
           "result": "L",
           "gf": 1,
           "ga": 5,
+          "goalLog": [
+            {
+              "type": "goal",
+              "period": 1,
+              "clockTime": "09:09",
+              "team": "self",
+              "teamName": "Orangeville Flyers U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 1,
+              "clockTime": "08:42",
+              "team": "opp",
+              "teamName": "Barrie Colts U13-2 A Blue",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 1,
+              "clockTime": "05:29",
+              "team": "opp",
+              "teamName": "Barrie Colts U13-2 A Blue",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 2,
+              "clockTime": "05:54",
+              "team": "opp",
+              "teamName": "Barrie Colts U13-2 A Blue",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 2,
+              "clockTime": "01:10",
+              "team": "opp",
+              "teamName": "Barrie Colts U13-2 A Blue",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 3,
+              "clockTime": "07:33",
+              "team": "opp",
+              "teamName": "Barrie Colts U13-2 A Blue",
+              "scorer": ""
+            }
+          ],
+          "penaltyLog": [],
           "notes": "Home GameSheet regular season box score"
         },
         {
+          "gameId": 3120087,
           "date": "Nov 1, 2026",
           "opp": "Stouffville Clippers",
           "vsAt": "@",
@@ -59523,9 +62994,61 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
           "result": "W",
           "gf": 4,
           "ga": 2,
+          "goalLog": [
+            {
+              "type": "goal",
+              "period": 1,
+              "clockTime": "00:17",
+              "team": "self",
+              "teamName": "Orangeville Flyers U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 2,
+              "clockTime": "04:08",
+              "team": "self",
+              "teamName": "Orangeville Flyers U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 2,
+              "clockTime": "01:24",
+              "team": "self",
+              "teamName": "Orangeville Flyers U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 3,
+              "clockTime": "05:49",
+              "team": "self",
+              "teamName": "Orangeville Flyers U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 3,
+              "clockTime": "11:39",
+              "team": "opp",
+              "teamName": "Stouffville Clippers U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 3,
+              "clockTime": "00:05",
+              "team": "opp",
+              "teamName": "Stouffville Clippers U13 A",
+              "scorer": ""
+            }
+          ],
+          "penaltyLog": [],
           "notes": "Away GameSheet regular season box score"
         },
         {
+          "gameId": 3112769,
           "date": "Oct 29, 2026",
           "opp": "Georgian Bay Islanders",
           "vsAt": "vs",
@@ -59533,6 +63056,97 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
           "result": "L",
           "gf": 1,
           "ga": 10,
+          "goalLog": [
+            {
+              "type": "goal",
+              "period": 3,
+              "clockTime": "07:06",
+              "team": "self",
+              "teamName": "Orangeville Flyers U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 1,
+              "clockTime": "06:38",
+              "team": "opp",
+              "teamName": "Georgian Bay Islanders U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 1,
+              "clockTime": "05:03",
+              "team": "opp",
+              "teamName": "Georgian Bay Islanders U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 1,
+              "clockTime": "03:14",
+              "team": "opp",
+              "teamName": "Georgian Bay Islanders U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 1,
+              "clockTime": "01:20",
+              "team": "opp",
+              "teamName": "Georgian Bay Islanders U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 2,
+              "clockTime": "07:25",
+              "team": "opp",
+              "teamName": "Georgian Bay Islanders U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 2,
+              "clockTime": "07:04",
+              "team": "opp",
+              "teamName": "Georgian Bay Islanders U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 2,
+              "clockTime": "04:41",
+              "team": "opp",
+              "teamName": "Georgian Bay Islanders U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 2,
+              "clockTime": "02:19",
+              "team": "opp",
+              "teamName": "Georgian Bay Islanders U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 2,
+              "clockTime": "00:27",
+              "team": "opp",
+              "teamName": "Georgian Bay Islanders U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 3,
+              "clockTime": "05:09",
+              "team": "opp",
+              "teamName": "Georgian Bay Islanders U13 A",
+              "scorer": ""
+            }
+          ],
+          "penaltyLog": [],
           "notes": "Home GameSheet regular season box score"
         }
       ],
@@ -59915,31 +63529,102 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
       "teamId": "534295",
       "gameSheetUrl": "https://gamesheetstats.com/seasons/15490/teams/534295/schedule",
       "record": {
-        "gp": 9,
-        "w": 7,
+        "gp": 10,
+        "w": 8,
         "l": 2,
         "t": 0,
-        "pts": 14,
-        "winPct": ".778"
+        "pts": 16,
+        "winPct": ".800"
       },
       "stats": {
-        "gf": 72,
-        "ga": 15,
-        "diff": "+57",
-        "gpg": "8.00",
-        "gapg": "1.67",
-        "pim": 54,
+        "gf": 78,
+        "ga": 16,
+        "diff": "+62",
+        "gpg": "7.80",
+        "gapg": "1.60",
+        "pim": 60,
         "pimPg": "6.0"
       },
       "specialTeams": {
         "ppPct": "50.0%",
-        "ppGoals": 15,
-        "ppOpps": 30,
-        "pkPct": "94.1%",
+        "ppGoals": 17,
+        "ppOpps": 34,
+        "pkPct": "94.7%",
         "tendency": "Official GameSheet regular season special teams metrics."
       },
       "last5Games": [
         {
+          "gameId": 3170148,
+          "date": "Nov 15, 2026",
+          "opp": "Caledon Hawks",
+          "vsAt": "vs",
+          "score": "6-1",
+          "result": "W",
+          "gf": 6,
+          "ga": 1,
+          "goalLog": [
+            {
+              "type": "goal",
+              "period": 2,
+              "clockTime": "12:29",
+              "team": "self",
+              "teamName": "Georgian Bay Islanders U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 2,
+              "clockTime": "06:22",
+              "team": "self",
+              "teamName": "Georgian Bay Islanders U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 3,
+              "clockTime": "12:28",
+              "team": "self",
+              "teamName": "Georgian Bay Islanders U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 3,
+              "clockTime": "10:09",
+              "team": "self",
+              "teamName": "Georgian Bay Islanders U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 3,
+              "clockTime": "05:14",
+              "team": "self",
+              "teamName": "Georgian Bay Islanders U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 3,
+              "clockTime": "04:51",
+              "team": "self",
+              "teamName": "Georgian Bay Islanders U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 1,
+              "clockTime": "09:46",
+              "team": "opp",
+              "teamName": "Caledon Hawks 13 A",
+              "scorer": ""
+            }
+          ],
+          "penaltyLog": [],
+          "notes": "Home GameSheet regular season box score"
+        },
+        {
+          "gameId": 3120084,
           "date": "Nov 1, 2026",
           "opp": "Barrie Colts",
           "vsAt": "vs",
@@ -59947,9 +63632,61 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
           "result": "L",
           "gf": 1,
           "ga": 5,
+          "goalLog": [
+            {
+              "type": "goal",
+              "period": 2,
+              "clockTime": "00:20",
+              "team": "self",
+              "teamName": "Georgian Bay Islanders U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 1,
+              "clockTime": "01:59",
+              "team": "opp",
+              "teamName": "Barrie Colts U13-1 A White",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 1,
+              "clockTime": "01:31",
+              "team": "opp",
+              "teamName": "Barrie Colts U13-1 A White",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 2,
+              "clockTime": "04:10",
+              "team": "opp",
+              "teamName": "Barrie Colts U13-1 A White",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 3,
+              "clockTime": "13:10",
+              "team": "opp",
+              "teamName": "Barrie Colts U13-1 A White",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 3,
+              "clockTime": "01:47",
+              "team": "opp",
+              "teamName": "Barrie Colts U13-1 A White",
+              "scorer": ""
+            }
+          ],
+          "penaltyLog": [],
           "notes": "Home GameSheet regular season box score"
         },
         {
+          "gameId": 3112769,
           "date": "Oct 29, 2026",
           "opp": "Orangeville Flyers",
           "vsAt": "@",
@@ -59957,9 +63694,101 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
           "result": "W",
           "gf": 10,
           "ga": 1,
+          "goalLog": [
+            {
+              "type": "goal",
+              "period": 1,
+              "clockTime": "06:38",
+              "team": "self",
+              "teamName": "Georgian Bay Islanders U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 1,
+              "clockTime": "05:03",
+              "team": "self",
+              "teamName": "Georgian Bay Islanders U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 1,
+              "clockTime": "03:14",
+              "team": "self",
+              "teamName": "Georgian Bay Islanders U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 1,
+              "clockTime": "01:20",
+              "team": "self",
+              "teamName": "Georgian Bay Islanders U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 2,
+              "clockTime": "07:25",
+              "team": "self",
+              "teamName": "Georgian Bay Islanders U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 2,
+              "clockTime": "07:04",
+              "team": "self",
+              "teamName": "Georgian Bay Islanders U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 2,
+              "clockTime": "04:41",
+              "team": "self",
+              "teamName": "Georgian Bay Islanders U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 2,
+              "clockTime": "02:19",
+              "team": "self",
+              "teamName": "Georgian Bay Islanders U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 2,
+              "clockTime": "00:27",
+              "team": "self",
+              "teamName": "Georgian Bay Islanders U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 3,
+              "clockTime": "05:09",
+              "team": "self",
+              "teamName": "Georgian Bay Islanders U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 3,
+              "clockTime": "07:06",
+              "team": "opp",
+              "teamName": "Orangeville Flyers U13 A",
+              "scorer": ""
+            }
+          ],
+          "penaltyLog": [],
           "notes": "Away GameSheet regular season box score"
         },
         {
+          "gameId": 3098849,
           "date": "Oct 25, 2026",
           "opp": "Markham Waxers",
           "vsAt": "@",
@@ -59967,9 +63796,101 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
           "result": "W",
           "gf": 10,
           "ga": 1,
+          "goalLog": [
+            {
+              "type": "goal",
+              "period": 1,
+              "clockTime": "08:59",
+              "team": "self",
+              "teamName": "Georgian Bay Islanders U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 1,
+              "clockTime": "07:05",
+              "team": "self",
+              "teamName": "Georgian Bay Islanders U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 2,
+              "clockTime": "08:44",
+              "team": "self",
+              "teamName": "Georgian Bay Islanders U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 2,
+              "clockTime": "06:41",
+              "team": "self",
+              "teamName": "Georgian Bay Islanders U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 2,
+              "clockTime": "04:34",
+              "team": "self",
+              "teamName": "Georgian Bay Islanders U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 3,
+              "clockTime": "14:05",
+              "team": "self",
+              "teamName": "Georgian Bay Islanders U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 3,
+              "clockTime": "13:35",
+              "team": "self",
+              "teamName": "Georgian Bay Islanders U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 3,
+              "clockTime": "12:33",
+              "team": "self",
+              "teamName": "Georgian Bay Islanders U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 3,
+              "clockTime": "11:11",
+              "team": "self",
+              "teamName": "Georgian Bay Islanders U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 3,
+              "clockTime": "01:15",
+              "team": "self",
+              "teamName": "Georgian Bay Islanders U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 2,
+              "clockTime": "11:28",
+              "team": "opp",
+              "teamName": "Markham Waxers U13 A",
+              "scorer": ""
+            }
+          ],
+          "penaltyLog": [],
           "notes": "Away GameSheet regular season box score"
         },
         {
+          "gameId": 3096091,
           "date": "Oct 24, 2026",
           "opp": "King Rebellion",
           "vsAt": "vs",
@@ -59977,16 +63898,145 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
           "result": "W",
           "gf": 16,
           "ga": 1,
-          "notes": "Home GameSheet regular season box score"
-        },
-        {
-          "date": "Oct 18, 2026",
-          "opp": "Orillia Terriers",
-          "vsAt": "vs",
-          "score": "2-4",
-          "result": "L",
-          "gf": 2,
-          "ga": 4,
+          "goalLog": [
+            {
+              "type": "goal",
+              "period": 1,
+              "clockTime": "04:03",
+              "team": "self",
+              "teamName": "Georgian Bay Islanders U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 1,
+              "clockTime": "01:23",
+              "team": "self",
+              "teamName": "Georgian Bay Islanders U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 1,
+              "clockTime": "00:05",
+              "team": "self",
+              "teamName": "Georgian Bay Islanders U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 2,
+              "clockTime": "14:41",
+              "team": "self",
+              "teamName": "Georgian Bay Islanders U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 2,
+              "clockTime": "14:27",
+              "team": "self",
+              "teamName": "Georgian Bay Islanders U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 2,
+              "clockTime": "11:15",
+              "team": "self",
+              "teamName": "Georgian Bay Islanders U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 2,
+              "clockTime": "10:31",
+              "team": "self",
+              "teamName": "Georgian Bay Islanders U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 2,
+              "clockTime": "08:48",
+              "team": "self",
+              "teamName": "Georgian Bay Islanders U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 2,
+              "clockTime": "02:43",
+              "team": "self",
+              "teamName": "Georgian Bay Islanders U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 3,
+              "clockTime": "12:15",
+              "team": "self",
+              "teamName": "Georgian Bay Islanders U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 3,
+              "clockTime": "11:25",
+              "team": "self",
+              "teamName": "Georgian Bay Islanders U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 3,
+              "clockTime": "08:35",
+              "team": "self",
+              "teamName": "Georgian Bay Islanders U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 3,
+              "clockTime": "04:00",
+              "team": "self",
+              "teamName": "Georgian Bay Islanders U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 3,
+              "clockTime": "01:52",
+              "team": "self",
+              "teamName": "Georgian Bay Islanders U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 3,
+              "clockTime": "01:06",
+              "team": "self",
+              "teamName": "Georgian Bay Islanders U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 3,
+              "clockTime": "00:25",
+              "team": "self",
+              "teamName": "Georgian Bay Islanders U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 3,
+              "clockTime": "07:07",
+              "team": "opp",
+              "teamName": "King Rebellion 13 A",
+              "scorer": ""
+            }
+          ],
+          "penaltyLog": [],
           "notes": "Home GameSheet regular season box score"
         }
       ],
@@ -60029,6 +64079,7 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
       },
       "last5Games": [
         {
+          "gameId": 3166191,
           "date": "Nov 14, 2026",
           "opp": "Orillia Terriers",
           "vsAt": "@",
@@ -60036,9 +64087,77 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
           "result": "L",
           "gf": 3,
           "ga": 5,
+          "goalLog": [
+            {
+              "type": "goal",
+              "period": 2,
+              "clockTime": "08:41",
+              "team": "self",
+              "teamName": "Stouffville Clippers U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 2,
+              "clockTime": "05:38",
+              "team": "self",
+              "teamName": "Stouffville Clippers U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 3,
+              "clockTime": "10:36",
+              "team": "self",
+              "teamName": "Stouffville Clippers U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 1,
+              "clockTime": "03:02",
+              "team": "opp",
+              "teamName": "Orillia Terriers U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 2,
+              "clockTime": "06:39",
+              "team": "opp",
+              "teamName": "Orillia Terriers U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 3,
+              "clockTime": "11:06",
+              "team": "opp",
+              "teamName": "Orillia Terriers U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 3,
+              "clockTime": "01:34",
+              "team": "opp",
+              "teamName": "Orillia Terriers U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 3,
+              "clockTime": "00:38",
+              "team": "opp",
+              "teamName": "Orillia Terriers U13 A",
+              "scorer": ""
+            }
+          ],
+          "penaltyLog": [],
           "notes": "Away GameSheet regular season box score"
         },
         {
+          "gameId": 3163300,
           "date": "Nov 12, 2026",
           "opp": "Orangeville Flyers",
           "vsAt": "@",
@@ -60046,9 +64165,61 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
           "result": "L",
           "gf": 1,
           "ga": 5,
+          "goalLog": [
+            {
+              "type": "goal",
+              "period": 3,
+              "clockTime": "00:36",
+              "team": "self",
+              "teamName": "Stouffville Clippers U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 1,
+              "clockTime": "02:54",
+              "team": "opp",
+              "teamName": "Orangeville Flyers U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 2,
+              "clockTime": "08:14",
+              "team": "opp",
+              "teamName": "Orangeville Flyers U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 2,
+              "clockTime": "06:52",
+              "team": "opp",
+              "teamName": "Orangeville Flyers U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 3,
+              "clockTime": "10:15",
+              "team": "opp",
+              "teamName": "Orangeville Flyers U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 3,
+              "clockTime": "06:37",
+              "team": "opp",
+              "teamName": "Orangeville Flyers U13 A",
+              "scorer": ""
+            }
+          ],
+          "penaltyLog": [],
           "notes": "Away GameSheet regular season box score"
         },
         {
+          "gameId": 3148126,
           "date": "Nov 8, 2026",
           "opp": "South Simcoe Storm",
           "vsAt": "vs",
@@ -60056,9 +64227,61 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
           "result": "L",
           "gf": 2,
           "ga": 4,
+          "goalLog": [
+            {
+              "type": "goal",
+              "period": 2,
+              "clockTime": "08:40",
+              "team": "self",
+              "teamName": "Stouffville Clippers U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 3,
+              "clockTime": "00:32",
+              "team": "self",
+              "teamName": "Stouffville Clippers U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 2,
+              "clockTime": "06:01",
+              "team": "opp",
+              "teamName": "South Simcoe Storm U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 3,
+              "clockTime": "14:26",
+              "team": "opp",
+              "teamName": "South Simcoe Storm U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 3,
+              "clockTime": "04:51",
+              "team": "opp",
+              "teamName": "South Simcoe Storm U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 3,
+              "clockTime": "02:15",
+              "team": "opp",
+              "teamName": "South Simcoe Storm U13 A",
+              "scorer": ""
+            }
+          ],
+          "penaltyLog": [],
           "notes": "Home GameSheet regular season box score"
         },
         {
+          "gameId": 3144851,
           "date": "Nov 7, 2026",
           "opp": "South Simcoe Storm",
           "vsAt": "@",
@@ -60066,9 +64289,77 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
           "result": "T",
           "gf": 4,
           "ga": 4,
+          "goalLog": [
+            {
+              "type": "goal",
+              "period": 1,
+              "clockTime": "09:18",
+              "team": "self",
+              "teamName": "Stouffville Clippers U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 2,
+              "clockTime": "11:00",
+              "team": "self",
+              "teamName": "Stouffville Clippers U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 3,
+              "clockTime": "13:33",
+              "team": "self",
+              "teamName": "Stouffville Clippers U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 3,
+              "clockTime": "08:38",
+              "team": "self",
+              "teamName": "Stouffville Clippers U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 2,
+              "clockTime": "09:13",
+              "team": "opp",
+              "teamName": "South Simcoe Storm U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 2,
+              "clockTime": "04:32",
+              "team": "opp",
+              "teamName": "South Simcoe Storm U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 2,
+              "clockTime": "02:41",
+              "team": "opp",
+              "teamName": "South Simcoe Storm U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 3,
+              "clockTime": "08:00",
+              "team": "opp",
+              "teamName": "South Simcoe Storm U13 A",
+              "scorer": ""
+            }
+          ],
+          "penaltyLog": [],
           "notes": "Away GameSheet regular season box score"
         },
         {
+          "gameId": 3120087,
           "date": "Nov 1, 2026",
           "opp": "Orangeville Flyers",
           "vsAt": "vs",
@@ -60076,12 +64367,63 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
           "result": "L",
           "gf": 2,
           "ga": 4,
+          "goalLog": [
+            {
+              "type": "goal",
+              "period": 3,
+              "clockTime": "11:39",
+              "team": "self",
+              "teamName": "Stouffville Clippers U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 3,
+              "clockTime": "00:05",
+              "team": "self",
+              "teamName": "Stouffville Clippers U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 1,
+              "clockTime": "00:17",
+              "team": "opp",
+              "teamName": "Orangeville Flyers U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 2,
+              "clockTime": "04:08",
+              "team": "opp",
+              "teamName": "Orangeville Flyers U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 2,
+              "clockTime": "01:24",
+              "team": "opp",
+              "teamName": "Orangeville Flyers U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 3,
+              "clockTime": "05:49",
+              "team": "opp",
+              "teamName": "Orangeville Flyers U13 A",
+              "scorer": ""
+            }
+          ],
+          "penaltyLog": [],
           "notes": "Home GameSheet regular season box score"
         }
       ]
     }
   },
-  "lastSynced": "2026-11-15T21:36:01.133390Z"
+  "lastSynced": "2026-11-15T23:03:38.744275Z"
 };
 
     function getOpponentGameSheetData(oppNameOrCode) {

@@ -127,7 +127,34 @@ def compute_team_metrics(team_id: int, games: List[Dict[str, Any]]) -> Dict[str,
             .replace(" U13-1 A White", "")
         )
 
+        # Extract official goal & penalty logs from GameSheet box score
+        goal_log = []
+        for side, is_my_team in [(my_side, True), (opp_side, False)]:
+            for gd in (side.get("goalDetails") or []):
+                goal_log.append({
+                    "type": "goal",
+                    "period": int(gd.get("period") or 1),
+                    "clockTime": str(gd.get("clockTime") or "0:00"),
+                    "team": "tigers" if (is_my_team and team_id == TIGERS_TEAM_ID) else ("opp" if team_id == TIGERS_TEAM_ID else ("self" if is_my_team else "opp")),
+                    "teamName": side.get("title", ""),
+                    "scorer": gd.get("scorerName") or gd.get("playerName") or "",
+                })
+
+        penalty_log = []
+        for side, is_my_team in [(my_side, True), (opp_side, False)]:
+            for pd in (side.get("penaltyDetails") or side.get("penalties") or []):
+                penalty_log.append({
+                    "type": "penalty",
+                    "period": int(pd.get("period") or 1),
+                    "clockTime": str(pd.get("clockTime") or pd.get("time") or "0:00"),
+                    "team": "tigers" if (is_my_team and team_id == TIGERS_TEAM_ID) else ("opp" if team_id == TIGERS_TEAM_ID else ("self" if is_my_team else "opp")),
+                    "teamName": side.get("title", ""),
+                    "durationMin": float(pd.get("minutes") or pd.get("duration") or 2),
+                    "infraction": pd.get("infraction") or pd.get("description") or "Minor Penalty",
+                })
+
         completed_games.append({
+            "gameId": g.get("gameId"),
             "date": g.get("date"),
             "opp": opp_clean_title,
             "vsAt": "vs" if is_home else "@",
@@ -135,6 +162,8 @@ def compute_team_metrics(team_id: int, games: List[Dict[str, Any]]) -> Dict[str,
             "result": res,
             "gf": my_goals,
             "ga": opp_goals,
+            "goalLog": goal_log,
+            "penaltyLog": penalty_log,
             "notes": f"{'Home' if is_home else 'Away'} GameSheet regular season box score"
         })
 
@@ -185,6 +214,7 @@ def compute_team_metrics(team_id: int, games: List[Dict[str, Any]]) -> Dict[str,
             "shAllowed": pk_goals_allowed
         },
         "last5Games": last_5,
+        "allCompletedGames": list(reversed(completed_games)) if team_id == TIGERS_TEAM_ID else [],
         "headToHead": h2h_vs_tigers
     }
 
@@ -282,6 +312,8 @@ def main():
             current_entry["specialTeams"]["tendency"] = "Official GameSheet regular season special teams metrics."
 
         current_entry["last5Games"] = metrics["last5Games"]
+        if metrics.get("allCompletedGames"):
+            current_entry["allCompletedGames"] = metrics["allCompletedGames"]
         if metrics["headToHead"]:
             current_entry["headToHead"] = metrics["headToHead"]
 

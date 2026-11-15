@@ -419,12 +419,13 @@ DETECTION & CLASSIFICATION RULES:
    - breakout_type: "Rim", "D-to-D", "Wheel", "Chip Off Glass", or "None".
    - turnover_location: "Behind Goal Line", "Half-Wall", "Blue Line", or "None".
 
-6. GOAL DETECTION & VERIFICATION (`goal_scored`: "None", "Tigers Goal", or "Opponent Goal"):
-   - Determine whether a goal was scored at the end of the shift using these 4 visual & scoreboard anchors:
-     * Anchor A (XbotGo Falcon On-Screen Scoreboard): Many game videos have a burned-in bottom scoreboard (`u13A Tigers [X] | [Period] | [Y] [Opponent]`). Watch for the exact timestamp where either score increments!
-     * Anchor B (Net & Goalie Pad Anchor): A goal in the Offensive Zone (opposing goalie's net) is a `"Tigers Goal"`. A goal in the Defensive Zone (net guarded by Tigers goalie #13 in Yellow/White pads or #98 in Red/White pads) is an `"Opponent Goal"`.
-     * Anchor C (Referee Signal & Celebration): Referee pointing arm directly at the net + 5 skaters grouping together for glove bumps.
-     * Anchor D (Center Ice Faceoff Proof): Every goal in hockey is immediately followed by a puck drop at the Center Ice red dot (`faceoff_location = "Center Ice"`).
+6. GOAL & PERIOD BOUNDARY DETECTION (`goal_scored`: "None", "Tigers Goal", or "Opponent Goal"):
+   - DISREGARD any burned-in on-screen Falcon scoreboard overlay (we use the app's own GameSheet-synced scoreboard instead).
+   - Period Start / End Detection: Identify each period's exact opening faceoff puck drop (`periods["1"]`, `periods["2"]`, `periods["3"]`) and when play stops at the end of the period (buzzer / players skating to bench or handshake) from the on-ice action.
+   - Determine whether a goal was scored at the end of a shift using on-ice visual anchors:
+     * Anchor A (Net & Goalie Pad Anchor): A goal in the Offensive Zone (opposing goalie's net) is a `"Tigers Goal"`. A goal in the Defensive Zone (net guarded by Tigers goalie #13 in Yellow/White pads or #98 in Red/White pads) is an `"Opponent Goal"`.
+     * Anchor B (Referee Signal & Celebration): Referee pointing arm directly at the net + skaters grouping together for glove bumps.
+     * Anchor C (Center Ice Faceoff Proof): Every goal in hockey is immediately followed by a puck drop at the Center Ice red dot (`faceoff_location = "Center Ice"`).
    - Also ensure the total number of `"Tigers Goal"` and `"Opponent Goal"` shifts across the game matches the final score in `{game_title}`.
 
 7. COACHING NOTES:
@@ -1196,6 +1197,7 @@ def run_sync():
             "date": f_date,
             "opponent": "League Match",
             "periods": periods_detected,
+            "period_lengths": {"1": 600, "2": 600, "3": 900},
             "ai_engine": ai_engine_used,
             "teamsnap": ts_data,
             "shifts": shifts_list,
