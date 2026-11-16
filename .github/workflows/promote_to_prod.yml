@@ -1,0 +1,31 @@
+name: Promote Dev to Production
+
+on:
+  workflow_dispatch:
+    inputs:
+      confirm:
+        description: 'Type PROMOTE to merge dev -> main (Production)'
+        required: true
+        default: 'PROMOTE'
+
+permissions:
+  contents: write
+
+jobs:
+  promote:
+    if: ${{ github.event.inputs.confirm == 'PROMOTE' }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository (Full History)
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          ref: main
+
+      - name: Merge dev into main & Push to Production
+        run: |
+          git config --global user.name "Hockey Auto Bot"
+          git config --global user.email "bot@hockey-app.local"
+          git fetch origin dev
+          git merge --no-ff origin/dev -m "chore(release): promote dev sandbox to production"
+          git push origin main
