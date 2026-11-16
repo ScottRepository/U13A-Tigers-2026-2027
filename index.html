@@ -44711,6 +44711,21 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
       const recListEl = document.getElementById('player-recommended-shifts-list');
       if (recListEl) {
         let recItems = [];
+        // 0. Coach-assigned Player Passport clips & comments (synced across devices)
+        if (typeof getPlayerPassportList === 'function') {
+          const passportClips = getPlayerPassportList(num) || [];
+          passportClips.forEach(pc => {
+            recItems.push({
+              st: Math.round(Number(pc.start_seconds ?? 0)),
+              en: Math.round(Number(pc.end_seconds ?? ((pc.start_seconds || 0) + 30))),
+              title: `👨‍🏫 ${pc.title || 'Coach Assigned Clip'}${pc.game_title ? ' • ' + pc.game_title : ''}`,
+              note: pc.notes || 'Coach recommended clip for player review.',
+              shiftId: 0,
+              isCoachAssigned: true,
+              youtubeId: pc.youtube_id || ''
+            });
+          });
+        }
         // Check coaching_clips on currentGame first
         if (Array.isArray(currentGame.coaching_clips)) {
           currentGame.coaching_clips.forEach(c => {
@@ -44749,11 +44764,15 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
           });
         }
         if (recBadge) recBadge.innerText = `${recItems.length} Clip${recItems.length === 1 ? '' : 's'}`;
-        if (recItems.length > 0) {
+        if (recListEl && recItems.length > 0) {
           recListEl.innerHTML = recItems.map(r => {
             const safeNote = (r.note || '').replace(/'/g, "\\'");
+            const safeTitle = (r.title || '').replace(/'/g, "\\'");
+            const clickAction = (r.isCoachAssigned && r.youtubeId && typeof playPassportClip === 'function' && currentGame?.youtube_video_id !== r.youtubeId)
+              ? `playPassportClip(${r.st}, ${r.en}, '${safeTitle}')`
+              : `playClip(${r.st}, ${r.en}, '${safeNote}', ${r.shiftId || 0});`;
             return `
-              <div onclick="playClip(${r.st}, ${r.en}, '${safeNote}', ${r.shiftId || 0});" class="p-2 rounded-xl bg-white hover:bg-amber-100/60 border border-amber-200 hover:border-amber-400 transition cursor-pointer space-y-1 shadow-2xs">
+              <div onclick="${clickAction}" class="p-2 rounded-xl ${r.isCoachAssigned ? 'bg-amber-50 border-amber-400' : 'bg-white border-amber-200'} hover:bg-amber-100/60 border hover:border-amber-400 transition cursor-pointer space-y-1 shadow-2xs">
                 <div class="flex items-center justify-between gap-2">
                   <span class="text-[11px] font-bold text-slate-900 truncate">${escapeHtml(r.title)}</span>
                   <span class="text-[10px] font-mono font-bold text-amber-800 shrink-0">${formatMinSec(r.st)} ▶</span>
@@ -45507,6 +45526,40 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
             if (currentMode === 'feedback') renderFeedbackHistory(); if (typeof renderFeedbackModalHistory === "function") renderFeedbackModalHistory();
           }
         }, (err) => console.log("Feedback sync notice:", err));
+      } catch(e) {}
+
+      // 3. Player Passports & Coach-Assigned Recommended Clips Listener (Coach -> Parent sync)
+      try {
+        db.collection("player_passports").limit(200).onSnapshot((snapshot) => {
+          const byPlayer = {};
+          snapshot.forEach((doc) => {
+            const data = doc.data() || {};
+            const pNum = String(data.player_num || '').trim();
+            if (!pNum) return;
+            if (!byPlayer[pNum]) byPlayer[pNum] = [];
+            byPlayer[pNum].push({ id: data.id || doc.id, _docId: doc.id, ...data });
+          });
+          Object.keys(byPlayer).forEach((pNum) => {
+            const key = `tigers_passport_clips_${pNum}`;
+            let localList = [];
+            try { localList = JSON.parse(localStorage.getItem(key) || '[]'); } catch(e) {}
+            const mergedMap = new Map();
+            byPlayer[pNum].forEach(c => mergedMap.set(String(c.id), c));
+            localList.forEach(c => {
+              if (!mergedMap.has(String(c.id))) mergedMap.set(String(c.id), c);
+            });
+            const merged = Array.from(mergedMap.values()).sort((a, b) => {
+              const ta = Number(String(a.id || '').replace('pass_', '')) || 0;
+              const tb = Number(String(b.id || '').replace('pass_', '')) || 0;
+              return tb - ta;
+            });
+            safeSet(key, JSON.stringify(merged));
+          });
+          if (typeof updatePassportCounters === 'function') updatePassportCounters();
+          if (currentMode === 'player_analytics' && typeof renderPlayerAnalyticsDossier === 'function') {
+            renderPlayerAnalyticsDossier(currentJersey);
+          }
+        }, (err) => console.log("Passport sync notice:", err));
       } catch(e) {}
     }
 
@@ -49000,8 +49053,9 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
         localStorage.setItem(key, JSON.stringify(list));
       } catch(e){}
 
-      if (window.db) {
-        window.db.collection("player_passports").add({
+      const firestoreDb = window.db || (typeof db !== 'undefined' ? db : null);
+      if (firestoreDb) {
+        firestoreDb.collection("player_passports").doc(clipId).set({
           ...newClip,
           created_at: firebase.firestore.FieldValue.serverTimestamp()
         }).catch(err => console.log("Cloud passport save error:", err));
@@ -49009,6 +49063,9 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
 
       closeSavePassportModal();
       updatePassportCounters();
+      if (currentMode === 'player_analytics' && typeof renderPlayerAnalyticsDossier === 'function') {
+        renderPlayerAnalyticsDossier(currentJersey);
+      }
       showToast(`🪪 Saved to #${pNum} ${pInfo.name}'s Player Passport!`);
     }
 
