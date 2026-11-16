@@ -44,7 +44,7 @@
       "id": "game_A-2-QEqPFqk",
       "title": "6.11.2026 - 0 Tigers Vs. Orillia 9",
       "youtube_video_id": "A-2-QEqPFqk",
-      "date": "2026-11-15",
+      "date": "2026-11-16",
       "opponent": "League Match",
       "periods": {
         "1": 294,
@@ -53,14 +53,14 @@
       },
       "ai_engine": "Google Gemini 3 (gemini-3.5-flash - Visual Anchored)",
       "teamsnap": {
-        "date": "2026-11-15",
-        "time": "Game Time",
-        "arena": "Aurora Community Centre - Pad 1",
-        "address": "1 Community Centre Ln, Aurora, ON L4G 7B1",
-        "maps_url": "https://maps.google.com/?q=Aurora+Community+Centre",
-        "home_away": "Home",
-        "jersey": "Home (White)",
-        "is_home": true
+        "date": "2026-11-16",
+        "time": "6:20 PM",
+        "arena": "171 Mapleton Ave., Barrie, ON, L5N9B4, Canada",
+        "address": "171 Mapleton Ave., Barrie, ON, L5N9B4, Canada",
+        "maps_url": "https://maps.google.com/?q=171%20Mapleton%20Ave.%2C%20Barrie%2C%20ON%2C%20L5N9B4%2C%20Canada",
+        "home_away": "Away",
+        "jersey": "Away (Black)",
+        "is_home": false
       },
       "shifts": [
         {
@@ -2754,7 +2754,7 @@
       "id": "game_pfbgkQG_vYQ",
       "title": "1.11.2026 - GOLD MEDAL GAME - Tigers 3 - Tewksbury 7",
       "youtube_video_id": "pfbgkQG_vYQ",
-      "date": "2026-11-15",
+      "date": "2026-11-16",
       "opponent": "League Match",
       "periods": {
         "1": 1284,
@@ -2763,14 +2763,14 @@
       },
       "ai_engine": "Google Gemini 3 (gemini-3.5-flash - Visual Anchored)",
       "teamsnap": {
-        "date": "2026-11-15",
-        "time": "Game Time",
-        "arena": "Aurora Community Centre - Pad 1",
-        "address": "1 Community Centre Ln, Aurora, ON L4G 7B1",
-        "maps_url": "https://maps.google.com/?q=Aurora+Community+Centre",
-        "home_away": "Home",
-        "jersey": "Home (White)",
-        "is_home": true
+        "date": "2026-11-16",
+        "time": "6:20 PM",
+        "arena": "171 Mapleton Ave., Barrie, ON, L5N9B4, Canada",
+        "address": "171 Mapleton Ave., Barrie, ON, L5N9B4, Canada",
+        "maps_url": "https://maps.google.com/?q=171%20Mapleton%20Ave.%2C%20Barrie%2C%20ON%2C%20L5N9B4%2C%20Canada",
+        "home_away": "Away",
+        "jersey": "Away (Black)",
+        "is_home": false
       },
       "shifts": [
         {
@@ -4906,23 +4906,28 @@
       "id": "game_BYQB0f5l8IY",
       "title": "6.11.2026 - 0 Tigers Vs. Orillia 9",
       "youtube_video_id": "BYQB0f5l8IY",
-      "date": "2026-11-15",
+      "date": "2026-11-16",
       "opponent": "League Match",
       "periods": {
         "1": 0,
         "2": 912,
         "3": 1776
       },
+      "period_lengths": {
+        "1": 600,
+        "2": 600,
+        "3": 900
+      },
       "ai_engine": "Proportional Line Engine",
       "teamsnap": {
-        "date": "2026-11-15",
-        "time": "Game Time",
-        "arena": "Aurora Community Centre - Pad 1",
-        "address": "1 Community Centre Ln, Aurora, ON L4G 7B1",
-        "maps_url": "https://maps.google.com/?q=Aurora+Community+Centre",
-        "home_away": "Home",
-        "jersey": "Home (White)",
-        "is_home": true
+        "date": "2026-11-16",
+        "time": "6:20 PM",
+        "arena": "171 Mapleton Ave., Barrie, ON, L5N9B4, Canada",
+        "address": "171 Mapleton Ave., Barrie, ON, L5N9B4, Canada",
+        "maps_url": "https://maps.google.com/?q=171%20Mapleton%20Ave.%2C%20Barrie%2C%20ON%2C%20L5N9B4%2C%20Canada",
+        "home_away": "Away",
+        "jersey": "Away (Black)",
+        "is_home": false
       },
       "shifts": [
         {
