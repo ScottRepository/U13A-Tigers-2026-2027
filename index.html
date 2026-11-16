@@ -5191,7 +5191,7 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
             <canvas id="telestrator-canvas" class="absolute inset-0 w-full h-full pointer-events-none z-20"></canvas>
 
             <!-- LIVE STREAM OFFLINE / STANDBY STATE WITH NEXT GAME COUNTDOWN -->
-            <div id="live-offline-placeholder" class="hidden absolute inset-0 z-35 bg-slate-950/95 backdrop-blur-md flex flex-col items-center justify-center p-4 sm:p-6 text-center text-white select-none animate-in fade-in duration-200 overflow-y-auto">
+            <div id="live-offline-placeholder" class="hidden absolute inset-0 z-40 bg-slate-950/95 backdrop-blur-md flex flex-col items-center justify-center p-4 sm:p-6 text-center text-white select-none animate-in fade-in duration-200 overflow-y-auto">
               <!-- Top Pill -->
               <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-slate-900 border border-amber-400/30 text-[11px] font-mono font-bold text-amber-300 mb-3 shadow-sm">
                 <span class="w-2 h-2 rounded-full bg-amber-400 animate-pulse"></span>
@@ -5487,13 +5487,13 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
 
                 <!-- Precision Transport Buttons -->
                 <div class="flex items-center bg-slate-800/90 rounded-lg p-0.5 border border-slate-700/80 text-[11px] font-mono">
-                  <button onclick="stepSeconds(-30)" title="Back 30 seconds" class="px-2 py-1 rounded hover:bg-slate-700 text-slate-300 hover:text-white transition cursor-pointer font-bold">-30s</button>
-                  <button onclick="stepSeconds(-15)" title="Back 15 seconds" class="px-2 py-1 rounded hover:bg-slate-700 text-slate-300 hover:text-white transition cursor-pointer font-bold">-15s</button>
-                  <button onclick="stepSeconds(-5)" title="Back 5 seconds" class="px-1.5 py-1 rounded hover:bg-slate-700 text-slate-300 hover:text-white transition cursor-pointer font-bold">-5s</button>
+                  <button onclick="stepSeconds(-30)" title="Back 30 seconds" class="px-2 py-1 rounded hover:bg-slate-700 hover:!text-white text-slate-300 transition cursor-pointer font-bold">-30s</button>
+                  <button onclick="stepSeconds(-15)" title="Back 15 seconds" class="px-2 py-1 rounded hover:bg-slate-700 hover:!text-white text-slate-300 transition cursor-pointer font-bold">-15s</button>
+                  <button onclick="stepSeconds(-5)" title="Back 5 seconds" class="px-1.5 py-1 rounded hover:bg-slate-700 hover:!text-white text-slate-300 transition cursor-pointer font-bold">-5s</button>
                   <button onclick="togglePlayPause()" id="play-pause-btn" class="px-3.5 py-1 rounded bg-tigersGold text-slate-950 hover:bg-tigersGoldBright font-black transition cursor-pointer shadow-xs">▶️</button>
-                  <button onclick="stepSeconds(5)" title="Forward 5 seconds" class="px-1.5 py-1 rounded hover:bg-slate-700 text-slate-300 hover:text-white transition cursor-pointer font-bold">+5s</button>
-                  <button onclick="stepSeconds(15)" title="Forward 15 seconds" class="px-2 py-1 rounded hover:bg-slate-700 text-slate-300 hover:text-white transition cursor-pointer font-bold">+15s</button>
-                  <button onclick="stepSeconds(30)" title="Forward 30 seconds" class="px-2 py-1 rounded hover:bg-slate-700 text-slate-300 hover:text-white transition cursor-pointer font-bold">+30s</button>
+                  <button onclick="stepSeconds(5)" title="Forward 5 seconds" class="px-1.5 py-1 rounded hover:bg-slate-700 hover:!text-white text-slate-300 transition cursor-pointer font-bold">+5s</button>
+                  <button onclick="stepSeconds(15)" title="Forward 15 seconds" class="px-2 py-1 rounded hover:bg-slate-700 hover:!text-white text-slate-300 transition cursor-pointer font-bold">+15s</button>
+                  <button onclick="stepSeconds(30)" title="Forward 30 seconds" class="px-2 py-1 rounded hover:bg-slate-700 hover:!text-white text-slate-300 transition cursor-pointer font-bold">+30s</button>
                 </div>
               </div>
 
@@ -65016,6 +65016,7 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
           if (typeof currentMode !== 'undefined' && currentMode === 'breakouts' && typeof switchViewMode === 'function') switchViewMode('coaches');
           renderAppScheduleFlyout('upcoming');
         } else if (railKey === 'film') {
+          if (typeof hideGameCountdownStage === 'function') hideGameCountdownStage();
           if (typeof setLayoutMode === 'function') setLayoutMode('split');
           if (typeof currentMode !== 'undefined' && currentMode === 'breakouts' && typeof switchViewMode === 'function') switchViewMode('coaches');
           renderAppFilmFlyout();
