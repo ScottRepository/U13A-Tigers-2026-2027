@@ -42792,6 +42792,12 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
       const overlayPill = document.getElementById('active-shift-pill');
       if (overlayPill) overlayPill.classList.add('hidden');
 
+      // Always hide broadcast standby / countdown overlay when loading an archived game
+      const standbyEl = document.getElementById('live-offline-placeholder');
+      if (standbyEl) standbyEl.classList.add('hidden');
+      const postgameEl = document.getElementById('live-postgame-placeholder');
+      if (postgameEl) postgameEl.classList.add('hidden');
+
       // Ensure we exit live broadcast view if active so the archived film and shifts play properly
       if (typeof isLiveBroadcastActive !== 'undefined' && isLiveBroadcastActive) {
         isLiveBroadcastActive = false;
@@ -48384,6 +48390,10 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
     }
 
     function togglePlayPause() {
+      // Hide standby countdown overlay if user clicks Play on the film stage
+      const standbyEl = document.getElementById('live-offline-placeholder');
+      if (standbyEl && !isLiveBroadcastActive) standbyEl.classList.add('hidden');
+
       if (!isPlayerReady || !ytPlayer) {
         showToast("⏳ Video stream initializing... Please wait a moment.");
         if (pendingVideoId) initYouTubePlayer(pendingVideoId);
