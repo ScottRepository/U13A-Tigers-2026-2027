@@ -4,16 +4,16 @@
   "date": "Nov 21, 2026",
   "time": "5:00 PM",
   "location": "Bradford Leisure (Paul Dossey)",
-  "status": "scheduled",
-  "isLive": false,
+  "status": "in_progress",
+  "isLive": true,
   "homeTeam": "South Simcoe Storm U13 A",
   "homeScore": 0,
   "homeShots": 0,
   "awayTeam": "Aurora Tigers U13 A",
   "awayScore": 0,
   "awayShots": 0,
-  "period": "1",
-  "clock": "15:00",
+  "period": "Live",
+  "clock": "Live",
   "events": [],
-  "lastUpdated": "2026-11-21T17:15:13.534956Z"
+  "lastUpdated": "2026-11-21T22:57:53.986898Z"
 }
