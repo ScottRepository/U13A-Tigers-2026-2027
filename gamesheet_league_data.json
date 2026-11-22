@@ -5435,30 +5435,148 @@
       "teamId": "534295",
       "gameSheetUrl": "https://gamesheetstats.com/seasons/15490/teams/534295/schedule",
       "record": {
-        "gp": 11,
-        "w": 9,
+        "gp": 12,
+        "w": 10,
         "l": 2,
         "t": 0,
-        "pts": 18,
-        "winPct": ".818"
+        "pts": 20,
+        "winPct": ".833"
       },
       "stats": {
-        "gf": 85,
-        "ga": 16,
-        "diff": "+69",
-        "gpg": "7.73",
-        "gapg": "1.45",
-        "pim": 66,
+        "gf": 96,
+        "ga": 18,
+        "diff": "+78",
+        "gpg": "8.00",
+        "gapg": "1.50",
+        "pim": 72,
         "pimPg": "6.0"
       },
       "specialTeams": {
-        "ppPct": "47.2%",
-        "ppGoals": 17,
-        "ppOpps": 36,
-        "pkPct": "95.7%",
+        "ppPct": "52.4%",
+        "ppGoals": 22,
+        "ppOpps": 42,
+        "pkPct": "96.3%",
         "tendency": "Official GameSheet regular season special teams metrics."
       },
       "last5Games": [
+        {
+          "gameId": 3183845,
+          "date": "Nov 22, 2026",
+          "opp": "King Rebellion",
+          "vsAt": "@",
+          "score": "11-2",
+          "result": "W",
+          "gf": 11,
+          "ga": 2,
+          "goalLog": [
+            {
+              "type": "goal",
+              "period": 1,
+              "clockTime": "07:29",
+              "team": "self",
+              "teamName": "Georgian Bay Islanders U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 1,
+              "clockTime": "06:36",
+              "team": "self",
+              "teamName": "Georgian Bay Islanders U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 1,
+              "clockTime": "03:35",
+              "team": "self",
+              "teamName": "Georgian Bay Islanders U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 2,
+              "clockTime": "12:39",
+              "team": "self",
+              "teamName": "Georgian Bay Islanders U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 2,
+              "clockTime": "12:22",
+              "team": "self",
+              "teamName": "Georgian Bay Islanders U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 2,
+              "clockTime": "08:07",
+              "team": "self",
+              "teamName": "Georgian Bay Islanders U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 2,
+              "clockTime": "07:00",
+              "team": "self",
+              "teamName": "Georgian Bay Islanders U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 2,
+              "clockTime": "06:48",
+              "team": "self",
+              "teamName": "Georgian Bay Islanders U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 3,
+              "clockTime": "11:10",
+              "team": "self",
+              "teamName": "Georgian Bay Islanders U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 3,
+              "clockTime": "09:20",
+              "team": "self",
+              "teamName": "Georgian Bay Islanders U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 3,
+              "clockTime": "04:12",
+              "team": "self",
+              "teamName": "Georgian Bay Islanders U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 1,
+              "clockTime": "00:35",
+              "team": "opp",
+              "teamName": "King Rebellion 13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 3,
+              "clockTime": "01:05",
+              "team": "opp",
+              "teamName": "King Rebellion 13 A",
+              "scorer": ""
+            }
+          ],
+          "penaltyLog": [],
+          "notes": "Away GameSheet regular season box score"
+        },
         {
           "gameId": 3182603,
           "date": "Nov 21, 2026",
@@ -5757,108 +5875,6 @@
               "clockTime": "07:06",
               "team": "opp",
               "teamName": "Orangeville Flyers U13 A",
-              "scorer": ""
-            }
-          ],
-          "penaltyLog": [],
-          "notes": "Away GameSheet regular season box score"
-        },
-        {
-          "gameId": 3098849,
-          "date": "Oct 25, 2026",
-          "opp": "Markham Waxers",
-          "vsAt": "@",
-          "score": "10-1",
-          "result": "W",
-          "gf": 10,
-          "ga": 1,
-          "goalLog": [
-            {
-              "type": "goal",
-              "period": 1,
-              "clockTime": "08:59",
-              "team": "self",
-              "teamName": "Georgian Bay Islanders U13 A",
-              "scorer": ""
-            },
-            {
-              "type": "goal",
-              "period": 1,
-              "clockTime": "07:05",
-              "team": "self",
-              "teamName": "Georgian Bay Islanders U13 A",
-              "scorer": ""
-            },
-            {
-              "type": "goal",
-              "period": 2,
-              "clockTime": "08:44",
-              "team": "self",
-              "teamName": "Georgian Bay Islanders U13 A",
-              "scorer": ""
-            },
-            {
-              "type": "goal",
-              "period": 2,
-              "clockTime": "06:41",
-              "team": "self",
-              "teamName": "Georgian Bay Islanders U13 A",
-              "scorer": ""
-            },
-            {
-              "type": "goal",
-              "period": 2,
-              "clockTime": "04:34",
-              "team": "self",
-              "teamName": "Georgian Bay Islanders U13 A",
-              "scorer": ""
-            },
-            {
-              "type": "goal",
-              "period": 3,
-              "clockTime": "14:05",
-              "team": "self",
-              "teamName": "Georgian Bay Islanders U13 A",
-              "scorer": ""
-            },
-            {
-              "type": "goal",
-              "period": 3,
-              "clockTime": "13:35",
-              "team": "self",
-              "teamName": "Georgian Bay Islanders U13 A",
-              "scorer": ""
-            },
-            {
-              "type": "goal",
-              "period": 3,
-              "clockTime": "12:33",
-              "team": "self",
-              "teamName": "Georgian Bay Islanders U13 A",
-              "scorer": ""
-            },
-            {
-              "type": "goal",
-              "period": 3,
-              "clockTime": "11:11",
-              "team": "self",
-              "teamName": "Georgian Bay Islanders U13 A",
-              "scorer": ""
-            },
-            {
-              "type": "goal",
-              "period": 3,
-              "clockTime": "01:15",
-              "team": "self",
-              "teamName": "Georgian Bay Islanders U13 A",
-              "scorer": ""
-            },
-            {
-              "type": "goal",
-              "period": 2,
-              "clockTime": "11:28",
-              "team": "opp",
-              "teamName": "Markham Waxers U13 A",
               "scorer": ""
             }
           ],
@@ -6233,5 +6249,5 @@
       ]
     }
   },
-  "lastSynced": "2026-11-22T11:23:28.407021Z"
+  "lastSynced": "2026-11-22T18:26:02.239921Z"
 }
