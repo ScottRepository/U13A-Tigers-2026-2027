@@ -891,32 +891,102 @@
       "gameSheetCode": "U13A-RS-130",
       "gameSheetUrl": "https://gamesheetstats.com/seasons/15490/teams/534214/schedule",
       "record": {
-        "gp": 10,
+        "gp": 11,
         "w": 4,
-        "l": 5,
+        "l": 6,
         "t": 1,
         "pts": 9,
-        "winPct": ".400"
+        "winPct": ".364"
       },
       "stats": {
         "gf": 35,
-        "ga": 40,
-        "diff": "-5",
-        "gpg": "3.50",
-        "gapg": "4.00",
-        "pim": 60,
+        "ga": 47,
+        "diff": "-12",
+        "gpg": "3.18",
+        "gapg": "4.27",
+        "pim": 66,
         "pimPg": "6.0"
       },
       "specialTeams": {
-        "ppPct": "20.6%",
+        "ppPct": "18.4%",
         "ppGoals": 7,
-        "ppOpps": 34,
-        "pkPct": "61.1%",
+        "ppOpps": 38,
+        "pkPct": "63.2%",
         "shGoals": 1,
         "shAllowed": 9,
         "tendency": "Fast rush team; attacks wide and throws pucks to low slot."
       },
       "last5Games": [
+        {
+          "gameId": 3182603,
+          "date": "Nov 21, 2026",
+          "opp": "Georgian Bay Islanders",
+          "vsAt": "@",
+          "score": "0-7",
+          "result": "L",
+          "gf": 0,
+          "ga": 7,
+          "goalLog": [
+            {
+              "type": "goal",
+              "period": 1,
+              "clockTime": "09:15",
+              "team": "opp",
+              "teamName": "Georgian Bay Islanders U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 1,
+              "clockTime": "05:10",
+              "team": "opp",
+              "teamName": "Georgian Bay Islanders U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 2,
+              "clockTime": "13:39",
+              "team": "opp",
+              "teamName": "Georgian Bay Islanders U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 2,
+              "clockTime": "10:51",
+              "team": "opp",
+              "teamName": "Georgian Bay Islanders U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 2,
+              "clockTime": "09:24",
+              "team": "opp",
+              "teamName": "Georgian Bay Islanders U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 3,
+              "clockTime": "07:52",
+              "team": "opp",
+              "teamName": "Georgian Bay Islanders U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 3,
+              "clockTime": "01:50",
+              "team": "opp",
+              "teamName": "Georgian Bay Islanders U13 A",
+              "scorer": ""
+            }
+          ],
+          "penaltyLog": [],
+          "notes": "Away GameSheet regular season box score"
+        },
         {
           "gameId": 3148127,
           "date": "Nov 8, 2026",
@@ -1135,76 +1205,6 @@
               "clockTime": "00:52",
               "team": "opp",
               "teamName": "Upper York Admirals U13 A",
-              "scorer": ""
-            }
-          ],
-          "penaltyLog": [],
-          "notes": "Away GameSheet regular season box score"
-        },
-        {
-          "gameId": 3096086,
-          "date": "Oct 24, 2026",
-          "opp": "Barrie Colts U13-2 A Blue",
-          "vsAt": "@",
-          "score": "2-5",
-          "result": "L",
-          "gf": 2,
-          "ga": 5,
-          "goalLog": [
-            {
-              "type": "goal",
-              "period": 3,
-              "clockTime": "06:00",
-              "team": "self",
-              "teamName": "Newmarket Renegades U13 A",
-              "scorer": ""
-            },
-            {
-              "type": "goal",
-              "period": 3,
-              "clockTime": "00:45",
-              "team": "self",
-              "teamName": "Newmarket Renegades U13 A",
-              "scorer": ""
-            },
-            {
-              "type": "goal",
-              "period": 1,
-              "clockTime": "07:02",
-              "team": "opp",
-              "teamName": "Barrie Colts U13-2 A Blue",
-              "scorer": ""
-            },
-            {
-              "type": "goal",
-              "period": 1,
-              "clockTime": "00:17",
-              "team": "opp",
-              "teamName": "Barrie Colts U13-2 A Blue",
-              "scorer": ""
-            },
-            {
-              "type": "goal",
-              "period": 2,
-              "clockTime": "07:31",
-              "team": "opp",
-              "teamName": "Barrie Colts U13-2 A Blue",
-              "scorer": ""
-            },
-            {
-              "type": "goal",
-              "period": 2,
-              "clockTime": "05:53",
-              "team": "opp",
-              "teamName": "Barrie Colts U13-2 A Blue",
-              "scorer": ""
-            },
-            {
-              "type": "goal",
-              "period": 3,
-              "clockTime": "08:34",
-              "team": "opp",
-              "teamName": "Barrie Colts U13-2 A Blue",
               "scorer": ""
             }
           ],
@@ -2489,32 +2489,134 @@
       "teamId": "534204",
       "gameSheetUrl": "https://gamesheetstats.com/seasons/15490/teams/534204/schedule",
       "record": {
-        "gp": 9,
+        "gp": 10,
         "w": 0,
-        "l": 9,
+        "l": 10,
         "t": 0,
         "pts": 0,
         "winPct": ".000"
       },
       "stats": {
         "gf": 3,
-        "ga": 86,
-        "diff": "-83",
-        "gpg": "0.33",
-        "gapg": "9.56",
-        "pim": 54,
+        "ga": 97,
+        "diff": "-94",
+        "gpg": "0.30",
+        "gapg": "9.70",
+        "pim": 60,
         "pimPg": "7.0"
       },
       "specialTeams": {
-        "ppPct": "5.3%",
+        "ppPct": "4.2%",
         "ppGoals": 1,
-        "ppOpps": 19,
-        "pkPct": "50.0%",
+        "ppOpps": 24,
+        "pkPct": "54.5%",
         "shGoals": 0,
         "shAllowed": 14,
         "tendency": "Resilient defensive structure looking for breakout execution. Head-to-head vs Caledon on Oct 3: 0-12."
       },
       "last5Games": [
+        {
+          "gameId": 3182602,
+          "date": "Nov 21, 2026",
+          "opp": "South Simcoe Storm",
+          "vsAt": "@",
+          "score": "0-11",
+          "result": "L",
+          "gf": 0,
+          "ga": 11,
+          "goalLog": [
+            {
+              "type": "goal",
+              "period": 1,
+              "clockTime": "09:05",
+              "team": "opp",
+              "teamName": "South Simcoe Storm U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 1,
+              "clockTime": "08:41",
+              "team": "opp",
+              "teamName": "South Simcoe Storm U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 1,
+              "clockTime": "07:32",
+              "team": "opp",
+              "teamName": "South Simcoe Storm U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 2,
+              "clockTime": "14:37",
+              "team": "opp",
+              "teamName": "South Simcoe Storm U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 2,
+              "clockTime": "12:07",
+              "team": "opp",
+              "teamName": "South Simcoe Storm U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 2,
+              "clockTime": "08:54",
+              "team": "opp",
+              "teamName": "South Simcoe Storm U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 2,
+              "clockTime": "08:23",
+              "team": "opp",
+              "teamName": "South Simcoe Storm U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 2,
+              "clockTime": "03:33",
+              "team": "opp",
+              "teamName": "South Simcoe Storm U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 2,
+              "clockTime": "00:12",
+              "team": "opp",
+              "teamName": "South Simcoe Storm U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 3,
+              "clockTime": "11:40",
+              "team": "opp",
+              "teamName": "South Simcoe Storm U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 3,
+              "clockTime": "00:10",
+              "team": "opp",
+              "teamName": "South Simcoe Storm U13 A",
+              "scorer": ""
+            }
+          ],
+          "penaltyLog": [],
+          "notes": "Away GameSheet regular season box score"
+        },
         {
           "gameId": 3173778,
           "date": "Nov 16, 2026",
@@ -2834,92 +2936,6 @@
           ],
           "penaltyLog": [],
           "notes": "Away GameSheet regular season box score"
-        },
-        {
-          "gameId": 3087227,
-          "date": "Oct 20, 2026",
-          "opp": "Newmarket Renegades",
-          "vsAt": "@",
-          "score": "1-8",
-          "result": "L",
-          "gf": 1,
-          "ga": 8,
-          "goalLog": [
-            {
-              "type": "goal",
-              "period": 2,
-              "clockTime": "04:06",
-              "team": "tigers",
-              "teamName": "Aurora Tigers U13 A",
-              "scorer": ""
-            },
-            {
-              "type": "goal",
-              "period": 1,
-              "clockTime": "07:46",
-              "team": "opp",
-              "teamName": "Newmarket Renegades U13 A",
-              "scorer": ""
-            },
-            {
-              "type": "goal",
-              "period": 2,
-              "clockTime": "10:45",
-              "team": "opp",
-              "teamName": "Newmarket Renegades U13 A",
-              "scorer": ""
-            },
-            {
-              "type": "goal",
-              "period": 2,
-              "clockTime": "10:17",
-              "team": "opp",
-              "teamName": "Newmarket Renegades U13 A",
-              "scorer": ""
-            },
-            {
-              "type": "goal",
-              "period": 2,
-              "clockTime": "07:51",
-              "team": "opp",
-              "teamName": "Newmarket Renegades U13 A",
-              "scorer": ""
-            },
-            {
-              "type": "goal",
-              "period": 2,
-              "clockTime": "06:54",
-              "team": "opp",
-              "teamName": "Newmarket Renegades U13 A",
-              "scorer": ""
-            },
-            {
-              "type": "goal",
-              "period": 2,
-              "clockTime": "05:34",
-              "team": "opp",
-              "teamName": "Newmarket Renegades U13 A",
-              "scorer": ""
-            },
-            {
-              "type": "goal",
-              "period": 2,
-              "clockTime": "00:32",
-              "team": "opp",
-              "teamName": "Newmarket Renegades U13 A",
-              "scorer": ""
-            },
-            {
-              "type": "goal",
-              "period": 3,
-              "clockTime": "06:55",
-              "team": "opp",
-              "teamName": "Newmarket Renegades U13 A",
-              "scorer": ""
-            }
-          ],
-          "penaltyLog": [],
-          "notes": "Away GameSheet regular season box score"
         }
       ],
       "goalie": {
@@ -2941,6 +2957,108 @@
         "score": "0-12"
       },
       "allCompletedGames": [
+        {
+          "gameId": 3182602,
+          "date": "Nov 21, 2026",
+          "opp": "South Simcoe Storm",
+          "vsAt": "@",
+          "score": "0-11",
+          "result": "L",
+          "gf": 0,
+          "ga": 11,
+          "goalLog": [
+            {
+              "type": "goal",
+              "period": 1,
+              "clockTime": "09:05",
+              "team": "opp",
+              "teamName": "South Simcoe Storm U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 1,
+              "clockTime": "08:41",
+              "team": "opp",
+              "teamName": "South Simcoe Storm U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 1,
+              "clockTime": "07:32",
+              "team": "opp",
+              "teamName": "South Simcoe Storm U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 2,
+              "clockTime": "14:37",
+              "team": "opp",
+              "teamName": "South Simcoe Storm U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 2,
+              "clockTime": "12:07",
+              "team": "opp",
+              "teamName": "South Simcoe Storm U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 2,
+              "clockTime": "08:54",
+              "team": "opp",
+              "teamName": "South Simcoe Storm U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 2,
+              "clockTime": "08:23",
+              "team": "opp",
+              "teamName": "South Simcoe Storm U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 2,
+              "clockTime": "03:33",
+              "team": "opp",
+              "teamName": "South Simcoe Storm U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 2,
+              "clockTime": "00:12",
+              "team": "opp",
+              "teamName": "South Simcoe Storm U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 3,
+              "clockTime": "11:40",
+              "team": "opp",
+              "teamName": "South Simcoe Storm U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 3,
+              "clockTime": "00:10",
+              "team": "opp",
+              "teamName": "South Simcoe Storm U13 A",
+              "scorer": ""
+            }
+          ],
+          "penaltyLog": [],
+          "notes": "Away GameSheet regular season box score"
+        },
         {
           "gameId": 3173778,
           "date": "Nov 16, 2026",
@@ -3789,32 +3907,134 @@
       "gameSheetCode": "U13A-RS-070",
       "gameSheetUrl": "https://gamesheetstats.com/seasons/15490/teams/534235/schedule",
       "record": {
-        "gp": 9,
-        "w": 5,
+        "gp": 10,
+        "w": 6,
         "l": 2,
         "t": 2,
-        "pts": 12,
-        "winPct": ".556"
+        "pts": 14,
+        "winPct": ".600"
       },
       "stats": {
-        "gf": 33,
+        "gf": 44,
         "ga": 19,
-        "diff": "+14",
-        "gpg": "3.67",
-        "gapg": "2.11",
-        "pim": 54,
+        "diff": "+25",
+        "gpg": "4.40",
+        "gapg": "1.90",
+        "pim": 60,
         "pimPg": "6.0"
       },
       "specialTeams": {
-        "ppPct": "17.4%",
-        "ppGoals": 4,
-        "ppOpps": 23,
-        "pkPct": "87.5%",
+        "ppPct": "20.7%",
+        "ppGoals": 6,
+        "ppOpps": 29,
+        "pkPct": "89.7%",
         "shGoals": 1,
         "shAllowed": 9,
         "tendency": "Solid neutral zone structure; relies on counter-attacking off opponent turnovers."
       },
       "last5Games": [
+        {
+          "gameId": 3182602,
+          "date": "Nov 21, 2026",
+          "opp": "Aurora Tigers",
+          "vsAt": "vs",
+          "score": "11-0",
+          "result": "W",
+          "gf": 11,
+          "ga": 0,
+          "goalLog": [
+            {
+              "type": "goal",
+              "period": 1,
+              "clockTime": "09:05",
+              "team": "self",
+              "teamName": "South Simcoe Storm U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 1,
+              "clockTime": "08:41",
+              "team": "self",
+              "teamName": "South Simcoe Storm U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 1,
+              "clockTime": "07:32",
+              "team": "self",
+              "teamName": "South Simcoe Storm U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 2,
+              "clockTime": "14:37",
+              "team": "self",
+              "teamName": "South Simcoe Storm U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 2,
+              "clockTime": "12:07",
+              "team": "self",
+              "teamName": "South Simcoe Storm U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 2,
+              "clockTime": "08:54",
+              "team": "self",
+              "teamName": "South Simcoe Storm U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 2,
+              "clockTime": "08:23",
+              "team": "self",
+              "teamName": "South Simcoe Storm U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 2,
+              "clockTime": "03:33",
+              "team": "self",
+              "teamName": "South Simcoe Storm U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 2,
+              "clockTime": "00:12",
+              "team": "self",
+              "teamName": "South Simcoe Storm U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 3,
+              "clockTime": "11:40",
+              "team": "self",
+              "teamName": "South Simcoe Storm U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 3,
+              "clockTime": "00:10",
+              "team": "self",
+              "teamName": "South Simcoe Storm U13 A",
+              "scorer": ""
+            }
+          ],
+          "penaltyLog": [],
+          "notes": "Home GameSheet regular season box score"
+        },
         {
           "gameId": 3148126,
           "date": "Nov 8, 2026",
@@ -4062,68 +4282,6 @@
           ],
           "penaltyLog": [],
           "notes": "Home GameSheet regular season box score"
-        },
-        {
-          "gameId": 3096090,
-          "date": "Oct 24, 2026",
-          "opp": "Upper York Admirals",
-          "vsAt": "vs",
-          "score": "4-2",
-          "result": "W",
-          "gf": 4,
-          "ga": 2,
-          "goalLog": [
-            {
-              "type": "goal",
-              "period": 1,
-              "clockTime": "07:47",
-              "team": "self",
-              "teamName": "South Simcoe Storm U13 A",
-              "scorer": ""
-            },
-            {
-              "type": "goal",
-              "period": 1,
-              "clockTime": "07:35",
-              "team": "self",
-              "teamName": "South Simcoe Storm U13 A",
-              "scorer": ""
-            },
-            {
-              "type": "goal",
-              "period": 2,
-              "clockTime": "07:03",
-              "team": "self",
-              "teamName": "South Simcoe Storm U13 A",
-              "scorer": ""
-            },
-            {
-              "type": "goal",
-              "period": 2,
-              "clockTime": "05:30",
-              "team": "self",
-              "teamName": "South Simcoe Storm U13 A",
-              "scorer": ""
-            },
-            {
-              "type": "goal",
-              "period": 2,
-              "clockTime": "01:46",
-              "team": "opp",
-              "teamName": "Upper York Admirals U13 A",
-              "scorer": ""
-            },
-            {
-              "type": "goal",
-              "period": 3,
-              "clockTime": "09:48",
-              "team": "opp",
-              "teamName": "Upper York Admirals U13 A",
-              "scorer": ""
-            }
-          ],
-          "penaltyLog": [],
-          "notes": "Home GameSheet regular season box score"
         }
       ],
       "dangerPlayers": [
@@ -4154,7 +4312,13 @@
         "Active Stick in D-Zone: Deny Clark room to set up in the high slot.",
         "Crash the Net: Create secondary chaos around Connor Wright."
       ],
-      "teamId": "534235"
+      "teamId": "534235",
+      "headToHead": {
+        "summary": "Nov 21, 2026: Opponent 11, Tigers 0",
+        "date": "Nov 21, 2026",
+        "score": "11-0",
+        "result": "W"
+      }
     },
     "richmond_hill": {
       "teamName": "Richmond Hill Jaguars",
@@ -5271,30 +5435,100 @@
       "teamId": "534295",
       "gameSheetUrl": "https://gamesheetstats.com/seasons/15490/teams/534295/schedule",
       "record": {
-        "gp": 10,
-        "w": 8,
+        "gp": 11,
+        "w": 9,
         "l": 2,
         "t": 0,
-        "pts": 16,
-        "winPct": ".800"
+        "pts": 18,
+        "winPct": ".818"
       },
       "stats": {
-        "gf": 78,
+        "gf": 85,
         "ga": 16,
-        "diff": "+62",
-        "gpg": "7.80",
-        "gapg": "1.60",
-        "pim": 60,
+        "diff": "+69",
+        "gpg": "7.73",
+        "gapg": "1.45",
+        "pim": 66,
         "pimPg": "6.0"
       },
       "specialTeams": {
-        "ppPct": "50.0%",
+        "ppPct": "47.2%",
         "ppGoals": 17,
-        "ppOpps": 34,
-        "pkPct": "94.7%",
+        "ppOpps": 36,
+        "pkPct": "95.7%",
         "tendency": "Official GameSheet regular season special teams metrics."
       },
       "last5Games": [
+        {
+          "gameId": 3182603,
+          "date": "Nov 21, 2026",
+          "opp": "Newmarket Renegades",
+          "vsAt": "vs",
+          "score": "7-0",
+          "result": "W",
+          "gf": 7,
+          "ga": 0,
+          "goalLog": [
+            {
+              "type": "goal",
+              "period": 1,
+              "clockTime": "09:15",
+              "team": "self",
+              "teamName": "Georgian Bay Islanders U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 1,
+              "clockTime": "05:10",
+              "team": "self",
+              "teamName": "Georgian Bay Islanders U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 2,
+              "clockTime": "13:39",
+              "team": "self",
+              "teamName": "Georgian Bay Islanders U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 2,
+              "clockTime": "10:51",
+              "team": "self",
+              "teamName": "Georgian Bay Islanders U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 2,
+              "clockTime": "09:24",
+              "team": "self",
+              "teamName": "Georgian Bay Islanders U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 3,
+              "clockTime": "07:52",
+              "team": "self",
+              "teamName": "Georgian Bay Islanders U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 3,
+              "clockTime": "01:50",
+              "team": "self",
+              "teamName": "Georgian Bay Islanders U13 A",
+              "scorer": ""
+            }
+          ],
+          "penaltyLog": [],
+          "notes": "Home GameSheet regular season box score"
+        },
         {
           "gameId": 3170148,
           "date": "Nov 15, 2026",
@@ -5630,156 +5864,6 @@
           ],
           "penaltyLog": [],
           "notes": "Away GameSheet regular season box score"
-        },
-        {
-          "gameId": 3096091,
-          "date": "Oct 24, 2026",
-          "opp": "King Rebellion",
-          "vsAt": "vs",
-          "score": "16-1",
-          "result": "W",
-          "gf": 16,
-          "ga": 1,
-          "goalLog": [
-            {
-              "type": "goal",
-              "period": 1,
-              "clockTime": "04:03",
-              "team": "self",
-              "teamName": "Georgian Bay Islanders U13 A",
-              "scorer": ""
-            },
-            {
-              "type": "goal",
-              "period": 1,
-              "clockTime": "01:23",
-              "team": "self",
-              "teamName": "Georgian Bay Islanders U13 A",
-              "scorer": ""
-            },
-            {
-              "type": "goal",
-              "period": 1,
-              "clockTime": "00:05",
-              "team": "self",
-              "teamName": "Georgian Bay Islanders U13 A",
-              "scorer": ""
-            },
-            {
-              "type": "goal",
-              "period": 2,
-              "clockTime": "14:41",
-              "team": "self",
-              "teamName": "Georgian Bay Islanders U13 A",
-              "scorer": ""
-            },
-            {
-              "type": "goal",
-              "period": 2,
-              "clockTime": "14:27",
-              "team": "self",
-              "teamName": "Georgian Bay Islanders U13 A",
-              "scorer": ""
-            },
-            {
-              "type": "goal",
-              "period": 2,
-              "clockTime": "11:15",
-              "team": "self",
-              "teamName": "Georgian Bay Islanders U13 A",
-              "scorer": ""
-            },
-            {
-              "type": "goal",
-              "period": 2,
-              "clockTime": "10:31",
-              "team": "self",
-              "teamName": "Georgian Bay Islanders U13 A",
-              "scorer": ""
-            },
-            {
-              "type": "goal",
-              "period": 2,
-              "clockTime": "08:48",
-              "team": "self",
-              "teamName": "Georgian Bay Islanders U13 A",
-              "scorer": ""
-            },
-            {
-              "type": "goal",
-              "period": 2,
-              "clockTime": "02:43",
-              "team": "self",
-              "teamName": "Georgian Bay Islanders U13 A",
-              "scorer": ""
-            },
-            {
-              "type": "goal",
-              "period": 3,
-              "clockTime": "12:15",
-              "team": "self",
-              "teamName": "Georgian Bay Islanders U13 A",
-              "scorer": ""
-            },
-            {
-              "type": "goal",
-              "period": 3,
-              "clockTime": "11:25",
-              "team": "self",
-              "teamName": "Georgian Bay Islanders U13 A",
-              "scorer": ""
-            },
-            {
-              "type": "goal",
-              "period": 3,
-              "clockTime": "08:35",
-              "team": "self",
-              "teamName": "Georgian Bay Islanders U13 A",
-              "scorer": ""
-            },
-            {
-              "type": "goal",
-              "period": 3,
-              "clockTime": "04:00",
-              "team": "self",
-              "teamName": "Georgian Bay Islanders U13 A",
-              "scorer": ""
-            },
-            {
-              "type": "goal",
-              "period": 3,
-              "clockTime": "01:52",
-              "team": "self",
-              "teamName": "Georgian Bay Islanders U13 A",
-              "scorer": ""
-            },
-            {
-              "type": "goal",
-              "period": 3,
-              "clockTime": "01:06",
-              "team": "self",
-              "teamName": "Georgian Bay Islanders U13 A",
-              "scorer": ""
-            },
-            {
-              "type": "goal",
-              "period": 3,
-              "clockTime": "00:25",
-              "team": "self",
-              "teamName": "Georgian Bay Islanders U13 A",
-              "scorer": ""
-            },
-            {
-              "type": "goal",
-              "period": 3,
-              "clockTime": "07:07",
-              "team": "opp",
-              "teamName": "King Rebellion 13 A",
-              "scorer": ""
-            }
-          ],
-          "penaltyLog": [],
-          "notes": "Home GameSheet regular season box score"
         }
       ],
       "headToHead": {
@@ -6149,5 +6233,5 @@
       ]
     }
   },
-  "lastSynced": "2026-11-21T22:57:53.870910Z"
+  "lastSynced": "2026-11-22T03:37:05.405358Z"
 }
