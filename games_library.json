@@ -44,7 +44,7 @@
       "id": "game_A-2-QEqPFqk",
       "title": "6.11.2026 - 0 Tigers Vs. Orillia 9",
       "youtube_video_id": "A-2-QEqPFqk",
-      "date": "2026-11-22",
+      "date": "2026-11-23",
       "opponent": "League Match",
       "periods": {
         "1": 294,
@@ -53,14 +53,14 @@
       },
       "ai_engine": "Google Gemini 3 (gemini-3.5-flash - Visual Anchored)",
       "teamsnap": {
-        "date": "2026-11-21",
-        "time": "5:00 PM",
-        "arena": "471 West Park Ave., Bradford, ON, L3Z 0J3, Canada",
-        "address": "471 West Park Ave., Bradford, ON, L3Z 0J3, Canada",
-        "maps_url": "https://maps.google.com/?q=471%20West%20Park%20Ave.%2C%20Bradford%2C%20ON%2C%20L3Z%200J3%2C%20Canada",
-        "home_away": "Away",
-        "jersey": "Away (Black)",
-        "is_home": false
+        "date": "2026-11-23",
+        "time": "Game Time",
+        "arena": "Aurora Community Centre - Pad 1",
+        "address": "1 Community Centre Ln, Aurora, ON L4G 7B1",
+        "maps_url": "https://maps.google.com/?q=Aurora+Community+Centre",
+        "home_away": "Home",
+        "jersey": "Home (White)",
+        "is_home": true
       },
       "shifts": [
         {
@@ -2754,7 +2754,7 @@
       "id": "game_pfbgkQG_vYQ",
       "title": "1.11.2026 - GOLD MEDAL GAME - Tigers 3 - Tewksbury 7",
       "youtube_video_id": "pfbgkQG_vYQ",
-      "date": "2026-11-22",
+      "date": "2026-11-23",
       "opponent": "League Match",
       "periods": {
         "1": 1284,
@@ -2763,14 +2763,14 @@
       },
       "ai_engine": "Google Gemini 3 (gemini-3.5-flash - Visual Anchored)",
       "teamsnap": {
-        "date": "2026-11-21",
-        "time": "5:00 PM",
-        "arena": "471 West Park Ave., Bradford, ON, L3Z 0J3, Canada",
-        "address": "471 West Park Ave., Bradford, ON, L3Z 0J3, Canada",
-        "maps_url": "https://maps.google.com/?q=471%20West%20Park%20Ave.%2C%20Bradford%2C%20ON%2C%20L3Z%200J3%2C%20Canada",
-        "home_away": "Away",
-        "jersey": "Away (Black)",
-        "is_home": false
+        "date": "2026-11-23",
+        "time": "Game Time",
+        "arena": "Aurora Community Centre - Pad 1",
+        "address": "1 Community Centre Ln, Aurora, ON L4G 7B1",
+        "maps_url": "https://maps.google.com/?q=Aurora+Community+Centre",
+        "home_away": "Home",
+        "jersey": "Home (White)",
+        "is_home": true
       },
       "shifts": [
         {
