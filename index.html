@@ -4791,21 +4791,21 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
             <span class="rail-btn-icon text-lg">🔴</span>
             <span class="text-[9px] uppercase tracking-tight font-black">Live</span>
           </button>
-          <button id="rail-btn-passports" onclick="switchAppRail('passports')" class="rail-btn" title="Player Passports (Folders / Roster)">
+          <button id="rail-btn-passports" onclick="switchAppRail('passports')" class="rail-btn" title="Player Passports &amp; Team Roster">
             <span class="rail-btn-icon text-lg">🪪</span>
             <span class="text-[9px] uppercase tracking-tight font-black">Roster</span>
-          </button>
-          <button id="rail-btn-analytics" onclick="switchAppRail('analytics')" class="rail-btn" title="Team Analytics, Breakouts &amp; Zone Times">
-            <span class="rail-btn-icon text-lg">📊</span>
-            <span class="text-[9px] uppercase tracking-tight font-black">Stats</span>
-          </button>
-          <button id="rail-btn-review" onclick="openVideoReviewPrep()" class="rail-btn" title="Video Review Prep &amp; Coach Film Tray">
-            <span class="rail-btn-icon text-lg">⭐</span>
-            <span class="text-[9px] uppercase tracking-tight font-black">Review</span>
           </button>
           <button id="rail-btn-tournaments" onclick="switchAppRail('tournaments')" class="rail-btn" title="Tournaments &amp; Showcases">
             <span class="rail-btn-icon text-lg">🏆</span>
             <span class="text-[9px] uppercase tracking-tight font-black">Tourn</span>
+          </button>
+          <button id="rail-btn-analytics" onclick="switchAppRail('analytics')" class="rail-btn hidden" title="Team Analytics">
+            <span class="rail-btn-icon text-lg">📊</span>
+            <span class="text-[9px] uppercase tracking-tight font-black">Stats</span>
+          </button>
+          <button id="rail-btn-review" onclick="openVideoReviewPrep()" class="rail-btn hidden" title="Coach Film Tray">
+            <span class="rail-btn-icon text-lg">⭐</span>
+            <span class="text-[9px] uppercase tracking-tight font-black">Tray</span>
           </button>
         </div>
 
@@ -5462,8 +5462,8 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
           <div class="bg-slate-900 text-slate-100 rounded-xl p-2 md:p-2.5 shadow-md border border-slate-800 space-y-2">
             
             <div class="flex flex-wrap items-center justify-between gap-2 text-xs">
-            <!-- QUICK-ACCESS BROADCAST STREAM DELAY BUFFER & SYNC LOCK -->
-            <div id="player-stream-sync-bar" class="flex flex-wrap items-center justify-between gap-2 p-1.5 px-2.5 bg-slate-950/90 rounded-lg border border-slate-800 text-[11px]">
+            <!-- QUICK-ACCESS BROADCAST STREAM DELAY BUFFER & SYNC LOCK (Coach/Admin Toggleable) -->
+            <div id="player-stream-sync-bar" class="hidden w-full flex flex-wrap items-center justify-between gap-2 p-1.5 px-2.5 bg-slate-950/90 rounded-lg border border-slate-800 text-[11px]">
               <div class="flex items-center gap-2 flex-wrap">
                 <div class="flex items-center gap-1.5 text-amber-300 font-bold">
                   <span>⏱️</span>
@@ -5938,7 +5938,28 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
               <span id="past-game-arena-text">Aurora Community Centre</span>
               <a id="past-game-gamesheet-link" href="#" target="_blank" class="text-sky-300 hover:underline font-bold text-[10px]">GameSheet Box Score ↗</a>
             </div>
+            <!-- Explicit AI Analysis Verification & Confidence Banner -->
+            <div id="past-game-ai-verify-banner" class="mt-1 px-2.5 py-1.5 rounded-lg bg-slate-900/90 border border-emerald-500/40 flex items-center justify-between gap-2 text-[10px]">
+              <span id="past-game-ai-verify-text" class="font-bold text-emerald-300">🟢 Checking AI Video Analysis...</span>
+              <span id="past-game-ai-conf-pill" class="font-mono font-black px-1.5 py-0.2 rounded bg-emerald-500/20 text-emerald-300">—</span>
+            </div>
           </div>
+
+          <!-- UNIFIED 3-TAB RIGHT PANEL SWITCHER (Clips & Shifts | Box Score & Stats | Coach Tray) -->
+          <div class="flex items-center gap-1 p-1 rounded-xl bg-slate-200/80 border border-slate-300 text-[11px] font-bold shrink-0">
+            <button type="button" id="pg-subtab-btn-clips" onclick="switchPastGameSubTab('clips')" class="flex-1 py-1.5 px-2 rounded-lg bg-slate-900 text-amber-400 shadow-xs cursor-pointer transition flex items-center justify-center gap-1">
+              <span>🎬</span> <span>Clips &amp; Shifts</span>
+            </button>
+            <button type="button" id="pg-subtab-btn-stats" onclick="switchPastGameSubTab('stats')" class="flex-1 py-1.5 px-2 rounded-lg text-slate-700 hover:bg-white cursor-pointer transition flex items-center justify-center gap-1">
+              <span>📊</span> <span>Box Score &amp; Stats</span>
+            </button>
+            <button type="button" id="pg-subtab-btn-tray" onclick="openVideoReviewPrep()" class="flex-1 py-1.5 px-2 rounded-lg text-slate-700 hover:bg-white cursor-pointer transition flex items-center justify-center gap-1">
+              <span>⭐</span> <span>Coach Tray</span>
+            </button>
+          </div>
+
+          <!-- SUB-VIEW A: TOP CLIPS & PLAY-BY-PLAY SHIFTS -->
+          <div id="past-game-subview-clips" class="space-y-3">
 
           <!-- LIVE VIDEO REVIEW PREP QUEUE (PINNED AT TOP FOR EASY TEAM REVIEW) -->
           <div class="p-3 rounded-xl bg-[var(--bg-surface)] border-2 border-amber-400/70 space-y-2 shadow-sm">
@@ -5956,9 +5977,14 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
               </div>
             </div>
             <div id="past-game-review-prep-queue" class="space-y-1.5 max-h-56 overflow-y-auto custom-scroll text-xs">
-              <!-- Dynamically populated from getCoachingTrayClips() so any shift added with + Tray pops right up here! -->
+              <!-- Dynamically populated from getTopPrepClipsForGame() -->
             </div>
           </div>
+
+          </div><!-- /#past-game-subview-clips (top half; shifts card moved inside below or toggled cleanly) -->
+
+          <!-- SUB-VIEW B: BOX SCORE & VIDEO ANALYTICS (Hidden until Box Score & Stats tab clicked) -->
+          <div id="past-game-subview-stats" class="space-y-3 hidden">
 
           <!-- VIDEO ANALYTICS: ZONE TIME & POSSESSION -->
           <div class="p-3 rounded-xl bg-[var(--bg-surface)] border border-[var(--border-color)] space-y-2">
@@ -6046,14 +6072,16 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
                 <div id="past-stat-sog" class="text-sm font-black text-slate-900 font-mono mt-0.5">24 - 26</div>
               </div>
               <div class="p-2 rounded bg-[var(--bg-panel)] border border-[var(--border-color)]">
-                <div class="text-[9px] text-slate-400 font-bold uppercase">Total PIM</div>
-                <div id="past-stat-pim" class="text-sm font-black text-rose-600 font-mono mt-0.5">6 mins</div>
+                <div class="text-[9px] text-slate-400 font-bold uppercase">Penalty Mins (PIM)</div>
+                <div id="past-stat-pim" class="text-xs font-black text-rose-600 font-mono mt-1">TIG 0m • OPP 0m</div>
               </div>
             </div>
           </div>
 
+          </div><!-- /#past-game-subview-stats -->
+
           <!-- PLAY-BY-PLAY & SHIFT VIDEO CLIPS JUMPER -->
-          <div class="p-3 rounded-xl bg-[var(--bg-surface)] border border-[var(--border-color)] space-y-2.5">
+          <div id="past-game-shifts-card" class="p-3 rounded-xl bg-[var(--bg-surface)] border border-[var(--border-color)] space-y-2.5">
             <div class="flex items-center justify-between gap-2 flex-wrap text-[10px] font-bold uppercase tracking-wider text-slate-700">
               <span class="flex items-center gap-1 text-amber-500">
                 <span>🎬</span> <span>Play-By-Play &amp; Video Shift Cards</span>
@@ -6685,11 +6713,14 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
                 </div>
               </div>
               <div class="flex items-center gap-1.5">
-                <button onclick="promptCreateCustomFolder()" title="Create custom folder" class="px-2 py-1 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-[10px] cursor-pointer transition border border-slate-300">
-                  ➕ New Folder
+                <button type="button" onclick="if(currentGame) renderSidebarPastGameIntel(currentGame); else switchViewMode('coaches');" title="Return to Current Game Clips &amp; Shifts" class="px-2 py-1 rounded-lg bg-slate-900 hover:bg-slate-800 text-amber-300 font-bold text-[10px] cursor-pointer transition">
+                  ← Game Clips
                 </button>
-                <button onclick="playAllClipsInTraySequence()" title="Play all clips in active folder continuously" class="px-2.5 py-1 rounded-lg bg-tigersGold hover:bg-tigersGoldBright text-slate-950 font-black text-[10px] uppercase cursor-pointer transition shadow-xs flex items-center gap-1">
-                  <span>▶️</span> <span>Play All</span>
+                <button type="button" id="tray-scope-toggle-btn" onclick="toggleTrayGameScope()" title="Toggle between Current Game clips and All Season clips" class="px-2 py-1 rounded-lg bg-emerald-50 hover:bg-emerald-100 text-emerald-800 font-bold text-[10px] cursor-pointer transition border border-emerald-300">
+                  🎯 This Game
+                </button>
+                <button onclick="playAllClipsInTraySequence()" title="Play saved tray clips continuously" class="px-2.5 py-1 rounded-lg bg-tigersGold hover:bg-tigersGoldBright text-slate-950 font-black text-[10px] uppercase cursor-pointer transition shadow-xs flex items-center gap-1">
+                  <span>▶️</span> <span>Play Tray</span>
                 </button>
               </div>
             </div>
@@ -6701,24 +6732,40 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
 
           </div>
 
-          <!-- Main Scrollable Area: AI Suggestions Banner + Flagged Clips List -->
+          <!-- Main Scrollable Area: SAVED TRAY CLIPS PINNED AT TOP + CURATED AI SHORTLIST BELOW -->
           <div class="flex-1 overflow-y-auto custom-scroll p-3 space-y-3">
+
+            <!-- 1. SAVED FOLDER CLIP LIST CONTAINER (PINNED AT TOP SO + TO TRAY IS IMMEDIATELY VISIBLE!) -->
+            <div class="p-3 rounded-2xl bg-white border-2 border-amber-400/80 shadow-xs space-y-2">
+              <div class="flex items-center justify-between px-0.5">
+                <div class="flex items-center gap-1.5">
+                  <span class="text-sm">⭐</span>
+                  <span id="active-folder-title" class="font-display font-black text-xs uppercase text-slate-900">Saved Clips (This Game)</span>
+                  <span id="active-folder-count-badge" class="px-2 py-0.2 rounded-full bg-amber-400 text-slate-950 font-mono font-black text-[10px]">0</span>
+                </div>
+                <button onclick="clearCurrentFolderClips()" title="Clear saved clips in this folder" class="text-[10px] text-slate-400 hover:text-rose-600 font-semibold cursor-pointer">
+                  Clear
+                </button>
+              </div>
+
+              <div id="tray-clips-list" class="space-y-2">
+                <!-- Dynamically populated saved clip cards -->
+              </div>
+            </div>
             
-            <!-- AI FILM STUDY & TACTICAL SUGGESTIONS ACCORDION/CARD -->
-            <div id="ai-film-review-card" class="bg-gradient-to-br from-amber-500/10 via-slate-50 to-white rounded-2xl border-2 border-amber-400/80 p-3 shadow-xs space-y-2.5">
+            <!-- 2. CURATED AI SHORTLIST (MAX 5 GOOD PLAYS + MAX 5 COACHING FIXES + GOALS/PP/PK) -->
+            <div id="ai-film-review-card" class="bg-gradient-to-br from-amber-500/10 via-slate-50 to-white rounded-2xl border border-slate-200 p-3 shadow-xs space-y-2.5">
               <div class="space-y-2">
                 <div class="flex items-center justify-between gap-2">
                   <div class="flex items-center gap-2">
-                    <span class="px-2 py-0.5 rounded-md bg-slate-900 text-tigersGold font-mono font-bold text-[10px] tracking-wider uppercase">AI Film Coach</span>
-                    <span class="font-display font-black text-xs text-slate-900 uppercase">Game Breakdown &amp; Suggested Review Clips</span>
+                    <span class="px-2 py-0.5 rounded-md bg-slate-900 text-tigersGold font-mono font-bold text-[10px] tracking-wider uppercase">AI Shortlist</span>
+                    <span class="font-display font-black text-xs text-slate-900 uppercase">Top Teaching Moments (Curated)</span>
                   </div>
                 </div>
                 <div id="ai-filter-pills-row" class="flex flex-wrap items-center gap-1 text-[10px]">
-                  <button onclick="setAiFilterMode('all')" id="ai-filter-all" class="px-2.5 py-0.5 rounded-full font-bold bg-slate-900 text-tigersGold cursor-pointer transition">📁 All</button>
-                  <button onclick="setAiFilterMode('teaching')" id="ai-filter-teaching" class="px-2.5 py-0.5 rounded-full font-bold bg-white text-amber-900 border border-amber-300 hover:bg-amber-50 cursor-pointer transition">💡 Teaching</button>
-                  <button onclick="setAiFilterMode('good')" id="ai-filter-good" class="px-2.5 py-0.5 rounded-full font-bold bg-white text-emerald-800 border border-emerald-300 hover:bg-emerald-50 cursor-pointer transition">🟢 Good Plays</button>
-                  <button onclick="setAiFilterMode('bad')" id="ai-filter-bad" class="px-2.5 py-0.5 rounded-full font-bold bg-white text-rose-800 border border-rose-300 hover:bg-rose-50 cursor-pointer transition">🔴 Coaching Fixes</button>
-                  <button onclick="setAiFilterMode('breakouts')" id="ai-filter-breakouts" class="px-2.5 py-0.5 rounded-full font-bold bg-white text-sky-800 border border-sky-300 hover:bg-sky-50 cursor-pointer transition">🏒 Breakouts</button>
+                  <button onclick="setAiFilterMode('all')" id="ai-filter-all" class="px-2.5 py-0.5 rounded-full font-bold bg-slate-900 text-tigersGold cursor-pointer transition">📁 Top Shortlist</button>
+                  <button onclick="setAiFilterMode('good')" id="ai-filter-good" class="px-2.5 py-0.5 rounded-full font-bold bg-white text-emerald-800 border border-emerald-300 hover:bg-emerald-50 cursor-pointer transition">🟢 Top 5 Good</button>
+                  <button onclick="setAiFilterMode('bad')" id="ai-filter-bad" class="px-2.5 py-0.5 rounded-full font-bold bg-white text-rose-800 border border-rose-300 hover:bg-rose-50 cursor-pointer transition">🔴 Top 5 Fixes</button>
                   <button onclick="setAiFilterMode('powerplay')" id="ai-filter-powerplay" class="px-2.5 py-0.5 rounded-full font-bold bg-white text-amber-800 border border-amber-300 hover:bg-amber-50 cursor-pointer transition">⚡ Power Play</button>
                   <button onclick="setAiFilterMode('penalty_kill')" id="ai-filter-penalty_kill" class="px-2.5 py-0.5 rounded-full font-bold bg-white text-indigo-800 border border-indigo-300 hover:bg-indigo-50 cursor-pointer transition">🛡️ Penalty Kill</button>
                   <button onclick="setAiFilterMode('tigers_goals')" id="ai-filter-tigers_goals" class="px-2.5 py-0.5 rounded-full font-bold bg-white text-emerald-800 border border-emerald-400 hover:bg-emerald-50 cursor-pointer transition">🚨 Tigers Goals</button>
@@ -6726,38 +6773,15 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
                 </div>
               </div>
 
-              <p class="text-[11px] text-slate-600 leading-relaxed font-medium">
-                AI analyzes game telemetry (breakouts, zone possession, turnovers, and line shifts) to highlight high-value teaching clips to review with players.
-              </p>
-
-              <!-- List of AI Suggested Clips -->
               <div id="ai-suggested-clips-list" class="space-y-2 pt-1">
-                <!-- Dynamically populated AI Good/Bad play cards -->
+                <!-- Dynamically populated curated AI shortlist -->
               </div>
 
-              <!-- Live AI Re-analyze Button -->
               <div class="pt-1 flex items-center justify-between text-[10px] border-t border-amber-200/80">
-                <span class="text-slate-500 font-mono">Powered by Gemini &amp; Tactical CV</span>
+                <span class="text-slate-500 font-mono">Curated Top Moments (Max 5 Good • Max 5 Fixes)</span>
                 <button onclick="runLiveAiClipReview()" class="px-2.5 py-1 rounded-lg bg-amber-100 hover:bg-amber-200 text-amber-950 font-bold cursor-pointer transition border border-amber-300 flex items-center gap-1 shadow-2xs">
-                  <span>🧠</span> <span>Refresh AI Clip Suggestions</span>
+                  <span>↻</span> <span>Refresh</span>
                 </button>
-              </div>
-            </div>
-
-            <!-- FOLDER CLIP LIST CONTAINER -->
-            <div class="space-y-2">
-              <div class="flex items-center justify-between px-0.5">
-                <div class="flex items-center gap-1.5">
-                  <span id="active-folder-title" class="font-display font-black text-xs uppercase text-slate-800">All Saved Clips</span>
-                  <span id="active-folder-count-badge" class="px-2 py-0.2 rounded-full bg-slate-200 text-slate-700 font-mono font-bold text-[10px]">0</span>
-                </div>
-                <button onclick="clearCurrentFolderClips()" title="Clear clips in this folder" class="text-[10px] text-slate-400 hover:text-rose-600 font-semibold cursor-pointer">
-                  Clear Folder
-                </button>
-              </div>
-
-              <div id="tray-clips-list" class="space-y-2">
-                <!-- Dynamically populated saved clip cards -->
               </div>
             </div>
 
@@ -8480,7 +8504,8 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
       const p2 = Number(pTimes[2] ?? pTimes["2"] ?? 900);
       const p3 = Number(pTimes[3] ?? pTimes["3"] ?? 1800);
 
-      // 1. Period and Stop-Time Clock Calculation
+      // 1. Piecewise Stop-Time Clock Calculation (WARMUP before P1 puck drop; freezes on referee whistles!)
+      let isWarmup = (p1 > 5 && curSec < p1);
       let periodNum = 1;
       let periodStart = p1;
       let periodVideoSpan = Math.max(600, Number(pEnds[1] ?? pEnds["1"] ?? p2) - p1);
@@ -8495,10 +8520,37 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
         periodVideoSpan = Math.max(600, Number(pEnds[2] ?? pEnds["2"] ?? p3) - p2);
       }
 
-      const periodLengthSec = pLengths[periodNum] || 600;
-      const rawElapsed = Math.max(0, curSec - periodStart);
-      const scaledElapsed = Math.round(rawElapsed * (periodLengthSec / periodVideoSpan));
-      let remainingSec = Math.max(0, periodLengthSec - scaledElapsed);
+      const periodLengthSec = pLengths[periodNum] || (periodNum === 1 ? 600 : 900);
+      let remainingSec = periodLengthSec;
+
+      if (!isWarmup) {
+        const rawPShifts = Array.isArray(currentGame.shifts)
+          ? currentGame.shifts.filter(s => Number(s.period || 1) === periodNum && Number(s.start_seconds || 0) >= periodStart)
+          : [];
+        if (rawPShifts.length > 0) {
+          // Piecewise stop-time: clock ONLY ticks during active [start_seconds, end_seconds] shifts!
+          const totalActive = rawPShifts.reduce((acc, s) => acc + Math.max(1, Number(s.end_seconds || 0) - Number(s.start_seconds || 0)), 0);
+          const scale = periodLengthSec / Math.max(180, totalActive);
+          let activeElapsed = 0;
+          for (const s of rawPShifts) {
+            const st = Number(s.start_seconds || 0);
+            const en = Number(s.end_seconds || st + 30);
+            if (curSec >= en) {
+              activeElapsed += Math.max(1, en - st);
+            } else if (curSec > st) {
+              activeElapsed += (curSec - st);
+              break;
+            } else {
+              break;
+            }
+          }
+          remainingSec = Math.max(0, periodLengthSec - Math.round(activeElapsed * scale));
+        } else {
+          const rawElapsed = Math.max(0, curSec - periodStart);
+          const scaledElapsed = Math.round(rawElapsed * (periodLengthSec / periodVideoSpan));
+          remainingSec = Math.max(0, periodLengthSec - scaledElapsed);
+        }
+      }
 
       // Restore saved film calibration from localStorage if not yet loaded on currentGame
       if (currentGame.filmScoreboardCalibration === undefined) {
@@ -8982,12 +9034,16 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
         topTrayBtn.classList.toggle('hidden', !isCoach);
       }
 
-      // Live stream tuner & 1-touch score adjuster visibility (Coach/Admin only)
+      // Live stream tuner, sync bar & 1-touch score adjuster visibility (Coach/Admin only)
       const tunerBar = document.getElementById('live-stream-tuner-bar');
       const scoreAdjusterCard = document.getElementById('live-score-adjuster-card');
+      const streamSyncBar = document.getElementById('player-stream-sync-bar');
+      const railReviewBtn = document.getElementById('rail-btn-review');
       const showLiveControls = (typeof isLiveBroadcastActive !== 'undefined' && isLiveBroadcastActive) && (isCoach || isAdmin);
       if (tunerBar) tunerBar.classList.toggle('hidden', !showLiveControls);
       if (scoreAdjusterCard) scoreAdjusterCard.classList.toggle('hidden', !isCoach && !isAdmin);
+      if (streamSyncBar && !isCoach && !isAdmin) streamSyncBar.classList.add('hidden');
+      if (railReviewBtn) railReviewBtn.classList.toggle('hidden', !isCoach && !isAdmin);
 
       if (notify) {
         if (role === 'admin') {
@@ -46228,6 +46284,10 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
 
     function generateAiClipSuggestions(game) {
       if (!game) return [];
+      const engineName = String(game.ai_engine || '');
+      if (!engineName.includes('Gemini')) {
+        return []; // Never generate fake suggestions before real Gemini scan completes!
+      }
       const gameId = game.id || "game_active";
       if (cachedAiSuggestions[gameId]) {
         return cachedAiSuggestions[gameId];
@@ -46238,8 +46298,11 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
       const parsed = (typeof parseGameScoreAndOpponent === 'function') ? parseGameScoreAndOpponent(game) : { opponent: 'Opponent' };
       const oppName = parsed.opponent || game.opponent || 'Opponent';
 
-      // 1. Highlight Clean Breakouts (Good Plays & Breakouts & Teaching)
-      const cleanBreakouts = shifts.filter(s => s.breakout && s.breakout.attempted && s.breakout.successful);
+      // 1. Highlight Top 3 Clean Breakouts (Max 5 Good Plays total!)
+      const cleanBreakouts = shifts
+        .filter(s => s.breakout && s.breakout.attempted && s.breakout.successful && !s.is_tigers_goal && !s.is_opp_goal)
+        .sort((a, b) => Number(b.confidence || 85) - Number(a.confidence || 85))
+        .slice(0, 3);
       cleanBreakouts.forEach((cb, idx) => {
         const st = Math.round(Number(cb.start_seconds || 0));
         const en = Math.round(Number(cb.end_seconds || (st + 35)));
@@ -46248,7 +46311,7 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
           id: `ai_good_bo_${cb.shift_id || idx + 1}`,
           shift_id: cb.shift_id || idx + 1,
           type: "good_play",
-          is_teaching: idx < 3,
+          is_teaching: true,
           is_breakout: true,
           badge_label: "🟢 Good Play • Breakout",
           badge_cls: "bg-emerald-100 text-emerald-900 border-emerald-300",
@@ -46258,15 +46321,18 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
           endSec: en,
           period: cb.period || 1,
           zone: "Defensive Zone",
-          tactical_insight: cb.coach_notes || "Teaching Gold: Crisp first pass out of the defensive zone under forecheck pressure. Strong defensive wall support.",
+          tactical_insight: cb.coach_notes || "Crisp first pass out of the defensive zone under forecheck pressure.",
           players: cb.player_ids || [21, 28, 23],
           target_folder: "good_plays"
         });
       });
 
-      // 2. Highlight Sustained O-Zone Pressure (Good Plays & Teaching)
-      const oZoneShifts = shifts.filter(s => String(s.primary_zone || '').toLowerCase().includes('offens') && !s.is_tigers_goal);
-      oZoneShifts.slice(0, 3).forEach((oz, idx) => {
+      // 2. Highlight Top 2 Sustained O-Zone Pressure Plays (Completes Max 5 Good Plays)
+      const oZoneShifts = shifts
+        .filter(s => String(s.primary_zone || '').toLowerCase().includes('offens') && !s.is_tigers_goal && !s.is_opp_goal)
+        .sort((a, b) => Number(b.confidence || 85) - Number(a.confidence || 85))
+        .slice(0, 2);
+      oZoneShifts.forEach((oz, idx) => {
         const st = Math.round(Number(oz.start_seconds || 0));
         const en = Math.round(Number(oz.end_seconds || (st + 38)));
         suggestions.push({
@@ -46282,14 +46348,16 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
           endSec: en,
           period: oz.period || 1,
           zone: "Offensive Zone",
-          tactical_insight: oz.coach_notes || "Reinforce Habit: Great puck recovery on the half-wall and defense pinching at the blue line to maintain pressure.",
+          tactical_insight: oz.coach_notes || "Strong puck recovery on the half-wall to maintain offensive pressure.",
           players: oz.player_ids || [9, 10, 7],
           target_folder: "good_plays"
         });
       });
 
-      // 3. Highlight D-Zone Turnovers (Coaching Fixes & Breakouts & Teaching)
-      const turnoverShifts = shifts.filter(s => s.breakout && s.breakout.attempted && !s.breakout.successful);
+      // 3. Highlight Top 5 D-Zone Turnovers (Max 5 Coaching Fixes!)
+      const turnoverShifts = shifts
+        .filter(s => s.breakout && s.breakout.attempted && !s.breakout.successful && !s.is_opp_goal)
+        .slice(0, 5);
       turnoverShifts.forEach((to, idx) => {
         const st = Math.round(Number(to.start_seconds || 0));
         const en = Math.round(Number(to.end_seconds || (st + 35)));
@@ -46478,13 +46546,33 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
       }, 600);
     }
 
+    let trayScopeCurrentGameOnly = true;
+    function toggleTrayGameScope() {
+      trayScopeCurrentGameOnly = !trayScopeCurrentGameOnly;
+      const btn = document.getElementById('tray-scope-toggle-btn');
+      if (btn) {
+        btn.innerText = trayScopeCurrentGameOnly ? '🎯 This Game' : '📚 All Games';
+        btn.className = trayScopeCurrentGameOnly
+          ? 'px-2 py-1 rounded-lg bg-emerald-50 hover:bg-emerald-100 text-emerald-800 font-bold text-[10px] cursor-pointer transition border border-emerald-300'
+          : 'px-2 py-1 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-[10px] cursor-pointer transition border border-slate-300';
+      }
+      renderFilmTrayView();
+    }
+
     function renderAiSuggestedClips() {
       const listEl = document.getElementById('ai-suggested-clips-list');
       if (!listEl || !currentGame) return;
 
       updateAiFilterPillStyles();
+      if (!String(currentGame.ai_engine || '').includes('Gemini')) {
+        listEl.innerHTML = `<div class="p-3 text-center text-xs text-amber-800 bg-amber-50 rounded-xl border border-amber-300 font-medium">⏳ <strong>Queued for AI Video Scan</strong> — Official GameSheet Box Score is ready; curated video clips will appear automatically after the 15-minute AI scan completes.</div>`;
+        return;
+      }
+
       const allSuggestions = generateAiClipSuggestions(currentGame);
       const filtered = allSuggestions.filter(s => suggestionMatchesAiFilter(s, currentAiFilter));
+      const savedClips = getCoachingTrayClips();
+      const gId = currentGame.id || currentGame.youtube_video_id || '';
 
       if (filtered.length === 0) {
         const emptyMsg = currentAiFilter === 'tigers_goals'
@@ -46504,6 +46592,7 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
         const typeBadge = `<span class="px-2 py-0.5 rounded text-[10px] font-black uppercase border ${badgeCls}">${badgeLabel}</span>`;
         const borderCls = isGood ? 'border-emerald-200 hover:border-emerald-400' : (isFix ? 'border-rose-200 hover:border-rose-400' : 'border-amber-200 hover:border-amber-400');
         const bgCls = isGood ? 'bg-emerald-50/40' : (isFix ? 'bg-rose-50/40' : 'bg-amber-50/40');
+        const alreadySaved = savedClips.some(c => c.game_id === gId && Math.abs(Number(c.start_seconds || 0) - Number(s.startSec || 0)) <= 2);
 
         return `
           <div class="p-2.5 rounded-xl border ${borderCls} ${bgCls} space-y-1.5 shadow-2xs transition">
@@ -46517,8 +46606,8 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
                 <button onclick="playClip(${s.startSec}, ${s.endSec}, '${s.title.replace(/'/g, "\\'")}', '${s.shift_id || s.id}'); if(typeof isTheaterMode !== 'undefined' && isTheaterMode && isFlyoutOpen) toggleFlyoutDrawer(false);" class="px-2 py-1 rounded-lg bg-white hover:bg-tigersGold hover:text-slate-950 text-slate-800 font-bold text-[10px] border border-slate-300 cursor-pointer transition shadow-2xs flex items-center gap-1">
                   <span>▶️</span> <span>Play</span>
                 </button>
-                <button onclick="addAiSuggestionToTray('${s.id}')" title="Save to Tray folder" class="px-2 py-1 rounded-lg bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold text-[10px] cursor-pointer transition shadow-2xs flex items-center gap-1">
-                  <span>➕</span> <span>To Tray</span>
+                <button onclick="addAiSuggestionToTray('${s.id}')" title="Save to Tray above" class="px-2 py-1 rounded-lg ${alreadySaved ? 'bg-emerald-600 text-white' : 'bg-amber-500 hover:bg-amber-400 text-slate-950'} font-bold text-[10px] cursor-pointer transition shadow-2xs flex items-center gap-1">
+                  <span>${alreadySaved ? '✅' : '➕'}</span> <span>${alreadySaved ? 'Saved' : 'To Tray'}</span>
                 </button>
               </div>
             </div>
@@ -46533,12 +46622,18 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
       const folderPillsEl = document.getElementById('tray-folder-pills');
       const clipsListEl = document.getElementById('tray-clips-list');
       const folderTitleEl = document.getElementById('active-folder-title');
+      const countBadgeEl = document.getElementById('active-folder-count-badge');
 
       const allFolders = getAllTrayFolders();
       const currentFolderObj = allFolders.find(f => f.id === currentTrayFolder) || allFolders[0];
-      if (folderTitleEl) folderTitleEl.innerText = `${currentFolderObj.icon || '📁'} ${currentFolderObj.name}`;
+      const gId = currentGame ? (currentGame.id || currentGame.youtube_video_id || '') : '';
+      const rawClips = getCoachingTrayClips();
+      const scopedClips = (trayScopeCurrentGameOnly && gId) ? rawClips.filter(c => c.game_id === gId) : rawClips;
+      const scopeSuffix = (trayScopeCurrentGameOnly && currentGame) ? ` • ${(currentGame.title || 'This Game').substring(0, 26)}` : ' • All Games';
+      if (folderTitleEl) folderTitleEl.innerText = `Saved Clips${scopeSuffix}`;
+      if (countBadgeEl) countBadgeEl.innerText = scopedClips.length;
 
-      const allClips = getCoachingTrayClips();
+      const allClips = scopedClips;
       const gameSuggestions = currentGame ? generateAiClipSuggestions(currentGame) : [];
 
       // Render Folder Pills (showing saved tray count + active game breakdown count so every category button shows available clips!)
@@ -65535,7 +65630,7 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
       ]
     }
   },
-  "lastSynced": "2026-11-25T18:51:07.958795Z"
+  "lastSynced": "2026-11-25T20:25:55.958101Z"
 };
 
     function getOpponentGameSheetData(oppNameOrCode) {
@@ -67793,6 +67888,30 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
       if (arenaText) arenaText.innerText = (game.teamsnap && game.teamsnap.arena) ? game.teamsnap.arena : (game.arena || 'York Simcoe League Match');
       if (gsLink) gsLink.href = game.gamesheet_url || game.gameSheetUrl || "https://gamesheetstats.com/seasons/15490/teams/534204/schedule";
 
+      // Explicit AI Analysis Verification & Confidence Banner
+      const aiBanner = document.getElementById('past-game-ai-verify-banner');
+      const aiText = document.getElementById('past-game-ai-verify-text');
+      const aiConf = document.getElementById('past-game-ai-conf-pill');
+      const engineName = String(game.ai_engine || '');
+      const isAiVerified = engineName.includes('Gemini');
+      if (aiBanner && aiText && aiConf) {
+        if (isAiVerified) {
+          const avgConf = game.ai_confidence_avg || 90;
+          const modelBadge = engineName.includes('carbon') ? 'Gemini 4 Carbon' : (engineName.includes('Gemini 4') ? 'Gemini 4' : 'Gemini AI');
+          aiBanner.className = "mt-1 px-2.5 py-1.5 rounded-lg bg-slate-900/90 border border-emerald-500/40 flex items-center justify-between gap-2 text-[10px]";
+          aiText.className = "font-bold text-emerald-300";
+          aiText.innerText = `🟢 AI Video Analyzed (${modelBadge} • ${(game.shifts || []).length} Active Shifts)`;
+          aiConf.className = "font-mono font-black px-1.5 py-0.2 rounded bg-emerald-500/20 text-emerald-300 shrink-0";
+          aiConf.innerText = `${avgConf}% Confidence`;
+        } else {
+          aiBanner.className = "mt-1 px-2.5 py-1.5 rounded-lg bg-amber-950/80 border border-amber-400/50 flex items-center justify-between gap-2 text-[10px]";
+          aiText.className = "font-bold text-amber-300";
+          aiText.innerText = `🟡 Queued for AI Video Scan — Official Box Score Ready`;
+          aiConf.className = "font-mono font-black px-1.5 py-0.2 rounded bg-amber-400/20 text-amber-200 shrink-0";
+          aiConf.innerText = `Pending Scan`;
+        }
+      }
+
       // Video Analytics: Real Zone Time derived from observed shifts
       const analytics = game.analytics || {};
       const gameShifts = (game.shifts && Array.isArray(game.shifts)) ? game.shifts : [];
@@ -67883,7 +68002,12 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
             statSog.title = `YSMHL timekeeper did not record shot totals on GameSheet iPad for this game`;
           }
         }
-        if (statPim) statPim.innerText = `${gsBox.pim ?? (pkOpp * 2)} mins`;
+        if (statPim) {
+          const tigPim = gsBox.tigersPim ?? gsBox.pim ?? (pkOpp * 2);
+          const oppPim = gsBox.oppPim ?? (ppCh * 2);
+          statPim.innerText = `TIG ${tigPim}m • OPP ${oppPim}m`;
+          statPim.title = `Aurora Tigers: ${tigPim} penalty mins (${pkOpp} PK) • Opponent: ${oppPim} penalty mins (${ppCh} PP)`;
+        }
       } else {
         if (statPp) statPp.innerText = `Tournament`;
         if (statPk) statPk.innerText = `Tournament`;
@@ -68046,6 +68170,30 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
       }
     }
 
+    function switchPastGameSubTab(tab) {
+      const clipsSub = document.getElementById('past-game-subview-clips');
+      const shiftsCard = document.getElementById('past-game-shifts-card');
+      const statsSub = document.getElementById('past-game-subview-stats');
+      const bClips = document.getElementById('pg-subtab-btn-clips');
+      const bStats = document.getElementById('pg-subtab-btn-stats');
+
+      const showClips = (tab !== 'stats');
+      if (clipsSub) clipsSub.classList.toggle('hidden', !showClips);
+      if (shiftsCard) shiftsCard.classList.toggle('hidden', !showClips);
+      if (statsSub) statsSub.classList.toggle('hidden', showClips);
+
+      if (bClips) {
+        bClips.className = showClips
+          ? "flex-1 py-1.5 px-2 rounded-lg bg-slate-900 text-amber-400 shadow-xs cursor-pointer transition flex items-center justify-center gap-1"
+          : "flex-1 py-1.5 px-2 rounded-lg text-slate-700 hover:bg-white cursor-pointer transition flex items-center justify-center gap-1";
+      }
+      if (bStats) {
+        bStats.className = !showClips
+          ? "flex-1 py-1.5 px-2 rounded-lg bg-slate-900 text-amber-400 shadow-xs cursor-pointer transition flex items-center justify-center gap-1"
+          : "flex-1 py-1.5 px-2 rounded-lg text-slate-700 hover:bg-white cursor-pointer transition flex items-center justify-center gap-1";
+      }
+    }
+
     function setPastGameShiftFilter(filterId) {
       window.currentPastGameShiftFilter = filterId || 'all';
       if (currentGame && typeof renderSidebarPastGameIntel === 'function') {
@@ -68112,6 +68260,9 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
     function getTopPrepClipsForGame(game) {
       const targetGame = game || currentGame;
       if (!targetGame) return [];
+      if (!String(targetGame.ai_engine || '').includes('Gemini')) {
+        return []; // Wait for real Gemini period & whistle scan so clips never land in warmups!
+      }
       const gKey = targetGame.id || targetGame.youtube_video_id || '';
       const overrides = getGoalTimeOverridesMap();
       let list = [];
