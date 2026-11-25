@@ -2,7 +2,7 @@ name: Auto-Sync YouTube Games & GameSheet
 
 on:
   schedule:
-    - cron: '0 * * * *'
+    - cron: '*/15 * * * *'
   workflow_dispatch:
 
 permissions:
@@ -25,7 +25,10 @@ jobs:
           sudo apt-get update && sudo apt-get install -y ffmpeg
           pip install --upgrade yt-dlp google-genai requests opencv-python-headless numpy ultralytics
 
-      - name: Run Auto Sync Script (Gemini Shift & Zone Breakdown)
+      - name: Sync Live GameSheet Data (York Simcoe U13A Season #15490)
+        run: python sync_gamesheet.py || true
+
+      - name: Run Auto Sync Script (Two-Pass High-Accuracy Gemini + GameSheet Alignment)
         run: python auto_sync.py
         env:
           YOUTUBE_SOURCE: "https://www.youtube.com/playlist?list=PLXFVFYYSmylE"
@@ -38,9 +41,6 @@ jobs:
         run: python cv_tracker.py --library games_library.json --out-dir tracking || true
         env:
           YT_COOKIES: ${{ secrets.YT_COOKIES }}
-
-      - name: Sync Live GameSheet Data (York Simcoe U13A Season #15490)
-        run: python sync_gamesheet.py || true
 
       - name: Commit & Push Changes
         run: |

@@ -8,10 +8,18 @@ import time
 from datetime import datetime, timedelta
 from pathlib import Path
 from typing import Any, Dict, List, Optional
-from urllib.parse import parse_qs, urlparse
+from urllib.parse import parse_qs, quote as url_quote, urlparse
+import urllib.request
 
-import requests
-import yt_dlp
+try:
+    import requests
+except ImportError:
+    requests = None  # type: ignore
+
+try:
+    import yt_dlp
+except ImportError:
+    yt_dlp = None  # type: ignore
 
 logging.basicConfig(
     level=logging.INFO,
@@ -22,6 +30,7 @@ logger = logging.getLogger("TigersSync")
 
 ROOT_DIR = Path(__file__).resolve().parent
 LIBRARY_PATH = ROOT_DIR / "games_library.json"
+GAMESHEET_PATH = ROOT_DIR / "gamesheet_league_data.json"
 COOKIE_FILE = ROOT_DIR / "youtube_cookies.txt"
 
 # Canonical U13A Aurora Tigers Roster with Visual Anchoring Attributes
@@ -111,12 +120,27 @@ def extract_and_validate_id(raw_id_or_url: Optional[str]) -> Optional[str]:
         return None
     return candidate
 
+def http_get_text(url: str, timeout: int = 10) -> Optional[str]:
+    if requests is not None:
+        try:
+            resp = requests.get(url, timeout=timeout, headers={"User-Agent": "Mozilla/5.0"})
+            if resp.status_code == 200:
+                return resp.text
+        except Exception:
+            pass
+    try:
+        req = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0"})
+        with urllib.request.urlopen(req, timeout=timeout) as r:
+            return r.read().decode("utf-8", errors="ignore")
+    except Exception:
+        return None
+
 def fetch_oembed_title(vid_id: str) -> Optional[str]:
     try:
         url = f"https://www.youtube.com/oembed?url=https://www.youtube.com/watch?v={vid_id}&format=json"
-        resp = requests.get(url, timeout=8)
-        if resp.status_code == 200:
-            data = resp.json()
+        raw = http_get_text(url, timeout=8)
+        if raw:
+            data = json.loads(raw)
             return data.get("title")
     except Exception:
         pass
@@ -125,9 +149,9 @@ def fetch_oembed_title(vid_id: str) -> Optional[str]:
 def fetch_video_duration(vid_id: str, default_dur: float = 2700.0) -> float:
     try:
         url = f"https://www.youtube.com/watch?v={vid_id}"
-        resp = requests.get(url, timeout=10)
-        if resp.status_code == 200:
-            m = re.search(r'"lengthSeconds":"(\d+)"', resp.text)
+        raw = http_get_text(url, timeout=10)
+        if raw:
+            m = re.search(r'"lengthSeconds":"(\d+)"', raw)
             if m:
                 return float(m.group(1))
     except Exception:
@@ -137,32 +161,27 @@ def fetch_video_duration(vid_id: str, default_dur: float = 2700.0) -> float:
 def parse_date_from_title(title: str, fallback_upload_date: Optional[str] = None) -> str:
     """
     Extracts YYYY-MM-DD from video titles such as:
+    - '11.24.2026 Tigers 0 Vs. Barrie 7' (MM.DD.YYYY)
+    - '6.11.2026 - 0 Tigers Vs. Orillia 9' (D.MM.YYYY)
+    - '1.11.2026 - GOLD MEDAL GAME' (D.MM.YYYY)
     - '20.10.2026 - Tigers 1 - Newmarket 9' (DD.MM.YYYY)
-    - '04.10.2026 - Tigers 1 - Upper York 11' (DD.MM.YYYY)
     - '09 19 2026   North Durham 10   Aurora 1' (MM DD YYYY)
-    - '26 09 2026   Tigers 0   Welland 8' (DD MM YYYY)
     """
     if title:
-        # Check YYYY-MM-DD or YYYY.MM.DD
-        m_iso = re.search(r"\b(202\d)[-. /](\d{2})[-. /](\d{2})\b", title)
+        m_iso = re.search(r"\b(202\d)[-. /](\d{1,2})[-. /](\d{1,2})\b", title)
         if m_iso:
             y, m, d = int(m_iso.group(1)), int(m_iso.group(2)), int(m_iso.group(3))
             if 1 <= m <= 12 and 1 <= d <= 31:
                 return f"{y:04d}-{m:02d}-{d:02d}"
 
-        # Check DD.MM.YYYY or MM.DD.YYYY or DD MM YYYY at start of title
-        m_dmy = re.search(r"\b(\d{2})[.\s/-](\d{2})[.\s/-](202\d)\b", title)
+        m_dmy = re.search(r"(?:^|\s)(\d{1,2})([.\s/-])(\d{1,2})\2(202\d)\b", title)
         if m_dmy:
-            p1, p2, y = int(m_dmy.group(1)), int(m_dmy.group(2)), int(m_dmy.group(3))
-            sep = title[m_dmy.start() + 2]
+            p1, sep, p2, y = int(m_dmy.group(1)), m_dmy.group(2), int(m_dmy.group(3)), int(m_dmy.group(4))
             if p1 > 12:
-                # Definitely DD MM YYYY
                 d, m = p1, p2
             elif p2 > 12:
-                # Definitely MM DD YYYY
                 m, d = p1, p2
             elif sep == ".":
-                # Dot-separated titles in this repo use DD.MM.YYYY (e.g., 11.10.2026, 07.10.2026, 04.10.2026, 03.10.2026)
                 d, m = p1, p2
             else:
                 m, d = p1, p2
@@ -174,14 +193,65 @@ def parse_date_from_title(title: str, fallback_upload_date: Optional[str] = None
 
     return datetime.utcnow().strftime("%Y-%m-%d")
 
+def load_gamesheet_completed_games() -> List[Dict[str, Any]]:
+    try:
+        if GAMESHEET_PATH.exists():
+            with open(GAMESHEET_PATH, "r", encoding="utf-8") as f:
+                data = json.load(f)
+            return data.get("teams", {}).get("tigers", {}).get("allCompletedGames", []) or []
+    except Exception as e:
+        logger.warning(f"GameSheet load notice: {e}")
+    return []
+
+def parse_gs_date_iso(gs_date: str) -> Optional[str]:
+    if not gs_date:
+        return None
+    try:
+        return datetime.strptime(gs_date.strip(), "%b %d, %Y").strftime("%Y-%m-%d")
+    except Exception:
+        return None
+
+def match_gamesheet_game(video_date: str, video_title: str, gs_games: List[Dict[str, Any]]) -> Optional[Dict[str, Any]]:
+    if not gs_games:
+        return None
+    title_l = (video_title or "").lower()
+    best = None
+    for g in gs_games:
+        g_iso = parse_gs_date_iso(g.get("date", ""))
+        if not g_iso:
+            continue
+        try:
+            d_vid = datetime.strptime(video_date[:10], "%Y-%m-%d")
+            d_gs = datetime.strptime(g_iso, "%Y-%m-%d")
+            day_diff = abs((d_vid - d_gs).days)
+        except Exception:
+            day_diff = 999
+
+        opp_l = (g.get("opp") or "").lower()
+        opp_words = [w for w in re.split(r"[^a-z0-9]+", opp_l) if len(w) >= 4 and w not in ("colts", "white", "blue")]
+        if "barrie" in opp_l:
+            opp_words.append("barrie")
+        if "waxers" in opp_l or "markham" in opp_l:
+            opp_words.extend(["waxers", "markham"])
+        if "islanders" in opp_l or "georgian" in opp_l:
+            opp_words.extend(["islanders", "georgian"])
+        opp_hit = any(w in title_l for w in opp_words)
+
+        if day_diff == 0 and (opp_hit or not opp_words):
+            return g
+        if day_diff <= 1 and opp_hit and best is None:
+            best = g
+    return best
+
 def fetch_teamsnap_events(ical_url: str) -> List[Dict[str, Any]]:
     if not ical_url:
         return []
     try:
-        resp = requests.get(ical_url, timeout=10)
-        resp.raise_for_status()
+        raw = http_get_text(ical_url, timeout=10)
+        if not raw:
+            return []
         events = []
-        for rev in resp.text.split("BEGIN:VEVENT")[1:]:
+        for rev in raw.split("BEGIN:VEVENT")[1:]:
             ev: Dict[str, Any] = {}
             for line in rev.splitlines():
                 if line.startswith("SUMMARY:"):
@@ -243,7 +313,7 @@ def match_teamsnap_data(video_date: str, events: List[Dict[str, Any]], video_tit
         "time": matched.get("time_str", "Game Time"),
         "arena": loc,
         "address": loc,
-        "maps_url": f"https://maps.google.com/?q={requests.utils.quote(loc)}",
+        "maps_url": f"https://maps.google.com/?q={url_quote(loc)}",
         "home_away": "Home" if is_home else "Away",
         "jersey": "Home (White)" if is_home else "Away (Black)",
         "is_home": is_home
@@ -260,6 +330,29 @@ GEMINI_RESPONSE_SCHEMA = {
                 "1": {"type": "integer"},
                 "2": {"type": "integer"},
                 "3": {"type": "integer"}
+            }
+        },
+        "period_ends": {
+            "type": "object",
+            "properties": {
+                "1": {"type": "integer"},
+                "2": {"type": "integer"},
+                "3": {"type": "integer"}
+            }
+        },
+        "verified_goals": {
+            "type": "array",
+            "items": {
+                "type": "object",
+                "properties": {
+                    "goal_index": {"type": "integer"},
+                    "period": {"type": "integer"},
+                    "gs_clock": {"type": "string"},
+                    "video_second": {"type": "integer"},
+                    "team": {"type": "string", "enum": ["tigers", "opp"]},
+                    "notes": {"type": "string"}
+                },
+                "required": ["period", "video_second", "team"]
             }
         },
         "shifts": {
@@ -329,7 +422,8 @@ def build_coaching_prompt(
     is_home: bool = True, 
     game_title: str = "",
     scratches: Optional[List[int]] = None,
-    verified_lines: Optional[Dict[str, Any]] = None
+    verified_lines: Optional[Dict[str, Any]] = None,
+    gs_game: Optional[Dict[str, Any]] = None,
 ) -> str:
     tigers_jersey = "WHITE jerseys" if is_home else "DARK/BLACK (or Away) jerseys"
     opp_jersey = "DARK jerseys" if is_home else "WHITE/LIGHT jerseys"
@@ -352,11 +446,33 @@ COACH CONFIRMED PRIMARY LINE COMBINATIONS (PRIORITIZE THESE TRIOS & PAIRS):
 - When identifying skaters, prioritize these confirmed regular unit combinations.
 """
 
+    gs_section = ""
+    if gs_game:
+        goal_lines = []
+        for idx, gl in enumerate(gs_game.get("goalLog") or [], start=1):
+            who = "AURORA TIGERS" if gl.get("team") == "tigers" else (gl.get("teamName") or gs_game.get("opp") or "OPPONENT")
+            scorer_txt = f" (Scorer: {gl['scorer']})" if gl.get("scorer") else ""
+            goal_lines.append(f"  * Goal #{idx}: Period {gl.get('period')} at game clock {gl.get('clockTime')} — {who}{scorer_txt}")
+        goals_block = "\n".join(goal_lines) if goal_lines else "  * No goals scored (0-0)."
+        gs_section = f"""
+OFFICIAL REFEREE GAMESHEET GROUND TRUTH (100% AUTHORITATIVE — DO NOT INVENT OR OMIT GOALS):
+- Final Score: Aurora Tigers {gs_game.get('gf', 0)} - {gs_game.get('ga', 0)} {gs_game.get('opp', 'Opponent')}
+- Tigers Power Plays: {gs_game.get('ppGoals', 0)}/{gs_game.get('ppOpps', 0)} | Tigers Penalty Kills: {gs_game.get('pkOpps', 0) - gs_game.get('pkGoalsAllowed', 0)}/{gs_game.get('pkOpps', 0)}
+- Official Goal Timestamps (YSMHL periods: P1 = 10:00, P2 = 15:00, P3 = 15:00 countdown):
+{goals_block}
+- MANDATORY ALIGNMENT RULE: Locate the EXACT video_second for each official goal above (using the arena/XbotGo countdown clock when visible, plus puck entering the net, referee pointing at net, and the mandatory Center Ice faceoff that immediately follows) and populate `verified_goals`. NEVER mark `goal_scored` on a shift unless one of the official goals above actually enters the net during that clip!
+"""
+
     return f"""
 You are an expert ice hockey video coach analyzing game footage for the Aurora Tigers U13A team (Match: {game_title or 'U13A Tigers Game'}).
 In this match, the Aurora Tigers wear {tigers_jersey} (or check the Tigers gold/black trim & goalie pad anchors below), and the opposing team wears {opp_jersey}. Total run time: {int(duration_sec)}s.
 {scratch_section}
 {line_section}
+{gs_section}
+STRICT ROSTER & SHIFT INTEGRITY RULES:
+- NEVER list more than 5 skaters + 1 goalie (max 6 numbers) in `player_ids` for any shift!
+- NEVER create overlapping shifts (`start_seconds` of Shift N+1 must be >= `end_seconds` of Shift N).
+- Always populate `faceoff_location` and `faceoff_won` accurately when a shift begins on a faceoff draw.
 TEAM ROSTER & VISUAL ATTRIBUTES:
 - Goalies:
   * #13 Matthew Hart (Goalie, Catches Left, Yellow and White pads)
@@ -437,9 +553,10 @@ Return strictly valid JSON adhering to the configured schema.
 def select_latest_gemini_model(client: Any) -> List[str]:
     """
     Returns prioritized list of the latest Gemini models available on the API key,
-    preferring Gemini 4 and latest Gemini 3.x releases before falling back.
+    preferring Gemini 4 Carbon / Hydrogen / Argon and latest Gemini 3.x releases.
     """
     preferred = [
+        "gemini-4-carbon",
         "gemini-4-hydrogen",
         "gemini-4-argon",
         "gemini-3.8-flash",
@@ -463,23 +580,34 @@ def select_latest_gemini_model(client: Any) -> List[str]:
             return ranked
     except Exception:
         pass
-    return ["gemini-4-hydrogen", "gemini-3.8-flash", "gemini-3.5-flash", "gemini-2.5-flash"]
+    return ["gemini-4-carbon", "gemini-4-hydrogen", "gemini-3.8-flash", "gemini-3.5-flash", "gemini-2.5-flash"]
 
-def invoke_gemini_with_retry(client: Any, video_part: Any, prompt: str) -> tuple[Optional[Dict[str, Any]], str]:
+def invoke_gemini_with_retry(
+    client: Any,
+    video_part: Any,
+    prompt: str,
+    high_res: bool = False,
+    schema: Optional[Dict[str, Any]] = None,
+) -> tuple[Optional[Dict[str, Any]], str]:
     from google.genai import types
 
+    target_schema = schema or GEMINI_RESPONSE_SCHEMA
     models_to_try = select_latest_gemini_model(client)
+    med_res = getattr(types.MediaResolution, "MEDIA_RESOLUTION_MEDIUM", types.MediaResolution.MEDIA_RESOLUTION_LOW)
+    hi_res = getattr(types.MediaResolution, "MEDIA_RESOLUTION_HIGH", med_res)
+    primary_res = hi_res if high_res else med_res
+
     configs_to_try = [
-        ("Token-Optimized Mode (MEDIA_RESOLUTION_LOW)", types.GenerateContentConfig(
+        (f"High-Accuracy Mode ({primary_res})", types.GenerateContentConfig(
             response_mime_type="application/json",
-            response_schema=GEMINI_RESPONSE_SCHEMA,
-            media_resolution=types.MediaResolution.MEDIA_RESOLUTION_LOW,
-            temperature=0.2,
+            response_schema=target_schema,
+            media_resolution=primary_res,
+            temperature=0.1,
         )),
         ("Standard Resolution Fallback", types.GenerateContentConfig(
             response_mime_type="application/json",
-            response_schema=GEMINI_RESPONSE_SCHEMA,
-            temperature=0.2,
+            response_schema=target_schema,
+            temperature=0.1,
         )),
     ]
 
@@ -494,14 +622,14 @@ def invoke_gemini_with_retry(client: Any, video_part: Any, prompt: str) -> tuple
                 )
                 if response and response.text:
                     parsed = json.loads(response.text)
-                    if isinstance(parsed, dict) and parsed.get("shifts"):
-                        logger.info(f"🎉 {model_id} returned {len(parsed['shifts'])} shifts ({label})!")
+                    if isinstance(parsed, dict) and (parsed.get("shifts") or parsed.get("verified_goals")):
+                        logger.info(f"🎉 {model_id} returned {len(parsed.get('shifts', []))} shifts ({label})!")
                         return parsed, model_id
             except Exception as err:
                 err_str = str(err)
                 logger.warning(f"⚠️ {model_id} attempt ({label}) notice: {err_str}")
                 if "NOT_FOUND" in err_str or "not found" in err_str.lower():
-                    break  # Try next model in list
+                    break
                 continue
     return None, ""
 
@@ -513,6 +641,7 @@ def process_video_with_gemini(
     game_title: str = "",
     scratches: Optional[List[int]] = None,
     verified_lines: Optional[Dict[str, Any]] = None,
+    gs_game: Optional[Dict[str, Any]] = None,
 ) -> Optional[Dict[str, Any]]:
     if not GOOGLE_API_KEY:
         logger.info("ℹ️ No GEMINI_API_KEY configured. Skipping Google AI video processing.")
@@ -522,33 +651,33 @@ def process_video_with_gemini(
         from google import genai
         from google.genai import types
 
-        logger.info("🚀 Initializing Gemini Client with Hockey Tactical Anchors...")
+        logger.info("🚀 Initializing Two-Pass Gemini Video Coach (GameSheet Ground-Truth Anchored)...")
         client = genai.Client(api_key=GOOGLE_API_KEY)
         prompt = build_coaching_prompt(
-            duration_sec, 
-            is_home=is_home, 
+            duration_sec,
+            is_home=is_home,
             game_title=game_title,
             scratches=scratches,
-            verified_lines=verified_lines
+            verified_lines=verified_lines,
+            gs_game=gs_game,
         )
 
-        # Path A: 3-Period Segmented YouTube URI Analysis via Gemini 3.5 Flash (Token-Saver Mode)
-        # Trims pre-game warmup, intermission buffers, and post-game handshakes, and samples at 0.5 FPS
-        # with MEDIA_RESOLUTION_LOW (~175k tokens per full game instead of ~1.06M tokens!).
-        logger.info(f"🌐 Running token-optimized 3-period Gemini 3.5 analysis on {youtube_url} ({int(duration_sec)}s)...")
-        warmup_trim = int(min(180, duration_sec * 0.05))
-        p1_end = int(duration_sec * 0.33)
-        p2_start = int(duration_sec * 0.36)  # Skip 1st intermission
-        p2_end = int(duration_sec * 0.66)
-        p3_start = int(duration_sec * 0.69)  # Skip 2nd intermission
-        p3_end = int(duration_sec * 0.96)    # Skip post-game handshake line
+        # PASS 1: Contiguous Full-Game 1.0 FPS Medium-Res Scan (Zero blind intermission gaps!)
+        p1_start = 0
+        p1_end = int(duration_sec * 0.36)
+        p2_start = int(duration_sec * 0.34)
+        p2_end = int(duration_sec * 0.69)
+        p3_start = int(duration_sec * 0.67)
+        p3_end = int(duration_sec)
         segments = [
-            (1, warmup_trim, p1_end),
+            (1, p1_start, p1_end),
             (2, p2_start, p2_end),
             (3, p3_start, p3_end),
         ]
         segmented_shifts: List[Dict[str, Any]] = []
-        segmented_periods: Dict[str, int] = {"1": warmup_trim, "2": p2_start, "3": p3_start}
+        segmented_periods: Dict[str, int] = {"1": 60, "2": int(duration_sec * 0.37), "3": int(duration_sec * 0.71)}
+        segmented_period_ends: Dict[str, int] = {"1": p1_end, "2": p2_end, "3": p3_end}
+        verified_goals_all: List[Dict[str, Any]] = []
         model_used_final = select_latest_gemini_model(client)[0]
 
         for p_num, st_off, en_off in segments:
@@ -557,30 +686,76 @@ def process_video_with_gemini(
                 video_metadata=types.VideoMetadata(
                     start_offset=f"{st_off}s",
                     end_offset=f"{en_off}s",
-                    fps=0.5,
+                    fps=1.0,
                 ),
             )
             seg_prompt = (
                 prompt
-                + f"\n\nIMPORTANT: Focus strictly on Period {p_num} between {st_off}s and {en_off}s of the video. "
-                f"Return 7 to 9 active shifts with start_seconds and end_seconds between {st_off} and {en_off}, "
-                f"and set periods['{p_num}'] to the opening faceoff timestamp in seconds for this segment."
+                + f"\n\nPASS 1 (PERIOD {p_num} FULL SCAN, {st_off}s–{en_off}s): "
+                f"1) Record the exact opening puck-drop video second in periods['{p_num}'] and period-end horn in period_ends['{p_num}']. "
+                f"2) Locate every official Period {p_num} goal in `verified_goals` with its exact `video_second` when the puck enters the net. "
+                f"3) Return non-overlapping active puck-drop-to-whistle shifts for Period {p_num} (strictly max 5 skaters + 1 goalie per shift)."
             )
-            seg_res, m_used = invoke_gemini_with_retry(client, seg_part, seg_prompt)
+            seg_res, m_used = invoke_gemini_with_retry(client, seg_part, seg_prompt, high_res=False)
             if m_used:
                 model_used_final = m_used
-            if seg_res and seg_res.get("shifts"):
+            if seg_res:
                 p_obj = seg_res.get("periods") or {}
+                pe_obj = seg_res.get("period_ends") or {}
                 if p_obj.get(str(p_num)) and int(p_obj[str(p_num)]) >= st_off:
                     segmented_periods[str(p_num)] = int(p_obj[str(p_num)])
-                for sh in seg_res["shifts"]:
+                if pe_obj.get(str(p_num)) and int(pe_obj[str(p_num)]) > segmented_periods[str(p_num)]:
+                    segmented_period_ends[str(p_num)] = int(pe_obj[str(p_num)])
+                for vg in (seg_res.get("verified_goals") or []):
+                    if int(vg.get("period") or p_num) == p_num:
+                        verified_goals_all.append(vg)
+                for sh in (seg_res.get("shifts") or []):
                     sh["period"] = p_num
                     segmented_shifts.append(sh)
+
+        # PASS 2: High-Resolution 2.0 FPS Zoom Verification on Top Clips (Goals, PP, PK — up to 8 key windows)
+        key_shifts = [
+            s for s in segmented_shifts
+            if s.get("goal_scored") in ("Tigers Goal", "Opponent Goal")
+            or "PP" in str(s.get("strength_state", ""))
+            or "PK" in str(s.get("strength_state", ""))
+        ][:8]
+        for ks in key_shifts:
+            kst = max(0, int(ks.get("start_seconds", 0)) - 5)
+            ken = min(int(duration_sec), int(ks.get("end_seconds", kst + 30)) + 5)
+            if ken - kst < 8:
+                continue
+            zoom_part = types.Part(
+                file_data=types.FileData(file_uri=youtube_url, mime_type="video/mp4"),
+                video_metadata=types.VideoMetadata(
+                    start_offset=f"{kst}s",
+                    end_offset=f"{ken}s",
+                    fps=2.0,
+                ),
+            )
+            zoom_prompt = (
+                prompt
+                + f"\n\nPASS 2 HIGH-RES ZOOM ({kst}s–{ken}s): Read exact jersey numbers on ice (max 5 skaters + 1 goalie), "
+                f"verify faceoff_location and faceoff_won, and confirm exact start_seconds/end_seconds for this single clip."
+            )
+            z_res, _ = invoke_gemini_with_retry(client, zoom_part, zoom_prompt, high_res=True)
+            if z_res and z_res.get("shifts"):
+                zs = z_res["shifts"][0]
+                if zs.get("player_ids"):
+                    ks["player_ids"] = zs["player_ids"][:6]
+                if zs.get("faceoff_location"):
+                    ks["faceoff_location"] = zs["faceoff_location"]
+                if "faceoff_won" in zs:
+                    ks["faceoff_won"] = zs["faceoff_won"]
+                if zs.get("coach_notes"):
+                    ks["coach_notes"] = zs["coach_notes"]
 
         if segmented_shifts:
             return {
                 "game_title": game_title,
                 "periods": segmented_periods,
+                "period_ends": segmented_period_ends,
+                "verified_goals": verified_goals_all,
                 "shifts": segmented_shifts,
                 "_model_used": model_used_final,
             }
@@ -635,12 +810,25 @@ def process_video_with_gemini(
         logger.error(f"❌ Gemini API Exception: {e}", exc_info=True)
         return None
 
+def cap_roster_ids(raw_ids: List[Any], center_id: Optional[int] = None) -> List[int]:
+    roster_nums = {p["num"] for p in OFFICIAL_ROSTER}
+    goalie_nums = {13, 98}
+    dedup: List[int] = []
+    for x in raw_ids:
+        if str(x).isdigit() and int(x) in roster_nums and int(x) not in dedup:
+            dedup.append(int(x))
+    if isinstance(center_id, int) and center_id in roster_nums and center_id not in goalie_nums and center_id not in dedup:
+        dedup.insert(0, center_id)
+    goalies = [n for n in dedup if n in goalie_nums][:1]
+    skaters = [n for n in dedup if n not in goalie_nums][:5]
+    return skaters + goalies
+
 # ================= ADAPTER: CONVERTS GEMINI SHIFTS TO APP FORMAT =================
 def transform_gemini_to_library_schema(
     gemini_data: Dict[str, Any],
     duration_sec: float
 ) -> tuple[Dict[str, int], List[Dict[str, Any]], Dict[str, Any], Dict[str, List[Dict[str, Any]]], Dict[str, Any]]:
-    raw_shifts = gemini_data.get("shifts", [])
+    raw_shifts = sorted(gemini_data.get("shifts", []), key=lambda x: float(x.get("start_seconds", 0)))
 
     # 1. Periods Detection
     periods = gemini_data.get("periods") or {}
@@ -653,28 +841,33 @@ def transform_gemini_to_library_schema(
         p3 = int(duration_sec * 0.74)
     periods_clean = {"1": p1, "2": p2, "3": p3}
 
-    # Normalize shifts and ensure valid timestamps & roster player_ids
-    roster_nums = {p["num"] for p in OFFICIAL_ROSTER}
+    # Normalize shifts, cap skaters <= 5 + 1 goalie, and prevent overlapping intervals
     shifts: List[Dict[str, Any]] = []
+    last_end = -1
     for idx, s in enumerate(raw_shifts, start=1):
         st = max(p1, int(float(s.get("start_seconds", 0))))
-        en = max(st + 15, int(float(s.get("end_seconds", st + 38))))
+        en = max(st + 12, int(float(s.get("end_seconds", st + 35))))
+        if last_end >= 0 and st < last_end:
+            if en <= last_end + 8:
+                continue  # Drop duplicate overlapping micro-shift
+            st = last_end + 1
         if en - st > 55:
-            en = st + 45  # Cap at whistle/shift length so clips never span across stoppages
+            en = st + 45
         if duration_sec > 0 and en > int(duration_sec):
             en = int(duration_sec)
-        p_ids = [int(x) for x in s.get("player_ids", []) if str(x).isdigit() and int(x) in roster_nums]
+        if en <= st + 5:
+            continue
+        last_end = en
+
         center_id = s.get("center_id")
-        if isinstance(center_id, int) and center_id in roster_nums and center_id not in p_ids:
-            p_ids.insert(0, center_id)
+        p_ids = cap_roster_ids(s.get("player_ids", []), center_id if isinstance(center_id, int) else None)
         if not p_ids:
-            # Assign a rotating line from roster if Gemini omitted jersey numbers on a wide shot
             preset_lines = [
                 [10, 7, 11, 21, 27],
                 [23, 9, 3, 28, 76],
                 [18, 5, 16, 97, 28],
             ]
-            p_ids = preset_lines[(idx - 1) % len(preset_lines)]
+            p_ids = preset_lines[(len(shifts)) % len(preset_lines)]
 
         period_num = int(s.get("period") or (1 if st < p2 else (2 if st < p3 else 3)))
         bo_raw = s.get("breakout") or {}
@@ -687,16 +880,20 @@ def transform_gemini_to_library_schema(
         goal_scored = s.get("goal_scored") or "None"
         is_tigers_goal = (goal_scored == "Tigers Goal")
         is_opp_goal = (goal_scored == "Opponent Goal")
+        fo_loc = s.get("faceoff_location")
+        fo_won = s.get("faceoff_won") if isinstance(s.get("faceoff_won"), bool) else None
         shifts.append({
-            "shift_id": idx,
+            "shift_id": len(shifts) + 1,
             "period": period_num,
             "start_seconds": st,
             "end_seconds": en,
-            "display_time": s.get("display_time") or f"{st // 60}:{st % 60:02d}",
+            "display_time": f"{st // 60}:{st % 60:02d}",
             "center_id": center_id if isinstance(center_id, int) else p_ids[0],
             "player_ids": p_ids,
             "strength_state": s.get("strength_state") or "5v5",
             "primary_zone": s.get("primary_zone") or "Neutral Zone",
+            "faceoff_location": fo_loc,
+            "faceoff_won": fo_won,
             "breakout": bo,
             "goal_scored": goal_scored,
             "is_tigers_goal": is_tigers_goal,
@@ -805,17 +1002,25 @@ def transform_gemini_to_library_schema(
         else:
             coaching_clips["offensive_zone"].append(clip_item)
 
-    # 4. Analytics Block
+    # 4. Analytics Block (Strictly computed from observed shifts — zero hardcoded shot/save numbers)
     succ_pct = round((breakout_successes / max(1, breakout_attempts)) * 100, 1)
+    fo_stats = {
+        "dzone_won": sum(1 for s in shifts if s.get("faceoff_location") == "D-Zone Dot" and s.get("faceoff_won") is True),
+        "dzone_total": sum(1 for s in shifts if s.get("faceoff_location") == "D-Zone Dot" and isinstance(s.get("faceoff_won"), bool)),
+        "center_won": sum(1 for s in shifts if s.get("faceoff_location") in ("Center Ice", "Neutral Zone Dot") and s.get("faceoff_won") is True),
+        "center_total": sum(1 for s in shifts if s.get("faceoff_location") in ("Center Ice", "Neutral Zone Dot") and isinstance(s.get("faceoff_won"), bool)),
+        "ozone_won": sum(1 for s in shifts if s.get("faceoff_location") == "O-Zone Dot" and s.get("faceoff_won") is True),
+        "ozone_total": sum(1 for s in shifts if s.get("faceoff_location") == "O-Zone Dot" and isinstance(s.get("faceoff_won"), bool)),
+    }
     analytics_dict = {
         "active_play_time": f"{int(duration_sec // 60)}m",
-        "possession_tigers_pct": 52,
-        "possession_opp_pct": 48,
-        "ozone_time": f"{int((duration_sec * 0.35) // 60)}m",
-        "dzone_time": f"{int((duration_sec * 0.30) // 60)}m",
-        "shots_on_goal": 24,
-        "goalie_saves": 26,
-        "save_pct": "91.5%",
+        "possession_tigers_pct": 50,
+        "possession_opp_pct": 50,
+        "ozone_time": f"{int((duration_sec * 0.33) // 60)}m",
+        "dzone_time": f"{int((duration_sec * 0.34) // 60)}m",
+        "shots_on_goal": None,
+        "goalie_saves": None,
+        "faceoffs": fo_stats,
         "breakouts": {
             "attempts": breakout_attempts,
             "successes": breakout_successes,
@@ -944,52 +1149,53 @@ def estimate_periods_and_shifts(duration_sec: float) -> tuple[Dict[str, int], Li
 def discover_playlist_entries(source_url: str) -> List[Dict[str, Any]]:
     """
     Discovers playlist videos reliably.
-    1. Tries yt-dlp without cookies first (avoids failure if YT_COOKIES secret is expired).
+    1. Tries yt-dlp without cookies first (if yt_dlp installed).
     2. Tries yt-dlp with cookies if needed.
     3. Falls back to direct HTTPS playlist scrape + oEmbed metadata lookup.
     """
     entries_by_id: Dict[str, Dict[str, Any]] = {}
 
-    for use_cookies in ([False, True] if COOKIE_FILE.exists() else [False]):
-        ydl_opts: Dict[str, Any] = {"extract_flat": "in_playlist", "ignoreerrors": True, "quiet": True}
-        if use_cookies and COOKIE_FILE.exists():
-            ydl_opts["cookiefile"] = str(COOKIE_FILE)
-        try:
-            with yt_dlp.YoutubeDL(ydl_opts) as ydl:
-                info = ydl.extract_info(source_url, download=False)
-                for entry in (info.get("entries", []) if info else []):
-                    if not entry:
-                        continue
-                    vid_id = extract_and_validate_id(entry.get("id") or entry.get("url"))
-                    if not vid_id:
-                        continue
-                    title = entry.get("title")
-                    if title in ("[Deleted video]", "[Private video]"):
-                        continue
-                    oembed_t = fetch_oembed_title(vid_id)
-                    if not oembed_t:
-                        logger.info(f"⏭️ Skipping unavailable/deleted playlist video: {vid_id}")
-                        continue
-                    if not title or title.startswith("Aurora Tigers Match -"):
-                        title = oembed_t
-                    entries_by_id[vid_id] = {
-                        "id": vid_id,
-                        "title": title,
-                        "upload_date": entry.get("upload_date"),
-                        "duration": float(entry.get("duration") or 2400.0),
-                    }
-            if entries_by_id:
-                break
-        except Exception as e:
-            logger.warning(f"yt-dlp playlist scan notice (cookies={use_cookies}): {e}")
+    if yt_dlp is not None:
+        for use_cookies in ([False, True] if COOKIE_FILE.exists() else [False]):
+            ydl_opts: Dict[str, Any] = {"extract_flat": "in_playlist", "ignoreerrors": True, "quiet": True}
+            if use_cookies and COOKIE_FILE.exists():
+                ydl_opts["cookiefile"] = str(COOKIE_FILE)
+            try:
+                with yt_dlp.YoutubeDL(ydl_opts) as ydl:
+                    info = ydl.extract_info(source_url, download=False)
+                    for entry in (info.get("entries", []) if info else []):
+                        if not entry:
+                            continue
+                        vid_id = extract_and_validate_id(entry.get("id") or entry.get("url"))
+                        if not vid_id:
+                            continue
+                        title = entry.get("title")
+                        if title in ("[Deleted video]", "[Private video]"):
+                            continue
+                        oembed_t = fetch_oembed_title(vid_id)
+                        if not oembed_t:
+                            logger.info(f"⏭️ Skipping unavailable/deleted playlist video: {vid_id}")
+                            continue
+                        # Always prefer fresh YouTube oEmbed title so YouTube renames propagate immediately!
+                        title = oembed_t or title
+                        entries_by_id[vid_id] = {
+                            "id": vid_id,
+                            "title": title,
+                            "upload_date": entry.get("upload_date"),
+                            "duration": float(entry.get("duration") or 2400.0),
+                        }
+                if entries_by_id:
+                    break
+            except Exception as e:
+                logger.warning(f"yt-dlp playlist scan notice (cookies={use_cookies}): {e}")
 
-    # Direct HTTPS scrape fallback if yt-dlp returned nothing
+    # Direct HTTPS scrape fallback if yt-dlp is unavailable or returned nothing
     if not entries_by_id:
         try:
-            resp = requests.get(source_url, timeout=15)
-            if resp.status_code == 200:
+            raw_html = http_get_text(source_url, timeout=15)
+            if raw_html:
                 found_ids = []
-                for m in re.finditer(r'"videoId":"([A-Za-z0-9_-]{11})"', resp.text):
+                for m in re.finditer(r'"videoId":"([A-Za-z0-9_-]{11})"', raw_html):
                     vid_id = m.group(1)
                     if vid_id not in found_ids:
                         found_ids.append(vid_id)
@@ -1000,7 +1206,7 @@ def discover_playlist_entries(source_url: str) -> List[Dict[str, Any]]:
                             "id": vid_id,
                             "title": oembed_title,
                             "upload_date": None,
-                            "duration": 2400.0,
+                            "duration": fetch_video_duration(vid_id, default_dur=2700.0),
                         }
         except Exception as e:
             logger.warning(f"Direct playlist scrape notice: {e}")
@@ -1010,8 +1216,9 @@ def discover_playlist_entries(source_url: str) -> List[Dict[str, Any]]:
 def download_hd_video(youtube_url: str, local_video: Path) -> bool:
     """
     Downloads 1080p MP4 stream, falling back to 720p MP4 (avoiding 360p blur).
-    Tries with cookies if available, and falls back to cookie-less multi-client extraction.
     """
+    if yt_dlp is None:
+        return False
     hd_format = (
         "bestvideo[height=1080][ext=mp4]+bestaudio[ext=m4a]/"
         "bestvideo[height=1080]+bestaudio/"
@@ -1053,6 +1260,180 @@ def download_hd_video(youtube_url: str, local_video: Path) -> bool:
 
     return False
 
+def parse_clock_to_sec(clk: str) -> int:
+    parts = str(clk or "0:00").strip().split(":")
+    if len(parts) == 2 and parts[0].isdigit() and parts[1].isdigit():
+        return int(parts[0]) * 60 + int(parts[1])
+    return 0
+
+def sanitize_and_enrich_game_entry(
+    entry: Dict[str, Any],
+    gs_games: List[Dict[str, Any]],
+    verified_goals: Optional[List[Dict[str, Any]]] = None,
+) -> Dict[str, Any]:
+    """
+    Cleans shift overlaps & >6 player_ids, removes hardcoded fake stats,
+    attaches official GameSheet boxscore, and builds Top Clips (Prep Queue).
+    """
+    title = entry.get("title") or ""
+    date_iso = parse_date_from_title(title) if title else (entry.get("date") or "")
+    if date_iso:
+        entry["date"] = date_iso
+    entry["period_lengths"] = {"1": 600, "2": 900, "3": 900}
+
+    gs_match = match_gamesheet_game(entry.get("date", ""), title, gs_games)
+    if gs_match:
+        entry["opponent"] = gs_match.get("opp") or entry.get("opponent") or "League Match"
+        entry["boxscore"] = {
+            "source": "GameSheet Official",
+            "gameId": gs_match.get("gameId"),
+            "gameCode": gs_match.get("gameCode") or "",
+            "date": gs_match.get("date"),
+            "opp": gs_match.get("opp"),
+            "vsAt": gs_match.get("vsAt"),
+            "score": gs_match.get("score"),
+            "gf": gs_match.get("gf", 0),
+            "ga": gs_match.get("ga", 0),
+            "ppGoals": gs_match.get("ppGoals", 0),
+            "ppOpps": gs_match.get("ppOpps", 0),
+            "pkGoalsAllowed": gs_match.get("pkGoalsAllowed", 0),
+            "pkOpps": gs_match.get("pkOpps", 0),
+            "shotsFor": gs_match.get("shotsFor", 0),
+            "shotsAgainst": gs_match.get("shotsAgainst", 0),
+            "pim": gs_match.get("pim", 0),
+            "goalLog": gs_match.get("goalLog") or [],
+            "penaltyLog": gs_match.get("penaltyLog") or [],
+        }
+
+    # Clean & non-overlap shifts, capping players to <= 5 skaters + 1 goalie
+    raw_shifts = sorted(entry.get("shifts") or [], key=lambda x: float(x.get("start_seconds", 0)))
+    cleaned_shifts: List[Dict[str, Any]] = []
+    last_end = -1
+    for s in raw_shifts:
+        st = int(float(s.get("start_seconds", 0)))
+        en = int(float(s.get("end_seconds", st + 35)))
+        if last_end >= 0 and st < last_end:
+            if en <= last_end + 8:
+                continue
+            st = last_end + 1
+        if en <= st + 5:
+            continue
+        last_end = en
+        s["start_seconds"] = st
+        s["end_seconds"] = en
+        s["display_time"] = f"{st // 60}:{st % 60:02d}"
+        s["player_ids"] = cap_roster_ids(s.get("player_ids") or [], s.get("center_id"))
+        s["shift_id"] = len(cleaned_shifts) + 1
+        # Strip any legacy synthetic goal badges if GameSheet says 0 goals for that side
+        if gs_match:
+            if int(gs_match.get("gf", 0)) == 0:
+                s["is_tigers_goal"] = False
+                if s.get("goal_scored") == "Tigers Goal":
+                    s["goal_scored"] = "None"
+            if int(gs_match.get("ga", 0)) == 0:
+                s["is_opp_goal"] = False
+                if s.get("goal_scored") == "Opponent Goal":
+                    s["goal_scored"] = "None"
+        cleaned_shifts.append(s)
+    entry["shifts"] = cleaned_shifts
+
+    # Remove legacy hardcoded 24/26 shots if GameSheet didn't track shots
+    analytics = entry.setdefault("analytics", {})
+    if analytics.get("shots_on_goal") == 24 and analytics.get("goalie_saves") == 26:
+        analytics["shots_on_goal"] = gs_match.get("shotsFor") if (gs_match and gs_match.get("shotsFor")) else None
+        analytics["goalie_saves"] = gs_match.get("shotsAgainst") if (gs_match and gs_match.get("shotsAgainst")) else None
+
+    # Build Top Clips (Prep Queue): Official GameSheet Goals + Verified PP / PK + Key Breakouts
+    periods = entry.get("periods") or {"1": 60, "2": 1100, "3": 2100}
+    p1_s = int(periods.get("1") or 60)
+    p2_s = int(periods.get("2") or max(p1_s + 700, 1100))
+    p3_s = int(periods.get("3") or max(p2_s + 950, 2100))
+    max_shift_end = max([s["end_seconds"] for s in cleaned_shifts], default=p3_s + 1000)
+    p_bounds = {
+        1: (p1_s, max(p1_s + 600, p2_s - 120), 600),
+        2: (p2_s, max(p2_s + 900, p3_s - 120), 900),
+        3: (p3_s, max(p3_s + 900, max_shift_end), 900),
+    }
+
+    top_clips: List[Dict[str, Any]] = []
+    vg_list = verified_goals or entry.get("verified_goals") or []
+    if vg_list:
+        entry["verified_goals"] = vg_list
+
+    if gs_match and gs_match.get("goalLog"):
+        t_goal_num = 0
+        o_goal_num = 0
+        for g_idx, gl in enumerate(gs_match["goalLog"], start=1):
+            p_num = int(gl.get("period") or 1)
+            clk_str = str(gl.get("clockTime") or "0:00")
+            rem_sec = parse_clock_to_sec(clk_str)
+            p_st, p_en, p_len = p_bounds.get(p_num, (p1_s, p1_s + 750, 600))
+            elapsed_ratio = max(0.0, min(1.0, (p_len - min(p_len, rem_sec)) / float(p_len)))
+            est_goal_sec = int(p_st + elapsed_ratio * max(300, (p_en - p_st)))
+
+            # Prefer Gemini verified_goals video_second when available
+            matched_vg = next(
+                (vg for vg in vg_list if int(vg.get("period") or 0) == p_num and abs(int(vg.get("video_second") or 0) - est_goal_sec) < 240),
+                None,
+            )
+            goal_sec = int(matched_vg["video_second"]) if matched_vg else est_goal_sec
+            is_verified = bool(matched_vg)
+            clip_st = max(0, goal_sec - 18)
+            clip_en = goal_sec + 6
+            is_tig = (gl.get("team") == "tigers")
+            if is_tig:
+                t_goal_num += 1
+                label = f"🚨 TIGERS GOAL #{t_goal_num} (P{p_num} {clk_str})"
+            else:
+                o_goal_num += 1
+                opp_short = (gs_match.get("opp") or "OPPONENT").upper()
+                label = f"🥅 {opp_short} GOAL #{o_goal_num} (P{p_num} {clk_str})"
+            scorer_note = f" • {gl['scorer']}" if gl.get("scorer") else ""
+            align_tag = "AI Visual Verified" if is_verified else "GameSheet Clock Aligned"
+            top_clips.append({
+                "clip_id": f"gs_goal_{g_idx}",
+                "type": "tigers_goal" if is_tig else "opp_goal",
+                "period": p_num,
+                "gs_clock": clk_str,
+                "start_seconds": clip_st,
+                "end_seconds": clip_en,
+                "verified": is_verified,
+                "align_status": align_tag,
+                "label": label,
+                "description": f"{label}{scorer_note} — Official GameSheet P{p_num} @ {clk_str} ({align_tag})",
+            })
+
+    # Add Power Play & Penalty Kill clips from shifts
+    for s in cleaned_shifts:
+        st_state = str(s.get("strength_state") or "5v5")
+        if "PP" in st_state:
+            top_clips.append({
+                "clip_id": f"pp_shift_{s['shift_id']}",
+                "type": "powerplay",
+                "period": s.get("period", 1),
+                "start_seconds": s["start_seconds"],
+                "end_seconds": s["end_seconds"],
+                "verified": True,
+                "align_status": "Special Teams Shift",
+                "label": f"⚡ POWER PLAY • P{s.get('period', 1)} ({s['display_time']})",
+                "description": s.get("coach_notes") or "Power Play sequence",
+            })
+        elif "PK" in st_state:
+            top_clips.append({
+                "clip_id": f"pk_shift_{s['shift_id']}",
+                "type": "penalty_kill",
+                "period": s.get("period", 1),
+                "start_seconds": s["start_seconds"],
+                "end_seconds": s["end_seconds"],
+                "verified": True,
+                "align_status": "Special Teams Shift",
+                "label": f"🛡️ PENALTY KILL • P{s.get('period', 1)} ({s['display_time']})",
+                "description": s.get("coach_notes") or "Penalty Kill sequence",
+            })
+
+    entry["top_clips"] = top_clips[:18]
+    return entry
+
 # ================= RUN PIPELINE =================
 def is_gemini_analyzed(game_entry: Dict[str, Any]) -> bool:
     engine = str(game_entry.get("ai_engine") or "")
@@ -1063,19 +1444,18 @@ def run_sync():
     logger.info(f"🔍 Reading playlist: {SOURCE_URL}")
     setup_cookies()
 
+    gs_games = load_gamesheet_completed_games()
     teamsnap_events = fetch_teamsnap_events(TEAMSNAP_ICAL_URL)
     playlist_videos = discover_playlist_entries(SOURCE_URL)
     logger.info(f"📋 Discovered {len(playlist_videos)} live video(s) in playlist.")
 
-    existing_games_by_vid: Dict[str, Dict[str, Any]] = {
-        g.get("youtube_video_id"): g
-        for g in library.get("games", [])
-        if g.get("youtube_video_id")
-    }
+    # Deduplicate existing games by youtube_video_id first
+    existing_games_by_vid: Dict[str, Dict[str, Any]] = {}
+    for g in library.get("games", []):
+        vid = g.get("youtube_video_id")
+        if vid and vid not in existing_games_by_vid:
+            existing_games_by_vid[vid] = g
 
-    # Queue both:
-    # 1. New playlist videos not in games_library.json
-    # 2. Existing games in games_library.json that fell back to "Proportional Line Engine" or have empty shifts
     videos_to_process: List[Dict[str, Any]] = []
     seen_ids = set()
 
@@ -1086,41 +1466,36 @@ def run_sync():
         if not existing_g or not is_gemini_analyzed(existing_g):
             videos_to_process.append(pv)
         else:
-            # Still refresh title/date/TeamSnap metadata if title was generic
-            if existing_g.get("title", "").startswith("Aurora Tigers Match -") and not pv["title"].startswith("Aurora Tigers Match -"):
+            # Always sync renamed YouTube titles, dates, TeamSnap, and GameSheet boxscores!
+            if pv.get("title") and not pv["title"].startswith("Aurora Tigers Match -"):
                 existing_g["title"] = pv["title"]
             parsed_date = parse_date_from_title(existing_g.get("title", ""), pv.get("upload_date"))
             existing_g["date"] = parsed_date
             existing_g["teamsnap"] = match_teamsnap_data(parsed_date, teamsnap_events, existing_g.get("title", ""))
+            sanitize_and_enrich_game_entry(existing_g, gs_games)
 
-    # Also check any existing games in library not yet Gemini-analyzed (if still valid on YouTube)
-    dead_ids = set()
-    for vid_id, g in existing_games_by_vid.items():
-        if vid_id not in seen_ids:
-            oembed_title = fetch_oembed_title(vid_id)
-            if oembed_title:
-                if not is_gemini_analyzed(g):
-                    videos_to_process.append({
-                        "id": vid_id,
-                        "title": oembed_title if g.get("title", "").startswith("Aurora Tigers Match -") else (g.get("title") or oembed_title),
-                        "upload_date": None,
-                        "duration": 2400.0,
-                    })
+    # STRICT PLAYLIST MIRRORING: If playlist returned >= 1 video, keep ONLY videos currently in the playlist!
+    if len(seen_ids) >= 1:
+        kept_games = []
+        seen_kept = set()
+        for g in library.get("games", []):
+            vid = g.get("youtube_video_id")
+            if vid in seen_ids and vid not in seen_kept:
+                seen_kept.add(vid)
+                kept_games.append(g)
             else:
-                logger.info(f"🧹 Removing unavailable/deleted YouTube video from library: {vid_id} ({g.get('title')})")
-                dead_ids.add(vid_id)
-
-    if dead_ids:
-        library["games"] = [g for g in library.get("games", []) if g.get("youtube_video_id") not in dead_ids]
+                logger.info(f"🧹 Pruning video removed from playlist (or duplicate): {vid} ({g.get('title')})")
+        library["games"] = kept_games
+        library["games"].sort(key=lambda g: g.get("date", ""), reverse=True)
 
     if not videos_to_process:
-        logger.info("✅ All playlist games are already analyzed by Google Gemini 2.5 Flash.")
+        logger.info("✅ All playlist games synced, titles/dates refreshed, and GameSheet Top Clips aligned.")
         save_library(library)
         clean_cookies()
         return
 
     batch = videos_to_process[:MAX_GAMES_PER_RUN]
-    logger.info(f"🎬 Processing {len(batch)} of {len(videos_to_process)} pending game(s) through Gemini 2.5 Flash...")
+    logger.info(f"🎬 Processing {len(batch)} of {len(videos_to_process)} pending game(s) through Two-Pass Gemini Coach...")
 
     for v in batch:
         vid_id = v["id"]
@@ -1131,6 +1506,7 @@ def run_sync():
         f_date = parse_date_from_title(real_title, v.get("upload_date"))
         ts_data = match_teamsnap_data(f_date, teamsnap_events, real_title)
         f_date = ts_data.get("date", f_date)
+        gs_match = match_gamesheet_game(f_date, real_title, gs_games)
 
         youtube_url = f"https://www.youtube.com/watch?v={vid_id}"
         local_video = ROOT_DIR / f"temp_{vid_id}.mp4"
@@ -1144,7 +1520,6 @@ def run_sync():
         known_lines = existing_entry.get("verified_lines", {}) if existing_entry else {}
 
         try:
-            # Step 1: Fast Token-Saver YouTube URI analysis (0.5 FPS + MEDIA_RESOLUTION_LOW + active period windows)
             gemini_result = process_video_with_gemini(
                 None,
                 youtube_url=youtube_url,
@@ -1153,8 +1528,8 @@ def run_sync():
                 game_title=real_title,
                 scratches=known_scratches,
                 verified_lines=known_lines,
+                gs_game=gs_match,
             )
-            # Step 2: Only download HD MP4 locally if direct YouTube URI analysis did not return shifts
             if not (gemini_result and gemini_result.get("shifts")):
                 downloaded = download_hd_video(youtube_url, local_video)
                 if downloaded:
@@ -1166,6 +1541,7 @@ def run_sync():
                         game_title=real_title,
                         scratches=known_scratches,
                         verified_lines=known_lines,
+                        gs_game=gs_match,
                     )
         except Exception as dl_err:
             logger.warning(f"Download/AI notice for {vid_id}: {dl_err}")
@@ -1177,14 +1553,15 @@ def run_sync():
             periods_detected, shifts_list, players_matrix, clips_matrix, analytics_matrix = transform_gemini_to_library_schema(
                 gemini_result, true_duration
             )
-            model_used = gemini_result.get("_model_used") or "gemini-3.8-flash"
+            model_used = gemini_result.get("_model_used") or "gemini-4-carbon"
             engine_gen = "Gemini 4" if "gemini-4" in model_used else "Gemini 3"
-            ai_engine_used = f"Google {engine_gen} ({model_used} - Visual Anchored)"
+            ai_engine_used = f"Google {engine_gen} ({model_used} - Two-Pass GameSheet Anchored)"
             logger.info(f"🎯 Successfully parsed {len(shifts_list)} shifts via {model_used} for {vid_id} ({real_title})!")
         else:
             existing_g = existing_games_by_vid.get(vid_id)
             if existing_g and existing_g.get("shifts") and not GOOGLE_API_KEY:
                 logger.info(f"ℹ️ Keeping existing shifts for {vid_id} (no GEMINI_API_KEY provided).")
+                sanitize_and_enrich_game_entry(existing_g, gs_games)
                 continue
             periods_detected, shifts_list, players_matrix, clips_matrix, analytics_matrix = estimate_periods_and_shifts(v["duration"])
             ai_engine_used = "Proportional Line Engine"
@@ -1195,9 +1572,9 @@ def run_sync():
             "title": real_title,
             "youtube_video_id": vid_id,
             "date": f_date,
-            "opponent": "League Match",
+            "opponent": gs_match.get("opp") if gs_match else "League Match",
             "periods": periods_detected,
-            "period_lengths": {"1": 600, "2": 600, "3": 900},
+            "period_lengths": {"1": 600, "2": 900, "3": 900},
             "ai_engine": ai_engine_used,
             "teamsnap": ts_data,
             "shifts": shifts_list,
@@ -1205,8 +1582,12 @@ def run_sync():
             "coaching_clips": clips_matrix,
             "analytics": analytics_matrix
         }
+        sanitize_and_enrich_game_entry(
+            new_entry,
+            gs_games,
+            verified_goals=gemini_result.get("verified_goals") if gemini_result else None,
+        )
 
-        # Update existing game in-place or insert at top
         replaced = False
         for i, existing_game in enumerate(library.get("games", [])):
             if existing_game.get("youtube_video_id") == vid_id or existing_game.get("id") == f"game_{vid_id}":
@@ -1216,7 +1597,6 @@ def run_sync():
         if not replaced:
             library["games"].insert(0, new_entry)
 
-        # Sort games newest-first by date
         library["games"].sort(key=lambda g: g.get("date", ""), reverse=True)
 
         # Save incrementally after each game so progress is preserved

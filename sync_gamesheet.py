@@ -128,17 +128,27 @@ def compute_team_metrics(team_id: int, games: List[Dict[str, Any]]) -> Dict[str,
         )
 
         # Extract official goal & penalty logs from GameSheet box score
+        def parse_clock_sec(clk: str) -> int:
+            parts = str(clk or "0:00").split(":")
+            if len(parts) == 2 and parts[0].isdigit() and parts[1].isdigit():
+                return int(parts[0]) * 60 + int(parts[1])
+            return 0
+
         goal_log = []
         for side, is_my_team in [(my_side, True), (opp_side, False)]:
             for gd in (side.get("goalDetails") or []):
+                full_name = f"{gd.get('firstName') or ''} {gd.get('lastName') or ''}".strip()
+                scorer = gd.get("scorerName") or gd.get("playerName") or full_name
                 goal_log.append({
                     "type": "goal",
                     "period": int(gd.get("period") or 1),
                     "clockTime": str(gd.get("clockTime") or "0:00"),
                     "team": "tigers" if (is_my_team and team_id == TIGERS_TEAM_ID) else ("opp" if team_id == TIGERS_TEAM_ID else ("self" if is_my_team else "opp")),
                     "teamName": side.get("title", ""),
-                    "scorer": gd.get("scorerName") or gd.get("playerName") or "",
+                    "scorer": scorer,
                 })
+        # Sort goals chronologically: period 1 -> 3, clock countdown 15:00 -> 0:00
+        goal_log.sort(key=lambda x: (int(x.get("period") or 1), -parse_clock_sec(x.get("clockTime", "0:00"))))
 
         penalty_log = []
         for side, is_my_team in [(my_side, True), (opp_side, False)]:
@@ -152,16 +162,34 @@ def compute_team_metrics(team_id: int, games: List[Dict[str, Any]]) -> Dict[str,
                     "durationMin": float(pd.get("minutes") or pd.get("duration") or 2),
                     "infraction": pd.get("infraction") or pd.get("description") or "Minor Penalty",
                 })
+        penalty_log.sort(key=lambda x: (int(x.get("period") or 1), -parse_clock_sec(x.get("clockTime", "0:00"))))
+
+        game_pp_goals = int(my_side.get("ppGoals") or 0)
+        game_pp_opps = int(my_side.get("ppOpportunities") or 0)
+        game_pk_goals_allowed = int(opp_side.get("ppGoals") or 0)
+        game_pk_opps = int(opp_side.get("ppOpportunities") or 0)
+        game_shots_for = int(my_side.get("shots") or 0)
+        game_shots_against = int(opp_side.get("shots") or 0)
+        game_pim = sum(int(p.get("durationMin", 2)) for p in penalty_log if p.get("team") in ("tigers", "self")) or (game_pk_opps * 2)
 
         completed_games.append({
             "gameId": g.get("gameId"),
+            "gameCode": g.get("number") or "",
             "date": g.get("date"),
+            "location": g.get("location") or "",
             "opp": opp_clean_title,
             "vsAt": "vs" if is_home else "@",
             "score": f"{my_goals}-{opp_goals}",
             "result": res,
             "gf": my_goals,
             "ga": opp_goals,
+            "ppGoals": game_pp_goals,
+            "ppOpps": game_pp_opps,
+            "pkGoalsAllowed": game_pk_goals_allowed,
+            "pkOpps": game_pk_opps,
+            "shotsFor": game_shots_for,
+            "shotsAgainst": game_shots_against,
+            "pim": game_pim,
             "goalLog": goal_log,
             "penaltyLog": penalty_log,
             "notes": f"{'Home' if is_home else 'Away'} GameSheet regular season box score"
@@ -202,15 +230,16 @@ def compute_team_metrics(team_id: int, games: List[Dict[str, Any]]) -> Dict[str,
             "diff": diff_str,
             "gpg": gpg,
             "gapg": gapg,
-            "pim": gp * 6, # Estimated standard OMHA PIM benchmark
-            "pimPg": "6.0" if team_id != TIGERS_TEAM_ID else "7.0"
+            "pim": pk_opps * 2,
+            "pimPg": f"{((pk_opps * 2) / gp):.1f}" if gp > 0 else "0.0"
         },
         "specialTeams": {
             "ppPct": pp_pct,
             "ppGoals": pp_goals,
             "ppOpps": pp_opps,
             "pkPct": pk_pct,
-            "shGoals": 1 if team_id == TEAM_MAP["caledon"]["id"] else 0,
+            "pkOpps": pk_opps,
+            "shGoals": 0,
             "shAllowed": pk_goals_allowed
         },
         "last5Games": last_5,
