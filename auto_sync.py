@@ -566,19 +566,15 @@ Return strictly valid JSON adhering to the configured schema.
 
 def select_latest_gemini_model(client: Any) -> List[str]:
     """
-    Returns prioritized list of the latest Gemini models available on the API key,
-    preferring Gemini 4 Carbon / Hydrogen / Argon and latest Gemini 3.x releases.
+    Returns prioritized list of lightweight Gemini models available on the API key,
+    strictly preferring Gemini 4 Hydrogen (never Carbon, Argon, or Pro).
     """
     preferred = [
-        "gemini-4-carbon",
         "gemini-4-hydrogen",
-        "gemini-4-argon",
         "gemini-3.8-flash",
         "gemini-3.7-flash",
         "gemini-3.6-flash",
         "gemini-3.5-flash",
-        "gemini-3.1-pro-preview",
-        "gemini-2.5-pro",
         "gemini-2.5-flash",
     ]
     try:
@@ -587,14 +583,20 @@ def select_latest_gemini_model(client: Any) -> List[str]:
             name = getattr(m, "name", "") or ""
             if name.startswith("models/"):
                 name = name.replace("models/", "", 1)
-            if "gemini-4" in name or "gemini-3" in name or "gemini-2.5" in name:
+            lower_name = name.lower()
+            if (
+                ("gemini-4" in lower_name or "gemini-3" in lower_name or "gemini-2.5" in lower_name)
+                and "carbon" not in lower_name
+                and "argon" not in lower_name
+                and "pro" not in lower_name
+            ):
                 available.add(name)
         ranked = [m for m in preferred if m in available]
         if ranked:
             return ranked
     except Exception:
         pass
-    return ["gemini-4-carbon", "gemini-4-hydrogen", "gemini-3.8-flash", "gemini-3.5-flash", "gemini-2.5-flash"]
+    return ["gemini-4-hydrogen", "gemini-3.8-flash", "gemini-3.5-flash", "gemini-2.5-flash"]
 
 def invoke_gemini_with_retry(
     client: Any,
@@ -607,23 +609,33 @@ def invoke_gemini_with_retry(
 
     target_schema = schema or GEMINI_RESPONSE_SCHEMA
     models_to_try = select_latest_gemini_model(client)
-    med_res = getattr(types.MediaResolution, "MEDIA_RESOLUTION_MEDIUM", types.MediaResolution.MEDIA_RESOLUTION_LOW)
-    hi_res = getattr(types.MediaResolution, "MEDIA_RESOLUTION_HIGH", med_res)
-    primary_res = hi_res if high_res else med_res
+    low_res = types.MediaResolution.MEDIA_RESOLUTION_LOW
+    med_res = getattr(types.MediaResolution, "MEDIA_RESOLUTION_MEDIUM", low_res)
 
-    configs_to_try = [
-        (f"High-Accuracy Mode ({primary_res})", types.GenerateContentConfig(
-            response_mime_type="application/json",
-            response_schema=target_schema,
-            media_resolution=primary_res,
-            temperature=0.1,
-        )),
-        ("Standard Resolution Fallback", types.GenerateContentConfig(
-            response_mime_type="application/json",
-            response_schema=target_schema,
-            temperature=0.1,
-        )),
-    ]
+    if high_res:
+        configs_to_try = [
+            ("Zoom Clip Mode (MEDIA_RESOLUTION_MEDIUM)", types.GenerateContentConfig(
+                response_mime_type="application/json",
+                response_schema=target_schema,
+                media_resolution=med_res,
+                temperature=0.1,
+            )),
+            ("Hydrogen Credit-Saver Fallback (MEDIA_RESOLUTION_LOW)", types.GenerateContentConfig(
+                response_mime_type="application/json",
+                response_schema=target_schema,
+                media_resolution=low_res,
+                temperature=0.1,
+            )),
+        ]
+    else:
+        configs_to_try = [
+            ("Hydrogen Credit-Optimized Mode (MEDIA_RESOLUTION_LOW)", types.GenerateContentConfig(
+                response_mime_type="application/json",
+                response_schema=target_schema,
+                media_resolution=low_res,
+                temperature=0.1,
+            )),
+        ]
 
     for model_id in models_to_try:
         for label, cfg in configs_to_try:
@@ -1681,7 +1693,7 @@ def run_sync():
             periods_detected, shifts_list, players_matrix, clips_matrix, analytics_matrix = transform_gemini_to_library_schema(
                 gemini_result, true_duration
             )
-            model_used = gemini_result.get("_model_used") or "gemini-4-carbon"
+            model_used = gemini_result.get("_model_used") or "gemini-4-hydrogen"
             engine_gen = "Gemini 4" if "gemini-4" in model_used else "Gemini 3"
             ai_engine_used = f"Google {engine_gen} ({model_used} - Two-Pass Stop-Time Verified)"
             logger.info(f"🎯 Successfully parsed {len(shifts_list)} shifts via {model_used} for {vid_id} ({real_title})!")
