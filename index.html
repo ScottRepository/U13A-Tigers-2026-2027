@@ -67897,7 +67897,7 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
       if (aiBanner && aiText && aiConf) {
         if (isAiVerified) {
           const avgConf = game.ai_confidence_avg || 90;
-          const modelBadge = engineName.includes('carbon') ? 'Gemini 4 Carbon' : (engineName.includes('Gemini 4') ? 'Gemini 4' : 'Gemini AI');
+          const modelBadge = engineName.includes('hydrogen') ? 'Gemini 4 Hydrogen' : (engineName.includes('Gemini 4') ? 'Gemini 4' : 'Gemini AI');
           aiBanner.className = "mt-1 px-2.5 py-1.5 rounded-lg bg-slate-900/90 border border-emerald-500/40 flex items-center justify-between gap-2 text-[10px]";
           aiText.className = "font-bold text-emerald-300";
           aiText.innerText = `🟢 AI Video Analyzed (${modelBadge} • ${(game.shifts || []).length} Active Shifts)`;

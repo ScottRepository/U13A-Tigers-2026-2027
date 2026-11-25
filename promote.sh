@@ -3,7 +3,7 @@ set -euo pipefail
 
 echo "🔄 Syncing latest Production data into dev..."
 git checkout dev
-git pull origin main --no-edit || true
+git pull --no-rebase origin main --no-edit || true
 git push origin dev
 
 echo "🚀 Promoting dev -> main (Production)..."
