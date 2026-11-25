@@ -47,16 +47,18 @@
       "date": "2026-11-24",
       "opponent": "Barrie Colts U13-2 A Blue",
       "periods": {
-        "1": 0,
-        "2": 1614,
-        "3": 3143
+        "1": 60,
+        "2": 1571,
+        "3": 3016
       },
+      "period_ends": null,
       "period_lengths": {
         "1": 600,
         "2": 900,
         "3": 900
       },
-      "ai_engine": "Proportional Line Engine",
+      "ai_engine": "Pending AI Scan",
+      "analyzed_at": null,
       "teamsnap": {
         "date": "2026-11-24",
         "time": "7:30 PM",
@@ -67,2642 +69,21 @@
         "jersey": "Home (White)",
         "is_home": true
       },
-      "shifts": [
-        {
-          "shift_id": 1,
-          "period": 1,
-          "start_seconds": 45,
-          "end_seconds": 88,
-          "display_time": "0:45",
-          "center_id": 23,
-          "player_ids": [
-            23,
-            10,
-            7,
-            11,
-            21,
-            13
-          ],
-          "strength_state": "5v5",
-          "primary_zone": "Offensive Zone",
-          "breakout": {
-            "attempted": true,
-            "successful": true,
-            "breakout_type": "D-to-D",
-            "turnover_location": "None"
-          },
-          "coach_notes": "P1 Shift 1: Controlled offensive zone sequence (D-to-D)",
-          "is_tigers_goal": false
-        },
-        {
-          "shift_id": 2,
-          "period": 1,
-          "start_seconds": 140,
-          "end_seconds": 184,
-          "display_time": "2:20",
-          "center_id": 9,
-          "player_ids": [
-            23,
-            9,
-            3,
-            28,
-            76,
-            13
-          ],
-          "strength_state": "5v5",
-          "primary_zone": "Defensive Zone",
-          "breakout": {
-            "attempted": true,
-            "successful": true,
-            "breakout_type": "Rim",
-            "turnover_location": "None"
-          },
-          "coach_notes": "P1 Shift 2: Controlled defensive zone sequence (Rim)",
-          "is_tigers_goal": false
-        },
-        {
-          "shift_id": 3,
-          "period": 1,
-          "start_seconds": 235,
-          "end_seconds": 280,
-          "display_time": "3:55",
-          "center_id": 18,
-          "player_ids": [
-            18,
-            5,
-            16,
-            97,
-            28,
-            98
-          ],
-          "strength_state": "5v5",
-          "primary_zone": "Neutral Zone",
-          "breakout": {
-            "attempted": true,
-            "successful": true,
-            "breakout_type": "Wheel",
-            "turnover_location": "None"
-          },
-          "coach_notes": "P1 Shift 3: Controlled neutral zone sequence (Wheel)",
-          "is_tigers_goal": false
-        },
-        {
-          "shift_id": 4,
-          "period": 1,
-          "start_seconds": 330,
-          "end_seconds": 376,
-          "display_time": "5:30",
-          "center_id": 23,
-          "player_ids": [
-            88,
-            10,
-            23,
-            21,
-            27,
-            98
-          ],
-          "strength_state": "5v5",
-          "primary_zone": "Defensive Zone",
-          "breakout": {
-            "attempted": true,
-            "successful": false,
-            "breakout_type": "Chip Off Glass",
-            "turnover_location": "Half-Wall"
-          },
-          "coach_notes": "P1 Shift 4: Controlled defensive zone sequence (Chip Off Glass)",
-          "is_tigers_goal": false
-        },
-        {
-          "shift_id": 5,
-          "period": 1,
-          "start_seconds": 425,
-          "end_seconds": 472,
-          "display_time": "7:05",
-          "center_id": 23,
-          "player_ids": [
-            23,
-            10,
-            7,
-            11,
-            21,
-            13
-          ],
-          "strength_state": "5v5",
-          "primary_zone": "Offensive Zone",
-          "breakout": {
-            "attempted": true,
-            "successful": true,
-            "breakout_type": "D-to-D",
-            "turnover_location": "None"
-          },
-          "coach_notes": "P1 Shift 5: Controlled offensive zone sequence (D-to-D)",
-          "is_tigers_goal": false
-        },
-        {
-          "shift_id": 6,
-          "period": 1,
-          "start_seconds": 520,
-          "end_seconds": 568,
-          "display_time": "8:40",
-          "center_id": 9,
-          "player_ids": [
-            23,
-            9,
-            3,
-            28,
-            76,
-            13
-          ],
-          "strength_state": "5v5",
-          "primary_zone": "Defensive Zone",
-          "breakout": {
-            "attempted": true,
-            "successful": true,
-            "breakout_type": "Rim",
-            "turnover_location": "None"
-          },
-          "coach_notes": "P1 Shift 6: Controlled defensive zone sequence (Rim)",
-          "is_tigers_goal": false
-        },
-        {
-          "shift_id": 7,
-          "period": 1,
-          "start_seconds": 615,
-          "end_seconds": 657,
-          "display_time": "10:15",
-          "center_id": 18,
-          "player_ids": [
-            18,
-            5,
-            16,
-            97,
-            28,
-            98
-          ],
-          "strength_state": "5v5",
-          "primary_zone": "Neutral Zone",
-          "breakout": {
-            "attempted": true,
-            "successful": true,
-            "breakout_type": "Wheel",
-            "turnover_location": "None"
-          },
-          "coach_notes": "P1 Shift 7: Controlled neutral zone sequence (Wheel)",
-          "is_tigers_goal": false
-        },
-        {
-          "shift_id": 8,
-          "period": 1,
-          "start_seconds": 710,
-          "end_seconds": 753,
-          "display_time": "11:50",
-          "center_id": 23,
-          "player_ids": [
-            88,
-            10,
-            23,
-            21,
-            27,
-            98
-          ],
-          "strength_state": "5v5",
-          "primary_zone": "Defensive Zone",
-          "breakout": {
-            "attempted": true,
-            "successful": false,
-            "breakout_type": "Chip Off Glass",
-            "turnover_location": "Half-Wall"
-          },
-          "coach_notes": "P1 Shift 8: Controlled defensive zone sequence (Chip Off Glass)",
-          "is_tigers_goal": false
-        },
-        {
-          "shift_id": 9,
-          "period": 1,
-          "start_seconds": 805,
-          "end_seconds": 849,
-          "display_time": "13:25",
-          "center_id": 23,
-          "player_ids": [
-            23,
-            10,
-            7,
-            11,
-            21,
-            13
-          ],
-          "strength_state": "PP (Tigers)",
-          "primary_zone": "Offensive Zone",
-          "breakout": {
-            "attempted": true,
-            "successful": true,
-            "breakout_type": "D-to-D",
-            "turnover_location": "None"
-          },
-          "coach_notes": "P1 Shift 9: Controlled offensive zone sequence (D-to-D)",
-          "is_tigers_goal": false
-        },
-        {
-          "shift_id": 10,
-          "period": 1,
-          "start_seconds": 900,
-          "end_seconds": 945,
-          "display_time": "15:00",
-          "center_id": 9,
-          "player_ids": [
-            23,
-            9,
-            3,
-            28,
-            76,
-            13
-          ],
-          "strength_state": "5v5",
-          "primary_zone": "Defensive Zone",
-          "breakout": {
-            "attempted": true,
-            "successful": true,
-            "breakout_type": "Rim",
-            "turnover_location": "None"
-          },
-          "coach_notes": "P1 Shift 10: Controlled defensive zone sequence (Rim)",
-          "is_tigers_goal": false
-        },
-        {
-          "shift_id": 11,
-          "period": 1,
-          "start_seconds": 995,
-          "end_seconds": 1041,
-          "display_time": "16:35",
-          "center_id": 18,
-          "player_ids": [
-            18,
-            5,
-            16,
-            97,
-            28,
-            98
-          ],
-          "strength_state": "PK (Tigers)",
-          "primary_zone": "Neutral Zone",
-          "breakout": {
-            "attempted": true,
-            "successful": true,
-            "breakout_type": "Wheel",
-            "turnover_location": "None"
-          },
-          "coach_notes": "P1 Shift 11: Controlled neutral zone sequence (Wheel)",
-          "is_tigers_goal": false
-        },
-        {
-          "shift_id": 12,
-          "period": 1,
-          "start_seconds": 1090,
-          "end_seconds": 1137,
-          "display_time": "18:10",
-          "center_id": 23,
-          "player_ids": [
-            88,
-            10,
-            23,
-            21,
-            27,
-            98
-          ],
-          "strength_state": "5v5",
-          "primary_zone": "Defensive Zone",
-          "breakout": {
-            "attempted": true,
-            "successful": false,
-            "breakout_type": "Chip Off Glass",
-            "turnover_location": "Half-Wall"
-          },
-          "coach_notes": "P1 Shift 12: Controlled defensive zone sequence (Chip Off Glass)",
-          "is_tigers_goal": false
-        },
-        {
-          "shift_id": 13,
-          "period": 1,
-          "start_seconds": 1185,
-          "end_seconds": 1233,
-          "display_time": "19:45",
-          "center_id": 23,
-          "player_ids": [
-            23,
-            10,
-            7,
-            11,
-            21,
-            13
-          ],
-          "strength_state": "5v5",
-          "primary_zone": "Offensive Zone",
-          "breakout": {
-            "attempted": true,
-            "successful": true,
-            "breakout_type": "D-to-D",
-            "turnover_location": "None"
-          },
-          "coach_notes": "P1 Shift 13: Controlled offensive zone sequence (D-to-D)",
-          "is_tigers_goal": false
-        },
-        {
-          "shift_id": 14,
-          "period": 1,
-          "start_seconds": 1280,
-          "end_seconds": 1322,
-          "display_time": "21:20",
-          "center_id": 9,
-          "player_ids": [
-            23,
-            9,
-            3,
-            28,
-            76,
-            13
-          ],
-          "strength_state": "5v5",
-          "primary_zone": "Defensive Zone",
-          "breakout": {
-            "attempted": true,
-            "successful": true,
-            "breakout_type": "Rim",
-            "turnover_location": "None"
-          },
-          "coach_notes": "P1 Shift 14: Controlled defensive zone sequence (Rim)",
-          "is_tigers_goal": false
-        },
-        {
-          "shift_id": 15,
-          "period": 1,
-          "start_seconds": 1375,
-          "end_seconds": 1418,
-          "display_time": "22:55",
-          "center_id": 18,
-          "player_ids": [
-            18,
-            5,
-            16,
-            97,
-            28,
-            98
-          ],
-          "strength_state": "5v5",
-          "primary_zone": "Neutral Zone",
-          "breakout": {
-            "attempted": true,
-            "successful": true,
-            "breakout_type": "Wheel",
-            "turnover_location": "None"
-          },
-          "coach_notes": "P1 Shift 15: Controlled neutral zone sequence (Wheel)",
-          "is_tigers_goal": false
-        },
-        {
-          "shift_id": 16,
-          "period": 1,
-          "start_seconds": 1470,
-          "end_seconds": 1514,
-          "display_time": "24:30",
-          "center_id": 23,
-          "player_ids": [
-            88,
-            10,
-            23,
-            21,
-            27,
-            98
-          ],
-          "strength_state": "5v5",
-          "primary_zone": "Defensive Zone",
-          "breakout": {
-            "attempted": true,
-            "successful": false,
-            "breakout_type": "Chip Off Glass",
-            "turnover_location": "Half-Wall"
-          },
-          "coach_notes": "P1 Shift 16: Controlled defensive zone sequence (Chip Off Glass)",
-          "is_tigers_goal": false
-        },
-        {
-          "shift_id": 17,
-          "period": 1,
-          "start_seconds": 1565,
-          "end_seconds": 1610,
-          "display_time": "26:05",
-          "center_id": 23,
-          "player_ids": [
-            23,
-            10,
-            7,
-            11,
-            21,
-            13
-          ],
-          "strength_state": "5v5",
-          "primary_zone": "Offensive Zone",
-          "breakout": {
-            "attempted": true,
-            "successful": true,
-            "breakout_type": "D-to-D",
-            "turnover_location": "None"
-          },
-          "coach_notes": "P1 Shift 17: Controlled offensive zone sequence (D-to-D)",
-          "is_tigers_goal": false
-        },
-        {
-          "shift_id": 18,
-          "period": 2,
-          "start_seconds": 1659,
-          "end_seconds": 1705,
-          "display_time": "27:39",
-          "center_id": 9,
-          "player_ids": [
-            23,
-            9,
-            3,
-            28,
-            76,
-            13
-          ],
-          "strength_state": "PP (Tigers)",
-          "primary_zone": "Defensive Zone",
-          "breakout": {
-            "attempted": true,
-            "successful": true,
-            "breakout_type": "Rim",
-            "turnover_location": "None"
-          },
-          "coach_notes": "P2 Shift 18: Controlled defensive zone sequence (Rim)",
-          "is_tigers_goal": false
-        },
-        {
-          "shift_id": 19,
-          "period": 2,
-          "start_seconds": 1754,
-          "end_seconds": 1801,
-          "display_time": "29:14",
-          "center_id": 18,
-          "player_ids": [
-            18,
-            5,
-            16,
-            97,
-            28,
-            98
-          ],
-          "strength_state": "5v5",
-          "primary_zone": "Neutral Zone",
-          "breakout": {
-            "attempted": true,
-            "successful": true,
-            "breakout_type": "Wheel",
-            "turnover_location": "None"
-          },
-          "coach_notes": "P2 Shift 19: Controlled neutral zone sequence (Wheel)",
-          "is_tigers_goal": false
-        },
-        {
-          "shift_id": 20,
-          "period": 2,
-          "start_seconds": 1849,
-          "end_seconds": 1897,
-          "display_time": "30:49",
-          "center_id": 23,
-          "player_ids": [
-            88,
-            10,
-            23,
-            21,
-            27,
-            98
-          ],
-          "strength_state": "5v5",
-          "primary_zone": "Defensive Zone",
-          "breakout": {
-            "attempted": true,
-            "successful": false,
-            "breakout_type": "Chip Off Glass",
-            "turnover_location": "Half-Wall"
-          },
-          "coach_notes": "P2 Shift 20: Controlled defensive zone sequence (Chip Off Glass)",
-          "is_tigers_goal": false
-        },
-        {
-          "shift_id": 21,
-          "period": 2,
-          "start_seconds": 1944,
-          "end_seconds": 1986,
-          "display_time": "32:24",
-          "center_id": 23,
-          "player_ids": [
-            23,
-            10,
-            7,
-            11,
-            21,
-            13
-          ],
-          "strength_state": "5v5",
-          "primary_zone": "Offensive Zone",
-          "breakout": {
-            "attempted": true,
-            "successful": true,
-            "breakout_type": "D-to-D",
-            "turnover_location": "None"
-          },
-          "coach_notes": "P2 Shift 21: Controlled offensive zone sequence (D-to-D)",
-          "is_tigers_goal": false
-        },
-        {
-          "shift_id": 22,
-          "period": 2,
-          "start_seconds": 2039,
-          "end_seconds": 2082,
-          "display_time": "33:59",
-          "center_id": 9,
-          "player_ids": [
-            23,
-            9,
-            3,
-            28,
-            76,
-            13
-          ],
-          "strength_state": "PK (Tigers)",
-          "primary_zone": "Defensive Zone",
-          "breakout": {
-            "attempted": true,
-            "successful": true,
-            "breakout_type": "Rim",
-            "turnover_location": "None"
-          },
-          "coach_notes": "P2 Shift 22: Controlled defensive zone sequence (Rim)",
-          "is_tigers_goal": false
-        },
-        {
-          "shift_id": 23,
-          "period": 2,
-          "start_seconds": 2134,
-          "end_seconds": 2178,
-          "display_time": "35:34",
-          "center_id": 18,
-          "player_ids": [
-            18,
-            5,
-            16,
-            97,
-            28,
-            98
-          ],
-          "strength_state": "5v5",
-          "primary_zone": "Neutral Zone",
-          "breakout": {
-            "attempted": true,
-            "successful": true,
-            "breakout_type": "Wheel",
-            "turnover_location": "None"
-          },
-          "coach_notes": "P2 Shift 23: Controlled neutral zone sequence (Wheel)",
-          "is_tigers_goal": false
-        },
-        {
-          "shift_id": 24,
-          "period": 2,
-          "start_seconds": 2229,
-          "end_seconds": 2274,
-          "display_time": "37:09",
-          "center_id": 23,
-          "player_ids": [
-            88,
-            10,
-            23,
-            21,
-            27,
-            98
-          ],
-          "strength_state": "5v5",
-          "primary_zone": "Defensive Zone",
-          "breakout": {
-            "attempted": true,
-            "successful": false,
-            "breakout_type": "Chip Off Glass",
-            "turnover_location": "Half-Wall"
-          },
-          "coach_notes": "P2 Shift 24: Controlled defensive zone sequence (Chip Off Glass)",
-          "is_tigers_goal": false
-        },
-        {
-          "shift_id": 25,
-          "period": 2,
-          "start_seconds": 2324,
-          "end_seconds": 2370,
-          "display_time": "38:44",
-          "center_id": 23,
-          "player_ids": [
-            23,
-            10,
-            7,
-            11,
-            21,
-            13
-          ],
-          "strength_state": "5v5",
-          "primary_zone": "Offensive Zone",
-          "breakout": {
-            "attempted": true,
-            "successful": true,
-            "breakout_type": "D-to-D",
-            "turnover_location": "None"
-          },
-          "coach_notes": "P2 Shift 25: Controlled offensive zone sequence (D-to-D)",
-          "is_tigers_goal": false
-        },
-        {
-          "shift_id": 26,
-          "period": 2,
-          "start_seconds": 2419,
-          "end_seconds": 2466,
-          "display_time": "40:19",
-          "center_id": 9,
-          "player_ids": [
-            23,
-            9,
-            3,
-            28,
-            76,
-            13
-          ],
-          "strength_state": "5v5",
-          "primary_zone": "Defensive Zone",
-          "breakout": {
-            "attempted": true,
-            "successful": true,
-            "breakout_type": "Rim",
-            "turnover_location": "None"
-          },
-          "coach_notes": "P2 Shift 26: Controlled defensive zone sequence (Rim)",
-          "is_tigers_goal": false
-        },
-        {
-          "shift_id": 27,
-          "period": 2,
-          "start_seconds": 2514,
-          "end_seconds": 2562,
-          "display_time": "41:54",
-          "center_id": 18,
-          "player_ids": [
-            18,
-            5,
-            16,
-            97,
-            28,
-            98
-          ],
-          "strength_state": "PP (Tigers)",
-          "primary_zone": "Neutral Zone",
-          "breakout": {
-            "attempted": true,
-            "successful": true,
-            "breakout_type": "Wheel",
-            "turnover_location": "None"
-          },
-          "coach_notes": "P2 Shift 27: Controlled neutral zone sequence (Wheel)",
-          "is_tigers_goal": false
-        },
-        {
-          "shift_id": 28,
-          "period": 2,
-          "start_seconds": 2609,
-          "end_seconds": 2651,
-          "display_time": "43:29",
-          "center_id": 23,
-          "player_ids": [
-            88,
-            10,
-            23,
-            21,
-            27,
-            98
-          ],
-          "strength_state": "5v5",
-          "primary_zone": "Defensive Zone",
-          "breakout": {
-            "attempted": true,
-            "successful": false,
-            "breakout_type": "Chip Off Glass",
-            "turnover_location": "Half-Wall"
-          },
-          "coach_notes": "P2 Shift 28: Controlled defensive zone sequence (Chip Off Glass)",
-          "is_tigers_goal": false
-        },
-        {
-          "shift_id": 29,
-          "period": 2,
-          "start_seconds": 2704,
-          "end_seconds": 2747,
-          "display_time": "45:04",
-          "center_id": 23,
-          "player_ids": [
-            23,
-            10,
-            7,
-            11,
-            21,
-            13
-          ],
-          "strength_state": "5v5",
-          "primary_zone": "Offensive Zone",
-          "breakout": {
-            "attempted": true,
-            "successful": true,
-            "breakout_type": "D-to-D",
-            "turnover_location": "None"
-          },
-          "coach_notes": "P2 Shift 29: Controlled offensive zone sequence (D-to-D)",
-          "is_tigers_goal": false
-        },
-        {
-          "shift_id": 30,
-          "period": 2,
-          "start_seconds": 2799,
-          "end_seconds": 2843,
-          "display_time": "46:39",
-          "center_id": 9,
-          "player_ids": [
-            23,
-            9,
-            3,
-            28,
-            76,
-            13
-          ],
-          "strength_state": "5v5",
-          "primary_zone": "Defensive Zone",
-          "breakout": {
-            "attempted": true,
-            "successful": true,
-            "breakout_type": "Rim",
-            "turnover_location": "None"
-          },
-          "coach_notes": "P2 Shift 30: Controlled defensive zone sequence (Rim)",
-          "is_tigers_goal": false
-        },
-        {
-          "shift_id": 31,
-          "period": 2,
-          "start_seconds": 2894,
-          "end_seconds": 2939,
-          "display_time": "48:14",
-          "center_id": 18,
-          "player_ids": [
-            18,
-            5,
-            16,
-            97,
-            28,
-            98
-          ],
-          "strength_state": "5v5",
-          "primary_zone": "Neutral Zone",
-          "breakout": {
-            "attempted": true,
-            "successful": true,
-            "breakout_type": "Wheel",
-            "turnover_location": "None"
-          },
-          "coach_notes": "P2 Shift 31: Controlled neutral zone sequence (Wheel)",
-          "is_tigers_goal": false
-        },
-        {
-          "shift_id": 32,
-          "period": 2,
-          "start_seconds": 2989,
-          "end_seconds": 3035,
-          "display_time": "49:49",
-          "center_id": 23,
-          "player_ids": [
-            88,
-            10,
-            23,
-            21,
-            27,
-            98
-          ],
-          "strength_state": "5v5",
-          "primary_zone": "Defensive Zone",
-          "breakout": {
-            "attempted": true,
-            "successful": false,
-            "breakout_type": "Chip Off Glass",
-            "turnover_location": "Half-Wall"
-          },
-          "coach_notes": "P2 Shift 32: Controlled defensive zone sequence (Chip Off Glass)",
-          "is_tigers_goal": false
-        },
-        {
-          "shift_id": 33,
-          "period": 2,
-          "start_seconds": 3084,
-          "end_seconds": 3131,
-          "display_time": "51:24",
-          "center_id": 23,
-          "player_ids": [
-            23,
-            10,
-            7,
-            11,
-            21,
-            13
-          ],
-          "strength_state": "PK (Tigers)",
-          "primary_zone": "Offensive Zone",
-          "breakout": {
-            "attempted": true,
-            "successful": true,
-            "breakout_type": "D-to-D",
-            "turnover_location": "None"
-          },
-          "coach_notes": "P2 Shift 33: Controlled offensive zone sequence (D-to-D)",
-          "is_tigers_goal": false
-        },
-        {
-          "shift_id": 34,
-          "period": 3,
-          "start_seconds": 3188,
-          "end_seconds": 3236,
-          "display_time": "53:08",
-          "center_id": 9,
-          "player_ids": [
-            23,
-            9,
-            3,
-            28,
-            76,
-            13
-          ],
-          "strength_state": "5v5",
-          "primary_zone": "Defensive Zone",
-          "breakout": {
-            "attempted": true,
-            "successful": true,
-            "breakout_type": "Rim",
-            "turnover_location": "None"
-          },
-          "coach_notes": "P3 Shift 34: Controlled defensive zone sequence (Rim)",
-          "is_tigers_goal": false
-        },
-        {
-          "shift_id": 35,
-          "period": 3,
-          "start_seconds": 3283,
-          "end_seconds": 3325,
-          "display_time": "54:43",
-          "center_id": 18,
-          "player_ids": [
-            18,
-            5,
-            16,
-            97,
-            28,
-            98
-          ],
-          "strength_state": "5v5",
-          "primary_zone": "Neutral Zone",
-          "breakout": {
-            "attempted": true,
-            "successful": true,
-            "breakout_type": "Wheel",
-            "turnover_location": "None"
-          },
-          "coach_notes": "P3 Shift 35: Controlled neutral zone sequence (Wheel)",
-          "is_tigers_goal": false
-        },
-        {
-          "shift_id": 36,
-          "period": 3,
-          "start_seconds": 3378,
-          "end_seconds": 3421,
-          "display_time": "56:18",
-          "center_id": 23,
-          "player_ids": [
-            88,
-            10,
-            23,
-            21,
-            27,
-            98
-          ],
-          "strength_state": "PP (Tigers)",
-          "primary_zone": "Defensive Zone",
-          "breakout": {
-            "attempted": true,
-            "successful": false,
-            "breakout_type": "Chip Off Glass",
-            "turnover_location": "Half-Wall"
-          },
-          "coach_notes": "P3 Shift 36: Controlled defensive zone sequence (Chip Off Glass)",
-          "is_tigers_goal": false
-        }
-      ],
-      "players": {
-        "3": {
-          "name": "Stewart Dolmage",
-          "total_ice_time": "6m 47s",
-          "shifts_count": 9,
-          "avg_shift_len": "45s",
-          "shifts": [
-            {
-              "id": 1,
-              "start": 140.0,
-              "end": 184.0,
-              "duration": 44
-            },
-            {
-              "id": 2,
-              "start": 520.0,
-              "end": 568.0,
-              "duration": 48
-            },
-            {
-              "id": 3,
-              "start": 900.0,
-              "end": 945.0,
-              "duration": 45
-            },
-            {
-              "id": 4,
-              "start": 1280.0,
-              "end": 1322.0,
-              "duration": 42
-            },
-            {
-              "id": 5,
-              "start": 1659.0,
-              "end": 1705.0,
-              "duration": 46
-            },
-            {
-              "id": 6,
-              "start": 2039.0,
-              "end": 2082.0,
-              "duration": 43
-            },
-            {
-              "id": 7,
-              "start": 2419.0,
-              "end": 2466.0,
-              "duration": 47
-            },
-            {
-              "id": 8,
-              "start": 2799.0,
-              "end": 2843.0,
-              "duration": 44
-            },
-            {
-              "id": 9,
-              "start": 3188.0,
-              "end": 3236.0,
-              "duration": 48
-            }
-          ]
-        },
-        "5": {
-          "name": "Nathan Zhao",
-          "total_ice_time": "6m 42s",
-          "shifts_count": 9,
-          "avg_shift_len": "45s",
-          "shifts": [
-            {
-              "id": 1,
-              "start": 235.0,
-              "end": 280.0,
-              "duration": 45
-            },
-            {
-              "id": 2,
-              "start": 615.0,
-              "end": 657.0,
-              "duration": 42
-            },
-            {
-              "id": 3,
-              "start": 995.0,
-              "end": 1041.0,
-              "duration": 46
-            },
-            {
-              "id": 4,
-              "start": 1375.0,
-              "end": 1418.0,
-              "duration": 43
-            },
-            {
-              "id": 5,
-              "start": 1754.0,
-              "end": 1801.0,
-              "duration": 47
-            },
-            {
-              "id": 6,
-              "start": 2134.0,
-              "end": 2178.0,
-              "duration": 44
-            },
-            {
-              "id": 7,
-              "start": 2514.0,
-              "end": 2562.0,
-              "duration": 48
-            },
-            {
-              "id": 8,
-              "start": 2894.0,
-              "end": 2939.0,
-              "duration": 45
-            },
-            {
-              "id": 9,
-              "start": 3283.0,
-              "end": 3325.0,
-              "duration": 42
-            }
-          ]
-        },
-        "7": {
-          "name": "Maxwell Dey",
-          "total_ice_time": "6m 45s",
-          "shifts_count": 9,
-          "avg_shift_len": "45s",
-          "shifts": [
-            {
-              "id": 1,
-              "start": 45.0,
-              "end": 88.0,
-              "duration": 43
-            },
-            {
-              "id": 2,
-              "start": 425.0,
-              "end": 472.0,
-              "duration": 47
-            },
-            {
-              "id": 3,
-              "start": 805.0,
-              "end": 849.0,
-              "duration": 44
-            },
-            {
-              "id": 4,
-              "start": 1185.0,
-              "end": 1233.0,
-              "duration": 48
-            },
-            {
-              "id": 5,
-              "start": 1565.0,
-              "end": 1610.0,
-              "duration": 45
-            },
-            {
-              "id": 6,
-              "start": 1944.0,
-              "end": 1986.0,
-              "duration": 42
-            },
-            {
-              "id": 7,
-              "start": 2324.0,
-              "end": 2370.0,
-              "duration": 46
-            },
-            {
-              "id": 8,
-              "start": 2704.0,
-              "end": 2747.0,
-              "duration": 43
-            },
-            {
-              "id": 9,
-              "start": 3084.0,
-              "end": 3131.0,
-              "duration": 47
-            }
-          ]
-        },
-        "9": {
-          "name": "Oliver Patterson",
-          "total_ice_time": "6m 47s",
-          "shifts_count": 9,
-          "avg_shift_len": "45s",
-          "shifts": [
-            {
-              "id": 1,
-              "start": 140.0,
-              "end": 184.0,
-              "duration": 44
-            },
-            {
-              "id": 2,
-              "start": 520.0,
-              "end": 568.0,
-              "duration": 48
-            },
-            {
-              "id": 3,
-              "start": 900.0,
-              "end": 945.0,
-              "duration": 45
-            },
-            {
-              "id": 4,
-              "start": 1280.0,
-              "end": 1322.0,
-              "duration": 42
-            },
-            {
-              "id": 5,
-              "start": 1659.0,
-              "end": 1705.0,
-              "duration": 46
-            },
-            {
-              "id": 6,
-              "start": 2039.0,
-              "end": 2082.0,
-              "duration": 43
-            },
-            {
-              "id": 7,
-              "start": 2419.0,
-              "end": 2466.0,
-              "duration": 47
-            },
-            {
-              "id": 8,
-              "start": 2799.0,
-              "end": 2843.0,
-              "duration": 44
-            },
-            {
-              "id": 9,
-              "start": 3188.0,
-              "end": 3236.0,
-              "duration": 48
-            }
-          ]
-        },
-        "10": {
-          "name": "Arjun Manjunath",
-          "total_ice_time": "13m 29s",
-          "shifts_count": 18,
-          "avg_shift_len": "45s",
-          "shifts": [
-            {
-              "id": 1,
-              "start": 45.0,
-              "end": 88.0,
-              "duration": 43
-            },
-            {
-              "id": 2,
-              "start": 330.0,
-              "end": 376.0,
-              "duration": 46
-            },
-            {
-              "id": 3,
-              "start": 425.0,
-              "end": 472.0,
-              "duration": 47
-            },
-            {
-              "id": 4,
-              "start": 710.0,
-              "end": 753.0,
-              "duration": 43
-            },
-            {
-              "id": 5,
-              "start": 805.0,
-              "end": 849.0,
-              "duration": 44
-            },
-            {
-              "id": 6,
-              "start": 1090.0,
-              "end": 1137.0,
-              "duration": 47
-            },
-            {
-              "id": 7,
-              "start": 1185.0,
-              "end": 1233.0,
-              "duration": 48
-            },
-            {
-              "id": 8,
-              "start": 1470.0,
-              "end": 1514.0,
-              "duration": 44
-            },
-            {
-              "id": 9,
-              "start": 1565.0,
-              "end": 1610.0,
-              "duration": 45
-            },
-            {
-              "id": 10,
-              "start": 1849.0,
-              "end": 1897.0,
-              "duration": 48
-            },
-            {
-              "id": 11,
-              "start": 1944.0,
-              "end": 1986.0,
-              "duration": 42
-            },
-            {
-              "id": 12,
-              "start": 2229.0,
-              "end": 2274.0,
-              "duration": 45
-            },
-            {
-              "id": 13,
-              "start": 2324.0,
-              "end": 2370.0,
-              "duration": 46
-            },
-            {
-              "id": 14,
-              "start": 2609.0,
-              "end": 2651.0,
-              "duration": 42
-            },
-            {
-              "id": 15,
-              "start": 2704.0,
-              "end": 2747.0,
-              "duration": 43
-            },
-            {
-              "id": 16,
-              "start": 2989.0,
-              "end": 3035.0,
-              "duration": 46
-            },
-            {
-              "id": 17,
-              "start": 3084.0,
-              "end": 3131.0,
-              "duration": 47
-            },
-            {
-              "id": 18,
-              "start": 3378.0,
-              "end": 3421.0,
-              "duration": 43
-            }
-          ]
-        },
-        "11": {
-          "name": "Andrew Bichay",
-          "total_ice_time": "6m 45s",
-          "shifts_count": 9,
-          "avg_shift_len": "45s",
-          "shifts": [
-            {
-              "id": 1,
-              "start": 45.0,
-              "end": 88.0,
-              "duration": 43
-            },
-            {
-              "id": 2,
-              "start": 425.0,
-              "end": 472.0,
-              "duration": 47
-            },
-            {
-              "id": 3,
-              "start": 805.0,
-              "end": 849.0,
-              "duration": 44
-            },
-            {
-              "id": 4,
-              "start": 1185.0,
-              "end": 1233.0,
-              "duration": 48
-            },
-            {
-              "id": 5,
-              "start": 1565.0,
-              "end": 1610.0,
-              "duration": 45
-            },
-            {
-              "id": 6,
-              "start": 1944.0,
-              "end": 1986.0,
-              "duration": 42
-            },
-            {
-              "id": 7,
-              "start": 2324.0,
-              "end": 2370.0,
-              "duration": 46
-            },
-            {
-              "id": 8,
-              "start": 2704.0,
-              "end": 2747.0,
-              "duration": 43
-            },
-            {
-              "id": 9,
-              "start": 3084.0,
-              "end": 3131.0,
-              "duration": 47
-            }
-          ]
-        },
-        "13": {
-          "name": "Matthew Hart",
-          "total_ice_time": "13m 32s",
-          "shifts_count": 18,
-          "avg_shift_len": "45s",
-          "shifts": [
-            {
-              "id": 1,
-              "start": 45.0,
-              "end": 88.0,
-              "duration": 43
-            },
-            {
-              "id": 2,
-              "start": 140.0,
-              "end": 184.0,
-              "duration": 44
-            },
-            {
-              "id": 3,
-              "start": 425.0,
-              "end": 472.0,
-              "duration": 47
-            },
-            {
-              "id": 4,
-              "start": 520.0,
-              "end": 568.0,
-              "duration": 48
-            },
-            {
-              "id": 5,
-              "start": 805.0,
-              "end": 849.0,
-              "duration": 44
-            },
-            {
-              "id": 6,
-              "start": 900.0,
-              "end": 945.0,
-              "duration": 45
-            },
-            {
-              "id": 7,
-              "start": 1185.0,
-              "end": 1233.0,
-              "duration": 48
-            },
-            {
-              "id": 8,
-              "start": 1280.0,
-              "end": 1322.0,
-              "duration": 42
-            },
-            {
-              "id": 9,
-              "start": 1565.0,
-              "end": 1610.0,
-              "duration": 45
-            },
-            {
-              "id": 10,
-              "start": 1659.0,
-              "end": 1705.0,
-              "duration": 46
-            },
-            {
-              "id": 11,
-              "start": 1944.0,
-              "end": 1986.0,
-              "duration": 42
-            },
-            {
-              "id": 12,
-              "start": 2039.0,
-              "end": 2082.0,
-              "duration": 43
-            },
-            {
-              "id": 13,
-              "start": 2324.0,
-              "end": 2370.0,
-              "duration": 46
-            },
-            {
-              "id": 14,
-              "start": 2419.0,
-              "end": 2466.0,
-              "duration": 47
-            },
-            {
-              "id": 15,
-              "start": 2704.0,
-              "end": 2747.0,
-              "duration": 43
-            },
-            {
-              "id": 16,
-              "start": 2799.0,
-              "end": 2843.0,
-              "duration": 44
-            },
-            {
-              "id": 17,
-              "start": 3084.0,
-              "end": 3131.0,
-              "duration": 47
-            },
-            {
-              "id": 18,
-              "start": 3188.0,
-              "end": 3236.0,
-              "duration": 48
-            }
-          ]
-        },
-        "16": {
-          "name": "Joshua Liu",
-          "total_ice_time": "6m 42s",
-          "shifts_count": 9,
-          "avg_shift_len": "45s",
-          "shifts": [
-            {
-              "id": 1,
-              "start": 235.0,
-              "end": 280.0,
-              "duration": 45
-            },
-            {
-              "id": 2,
-              "start": 615.0,
-              "end": 657.0,
-              "duration": 42
-            },
-            {
-              "id": 3,
-              "start": 995.0,
-              "end": 1041.0,
-              "duration": 46
-            },
-            {
-              "id": 4,
-              "start": 1375.0,
-              "end": 1418.0,
-              "duration": 43
-            },
-            {
-              "id": 5,
-              "start": 1754.0,
-              "end": 1801.0,
-              "duration": 47
-            },
-            {
-              "id": 6,
-              "start": 2134.0,
-              "end": 2178.0,
-              "duration": 44
-            },
-            {
-              "id": 7,
-              "start": 2514.0,
-              "end": 2562.0,
-              "duration": 48
-            },
-            {
-              "id": 8,
-              "start": 2894.0,
-              "end": 2939.0,
-              "duration": 45
-            },
-            {
-              "id": 9,
-              "start": 3283.0,
-              "end": 3325.0,
-              "duration": 42
-            }
-          ]
-        },
-        "18": {
-          "name": "Nathan Carinci",
-          "total_ice_time": "6m 42s",
-          "shifts_count": 9,
-          "avg_shift_len": "45s",
-          "shifts": [
-            {
-              "id": 1,
-              "start": 235.0,
-              "end": 280.0,
-              "duration": 45
-            },
-            {
-              "id": 2,
-              "start": 615.0,
-              "end": 657.0,
-              "duration": 42
-            },
-            {
-              "id": 3,
-              "start": 995.0,
-              "end": 1041.0,
-              "duration": 46
-            },
-            {
-              "id": 4,
-              "start": 1375.0,
-              "end": 1418.0,
-              "duration": 43
-            },
-            {
-              "id": 5,
-              "start": 1754.0,
-              "end": 1801.0,
-              "duration": 47
-            },
-            {
-              "id": 6,
-              "start": 2134.0,
-              "end": 2178.0,
-              "duration": 44
-            },
-            {
-              "id": 7,
-              "start": 2514.0,
-              "end": 2562.0,
-              "duration": 48
-            },
-            {
-              "id": 8,
-              "start": 2894.0,
-              "end": 2939.0,
-              "duration": 45
-            },
-            {
-              "id": 9,
-              "start": 3283.0,
-              "end": 3325.0,
-              "duration": 42
-            }
-          ]
-        },
-        "21": {
-          "name": "Caleb Irgengioro-Wu",
-          "total_ice_time": "13m 29s",
-          "shifts_count": 18,
-          "avg_shift_len": "45s",
-          "shifts": [
-            {
-              "id": 1,
-              "start": 45.0,
-              "end": 88.0,
-              "duration": 43
-            },
-            {
-              "id": 2,
-              "start": 330.0,
-              "end": 376.0,
-              "duration": 46
-            },
-            {
-              "id": 3,
-              "start": 425.0,
-              "end": 472.0,
-              "duration": 47
-            },
-            {
-              "id": 4,
-              "start": 710.0,
-              "end": 753.0,
-              "duration": 43
-            },
-            {
-              "id": 5,
-              "start": 805.0,
-              "end": 849.0,
-              "duration": 44
-            },
-            {
-              "id": 6,
-              "start": 1090.0,
-              "end": 1137.0,
-              "duration": 47
-            },
-            {
-              "id": 7,
-              "start": 1185.0,
-              "end": 1233.0,
-              "duration": 48
-            },
-            {
-              "id": 8,
-              "start": 1470.0,
-              "end": 1514.0,
-              "duration": 44
-            },
-            {
-              "id": 9,
-              "start": 1565.0,
-              "end": 1610.0,
-              "duration": 45
-            },
-            {
-              "id": 10,
-              "start": 1849.0,
-              "end": 1897.0,
-              "duration": 48
-            },
-            {
-              "id": 11,
-              "start": 1944.0,
-              "end": 1986.0,
-              "duration": 42
-            },
-            {
-              "id": 12,
-              "start": 2229.0,
-              "end": 2274.0,
-              "duration": 45
-            },
-            {
-              "id": 13,
-              "start": 2324.0,
-              "end": 2370.0,
-              "duration": 46
-            },
-            {
-              "id": 14,
-              "start": 2609.0,
-              "end": 2651.0,
-              "duration": 42
-            },
-            {
-              "id": 15,
-              "start": 2704.0,
-              "end": 2747.0,
-              "duration": 43
-            },
-            {
-              "id": 16,
-              "start": 2989.0,
-              "end": 3035.0,
-              "duration": 46
-            },
-            {
-              "id": 17,
-              "start": 3084.0,
-              "end": 3131.0,
-              "duration": 47
-            },
-            {
-              "id": 18,
-              "start": 3378.0,
-              "end": 3421.0,
-              "duration": 43
-            }
-          ]
-        },
-        "23": {
-          "name": "Easton Carpentier",
-          "total_ice_time": "13m 31s",
-          "shifts_count": 18,
-          "avg_shift_len": "45s",
-          "shifts": [
-            {
-              "id": 1,
-              "start": 140.0,
-              "end": 184.0,
-              "duration": 44
-            },
-            {
-              "id": 2,
-              "start": 330.0,
-              "end": 376.0,
-              "duration": 46
-            },
-            {
-              "id": 3,
-              "start": 520.0,
-              "end": 568.0,
-              "duration": 48
-            },
-            {
-              "id": 4,
-              "start": 710.0,
-              "end": 753.0,
-              "duration": 43
-            },
-            {
-              "id": 5,
-              "start": 900.0,
-              "end": 945.0,
-              "duration": 45
-            },
-            {
-              "id": 6,
-              "start": 1090.0,
-              "end": 1137.0,
-              "duration": 47
-            },
-            {
-              "id": 7,
-              "start": 1280.0,
-              "end": 1322.0,
-              "duration": 42
-            },
-            {
-              "id": 8,
-              "start": 1470.0,
-              "end": 1514.0,
-              "duration": 44
-            },
-            {
-              "id": 9,
-              "start": 1659.0,
-              "end": 1705.0,
-              "duration": 46
-            },
-            {
-              "id": 10,
-              "start": 1849.0,
-              "end": 1897.0,
-              "duration": 48
-            },
-            {
-              "id": 11,
-              "start": 2039.0,
-              "end": 2082.0,
-              "duration": 43
-            },
-            {
-              "id": 12,
-              "start": 2229.0,
-              "end": 2274.0,
-              "duration": 45
-            },
-            {
-              "id": 13,
-              "start": 2419.0,
-              "end": 2466.0,
-              "duration": 47
-            },
-            {
-              "id": 14,
-              "start": 2609.0,
-              "end": 2651.0,
-              "duration": 42
-            },
-            {
-              "id": 15,
-              "start": 2799.0,
-              "end": 2843.0,
-              "duration": 44
-            },
-            {
-              "id": 16,
-              "start": 2989.0,
-              "end": 3035.0,
-              "duration": 46
-            },
-            {
-              "id": 17,
-              "start": 3188.0,
-              "end": 3236.0,
-              "duration": 48
-            },
-            {
-              "id": 18,
-              "start": 3378.0,
-              "end": 3421.0,
-              "duration": 43
-            }
-          ]
-        },
-        "27": {
-          "name": "Alen Fazlic",
-          "total_ice_time": "13m 29s",
-          "shifts_count": 18,
-          "avg_shift_len": "45s",
-          "shifts": [
-            {
-              "id": 1,
-              "start": 45.0,
-              "end": 88.0,
-              "duration": 43
-            },
-            {
-              "id": 2,
-              "start": 330.0,
-              "end": 376.0,
-              "duration": 46
-            },
-            {
-              "id": 3,
-              "start": 425.0,
-              "end": 472.0,
-              "duration": 47
-            },
-            {
-              "id": 4,
-              "start": 710.0,
-              "end": 753.0,
-              "duration": 43
-            },
-            {
-              "id": 5,
-              "start": 805.0,
-              "end": 849.0,
-              "duration": 44
-            },
-            {
-              "id": 6,
-              "start": 1090.0,
-              "end": 1137.0,
-              "duration": 47
-            },
-            {
-              "id": 7,
-              "start": 1185.0,
-              "end": 1233.0,
-              "duration": 48
-            },
-            {
-              "id": 8,
-              "start": 1470.0,
-              "end": 1514.0,
-              "duration": 44
-            },
-            {
-              "id": 9,
-              "start": 1565.0,
-              "end": 1610.0,
-              "duration": 45
-            },
-            {
-              "id": 10,
-              "start": 1849.0,
-              "end": 1897.0,
-              "duration": 48
-            },
-            {
-              "id": 11,
-              "start": 1944.0,
-              "end": 1986.0,
-              "duration": 42
-            },
-            {
-              "id": 12,
-              "start": 2229.0,
-              "end": 2274.0,
-              "duration": 45
-            },
-            {
-              "id": 13,
-              "start": 2324.0,
-              "end": 2370.0,
-              "duration": 46
-            },
-            {
-              "id": 14,
-              "start": 2609.0,
-              "end": 2651.0,
-              "duration": 42
-            },
-            {
-              "id": 15,
-              "start": 2704.0,
-              "end": 2747.0,
-              "duration": 43
-            },
-            {
-              "id": 16,
-              "start": 2989.0,
-              "end": 3035.0,
-              "duration": 46
-            },
-            {
-              "id": 17,
-              "start": 3084.0,
-              "end": 3131.0,
-              "duration": 47
-            },
-            {
-              "id": 18,
-              "start": 3378.0,
-              "end": 3421.0,
-              "duration": 43
-            }
-          ]
-        },
-        "28": {
-          "name": "Ross Elley",
-          "total_ice_time": "13m 29s",
-          "shifts_count": 18,
-          "avg_shift_len": "45s",
-          "shifts": [
-            {
-              "id": 1,
-              "start": 140.0,
-              "end": 184.0,
-              "duration": 44
-            },
-            {
-              "id": 2,
-              "start": 235.0,
-              "end": 280.0,
-              "duration": 45
-            },
-            {
-              "id": 3,
-              "start": 520.0,
-              "end": 568.0,
-              "duration": 48
-            },
-            {
-              "id": 4,
-              "start": 615.0,
-              "end": 657.0,
-              "duration": 42
-            },
-            {
-              "id": 5,
-              "start": 900.0,
-              "end": 945.0,
-              "duration": 45
-            },
-            {
-              "id": 6,
-              "start": 995.0,
-              "end": 1041.0,
-              "duration": 46
-            },
-            {
-              "id": 7,
-              "start": 1280.0,
-              "end": 1322.0,
-              "duration": 42
-            },
-            {
-              "id": 8,
-              "start": 1375.0,
-              "end": 1418.0,
-              "duration": 43
-            },
-            {
-              "id": 9,
-              "start": 1659.0,
-              "end": 1705.0,
-              "duration": 46
-            },
-            {
-              "id": 10,
-              "start": 1754.0,
-              "end": 1801.0,
-              "duration": 47
-            },
-            {
-              "id": 11,
-              "start": 2039.0,
-              "end": 2082.0,
-              "duration": 43
-            },
-            {
-              "id": 12,
-              "start": 2134.0,
-              "end": 2178.0,
-              "duration": 44
-            },
-            {
-              "id": 13,
-              "start": 2419.0,
-              "end": 2466.0,
-              "duration": 47
-            },
-            {
-              "id": 14,
-              "start": 2514.0,
-              "end": 2562.0,
-              "duration": 48
-            },
-            {
-              "id": 15,
-              "start": 2799.0,
-              "end": 2843.0,
-              "duration": 44
-            },
-            {
-              "id": 16,
-              "start": 2894.0,
-              "end": 2939.0,
-              "duration": 45
-            },
-            {
-              "id": 17,
-              "start": 3188.0,
-              "end": 3236.0,
-              "duration": 48
-            },
-            {
-              "id": 18,
-              "start": 3283.0,
-              "end": 3325.0,
-              "duration": 42
-            }
-          ]
-        },
-        "76": {
-          "name": "Matt Davis",
-          "total_ice_time": "6m 47s",
-          "shifts_count": 9,
-          "avg_shift_len": "45s",
-          "shifts": [
-            {
-              "id": 1,
-              "start": 140.0,
-              "end": 184.0,
-              "duration": 44
-            },
-            {
-              "id": 2,
-              "start": 520.0,
-              "end": 568.0,
-              "duration": 48
-            },
-            {
-              "id": 3,
-              "start": 900.0,
-              "end": 945.0,
-              "duration": 45
-            },
-            {
-              "id": 4,
-              "start": 1280.0,
-              "end": 1322.0,
-              "duration": 42
-            },
-            {
-              "id": 5,
-              "start": 1659.0,
-              "end": 1705.0,
-              "duration": 46
-            },
-            {
-              "id": 6,
-              "start": 2039.0,
-              "end": 2082.0,
-              "duration": 43
-            },
-            {
-              "id": 7,
-              "start": 2419.0,
-              "end": 2466.0,
-              "duration": 47
-            },
-            {
-              "id": 8,
-              "start": 2799.0,
-              "end": 2843.0,
-              "duration": 44
-            },
-            {
-              "id": 9,
-              "start": 3188.0,
-              "end": 3236.0,
-              "duration": 48
-            }
-          ]
-        },
-        "88": {
-          "name": "Roy Chen",
-          "total_ice_time": "6m 44s",
-          "shifts_count": 9,
-          "avg_shift_len": "45s",
-          "shifts": [
-            {
-              "id": 1,
-              "start": 330.0,
-              "end": 376.0,
-              "duration": 46
-            },
-            {
-              "id": 2,
-              "start": 710.0,
-              "end": 753.0,
-              "duration": 43
-            },
-            {
-              "id": 3,
-              "start": 1090.0,
-              "end": 1137.0,
-              "duration": 47
-            },
-            {
-              "id": 4,
-              "start": 1470.0,
-              "end": 1514.0,
-              "duration": 44
-            },
-            {
-              "id": 5,
-              "start": 1849.0,
-              "end": 1897.0,
-              "duration": 48
-            },
-            {
-              "id": 6,
-              "start": 2229.0,
-              "end": 2274.0,
-              "duration": 45
-            },
-            {
-              "id": 7,
-              "start": 2609.0,
-              "end": 2651.0,
-              "duration": 42
-            },
-            {
-              "id": 8,
-              "start": 2989.0,
-              "end": 3035.0,
-              "duration": 46
-            },
-            {
-              "id": 9,
-              "start": 3378.0,
-              "end": 3421.0,
-              "duration": 43
-            }
-          ]
-        },
-        "97": {
-          "name": "Hudson Millar",
-          "total_ice_time": "6m 42s",
-          "shifts_count": 9,
-          "avg_shift_len": "45s",
-          "shifts": [
-            {
-              "id": 1,
-              "start": 235.0,
-              "end": 280.0,
-              "duration": 45
-            },
-            {
-              "id": 2,
-              "start": 615.0,
-              "end": 657.0,
-              "duration": 42
-            },
-            {
-              "id": 3,
-              "start": 995.0,
-              "end": 1041.0,
-              "duration": 46
-            },
-            {
-              "id": 4,
-              "start": 1375.0,
-              "end": 1418.0,
-              "duration": 43
-            },
-            {
-              "id": 5,
-              "start": 1754.0,
-              "end": 1801.0,
-              "duration": 47
-            },
-            {
-              "id": 6,
-              "start": 2134.0,
-              "end": 2178.0,
-              "duration": 44
-            },
-            {
-              "id": 7,
-              "start": 2514.0,
-              "end": 2562.0,
-              "duration": 48
-            },
-            {
-              "id": 8,
-              "start": 2894.0,
-              "end": 2939.0,
-              "duration": 45
-            },
-            {
-              "id": 9,
-              "start": 3283.0,
-              "end": 3325.0,
-              "duration": 42
-            }
-          ]
-        },
-        "98": {
-          "name": "Hudson Barfitt",
-          "total_ice_time": "13m 26s",
-          "shifts_count": 18,
-          "avg_shift_len": "45s",
-          "shifts": [
-            {
-              "id": 1,
-              "start": 235.0,
-              "end": 280.0,
-              "duration": 45
-            },
-            {
-              "id": 2,
-              "start": 330.0,
-              "end": 376.0,
-              "duration": 46
-            },
-            {
-              "id": 3,
-              "start": 615.0,
-              "end": 657.0,
-              "duration": 42
-            },
-            {
-              "id": 4,
-              "start": 710.0,
-              "end": 753.0,
-              "duration": 43
-            },
-            {
-              "id": 5,
-              "start": 995.0,
-              "end": 1041.0,
-              "duration": 46
-            },
-            {
-              "id": 6,
-              "start": 1090.0,
-              "end": 1137.0,
-              "duration": 47
-            },
-            {
-              "id": 7,
-              "start": 1375.0,
-              "end": 1418.0,
-              "duration": 43
-            },
-            {
-              "id": 8,
-              "start": 1470.0,
-              "end": 1514.0,
-              "duration": 44
-            },
-            {
-              "id": 9,
-              "start": 1754.0,
-              "end": 1801.0,
-              "duration": 47
-            },
-            {
-              "id": 10,
-              "start": 1849.0,
-              "end": 1897.0,
-              "duration": 48
-            },
-            {
-              "id": 11,
-              "start": 2134.0,
-              "end": 2178.0,
-              "duration": 44
-            },
-            {
-              "id": 12,
-              "start": 2229.0,
-              "end": 2274.0,
-              "duration": 45
-            },
-            {
-              "id": 13,
-              "start": 2514.0,
-              "end": 2562.0,
-              "duration": 48
-            },
-            {
-              "id": 14,
-              "start": 2609.0,
-              "end": 2651.0,
-              "duration": 42
-            },
-            {
-              "id": 15,
-              "start": 2894.0,
-              "end": 2939.0,
-              "duration": 45
-            },
-            {
-              "id": 16,
-              "start": 2989.0,
-              "end": 3035.0,
-              "duration": 46
-            },
-            {
-              "id": 17,
-              "start": 3283.0,
-              "end": 3325.0,
-              "duration": 42
-            },
-            {
-              "id": 18,
-              "start": 3378.0,
-              "end": 3421.0,
-              "duration": 43
-            }
-          ]
-        }
-      },
+      "shifts": [],
+      "players": {},
       "coaching_clips": {
-        "powerplay": [
-          {
-            "id": 1,
-            "shift_id": 1,
-            "start": 140,
-            "start_seconds": 140,
-            "end": 175,
-            "end_seconds": 175,
-            "duration": 35,
-            "description": "P1 Powerplay (5v4) Setup",
-            "player_ids": [
-              10,
-              23,
-              11,
-              21,
-              88
-            ],
-            "breakout": {
-              "attempted": false,
-              "successful": false,
-              "breakout_type": "None",
-              "turnover_location": "None"
-            }
-          },
-          {
-            "id": 2,
-            "shift_id": 2,
-            "start": 1814,
-            "start_seconds": 1814,
-            "end": 1854,
-            "end_seconds": 1854,
-            "duration": 40,
-            "description": "P2 Powerplay (5v4) Umbrella Movement",
-            "player_ids": [
-              10,
-              23,
-              11,
-              21,
-              88
-            ],
-            "breakout": {
-              "attempted": false,
-              "successful": false,
-              "breakout_type": "None",
-              "turnover_location": "None"
-            }
-          }
-        ],
-        "penalty_kill": [
-          {
-            "id": 3,
-            "shift_id": 3,
-            "start": 320,
-            "start_seconds": 320,
-            "end": 360,
-            "end_seconds": 360,
-            "duration": 40,
-            "description": "P1 Penalty Kill (4v5) Box Clear",
-            "player_ids": [
-              9,
-              18,
-              27,
-              76
-            ],
-            "breakout": {
-              "attempted": true,
-              "successful": true,
-              "breakout_type": "Chip Off Glass",
-              "turnover_location": "None"
-            }
-          },
-          {
-            "id": 4,
-            "shift_id": 4,
-            "start": 3263,
-            "start_seconds": 3263,
-            "end": 3298,
-            "end_seconds": 3298,
-            "duration": 35,
-            "description": "P3 Penalty Kill Pressure",
-            "player_ids": [
-              9,
-              18,
-              27,
-              76
-            ],
-            "breakout": {
-              "attempted": false,
-              "successful": false,
-              "breakout_type": "None",
-              "turnover_location": "None"
-            }
-          }
-        ],
-        "offensive_zone": [
-          {
-            "id": 5,
-            "shift_id": 5,
-            "start": 140,
-            "start_seconds": 140,
-            "end": 175,
-            "end_seconds": 175,
-            "duration": 35,
-            "description": "P1 O-Zone 5v5 Possession & Cycle",
-            "player_ids": [
-              10,
-              7,
-              11,
-              21,
-              27
-            ],
-            "breakout": {
-              "attempted": false,
-              "successful": false,
-              "breakout_type": "None",
-              "turnover_location": "None"
-            }
-          },
-          {
-            "id": 6,
-            "shift_id": 6,
-            "start": 1714,
-            "start_seconds": 1714,
-            "end": 1754,
-            "end_seconds": 1754,
-            "duration": 40,
-            "description": "P2 O-Zone 5v5 Triangle Rotation",
-            "player_ids": [
-              10,
-              7,
-              11,
-              21,
-              27
-            ],
-            "breakout": {
-              "attempted": false,
-              "successful": false,
-              "breakout_type": "None",
-              "turnover_location": "None"
-            }
-          }
-        ],
-        "defensive_zone": [
-          {
-            "id": 7,
-            "shift_id": 7,
-            "start": 210,
-            "start_seconds": 210,
-            "end": 245,
-            "end_seconds": 245,
-            "duration": 35,
-            "description": "P1 D-Zone 5v5 Rim Breakout",
-            "player_ids": [
-              23,
-              9,
-              3,
-              28,
-              76
-            ],
-            "breakout": {
-              "attempted": true,
-              "successful": true,
-              "breakout_type": "Rim",
-              "turnover_location": "None"
-            }
-          },
-          {
-            "id": 8,
-            "shift_id": 8,
-            "start": 1914,
-            "start_seconds": 1914,
-            "end": 1954,
-            "end_seconds": 1954,
-            "duration": 40,
-            "description": "P2 D-Zone 5v5 Half-Wall Turnover",
-            "player_ids": [
-              23,
-              9,
-              3,
-              28,
-              76
-            ],
-            "breakout": {
-              "attempted": true,
-              "successful": false,
-              "breakout_type": "D-to-D",
-              "turnover_location": "Half-Wall"
-            }
-          }
-        ],
-        "neutral_zone": [
-          {
-            "id": 9,
-            "shift_id": 9,
-            "start": 85,
-            "start_seconds": 85,
-            "end": 120,
-            "end_seconds": 120,
-            "duration": 35,
-            "description": "P1 Neutral 1-2-2 Left Wing Lock",
-            "player_ids": [
-              18,
-              5,
-              16,
-              97,
-              28
-            ],
-            "breakout": {
-              "attempted": false,
-              "successful": false,
-              "breakout_type": "None",
-              "turnover_location": "None"
-            }
-          },
-          {
-            "id": 10,
-            "shift_id": 10,
-            "start": 1794,
-            "start_seconds": 1794,
-            "end": 1829,
-            "end_seconds": 1829,
-            "duration": 35,
-            "description": "P2 Center Ice Turnover & Backcheck",
-            "player_ids": [
-              18,
-              5,
-              16,
-              97,
-              28
-            ],
-            "breakout": {
-              "attempted": false,
-              "successful": false,
-              "breakout_type": "None",
-              "turnover_location": "None"
-            }
-          }
-        ]
+        "powerplay": [],
+        "penalty_kill": [],
+        "offensive_zone": [],
+        "defensive_zone": [],
+        "neutral_zone": []
       },
       "analytics": {
-        "active_play_time": "70m",
-        "possession_tigers_pct": 52,
-        "possession_opp_pct": 48,
-        "ozone_time": "24m",
-        "dzone_time": "21m",
-        "shots_on_goal": null,
-        "goalie_saves": null,
-        "save_pct": "91.5%",
+        "active_play_time": "Pending Scan",
         "breakouts": {
-          "attempts": 22,
-          "successes": 15,
-          "success_pct": "68.2%",
-          "breakout_types": {
-            "Rim": 8,
-            "D-to-D": 6,
-            "Wheel": 4,
-            "Chip Off Glass": 4
-          },
-          "turnover_locations": {
-            "Behind Goal Line": 2,
-            "Half-Wall": 3,
-            "Blue Line": 2
-          }
+          "attempts": 0,
+          "successes": 0,
+          "success_pct": "0%"
         }
       },
       "boxscore": {
@@ -2722,6 +103,8 @@
         "shotsFor": 0,
         "shotsAgainst": 0,
         "pim": 10,
+        "tigersPim": 10,
+        "oppPim": 4,
         "goalLog": [
           {
             "type": "goal",
@@ -2782,169 +165,9 @@
         ],
         "penaltyLog": []
       },
-      "top_clips": [
-        {
-          "clip_id": "gs_goal_1",
-          "type": "opp_goal",
-          "period": 1,
-          "gs_clock": "06:49",
-          "start_seconds": 498,
-          "end_seconds": 522,
-          "verified": false,
-          "align_status": "GameSheet Clock Aligned",
-          "label": "🥅 BARRIE COLTS U13-2 A BLUE GOAL #1 (P1 06:49)",
-          "description": "🥅 BARRIE COLTS U13-2 A BLUE GOAL #1 (P1 06:49) — Official GameSheet P1 @ 06:49 (GameSheet Clock Aligned)"
-        },
-        {
-          "clip_id": "gs_goal_2",
-          "type": "opp_goal",
-          "period": 1,
-          "gs_clock": "04:44",
-          "start_seconds": 797,
-          "end_seconds": 821,
-          "verified": false,
-          "align_status": "GameSheet Clock Aligned",
-          "label": "🥅 BARRIE COLTS U13-2 A BLUE GOAL #2 (P1 04:44)",
-          "description": "🥅 BARRIE COLTS U13-2 A BLUE GOAL #2 (P1 04:44) — Official GameSheet P1 @ 04:44 (GameSheet Clock Aligned)"
-        },
-        {
-          "clip_id": "gs_goal_3",
-          "type": "opp_goal",
-          "period": 2,
-          "gs_clock": "14:32",
-          "start_seconds": 1639,
-          "end_seconds": 1663,
-          "verified": false,
-          "align_status": "GameSheet Clock Aligned",
-          "label": "🥅 BARRIE COLTS U13-2 A BLUE GOAL #3 (P2 14:32)",
-          "description": "🥅 BARRIE COLTS U13-2 A BLUE GOAL #3 (P2 14:32) — Official GameSheet P2 @ 14:32 (GameSheet Clock Aligned)"
-        },
-        {
-          "clip_id": "gs_goal_4",
-          "type": "opp_goal",
-          "period": 2,
-          "gs_clock": "06:23",
-          "start_seconds": 2405,
-          "end_seconds": 2429,
-          "verified": false,
-          "align_status": "GameSheet Clock Aligned",
-          "label": "🥅 BARRIE COLTS U13-2 A BLUE GOAL #4 (P2 06:23)",
-          "description": "🥅 BARRIE COLTS U13-2 A BLUE GOAL #4 (P2 06:23) — Official GameSheet P2 @ 06:23 (GameSheet Clock Aligned)"
-        },
-        {
-          "clip_id": "gs_goal_5",
-          "type": "opp_goal",
-          "period": 2,
-          "gs_clock": "05:49",
-          "start_seconds": 2458,
-          "end_seconds": 2482,
-          "verified": false,
-          "align_status": "GameSheet Clock Aligned",
-          "label": "🥅 BARRIE COLTS U13-2 A BLUE GOAL #5 (P2 05:49)",
-          "description": "🥅 BARRIE COLTS U13-2 A BLUE GOAL #5 (P2 05:49) — Official GameSheet P2 @ 05:49 (GameSheet Clock Aligned)"
-        },
-        {
-          "clip_id": "gs_goal_6",
-          "type": "opp_goal",
-          "period": 3,
-          "gs_clock": "13:32",
-          "start_seconds": 3213,
-          "end_seconds": 3237,
-          "verified": false,
-          "align_status": "GameSheet Clock Aligned",
-          "label": "🥅 BARRIE COLTS U13-2 A BLUE GOAL #6 (P3 13:32)",
-          "description": "🥅 BARRIE COLTS U13-2 A BLUE GOAL #6 (P3 13:32) — Official GameSheet P3 @ 13:32 (GameSheet Clock Aligned)"
-        },
-        {
-          "clip_id": "gs_goal_7",
-          "type": "opp_goal",
-          "period": 3,
-          "gs_clock": "08:20",
-          "start_seconds": 3525,
-          "end_seconds": 3549,
-          "verified": false,
-          "align_status": "GameSheet Clock Aligned",
-          "label": "🥅 BARRIE COLTS U13-2 A BLUE GOAL #7 (P3 08:20)",
-          "description": "🥅 BARRIE COLTS U13-2 A BLUE GOAL #7 (P3 08:20) — Official GameSheet P3 @ 08:20 (GameSheet Clock Aligned)"
-        },
-        {
-          "clip_id": "pp_shift_9",
-          "type": "powerplay",
-          "period": 1,
-          "start_seconds": 805,
-          "end_seconds": 849,
-          "verified": true,
-          "align_status": "Special Teams Shift",
-          "label": "⚡ POWER PLAY • P1 (13:25)",
-          "description": "P1 Shift 9: Controlled offensive zone sequence (D-to-D)"
-        },
-        {
-          "clip_id": "pk_shift_11",
-          "type": "penalty_kill",
-          "period": 1,
-          "start_seconds": 995,
-          "end_seconds": 1041,
-          "verified": true,
-          "align_status": "Special Teams Shift",
-          "label": "🛡️ PENALTY KILL • P1 (16:35)",
-          "description": "P1 Shift 11: Controlled neutral zone sequence (Wheel)"
-        },
-        {
-          "clip_id": "pp_shift_18",
-          "type": "powerplay",
-          "period": 2,
-          "start_seconds": 1659,
-          "end_seconds": 1705,
-          "verified": true,
-          "align_status": "Special Teams Shift",
-          "label": "⚡ POWER PLAY • P2 (27:39)",
-          "description": "P2 Shift 18: Controlled defensive zone sequence (Rim)"
-        },
-        {
-          "clip_id": "pk_shift_22",
-          "type": "penalty_kill",
-          "period": 2,
-          "start_seconds": 2039,
-          "end_seconds": 2082,
-          "verified": true,
-          "align_status": "Special Teams Shift",
-          "label": "🛡️ PENALTY KILL • P2 (33:59)",
-          "description": "P2 Shift 22: Controlled defensive zone sequence (Rim)"
-        },
-        {
-          "clip_id": "pp_shift_27",
-          "type": "powerplay",
-          "period": 2,
-          "start_seconds": 2514,
-          "end_seconds": 2562,
-          "verified": true,
-          "align_status": "Special Teams Shift",
-          "label": "⚡ POWER PLAY • P2 (41:54)",
-          "description": "P2 Shift 27: Controlled neutral zone sequence (Wheel)"
-        },
-        {
-          "clip_id": "pk_shift_33",
-          "type": "penalty_kill",
-          "period": 2,
-          "start_seconds": 3084,
-          "end_seconds": 3131,
-          "verified": true,
-          "align_status": "Special Teams Shift",
-          "label": "🛡️ PENALTY KILL • P2 (51:24)",
-          "description": "P2 Shift 33: Controlled offensive zone sequence (D-to-D)"
-        },
-        {
-          "clip_id": "pp_shift_36",
-          "type": "powerplay",
-          "period": 3,
-          "start_seconds": 3378,
-          "end_seconds": 3421,
-          "verified": true,
-          "align_status": "Special Teams Shift",
-          "label": "⚡ POWER PLAY • P3 (56:18)",
-          "description": "P3 Shift 36: Controlled defensive zone sequence (Chip Off Glass)"
-        }
-      ]
+      "ai_verified": false,
+      "ai_confidence_avg": null,
+      "top_clips": []
     },
     {
       "id": "game_5WA3M3h3FZM",
@@ -5770,6 +2993,8 @@
         "shotsFor": 0,
         "shotsAgainst": 0,
         "pim": 12,
+        "tigersPim": 12,
+        "oppPim": 10,
         "goalLog": [
           {
             "type": "goal",
@@ -5868,132 +3093,132 @@
           "type": "opp_goal",
           "period": 1,
           "gs_clock": "09:05",
-          "start_seconds": 394,
-          "end_seconds": 418,
+          "start_seconds": 331,
+          "end_seconds": 353,
           "verified": false,
-          "align_status": "GameSheet Clock Aligned",
+          "align_status": "Stop-Time Clock Aligned",
           "label": "🥅 SOUTH SIMCOE STORM GOAL #1 (P1 09:05)",
-          "description": "🥅 SOUTH SIMCOE STORM GOAL #1 (P1 09:05) — Official GameSheet P1 @ 09:05 (GameSheet Clock Aligned)"
+          "description": "🥅 SOUTH SIMCOE STORM GOAL #1 (P1 09:05) — Official GameSheet P1 @ 09:05 (Stop-Time Clock Aligned)"
         },
         {
           "clip_id": "gs_goal_2",
           "type": "opp_goal",
           "period": 1,
           "gs_clock": "08:41",
-          "start_seconds": 437,
-          "end_seconds": 461,
+          "start_seconds": 345,
+          "end_seconds": 367,
           "verified": false,
-          "align_status": "GameSheet Clock Aligned",
+          "align_status": "Stop-Time Clock Aligned",
           "label": "🥅 SOUTH SIMCOE STORM GOAL #2 (P1 08:41)",
-          "description": "🥅 SOUTH SIMCOE STORM GOAL #2 (P1 08:41) — Official GameSheet P1 @ 08:41 (GameSheet Clock Aligned)"
+          "description": "🥅 SOUTH SIMCOE STORM GOAL #2 (P1 08:41) — Official GameSheet P1 @ 08:41 (Stop-Time Clock Aligned)"
         },
         {
           "clip_id": "gs_goal_3",
           "type": "opp_goal",
           "period": 1,
           "gs_clock": "07:32",
-          "start_seconds": 560,
-          "end_seconds": 584,
+          "start_seconds": 468,
+          "end_seconds": 490,
           "verified": false,
-          "align_status": "GameSheet Clock Aligned",
+          "align_status": "Stop-Time Clock Aligned",
           "label": "🥅 SOUTH SIMCOE STORM GOAL #3 (P1 07:32)",
-          "description": "🥅 SOUTH SIMCOE STORM GOAL #3 (P1 07:32) — Official GameSheet P1 @ 07:32 (GameSheet Clock Aligned)"
+          "description": "🥅 SOUTH SIMCOE STORM GOAL #3 (P1 07:32) — Official GameSheet P1 @ 07:32 (Stop-Time Clock Aligned)"
         },
         {
           "clip_id": "gs_goal_4",
           "type": "opp_goal",
           "period": 2,
           "gs_clock": "14:37",
-          "start_seconds": 1529,
-          "end_seconds": 1553,
+          "start_seconds": 1506,
+          "end_seconds": 1519,
           "verified": false,
-          "align_status": "GameSheet Clock Aligned",
+          "align_status": "Stop-Time Clock Aligned",
           "label": "🥅 SOUTH SIMCOE STORM GOAL #4 (P2 14:37)",
-          "description": "🥅 SOUTH SIMCOE STORM GOAL #4 (P2 14:37) — Official GameSheet P2 @ 14:37 (GameSheet Clock Aligned)"
+          "description": "🥅 SOUTH SIMCOE STORM GOAL #4 (P2 14:37) — Official GameSheet P2 @ 14:37 (Stop-Time Clock Aligned)"
         },
         {
           "clip_id": "gs_goal_5",
           "type": "opp_goal",
           "period": 2,
           "gs_clock": "12:07",
-          "start_seconds": 1796,
-          "end_seconds": 1820,
+          "start_seconds": 1578,
+          "end_seconds": 1600,
           "verified": false,
-          "align_status": "GameSheet Clock Aligned",
+          "align_status": "Stop-Time Clock Aligned",
           "label": "🥅 SOUTH SIMCOE STORM GOAL #5 (P2 12:07)",
-          "description": "🥅 SOUTH SIMCOE STORM GOAL #5 (P2 12:07) — Official GameSheet P2 @ 12:07 (GameSheet Clock Aligned)"
+          "description": "🥅 SOUTH SIMCOE STORM GOAL #5 (P2 12:07) — Official GameSheet P2 @ 12:07 (Stop-Time Clock Aligned)"
         },
         {
           "clip_id": "gs_goal_6",
           "type": "opp_goal",
           "period": 2,
           "gs_clock": "08:54",
-          "start_seconds": 2141,
-          "end_seconds": 2165,
+          "start_seconds": 1692,
+          "end_seconds": 1714,
           "verified": false,
-          "align_status": "GameSheet Clock Aligned",
+          "align_status": "Stop-Time Clock Aligned",
           "label": "🥅 SOUTH SIMCOE STORM GOAL #6 (P2 08:54)",
-          "description": "🥅 SOUTH SIMCOE STORM GOAL #6 (P2 08:54) — Official GameSheet P2 @ 08:54 (GameSheet Clock Aligned)"
+          "description": "🥅 SOUTH SIMCOE STORM GOAL #6 (P2 08:54) — Official GameSheet P2 @ 08:54 (Stop-Time Clock Aligned)"
         },
         {
           "clip_id": "gs_goal_7",
           "type": "opp_goal",
           "period": 2,
           "gs_clock": "08:23",
-          "start_seconds": 2196,
-          "end_seconds": 2220,
+          "start_seconds": 1702,
+          "end_seconds": 1724,
           "verified": false,
-          "align_status": "GameSheet Clock Aligned",
+          "align_status": "Stop-Time Clock Aligned",
           "label": "🥅 SOUTH SIMCOE STORM GOAL #7 (P2 08:23)",
-          "description": "🥅 SOUTH SIMCOE STORM GOAL #7 (P2 08:23) — Official GameSheet P2 @ 08:23 (GameSheet Clock Aligned)"
+          "description": "🥅 SOUTH SIMCOE STORM GOAL #7 (P2 08:23) — Official GameSheet P2 @ 08:23 (Stop-Time Clock Aligned)"
         },
         {
           "clip_id": "gs_goal_8",
           "type": "opp_goal",
           "period": 2,
           "gs_clock": "03:33",
-          "start_seconds": 2713,
-          "end_seconds": 2737,
+          "start_seconds": 2094,
+          "end_seconds": 2116,
           "verified": false,
-          "align_status": "GameSheet Clock Aligned",
+          "align_status": "Stop-Time Clock Aligned",
           "label": "🥅 SOUTH SIMCOE STORM GOAL #8 (P2 03:33)",
-          "description": "🥅 SOUTH SIMCOE STORM GOAL #8 (P2 03:33) — Official GameSheet P2 @ 03:33 (GameSheet Clock Aligned)"
+          "description": "🥅 SOUTH SIMCOE STORM GOAL #8 (P2 03:33) — Official GameSheet P2 @ 03:33 (Stop-Time Clock Aligned)"
         },
         {
           "clip_id": "gs_goal_9",
           "type": "opp_goal",
           "period": 2,
           "gs_clock": "00:12",
-          "start_seconds": 3072,
-          "end_seconds": 3096,
+          "start_seconds": 2629,
+          "end_seconds": 2651,
           "verified": false,
-          "align_status": "GameSheet Clock Aligned",
+          "align_status": "Stop-Time Clock Aligned",
           "label": "🥅 SOUTH SIMCOE STORM GOAL #9 (P2 00:12)",
-          "description": "🥅 SOUTH SIMCOE STORM GOAL #9 (P2 00:12) — Official GameSheet P2 @ 00:12 (GameSheet Clock Aligned)"
+          "description": "🥅 SOUTH SIMCOE STORM GOAL #9 (P2 00:12) — Official GameSheet P2 @ 00:12 (Stop-Time Clock Aligned)"
         },
         {
           "clip_id": "gs_goal_10",
           "type": "opp_goal",
           "period": 3,
           "gs_clock": "11:40",
-          "start_seconds": 3414,
-          "end_seconds": 3438,
+          "start_seconds": 3370,
+          "end_seconds": 3392,
           "verified": false,
-          "align_status": "GameSheet Clock Aligned",
+          "align_status": "Stop-Time Clock Aligned",
           "label": "🥅 SOUTH SIMCOE STORM GOAL #10 (P3 11:40)",
-          "description": "🥅 SOUTH SIMCOE STORM GOAL #10 (P3 11:40) — Official GameSheet P3 @ 11:40 (GameSheet Clock Aligned)"
+          "description": "🥅 SOUTH SIMCOE STORM GOAL #10 (P3 11:40) — Official GameSheet P3 @ 11:40 (Stop-Time Clock Aligned)"
         },
         {
           "clip_id": "gs_goal_11",
           "type": "opp_goal",
           "period": 3,
           "gs_clock": "00:10",
-          "start_seconds": 4104,
-          "end_seconds": 4128,
+          "start_seconds": 3885,
+          "end_seconds": 3907,
           "verified": false,
-          "align_status": "GameSheet Clock Aligned",
+          "align_status": "Stop-Time Clock Aligned",
           "label": "🥅 SOUTH SIMCOE STORM GOAL #11 (P3 00:10)",
-          "description": "🥅 SOUTH SIMCOE STORM GOAL #11 (P3 00:10) — Official GameSheet P3 @ 00:10 (GameSheet Clock Aligned)"
+          "description": "🥅 SOUTH SIMCOE STORM GOAL #11 (P3 00:10) — Official GameSheet P3 @ 00:10 (Stop-Time Clock Aligned)"
         },
         {
           "clip_id": "pk_shift_7",
@@ -6002,7 +3227,7 @@
           "start_seconds": 871,
           "end_seconds": 903,
           "verified": true,
-          "align_status": "Special Teams Shift",
+          "align_status": "Verified 4v5 Penalty Kill",
           "label": "🛡️ PENALTY KILL • P1 (14:31)",
           "description": "Effective shorthanded faceoff win and glass-and-out clear to relieve pressure and force an opponent reset."
         },
@@ -6013,11 +3238,13 @@
           "start_seconds": 2324,
           "end_seconds": 2374,
           "verified": true,
-          "align_status": "Special Teams Shift",
+          "align_status": "Verified 4v5 Penalty Kill",
           "label": "🛡️ PENALTY KILL • P2 (38:44)",
           "description": "Disciplined penalty kill box kept shots to the perimeter before icing the puck for a fresh unit."
         }
-      ]
+      ],
+      "ai_verified": true,
+      "ai_confidence_avg": 89
     },
     {
       "id": "game_qpXLIvsACvI",
@@ -6481,7 +3708,7 @@
             28,
             13
           ],
-          "strength_state": "PK (Tigers)",
+          "strength_state": "5v5",
           "primary_zone": "Defensive Zone",
           "breakout": {
             "attempted": true,
@@ -6510,7 +3737,7 @@
             97,
             13
           ],
-          "strength_state": "PK (Tigers)",
+          "strength_state": "5v5",
           "primary_zone": "Defensive Zone",
           "breakout": {
             "attempted": true,
@@ -8746,6 +5973,8 @@
         "shotsFor": 0,
         "shotsAgainst": 0,
         "pim": 0,
+        "tigersPim": 0,
+        "oppPim": 4,
         "goalLog": [
           {
             "type": "goal",
@@ -8844,154 +6073,132 @@
           "type": "opp_goal",
           "period": 1,
           "gs_clock": "04:50",
-          "start_seconds": 1389,
-          "end_seconds": 1413,
+          "start_seconds": 1172,
+          "end_seconds": 1194,
           "verified": false,
-          "align_status": "GameSheet Clock Aligned",
+          "align_status": "Stop-Time Clock Aligned",
           "label": "🥅 BARRIE COLTS GOAL #1 (P1 04:50)",
-          "description": "🥅 BARRIE COLTS GOAL #1 (P1 04:50) — Official GameSheet P1 @ 04:50 (GameSheet Clock Aligned)"
+          "description": "🥅 BARRIE COLTS GOAL #1 (P1 04:50) — Official GameSheet P1 @ 04:50 (Stop-Time Clock Aligned)"
         },
         {
           "clip_id": "gs_goal_2",
           "type": "opp_goal",
           "period": 2,
           "gs_clock": "13:48",
-          "start_seconds": 1947,
-          "end_seconds": 1971,
+          "start_seconds": 1870,
+          "end_seconds": 1892,
           "verified": false,
-          "align_status": "GameSheet Clock Aligned",
+          "align_status": "Stop-Time Clock Aligned",
           "label": "🥅 BARRIE COLTS GOAL #2 (P2 13:48)",
-          "description": "🥅 BARRIE COLTS GOAL #2 (P2 13:48) — Official GameSheet P2 @ 13:48 (GameSheet Clock Aligned)"
+          "description": "🥅 BARRIE COLTS GOAL #2 (P2 13:48) — Official GameSheet P2 @ 13:48 (Stop-Time Clock Aligned)"
         },
         {
           "clip_id": "gs_goal_3",
           "type": "opp_goal",
           "period": 2,
           "gs_clock": "08:12",
-          "start_seconds": 2438,
-          "end_seconds": 2462,
+          "start_seconds": 2015,
+          "end_seconds": 2037,
           "verified": false,
-          "align_status": "GameSheet Clock Aligned",
+          "align_status": "Stop-Time Clock Aligned",
           "label": "🥅 BARRIE COLTS GOAL #3 (P2 08:12)",
-          "description": "🥅 BARRIE COLTS GOAL #3 (P2 08:12) — Official GameSheet P2 @ 08:12 (GameSheet Clock Aligned)"
+          "description": "🥅 BARRIE COLTS GOAL #3 (P2 08:12) — Official GameSheet P2 @ 08:12 (Stop-Time Clock Aligned)"
         },
         {
           "clip_id": "gs_goal_4",
           "type": "opp_goal",
           "period": 2,
           "gs_clock": "04:27",
-          "start_seconds": 2767,
-          "end_seconds": 2791,
+          "start_seconds": 2131,
+          "end_seconds": 2153,
           "verified": false,
-          "align_status": "GameSheet Clock Aligned",
+          "align_status": "Stop-Time Clock Aligned",
           "label": "🥅 BARRIE COLTS GOAL #4 (P2 04:27)",
-          "description": "🥅 BARRIE COLTS GOAL #4 (P2 04:27) — Official GameSheet P2 @ 04:27 (GameSheet Clock Aligned)"
+          "description": "🥅 BARRIE COLTS GOAL #4 (P2 04:27) — Official GameSheet P2 @ 04:27 (Stop-Time Clock Aligned)"
         },
         {
           "clip_id": "gs_goal_5",
           "type": "opp_goal",
           "period": 2,
           "gs_clock": "01:07",
-          "start_seconds": 3060,
-          "end_seconds": 3084,
+          "start_seconds": 2296,
+          "end_seconds": 2318,
           "verified": false,
-          "align_status": "GameSheet Clock Aligned",
+          "align_status": "Stop-Time Clock Aligned",
           "label": "🥅 BARRIE COLTS GOAL #5 (P2 01:07)",
-          "description": "🥅 BARRIE COLTS GOAL #5 (P2 01:07) — Official GameSheet P2 @ 01:07 (GameSheet Clock Aligned)"
+          "description": "🥅 BARRIE COLTS GOAL #5 (P2 01:07) — Official GameSheet P2 @ 01:07 (Stop-Time Clock Aligned)"
         },
         {
           "clip_id": "gs_goal_6",
           "type": "opp_goal",
           "period": 2,
           "gs_clock": "00:01",
-          "start_seconds": 3156,
-          "end_seconds": 3180,
+          "start_seconds": 2320,
+          "end_seconds": 2342,
           "verified": false,
-          "align_status": "GameSheet Clock Aligned",
+          "align_status": "Stop-Time Clock Aligned",
           "label": "🥅 BARRIE COLTS GOAL #6 (P2 00:01)",
-          "description": "🥅 BARRIE COLTS GOAL #6 (P2 00:01) — Official GameSheet P2 @ 00:01 (GameSheet Clock Aligned)"
+          "description": "🥅 BARRIE COLTS GOAL #6 (P2 00:01) — Official GameSheet P2 @ 00:01 (Stop-Time Clock Aligned)"
         },
         {
           "clip_id": "gs_goal_7",
           "type": "opp_goal",
           "period": 3,
           "gs_clock": "10:55",
-          "start_seconds": 3523,
-          "end_seconds": 3547,
+          "start_seconds": 3450,
+          "end_seconds": 3472,
           "verified": false,
-          "align_status": "GameSheet Clock Aligned",
+          "align_status": "Stop-Time Clock Aligned",
           "label": "🥅 BARRIE COLTS GOAL #7 (P3 10:55)",
-          "description": "🥅 BARRIE COLTS GOAL #7 (P3 10:55) — Official GameSheet P3 @ 10:55 (GameSheet Clock Aligned)"
+          "description": "🥅 BARRIE COLTS GOAL #7 (P3 10:55) — Official GameSheet P3 @ 10:55 (Stop-Time Clock Aligned)"
         },
         {
           "clip_id": "gs_goal_8",
           "type": "opp_goal",
           "period": 3,
           "gs_clock": "10:17",
-          "start_seconds": 3561,
-          "end_seconds": 3585,
+          "start_seconds": 3467,
+          "end_seconds": 3489,
           "verified": false,
-          "align_status": "GameSheet Clock Aligned",
+          "align_status": "Stop-Time Clock Aligned",
           "label": "🥅 BARRIE COLTS GOAL #8 (P3 10:17)",
-          "description": "🥅 BARRIE COLTS GOAL #8 (P3 10:17) — Official GameSheet P3 @ 10:17 (GameSheet Clock Aligned)"
+          "description": "🥅 BARRIE COLTS GOAL #8 (P3 10:17) — Official GameSheet P3 @ 10:17 (Stop-Time Clock Aligned)"
         },
         {
           "clip_id": "gs_goal_9",
           "type": "opp_goal",
           "period": 3,
           "gs_clock": "04:03",
-          "start_seconds": 3935,
-          "end_seconds": 3959,
+          "start_seconds": 3684,
+          "end_seconds": 3706,
           "verified": false,
-          "align_status": "GameSheet Clock Aligned",
+          "align_status": "Stop-Time Clock Aligned",
           "label": "🥅 BARRIE COLTS GOAL #9 (P3 04:03)",
-          "description": "🥅 BARRIE COLTS GOAL #9 (P3 04:03) — Official GameSheet P3 @ 04:03 (GameSheet Clock Aligned)"
+          "description": "🥅 BARRIE COLTS GOAL #9 (P3 04:03) — Official GameSheet P3 @ 04:03 (Stop-Time Clock Aligned)"
         },
         {
           "clip_id": "gs_goal_10",
           "type": "opp_goal",
           "period": 3,
           "gs_clock": "01:38",
-          "start_seconds": 4080,
-          "end_seconds": 4104,
+          "start_seconds": 3753,
+          "end_seconds": 3775,
           "verified": false,
-          "align_status": "GameSheet Clock Aligned",
+          "align_status": "Stop-Time Clock Aligned",
           "label": "🥅 BARRIE COLTS GOAL #10 (P3 01:38)",
-          "description": "🥅 BARRIE COLTS GOAL #10 (P3 01:38) — Official GameSheet P3 @ 01:38 (GameSheet Clock Aligned)"
+          "description": "🥅 BARRIE COLTS GOAL #10 (P3 01:38) — Official GameSheet P3 @ 01:38 (Stop-Time Clock Aligned)"
         },
         {
           "clip_id": "gs_goal_11",
           "type": "opp_goal",
           "period": 3,
           "gs_clock": "00:45",
-          "start_seconds": 4133,
-          "end_seconds": 4157,
+          "start_seconds": 3777,
+          "end_seconds": 3799,
           "verified": false,
-          "align_status": "GameSheet Clock Aligned",
+          "align_status": "Stop-Time Clock Aligned",
           "label": "🥅 BARRIE COLTS GOAL #11 (P3 00:45)",
-          "description": "🥅 BARRIE COLTS GOAL #11 (P3 00:45) — Official GameSheet P3 @ 00:45 (GameSheet Clock Aligned)"
-        },
-        {
-          "clip_id": "pk_shift_15",
-          "type": "penalty_kill",
-          "period": 2,
-          "start_seconds": 2168,
-          "end_seconds": 2198,
-          "verified": true,
-          "align_status": "Special Teams Shift",
-          "label": "🛡️ PENALTY KILL • P2 (36:08)",
-          "description": "Maintained a compact penalty kill box in the defensive zone and chipped the puck off the boards to clear and get fresh skaters on."
-        },
-        {
-          "clip_id": "pk_shift_16",
-          "type": "penalty_kill",
-          "period": 2,
-          "start_seconds": 2248,
-          "end_seconds": 2272,
-          "verified": true,
-          "align_status": "Special Teams Shift",
-          "label": "🛡️ PENALTY KILL • P2 (37:28)",
-          "description": "Secured the critical defensive zone shorthanded draw and pressured the opponent into taking a penalty on the clear."
+          "description": "🥅 BARRIE COLTS GOAL #11 (P3 00:45) — Official GameSheet P3 @ 00:45 (Stop-Time Clock Aligned)"
         },
         {
           "clip_id": "pp_shift_17",
@@ -9000,11 +6207,13 @@
           "start_seconds": 2295,
           "end_seconds": 2337,
           "verified": true,
-          "align_status": "Special Teams Shift",
+          "align_status": "Verified 5v4 Power Play",
           "label": "⚡ POWER PLAY • P2 (38:15)",
           "description": "Used speed on the power play transition to break out cleanly and attack the offensive zone for a late shot on goal."
         }
-      ]
+      ],
+      "ai_verified": true,
+      "ai_confidence_avg": 88
     },
     {
       "id": "game_DZptzovnHtk",
@@ -11482,6 +8691,8 @@
         "shotsFor": 0,
         "shotsAgainst": 0,
         "pim": 2,
+        "tigersPim": 2,
+        "oppPim": 2,
         "goalLog": [
           {
             "type": "goal",
@@ -11532,60 +8743,60 @@
           "type": "opp_goal",
           "period": 1,
           "gs_clock": "01:44",
-          "start_seconds": 893,
-          "end_seconds": 917,
+          "start_seconds": 562,
+          "end_seconds": 584,
           "verified": false,
-          "align_status": "GameSheet Clock Aligned",
+          "align_status": "Stop-Time Clock Aligned",
           "label": "🥅 MARKHAM WAXERS GOAL #1 (P1 01:44)",
-          "description": "🥅 MARKHAM WAXERS GOAL #1 (P1 01:44) — Official GameSheet P1 @ 01:44 (GameSheet Clock Aligned)"
+          "description": "🥅 MARKHAM WAXERS GOAL #1 (P1 01:44) — Official GameSheet P1 @ 01:44 (Stop-Time Clock Aligned)"
         },
         {
           "clip_id": "gs_goal_2",
           "type": "opp_goal",
           "period": 2,
           "gs_clock": "11:17",
-          "start_seconds": 1391,
-          "end_seconds": 1415,
+          "start_seconds": 1278,
+          "end_seconds": 1300,
           "verified": false,
-          "align_status": "GameSheet Clock Aligned",
+          "align_status": "Stop-Time Clock Aligned",
           "label": "🥅 MARKHAM WAXERS GOAL #2 (P2 11:17)",
-          "description": "🥅 MARKHAM WAXERS GOAL #2 (P2 11:17) — Official GameSheet P2 @ 11:17 (GameSheet Clock Aligned)"
+          "description": "🥅 MARKHAM WAXERS GOAL #2 (P2 11:17) — Official GameSheet P2 @ 11:17 (Stop-Time Clock Aligned)"
         },
         {
           "clip_id": "gs_goal_3",
           "type": "opp_goal",
           "period": 2,
           "gs_clock": "09:55",
-          "start_seconds": 1474,
-          "end_seconds": 1498,
+          "start_seconds": 1392,
+          "end_seconds": 1414,
           "verified": false,
-          "align_status": "GameSheet Clock Aligned",
+          "align_status": "Stop-Time Clock Aligned",
           "label": "🥅 MARKHAM WAXERS GOAL #3 (P2 09:55)",
-          "description": "🥅 MARKHAM WAXERS GOAL #3 (P2 09:55) — Official GameSheet P2 @ 09:55 (GameSheet Clock Aligned)"
+          "description": "🥅 MARKHAM WAXERS GOAL #3 (P2 09:55) — Official GameSheet P2 @ 09:55 (Stop-Time Clock Aligned)"
         },
         {
           "clip_id": "gs_goal_4",
           "type": "opp_goal",
           "period": 2,
           "gs_clock": "03:32",
-          "start_seconds": 1862,
-          "end_seconds": 1886,
+          "start_seconds": 1675,
+          "end_seconds": 1697,
           "verified": false,
-          "align_status": "GameSheet Clock Aligned",
+          "align_status": "Stop-Time Clock Aligned",
           "label": "🥅 MARKHAM WAXERS GOAL #4 (P2 03:32)",
-          "description": "🥅 MARKHAM WAXERS GOAL #4 (P2 03:32) — Official GameSheet P2 @ 03:32 (GameSheet Clock Aligned)"
+          "description": "🥅 MARKHAM WAXERS GOAL #4 (P2 03:32) — Official GameSheet P2 @ 03:32 (Stop-Time Clock Aligned)"
         },
         {
           "clip_id": "gs_goal_5",
           "type": "opp_goal",
           "period": 3,
           "gs_clock": "09:54",
-          "start_seconds": 2504,
-          "end_seconds": 2528,
+          "start_seconds": 2529,
+          "end_seconds": 2551,
           "verified": false,
-          "align_status": "GameSheet Clock Aligned",
+          "align_status": "Stop-Time Clock Aligned",
           "label": "🥅 MARKHAM WAXERS GOAL #5 (P3 09:54)",
-          "description": "🥅 MARKHAM WAXERS GOAL #5 (P3 09:54) — Official GameSheet P3 @ 09:54 (GameSheet Clock Aligned)"
+          "description": "🥅 MARKHAM WAXERS GOAL #5 (P3 09:54) — Official GameSheet P3 @ 09:54 (Stop-Time Clock Aligned)"
         },
         {
           "clip_id": "pk_shift_12",
@@ -11594,11 +8805,13 @@
           "start_seconds": 1495,
           "end_seconds": 1540,
           "verified": true,
-          "align_status": "Special Teams Shift",
+          "align_status": "Verified 4v5 Penalty Kill",
           "label": "🛡️ PENALTY KILL • P2 (24:55)",
           "description": "Effective PK clear using high chip off the glass to force opponent back setup."
         }
-      ]
+      ],
+      "ai_verified": true,
+      "ai_confidence_avg": 89
     },
     {
       "id": "game_l7RAv5VWcx4",
@@ -14170,6 +11383,8 @@
         "shotsFor": 0,
         "shotsAgainst": 0,
         "pim": 4,
+        "tigersPim": 4,
+        "oppPim": 4,
         "goalLog": [
           {
             "type": "goal",
@@ -14244,96 +11459,96 @@
           "type": "opp_goal",
           "period": 1,
           "gs_clock": "04:16",
-          "start_seconds": 860,
-          "end_seconds": 884,
+          "start_seconds": 608,
+          "end_seconds": 630,
           "verified": false,
-          "align_status": "GameSheet Clock Aligned",
+          "align_status": "Stop-Time Clock Aligned",
           "label": "🥅 CALEDON HAWKS GOAL #1 (P1 04:16)",
-          "description": "🥅 CALEDON HAWKS GOAL #1 (P1 04:16) — Official GameSheet P1 @ 04:16 (GameSheet Clock Aligned)"
+          "description": "🥅 CALEDON HAWKS GOAL #1 (P1 04:16) — Official GameSheet P1 @ 04:16 (Stop-Time Clock Aligned)"
         },
         {
           "clip_id": "gs_goal_2",
           "type": "opp_goal",
           "period": 1,
           "gs_clock": "01:00",
-          "start_seconds": 1138,
-          "end_seconds": 1162,
+          "start_seconds": 826,
+          "end_seconds": 848,
           "verified": false,
-          "align_status": "GameSheet Clock Aligned",
+          "align_status": "Stop-Time Clock Aligned",
           "label": "🥅 CALEDON HAWKS GOAL #2 (P1 01:00)",
-          "description": "🥅 CALEDON HAWKS GOAL #2 (P1 01:00) — Official GameSheet P1 @ 01:00 (GameSheet Clock Aligned)"
+          "description": "🥅 CALEDON HAWKS GOAL #2 (P1 01:00) — Official GameSheet P1 @ 01:00 (Stop-Time Clock Aligned)"
         },
         {
           "clip_id": "gs_goal_3",
           "type": "opp_goal",
           "period": 2,
           "gs_clock": "07:21",
-          "start_seconds": 1968,
-          "end_seconds": 1992,
+          "start_seconds": 1697,
+          "end_seconds": 1719,
           "verified": false,
-          "align_status": "GameSheet Clock Aligned",
+          "align_status": "Stop-Time Clock Aligned",
           "label": "🥅 CALEDON HAWKS GOAL #3 (P2 07:21)",
-          "description": "🥅 CALEDON HAWKS GOAL #3 (P2 07:21) — Official GameSheet P2 @ 07:21 (GameSheet Clock Aligned)"
+          "description": "🥅 CALEDON HAWKS GOAL #3 (P2 07:21) — Official GameSheet P2 @ 07:21 (Stop-Time Clock Aligned)"
         },
         {
           "clip_id": "gs_goal_4",
           "type": "opp_goal",
           "period": 3,
           "gs_clock": "14:50",
-          "start_seconds": 2699,
-          "end_seconds": 2723,
+          "start_seconds": 2707,
+          "end_seconds": 2718,
           "verified": false,
-          "align_status": "GameSheet Clock Aligned",
+          "align_status": "Stop-Time Clock Aligned",
           "label": "🥅 CALEDON HAWKS GOAL #4 (P3 14:50)",
-          "description": "🥅 CALEDON HAWKS GOAL #4 (P3 14:50) — Official GameSheet P3 @ 14:50 (GameSheet Clock Aligned)"
+          "description": "🥅 CALEDON HAWKS GOAL #4 (P3 14:50) — Official GameSheet P3 @ 14:50 (Stop-Time Clock Aligned)"
         },
         {
           "clip_id": "gs_goal_5",
           "type": "opp_goal",
           "period": 3,
           "gs_clock": "13:56",
-          "start_seconds": 2753,
-          "end_seconds": 2777,
+          "start_seconds": 2737,
+          "end_seconds": 2759,
           "verified": false,
-          "align_status": "GameSheet Clock Aligned",
+          "align_status": "Stop-Time Clock Aligned",
           "label": "🥅 CALEDON HAWKS GOAL #5 (P3 13:56)",
-          "description": "🥅 CALEDON HAWKS GOAL #5 (P3 13:56) — Official GameSheet P3 @ 13:56 (GameSheet Clock Aligned)"
+          "description": "🥅 CALEDON HAWKS GOAL #5 (P3 13:56) — Official GameSheet P3 @ 13:56 (Stop-Time Clock Aligned)"
         },
         {
           "clip_id": "gs_goal_6",
           "type": "opp_goal",
           "period": 3,
           "gs_clock": "10:16",
-          "start_seconds": 2973,
-          "end_seconds": 2997,
+          "start_seconds": 2845,
+          "end_seconds": 2867,
           "verified": false,
-          "align_status": "GameSheet Clock Aligned",
+          "align_status": "Stop-Time Clock Aligned",
           "label": "🥅 CALEDON HAWKS GOAL #6 (P3 10:16)",
-          "description": "🥅 CALEDON HAWKS GOAL #6 (P3 10:16) — Official GameSheet P3 @ 10:16 (GameSheet Clock Aligned)"
+          "description": "🥅 CALEDON HAWKS GOAL #6 (P3 10:16) — Official GameSheet P3 @ 10:16 (Stop-Time Clock Aligned)"
         },
         {
           "clip_id": "gs_goal_7",
           "type": "opp_goal",
           "period": 3,
           "gs_clock": "07:25",
-          "start_seconds": 3144,
-          "end_seconds": 3168,
+          "start_seconds": 2952,
+          "end_seconds": 2974,
           "verified": false,
-          "align_status": "GameSheet Clock Aligned",
+          "align_status": "Stop-Time Clock Aligned",
           "label": "🥅 CALEDON HAWKS GOAL #7 (P3 07:25)",
-          "description": "🥅 CALEDON HAWKS GOAL #7 (P3 07:25) — Official GameSheet P3 @ 07:25 (GameSheet Clock Aligned)"
+          "description": "🥅 CALEDON HAWKS GOAL #7 (P3 07:25) — Official GameSheet P3 @ 07:25 (Stop-Time Clock Aligned)"
         },
         {
           "clip_id": "gs_goal_8",
           "type": "opp_goal",
           "period": 3,
           "gs_clock": "05:20",
-          "start_seconds": 3269,
-          "end_seconds": 3293,
+          "start_seconds": 3018,
+          "end_seconds": 3040,
           "verified": false,
-          "align_status": "GameSheet Clock Aligned",
+          "align_status": "Stop-Time Clock Aligned",
           "label": "🥅 CALEDON HAWKS GOAL #8 (P3 05:20)",
-          "description": "🥅 CALEDON HAWKS GOAL #8 (P3 05:20) — Official GameSheet P3 @ 05:20 (GameSheet Clock Aligned)"
+          "description": "🥅 CALEDON HAWKS GOAL #8 (P3 05:20) — Official GameSheet P3 @ 05:20 (Stop-Time Clock Aligned)"
         },
         {
           "clip_id": "pk_shift_16",
@@ -14342,11 +11557,13 @@
           "start_seconds": 1970,
           "end_seconds": 2015,
           "verified": true,
-          "align_status": "Special Teams Shift",
+          "align_status": "Verified 4v5 Penalty Kill",
           "label": "🛡️ PENALTY KILL • P2 (32:50)",
           "description": "Good penalty kill structural posture, forcing wide shots and clearing puck down the boards."
         }
-      ]
+      ],
+      "ai_verified": true,
+      "ai_confidence_avg": 90
     },
     {
       "id": "game_A-2-QEqPFqk",
@@ -17106,6 +14323,8 @@
         "shotsFor": 0,
         "shotsAgainst": 0,
         "pim": 6,
+        "tigersPim": 6,
+        "oppPim": 6,
         "goalLog": [
           {
             "type": "goal",
@@ -17188,108 +14407,108 @@
           "type": "opp_goal",
           "period": 1,
           "gs_clock": "03:06",
-          "start_seconds": 805,
-          "end_seconds": 829,
+          "start_seconds": 694,
+          "end_seconds": 716,
           "verified": false,
-          "align_status": "GameSheet Clock Aligned",
+          "align_status": "Stop-Time Clock Aligned",
           "label": "🥅 ORILLIA TERRIERS GOAL #1 (P1 03:06)",
-          "description": "🥅 ORILLIA TERRIERS GOAL #1 (P1 03:06) — Official GameSheet P1 @ 03:06 (GameSheet Clock Aligned)"
+          "description": "🥅 ORILLIA TERRIERS GOAL #1 (P1 03:06) — Official GameSheet P1 @ 03:06 (Stop-Time Clock Aligned)"
         },
         {
           "clip_id": "gs_goal_2",
           "type": "opp_goal",
           "period": 1,
           "gs_clock": "00:51",
-          "start_seconds": 978,
-          "end_seconds": 1002,
+          "start_seconds": 949,
+          "end_seconds": 971,
           "verified": false,
-          "align_status": "GameSheet Clock Aligned",
+          "align_status": "Stop-Time Clock Aligned",
           "label": "🥅 ORILLIA TERRIERS GOAL #2 (P1 00:51)",
-          "description": "🥅 ORILLIA TERRIERS GOAL #2 (P1 00:51) — Official GameSheet P1 @ 00:51 (GameSheet Clock Aligned)"
+          "description": "🥅 ORILLIA TERRIERS GOAL #2 (P1 00:51) — Official GameSheet P1 @ 00:51 (Stop-Time Clock Aligned)"
         },
         {
           "clip_id": "gs_goal_3",
           "type": "opp_goal",
           "period": 2,
           "gs_clock": "08:45",
-          "start_seconds": 1539,
-          "end_seconds": 1563,
+          "start_seconds": 1459,
+          "end_seconds": 1481,
           "verified": false,
-          "align_status": "GameSheet Clock Aligned",
+          "align_status": "Stop-Time Clock Aligned",
           "label": "🥅 ORILLIA TERRIERS GOAL #3 (P2 08:45)",
-          "description": "🥅 ORILLIA TERRIERS GOAL #3 (P2 08:45) — Official GameSheet P2 @ 08:45 (GameSheet Clock Aligned)"
+          "description": "🥅 ORILLIA TERRIERS GOAL #3 (P2 08:45) — Official GameSheet P2 @ 08:45 (Stop-Time Clock Aligned)"
         },
         {
           "clip_id": "gs_goal_4",
           "type": "opp_goal",
           "period": 2,
           "gs_clock": "08:23",
-          "start_seconds": 1561,
-          "end_seconds": 1585,
+          "start_seconds": 1468,
+          "end_seconds": 1490,
           "verified": false,
-          "align_status": "GameSheet Clock Aligned",
+          "align_status": "Stop-Time Clock Aligned",
           "label": "🥅 ORILLIA TERRIERS GOAL #4 (P2 08:23)",
-          "description": "🥅 ORILLIA TERRIERS GOAL #4 (P2 08:23) — Official GameSheet P2 @ 08:23 (GameSheet Clock Aligned)"
+          "description": "🥅 ORILLIA TERRIERS GOAL #4 (P2 08:23) — Official GameSheet P2 @ 08:23 (Stop-Time Clock Aligned)"
         },
         {
           "clip_id": "gs_goal_5",
           "type": "opp_goal",
           "period": 2,
           "gs_clock": "06:45",
-          "start_seconds": 1659,
-          "end_seconds": 1683,
+          "start_seconds": 1536,
+          "end_seconds": 1558,
           "verified": false,
-          "align_status": "GameSheet Clock Aligned",
+          "align_status": "Stop-Time Clock Aligned",
           "label": "🥅 ORILLIA TERRIERS GOAL #5 (P2 06:45)",
-          "description": "🥅 ORILLIA TERRIERS GOAL #5 (P2 06:45) — Official GameSheet P2 @ 06:45 (GameSheet Clock Aligned)"
+          "description": "🥅 ORILLIA TERRIERS GOAL #5 (P2 06:45) — Official GameSheet P2 @ 06:45 (Stop-Time Clock Aligned)"
         },
         {
           "clip_id": "gs_goal_6",
           "type": "opp_goal",
           "period": 2,
           "gs_clock": "04:41",
-          "start_seconds": 1783,
-          "end_seconds": 1807,
+          "start_seconds": 1693,
+          "end_seconds": 1715,
           "verified": false,
-          "align_status": "GameSheet Clock Aligned",
+          "align_status": "Stop-Time Clock Aligned",
           "label": "🥅 ORILLIA TERRIERS GOAL #6 (P2 04:41)",
-          "description": "🥅 ORILLIA TERRIERS GOAL #6 (P2 04:41) — Official GameSheet P2 @ 04:41 (GameSheet Clock Aligned)"
+          "description": "🥅 ORILLIA TERRIERS GOAL #6 (P2 04:41) — Official GameSheet P2 @ 04:41 (Stop-Time Clock Aligned)"
         },
         {
           "clip_id": "gs_goal_7",
           "type": "opp_goal",
           "period": 2,
           "gs_clock": "00:52",
-          "start_seconds": 2012,
-          "end_seconds": 2036,
+          "start_seconds": 1999,
+          "end_seconds": 2021,
           "verified": false,
-          "align_status": "GameSheet Clock Aligned",
+          "align_status": "Stop-Time Clock Aligned",
           "label": "🥅 ORILLIA TERRIERS GOAL #7 (P2 00:52)",
-          "description": "🥅 ORILLIA TERRIERS GOAL #7 (P2 00:52) — Official GameSheet P2 @ 00:52 (GameSheet Clock Aligned)"
+          "description": "🥅 ORILLIA TERRIERS GOAL #7 (P2 00:52) — Official GameSheet P2 @ 00:52 (Stop-Time Clock Aligned)"
         },
         {
           "clip_id": "gs_goal_8",
           "type": "opp_goal",
           "period": 3,
           "gs_clock": "13:04",
-          "start_seconds": 2237,
-          "end_seconds": 2261,
+          "start_seconds": 2162,
+          "end_seconds": 2184,
           "verified": false,
-          "align_status": "GameSheet Clock Aligned",
+          "align_status": "Stop-Time Clock Aligned",
           "label": "🥅 ORILLIA TERRIERS GOAL #8 (P3 13:04)",
-          "description": "🥅 ORILLIA TERRIERS GOAL #8 (P3 13:04) — Official GameSheet P3 @ 13:04 (GameSheet Clock Aligned)"
+          "description": "🥅 ORILLIA TERRIERS GOAL #8 (P3 13:04) — Official GameSheet P3 @ 13:04 (Stop-Time Clock Aligned)"
         },
         {
           "clip_id": "gs_goal_9",
           "type": "opp_goal",
           "period": 3,
           "gs_clock": "04:34",
-          "start_seconds": 2747,
-          "end_seconds": 2771,
+          "start_seconds": 2452,
+          "end_seconds": 2474,
           "verified": false,
-          "align_status": "GameSheet Clock Aligned",
+          "align_status": "Stop-Time Clock Aligned",
           "label": "🥅 ORILLIA TERRIERS GOAL #9 (P3 04:34)",
-          "description": "🥅 ORILLIA TERRIERS GOAL #9 (P3 04:34) — Official GameSheet P3 @ 04:34 (GameSheet Clock Aligned)"
+          "description": "🥅 ORILLIA TERRIERS GOAL #9 (P3 04:34) — Official GameSheet P3 @ 04:34 (Stop-Time Clock Aligned)"
         },
         {
           "clip_id": "pk_shift_14",
@@ -17298,11 +14517,13 @@
           "start_seconds": 1452,
           "end_seconds": 1497,
           "verified": true,
-          "align_status": "Special Teams Shift",
+          "align_status": "Verified 4v5 Penalty Kill",
           "label": "🛡️ PENALTY KILL • P2 (24:12)",
           "description": "Shorthanded unit failed to clear the puck behind the net, yielding high-danger scoring chance."
         }
-      ]
+      ],
+      "ai_verified": true,
+      "ai_confidence_avg": 90
     },
     {
       "id": "game_pfbgkQG_vYQ",
@@ -19468,11 +16689,13 @@
           "start_seconds": 3060,
           "end_seconds": 3105,
           "verified": true,
-          "align_status": "Special Teams Shift",
+          "align_status": "Verified 4v5 Penalty Kill",
           "label": "🛡️ PENALTY KILL • P2 (51:00)",
           "description": "Shorthanded unit struggled to clear the puck past the blue line under heavy pressure."
         }
-      ]
+      ],
+      "ai_verified": true,
+      "ai_confidence_avg": 71
     },
     {
       "id": "game_-6OcZWNgIrQ",
@@ -21791,7 +19014,7 @@
           "start_seconds": 1640,
           "end_seconds": 1680,
           "verified": true,
-          "align_status": "Special Teams Shift",
+          "align_status": "Verified 5v4 Power Play",
           "label": "⚡ POWER PLAY • P2 (27:20)",
           "description": "Controlled powerplay setup with crisp perimeter passing."
         },
@@ -21802,11 +19025,13 @@
           "start_seconds": 2040,
           "end_seconds": 2080,
           "verified": true,
-          "align_status": "Special Teams Shift",
+          "align_status": "Verified 4v5 Penalty Kill",
           "label": "🛡️ PENALTY KILL • P2 (34:00)",
           "description": "Effective penalty kill clear following winning the d-zone draw."
         }
-      ]
+      ],
+      "ai_verified": true,
+      "ai_confidence_avg": 90
     },
     {
       "id": "game_INI7kuAsOcc",
@@ -24243,7 +21468,9 @@
         "2": 900,
         "3": 900
       },
-      "top_clips": []
+      "top_clips": [],
+      "ai_verified": true,
+      "ai_confidence_avg": 91
     },
     {
       "id": "game_0553e_Bn-6E",
@@ -26689,11 +23916,13 @@
           "start_seconds": 2285,
           "end_seconds": 2337,
           "verified": true,
-          "align_status": "Special Teams Shift",
+          "align_status": "Verified 5v4 Power Play",
           "label": "⚡ POWER PLAY • P2 (38:05)",
           "description": "Good blue-line puck movement created quality seam pass lanes during powerplay setup."
         }
-      ]
+      ],
+      "ai_verified": true,
+      "ai_confidence_avg": 92
     },
     {
       "id": "game_GZ-xVTxJPaU",
@@ -29129,7 +26358,9 @@
         "2": 900,
         "3": 900
       },
-      "top_clips": []
+      "top_clips": [],
+      "ai_verified": true,
+      "ai_confidence_avg": 90
     },
     {
       "id": "game_kdo2j6c39BQ_archive2",
@@ -31537,7 +28768,7 @@
           "start_seconds": 660,
           "end_seconds": 705,
           "verified": true,
-          "align_status": "Special Teams Shift",
+          "align_status": "Verified 5v4 Power Play",
           "label": "⚡ POWER PLAY • P1 (11:00)",
           "description": "Tigers powerplay unit establishes offensive zone cycle; Colton Carpentier (#23) generates shot from half-wall."
         },
@@ -31548,7 +28779,7 @@
           "start_seconds": 830,
           "end_seconds": 878,
           "verified": true,
-          "align_status": "Special Teams Shift",
+          "align_status": "Verified 4v5 Penalty Kill",
           "label": "🛡️ PENALTY KILL • P1 (13:50)",
           "description": "Penalty kill unit clears puck with a hard rim; goalie Matthew Hart (#13) makes key rebound freeze."
         },
@@ -31559,7 +28790,7 @@
           "start_seconds": 2280,
           "end_seconds": 2325,
           "verified": true,
-          "align_status": "Special Teams Shift",
+          "align_status": "Verified 5v4 Power Play",
           "label": "⚡ POWER PLAY • P2 (38:00)",
           "description": "Tigers powerplay unit establishes offensive zone cycle; Colton Carpentier (#23) generates shot from half-wall."
         },
@@ -31570,7 +28801,7 @@
           "start_seconds": 2460,
           "end_seconds": 2508,
           "verified": true,
-          "align_status": "Special Teams Shift",
+          "align_status": "Verified 4v5 Penalty Kill",
           "label": "🛡️ PENALTY KILL • P2 (41:00)",
           "description": "Penalty kill unit clears puck with a hard rim; goalie Matthew Hart (#13) makes key rebound freeze."
         },
@@ -31581,7 +28812,7 @@
           "start_seconds": 3890,
           "end_seconds": 3935,
           "verified": true,
-          "align_status": "Special Teams Shift",
+          "align_status": "Verified 5v4 Power Play",
           "label": "⚡ POWER PLAY • P3 (64:50)",
           "description": "Tigers powerplay unit establishes offensive zone cycle; Colton Carpentier (#23) generates shot from half-wall."
         },
@@ -31592,11 +28823,13 @@
           "start_seconds": 4060,
           "end_seconds": 4108,
           "verified": true,
-          "align_status": "Special Teams Shift",
+          "align_status": "Verified 4v5 Penalty Kill",
           "label": "🛡️ PENALTY KILL • P3 (67:40)",
           "description": "Penalty kill unit clears puck with a hard rim; goalie Matthew Hart (#13) makes key rebound freeze."
         }
-      ]
+      ],
+      "ai_verified": true,
+      "ai_confidence_avg": 92
     },
     {
       "id": "game_jlZoOVrO0kQ",
@@ -31624,9 +28857,9 @@
         {
           "shift_id": 1,
           "period": 1,
-          "start_seconds": 4,
+          "start_seconds": 15,
           "end_seconds": 45,
-          "display_time": "0:04",
+          "display_time": "0:15",
           "center_id": 9,
           "player_ids": [
             9,
@@ -34096,6 +31329,8 @@
         "shotsFor": 0,
         "shotsAgainst": 0,
         "pim": 6,
+        "tigersPim": 6,
+        "oppPim": 8,
         "goalLog": [
           {
             "type": "goal",
@@ -34178,108 +31413,108 @@
           "type": "opp_goal",
           "period": 1,
           "gs_clock": "07:46",
-          "start_seconds": 257,
-          "end_seconds": 281,
+          "start_seconds": 126,
+          "end_seconds": 148,
           "verified": false,
-          "align_status": "GameSheet Clock Aligned",
+          "align_status": "Stop-Time Clock Aligned",
           "label": "🥅 NEWMARKET RENEGADES GOAL #1 (P1 07:46)",
-          "description": "🥅 NEWMARKET RENEGADES GOAL #1 (P1 07:46) — Official GameSheet P1 @ 07:46 (GameSheet Clock Aligned)"
+          "description": "🥅 NEWMARKET RENEGADES GOAL #1 (P1 07:46) — Official GameSheet P1 @ 07:46 (Stop-Time Clock Aligned)"
         },
         {
           "clip_id": "gs_goal_2",
           "type": "opp_goal",
           "period": 2,
           "gs_clock": "10:45",
-          "start_seconds": 1666,
-          "end_seconds": 1690,
+          "start_seconds": 1442,
+          "end_seconds": 1464,
           "verified": false,
-          "align_status": "GameSheet Clock Aligned",
+          "align_status": "Stop-Time Clock Aligned",
           "label": "🥅 NEWMARKET RENEGADES GOAL #2 (P2 10:45)",
-          "description": "🥅 NEWMARKET RENEGADES GOAL #2 (P2 10:45) — Official GameSheet P2 @ 10:45 (GameSheet Clock Aligned)"
+          "description": "🥅 NEWMARKET RENEGADES GOAL #2 (P2 10:45) — Official GameSheet P2 @ 10:45 (Stop-Time Clock Aligned)"
         },
         {
           "clip_id": "gs_goal_3",
           "type": "opp_goal",
           "period": 2,
           "gs_clock": "10:17",
-          "start_seconds": 1704,
-          "end_seconds": 1728,
+          "start_seconds": 1453,
+          "end_seconds": 1475,
           "verified": false,
-          "align_status": "GameSheet Clock Aligned",
+          "align_status": "Stop-Time Clock Aligned",
           "label": "🥅 NEWMARKET RENEGADES GOAL #3 (P2 10:17)",
-          "description": "🥅 NEWMARKET RENEGADES GOAL #3 (P2 10:17) — Official GameSheet P2 @ 10:17 (GameSheet Clock Aligned)"
+          "description": "🥅 NEWMARKET RENEGADES GOAL #3 (P2 10:17) — Official GameSheet P2 @ 10:17 (Stop-Time Clock Aligned)"
         },
         {
           "clip_id": "gs_goal_4",
           "type": "opp_goal",
           "period": 2,
           "gs_clock": "07:51",
-          "start_seconds": 1900,
-          "end_seconds": 1924,
+          "start_seconds": 1676,
+          "end_seconds": 1698,
           "verified": false,
-          "align_status": "GameSheet Clock Aligned",
+          "align_status": "Stop-Time Clock Aligned",
           "label": "🥅 NEWMARKET RENEGADES GOAL #4 (P2 07:51)",
-          "description": "🥅 NEWMARKET RENEGADES GOAL #4 (P2 07:51) — Official GameSheet P2 @ 07:51 (GameSheet Clock Aligned)"
+          "description": "🥅 NEWMARKET RENEGADES GOAL #4 (P2 07:51) — Official GameSheet P2 @ 07:51 (Stop-Time Clock Aligned)"
         },
         {
           "clip_id": "gs_goal_5",
           "type": "opp_goal",
           "period": 2,
           "gs_clock": "06:54",
-          "start_seconds": 1977,
-          "end_seconds": 2001,
+          "start_seconds": 1700,
+          "end_seconds": 1722,
           "verified": false,
-          "align_status": "GameSheet Clock Aligned",
+          "align_status": "Stop-Time Clock Aligned",
           "label": "🥅 NEWMARKET RENEGADES GOAL #5 (P2 06:54)",
-          "description": "🥅 NEWMARKET RENEGADES GOAL #5 (P2 06:54) — Official GameSheet P2 @ 06:54 (GameSheet Clock Aligned)"
+          "description": "🥅 NEWMARKET RENEGADES GOAL #5 (P2 06:54) — Official GameSheet P2 @ 06:54 (Stop-Time Clock Aligned)"
         },
         {
           "clip_id": "gs_goal_6",
           "type": "opp_goal",
           "period": 2,
           "gs_clock": "05:34",
-          "start_seconds": 2085,
-          "end_seconds": 2109,
+          "start_seconds": 1891,
+          "end_seconds": 1913,
           "verified": false,
-          "align_status": "GameSheet Clock Aligned",
+          "align_status": "Stop-Time Clock Aligned",
           "label": "🥅 NEWMARKET RENEGADES GOAL #6 (P2 05:34)",
-          "description": "🥅 NEWMARKET RENEGADES GOAL #6 (P2 05:34) — Official GameSheet P2 @ 05:34 (GameSheet Clock Aligned)"
+          "description": "🥅 NEWMARKET RENEGADES GOAL #6 (P2 05:34) — Official GameSheet P2 @ 05:34 (Stop-Time Clock Aligned)"
         },
         {
           "clip_id": "gs_goal_7",
           "type": "tigers_goal",
           "period": 2,
           "gs_clock": "04:06",
-          "start_seconds": 2203,
-          "end_seconds": 2227,
+          "start_seconds": 1996,
+          "end_seconds": 2018,
           "verified": false,
-          "align_status": "GameSheet Clock Aligned",
+          "align_status": "Stop-Time Clock Aligned",
           "label": "🚨 TIGERS GOAL #1 (P2 04:06)",
-          "description": "🚨 TIGERS GOAL #1 (P2 04:06) — Official GameSheet P2 @ 04:06 (GameSheet Clock Aligned)"
+          "description": "🚨 TIGERS GOAL #1 (P2 04:06) — Official GameSheet P2 @ 04:06 (Stop-Time Clock Aligned)"
         },
         {
           "clip_id": "gs_goal_8",
           "type": "opp_goal",
           "period": 2,
           "gs_clock": "00:32",
-          "start_seconds": 2491,
-          "end_seconds": 2515,
+          "start_seconds": 2402,
+          "end_seconds": 2424,
           "verified": false,
-          "align_status": "GameSheet Clock Aligned",
+          "align_status": "Stop-Time Clock Aligned",
           "label": "🥅 NEWMARKET RENEGADES GOAL #7 (P2 00:32)",
-          "description": "🥅 NEWMARKET RENEGADES GOAL #7 (P2 00:32) — Official GameSheet P2 @ 00:32 (GameSheet Clock Aligned)"
+          "description": "🥅 NEWMARKET RENEGADES GOAL #7 (P2 00:32) — Official GameSheet P2 @ 00:32 (Stop-Time Clock Aligned)"
         },
         {
           "clip_id": "gs_goal_9",
           "type": "opp_goal",
           "period": 3,
           "gs_clock": "06:55",
-          "start_seconds": 3166,
-          "end_seconds": 3190,
+          "start_seconds": 3026,
+          "end_seconds": 3048,
           "verified": false,
-          "align_status": "GameSheet Clock Aligned",
+          "align_status": "Stop-Time Clock Aligned",
           "label": "🥅 NEWMARKET RENEGADES GOAL #8 (P3 06:55)",
-          "description": "🥅 NEWMARKET RENEGADES GOAL #8 (P3 06:55) — Official GameSheet P3 @ 06:55 (GameSheet Clock Aligned)"
+          "description": "🥅 NEWMARKET RENEGADES GOAL #8 (P3 06:55) — Official GameSheet P3 @ 06:55 (Stop-Time Clock Aligned)"
         },
         {
           "clip_id": "pk_shift_5",
@@ -34288,7 +31523,7 @@
           "start_seconds": 335,
           "end_seconds": 375,
           "verified": true,
-          "align_status": "Special Teams Shift",
+          "align_status": "Verified 4v5 Penalty Kill",
           "label": "🛡️ PENALTY KILL • P1 (5:35)",
           "description": "Tigers attempt a glass-and-out clearance, but Newmarket holds the line at the offensive blue line."
         },
@@ -34299,7 +31534,7 @@
           "start_seconds": 1680,
           "end_seconds": 1722,
           "verified": true,
-          "align_status": "Special Teams Shift",
+          "align_status": "Verified 4v5 Penalty Kill",
           "label": "🛡️ PENALTY KILL • P2 (28:00)",
           "description": "Weak clear attempt off the glass gets held at the point, leading to a quick net-front scramble and goal."
         },
@@ -34310,7 +31545,7 @@
           "start_seconds": 2830,
           "end_seconds": 2872,
           "verified": true,
-          "align_status": "Special Teams Shift",
+          "align_status": "Verified 4v5 Penalty Kill",
           "label": "🛡️ PENALTY KILL • P3 (47:10)",
           "description": "Penalty kill unit active around the crease; failed glass chip leads to sustained Newmarket offensive pressure."
         },
@@ -34321,11 +31556,13 @@
           "start_seconds": 3420,
           "end_seconds": 3465,
           "verified": true,
-          "align_status": "Special Teams Shift",
+          "align_status": "Verified 5v4 Power Play",
           "label": "⚡ POWER PLAY • P3 (57:00)",
           "description": "Power play unit cycles the puck effectively along the perimeter before taking a point shot through traffic."
         }
-      ]
+      ],
+      "ai_verified": true,
+      "ai_confidence_avg": 88
     },
     {
       "id": "game_IjPhCAFZStc",
@@ -36768,6 +34005,8 @@
         "shotsFor": 0,
         "shotsAgainst": 0,
         "pim": 2,
+        "tigersPim": 2,
+        "oppPim": 0,
         "goalLog": [
           {
             "type": "goal",
@@ -36850,110 +34089,112 @@
           "type": "opp_goal",
           "period": 1,
           "gs_clock": "07:10",
-          "start_seconds": 624,
-          "end_seconds": 648,
+          "start_seconds": 579,
+          "end_seconds": 601,
           "verified": false,
-          "align_status": "GameSheet Clock Aligned",
+          "align_status": "Stop-Time Clock Aligned",
           "label": "🥅 GEORGIAN BAY ISLANDERS GOAL #1 (P1 07:10)",
-          "description": "🥅 GEORGIAN BAY ISLANDERS GOAL #1 (P1 07:10) — Official GameSheet P1 @ 07:10 (GameSheet Clock Aligned)"
+          "description": "🥅 GEORGIAN BAY ISLANDERS GOAL #1 (P1 07:10) — Official GameSheet P1 @ 07:10 (Stop-Time Clock Aligned)"
         },
         {
           "clip_id": "gs_goal_2",
           "type": "opp_goal",
           "period": 2,
           "gs_clock": "09:00",
-          "start_seconds": 1750,
-          "end_seconds": 1774,
+          "start_seconds": 1560,
+          "end_seconds": 1582,
           "verified": false,
-          "align_status": "GameSheet Clock Aligned",
+          "align_status": "Stop-Time Clock Aligned",
           "label": "🥅 GEORGIAN BAY ISLANDERS GOAL #2 (P2 09:00)",
-          "description": "🥅 GEORGIAN BAY ISLANDERS GOAL #2 (P2 09:00) — Official GameSheet P2 @ 09:00 (GameSheet Clock Aligned)"
+          "description": "🥅 GEORGIAN BAY ISLANDERS GOAL #2 (P2 09:00) — Official GameSheet P2 @ 09:00 (Stop-Time Clock Aligned)"
         },
         {
           "clip_id": "gs_goal_3",
           "type": "opp_goal",
           "period": 2,
           "gs_clock": "04:25",
-          "start_seconds": 2110,
-          "end_seconds": 2134,
+          "start_seconds": 2014,
+          "end_seconds": 2036,
           "verified": false,
-          "align_status": "GameSheet Clock Aligned",
+          "align_status": "Stop-Time Clock Aligned",
           "label": "🥅 GEORGIAN BAY ISLANDERS GOAL #3 (P2 04:25)",
-          "description": "🥅 GEORGIAN BAY ISLANDERS GOAL #3 (P2 04:25) — Official GameSheet P2 @ 04:25 (GameSheet Clock Aligned)"
+          "description": "🥅 GEORGIAN BAY ISLANDERS GOAL #3 (P2 04:25) — Official GameSheet P2 @ 04:25 (Stop-Time Clock Aligned)"
         },
         {
           "clip_id": "gs_goal_4",
           "type": "opp_goal",
           "period": 2,
           "gs_clock": "02:05",
-          "start_seconds": 2293,
-          "end_seconds": 2317,
+          "start_seconds": 2170,
+          "end_seconds": 2192,
           "verified": false,
-          "align_status": "GameSheet Clock Aligned",
+          "align_status": "Stop-Time Clock Aligned",
           "label": "🥅 GEORGIAN BAY ISLANDERS GOAL #4 (P2 02:05)",
-          "description": "🥅 GEORGIAN BAY ISLANDERS GOAL #4 (P2 02:05) — Official GameSheet P2 @ 02:05 (GameSheet Clock Aligned)"
+          "description": "🥅 GEORGIAN BAY ISLANDERS GOAL #4 (P2 02:05) — Official GameSheet P2 @ 02:05 (Stop-Time Clock Aligned)"
         },
         {
           "clip_id": "gs_goal_5",
           "type": "opp_goal",
           "period": 3,
           "gs_clock": "10:49",
-          "start_seconds": 2853,
-          "end_seconds": 2877,
+          "start_seconds": 2698,
+          "end_seconds": 2720,
           "verified": false,
-          "align_status": "GameSheet Clock Aligned",
+          "align_status": "Stop-Time Clock Aligned",
           "label": "🥅 GEORGIAN BAY ISLANDERS GOAL #5 (P3 10:49)",
-          "description": "🥅 GEORGIAN BAY ISLANDERS GOAL #5 (P3 10:49) — Official GameSheet P3 @ 10:49 (GameSheet Clock Aligned)"
+          "description": "🥅 GEORGIAN BAY ISLANDERS GOAL #5 (P3 10:49) — Official GameSheet P3 @ 10:49 (Stop-Time Clock Aligned)"
         },
         {
           "clip_id": "gs_goal_6",
           "type": "opp_goal",
           "period": 3,
           "gs_clock": "08:52",
-          "start_seconds": 2981,
-          "end_seconds": 3005,
+          "start_seconds": 2959,
+          "end_seconds": 2981,
           "verified": false,
-          "align_status": "GameSheet Clock Aligned",
+          "align_status": "Stop-Time Clock Aligned",
           "label": "🥅 GEORGIAN BAY ISLANDERS GOAL #6 (P3 08:52)",
-          "description": "🥅 GEORGIAN BAY ISLANDERS GOAL #6 (P3 08:52) — Official GameSheet P3 @ 08:52 (GameSheet Clock Aligned)"
+          "description": "🥅 GEORGIAN BAY ISLANDERS GOAL #6 (P3 08:52) — Official GameSheet P3 @ 08:52 (Stop-Time Clock Aligned)"
         },
         {
           "clip_id": "gs_goal_7",
           "type": "opp_goal",
           "period": 3,
           "gs_clock": "07:59",
-          "start_seconds": 3040,
-          "end_seconds": 3064,
+          "start_seconds": 2979,
+          "end_seconds": 3001,
           "verified": false,
-          "align_status": "GameSheet Clock Aligned",
+          "align_status": "Stop-Time Clock Aligned",
           "label": "🥅 GEORGIAN BAY ISLANDERS GOAL #7 (P3 07:59)",
-          "description": "🥅 GEORGIAN BAY ISLANDERS GOAL #7 (P3 07:59) — Official GameSheet P3 @ 07:59 (GameSheet Clock Aligned)"
+          "description": "🥅 GEORGIAN BAY ISLANDERS GOAL #7 (P3 07:59) — Official GameSheet P3 @ 07:59 (Stop-Time Clock Aligned)"
         },
         {
           "clip_id": "gs_goal_8",
           "type": "opp_goal",
           "period": 3,
           "gs_clock": "05:40",
-          "start_seconds": 3193,
-          "end_seconds": 3217,
+          "start_seconds": 3259,
+          "end_seconds": 3281,
           "verified": false,
-          "align_status": "GameSheet Clock Aligned",
+          "align_status": "Stop-Time Clock Aligned",
           "label": "🥅 GEORGIAN BAY ISLANDERS GOAL #8 (P3 05:40)",
-          "description": "🥅 GEORGIAN BAY ISLANDERS GOAL #8 (P3 05:40) — Official GameSheet P3 @ 05:40 (GameSheet Clock Aligned)"
+          "description": "🥅 GEORGIAN BAY ISLANDERS GOAL #8 (P3 05:40) — Official GameSheet P3 @ 05:40 (Stop-Time Clock Aligned)"
         },
         {
           "clip_id": "gs_goal_9",
           "type": "opp_goal",
           "period": 3,
           "gs_clock": "02:25",
-          "start_seconds": 3407,
-          "end_seconds": 3431,
+          "start_seconds": 3366,
+          "end_seconds": 3388,
           "verified": false,
-          "align_status": "GameSheet Clock Aligned",
+          "align_status": "Stop-Time Clock Aligned",
           "label": "🥅 GEORGIAN BAY ISLANDERS GOAL #9 (P3 02:25)",
-          "description": "🥅 GEORGIAN BAY ISLANDERS GOAL #9 (P3 02:25) — Official GameSheet P3 @ 02:25 (GameSheet Clock Aligned)"
+          "description": "🥅 GEORGIAN BAY ISLANDERS GOAL #9 (P3 02:25) — Official GameSheet P3 @ 02:25 (Stop-Time Clock Aligned)"
         }
-      ]
+      ],
+      "ai_verified": true,
+      "ai_confidence_avg": 88
     },
     {
       "id": "game_p18H81X2Bp0",
@@ -39461,6 +36702,8 @@
         "shotsFor": 0,
         "shotsAgainst": 0,
         "pim": 6,
+        "tigersPim": 6,
+        "oppPim": 6,
         "goalLog": [
           {
             "type": "goal",
@@ -39567,144 +36810,144 @@
           "type": "opp_goal",
           "period": 1,
           "gs_clock": "10:00",
-          "start_seconds": 20,
-          "end_seconds": 44,
+          "start_seconds": 38,
+          "end_seconds": 49,
           "verified": false,
-          "align_status": "GameSheet Clock Aligned",
+          "align_status": "Stop-Time Clock Aligned",
           "label": "🥅 UPPER YORK ADMIRALS GOAL #1 (P1 10:00)",
-          "description": "🥅 UPPER YORK ADMIRALS GOAL #1 (P1 10:00) — Official GameSheet P1 @ 10:00 (GameSheet Clock Aligned)"
+          "description": "🥅 UPPER YORK ADMIRALS GOAL #1 (P1 10:00) — Official GameSheet P1 @ 10:00 (Stop-Time Clock Aligned)"
         },
         {
           "clip_id": "gs_goal_2",
           "type": "opp_goal",
           "period": 1,
           "gs_clock": "04:11",
-          "start_seconds": 586,
-          "end_seconds": 610,
+          "start_seconds": 531,
+          "end_seconds": 553,
           "verified": false,
-          "align_status": "GameSheet Clock Aligned",
+          "align_status": "Stop-Time Clock Aligned",
           "label": "🥅 UPPER YORK ADMIRALS GOAL #2 (P1 04:11)",
-          "description": "🥅 UPPER YORK ADMIRALS GOAL #2 (P1 04:11) — Official GameSheet P1 @ 04:11 (GameSheet Clock Aligned)"
+          "description": "🥅 UPPER YORK ADMIRALS GOAL #2 (P1 04:11) — Official GameSheet P1 @ 04:11 (Stop-Time Clock Aligned)"
         },
         {
           "clip_id": "gs_goal_3",
           "type": "opp_goal",
           "period": 2,
           "gs_clock": "13:29",
-          "start_seconds": 1239,
-          "end_seconds": 1263,
+          "start_seconds": 1155,
+          "end_seconds": 1177,
           "verified": false,
-          "align_status": "GameSheet Clock Aligned",
+          "align_status": "Stop-Time Clock Aligned",
           "label": "🥅 UPPER YORK ADMIRALS GOAL #3 (P2 13:29)",
-          "description": "🥅 UPPER YORK ADMIRALS GOAL #3 (P2 13:29) — Official GameSheet P2 @ 13:29 (GameSheet Clock Aligned)"
+          "description": "🥅 UPPER YORK ADMIRALS GOAL #3 (P2 13:29) — Official GameSheet P2 @ 13:29 (Stop-Time Clock Aligned)"
         },
         {
           "clip_id": "gs_goal_4",
           "type": "opp_goal",
           "period": 2,
           "gs_clock": "12:34",
-          "start_seconds": 1315,
-          "end_seconds": 1339,
+          "start_seconds": 1204,
+          "end_seconds": 1226,
           "verified": false,
-          "align_status": "GameSheet Clock Aligned",
+          "align_status": "Stop-Time Clock Aligned",
           "label": "🥅 UPPER YORK ADMIRALS GOAL #4 (P2 12:34)",
-          "description": "🥅 UPPER YORK ADMIRALS GOAL #4 (P2 12:34) — Official GameSheet P2 @ 12:34 (GameSheet Clock Aligned)"
+          "description": "🥅 UPPER YORK ADMIRALS GOAL #4 (P2 12:34) — Official GameSheet P2 @ 12:34 (Stop-Time Clock Aligned)"
         },
         {
           "clip_id": "gs_goal_5",
           "type": "opp_goal",
           "period": 2,
           "gs_clock": "07:55",
-          "start_seconds": 1700,
-          "end_seconds": 1724,
+          "start_seconds": 1381,
+          "end_seconds": 1403,
           "verified": false,
-          "align_status": "GameSheet Clock Aligned",
+          "align_status": "Stop-Time Clock Aligned",
           "label": "🥅 UPPER YORK ADMIRALS GOAL #5 (P2 07:55)",
-          "description": "🥅 UPPER YORK ADMIRALS GOAL #5 (P2 07:55) — Official GameSheet P2 @ 07:55 (GameSheet Clock Aligned)"
+          "description": "🥅 UPPER YORK ADMIRALS GOAL #5 (P2 07:55) — Official GameSheet P2 @ 07:55 (Stop-Time Clock Aligned)"
         },
         {
           "clip_id": "gs_goal_6",
           "type": "opp_goal",
           "period": 2,
           "gs_clock": "06:08",
-          "start_seconds": 1848,
-          "end_seconds": 1872,
+          "start_seconds": 1572,
+          "end_seconds": 1594,
           "verified": false,
-          "align_status": "GameSheet Clock Aligned",
+          "align_status": "Stop-Time Clock Aligned",
           "label": "🥅 UPPER YORK ADMIRALS GOAL #6 (P2 06:08)",
-          "description": "🥅 UPPER YORK ADMIRALS GOAL #6 (P2 06:08) — Official GameSheet P2 @ 06:08 (GameSheet Clock Aligned)"
+          "description": "🥅 UPPER YORK ADMIRALS GOAL #6 (P2 06:08) — Official GameSheet P2 @ 06:08 (Stop-Time Clock Aligned)"
         },
         {
           "clip_id": "gs_goal_7",
           "type": "opp_goal",
           "period": 2,
           "gs_clock": "05:50",
-          "start_seconds": 1873,
-          "end_seconds": 1897,
+          "start_seconds": 1580,
+          "end_seconds": 1602,
           "verified": false,
-          "align_status": "GameSheet Clock Aligned",
+          "align_status": "Stop-Time Clock Aligned",
           "label": "🥅 UPPER YORK ADMIRALS GOAL #7 (P2 05:50)",
-          "description": "🥅 UPPER YORK ADMIRALS GOAL #7 (P2 05:50) — Official GameSheet P2 @ 05:50 (GameSheet Clock Aligned)"
+          "description": "🥅 UPPER YORK ADMIRALS GOAL #7 (P2 05:50) — Official GameSheet P2 @ 05:50 (Stop-Time Clock Aligned)"
         },
         {
           "clip_id": "gs_goal_8",
           "type": "tigers_goal",
           "period": 2,
           "gs_clock": "02:51",
-          "start_seconds": 2120,
-          "end_seconds": 2144,
+          "start_seconds": 2091,
+          "end_seconds": 2113,
           "verified": false,
-          "align_status": "GameSheet Clock Aligned",
+          "align_status": "Stop-Time Clock Aligned",
           "label": "🚨 TIGERS GOAL #1 (P2 02:51)",
-          "description": "🚨 TIGERS GOAL #1 (P2 02:51) — Official GameSheet P2 @ 02:51 (GameSheet Clock Aligned)"
+          "description": "🚨 TIGERS GOAL #1 (P2 02:51) — Official GameSheet P2 @ 02:51 (Stop-Time Clock Aligned)"
         },
         {
           "clip_id": "gs_goal_9",
           "type": "opp_goal",
           "period": 2,
           "gs_clock": "00:46",
-          "start_seconds": 2293,
-          "end_seconds": 2317,
+          "start_seconds": 2208,
+          "end_seconds": 2230,
           "verified": false,
-          "align_status": "GameSheet Clock Aligned",
+          "align_status": "Stop-Time Clock Aligned",
           "label": "🥅 UPPER YORK ADMIRALS GOAL #8 (P2 00:46)",
-          "description": "🥅 UPPER YORK ADMIRALS GOAL #8 (P2 00:46) — Official GameSheet P2 @ 00:46 (GameSheet Clock Aligned)"
+          "description": "🥅 UPPER YORK ADMIRALS GOAL #8 (P2 00:46) — Official GameSheet P2 @ 00:46 (Stop-Time Clock Aligned)"
         },
         {
           "clip_id": "gs_goal_10",
           "type": "opp_goal",
           "period": 2,
           "gs_clock": "00:05",
-          "start_seconds": 2350,
-          "end_seconds": 2374,
+          "start_seconds": 2226,
+          "end_seconds": 2248,
           "verified": false,
-          "align_status": "GameSheet Clock Aligned",
+          "align_status": "Stop-Time Clock Aligned",
           "label": "🥅 UPPER YORK ADMIRALS GOAL #9 (P2 00:05)",
-          "description": "🥅 UPPER YORK ADMIRALS GOAL #9 (P2 00:05) — Official GameSheet P2 @ 00:05 (GameSheet Clock Aligned)"
+          "description": "🥅 UPPER YORK ADMIRALS GOAL #9 (P2 00:05) — Official GameSheet P2 @ 00:05 (Stop-Time Clock Aligned)"
         },
         {
           "clip_id": "gs_goal_11",
           "type": "opp_goal",
           "period": 3,
           "gs_clock": "08:20",
-          "start_seconds": 2877,
-          "end_seconds": 2901,
+          "start_seconds": 2520,
+          "end_seconds": 2542,
           "verified": false,
-          "align_status": "GameSheet Clock Aligned",
+          "align_status": "Stop-Time Clock Aligned",
           "label": "🥅 UPPER YORK ADMIRALS GOAL #10 (P3 08:20)",
-          "description": "🥅 UPPER YORK ADMIRALS GOAL #10 (P3 08:20) — Official GameSheet P3 @ 08:20 (GameSheet Clock Aligned)"
+          "description": "🥅 UPPER YORK ADMIRALS GOAL #10 (P3 08:20) — Official GameSheet P3 @ 08:20 (Stop-Time Clock Aligned)"
         },
         {
           "clip_id": "gs_goal_12",
           "type": "opp_goal",
           "period": 3,
           "gs_clock": "02:48",
-          "start_seconds": 3209,
-          "end_seconds": 3233,
+          "start_seconds": 2842,
+          "end_seconds": 2864,
           "verified": false,
-          "align_status": "GameSheet Clock Aligned",
+          "align_status": "Stop-Time Clock Aligned",
           "label": "🥅 UPPER YORK ADMIRALS GOAL #11 (P3 02:48)",
-          "description": "🥅 UPPER YORK ADMIRALS GOAL #11 (P3 02:48) — Official GameSheet P3 @ 02:48 (GameSheet Clock Aligned)"
+          "description": "🥅 UPPER YORK ADMIRALS GOAL #11 (P3 02:48) — Official GameSheet P3 @ 02:48 (Stop-Time Clock Aligned)"
         },
         {
           "clip_id": "pk_shift_15",
@@ -39713,7 +36956,7 @@
           "start_seconds": 1582,
           "end_seconds": 1630,
           "verified": true,
-          "align_status": "Special Teams Shift",
+          "align_status": "Verified 4v5 Penalty Kill",
           "label": "🛡️ PENALTY KILL • P2 (26:22)",
           "description": "Inability to elevate pucks over opposing forecheckers leads to repeated turnovers inside the defensive line."
         },
@@ -39724,11 +36967,13 @@
           "start_seconds": 2515,
           "end_seconds": 2557,
           "verified": true,
-          "align_status": "Special Teams Shift",
+          "align_status": "Verified 4v5 Penalty Kill",
           "label": "🛡️ PENALTY KILL • P3 (41:55)",
           "description": "On the penalty kill, Tigers fail to clear via chip off the glass, allowing Upper York to maintain zone possession."
         }
-      ]
+      ],
+      "ai_verified": true,
+      "ai_confidence_avg": 86
     },
     {
       "id": "game_KxRUQu2z-Ao",
@@ -39756,9 +37001,9 @@
         {
           "shift_id": 1,
           "period": 1,
-          "start_seconds": 13,
+          "start_seconds": 15,
           "end_seconds": 46,
-          "display_time": "0:13",
+          "display_time": "0:15",
           "center_id": 9,
           "player_ids": [
             9,
@@ -42173,6 +39418,8 @@
         "shotsFor": 0,
         "shotsAgainst": 0,
         "pim": 2,
+        "tigersPim": 2,
+        "oppPim": 2,
         "goalLog": [
           {
             "type": "goal",
@@ -42279,144 +39526,144 @@
           "type": "opp_goal",
           "period": 1,
           "gs_clock": "08:49",
-          "start_seconds": 86,
-          "end_seconds": 110,
+          "start_seconds": 104,
+          "end_seconds": 126,
           "verified": false,
-          "align_status": "GameSheet Clock Aligned",
+          "align_status": "Stop-Time Clock Aligned",
           "label": "🥅 CALEDON HAWKS GOAL #1 (P1 08:49)",
-          "description": "🥅 CALEDON HAWKS GOAL #1 (P1 08:49) — Official GameSheet P1 @ 08:49 (GameSheet Clock Aligned)"
+          "description": "🥅 CALEDON HAWKS GOAL #1 (P1 08:49) — Official GameSheet P1 @ 08:49 (Stop-Time Clock Aligned)"
         },
         {
           "clip_id": "gs_goal_2",
           "type": "opp_goal",
           "period": 1,
           "gs_clock": "07:37",
-          "start_seconds": 178,
-          "end_seconds": 202,
+          "start_seconds": 182,
+          "end_seconds": 204,
           "verified": false,
-          "align_status": "GameSheet Clock Aligned",
+          "align_status": "Stop-Time Clock Aligned",
           "label": "🥅 CALEDON HAWKS GOAL #2 (P1 07:37)",
-          "description": "🥅 CALEDON HAWKS GOAL #2 (P1 07:37) — Official GameSheet P1 @ 07:37 (GameSheet Clock Aligned)"
+          "description": "🥅 CALEDON HAWKS GOAL #2 (P1 07:37) — Official GameSheet P1 @ 07:37 (Stop-Time Clock Aligned)"
         },
         {
           "clip_id": "gs_goal_3",
           "type": "opp_goal",
           "period": 2,
           "gs_clock": "08:23",
-          "start_seconds": 1420,
-          "end_seconds": 1444,
+          "start_seconds": 1183,
+          "end_seconds": 1205,
           "verified": false,
-          "align_status": "GameSheet Clock Aligned",
+          "align_status": "Stop-Time Clock Aligned",
           "label": "🥅 CALEDON HAWKS GOAL #3 (P2 08:23)",
-          "description": "🥅 CALEDON HAWKS GOAL #3 (P2 08:23) — Official GameSheet P2 @ 08:23 (GameSheet Clock Aligned)"
+          "description": "🥅 CALEDON HAWKS GOAL #3 (P2 08:23) — Official GameSheet P2 @ 08:23 (Stop-Time Clock Aligned)"
         },
         {
           "clip_id": "gs_goal_4",
           "type": "opp_goal",
           "period": 2,
           "gs_clock": "07:45",
-          "start_seconds": 1472,
-          "end_seconds": 1496,
+          "start_seconds": 1223,
+          "end_seconds": 1245,
           "verified": false,
-          "align_status": "GameSheet Clock Aligned",
+          "align_status": "Stop-Time Clock Aligned",
           "label": "🥅 CALEDON HAWKS GOAL #4 (P2 07:45)",
-          "description": "🥅 CALEDON HAWKS GOAL #4 (P2 07:45) — Official GameSheet P2 @ 07:45 (GameSheet Clock Aligned)"
+          "description": "🥅 CALEDON HAWKS GOAL #4 (P2 07:45) — Official GameSheet P2 @ 07:45 (Stop-Time Clock Aligned)"
         },
         {
           "clip_id": "gs_goal_5",
           "type": "opp_goal",
           "period": 2,
           "gs_clock": "05:51",
-          "start_seconds": 1626,
-          "end_seconds": 1650,
+          "start_seconds": 1343,
+          "end_seconds": 1365,
           "verified": false,
-          "align_status": "GameSheet Clock Aligned",
+          "align_status": "Stop-Time Clock Aligned",
           "label": "🥅 CALEDON HAWKS GOAL #5 (P2 05:51)",
-          "description": "🥅 CALEDON HAWKS GOAL #5 (P2 05:51) — Official GameSheet P2 @ 05:51 (GameSheet Clock Aligned)"
+          "description": "🥅 CALEDON HAWKS GOAL #5 (P2 05:51) — Official GameSheet P2 @ 05:51 (Stop-Time Clock Aligned)"
         },
         {
           "clip_id": "gs_goal_6",
           "type": "opp_goal",
           "period": 2,
           "gs_clock": "05:34",
-          "start_seconds": 1649,
-          "end_seconds": 1673,
+          "start_seconds": 1351,
+          "end_seconds": 1373,
           "verified": false,
-          "align_status": "GameSheet Clock Aligned",
+          "align_status": "Stop-Time Clock Aligned",
           "label": "🥅 CALEDON HAWKS GOAL #6 (P2 05:34)",
-          "description": "🥅 CALEDON HAWKS GOAL #6 (P2 05:34) — Official GameSheet P2 @ 05:34 (GameSheet Clock Aligned)"
+          "description": "🥅 CALEDON HAWKS GOAL #6 (P2 05:34) — Official GameSheet P2 @ 05:34 (Stop-Time Clock Aligned)"
         },
         {
           "clip_id": "gs_goal_7",
           "type": "opp_goal",
           "period": 2,
           "gs_clock": "01:09",
-          "start_seconds": 2006,
-          "end_seconds": 2030,
+          "start_seconds": 1635,
+          "end_seconds": 1657,
           "verified": false,
-          "align_status": "GameSheet Clock Aligned",
+          "align_status": "Stop-Time Clock Aligned",
           "label": "🥅 CALEDON HAWKS GOAL #7 (P2 01:09)",
-          "description": "🥅 CALEDON HAWKS GOAL #7 (P2 01:09) — Official GameSheet P2 @ 01:09 (GameSheet Clock Aligned)"
+          "description": "🥅 CALEDON HAWKS GOAL #7 (P2 01:09) — Official GameSheet P2 @ 01:09 (Stop-Time Clock Aligned)"
         },
         {
           "clip_id": "gs_goal_8",
           "type": "opp_goal",
           "period": 3,
           "gs_clock": "13:24",
-          "start_seconds": 2316,
-          "end_seconds": 2340,
+          "start_seconds": 2238,
+          "end_seconds": 2249,
           "verified": false,
-          "align_status": "GameSheet Clock Aligned",
+          "align_status": "Stop-Time Clock Aligned",
           "label": "🥅 CALEDON HAWKS GOAL #8 (P3 13:24)",
-          "description": "🥅 CALEDON HAWKS GOAL #8 (P3 13:24) — Official GameSheet P3 @ 13:24 (GameSheet Clock Aligned)"
+          "description": "🥅 CALEDON HAWKS GOAL #8 (P3 13:24) — Official GameSheet P3 @ 13:24 (Stop-Time Clock Aligned)"
         },
         {
           "clip_id": "gs_goal_9",
           "type": "opp_goal",
           "period": 3,
           "gs_clock": "11:52",
-          "start_seconds": 2408,
-          "end_seconds": 2432,
+          "start_seconds": 2238,
+          "end_seconds": 2249,
           "verified": false,
-          "align_status": "GameSheet Clock Aligned",
+          "align_status": "Stop-Time Clock Aligned",
           "label": "🥅 CALEDON HAWKS GOAL #9 (P3 11:52)",
-          "description": "🥅 CALEDON HAWKS GOAL #9 (P3 11:52) — Official GameSheet P3 @ 11:52 (GameSheet Clock Aligned)"
+          "description": "🥅 CALEDON HAWKS GOAL #9 (P3 11:52) — Official GameSheet P3 @ 11:52 (Stop-Time Clock Aligned)"
         },
         {
           "clip_id": "gs_goal_10",
           "type": "opp_goal",
           "period": 3,
           "gs_clock": "06:22",
-          "start_seconds": 2738,
-          "end_seconds": 2762,
+          "start_seconds": 2238,
+          "end_seconds": 2249,
           "verified": false,
-          "align_status": "GameSheet Clock Aligned",
+          "align_status": "Stop-Time Clock Aligned",
           "label": "🥅 CALEDON HAWKS GOAL #10 (P3 06:22)",
-          "description": "🥅 CALEDON HAWKS GOAL #10 (P3 06:22) — Official GameSheet P3 @ 06:22 (GameSheet Clock Aligned)"
+          "description": "🥅 CALEDON HAWKS GOAL #10 (P3 06:22) — Official GameSheet P3 @ 06:22 (Stop-Time Clock Aligned)"
         },
         {
           "clip_id": "gs_goal_11",
           "type": "opp_goal",
           "period": 3,
           "gs_clock": "04:33",
-          "start_seconds": 2847,
-          "end_seconds": 2871,
+          "start_seconds": 2238,
+          "end_seconds": 2249,
           "verified": false,
-          "align_status": "GameSheet Clock Aligned",
+          "align_status": "Stop-Time Clock Aligned",
           "label": "🥅 CALEDON HAWKS GOAL #11 (P3 04:33)",
-          "description": "🥅 CALEDON HAWKS GOAL #11 (P3 04:33) — Official GameSheet P3 @ 04:33 (GameSheet Clock Aligned)"
+          "description": "🥅 CALEDON HAWKS GOAL #11 (P3 04:33) — Official GameSheet P3 @ 04:33 (Stop-Time Clock Aligned)"
         },
         {
           "clip_id": "gs_goal_12",
           "type": "opp_goal",
           "period": 3,
           "gs_clock": "02:11",
-          "start_seconds": 2989,
-          "end_seconds": 3013,
+          "start_seconds": 2258,
+          "end_seconds": 2280,
           "verified": false,
-          "align_status": "GameSheet Clock Aligned",
+          "align_status": "Stop-Time Clock Aligned",
           "label": "🥅 CALEDON HAWKS GOAL #12 (P3 02:11)",
-          "description": "🥅 CALEDON HAWKS GOAL #12 (P3 02:11) — Official GameSheet P3 @ 02:11 (GameSheet Clock Aligned)"
+          "description": "🥅 CALEDON HAWKS GOAL #12 (P3 02:11) — Official GameSheet P3 @ 02:11 (Stop-Time Clock Aligned)"
         },
         {
           "clip_id": "pk_shift_20",
@@ -42425,11 +39672,13 @@
           "start_seconds": 1873,
           "end_seconds": 1920,
           "verified": true,
-          "align_status": "Special Teams Shift",
+          "align_status": "Verified 4v5 Penalty Kill",
           "label": "🛡️ PENALTY KILL • P3 (31:13)",
           "description": "On the penalty kill, Tigers attempt a chip off the glass that is held at the blue line by Caledon's defense."
         }
-      ]
+      ],
+      "ai_verified": true,
+      "ai_confidence_avg": 87
     },
     {
       "id": "game_DYH1Kgffsjc",
@@ -42457,9 +39706,9 @@
         {
           "shift_id": 1,
           "period": 1,
-          "start_seconds": 11,
+          "start_seconds": 15,
           "end_seconds": 45,
-          "display_time": "0:11",
+          "display_time": "0:15",
           "center_id": 18,
           "player_ids": [
             18,
@@ -44760,11 +42009,13 @@
           "start_seconds": 1130,
           "end_seconds": 1172,
           "verified": true,
-          "align_status": "Special Teams Shift",
+          "align_status": "Verified 4v5 Penalty Kill",
           "label": "🛡️ PENALTY KILL • P2 (18:50)",
           "description": "On the penalty kill, Tigers attempt a high chip clear off the glass but are held at the line by Welland defensemen."
         }
-      ]
+      ],
+      "ai_verified": true,
+      "ai_confidence_avg": 87
     },
     {
       "id": "game_GywcR8aeMY8",
@@ -47174,11 +44425,13 @@
           "start_seconds": 2532,
           "end_seconds": 2580,
           "verified": true,
-          "align_status": "Special Teams Shift",
+          "align_status": "Verified 4v5 Penalty Kill",
           "label": "🛡️ PENALTY KILL • P3 (42:12)",
           "description": "Tigers collapse in the defensive zone on PK, failing to clear the puck past the half-wall."
         }
-      ]
+      ],
+      "ai_verified": true,
+      "ai_confidence_avg": 86
     },
     {
       "id": "game_NhSdyb8rVPA",
@@ -49500,11 +46753,13 @@
           "start_seconds": 3201,
           "end_seconds": 3245,
           "verified": true,
-          "align_status": "Special Teams Shift",
+          "align_status": "Verified 4v5 Penalty Kill",
           "label": "🛡️ PENALTY KILL • P3 (53:21)",
           "description": "Tigers execute an effective glass chip to clear the defensive zone under intense pressure."
         }
-      ]
+      ],
+      "ai_verified": true,
+      "ai_confidence_avg": 87
     }
   ]
 }
