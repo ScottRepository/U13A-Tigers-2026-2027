@@ -1,19 +1,19 @@
 {
-  "gameCode": "U13A-RS-189",
-  "gameId": 3191664,
-  "date": "Nov 24, 2026",
-  "time": "7:30 PM",
-  "location": "Aurora Rec Complex (Pfaff)",
+  "gameCode": "U13A-RS-153",
+  "gameId": 3201926,
+  "date": "Nov 29, 2026",
+  "time": "6:45 PM",
+  "location": "Aurora CC (2 - Lincoln)",
   "status": "scheduled",
   "isLive": false,
   "homeTeam": "Aurora Tigers U13 A",
   "homeScore": 0,
   "homeShots": 0,
-  "awayTeam": "Barrie Colts U13-2 A Blue",
+  "awayTeam": "Richmond Hill Jaguars U13 A",
   "awayScore": 0,
   "awayShots": 0,
   "period": "1",
   "clock": "15:00",
   "events": [],
-  "lastUpdated": "2026-11-24T17:37:20.776897Z"
+  "lastUpdated": "2026-11-25T02:04:07.679675Z"
 }
