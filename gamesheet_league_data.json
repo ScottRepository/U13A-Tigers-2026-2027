@@ -28,8 +28,8 @@
         "diff": "+37",
         "gpg": "4.90",
         "gapg": "1.20",
-        "pim": 60,
-        "pimPg": "6.0"
+        "pim": 30,
+        "pimPg": "3.0"
       },
       "specialTeams": {
         "ppPct": "30.8%",
@@ -44,13 +44,22 @@
       "last5Games": [
         {
           "gameId": 3170148,
+          "gameCode": "U13A-RS-134",
           "date": "Nov 15, 2026",
+          "location": "North Simcoe SRC (Centennial)",
           "opp": "Georgian Bay Islanders",
           "vsAt": "@",
           "score": "1-6",
           "result": "L",
           "gf": 1,
           "ga": 6,
+          "ppGoals": 0,
+          "ppOpps": 2,
+          "pkGoalsAllowed": 2,
+          "pkOpps": 4,
+          "shotsFor": 0,
+          "shotsAgainst": 0,
+          "pim": 8,
           "goalLog": [
             {
               "type": "goal",
@@ -114,13 +123,22 @@
         },
         {
           "gameId": 3166642,
+          "gameCode": "U13A-RS-018",
           "date": "Nov 14, 2026",
+          "location": "Caledon East (1)",
           "opp": "Markham Waxers",
           "vsAt": "vs",
           "score": "4-0",
           "result": "W",
           "gf": 4,
           "ga": 0,
+          "ppGoals": 1,
+          "ppOpps": 3,
+          "pkGoalsAllowed": 0,
+          "pkOpps": 2,
+          "shotsFor": 0,
+          "shotsAgainst": 0,
+          "pim": 4,
           "goalLog": [
             {
               "type": "goal",
@@ -160,13 +178,22 @@
         },
         {
           "gameId": 3156645,
+          "gameCode": "U13A-RS-015",
           "date": "Nov 10, 2026",
+          "location": "Aurora Rec Complex (Pfaff)",
           "opp": "Aurora Tigers",
           "vsAt": "@",
           "score": "8-0",
           "result": "W",
           "gf": 8,
           "ga": 0,
+          "ppGoals": 1,
+          "ppOpps": 2,
+          "pkGoalsAllowed": 0,
+          "pkOpps": 2,
+          "shotsFor": 0,
+          "shotsAgainst": 0,
+          "pim": 4,
           "goalLog": [
             {
               "type": "goal",
@@ -238,13 +265,22 @@
         },
         {
           "gameId": 3098848,
+          "gameCode": "U13A-RS-167",
           "date": "Oct 25, 2026",
+          "location": "Caledon East (1)",
           "opp": "Orangeville Flyers",
           "vsAt": "vs",
           "score": "3-0",
           "result": "W",
           "gf": 3,
           "ga": 0,
+          "ppGoals": 0,
+          "ppOpps": 3,
+          "pkGoalsAllowed": 0,
+          "pkOpps": 1,
+          "shotsFor": 0,
+          "shotsAgainst": 0,
+          "pim": 2,
           "goalLog": [
             {
               "type": "goal",
@@ -276,13 +312,22 @@
         },
         {
           "gameId": 3096089,
+          "gameCode": "U13A-RS-026",
           "date": "Oct 24, 2026",
+          "location": "Caledon East (1)",
           "opp": "Stouffville Clippers",
           "vsAt": "vs",
           "score": "3-3",
           "result": "T",
           "gf": 3,
           "ga": 3,
+          "ppGoals": 0,
+          "ppOpps": 3,
+          "pkGoalsAllowed": 0,
+          "pkOpps": 1,
+          "shotsFor": 0,
+          "shotsAgainst": 0,
+          "pim": 2,
           "goalLog": [
             {
               "type": "goal",
@@ -302,14 +347,6 @@
             },
             {
               "type": "goal",
-              "period": 3,
-              "clockTime": "02:48",
-              "team": "self",
-              "teamName": "Caledon Hawks 13 A",
-              "scorer": ""
-            },
-            {
-              "type": "goal",
               "period": 2,
               "clockTime": "00:16",
               "team": "opp",
@@ -322,6 +359,14 @@
               "clockTime": "12:09",
               "team": "opp",
               "teamName": "Stouffville Clippers U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 3,
+              "clockTime": "02:48",
+              "team": "self",
+              "teamName": "Caledon Hawks 13 A",
               "scorer": ""
             },
             {
@@ -418,8 +463,8 @@
         "diff": "+49",
         "gpg": "5.92",
         "gapg": "1.83",
-        "pim": 72,
-        "pimPg": "6.0"
+        "pim": 78,
+        "pimPg": "6.5"
       },
       "specialTeams": {
         "ppPct": "31.7%",
@@ -434,14 +479,31 @@
       "last5Games": [
         {
           "gameId": 3169974,
+          "gameCode": "U13A-RS-149",
           "date": "Nov 15, 2026",
+          "location": "West Orillia (Green)",
           "opp": "Barrie Colts",
           "vsAt": "vs",
           "score": "3-5",
           "result": "L",
           "gf": 3,
           "ga": 5,
+          "ppGoals": 2,
+          "ppOpps": 6,
+          "pkGoalsAllowed": 2,
+          "pkOpps": 4,
+          "shotsFor": 0,
+          "shotsAgainst": 0,
+          "pim": 8,
           "goalLog": [
+            {
+              "type": "goal",
+              "period": 1,
+              "clockTime": "05:49",
+              "team": "opp",
+              "teamName": "Barrie Colts U13-1 A White",
+              "scorer": ""
+            },
             {
               "type": "goal",
               "period": 2,
@@ -461,15 +523,7 @@
             {
               "type": "goal",
               "period": 2,
-              "clockTime": "01:30",
-              "team": "self",
-              "teamName": "Orillia Terriers U13 A",
-              "scorer": ""
-            },
-            {
-              "type": "goal",
-              "period": 1,
-              "clockTime": "05:49",
+              "clockTime": "05:19",
               "team": "opp",
               "teamName": "Barrie Colts U13-1 A White",
               "scorer": ""
@@ -477,9 +531,9 @@
             {
               "type": "goal",
               "period": 2,
-              "clockTime": "05:19",
-              "team": "opp",
-              "teamName": "Barrie Colts U13-1 A White",
+              "clockTime": "01:30",
+              "team": "self",
+              "teamName": "Orillia Terriers U13 A",
               "scorer": ""
             },
             {
@@ -512,13 +566,22 @@
         },
         {
           "gameId": 3166191,
+          "gameCode": "U13A-RS-068",
           "date": "Nov 14, 2026",
+          "location": "West Orillia (Blue)",
           "opp": "Stouffville Clippers",
           "vsAt": "vs",
           "score": "5-3",
           "result": "W",
           "gf": 5,
           "ga": 3,
+          "ppGoals": 1,
+          "ppOpps": 1,
+          "pkGoalsAllowed": 1,
+          "pkOpps": 4,
+          "shotsFor": 30,
+          "shotsAgainst": 21,
+          "pim": 8,
           "goalLog": [
             {
               "type": "goal",
@@ -531,9 +594,25 @@
             {
               "type": "goal",
               "period": 2,
+              "clockTime": "08:41",
+              "team": "opp",
+              "teamName": "Stouffville Clippers U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 2,
               "clockTime": "06:39",
               "team": "self",
               "teamName": "Orillia Terriers U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 2,
+              "clockTime": "05:38",
+              "team": "opp",
+              "teamName": "Stouffville Clippers U13 A",
               "scorer": ""
             },
             {
@@ -542,6 +621,14 @@
               "clockTime": "11:06",
               "team": "self",
               "teamName": "Orillia Terriers U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 3,
+              "clockTime": "10:36",
+              "team": "opp",
+              "teamName": "Stouffville Clippers U13 A",
               "scorer": ""
             },
             {
@@ -559,30 +646,6 @@
               "team": "self",
               "teamName": "Orillia Terriers U13 A",
               "scorer": ""
-            },
-            {
-              "type": "goal",
-              "period": 2,
-              "clockTime": "08:41",
-              "team": "opp",
-              "teamName": "Stouffville Clippers U13 A",
-              "scorer": ""
-            },
-            {
-              "type": "goal",
-              "period": 2,
-              "clockTime": "05:38",
-              "team": "opp",
-              "teamName": "Stouffville Clippers U13 A",
-              "scorer": ""
-            },
-            {
-              "type": "goal",
-              "period": 3,
-              "clockTime": "10:36",
-              "team": "opp",
-              "teamName": "Stouffville Clippers U13 A",
-              "scorer": ""
             }
           ],
           "penaltyLog": [],
@@ -590,13 +653,22 @@
         },
         {
           "gameId": 3143846,
+          "gameCode": "U13A-RS-056",
           "date": "Nov 6, 2026",
+          "location": "West Orillia (Blue)",
           "opp": "Aurora Tigers",
           "vsAt": "vs",
           "score": "9-0",
           "result": "W",
           "gf": 9,
           "ga": 0,
+          "ppGoals": 1,
+          "ppOpps": 3,
+          "pkGoalsAllowed": 0,
+          "pkOpps": 3,
+          "shotsFor": 0,
+          "shotsAgainst": 0,
+          "pim": 6,
           "goalLog": [
             {
               "type": "goal",
@@ -676,13 +748,22 @@
         },
         {
           "gameId": 3139395,
+          "gameCode": "U13A-RS-135",
           "date": "Nov 4, 2026",
+          "location": "Allandale Rec (Red)",
           "opp": "Barrie Colts",
           "vsAt": "@",
           "score": "6-1",
           "result": "W",
           "gf": 6,
           "ga": 1,
+          "ppGoals": 0,
+          "ppOpps": 2,
+          "pkGoalsAllowed": 1,
+          "pkOpps": 3,
+          "shotsFor": 0,
+          "shotsAgainst": 0,
+          "pim": 6,
           "goalLog": [
             {
               "type": "goal",
@@ -746,13 +827,22 @@
         },
         {
           "gameId": 3120089,
+          "gameCode": "U13A-RS-061",
           "date": "Nov 1, 2026",
+          "location": "Milliken Mills (Milliken Mills)",
           "opp": "Markham Waxers",
           "vsAt": "@",
           "score": "8-0",
           "result": "W",
           "gf": 8,
           "ga": 0,
+          "ppGoals": 1,
+          "ppOpps": 2,
+          "pkGoalsAllowed": 0,
+          "pkOpps": 2,
+          "shotsFor": 0,
+          "shotsAgainst": 0,
+          "pim": 4,
           "goalLog": [
             {
               "type": "goal",
@@ -904,8 +994,8 @@
         "diff": "-12",
         "gpg": "3.18",
         "gapg": "4.27",
-        "pim": 66,
-        "pimPg": "6.0"
+        "pim": 76,
+        "pimPg": "6.9"
       },
       "specialTeams": {
         "ppPct": "18.4%",
@@ -919,13 +1009,22 @@
       "last5Games": [
         {
           "gameId": 3182603,
+          "gameCode": "U13A-RS-034",
           "date": "Nov 21, 2026",
+          "location": "Penetang (Penetang)",
           "opp": "Georgian Bay Islanders",
           "vsAt": "@",
           "score": "0-7",
           "result": "L",
           "gf": 0,
           "ga": 7,
+          "ppGoals": 0,
+          "ppOpps": 4,
+          "pkGoalsAllowed": 0,
+          "pkOpps": 2,
+          "shotsFor": 0,
+          "shotsAgainst": 0,
+          "pim": 4,
           "goalLog": [
             {
               "type": "goal",
@@ -989,13 +1088,22 @@
         },
         {
           "gameId": 3148127,
+          "gameCode": "U13A-RS-006",
           "date": "Nov 8, 2026",
+          "location": "Magna (Honda)",
           "opp": "Richmond Hill Jaguars",
           "vsAt": "vs",
           "score": "6-1",
           "result": "W",
           "gf": 6,
           "ga": 1,
+          "ppGoals": 1,
+          "ppOpps": 2,
+          "pkGoalsAllowed": 1,
+          "pkOpps": 4,
+          "shotsFor": 0,
+          "shotsAgainst": 0,
+          "pim": 8,
           "goalLog": [
             {
               "type": "goal",
@@ -1032,6 +1140,14 @@
             {
               "type": "goal",
               "period": 3,
+              "clockTime": "11:48",
+              "team": "opp",
+              "teamName": "Richmond Hill Jaguars U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 3,
               "clockTime": "05:51",
               "team": "self",
               "teamName": "Newmarket Renegades U13 A",
@@ -1044,14 +1160,6 @@
               "team": "self",
               "teamName": "Newmarket Renegades U13 A",
               "scorer": ""
-            },
-            {
-              "type": "goal",
-              "period": 3,
-              "clockTime": "11:48",
-              "team": "opp",
-              "teamName": "Richmond Hill Jaguars U13 A",
-              "scorer": ""
             }
           ],
           "penaltyLog": [],
@@ -1059,13 +1167,22 @@
         },
         {
           "gameId": 3146846,
+          "gameCode": "U13A-RS-110",
           "date": "Nov 7, 2026",
+          "location": "Elgin Barrow (East)",
           "opp": "Richmond Hill Jaguars",
           "vsAt": "@",
           "score": "4-0",
           "result": "W",
           "gf": 4,
           "ga": 0,
+          "ppGoals": 0,
+          "ppOpps": 2,
+          "pkGoalsAllowed": 0,
+          "pkOpps": 1,
+          "shotsFor": 0,
+          "shotsAgainst": 0,
+          "pim": 2,
           "goalLog": [
             {
               "type": "goal",
@@ -1105,22 +1222,23 @@
         },
         {
           "gameId": 3141092,
+          "gameCode": "U13A-RS-124",
           "date": "Nov 5, 2026",
+          "location": "Magna (Pfaff)",
           "opp": "Upper York Admirals",
           "vsAt": "vs",
           "score": "1-3",
           "result": "L",
           "gf": 1,
           "ga": 3,
+          "ppGoals": 0,
+          "ppOpps": 4,
+          "pkGoalsAllowed": 1,
+          "pkOpps": 2,
+          "shotsFor": 0,
+          "shotsAgainst": 0,
+          "pim": 4,
           "goalLog": [
-            {
-              "type": "goal",
-              "period": 3,
-              "clockTime": "05:22",
-              "team": "self",
-              "teamName": "Newmarket Renegades U13 A",
-              "scorer": ""
-            },
             {
               "type": "goal",
               "period": 1,
@@ -1144,6 +1262,14 @@
               "team": "opp",
               "teamName": "Upper York Admirals U13 A",
               "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 3,
+              "clockTime": "05:22",
+              "team": "self",
+              "teamName": "Newmarket Renegades U13 A",
+              "scorer": ""
             }
           ],
           "penaltyLog": [],
@@ -1151,34 +1277,27 @@
         },
         {
           "gameId": 3120086,
+          "gameCode": "U13A-RS-151",
           "date": "Nov 1, 2026",
+          "location": "Georgina Sutton (Georgina Sutton)",
           "opp": "Upper York Admirals",
           "vsAt": "@",
           "score": "3-3",
           "result": "T",
           "gf": 3,
           "ga": 3,
+          "ppGoals": 0,
+          "ppOpps": 4,
+          "pkGoalsAllowed": 1,
+          "pkOpps": 3,
+          "shotsFor": 0,
+          "shotsAgainst": 0,
+          "pim": 6,
           "goalLog": [
             {
               "type": "goal",
               "period": 2,
               "clockTime": "13:08",
-              "team": "self",
-              "teamName": "Newmarket Renegades U13 A",
-              "scorer": ""
-            },
-            {
-              "type": "goal",
-              "period": 3,
-              "clockTime": "13:40",
-              "team": "self",
-              "teamName": "Newmarket Renegades U13 A",
-              "scorer": ""
-            },
-            {
-              "type": "goal",
-              "period": 3,
-              "clockTime": "00:14",
               "team": "self",
               "teamName": "Newmarket Renegades U13 A",
               "scorer": ""
@@ -1202,9 +1321,25 @@
             {
               "type": "goal",
               "period": 3,
+              "clockTime": "13:40",
+              "team": "self",
+              "teamName": "Newmarket Renegades U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 3,
               "clockTime": "00:52",
               "team": "opp",
               "teamName": "Upper York Admirals U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 3,
+              "clockTime": "00:14",
+              "team": "self",
+              "teamName": "Newmarket Renegades U13 A",
               "scorer": ""
             }
           ],
@@ -1269,8 +1404,8 @@
         "diff": "-37",
         "gpg": "1.75",
         "gapg": "4.83",
-        "pim": 72,
-        "pimPg": "6.0"
+        "pim": 38,
+        "pimPg": "3.2"
       },
       "specialTeams": {
         "ppPct": "11.5%",
@@ -1284,30 +1419,23 @@
       "last5Games": [
         {
           "gameId": 3170147,
+          "gameCode": "U13A-RS-193",
           "date": "Nov 15, 2026",
+          "location": "Angus Glen (1 - West)",
           "opp": "Barrie Colts U13-2 A Blue",
           "vsAt": "vs",
           "score": "2-4",
           "result": "L",
           "gf": 2,
           "ga": 4,
+          "ppGoals": 0,
+          "ppOpps": 4,
+          "pkGoalsAllowed": 0,
+          "pkOpps": 2,
+          "shotsFor": 0,
+          "shotsAgainst": 0,
+          "pim": 4,
           "goalLog": [
-            {
-              "type": "goal",
-              "period": 2,
-              "clockTime": "06:31",
-              "team": "self",
-              "teamName": "Markham Waxers U13 A",
-              "scorer": ""
-            },
-            {
-              "type": "goal",
-              "period": 3,
-              "clockTime": "13:47",
-              "team": "self",
-              "teamName": "Markham Waxers U13 A",
-              "scorer": ""
-            },
             {
               "type": "goal",
               "period": 2,
@@ -1319,9 +1447,25 @@
             {
               "type": "goal",
               "period": 2,
+              "clockTime": "06:31",
+              "team": "self",
+              "teamName": "Markham Waxers U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 2,
               "clockTime": "03:07",
               "team": "opp",
               "teamName": "Barrie Colts U13-2 A Blue",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 3,
+              "clockTime": "13:47",
+              "team": "self",
+              "teamName": "Markham Waxers U13 A",
               "scorer": ""
             },
             {
@@ -1346,13 +1490,22 @@
         },
         {
           "gameId": 3166642,
+          "gameCode": "U13A-RS-018",
           "date": "Nov 14, 2026",
+          "location": "Caledon East (1)",
           "opp": "Caledon Hawks",
           "vsAt": "@",
           "score": "0-4",
           "result": "L",
           "gf": 0,
           "ga": 4,
+          "ppGoals": 0,
+          "ppOpps": 2,
+          "pkGoalsAllowed": 1,
+          "pkOpps": 3,
+          "shotsFor": 0,
+          "shotsAgainst": 0,
+          "pim": 6,
           "goalLog": [
             {
               "type": "goal",
@@ -1392,13 +1545,22 @@
         },
         {
           "gameId": 3160514,
+          "gameCode": "U13A-RS-168",
           "date": "Nov 11, 2026",
+          "location": "Centennial (Centennial)",
           "opp": "Aurora Tigers",
           "vsAt": "vs",
           "score": "5-0",
           "result": "W",
           "gf": 5,
           "ga": 0,
+          "ppGoals": 0,
+          "ppOpps": 1,
+          "pkGoalsAllowed": 0,
+          "pkOpps": 1,
+          "shotsFor": 0,
+          "shotsAgainst": 0,
+          "pim": 2,
           "goalLog": [
             {
               "type": "goal",
@@ -1446,13 +1608,22 @@
         },
         {
           "gameId": 3148266,
+          "gameCode": "U13A-RS-179",
           "date": "Nov 8, 2026",
+          "location": "Milliken Mills (Milliken Mills)",
           "opp": "Barrie Colts",
           "vsAt": "vs",
           "score": "0-6",
           "result": "L",
           "gf": 0,
           "ga": 6,
+          "ppGoals": 0,
+          "ppOpps": 1,
+          "pkGoalsAllowed": 0,
+          "pkOpps": 0,
+          "shotsFor": 0,
+          "shotsAgainst": 0,
+          "pim": 0,
           "goalLog": [
             {
               "type": "goal",
@@ -1508,13 +1679,22 @@
         },
         {
           "gameId": 3146847,
+          "gameCode": "U13A-RS-192",
           "date": "Nov 7, 2026",
+          "location": "Peggy Hill (Arena 1)",
           "opp": "Barrie Colts U13-2 A Blue",
           "vsAt": "@",
           "score": "0-7",
           "result": "L",
           "gf": 0,
           "ga": 7,
+          "ppGoals": 0,
+          "ppOpps": 2,
+          "pkGoalsAllowed": 1,
+          "pkOpps": 1,
+          "shotsFor": 0,
+          "shotsAgainst": 0,
+          "pim": 2,
           "goalLog": [
             {
               "type": "goal",
@@ -1634,8 +1814,8 @@
         "diff": "+24",
         "gpg": "3.92",
         "gapg": "1.92",
-        "pim": 72,
-        "pimPg": "6.0"
+        "pim": 56,
+        "pimPg": "4.7"
       },
       "specialTeams": {
         "ppPct": "29.6%",
@@ -1649,13 +1829,22 @@
       "last5Games": [
         {
           "gameId": 3173778,
+          "gameCode": "U13A-RS-174",
           "date": "Nov 16, 2026",
+          "location": "Peggy Hill (Arena 2)",
           "opp": "Aurora Tigers",
           "vsAt": "vs",
           "score": "11-0",
           "result": "W",
           "gf": 11,
           "ga": 0,
+          "ppGoals": 0,
+          "ppOpps": 0,
+          "pkGoalsAllowed": 0,
+          "pkOpps": 2,
+          "shotsFor": 0,
+          "shotsAgainst": 0,
+          "pim": 4,
           "goalLog": [
             {
               "type": "goal",
@@ -1751,13 +1940,22 @@
         },
         {
           "gameId": 3169974,
+          "gameCode": "U13A-RS-149",
           "date": "Nov 15, 2026",
+          "location": "West Orillia (Green)",
           "opp": "Orillia Terriers",
           "vsAt": "@",
           "score": "5-3",
           "result": "W",
           "gf": 5,
           "ga": 3,
+          "ppGoals": 2,
+          "ppOpps": 4,
+          "pkGoalsAllowed": 2,
+          "pkOpps": 6,
+          "shotsFor": 0,
+          "shotsAgainst": 0,
+          "pim": 12,
           "goalLog": [
             {
               "type": "goal",
@@ -1770,9 +1968,33 @@
             {
               "type": "goal",
               "period": 2,
+              "clockTime": "10:13",
+              "team": "opp",
+              "teamName": "Orillia Terriers U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 2,
+              "clockTime": "08:05",
+              "team": "opp",
+              "teamName": "Orillia Terriers U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 2,
               "clockTime": "05:19",
               "team": "self",
               "teamName": "Barrie Colts U13-1 A White",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 2,
+              "clockTime": "01:30",
+              "team": "opp",
+              "teamName": "Orillia Terriers U13 A",
               "scorer": ""
             },
             {
@@ -1798,30 +2020,6 @@
               "team": "self",
               "teamName": "Barrie Colts U13-1 A White",
               "scorer": ""
-            },
-            {
-              "type": "goal",
-              "period": 2,
-              "clockTime": "10:13",
-              "team": "opp",
-              "teamName": "Orillia Terriers U13 A",
-              "scorer": ""
-            },
-            {
-              "type": "goal",
-              "period": 2,
-              "clockTime": "08:05",
-              "team": "opp",
-              "teamName": "Orillia Terriers U13 A",
-              "scorer": ""
-            },
-            {
-              "type": "goal",
-              "period": 2,
-              "clockTime": "01:30",
-              "team": "opp",
-              "teamName": "Orillia Terriers U13 A",
-              "scorer": ""
             }
           ],
           "penaltyLog": [],
@@ -1829,13 +2027,22 @@
         },
         {
           "gameId": 3160515,
+          "gameCode": "U13A-RS-185",
           "date": "Nov 11, 2026",
+          "location": "Ice Palace (Blue)",
           "opp": "Upper York Admirals",
           "vsAt": "@",
           "score": "3-0",
           "result": "W",
           "gf": 3,
           "ga": 0,
+          "ppGoals": 1,
+          "ppOpps": 3,
+          "pkGoalsAllowed": 0,
+          "pkOpps": 2,
+          "shotsFor": 0,
+          "shotsAgainst": 0,
+          "pim": 4,
           "goalLog": [
             {
               "type": "goal",
@@ -1867,13 +2074,22 @@
         },
         {
           "gameId": 3148266,
+          "gameCode": "U13A-RS-179",
           "date": "Nov 8, 2026",
+          "location": "Milliken Mills (Milliken Mills)",
           "opp": "Markham Waxers",
           "vsAt": "@",
           "score": "6-0",
           "result": "W",
           "gf": 6,
           "ga": 0,
+          "ppGoals": 0,
+          "ppOpps": 0,
+          "pkGoalsAllowed": 0,
+          "pkOpps": 1,
+          "shotsFor": 0,
+          "shotsAgainst": 0,
+          "pim": 2,
           "goalLog": [
             {
               "type": "goal",
@@ -1929,22 +2145,23 @@
         },
         {
           "gameId": 3139395,
+          "gameCode": "U13A-RS-135",
           "date": "Nov 4, 2026",
+          "location": "Allandale Rec (Red)",
           "opp": "Orillia Terriers",
           "vsAt": "vs",
           "score": "1-6",
           "result": "L",
           "gf": 1,
           "ga": 6,
+          "ppGoals": 1,
+          "ppOpps": 3,
+          "pkGoalsAllowed": 0,
+          "pkOpps": 2,
+          "shotsFor": 0,
+          "shotsAgainst": 0,
+          "pim": 4,
           "goalLog": [
-            {
-              "type": "goal",
-              "period": 3,
-              "clockTime": "05:59",
-              "team": "self",
-              "teamName": "Barrie Colts U13-1 A White",
-              "scorer": ""
-            },
             {
               "type": "goal",
               "period": 1,
@@ -1991,6 +2208,14 @@
               "clockTime": "09:19",
               "team": "opp",
               "teamName": "Orillia Terriers U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 3,
+              "clockTime": "05:59",
+              "team": "self",
+              "teamName": "Barrie Colts U13-1 A White",
               "scorer": ""
             }
           ],
@@ -2055,8 +2280,8 @@
         "diff": "+11",
         "gpg": "3.80",
         "gapg": "2.70",
-        "pim": 60,
-        "pimPg": "6.0"
+        "pim": 78,
+        "pimPg": "7.8"
       },
       "specialTeams": {
         "ppPct": "22.0%",
@@ -2070,14 +2295,31 @@
       "last5Games": [
         {
           "gameId": 3173779,
+          "gameCode": "U13A-RS-011",
           "date": "Nov 16, 2026",
+          "location": "Georgina Sutton (Georgina Sutton)",
           "opp": "Barrie Colts U13-2 A Blue",
           "vsAt": "vs",
           "score": "2-2",
           "result": "T",
           "gf": 2,
           "ga": 2,
+          "ppGoals": 0,
+          "ppOpps": 7,
+          "pkGoalsAllowed": 1,
+          "pkOpps": 2,
+          "shotsFor": 0,
+          "shotsAgainst": 0,
+          "pim": 4,
           "goalLog": [
+            {
+              "type": "goal",
+              "period": 1,
+              "clockTime": "04:17",
+              "team": "opp",
+              "teamName": "Barrie Colts U13-2 A Blue",
+              "scorer": ""
+            },
             {
               "type": "goal",
               "period": 2,
@@ -2089,15 +2331,7 @@
             {
               "type": "goal",
               "period": 3,
-              "clockTime": "00:46",
-              "team": "self",
-              "teamName": "Upper York Admirals U13 A",
-              "scorer": ""
-            },
-            {
-              "type": "goal",
-              "period": 1,
-              "clockTime": "04:17",
+              "clockTime": "04:21",
               "team": "opp",
               "teamName": "Barrie Colts U13-2 A Blue",
               "scorer": ""
@@ -2105,9 +2339,9 @@
             {
               "type": "goal",
               "period": 3,
-              "clockTime": "04:21",
-              "team": "opp",
-              "teamName": "Barrie Colts U13-2 A Blue",
+              "clockTime": "00:46",
+              "team": "self",
+              "teamName": "Upper York Admirals U13 A",
               "scorer": ""
             }
           ],
@@ -2116,13 +2350,22 @@
         },
         {
           "gameId": 3169951,
+          "gameCode": "U13A-RS-053",
           "date": "Nov 15, 2026",
+          "location": "Georgina Sutton (Georgina Sutton)",
           "opp": "Orangeville Flyers",
           "vsAt": "vs",
           "score": "4-1",
           "result": "W",
           "gf": 4,
           "ga": 1,
+          "ppGoals": 1,
+          "ppOpps": 7,
+          "pkGoalsAllowed": 0,
+          "pkOpps": 5,
+          "shotsFor": 0,
+          "shotsAgainst": 0,
+          "pim": 10,
           "goalLog": [
             {
               "type": "goal",
@@ -2143,6 +2386,14 @@
             {
               "type": "goal",
               "period": 3,
+              "clockTime": "11:15",
+              "team": "opp",
+              "teamName": "Orangeville Flyers U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 3,
               "clockTime": "08:16",
               "team": "self",
               "teamName": "Upper York Admirals U13 A",
@@ -2155,14 +2406,6 @@
               "team": "self",
               "teamName": "Upper York Admirals U13 A",
               "scorer": ""
-            },
-            {
-              "type": "goal",
-              "period": 3,
-              "clockTime": "11:15",
-              "team": "opp",
-              "teamName": "Orangeville Flyers U13 A",
-              "scorer": ""
             }
           ],
           "penaltyLog": [],
@@ -2170,13 +2413,22 @@
         },
         {
           "gameId": 3160515,
+          "gameCode": "U13A-RS-185",
           "date": "Nov 11, 2026",
+          "location": "Ice Palace (Blue)",
           "opp": "Barrie Colts",
           "vsAt": "vs",
           "score": "0-3",
           "result": "L",
           "gf": 0,
           "ga": 3,
+          "ppGoals": 0,
+          "ppOpps": 2,
+          "pkGoalsAllowed": 1,
+          "pkOpps": 3,
+          "shotsFor": 0,
+          "shotsAgainst": 0,
+          "pim": 6,
           "goalLog": [
             {
               "type": "goal",
@@ -2208,13 +2460,22 @@
         },
         {
           "gameId": 3147450,
+          "gameCode": "U13A-RS-132",
           "date": "Nov 8, 2026",
+          "location": "Zancor (JTF)",
           "opp": "King Rebellion",
           "vsAt": "@",
           "score": "7-1",
           "result": "W",
           "gf": 7,
           "ga": 1,
+          "ppGoals": 3,
+          "ppOpps": 7,
+          "pkGoalsAllowed": 0,
+          "pkOpps": 4,
+          "shotsFor": 0,
+          "shotsAgainst": 0,
+          "pim": 8,
           "goalLog": [
             {
               "type": "goal",
@@ -2251,6 +2512,14 @@
             {
               "type": "goal",
               "period": 2,
+              "clockTime": "10:17",
+              "team": "opp",
+              "teamName": "King Rebellion 13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 2,
               "clockTime": "05:09",
               "team": "self",
               "teamName": "Upper York Admirals U13 A",
@@ -2271,14 +2540,6 @@
               "team": "self",
               "teamName": "Upper York Admirals U13 A",
               "scorer": ""
-            },
-            {
-              "type": "goal",
-              "period": 2,
-              "clockTime": "10:17",
-              "team": "opp",
-              "teamName": "King Rebellion 13 A",
-              "scorer": ""
             }
           ],
           "penaltyLog": [],
@@ -2286,13 +2547,22 @@
         },
         {
           "gameId": 3141092,
+          "gameCode": "U13A-RS-124",
           "date": "Nov 5, 2026",
+          "location": "Magna (Pfaff)",
           "opp": "Newmarket Renegades",
           "vsAt": "@",
           "score": "3-1",
           "result": "W",
           "gf": 3,
           "ga": 1,
+          "ppGoals": 1,
+          "ppOpps": 2,
+          "pkGoalsAllowed": 0,
+          "pkOpps": 4,
+          "shotsFor": 0,
+          "shotsAgainst": 0,
+          "pim": 8,
           "goalLog": [
             {
               "type": "goal",
@@ -2502,8 +2772,8 @@
         "diff": "-101",
         "gpg": "0.27",
         "gapg": "9.45",
-        "pim": 66,
-        "pimPg": "7.0"
+        "pim": 54,
+        "pimPg": "4.9"
       },
       "specialTeams": {
         "ppPct": "3.8%",
@@ -2517,13 +2787,22 @@
       "last5Games": [
         {
           "gameId": 3191664,
+          "gameCode": "U13A-RS-189",
           "date": "Nov 24, 2026",
+          "location": "Aurora Rec Complex (Pfaff)",
           "opp": "Barrie Colts U13-2 A Blue",
           "vsAt": "vs",
           "score": "0-7",
           "result": "L",
           "gf": 0,
           "ga": 7,
+          "ppGoals": 0,
+          "ppOpps": 2,
+          "pkGoalsAllowed": 1,
+          "pkOpps": 5,
+          "shotsFor": 0,
+          "shotsAgainst": 0,
+          "pim": 10,
           "goalLog": [
             {
               "type": "goal",
@@ -2587,13 +2866,22 @@
         },
         {
           "gameId": 3182602,
+          "gameCode": "U13A-RS-070",
           "date": "Nov 21, 2026",
+          "location": "Bradford Leisure (Paul Dossey)",
           "opp": "South Simcoe Storm",
           "vsAt": "@",
           "score": "0-11",
           "result": "L",
           "gf": 0,
           "ga": 11,
+          "ppGoals": 0,
+          "ppOpps": 5,
+          "pkGoalsAllowed": 2,
+          "pkOpps": 6,
+          "shotsFor": 0,
+          "shotsAgainst": 0,
+          "pim": 12,
           "goalLog": [
             {
               "type": "goal",
@@ -2689,13 +2977,22 @@
         },
         {
           "gameId": 3173778,
+          "gameCode": "U13A-RS-174",
           "date": "Nov 16, 2026",
+          "location": "Peggy Hill (Arena 2)",
           "opp": "Barrie Colts",
           "vsAt": "@",
           "score": "0-11",
           "result": "L",
           "gf": 0,
           "ga": 11,
+          "ppGoals": 0,
+          "ppOpps": 2,
+          "pkGoalsAllowed": 0,
+          "pkOpps": 0,
+          "shotsFor": 0,
+          "shotsAgainst": 0,
+          "pim": 0,
           "goalLog": [
             {
               "type": "goal",
@@ -2791,13 +3088,22 @@
         },
         {
           "gameId": 3160514,
+          "gameCode": "U13A-RS-168",
           "date": "Nov 11, 2026",
+          "location": "Centennial (Centennial)",
           "opp": "Markham Waxers",
           "vsAt": "@",
           "score": "0-5",
           "result": "L",
           "gf": 0,
           "ga": 5,
+          "ppGoals": 0,
+          "ppOpps": 1,
+          "pkGoalsAllowed": 0,
+          "pkOpps": 1,
+          "shotsFor": 0,
+          "shotsAgainst": 0,
+          "pim": 2,
           "goalLog": [
             {
               "type": "goal",
@@ -2845,13 +3151,22 @@
         },
         {
           "gameId": 3156645,
+          "gameCode": "U13A-RS-015",
           "date": "Nov 10, 2026",
+          "location": "Aurora Rec Complex (Pfaff)",
           "opp": "Caledon Hawks",
           "vsAt": "vs",
           "score": "0-8",
           "result": "L",
           "gf": 0,
           "ga": 8,
+          "ppGoals": 0,
+          "ppOpps": 2,
+          "pkGoalsAllowed": 1,
+          "pkOpps": 2,
+          "shotsFor": 0,
+          "shotsAgainst": 0,
+          "pim": 4,
           "goalLog": [
             {
               "type": "goal",
@@ -2943,13 +3258,22 @@
       "allCompletedGames": [
         {
           "gameId": 3191664,
+          "gameCode": "U13A-RS-189",
           "date": "Nov 24, 2026",
+          "location": "Aurora Rec Complex (Pfaff)",
           "opp": "Barrie Colts U13-2 A Blue",
           "vsAt": "vs",
           "score": "0-7",
           "result": "L",
           "gf": 0,
           "ga": 7,
+          "ppGoals": 0,
+          "ppOpps": 2,
+          "pkGoalsAllowed": 1,
+          "pkOpps": 5,
+          "shotsFor": 0,
+          "shotsAgainst": 0,
+          "pim": 10,
           "goalLog": [
             {
               "type": "goal",
@@ -3013,13 +3337,22 @@
         },
         {
           "gameId": 3182602,
+          "gameCode": "U13A-RS-070",
           "date": "Nov 21, 2026",
+          "location": "Bradford Leisure (Paul Dossey)",
           "opp": "South Simcoe Storm",
           "vsAt": "@",
           "score": "0-11",
           "result": "L",
           "gf": 0,
           "ga": 11,
+          "ppGoals": 0,
+          "ppOpps": 5,
+          "pkGoalsAllowed": 2,
+          "pkOpps": 6,
+          "shotsFor": 0,
+          "shotsAgainst": 0,
+          "pim": 12,
           "goalLog": [
             {
               "type": "goal",
@@ -3115,13 +3448,22 @@
         },
         {
           "gameId": 3173778,
+          "gameCode": "U13A-RS-174",
           "date": "Nov 16, 2026",
+          "location": "Peggy Hill (Arena 2)",
           "opp": "Barrie Colts",
           "vsAt": "@",
           "score": "0-11",
           "result": "L",
           "gf": 0,
           "ga": 11,
+          "ppGoals": 0,
+          "ppOpps": 2,
+          "pkGoalsAllowed": 0,
+          "pkOpps": 0,
+          "shotsFor": 0,
+          "shotsAgainst": 0,
+          "pim": 0,
           "goalLog": [
             {
               "type": "goal",
@@ -3217,13 +3559,22 @@
         },
         {
           "gameId": 3160514,
+          "gameCode": "U13A-RS-168",
           "date": "Nov 11, 2026",
+          "location": "Centennial (Centennial)",
           "opp": "Markham Waxers",
           "vsAt": "@",
           "score": "0-5",
           "result": "L",
           "gf": 0,
           "ga": 5,
+          "ppGoals": 0,
+          "ppOpps": 1,
+          "pkGoalsAllowed": 0,
+          "pkOpps": 1,
+          "shotsFor": 0,
+          "shotsAgainst": 0,
+          "pim": 2,
           "goalLog": [
             {
               "type": "goal",
@@ -3271,13 +3622,22 @@
         },
         {
           "gameId": 3156645,
+          "gameCode": "U13A-RS-015",
           "date": "Nov 10, 2026",
+          "location": "Aurora Rec Complex (Pfaff)",
           "opp": "Caledon Hawks",
           "vsAt": "vs",
           "score": "0-8",
           "result": "L",
           "gf": 0,
           "ga": 8,
+          "ppGoals": 0,
+          "ppOpps": 2,
+          "pkGoalsAllowed": 1,
+          "pkOpps": 2,
+          "shotsFor": 0,
+          "shotsAgainst": 0,
+          "pim": 4,
           "goalLog": [
             {
               "type": "goal",
@@ -3349,13 +3709,22 @@
         },
         {
           "gameId": 3143846,
+          "gameCode": "U13A-RS-056",
           "date": "Nov 6, 2026",
+          "location": "West Orillia (Blue)",
           "opp": "Orillia Terriers",
           "vsAt": "@",
           "score": "0-9",
           "result": "L",
           "gf": 0,
           "ga": 9,
+          "ppGoals": 0,
+          "ppOpps": 3,
+          "pkGoalsAllowed": 1,
+          "pkOpps": 3,
+          "shotsFor": 0,
+          "shotsAgainst": 0,
+          "pim": 6,
           "goalLog": [
             {
               "type": "goal",
@@ -3435,22 +3804,23 @@
         },
         {
           "gameId": 3087227,
+          "gameCode": "U13A-RS-130",
           "date": "Oct 20, 2026",
+          "location": "Magna (Pfaff)",
           "opp": "Newmarket Renegades",
           "vsAt": "@",
           "score": "1-8",
           "result": "L",
           "gf": 1,
           "ga": 8,
+          "ppGoals": 0,
+          "ppOpps": 4,
+          "pkGoalsAllowed": 1,
+          "pkOpps": 3,
+          "shotsFor": 0,
+          "shotsAgainst": 0,
+          "pim": 6,
           "goalLog": [
-            {
-              "type": "goal",
-              "period": 2,
-              "clockTime": "04:06",
-              "team": "tigers",
-              "teamName": "Aurora Tigers U13 A",
-              "scorer": ""
-            },
             {
               "type": "goal",
               "period": 1,
@@ -3502,6 +3872,14 @@
             {
               "type": "goal",
               "period": 2,
+              "clockTime": "04:06",
+              "team": "tigers",
+              "teamName": "Aurora Tigers U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 2,
               "clockTime": "00:32",
               "team": "opp",
               "teamName": "Newmarket Renegades U13 A",
@@ -3521,13 +3899,22 @@
         },
         {
           "gameId": 3057628,
+          "gameCode": "U13A-RS-029",
           "date": "Oct 10, 2026",
+          "location": "Aurora CC (2 - Lincoln)",
           "opp": "Georgian Bay Islanders",
           "vsAt": "vs",
           "score": "0-9",
           "result": "L",
           "gf": 0,
           "ga": 9,
+          "ppGoals": 0,
+          "ppOpps": 0,
+          "pkGoalsAllowed": 1,
+          "pkOpps": 1,
+          "shotsFor": 0,
+          "shotsAgainst": 0,
+          "pim": 2,
           "goalLog": [
             {
               "type": "goal",
@@ -3607,28 +3994,37 @@
         },
         {
           "gameId": 3043454,
+          "gameCode": "U13A-RS-057",
           "date": "Oct 6, 2026",
+          "location": "Aurora Rec Complex (Pfaff)",
           "opp": "Orillia Terriers",
           "vsAt": "vs",
           "score": "1-13",
           "result": "L",
           "gf": 1,
           "ga": 13,
+          "ppGoals": 0,
+          "ppOpps": 3,
+          "pkGoalsAllowed": 2,
+          "pkOpps": 2,
+          "shotsFor": 0,
+          "shotsAgainst": 0,
+          "pim": 4,
           "goalLog": [
-            {
-              "type": "goal",
-              "period": 1,
-              "clockTime": "00:51",
-              "team": "tigers",
-              "teamName": "Aurora Tigers U13 A",
-              "scorer": ""
-            },
             {
               "type": "goal",
               "period": 1,
               "clockTime": "01:20",
               "team": "opp",
               "teamName": "Orillia Terriers U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 1,
+              "clockTime": "00:51",
+              "team": "tigers",
+              "teamName": "Aurora Tigers U13 A",
               "scorer": ""
             },
             {
@@ -3733,22 +4129,23 @@
         },
         {
           "gameId": 3035362,
+          "gameCode": "U13A-RS-083",
           "date": "Oct 4, 2026",
+          "location": "Georgina Sutton (Georgina Sutton)",
           "opp": "Upper York Admirals",
           "vsAt": "@",
           "score": "1-11",
           "result": "L",
           "gf": 1,
           "ga": 11,
+          "ppGoals": 1,
+          "ppOpps": 3,
+          "pkGoalsAllowed": 1,
+          "pkOpps": 3,
+          "shotsFor": 0,
+          "shotsAgainst": 0,
+          "pim": 6,
           "goalLog": [
-            {
-              "type": "goal",
-              "period": 2,
-              "clockTime": "02:51",
-              "team": "tigers",
-              "teamName": "Aurora Tigers U13 A",
-              "scorer": ""
-            },
             {
               "type": "goal",
               "period": 1,
@@ -3808,6 +4205,14 @@
             {
               "type": "goal",
               "period": 2,
+              "clockTime": "02:51",
+              "team": "tigers",
+              "teamName": "Aurora Tigers U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 2,
               "clockTime": "00:46",
               "team": "opp",
               "teamName": "Upper York Admirals U13 A",
@@ -3843,13 +4248,22 @@
         },
         {
           "gameId": 3034266,
+          "gameCode": "U13A-RS-014",
           "date": "Oct 3, 2026",
+          "location": "Caledon East (1)",
           "opp": "Caledon Hawks",
           "vsAt": "@",
           "score": "0-12",
           "result": "L",
           "gf": 0,
           "ga": 12,
+          "ppGoals": 0,
+          "ppOpps": 1,
+          "pkGoalsAllowed": 1,
+          "pkOpps": 1,
+          "shotsFor": 0,
+          "shotsAgainst": 0,
+          "pim": 2,
           "goalLog": [
             {
               "type": "goal",
@@ -3974,8 +4388,8 @@
         "diff": "+25",
         "gpg": "4.40",
         "gapg": "1.90",
-        "pim": 60,
-        "pimPg": "6.0"
+        "pim": 58,
+        "pimPg": "5.8"
       },
       "specialTeams": {
         "ppPct": "20.7%",
@@ -3989,13 +4403,22 @@
       "last5Games": [
         {
           "gameId": 3182602,
+          "gameCode": "U13A-RS-070",
           "date": "Nov 21, 2026",
+          "location": "Bradford Leisure (Paul Dossey)",
           "opp": "Aurora Tigers",
           "vsAt": "vs",
           "score": "11-0",
           "result": "W",
           "gf": 11,
           "ga": 0,
+          "ppGoals": 2,
+          "ppOpps": 6,
+          "pkGoalsAllowed": 0,
+          "pkOpps": 5,
+          "shotsFor": 0,
+          "shotsAgainst": 0,
+          "pim": 10,
           "goalLog": [
             {
               "type": "goal",
@@ -4091,14 +4514,31 @@
         },
         {
           "gameId": 3148126,
+          "gameCode": "U13A-RS-090",
           "date": "Nov 8, 2026",
+          "location": "Stouffville Clippers (CC1)",
           "opp": "Stouffville Clippers",
           "vsAt": "@",
           "score": "4-2",
           "result": "W",
           "gf": 4,
           "ga": 2,
+          "ppGoals": 1,
+          "ppOpps": 2,
+          "pkGoalsAllowed": 0,
+          "pkOpps": 2,
+          "shotsFor": 0,
+          "shotsAgainst": 0,
+          "pim": 4,
           "goalLog": [
+            {
+              "type": "goal",
+              "period": 2,
+              "clockTime": "08:40",
+              "team": "opp",
+              "teamName": "Stouffville Clippers U13 A",
+              "scorer": ""
+            },
             {
               "type": "goal",
               "period": 2,
@@ -4133,14 +4573,6 @@
             },
             {
               "type": "goal",
-              "period": 2,
-              "clockTime": "08:40",
-              "team": "opp",
-              "teamName": "Stouffville Clippers U13 A",
-              "scorer": ""
-            },
-            {
-              "type": "goal",
               "period": 3,
               "clockTime": "00:32",
               "team": "opp",
@@ -4153,14 +4585,39 @@
         },
         {
           "gameId": 3144851,
+          "gameCode": "U13A-RS-089",
           "date": "Nov 7, 2026",
+          "location": "Bradford Leisure (Paul Dossey)",
           "opp": "Stouffville Clippers",
           "vsAt": "vs",
           "score": "4-4",
           "result": "T",
           "gf": 4,
           "ga": 4,
+          "ppGoals": 1,
+          "ppOpps": 4,
+          "pkGoalsAllowed": 0,
+          "pkOpps": 2,
+          "shotsFor": 0,
+          "shotsAgainst": 0,
+          "pim": 4,
           "goalLog": [
+            {
+              "type": "goal",
+              "period": 1,
+              "clockTime": "09:18",
+              "team": "opp",
+              "teamName": "Stouffville Clippers U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 2,
+              "clockTime": "11:00",
+              "team": "opp",
+              "teamName": "Stouffville Clippers U13 A",
+              "scorer": ""
+            },
             {
               "type": "goal",
               "period": 2,
@@ -4188,30 +4645,6 @@
             {
               "type": "goal",
               "period": 3,
-              "clockTime": "08:00",
-              "team": "self",
-              "teamName": "South Simcoe Storm U13 A",
-              "scorer": ""
-            },
-            {
-              "type": "goal",
-              "period": 1,
-              "clockTime": "09:18",
-              "team": "opp",
-              "teamName": "Stouffville Clippers U13 A",
-              "scorer": ""
-            },
-            {
-              "type": "goal",
-              "period": 2,
-              "clockTime": "11:00",
-              "team": "opp",
-              "teamName": "Stouffville Clippers U13 A",
-              "scorer": ""
-            },
-            {
-              "type": "goal",
-              "period": 3,
               "clockTime": "13:33",
               "team": "opp",
               "teamName": "Stouffville Clippers U13 A",
@@ -4224,6 +4657,14 @@
               "team": "opp",
               "teamName": "Stouffville Clippers U13 A",
               "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 3,
+              "clockTime": "08:00",
+              "team": "self",
+              "teamName": "South Simcoe Storm U13 A",
+              "scorer": ""
             }
           ],
           "penaltyLog": [],
@@ -4231,13 +4672,22 @@
         },
         {
           "gameId": 3120088,
+          "gameCode": "U13A-RS-086",
           "date": "Nov 1, 2026",
+          "location": "Elvis Stojko (Elvis Stojko)",
           "opp": "Richmond Hill Jaguars",
           "vsAt": "@",
           "score": "6-0",
           "result": "W",
           "gf": 6,
           "ga": 0,
+          "ppGoals": 0,
+          "ppOpps": 0,
+          "pkGoalsAllowed": 0,
+          "pkOpps": 1,
+          "shotsFor": 0,
+          "shotsAgainst": 0,
+          "pim": 2,
           "goalLog": [
             {
               "type": "goal",
@@ -4293,26 +4743,27 @@
         },
         {
           "gameId": 3098846,
+          "gameCode": "U13A-RS-085",
           "date": "Oct 25, 2026",
+          "location": "Bob Fallis (Bob Fallis)",
           "opp": "Richmond Hill Jaguars",
           "vsAt": "vs",
           "score": "2-2",
           "result": "T",
           "gf": 2,
           "ga": 2,
+          "ppGoals": 0,
+          "ppOpps": 1,
+          "pkGoalsAllowed": 0,
+          "pkOpps": 3,
+          "shotsFor": 0,
+          "shotsAgainst": 0,
+          "pim": 6,
           "goalLog": [
             {
               "type": "goal",
               "period": 1,
               "clockTime": "09:08",
-              "team": "self",
-              "teamName": "South Simcoe Storm U13 A",
-              "scorer": ""
-            },
-            {
-              "type": "goal",
-              "period": 3,
-              "clockTime": "01:43",
               "team": "self",
               "teamName": "South Simcoe Storm U13 A",
               "scorer": ""
@@ -4331,6 +4782,14 @@
               "clockTime": "09:37",
               "team": "opp",
               "teamName": "Richmond Hill Jaguars U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 3,
+              "clockTime": "01:43",
+              "team": "self",
+              "teamName": "South Simcoe Storm U13 A",
               "scorer": ""
             }
           ],
@@ -4395,8 +4854,8 @@
         "diff": "-50",
         "gpg": "1.10",
         "gapg": "6.10",
-        "pim": 60,
-        "pimPg": "6.0"
+        "pim": 30,
+        "pimPg": "3.0"
       },
       "specialTeams": {
         "ppPct": "13.6%",
@@ -4410,22 +4869,23 @@
       "last5Games": [
         {
           "gameId": 3148127,
+          "gameCode": "U13A-RS-006",
           "date": "Nov 8, 2026",
+          "location": "Magna (Honda)",
           "opp": "Newmarket Renegades",
           "vsAt": "@",
           "score": "1-6",
           "result": "L",
           "gf": 1,
           "ga": 6,
+          "ppGoals": 1,
+          "ppOpps": 4,
+          "pkGoalsAllowed": 1,
+          "pkOpps": 2,
+          "shotsFor": 0,
+          "shotsAgainst": 0,
+          "pim": 4,
           "goalLog": [
-            {
-              "type": "goal",
-              "period": 3,
-              "clockTime": "11:48",
-              "team": "self",
-              "teamName": "Richmond Hill Jaguars U13 A",
-              "scorer": ""
-            },
             {
               "type": "goal",
               "period": 2,
@@ -4461,6 +4921,14 @@
             {
               "type": "goal",
               "period": 3,
+              "clockTime": "11:48",
+              "team": "self",
+              "teamName": "Richmond Hill Jaguars U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 3,
               "clockTime": "05:51",
               "team": "opp",
               "teamName": "Newmarket Renegades U13 A",
@@ -4480,13 +4948,22 @@
         },
         {
           "gameId": 3146846,
+          "gameCode": "U13A-RS-110",
           "date": "Nov 7, 2026",
+          "location": "Elgin Barrow (East)",
           "opp": "Newmarket Renegades",
           "vsAt": "vs",
           "score": "0-4",
           "result": "L",
           "gf": 0,
           "ga": 4,
+          "ppGoals": 0,
+          "ppOpps": 1,
+          "pkGoalsAllowed": 0,
+          "pkOpps": 2,
+          "shotsFor": 0,
+          "shotsAgainst": 0,
+          "pim": 4,
           "goalLog": [
             {
               "type": "goal",
@@ -4526,13 +5003,22 @@
         },
         {
           "gameId": 3120088,
+          "gameCode": "U13A-RS-086",
           "date": "Nov 1, 2026",
+          "location": "Elvis Stojko (Elvis Stojko)",
           "opp": "South Simcoe Storm",
           "vsAt": "vs",
           "score": "0-6",
           "result": "L",
           "gf": 0,
           "ga": 6,
+          "ppGoals": 0,
+          "ppOpps": 1,
+          "pkGoalsAllowed": 0,
+          "pkOpps": 0,
+          "shotsFor": 0,
+          "shotsAgainst": 0,
+          "pim": 0,
           "goalLog": [
             {
               "type": "goal",
@@ -4588,38 +5074,23 @@
         },
         {
           "gameId": 3108425,
+          "gameCode": "U13A-RS-115",
           "date": "Oct 27, 2026",
+          "location": "Elvis Stojko (Elvis Stojko)",
           "opp": "King Rebellion",
           "vsAt": "vs",
           "score": "3-4",
           "result": "L",
           "gf": 3,
           "ga": 4,
+          "ppGoals": 1,
+          "ppOpps": 1,
+          "pkGoalsAllowed": 0,
+          "pkOpps": 1,
+          "shotsFor": 0,
+          "shotsAgainst": 0,
+          "pim": 2,
           "goalLog": [
-            {
-              "type": "goal",
-              "period": 3,
-              "clockTime": "09:33",
-              "team": "self",
-              "teamName": "Richmond Hill Jaguars U13 A",
-              "scorer": ""
-            },
-            {
-              "type": "goal",
-              "period": 3,
-              "clockTime": "08:17",
-              "team": "self",
-              "teamName": "Richmond Hill Jaguars U13 A",
-              "scorer": ""
-            },
-            {
-              "type": "goal",
-              "period": 3,
-              "clockTime": "01:50",
-              "team": "self",
-              "teamName": "Richmond Hill Jaguars U13 A",
-              "scorer": ""
-            },
             {
               "type": "goal",
               "period": 2,
@@ -4647,9 +5118,33 @@
             {
               "type": "goal",
               "period": 3,
+              "clockTime": "09:33",
+              "team": "self",
+              "teamName": "Richmond Hill Jaguars U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 3,
+              "clockTime": "08:17",
+              "team": "self",
+              "teamName": "Richmond Hill Jaguars U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 3,
               "clockTime": "02:56",
               "team": "opp",
               "teamName": "King Rebellion 13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 3,
+              "clockTime": "01:50",
+              "team": "self",
+              "teamName": "Richmond Hill Jaguars U13 A",
               "scorer": ""
             }
           ],
@@ -4658,14 +5153,31 @@
         },
         {
           "gameId": 3098846,
+          "gameCode": "U13A-RS-085",
           "date": "Oct 25, 2026",
+          "location": "Bob Fallis (Bob Fallis)",
           "opp": "South Simcoe Storm",
           "vsAt": "@",
           "score": "2-2",
           "result": "T",
           "gf": 2,
           "ga": 2,
+          "ppGoals": 0,
+          "ppOpps": 3,
+          "pkGoalsAllowed": 0,
+          "pkOpps": 1,
+          "shotsFor": 0,
+          "shotsAgainst": 0,
+          "pim": 2,
           "goalLog": [
+            {
+              "type": "goal",
+              "period": 1,
+              "clockTime": "09:08",
+              "team": "opp",
+              "teamName": "South Simcoe Storm U13 A",
+              "scorer": ""
+            },
             {
               "type": "goal",
               "period": 2,
@@ -4680,14 +5192,6 @@
               "clockTime": "09:37",
               "team": "self",
               "teamName": "Richmond Hill Jaguars U13 A",
-              "scorer": ""
-            },
-            {
-              "type": "goal",
-              "period": 1,
-              "clockTime": "09:08",
-              "team": "opp",
-              "teamName": "South Simcoe Storm U13 A",
               "scorer": ""
             },
             {
@@ -4754,8 +5258,8 @@
         "diff": "-7",
         "gpg": "3.08",
         "gapg": "3.67",
-        "pim": 72,
-        "pimPg": "6.0"
+        "pim": 102,
+        "pimPg": "8.5"
       },
       "specialTeams": {
         "ppPct": "21.2%",
@@ -4769,22 +5273,23 @@
       "last5Games": [
         {
           "gameId": 3169951,
+          "gameCode": "U13A-RS-053",
           "date": "Nov 15, 2026",
+          "location": "Georgina Sutton (Georgina Sutton)",
           "opp": "Upper York Admirals",
           "vsAt": "@",
           "score": "1-4",
           "result": "L",
           "gf": 1,
           "ga": 4,
+          "ppGoals": 0,
+          "ppOpps": 5,
+          "pkGoalsAllowed": 1,
+          "pkOpps": 7,
+          "shotsFor": 0,
+          "shotsAgainst": 0,
+          "pim": 14,
           "goalLog": [
-            {
-              "type": "goal",
-              "period": 3,
-              "clockTime": "11:15",
-              "team": "self",
-              "teamName": "Orangeville Flyers U13 A",
-              "scorer": ""
-            },
             {
               "type": "goal",
               "period": 1,
@@ -4799,6 +5304,14 @@
               "clockTime": "11:18",
               "team": "opp",
               "teamName": "Upper York Admirals U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 3,
+              "clockTime": "11:15",
+              "team": "self",
+              "teamName": "Orangeville Flyers U13 A",
               "scorer": ""
             },
             {
@@ -4823,13 +5336,22 @@
         },
         {
           "gameId": 3163300,
+          "gameCode": "U13A-RS-054",
           "date": "Nov 12, 2026",
+          "location": "Alder (Red)",
           "opp": "Stouffville Clippers",
           "vsAt": "vs",
           "score": "5-1",
           "result": "W",
           "gf": 5,
           "ga": 1,
+          "ppGoals": 2,
+          "ppOpps": 3,
+          "pkGoalsAllowed": 1,
+          "pkOpps": 3,
+          "shotsFor": 0,
+          "shotsAgainst": 0,
+          "pim": 6,
           "goalLog": [
             {
               "type": "goal",
@@ -4885,13 +5407,22 @@
         },
         {
           "gameId": 3130624,
+          "gameCode": "U13A-RS-133",
           "date": "Nov 2, 2026",
+          "location": "Alder (Red)",
           "opp": "Barrie Colts U13-2 A Blue",
           "vsAt": "vs",
           "score": "1-5",
           "result": "L",
           "gf": 1,
           "ga": 5,
+          "ppGoals": 1,
+          "ppOpps": 6,
+          "pkGoalsAllowed": 1,
+          "pkOpps": 7,
+          "shotsFor": 0,
+          "shotsAgainst": 0,
+          "pim": 14,
           "goalLog": [
             {
               "type": "goal",
@@ -4947,13 +5478,22 @@
         },
         {
           "gameId": 3120087,
+          "gameCode": "U13A-RS-055",
           "date": "Nov 1, 2026",
+          "location": "Stouffville Clippers (CC1)",
           "opp": "Stouffville Clippers",
           "vsAt": "@",
           "score": "4-2",
           "result": "W",
           "gf": 4,
           "ga": 2,
+          "ppGoals": 1,
+          "ppOpps": 2,
+          "pkGoalsAllowed": 0,
+          "pkOpps": 4,
+          "shotsFor": 0,
+          "shotsAgainst": 0,
+          "pim": 8,
           "goalLog": [
             {
               "type": "goal",
@@ -4982,17 +5522,17 @@
             {
               "type": "goal",
               "period": 3,
-              "clockTime": "05:49",
-              "team": "self",
-              "teamName": "Orangeville Flyers U13 A",
+              "clockTime": "11:39",
+              "team": "opp",
+              "teamName": "Stouffville Clippers U13 A",
               "scorer": ""
             },
             {
               "type": "goal",
               "period": 3,
-              "clockTime": "11:39",
-              "team": "opp",
-              "teamName": "Stouffville Clippers U13 A",
+              "clockTime": "05:49",
+              "team": "self",
+              "teamName": "Orangeville Flyers U13 A",
               "scorer": ""
             },
             {
@@ -5009,22 +5549,23 @@
         },
         {
           "gameId": 3112769,
+          "gameCode": "U13A-RS-127",
           "date": "Oct 29, 2026",
+          "location": "Alder (Red)",
           "opp": "Georgian Bay Islanders",
           "vsAt": "vs",
           "score": "1-10",
           "result": "L",
           "gf": 1,
           "ga": 10,
+          "ppGoals": 0,
+          "ppOpps": 3,
+          "pkGoalsAllowed": 3,
+          "pkOpps": 5,
+          "shotsFor": 0,
+          "shotsAgainst": 0,
+          "pim": 10,
           "goalLog": [
-            {
-              "type": "goal",
-              "period": 3,
-              "clockTime": "07:06",
-              "team": "self",
-              "teamName": "Orangeville Flyers U13 A",
-              "scorer": ""
-            },
             {
               "type": "goal",
               "period": 1,
@@ -5095,6 +5636,14 @@
               "clockTime": "00:27",
               "team": "opp",
               "teamName": "Georgian Bay Islanders U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 3,
+              "clockTime": "07:06",
+              "team": "self",
+              "teamName": "Orangeville Flyers U13 A",
               "scorer": ""
             },
             {
@@ -5502,8 +6051,8 @@
         "diff": "+78",
         "gpg": "8.00",
         "gapg": "1.50",
-        "pim": 72,
-        "pimPg": "6.0"
+        "pim": 54,
+        "pimPg": "4.5"
       },
       "specialTeams": {
         "ppPct": "52.4%",
@@ -5515,13 +6064,22 @@
       "last5Games": [
         {
           "gameId": 3183845,
+          "gameCode": "U13A-RS-031",
           "date": "Nov 22, 2026",
+          "location": "Zancor (JTF)",
           "opp": "King Rebellion",
           "vsAt": "@",
           "score": "11-2",
           "result": "W",
           "gf": 11,
           "ga": 2,
+          "ppGoals": 5,
+          "ppOpps": 6,
+          "pkGoalsAllowed": 0,
+          "pkOpps": 4,
+          "shotsFor": 0,
+          "shotsAgainst": 0,
+          "pim": 8,
           "goalLog": [
             {
               "type": "goal",
@@ -5545,6 +6103,14 @@
               "clockTime": "03:35",
               "team": "self",
               "teamName": "Georgian Bay Islanders U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 1,
+              "clockTime": "00:35",
+              "team": "opp",
+              "teamName": "King Rebellion 13 A",
               "scorer": ""
             },
             {
@@ -5613,14 +6179,6 @@
             },
             {
               "type": "goal",
-              "period": 1,
-              "clockTime": "00:35",
-              "team": "opp",
-              "teamName": "King Rebellion 13 A",
-              "scorer": ""
-            },
-            {
-              "type": "goal",
               "period": 3,
               "clockTime": "01:05",
               "team": "opp",
@@ -5633,13 +6191,22 @@
         },
         {
           "gameId": 3182603,
+          "gameCode": "U13A-RS-034",
           "date": "Nov 21, 2026",
+          "location": "Penetang (Penetang)",
           "opp": "Newmarket Renegades",
           "vsAt": "vs",
           "score": "7-0",
           "result": "W",
           "gf": 7,
           "ga": 0,
+          "ppGoals": 0,
+          "ppOpps": 2,
+          "pkGoalsAllowed": 0,
+          "pkOpps": 4,
+          "shotsFor": 0,
+          "shotsAgainst": 0,
+          "pim": 8,
           "goalLog": [
             {
               "type": "goal",
@@ -5703,14 +6270,31 @@
         },
         {
           "gameId": 3170148,
+          "gameCode": "U13A-RS-134",
           "date": "Nov 15, 2026",
+          "location": "North Simcoe SRC (Centennial)",
           "opp": "Caledon Hawks",
           "vsAt": "vs",
           "score": "6-1",
           "result": "W",
           "gf": 6,
           "ga": 1,
+          "ppGoals": 2,
+          "ppOpps": 4,
+          "pkGoalsAllowed": 0,
+          "pkOpps": 2,
+          "shotsFor": 0,
+          "shotsAgainst": 0,
+          "pim": 4,
           "goalLog": [
+            {
+              "type": "goal",
+              "period": 1,
+              "clockTime": "09:46",
+              "team": "opp",
+              "teamName": "Caledon Hawks 13 A",
+              "scorer": ""
+            },
             {
               "type": "goal",
               "period": 2,
@@ -5758,14 +6342,6 @@
               "team": "self",
               "teamName": "Georgian Bay Islanders U13 A",
               "scorer": ""
-            },
-            {
-              "type": "goal",
-              "period": 1,
-              "clockTime": "09:46",
-              "team": "opp",
-              "teamName": "Caledon Hawks 13 A",
-              "scorer": ""
             }
           ],
           "penaltyLog": [],
@@ -5773,22 +6349,23 @@
         },
         {
           "gameId": 3120084,
+          "gameCode": "U13A-RS-143",
           "date": "Nov 1, 2026",
+          "location": "North Simcoe SRC (Centennial)",
           "opp": "Barrie Colts",
           "vsAt": "vs",
           "score": "1-5",
           "result": "L",
           "gf": 1,
           "ga": 5,
+          "ppGoals": 0,
+          "ppOpps": 2,
+          "pkGoalsAllowed": 0,
+          "pkOpps": 1,
+          "shotsFor": 0,
+          "shotsAgainst": 0,
+          "pim": 2,
           "goalLog": [
-            {
-              "type": "goal",
-              "period": 2,
-              "clockTime": "00:20",
-              "team": "self",
-              "teamName": "Georgian Bay Islanders U13 A",
-              "scorer": ""
-            },
             {
               "type": "goal",
               "period": 1,
@@ -5815,6 +6392,14 @@
             },
             {
               "type": "goal",
+              "period": 2,
+              "clockTime": "00:20",
+              "team": "self",
+              "teamName": "Georgian Bay Islanders U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
               "period": 3,
               "clockTime": "13:10",
               "team": "opp",
@@ -5835,13 +6420,22 @@
         },
         {
           "gameId": 3112769,
+          "gameCode": "U13A-RS-127",
           "date": "Oct 29, 2026",
+          "location": "Alder (Red)",
           "opp": "Orangeville Flyers",
           "vsAt": "@",
           "score": "10-1",
           "result": "W",
           "gf": 10,
           "ga": 1,
+          "ppGoals": 3,
+          "ppOpps": 5,
+          "pkGoalsAllowed": 0,
+          "pkOpps": 3,
+          "shotsFor": 0,
+          "shotsAgainst": 0,
+          "pim": 6,
           "goalLog": [
             {
               "type": "goal",
@@ -5918,17 +6512,17 @@
             {
               "type": "goal",
               "period": 3,
-              "clockTime": "05:09",
-              "team": "self",
-              "teamName": "Georgian Bay Islanders U13 A",
+              "clockTime": "07:06",
+              "team": "opp",
+              "teamName": "Orangeville Flyers U13 A",
               "scorer": ""
             },
             {
               "type": "goal",
               "period": 3,
-              "clockTime": "07:06",
-              "team": "opp",
-              "teamName": "Orangeville Flyers U13 A",
+              "clockTime": "05:09",
+              "team": "self",
+              "teamName": "Georgian Bay Islanders U13 A",
               "scorer": ""
             }
           ],
@@ -5963,8 +6557,8 @@
         "diff": "-11",
         "gpg": "2.58",
         "gapg": "3.50",
-        "pim": 72,
-        "pimPg": "6.0"
+        "pim": 58,
+        "pimPg": "4.8"
       },
       "specialTeams": {
         "ppPct": "16.7%",
@@ -5976,13 +6570,22 @@
       "last5Games": [
         {
           "gameId": 3179075,
+          "gameCode": "U13A-RS-002",
           "date": "Nov 19, 2026",
+          "location": "Zancor (JTF)",
           "opp": "King Rebellion",
           "vsAt": "@",
           "score": "3-1",
           "result": "W",
           "gf": 3,
           "ga": 1,
+          "ppGoals": 1,
+          "ppOpps": 6,
+          "pkGoalsAllowed": 1,
+          "pkOpps": 3,
+          "shotsFor": 0,
+          "shotsAgainst": 0,
+          "pim": 6,
           "goalLog": [
             {
               "type": "goal",
@@ -5990,6 +6593,14 @@
               "clockTime": "11:52",
               "team": "self",
               "teamName": "Stouffville Clippers U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 2,
+              "clockTime": "09:40",
+              "team": "opp",
+              "teamName": "King Rebellion 13 A",
               "scorer": ""
             },
             {
@@ -6007,14 +6618,6 @@
               "team": "self",
               "teamName": "Stouffville Clippers U13 A",
               "scorer": ""
-            },
-            {
-              "type": "goal",
-              "period": 2,
-              "clockTime": "09:40",
-              "team": "opp",
-              "teamName": "King Rebellion 13 A",
-              "scorer": ""
             }
           ],
           "penaltyLog": [],
@@ -6022,20 +6625,45 @@
         },
         {
           "gameId": 3166191,
+          "gameCode": "U13A-RS-068",
           "date": "Nov 14, 2026",
+          "location": "West Orillia (Blue)",
           "opp": "Orillia Terriers",
           "vsAt": "@",
           "score": "3-5",
           "result": "L",
           "gf": 3,
           "ga": 5,
+          "ppGoals": 1,
+          "ppOpps": 4,
+          "pkGoalsAllowed": 1,
+          "pkOpps": 1,
+          "shotsFor": 21,
+          "shotsAgainst": 30,
+          "pim": 2,
           "goalLog": [
+            {
+              "type": "goal",
+              "period": 1,
+              "clockTime": "03:02",
+              "team": "opp",
+              "teamName": "Orillia Terriers U13 A",
+              "scorer": ""
+            },
             {
               "type": "goal",
               "period": 2,
               "clockTime": "08:41",
               "team": "self",
               "teamName": "Stouffville Clippers U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 2,
+              "clockTime": "06:39",
+              "team": "opp",
+              "teamName": "Orillia Terriers U13 A",
               "scorer": ""
             },
             {
@@ -6049,23 +6677,7 @@
             {
               "type": "goal",
               "period": 3,
-              "clockTime": "10:36",
-              "team": "self",
-              "teamName": "Stouffville Clippers U13 A",
-              "scorer": ""
-            },
-            {
-              "type": "goal",
-              "period": 1,
-              "clockTime": "03:02",
-              "team": "opp",
-              "teamName": "Orillia Terriers U13 A",
-              "scorer": ""
-            },
-            {
-              "type": "goal",
-              "period": 2,
-              "clockTime": "06:39",
+              "clockTime": "11:06",
               "team": "opp",
               "teamName": "Orillia Terriers U13 A",
               "scorer": ""
@@ -6073,9 +6685,9 @@
             {
               "type": "goal",
               "period": 3,
-              "clockTime": "11:06",
-              "team": "opp",
-              "teamName": "Orillia Terriers U13 A",
+              "clockTime": "10:36",
+              "team": "self",
+              "teamName": "Stouffville Clippers U13 A",
               "scorer": ""
             },
             {
@@ -6100,22 +6712,23 @@
         },
         {
           "gameId": 3163300,
+          "gameCode": "U13A-RS-054",
           "date": "Nov 12, 2026",
+          "location": "Alder (Red)",
           "opp": "Orangeville Flyers",
           "vsAt": "@",
           "score": "1-5",
           "result": "L",
           "gf": 1,
           "ga": 5,
+          "ppGoals": 1,
+          "ppOpps": 3,
+          "pkGoalsAllowed": 2,
+          "pkOpps": 3,
+          "shotsFor": 0,
+          "shotsAgainst": 0,
+          "pim": 6,
           "goalLog": [
-            {
-              "type": "goal",
-              "period": 3,
-              "clockTime": "00:36",
-              "team": "self",
-              "teamName": "Stouffville Clippers U13 A",
-              "scorer": ""
-            },
             {
               "type": "goal",
               "period": 1,
@@ -6155,6 +6768,14 @@
               "team": "opp",
               "teamName": "Orangeville Flyers U13 A",
               "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 3,
+              "clockTime": "00:36",
+              "team": "self",
+              "teamName": "Stouffville Clippers U13 A",
+              "scorer": ""
             }
           ],
           "penaltyLog": [],
@@ -6162,26 +6783,27 @@
         },
         {
           "gameId": 3148126,
+          "gameCode": "U13A-RS-090",
           "date": "Nov 8, 2026",
+          "location": "Stouffville Clippers (CC1)",
           "opp": "South Simcoe Storm",
           "vsAt": "vs",
           "score": "2-4",
           "result": "L",
           "gf": 2,
           "ga": 4,
+          "ppGoals": 0,
+          "ppOpps": 2,
+          "pkGoalsAllowed": 1,
+          "pkOpps": 2,
+          "shotsFor": 0,
+          "shotsAgainst": 0,
+          "pim": 4,
           "goalLog": [
             {
               "type": "goal",
               "period": 2,
               "clockTime": "08:40",
-              "team": "self",
-              "teamName": "Stouffville Clippers U13 A",
-              "scorer": ""
-            },
-            {
-              "type": "goal",
-              "period": 3,
-              "clockTime": "00:32",
               "team": "self",
               "teamName": "Stouffville Clippers U13 A",
               "scorer": ""
@@ -6217,6 +6839,14 @@
               "team": "opp",
               "teamName": "South Simcoe Storm U13 A",
               "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 3,
+              "clockTime": "00:32",
+              "team": "self",
+              "teamName": "Stouffville Clippers U13 A",
+              "scorer": ""
             }
           ],
           "penaltyLog": [],
@@ -6224,13 +6854,22 @@
         },
         {
           "gameId": 3144851,
+          "gameCode": "U13A-RS-089",
           "date": "Nov 7, 2026",
+          "location": "Bradford Leisure (Paul Dossey)",
           "opp": "South Simcoe Storm",
           "vsAt": "@",
           "score": "4-4",
           "result": "T",
           "gf": 4,
           "ga": 4,
+          "ppGoals": 0,
+          "ppOpps": 2,
+          "pkGoalsAllowed": 1,
+          "pkOpps": 4,
+          "shotsFor": 0,
+          "shotsAgainst": 0,
+          "pim": 8,
           "goalLog": [
             {
               "type": "goal",
@@ -6244,22 +6883,6 @@
               "type": "goal",
               "period": 2,
               "clockTime": "11:00",
-              "team": "self",
-              "teamName": "Stouffville Clippers U13 A",
-              "scorer": ""
-            },
-            {
-              "type": "goal",
-              "period": 3,
-              "clockTime": "13:33",
-              "team": "self",
-              "teamName": "Stouffville Clippers U13 A",
-              "scorer": ""
-            },
-            {
-              "type": "goal",
-              "period": 3,
-              "clockTime": "08:38",
               "team": "self",
               "teamName": "Stouffville Clippers U13 A",
               "scorer": ""
@@ -6291,6 +6914,22 @@
             {
               "type": "goal",
               "period": 3,
+              "clockTime": "13:33",
+              "team": "self",
+              "teamName": "Stouffville Clippers U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 3,
+              "clockTime": "08:38",
+              "team": "self",
+              "teamName": "Stouffville Clippers U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 3,
               "clockTime": "08:00",
               "team": "opp",
               "teamName": "South Simcoe Storm U13 A",
@@ -6303,5 +6942,5 @@
       ]
     }
   },
-  "lastSynced": "2026-11-25T12:21:15.336449Z"
+  "lastSynced": "2026-11-25T18:51:07.958795Z"
 }

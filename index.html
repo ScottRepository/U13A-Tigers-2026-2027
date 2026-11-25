@@ -5202,7 +5202,7 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
               <div class="w-full max-w-lg p-5 rounded-2xl bg-slate-900 border border-slate-800 shadow-2xl relative overflow-hidden text-left">
                 <div class="text-[10px] font-black uppercase tracking-widest text-amber-400 mb-3 flex items-center justify-between">
                   <span>NEXT SCHEDULED BROADCAST</span>
-                  <span id="standby-league-tag" class="px-2 py-0.5 rounded bg-slate-800 text-slate-300 border border-slate-700 font-mono text-[9px]">YSMHL Game #U13A-RS-015</span>
+                  <span id="standby-league-tag" class="px-2 py-0.5 rounded bg-slate-800 text-slate-300 border border-slate-700 font-mono text-[9px]">YSMHL Game #U13A-RS-153</span>
                 </div>
 
                 <!-- Matchup Banner with Crests -->
@@ -5211,20 +5211,20 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
                   <div class="flex flex-col items-center gap-1.5 flex-1">
                     <img src="./tigers_logo.png" onerror="this.src='https://auroraminorhockey.com/public/images/common/logo.png'" alt="Aurora Tigers" class="w-12 h-12 object-contain drop-shadow" />
                     <span class="font-black text-xs text-white uppercase tracking-wider text-center">Aurora Tigers</span>
-                    <span class="text-[9px] font-mono font-bold text-amber-400 uppercase">HOME (6-0-0)</span>
+                    <span id="standby-tigers-record" class="text-[9px] font-mono font-bold text-amber-400 uppercase">HOME • YSMHL</span>
                   </div>
 
                   <div class="flex flex-col items-center px-3">
                     <span class="text-xs font-black text-slate-500 font-mono">VS</span>
                   </div>
 
-                  <!-- Away: Opponent (Caledon Hawks) -->
+                  <!-- Away: Opponent -->
                   <div class="flex flex-col items-center gap-1.5 flex-1">
                     <div class="w-12 h-12 rounded-xl bg-slate-800 border border-slate-700 flex items-center justify-center text-xl shadow-inner font-black text-amber-300">
-                      🦅
+                      🏒
                     </div>
-                    <span id="standby-opp-name" class="font-black text-xs text-white uppercase tracking-wider text-center">Caledon Hawks</span>
-                    <span id="standby-opp-record" class="text-[9px] font-mono font-bold text-rose-400 uppercase">AWAY (6-0-1)</span>
+                    <span id="standby-opp-name" class="font-black text-xs text-white uppercase tracking-wider text-center">Richmond Hill Jaguars</span>
+                    <span id="standby-opp-record" class="text-[9px] font-mono font-bold text-rose-400 uppercase">AWAY • YSMHL</span>
                   </div>
                 </div>
 
@@ -5232,13 +5232,13 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
                 <div class="space-y-1 mb-3 text-center">
                   <div class="flex items-center justify-center gap-2 text-sm sm:text-base font-black text-white">
                     <span>📅</span>
-                    <span id="standby-game-date">Tuesday, Nov 10, 2026</span>
+                    <span id="standby-game-date">Sunday, Nov 29, 2026</span>
                     <span class="text-slate-600">•</span>
-                    <span id="standby-game-time" class="text-amber-300">7:30 PM EST</span>
+                    <span id="standby-game-time" class="text-amber-300">6:45 PM EST</span>
                   </div>
                   <div class="flex items-center justify-center gap-1.5 text-xs text-slate-400">
                     <span>📍</span>
-                    <span id="standby-game-arena">Aurora Community Centre (ACC)</span>
+                    <span id="standby-game-arena">Aurora Community Centre</span>
                   </div>
                 </div>
 
@@ -5439,6 +5439,23 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
             <button id="floating-draw-btn" onclick="toggleTelestratorMode()" title="Freeze Video & Draw Tactical Telestration (Once Sport-style)" class="absolute bottom-3 left-3 z-30 bg-slate-900/90 hover:bg-slate-900 text-tigersGold border border-tigersGold/60 px-2.5 py-1 rounded-xl text-[11px] font-bold flex items-center gap-1.5 shadow-lg cursor-pointer transition transform hover:scale-105 active:scale-95">
               <span>✏️</span> <span>Telestrate</span>
             </button>
+
+            <!-- Live Viewer Presence Pill (Bottom-Right of Stage) -->
+            <div class="absolute bottom-3 right-3 z-30">
+              <button type="button" id="live-viewers-pill" onclick="toggleLiveViewersPopover()" title="See who is watching right now" class="hidden bg-slate-950/90 hover:bg-slate-900 text-white border border-emerald-400/50 px-2.5 py-1 rounded-xl text-[11px] font-bold flex items-center gap-1.5 shadow-lg cursor-pointer transition">
+                <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+                <span id="live-viewers-count">1 Watching</span>
+              </button>
+              <div id="live-viewers-popover" class="hidden absolute bottom-9 right-0 w-56 bg-slate-950/95 backdrop-blur-md border border-slate-700 rounded-xl p-2.5 shadow-2xl text-[11px] text-white space-y-1.5">
+                <div class="flex items-center justify-between border-b border-slate-800 pb-1">
+                  <span class="font-black text-emerald-400 uppercase text-[10px]">👁️ Watching Now</span>
+                  <button type="button" onclick="promptSetViewerName()" class="text-[10px] text-amber-300 hover:underline cursor-pointer font-bold">Edit Name</button>
+                </div>
+                <div id="live-viewers-list" class="max-h-36 overflow-y-auto space-y-1 text-[10px] text-slate-300">
+                  <div>Connecting...</div>
+                </div>
+              </div>
+            </div>
           </div>
 
           <!-- PRO VIDEO CONTROL CONSOLE (Streamlined Dark Media Bar) -->
@@ -5599,6 +5616,39 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
               </div>
 
             </div>
+          </div>
+
+          <!-- REAL-TIME ROSTER CONFIRMATION & 1-2-3 LINE ROTATION BAR (Alongside Video) -->
+          <div id="live-roster-rotation-bar" class="w-full p-2 bg-slate-950 text-slate-100 rounded-xl border border-slate-800 text-[11px] space-y-1.5 shadow-sm">
+            <div class="flex flex-wrap items-center justify-between gap-1.5">
+              <div class="flex items-center gap-1.5 flex-wrap">
+                <span class="font-black text-amber-400 uppercase tracking-wider text-[10px] flex items-center gap-1">
+                  <span>🏒</span> <span>Confirm Roster &amp; Line Rotation:</span>
+                </span>
+                <span id="roster-bar-target-badge" class="px-2 py-0.5 rounded bg-slate-900 border border-slate-700 text-[10px] font-mono text-slate-300">Ready</span>
+                <span id="roster-bar-next-line-pill" class="px-2 py-0.5 rounded bg-emerald-600 text-white font-black text-[10px] shadow-xs">Next: Line 1</span>
+              </div>
+              <div class="flex items-center gap-1 flex-wrap">
+                <button type="button" onclick="selectRosterBarLine('Line 1')" id="rb-line-btn-Line 1" class="px-2 py-0.5 rounded bg-slate-800 hover:bg-slate-700 text-amber-300 border border-slate-700 font-bold text-[10px] cursor-pointer transition">1️⃣ Line 1</button>
+                <button type="button" onclick="selectRosterBarLine('Line 2')" id="rb-line-btn-Line 2" class="px-2 py-0.5 rounded bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 font-bold text-[10px] cursor-pointer transition">2️⃣ Line 2</button>
+                <button type="button" onclick="selectRosterBarLine('Line 3')" id="rb-line-btn-Line 3" class="px-2 py-0.5 rounded bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 font-bold text-[10px] cursor-pointer transition">3️⃣ Line 3</button>
+                <button type="button" onclick="selectRosterBarLine('PP 1')" id="rb-line-btn-PP 1" class="px-2 py-0.5 rounded bg-slate-800 hover:bg-slate-700 text-sky-300 border border-slate-700 font-bold text-[10px] cursor-pointer transition">⚡ PP 1</button>
+                <button type="button" onclick="selectRosterBarLine('PK 1')" id="rb-line-btn-PK 1" class="px-2 py-0.5 rounded bg-slate-800 hover:bg-slate-700 text-rose-300 border border-slate-700 font-bold text-[10px] cursor-pointer transition">🛡️ PK 1</button>
+                <button type="button" onclick="toggleRosterBarEditor()" class="px-2 py-0.5 rounded bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-700 font-bold text-[10px] cursor-pointer transition">✏️ Edit #</button>
+              </div>
+            </div>
+            <div class="flex flex-wrap items-center justify-between gap-2 pt-0.5">
+              <div id="roster-bar-active-chips" class="flex flex-wrap items-center gap-1"></div>
+              <div class="flex items-center gap-1.5 shrink-0">
+                <button type="button" id="roster-bar-confirm-btn" onclick="confirmRosterBarOnActiveShift()" class="px-2.5 py-1 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white font-black text-[10px] cursor-pointer transition shadow-xs flex items-center gap-1">
+                  <span>✅</span> <span>Confirm Roster</span>
+                </button>
+                <button type="button" id="roster-bar-tag-next-btn" onclick="tagNextRotationShiftHere()" class="px-2.5 py-1 rounded-lg bg-amber-400 hover:bg-amber-300 text-slate-950 font-black text-[10px] cursor-pointer transition shadow-xs flex items-center gap-1">
+                  <span>➕</span> <span id="roster-bar-tag-next-label">Tag Line 1 Here</span>
+                </button>
+              </div>
+            </div>
+            <div id="roster-bar-full-grid" class="hidden pt-1.5 border-t border-slate-800 flex flex-wrap gap-1"></div>
           </div>
 
           <!-- CONTEXTUAL PLAYBOOK SYSTEMS BAR -->
@@ -5894,11 +5944,11 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
           <div class="p-3 rounded-xl bg-[var(--bg-surface)] border-2 border-amber-400/70 space-y-2 shadow-sm">
             <div class="flex items-center justify-between gap-2 flex-wrap">
               <span class="flex items-center gap-1.5 font-display font-black text-xs uppercase tracking-wider text-amber-600">
-                <span>⭐</span> <span>Video Review Prep Queue (Coach's Film Tray)</span>
+                <span>⭐</span> <span>Top Game Clips &amp; Prep Queue (Goals • PP • PK)</span>
               </span>
               <div class="flex items-center gap-1.5">
-                <button type="button" onclick="playAllClipsInTraySequence()" class="px-2.5 py-1 rounded bg-amber-400 hover:bg-amber-300 text-slate-950 font-black text-[10px] cursor-pointer shadow-2xs flex items-center gap-1">
-                  <span>▶</span> <span>Play All</span>
+                <button type="button" onclick="playTopPrepClipsReel()" class="px-2.5 py-1 rounded bg-amber-400 hover:bg-amber-300 text-slate-950 font-black text-[10px] cursor-pointer shadow-2xs flex items-center gap-1">
+                  <span>▶</span> <span>Play Top Clips</span>
                 </button>
                 <button type="button" onclick="openVideoReviewPrep()" class="px-2.5 py-1 rounded bg-slate-900 hover:bg-slate-800 text-amber-300 font-bold text-[10px] border border-amber-400/40 cursor-pointer">
                   Full Tray (<span id="past-inline-tray-count">0</span>) →
@@ -6086,8 +6136,8 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
             </a>
           </div>
 
-          <!-- 1-Touch Live Scoreboard Controls (Syncs instantly with on-screen broadcast overlay) -->
-          <div class="p-2.5 bg-slate-950 rounded-xl border border-slate-800 space-y-2">
+          <!-- 1-Touch Live Scoreboard Controls (Syncs instantly with on-screen broadcast overlay; Coach/Admin only) -->
+          <div id="live-score-adjuster-card" class="p-2.5 bg-slate-950 rounded-xl border border-slate-800 space-y-2">
             <div class="flex items-center justify-between text-[10px]">
               <span class="font-bold text-slate-300 uppercase tracking-wider flex items-center gap-1">
                 <span>⏱️</span> <span>1-Touch Live Score Adjuster</span>
@@ -6164,16 +6214,20 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
             </div>
           </div>
 
-          <!-- Sidebar Live Tabs: GameSheet Feed, Live Tracker, Pre-Game Scout -->
+          <!-- Sidebar Live Tabs: GameSheet Feed, Live Tracker, Pre-Game Scout, Live Chat -->
           <div class="flex items-center gap-1 p-1 bg-slate-950 rounded-xl border border-slate-800 text-[11px] font-bold">
-            <button id="sb-live-btn-gamesheet" onclick="switchSidebarLiveTab('gamesheet')" class="flex-1 py-1.5 px-2 rounded-lg bg-rose-600 text-white font-bold cursor-pointer transition shadow-xs flex items-center justify-center gap-1">
-              <span>📋</span> <span>GameSheet Stats</span>
+            <button id="sb-live-btn-gamesheet" onclick="switchSidebarLiveTab('gamesheet')" class="flex-1 py-1.5 px-1.5 rounded-lg bg-rose-600 text-white font-bold cursor-pointer transition shadow-xs flex items-center justify-center gap-1">
+              <span>📋</span> <span>GameSheet</span>
             </button>
-            <button id="sb-live-btn-tracker" onclick="switchSidebarLiveTab('tracker')" class="flex-1 py-1.5 px-2 rounded-lg text-slate-400 hover:text-white font-bold cursor-pointer transition flex items-center justify-center gap-1">
-              <span>📊</span> <span>Live Tracker</span>
+            <button id="sb-live-btn-tracker" onclick="switchSidebarLiveTab('tracker')" class="flex-1 py-1.5 px-1.5 rounded-lg text-slate-400 hover:text-white font-bold cursor-pointer transition flex items-center justify-center gap-1">
+              <span>📊</span> <span>Tracker</span>
             </button>
-            <button id="sb-live-btn-pregame" onclick="switchSidebarLiveTab('pregame')" class="flex-1 py-1.5 px-2 rounded-lg text-slate-400 hover:text-white font-bold cursor-pointer transition flex items-center justify-center gap-1">
+            <button id="sb-live-btn-pregame" onclick="switchSidebarLiveTab('pregame')" class="flex-1 py-1.5 px-1.5 rounded-lg text-slate-400 hover:text-white font-bold cursor-pointer transition flex items-center justify-center gap-1">
               <span>🏒</span> <span>Scout</span>
+            </button>
+            <button id="sb-live-btn-chat" onclick="switchSidebarLiveTab('chat')" class="flex-1 py-1.5 px-1.5 rounded-lg text-slate-400 hover:text-white font-bold cursor-pointer transition flex items-center justify-center gap-1 relative">
+              <span>💬</span> <span>Chat</span>
+              <span id="live-chat-unread-badge" class="hidden px-1.5 py-0.2 rounded-full bg-amber-400 text-slate-950 text-[9px] font-black">0</span>
             </button>
           </div>
 
@@ -6490,6 +6544,38 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
                   <span class="text-amber-400 font-bold">8:20 PM</span> Standby for Puck Drop: Aurora Tigers U13A at Orillia Terriers (#U13A-RS-056)
                 </div>
               </div>
+            </div>
+          </div>
+
+          <!-- Sub-Tab 4: Livestream Chat & Viewer Presence -->
+          <div id="sb-live-tab-chat" class="space-y-2.5 hidden flex-col flex-1 min-h-0">
+            <div class="p-2.5 bg-slate-950 rounded-2xl border border-slate-800 flex items-center justify-between text-[11px]">
+              <div class="flex items-center gap-2">
+                <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+                <span class="font-bold text-white">Team Live Chat</span>
+                <span id="live-chat-viewer-summary" class="text-[10px] font-mono text-emerald-400 font-bold">1 watching</span>
+              </div>
+              <button type="button" onclick="promptSetViewerName()" class="px-2 py-0.5 rounded bg-slate-800 hover:bg-slate-700 text-amber-300 border border-slate-700 text-[10px] font-bold cursor-pointer">
+                👤 <span id="live-chat-my-name">Set Name</span>
+              </button>
+            </div>
+
+            <div class="flex flex-wrap gap-1">
+              <button type="button" onclick="sendQuickLiveChat('🐯 Let\'s go Tigers!')" class="px-2 py-1 rounded-lg bg-slate-800 hover:bg-slate-700 text-amber-300 border border-slate-700 text-[10px] font-bold cursor-pointer">🐯 Go Tigers!</button>
+              <button type="button" onclick="sendQuickLiveChat('🚨 GOAL!!')" class="px-2 py-1 rounded-lg bg-slate-800 hover:bg-slate-700 text-emerald-300 border border-slate-700 text-[10px] font-bold cursor-pointer">🚨 GOAL!</button>
+              <button type="button" onclick="sendQuickLiveChat('🧱 Great save!')" class="px-2 py-1 rounded-lg bg-slate-800 hover:bg-slate-700 text-sky-300 border border-slate-700 text-[10px] font-bold cursor-pointer">🧱 Great Save!</button>
+              <button type="button" onclick="sendQuickLiveChat('👏 Great shift!')" class="px-2 py-1 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 text-[10px] font-bold cursor-pointer">👏 Great Shift!</button>
+            </div>
+
+            <div id="live-chat-messages-list" class="flex-1 min-h-[240px] max-h-[380px] overflow-y-auto custom-scroll p-2.5 bg-slate-950 rounded-2xl border border-slate-800 space-y-2 text-xs">
+              <div class="text-slate-500 text-center text-[11px] py-6">Loading team chat...</div>
+            </div>
+
+            <div class="flex items-center gap-1.5">
+              <input type="text" id="live-chat-input" onkeydown="if(event.key==='Enter') sendLiveChatMessage();" placeholder="Cheer or chat with parents &amp; coaches..." class="flex-1 bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-white text-xs placeholder-slate-500 focus:outline-none focus:border-amber-400" />
+              <button type="button" onclick="sendLiveChatMessage()" class="px-3.5 py-2 rounded-xl bg-amber-400 hover:bg-amber-300 text-slate-950 font-black text-xs cursor-pointer transition shrink-0">
+                Send
+              </button>
             </div>
           </div>
 
@@ -8895,6 +8981,13 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
       if (topTrayBtn) {
         topTrayBtn.classList.toggle('hidden', !isCoach);
       }
+
+      // Live stream tuner & 1-touch score adjuster visibility (Coach/Admin only)
+      const tunerBar = document.getElementById('live-stream-tuner-bar');
+      const scoreAdjusterCard = document.getElementById('live-score-adjuster-card');
+      const showLiveControls = (typeof isLiveBroadcastActive !== 'undefined' && isLiveBroadcastActive) && (isCoach || isAdmin);
+      if (tunerBar) tunerBar.classList.toggle('hidden', !showLiveControls);
+      if (scoreAdjusterCard) scoreAdjusterCard.classList.toggle('hidden', !isCoach && !isAdmin);
 
       if (notify) {
         if (role === 'admin') {
@@ -42948,6 +43041,15 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
     function renderPeriodDrawer() {
       const container = document.getElementById('period-buttons-container');
       if (!container) return;
+      if (typeof isLiveBroadcastActive !== 'undefined' && isLiveBroadcastActive) {
+        container.innerHTML = `
+          <span class="px-2.5 py-0.5 rounded text-[10px] font-black uppercase tracking-wider bg-rose-600/20 text-rose-300 border border-rose-500/40 flex items-center gap-1.5">
+            <span class="w-2 h-2 rounded-full bg-rose-500 animate-pulse"></span>
+            <span>LIVE BROADCAST</span>
+          </span>
+        `;
+        return;
+      }
       const pTimes = currentGame?.periods || { 1: 0, 2: 900, 3: 1800 };
       const p1 = pTimes[1] ?? pTimes["1"] ?? 0;
       const p2 = pTimes[2] ?? pTimes["2"] ?? 900;
@@ -45392,7 +45494,7 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
     }
 
     function overrideShiftLine(shiftId, lineName) {
-      if (!lineName || !LINE_PRESETS[lineName]) return;
+      if (!lineName || !LINE_PRESETS[lineName] || !currentGame) return;
       const assignedPlayers = LINE_PRESETS[lineName];
       
       const overrideData = {
@@ -45401,7 +45503,18 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
       };
 
       try { localStorage.setItem(`shift_override_${currentGame.id}_${shiftId}`, JSON.stringify(overrideData)); } catch(e){}
-      showToast(`✅ Assigned Shift #${shiftId} to ${lineName}`);
+      if (window.db) {
+        window.db.collection("shift_overrides").doc(`${currentGame.id}_${shiftId}`).set({
+          game_id: currentGame.id,
+          shift_id: String(shiftId),
+          player_ids: assignedPlayers,
+          line_label: lineName,
+          updated_by: getLiveViewerName(),
+          updated_at: firebase.firestore.FieldValue.serverTimestamp()
+        }, { merge: true }).catch(err => console.log("Shift override cloud sync:", err));
+      }
+      if (typeof advanceRosterLineRotation === 'function') advanceRosterLineRotation(lineName);
+      showToast(`✅ Assigned Shift #${shiftId} to ${lineName} • Next up: ${getNextRotationLine(lineName)}`);
       loadCoachingClips();
       if (currentStage === 'whiteboard') renderRinkBackground();
       redrawCanvasLayers();
@@ -46721,101 +46834,71 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
               : `Turnover (${clone.breakout.turnover_location && clone.breakout.turnover_location !== 'None' ? clone.breakout.turnover_location : 'Blue Line'})`;
           }
         }
-        if ((!Array.isArray(clone.on_ice) || clone.on_ice.length === 0) && Array.isArray(clone.player_ids) && clone.player_ids.length > 0) {
+        // Strictly cap player_ids & on_ice to <= 5 skaters + 1 goalie (never 11 players on one shift!)
+        if (Array.isArray(clone.player_ids) && clone.player_ids.length > 0) {
+          const goalieIds = [13, 98];
+          const dedupIds = [];
+          clone.player_ids.forEach(pid => {
+            const n = Number(pid);
+            if (!isNaN(n) && !dedupIds.includes(n)) dedupIds.push(n);
+          });
+          const gIds = dedupIds.filter(n => goalieIds.includes(n)).slice(0, 1);
+          const sIds = dedupIds.filter(n => !goalieIds.includes(n)).slice(0, 5);
+          clone.player_ids = [...gIds, ...sIds];
+        }
+        if ((!Array.isArray(clone.on_ice) || clone.on_ice.length === 0 || clone.on_ice.length > 6) && Array.isArray(clone.player_ids) && clone.player_ids.length > 0) {
           const defaultRoles = ['G', 'C', 'LW', 'RW', 'LD', 'RD'];
-          clone.on_ice = clone.player_ids.map((pid, pIdx) => {
+          clone.on_ice = clone.player_ids.slice(0, 6).map((pid, pIdx) => {
             const rPos = (typeof ROSTER_POSITIONS !== 'undefined' && ROSTER_POSITIONS[pid]) ? ROSTER_POSITIONS[pid].pos : defaultRoles[pIdx % defaultRoles.length];
             return { jersey: pid, position: rPos || defaultRoles[pIdx % defaultRoles.length] };
           });
+        } else if (Array.isArray(clone.on_ice) && clone.on_ice.length > 6) {
+          clone.on_ice = clone.on_ice.slice(0, 6);
         }
         return clone;
       });
 
-      // Ensure every game has at least 2 PP shifts and 2 PK shifts for Special Teams breakdown
-      const existingPpCount = finalShifts.filter(s => String(s.strength_state).toUpperCase().includes('PP')).length;
-      if (existingPpCount === 0 && finalShifts.length >= 6) {
-        const ozIndices = finalShifts
-          .map((s, i) => ({ s, i }))
-          .filter(x => String(x.s.primary_zone || '').toLowerCase().includes('offens'))
-          .map(x => x.i);
-        const pickPp = ozIndices.length >= 2 ? [ozIndices[0], ozIndices[ozIndices.length - 1]] : [2, Math.min(finalShifts.length - 2, 14)];
-        pickPp.forEach(idx => {
-          if (finalShifts[idx]) {
-            finalShifts[idx].strength_state = 'PP (Tigers)';
-            finalShifts[idx].strength = 'PP';
+      // Merge Official GameSheet Goal Clips (from game.top_clips or matched GameSheet goalLog)
+      // NEVER invent synthetic Goal or PP/PK badges on random 5v5 shifts!
+      const goalTopClips = (typeof getTopPrepClipsForGame === 'function')
+        ? getTopPrepClipsForGame(game).filter(tc => tc.type === 'tigers_goal' || tc.type === 'opp_goal')
+        : [];
+
+      // Clear any unverified synthetic goal flags if Official GameSheet goal clips exist
+      if (goalTopClips.length > 0) {
+        finalShifts.forEach(s => {
+          if (!s.goal_verified_human) {
+            s.is_tigers_goal = false;
+            s.is_opp_goal = false;
           }
         });
-      }
-
-      const existingPkCount = finalShifts.filter(s => String(s.strength_state).toUpperCase().includes('PK')).length;
-      if (existingPkCount === 0 && finalShifts.length >= 8) {
-        const dzIndices = finalShifts
-          .map((s, i) => ({ s, i }))
-          .filter(x => String(x.s.primary_zone || '').toLowerCase().includes('defens') && !String(x.s.strength_state).toUpperCase().includes('PP'))
-          .map(x => x.i);
-        const pickPk = dzIndices.length >= 2 ? [dzIndices[0], dzIndices[Math.min(dzIndices.length - 1, 2)]] : [4, Math.min(finalShifts.length - 3, 16)];
-        pickPk.forEach(idx => {
-          if (finalShifts[idx]) {
-            finalShifts[idx].strength_state = 'PK (Tigers)';
-            finalShifts[idx].strength = 'PK';
-          }
+        let tgNum = 0, ogNum = 0;
+        goalTopClips.forEach((gc, idx) => {
+          const isTig = gc.type === 'tigers_goal';
+          if (isTig) tgNum++; else ogNum++;
+          finalShifts.push({
+            shift_id: `G${idx + 1}`,
+            period: gc.period || 1,
+            start_seconds: gc.start_seconds,
+            end_seconds: gc.end_seconds,
+            display_time: formatTime(gc.start_seconds),
+            strength_state: 'Goal Clip',
+            strength: 'GOAL',
+            primary_zone: isTig ? 'Offensive Zone' : 'Defensive Zone',
+            is_tigers_goal: isTig,
+            is_opp_goal: !isTig,
+            goal_number: isTig ? tgNum : undefined,
+            opp_goal_number: !isTig ? ogNum : undefined,
+            goal_clip_id: gc.clip_id,
+            gs_clock: gc.gs_clock,
+            align_status: gc.align_status || 'GameSheet Clock Aligned',
+            player_ids: [],
+            on_ice: [],
+            breakout: { attempted: false, successful: false, breakout_type: 'Official Goal', turnover_location: 'None' },
+            coach_notes: gc.description || gc.label
+          });
         });
-      }
-
-      // Deterministically tag Tigers Goal shifts matching verified tigersScore
-      const alreadyTaggedTGoals = finalShifts.some(s => s.is_tigers_goal !== undefined);
-      if (!alreadyTaggedTGoals && tGoalsTarget > 0 && finalShifts.length > 0) {
-        const ozCandidates = finalShifts.filter(s => String(s.primary_zone || '').toLowerCase().includes('offens'));
-        const pool = ozCandidates.length >= tGoalsTarget ? ozCandidates : finalShifts;
-        const chosenIds = new Set();
-        for (let gIdx = 0; gIdx < Math.min(tGoalsTarget, pool.length); gIdx++) {
-          const pickIndex = Math.min(pool.length - 1, Math.floor(((gIdx + 0.5) * pool.length) / Math.min(tGoalsTarget, pool.length)));
-          const chosen = pool[pickIndex] || pool[gIdx];
-          if (chosen && !chosenIds.has(chosen.shift_id)) {
-            chosenIds.add(chosen.shift_id);
-            chosen.is_tigers_goal = true;
-            chosen.goal_number = gIdx + 1;
-            const prefix = `🚨 TIGERS GOAL #${gIdx + 1}! `;
-            if (chosen.coach_notes && !chosen.coach_notes.includes('TIGERS GOAL')) {
-              chosen.coach_notes = prefix + chosen.coach_notes;
-            } else if (!chosen.coach_notes) {
-              chosen.coach_notes = `${prefix}Sustained offensive zone pressure and slot finish.`;
-            }
-          }
-        }
-      }
-
-      // Deterministically tag Opponent Goal shifts matching verified opponentScore
-      const alreadyTaggedOGoals = finalShifts.some(s => s.is_opp_goal !== undefined);
-      if (!alreadyTaggedOGoals && oGoalsTarget > 0 && finalShifts.length > 0) {
-        const dzCandidates = finalShifts.filter(s =>
-          !s.is_tigers_goal && (
-            String(s.primary_zone || '').toLowerCase().includes('defens') ||
-            (s.breakout && s.breakout.attempted && !s.breakout.successful)
-          )
-        );
-        const nonTGoalShifts = finalShifts.filter(s => !s.is_tigers_goal);
-        const pool = dzCandidates.length >= oGoalsTarget ? dzCandidates : nonTGoalShifts;
-        const chosenIds = new Set();
-        const countToPick = Math.min(oGoalsTarget, pool.length);
-        for (let gIdx = 0; gIdx < countToPick; gIdx++) {
-          const pickIndex = Math.min(pool.length - 1, Math.floor(((gIdx + 0.5) * pool.length) / countToPick));
-          let chosen = pool[pickIndex];
-          if (chosen && chosenIds.has(chosen.shift_id)) {
-            chosen = pool.find(item => !chosenIds.has(item.shift_id));
-          }
-          if (chosen) {
-            chosenIds.add(chosen.shift_id);
-            chosen.is_opp_goal = true;
-            chosen.opp_goal_number = gIdx + 1;
-            const prefix = `🥅 ${oppLabel.toUpperCase()} GOAL #${gIdx + 1} — `;
-            if (chosen.coach_notes && !chosen.coach_notes.includes('GOAL #')) {
-              chosen.coach_notes = prefix + chosen.coach_notes;
-            } else if (!chosen.coach_notes) {
-              chosen.coach_notes = `${prefix}Defensive zone coverage breakdown in the slot.`;
-            }
-          }
-        }
+        finalShifts.sort((a, b) => Number(a.start_seconds || 0) - Number(b.start_seconds || 0));
       }
 
       return finalShifts;
@@ -47070,16 +47153,14 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
             </div>
 
             <div class="flex items-center gap-1 ml-auto" onclick="event.stopPropagation()">
-              ${isCoach ? `
-                <select onchange="overrideShiftLine(${shiftId}, this.value)" class="text-[9px] py-0.5 px-1 bg-white border border-slate-300 rounded text-slate-800 focus:outline-none">
-                  <option value="">Line...</option>
-                  <option value="Line 1">Line 1</option>
-                  <option value="Line 2">Line 2</option>
-                  <option value="Line 3">Line 3</option>
-                  <option value="PP 1">PP 1</option>
-                  <option value="PK 1">PK 1</option>
-                </select>
-              ` : ''}
+              <select onchange="overrideShiftLine(${shiftId}, this.value)" title="Assign shift to Line 1, 2, or 3" class="text-[9px] py-0.5 px-1 bg-white border border-slate-300 rounded text-slate-800 focus:outline-none cursor-pointer">
+                <option value="">Line...</option>
+                <option value="Line 1">Line 1</option>
+                <option value="Line 2">Line 2</option>
+                <option value="Line 3">Line 3</option>
+                <option value="PP 1">PP 1</option>
+                <option value="PK 1">PK 1</option>
+              </select>
               <button onclick="playShiftClip(${startSec}, ${endSec}, '${safeDesc}', ${shiftId})" class="px-2.5 py-1 bg-tigersGold hover:bg-tigersGoldBright text-slate-950 font-display font-bold text-[10px] uppercase tracking-wider rounded-lg transition cursor-pointer shadow-sm">
                 ▶ Play
               </button>
@@ -52350,19 +52431,29 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
     }
 
     function switchSidebarLiveTab(tab) {
-      const tabs = ['gamesheet', 'tracker', 'pregame'];
+      const tabs = ['gamesheet', 'tracker', 'pregame', 'chat'];
       tabs.forEach(t => {
         const btn = document.getElementById(`sb-live-btn-${t}`);
         const sec = document.getElementById(`sb-live-tab-${t}`);
         if (btn) {
           btn.className = (t === tab)
-            ? "flex-1 py-1.5 px-2 rounded-lg bg-rose-600 text-white font-bold cursor-pointer transition shadow-xs flex items-center justify-center gap-1"
-            : "flex-1 py-1.5 px-2 rounded-lg text-slate-400 hover:text-white font-bold cursor-pointer transition flex items-center justify-center gap-1";
+            ? "flex-1 py-1.5 px-1.5 rounded-lg bg-rose-600 text-white font-bold cursor-pointer transition shadow-xs flex items-center justify-center gap-1 relative"
+            : "flex-1 py-1.5 px-1.5 rounded-lg text-slate-400 hover:text-white font-bold cursor-pointer transition flex items-center justify-center gap-1 relative";
         }
         if (sec) {
           sec.classList.toggle('hidden', t !== tab);
+          if (t === 'chat') {
+            sec.classList.toggle('flex', t === tab);
+          }
         }
       });
+      if (tab === 'chat') {
+        liveChatUnreadCount = 0;
+        const badge = document.getElementById('live-chat-unread-badge');
+        if (badge) badge.classList.add('hidden');
+        const listEl = document.getElementById('live-chat-messages-list');
+        if (listEl) listEl.scrollTop = listEl.scrollHeight;
+      }
       if (tab === 'gamesheet') {
         const match = (typeof SCHEDULE_UPCOMING_MATCHUPS !== 'undefined')
           ? (SCHEDULE_UPCOMING_MATCHUPS.find(g => g.id === activeLiveMatchupId) || SCHEDULE_UPCOMING_MATCHUPS[0])
@@ -52625,29 +52716,34 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
         const res = await fetch('./live_game_state.json?t=' + Date.now());
         if (res.ok) {
           const liveState = await res.json();
-          if (liveState && (liveState.isLive || liveState.status === 'in_progress' || liveState.status === 'scheduled')) {
-            const hScore = Number(liveState.homeScore || 0);
-            const aScore = Number(liveState.awayScore || 0);
+          const isActiveOrFinal = liveState && (liveState.isLive === true || liveState.status === 'in_progress' || liveState.status === 'final');
+          if (isActiveOrFinal) {
+            const awayIsTigers = String(liveState.awayTeam || '').toLowerCase().includes('aurora') || String(liveState.awayTeam || '').toLowerCase().includes('tigers');
+            const tigersScore = Number(awayIsTigers ? (liveState.awayScore ?? 0) : (liveState.homeScore ?? 0));
+            const oppScore = Number(awayIsTigers ? (liveState.homeScore ?? 0) : (liveState.awayScore ?? 0));
 
-            if (hScore !== liveGameSheetState.homeScore || aScore !== liveGameSheetState.awayScore) {
+            const jsonUpdatedMs = liveState.lastUpdated ? Date.parse(liveState.lastUpdated) : 0;
+            const cloudUpdatedMs = liveGameSheetState.lastScorekeeperUpdateMs || 0;
+            if (jsonUpdatedMs >= cloudUpdatedMs && (tigersScore !== liveGameSheetState.homeScore || oppScore !== liveGameSheetState.awayScore)) {
               const oldHome = liveGameSheetState.homeScore;
               const oldAway = liveGameSheetState.awayScore;
-              liveGameSheetState.homeScore = hScore;
-              liveGameSheetState.awayScore = aScore;
+              liveGameSheetState.homeScore = tigersScore;
+              liveGameSheetState.awayScore = oppScore;
               if (liveState.period && liveState.period !== 'Live') {
                 liveGameSheetState.period = liveState.period;
               }
               renderLiveScoreboardHud();
 
-              if (hScore > oldHome) {
-                showToast(`🚨 GOAL! ${liveState.homeTeam || 'Tigers'} score! (${hScore} - ${aScore})`);
+              if (tigersScore > oldHome) {
+                showToast(`🚨 GOAL! Aurora Tigers score! (${tigersScore} - ${oppScore})`);
                 if (typeof addLiveTickerEvent === 'function') {
-                  addLiveTickerEvent(`🚨 GOAL! ${liveState.homeTeam || 'Tigers'} score! (${hScore} - ${aScore})`);
+                  addLiveTickerEvent(`🚨 GOAL! Aurora Tigers score! (${tigersScore} - ${oppScore})`, true);
                 }
-              } else if (aScore > oldAway) {
-                showToast(`🚨 GOAL! ${liveState.awayTeam || 'Opponent'} score! (${hScore} - ${aScore})`);
+              } else if (oppScore > oldAway) {
+                const oppLabel = awayIsTigers ? (liveState.homeTeam || 'Opponent') : (liveState.awayTeam || 'Opponent');
+                showToast(`🚨 GOAL! ${oppLabel} score! (${tigersScore} - ${oppScore})`);
                 if (typeof addLiveTickerEvent === 'function') {
-                  addLiveTickerEvent(`🚨 GOAL! ${liveState.awayTeam || 'Opponent'} score! (${hScore} - ${aScore})`);
+                  addLiveTickerEvent(`🚨 GOAL! ${oppLabel} score! (${tigersScore} - ${oppScore})`, true);
                 }
               }
             }
@@ -52670,12 +52766,17 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
       const offlinePlaceholder = document.getElementById('live-offline-placeholder');
       const postgameEl = document.getElementById('live-postgame-placeholder');
 
-      // CRITICAL FIX: Ensure video player & controls are active
+      // CRITICAL FIX: Ensure video player & controls are active; hide coach/admin ingest & score adjuster in Parent View
+      const canManageLiveStream = (typeof isCoach !== 'undefined' && isCoach) || (typeof isAdmin !== 'undefined' && isAdmin) || (typeof currentRole !== 'undefined' && currentRole !== 'parent');
       if (interactiveContainer) interactiveContainer.classList.remove('hidden');
-      if (tunerBar) tunerBar.classList.remove('hidden');
+      if (tunerBar) tunerBar.classList.toggle('hidden', !canManageLiveStream);
+      const scoreAdjusterCard = document.getElementById('live-score-adjuster-card');
+      if (scoreAdjusterCard) scoreAdjusterCard.classList.toggle('hidden', !canManageLiveStream);
       if (hud) hud.classList.remove('hidden');
       if (offlinePlaceholder) offlinePlaceholder.classList.add('hidden');
       if (postgameEl) postgameEl.classList.add('hidden');
+      if (typeof renderPeriodDrawer === 'function') renderPeriodDrawer();
+      if (typeof startLivePresenceAndChat === 'function') startLivePresenceAndChat();
       if (typeof updateFunctionalNavActiveState === 'function') updateFunctionalNavActiveState('live_stream');
 
       // Ensure split-screen layout is visible
@@ -52758,6 +52859,8 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
         clearInterval(standbyCountdownInterval);
         standbyCountdownInterval = null;
       }
+      if (typeof renderPeriodDrawer === 'function') renderPeriodDrawer();
+      if (typeof stopLivePresenceHeartbeat === 'function') stopLivePresenceHeartbeat();
 
       // Pause playback rather than force-playing old video
       if (ytPlayer && typeof ytPlayer.pauseVideo === 'function') {
@@ -53004,33 +53107,11 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
 
     let standbyCountdownInterval = null;
     function startStandbyCountdown() {
-      if (standbyCountdownInterval) clearInterval(standbyCountdownInterval);
-
-      function update() {
-        const timerEl = document.getElementById('standby-countdown-timer');
-        if (!timerEl) return;
-
-        // Target: Tuesday, Nov 10, 2026 at 7:30 PM EST (Game #U13A-RS-015)
-        const targetDate = new Date("2026-11-10T19:30:00-05:00").getTime();
-        const now = new Date().getTime();
-        const diff = targetDate - now;
-
-        if (diff <= 0) {
-          timerEl.innerText = "PUCK DROP PENDING";
-          timerEl.className = "text-sm font-mono font-black text-rose-400 animate-pulse";
-          return;
-        }
-
-        const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-        const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-        const minutes = Math.floor((diff % (1000 * 60)) / (1000 * 60));
-        const seconds = Math.floor((diff % (1000 * 60)) / 1000);
-
-        timerEl.innerText = `${days}d ${hours}h ${minutes}m ${seconds}s`;
+      const nextMatch = (typeof getNextUpcomingScheduledMatchup === 'function') ? getNextUpcomingScheduledMatchup() : null;
+      if (nextMatch && typeof showGameCountdownStage === 'function') {
+        showGameCountdownStage(nextMatch);
+        return;
       }
-
-      update();
-      standbyCountdownInterval = setInterval(update, 1000);
     }
 
     function renderOfflineStandbyHud() {
@@ -53154,6 +53235,8 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
         clearInterval(standbyCountdownInterval);
         standbyCountdownInterval = null;
       }
+      if (typeof renderPeriodDrawer === 'function') renderPeriodDrawer();
+      if (typeof stopLivePresenceHeartbeat === 'function') stopLivePresenceHeartbeat();
 
       if (liveStreamVideoId) {
         loadLiveStreamVideo(liveStreamVideoId);
@@ -53488,25 +53571,25 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
 
       if (active) {
         if (tBtn) {
-          tBtn.className = "px-2 py-1 rounded-lg bg-emerald-600/30 text-emerald-300 border border-emerald-400 font-bold text-[10px] cursor-pointer transition flex items-center gap-1 active:scale-95 shadow-xs";
+          tBtn.className = "px-2 py-1 rounded-lg bg-emerald-600 hover:bg-emerald-700 text-white border border-emerald-500 font-bold text-[10px] cursor-pointer transition flex items-center gap-1 active:scale-95 shadow-xs";
         }
         if (tIcon) tIcon.innerText = "🔊";
         if (tLabel) tLabel.innerText = "Whistle Ear: ON";
 
         if (sBtn) {
-          sBtn.className = "px-2 py-0.5 rounded bg-emerald-600/30 text-emerald-300 border border-emerald-400 text-[9px] font-bold flex items-center gap-1 cursor-pointer transition";
+          sBtn.className = "px-2 py-0.5 rounded bg-emerald-600 hover:bg-emerald-700 text-white border border-emerald-500 text-[9px] font-bold flex items-center gap-1 cursor-pointer transition";
         }
         if (sIcon) sIcon.innerText = "🔊";
         if (sLabel) sLabel.innerText = "Whistle Ear: ON";
       } else {
         if (tBtn) {
-          tBtn.className = "px-2 py-1 rounded-lg bg-slate-800 hover:bg-slate-700 text-sky-300 border border-sky-400/40 text-[10px] font-bold cursor-pointer transition flex items-center gap-1 active:scale-95";
+          tBtn.className = "px-2 py-1 rounded-lg bg-slate-800 hover:bg-slate-700 text-sky-200 border border-sky-400/50 text-[10px] font-bold cursor-pointer transition flex items-center gap-1 active:scale-95";
         }
         if (tIcon) tIcon.innerText = "🎙️";
         if (tLabel) tLabel.innerText = "Whistle Ear: OFF";
 
         if (sBtn) {
-          sBtn.className = "px-2 py-0.5 rounded bg-slate-900 hover:bg-slate-800 text-sky-300 border border-sky-400/30 text-[9px] font-bold flex items-center gap-1 cursor-pointer transition";
+          sBtn.className = "px-2 py-0.5 rounded bg-slate-800 hover:bg-slate-700 text-sky-200 border border-sky-400/40 text-[9px] font-bold flex items-center gap-1 cursor-pointer transition";
         }
         if (sIcon) sIcon.innerText = "🎙️";
         if (sLabel) sLabel.innerText = "Whistle Ear: OFF";
@@ -53520,6 +53603,8 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
     function syncLiveScoreToCloud() {
       const oppName = liveGameSheetState.opponent || "Opponent";
       const oppAbbr = liveGameSheetState.oppAbbr || "OPP";
+      const nowIso = new Date().toISOString();
+      liveGameSheetState.lastScorekeeperUpdateMs = Date.now();
       const payload = {
         homeScore: liveGameSheetState.homeScore,
         awayScore: liveGameSheetState.awayScore,
@@ -53529,7 +53614,9 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
         opponent: oppName,
         oppAbbr: oppAbbr,
         matchTitle: liveGameSheetState.matchTitle || `Aurora Tigers vs ${oppName}`,
-        lastScorekeeperUpdate: new Date().toISOString()
+        tickerEvents: (liveGameSheetState.tickerEvents || []).slice(0, 25),
+        lastScorekeeperUpdate: nowIso,
+        lastScorekeeperUpdateMs: liveGameSheetState.lastScorekeeperUpdateMs
       };
 
       try {
@@ -53580,30 +53667,55 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
       syncLiveScoreToCloud();
     }
 
-    function addLiveTickerEvent(text) {
+    function renderLiveTickerEvents() {
       const ticker = document.getElementById('live-gamesheet-ticker-list');
       if (!ticker) return;
-      const min = Math.floor(liveGameSheetState.clockSec / 60);
-      const sec = liveGameSheetState.clockSec % 60;
+      const events = liveGameSheetState.tickerEvents || [];
+      if (events.length === 0) return;
+      ticker.innerHTML = events.map(ev => `
+        <div class="p-2 rounded-lg bg-slate-900 border border-amber-400/40 text-white animate-in fade-in duration-200">
+          <span class="text-amber-400 font-bold">${escapeHtml(ev.timeStr || '')}</span> ${escapeHtml(ev.text || '')}
+        </div>
+      `).join('');
+    }
+
+    function addLiveTickerEvent(text, skipCloudSync = false) {
+      if (!text) return;
+      if (!Array.isArray(liveGameSheetState.tickerEvents)) {
+        liveGameSheetState.tickerEvents = [];
+      }
+      const min = Math.floor((liveGameSheetState.clockSec || 0) / 60);
+      const sec = (liveGameSheetState.clockSec || 0) % 60;
       const timeStr = `P${liveGameSheetState.period} ${min}:${sec.toString().padStart(2, '0')}`;
-      const item = document.createElement('div');
-      item.className = "p-2 rounded-lg bg-slate-900 border border-amber-400/50 text-white animate-in fade-in duration-200";
-      item.innerHTML = `<span class="text-amber-400 font-bold">${timeStr}</span> ${escapeHtml(text)}`;
-      ticker.prepend(item);
+      const nowMs = Date.now();
+      const latest = liveGameSheetState.tickerEvents[0];
+      if (latest && latest.text === text && (nowMs - (latest.ts || 0)) < 15000) {
+        return;
+      }
+      liveGameSheetState.tickerEvents.unshift({ timeStr, text, ts: nowMs });
+      if (liveGameSheetState.tickerEvents.length > 25) {
+        liveGameSheetState.tickerEvents = liveGameSheetState.tickerEvents.slice(0, 25);
+      }
+      renderLiveTickerEvents();
+      if (!skipCloudSync && typeof syncLiveScoreToCloud === 'function') {
+        syncLiveScoreToCloud();
+      }
     }
 
     function setLivePeriod(p) {
+      const prevPeriod = String(liveGameSheetState.period);
+      const nextPeriod = String(p);
       liveGameSheetState.period = p;
       const oppName = liveGameSheetState.opponent || "Opponent";
       if (p === 'FINAL' || p === 'final') {
         liveGameSheetState.period = 'FINAL';
         liveGameSheetState.running = false;
         liveGameSheetState.clockSec = 0;
-        addLiveTickerEvent(`Game Final: Aurora Tigers vs ${oppName}`);
+        if (prevPeriod !== 'FINAL') {
+          addLiveTickerEvent(`Game Final: Aurora Tigers vs ${oppName}`, true);
+        }
         showPostGameSummary();
       } else {
-        // OMHA / YSMHL standard period lengths:
-        // Period 1 is 10 mins (600s), Period 2 is 15 mins (900s), Period 3 is 15 mins (900s)
         if (p == 1 || p === '1') {
           liveGameSheetState.clockSec = 10 * 60;
         } else if (p == 2 || p === '2') {
@@ -53614,7 +53726,9 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
           liveGameSheetState.clockSec = 5 * 60;
         }
         liveGameSheetState.running = true;
-        addLiveTickerEvent(`Period ${p} started`);
+        if (prevPeriod !== nextPeriod) {
+          addLiveTickerEvent(`Period ${p} started`, true);
+        }
       }
       renderLiveScoreboardHud();
       syncLiveScoreToCloud();
@@ -55924,6 +56038,12 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
       if (vOpp) vOpp.innerText = oppAbbr;
       const awayLabelEl = document.getElementById('away-team-header-label');
       if (awayLabelEl && isLiveBroadcastActive) awayLabelEl.innerText = oppAbbr;
+      if (isLiveBroadcastActive) {
+        const tsDt = document.getElementById('ts-datetime');
+        const tsArena = document.getElementById('ts-arena');
+        if (tsDt) tsDt.innerText = `🔴 LIVE: ${match.isHome ? 'vs' : 'at'} ${match.opponent} (${match.time || 'Game Day'})`;
+        if (tsArena) tsArena.innerText = match.arena || 'Arena';
+      }
 
       // 2. GameSheet League Match Banner
       const bannerTitle = document.getElementById('live-match-banner-title');
@@ -58501,8 +58621,8 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
         "diff": "+37",
         "gpg": "4.90",
         "gapg": "1.20",
-        "pim": 60,
-        "pimPg": "6.0"
+        "pim": 30,
+        "pimPg": "3.0"
       },
       "specialTeams": {
         "ppPct": "30.8%",
@@ -58517,13 +58637,22 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
       "last5Games": [
         {
           "gameId": 3170148,
+          "gameCode": "U13A-RS-134",
           "date": "Nov 15, 2026",
+          "location": "North Simcoe SRC (Centennial)",
           "opp": "Georgian Bay Islanders",
           "vsAt": "@",
           "score": "1-6",
           "result": "L",
           "gf": 1,
           "ga": 6,
+          "ppGoals": 0,
+          "ppOpps": 2,
+          "pkGoalsAllowed": 2,
+          "pkOpps": 4,
+          "shotsFor": 0,
+          "shotsAgainst": 0,
+          "pim": 8,
           "goalLog": [
             {
               "type": "goal",
@@ -58587,13 +58716,22 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
         },
         {
           "gameId": 3166642,
+          "gameCode": "U13A-RS-018",
           "date": "Nov 14, 2026",
+          "location": "Caledon East (1)",
           "opp": "Markham Waxers",
           "vsAt": "vs",
           "score": "4-0",
           "result": "W",
           "gf": 4,
           "ga": 0,
+          "ppGoals": 1,
+          "ppOpps": 3,
+          "pkGoalsAllowed": 0,
+          "pkOpps": 2,
+          "shotsFor": 0,
+          "shotsAgainst": 0,
+          "pim": 4,
           "goalLog": [
             {
               "type": "goal",
@@ -58633,13 +58771,22 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
         },
         {
           "gameId": 3156645,
+          "gameCode": "U13A-RS-015",
           "date": "Nov 10, 2026",
+          "location": "Aurora Rec Complex (Pfaff)",
           "opp": "Aurora Tigers",
           "vsAt": "@",
           "score": "8-0",
           "result": "W",
           "gf": 8,
           "ga": 0,
+          "ppGoals": 1,
+          "ppOpps": 2,
+          "pkGoalsAllowed": 0,
+          "pkOpps": 2,
+          "shotsFor": 0,
+          "shotsAgainst": 0,
+          "pim": 4,
           "goalLog": [
             {
               "type": "goal",
@@ -58711,13 +58858,22 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
         },
         {
           "gameId": 3098848,
+          "gameCode": "U13A-RS-167",
           "date": "Oct 25, 2026",
+          "location": "Caledon East (1)",
           "opp": "Orangeville Flyers",
           "vsAt": "vs",
           "score": "3-0",
           "result": "W",
           "gf": 3,
           "ga": 0,
+          "ppGoals": 0,
+          "ppOpps": 3,
+          "pkGoalsAllowed": 0,
+          "pkOpps": 1,
+          "shotsFor": 0,
+          "shotsAgainst": 0,
+          "pim": 2,
           "goalLog": [
             {
               "type": "goal",
@@ -58749,13 +58905,22 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
         },
         {
           "gameId": 3096089,
+          "gameCode": "U13A-RS-026",
           "date": "Oct 24, 2026",
+          "location": "Caledon East (1)",
           "opp": "Stouffville Clippers",
           "vsAt": "vs",
           "score": "3-3",
           "result": "T",
           "gf": 3,
           "ga": 3,
+          "ppGoals": 0,
+          "ppOpps": 3,
+          "pkGoalsAllowed": 0,
+          "pkOpps": 1,
+          "shotsFor": 0,
+          "shotsAgainst": 0,
+          "pim": 2,
           "goalLog": [
             {
               "type": "goal",
@@ -58775,14 +58940,6 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
             },
             {
               "type": "goal",
-              "period": 3,
-              "clockTime": "02:48",
-              "team": "self",
-              "teamName": "Caledon Hawks 13 A",
-              "scorer": ""
-            },
-            {
-              "type": "goal",
               "period": 2,
               "clockTime": "00:16",
               "team": "opp",
@@ -58795,6 +58952,14 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
               "clockTime": "12:09",
               "team": "opp",
               "teamName": "Stouffville Clippers U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 3,
+              "clockTime": "02:48",
+              "team": "self",
+              "teamName": "Caledon Hawks 13 A",
               "scorer": ""
             },
             {
@@ -58891,8 +59056,8 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
         "diff": "+49",
         "gpg": "5.92",
         "gapg": "1.83",
-        "pim": 72,
-        "pimPg": "6.0"
+        "pim": 78,
+        "pimPg": "6.5"
       },
       "specialTeams": {
         "ppPct": "31.7%",
@@ -58907,14 +59072,31 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
       "last5Games": [
         {
           "gameId": 3169974,
+          "gameCode": "U13A-RS-149",
           "date": "Nov 15, 2026",
+          "location": "West Orillia (Green)",
           "opp": "Barrie Colts",
           "vsAt": "vs",
           "score": "3-5",
           "result": "L",
           "gf": 3,
           "ga": 5,
+          "ppGoals": 2,
+          "ppOpps": 6,
+          "pkGoalsAllowed": 2,
+          "pkOpps": 4,
+          "shotsFor": 0,
+          "shotsAgainst": 0,
+          "pim": 8,
           "goalLog": [
+            {
+              "type": "goal",
+              "period": 1,
+              "clockTime": "05:49",
+              "team": "opp",
+              "teamName": "Barrie Colts U13-1 A White",
+              "scorer": ""
+            },
             {
               "type": "goal",
               "period": 2,
@@ -58934,15 +59116,7 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
             {
               "type": "goal",
               "period": 2,
-              "clockTime": "01:30",
-              "team": "self",
-              "teamName": "Orillia Terriers U13 A",
-              "scorer": ""
-            },
-            {
-              "type": "goal",
-              "period": 1,
-              "clockTime": "05:49",
+              "clockTime": "05:19",
               "team": "opp",
               "teamName": "Barrie Colts U13-1 A White",
               "scorer": ""
@@ -58950,9 +59124,9 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
             {
               "type": "goal",
               "period": 2,
-              "clockTime": "05:19",
-              "team": "opp",
-              "teamName": "Barrie Colts U13-1 A White",
+              "clockTime": "01:30",
+              "team": "self",
+              "teamName": "Orillia Terriers U13 A",
               "scorer": ""
             },
             {
@@ -58985,13 +59159,22 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
         },
         {
           "gameId": 3166191,
+          "gameCode": "U13A-RS-068",
           "date": "Nov 14, 2026",
+          "location": "West Orillia (Blue)",
           "opp": "Stouffville Clippers",
           "vsAt": "vs",
           "score": "5-3",
           "result": "W",
           "gf": 5,
           "ga": 3,
+          "ppGoals": 1,
+          "ppOpps": 1,
+          "pkGoalsAllowed": 1,
+          "pkOpps": 4,
+          "shotsFor": 30,
+          "shotsAgainst": 21,
+          "pim": 8,
           "goalLog": [
             {
               "type": "goal",
@@ -59004,9 +59187,25 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
             {
               "type": "goal",
               "period": 2,
+              "clockTime": "08:41",
+              "team": "opp",
+              "teamName": "Stouffville Clippers U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 2,
               "clockTime": "06:39",
               "team": "self",
               "teamName": "Orillia Terriers U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 2,
+              "clockTime": "05:38",
+              "team": "opp",
+              "teamName": "Stouffville Clippers U13 A",
               "scorer": ""
             },
             {
@@ -59015,6 +59214,14 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
               "clockTime": "11:06",
               "team": "self",
               "teamName": "Orillia Terriers U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 3,
+              "clockTime": "10:36",
+              "team": "opp",
+              "teamName": "Stouffville Clippers U13 A",
               "scorer": ""
             },
             {
@@ -59032,30 +59239,6 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
               "team": "self",
               "teamName": "Orillia Terriers U13 A",
               "scorer": ""
-            },
-            {
-              "type": "goal",
-              "period": 2,
-              "clockTime": "08:41",
-              "team": "opp",
-              "teamName": "Stouffville Clippers U13 A",
-              "scorer": ""
-            },
-            {
-              "type": "goal",
-              "period": 2,
-              "clockTime": "05:38",
-              "team": "opp",
-              "teamName": "Stouffville Clippers U13 A",
-              "scorer": ""
-            },
-            {
-              "type": "goal",
-              "period": 3,
-              "clockTime": "10:36",
-              "team": "opp",
-              "teamName": "Stouffville Clippers U13 A",
-              "scorer": ""
             }
           ],
           "penaltyLog": [],
@@ -59063,13 +59246,22 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
         },
         {
           "gameId": 3143846,
+          "gameCode": "U13A-RS-056",
           "date": "Nov 6, 2026",
+          "location": "West Orillia (Blue)",
           "opp": "Aurora Tigers",
           "vsAt": "vs",
           "score": "9-0",
           "result": "W",
           "gf": 9,
           "ga": 0,
+          "ppGoals": 1,
+          "ppOpps": 3,
+          "pkGoalsAllowed": 0,
+          "pkOpps": 3,
+          "shotsFor": 0,
+          "shotsAgainst": 0,
+          "pim": 6,
           "goalLog": [
             {
               "type": "goal",
@@ -59149,13 +59341,22 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
         },
         {
           "gameId": 3139395,
+          "gameCode": "U13A-RS-135",
           "date": "Nov 4, 2026",
+          "location": "Allandale Rec (Red)",
           "opp": "Barrie Colts",
           "vsAt": "@",
           "score": "6-1",
           "result": "W",
           "gf": 6,
           "ga": 1,
+          "ppGoals": 0,
+          "ppOpps": 2,
+          "pkGoalsAllowed": 1,
+          "pkOpps": 3,
+          "shotsFor": 0,
+          "shotsAgainst": 0,
+          "pim": 6,
           "goalLog": [
             {
               "type": "goal",
@@ -59219,13 +59420,22 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
         },
         {
           "gameId": 3120089,
+          "gameCode": "U13A-RS-061",
           "date": "Nov 1, 2026",
+          "location": "Milliken Mills (Milliken Mills)",
           "opp": "Markham Waxers",
           "vsAt": "@",
           "score": "8-0",
           "result": "W",
           "gf": 8,
           "ga": 0,
+          "ppGoals": 1,
+          "ppOpps": 2,
+          "pkGoalsAllowed": 0,
+          "pkOpps": 2,
+          "shotsFor": 0,
+          "shotsAgainst": 0,
+          "pim": 4,
           "goalLog": [
             {
               "type": "goal",
@@ -59377,8 +59587,8 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
         "diff": "-12",
         "gpg": "3.18",
         "gapg": "4.27",
-        "pim": 66,
-        "pimPg": "6.0"
+        "pim": 76,
+        "pimPg": "6.9"
       },
       "specialTeams": {
         "ppPct": "18.4%",
@@ -59392,13 +59602,22 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
       "last5Games": [
         {
           "gameId": 3182603,
+          "gameCode": "U13A-RS-034",
           "date": "Nov 21, 2026",
+          "location": "Penetang (Penetang)",
           "opp": "Georgian Bay Islanders",
           "vsAt": "@",
           "score": "0-7",
           "result": "L",
           "gf": 0,
           "ga": 7,
+          "ppGoals": 0,
+          "ppOpps": 4,
+          "pkGoalsAllowed": 0,
+          "pkOpps": 2,
+          "shotsFor": 0,
+          "shotsAgainst": 0,
+          "pim": 4,
           "goalLog": [
             {
               "type": "goal",
@@ -59462,13 +59681,22 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
         },
         {
           "gameId": 3148127,
+          "gameCode": "U13A-RS-006",
           "date": "Nov 8, 2026",
+          "location": "Magna (Honda)",
           "opp": "Richmond Hill Jaguars",
           "vsAt": "vs",
           "score": "6-1",
           "result": "W",
           "gf": 6,
           "ga": 1,
+          "ppGoals": 1,
+          "ppOpps": 2,
+          "pkGoalsAllowed": 1,
+          "pkOpps": 4,
+          "shotsFor": 0,
+          "shotsAgainst": 0,
+          "pim": 8,
           "goalLog": [
             {
               "type": "goal",
@@ -59505,6 +59733,14 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
             {
               "type": "goal",
               "period": 3,
+              "clockTime": "11:48",
+              "team": "opp",
+              "teamName": "Richmond Hill Jaguars U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 3,
               "clockTime": "05:51",
               "team": "self",
               "teamName": "Newmarket Renegades U13 A",
@@ -59517,14 +59753,6 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
               "team": "self",
               "teamName": "Newmarket Renegades U13 A",
               "scorer": ""
-            },
-            {
-              "type": "goal",
-              "period": 3,
-              "clockTime": "11:48",
-              "team": "opp",
-              "teamName": "Richmond Hill Jaguars U13 A",
-              "scorer": ""
             }
           ],
           "penaltyLog": [],
@@ -59532,13 +59760,22 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
         },
         {
           "gameId": 3146846,
+          "gameCode": "U13A-RS-110",
           "date": "Nov 7, 2026",
+          "location": "Elgin Barrow (East)",
           "opp": "Richmond Hill Jaguars",
           "vsAt": "@",
           "score": "4-0",
           "result": "W",
           "gf": 4,
           "ga": 0,
+          "ppGoals": 0,
+          "ppOpps": 2,
+          "pkGoalsAllowed": 0,
+          "pkOpps": 1,
+          "shotsFor": 0,
+          "shotsAgainst": 0,
+          "pim": 2,
           "goalLog": [
             {
               "type": "goal",
@@ -59578,22 +59815,23 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
         },
         {
           "gameId": 3141092,
+          "gameCode": "U13A-RS-124",
           "date": "Nov 5, 2026",
+          "location": "Magna (Pfaff)",
           "opp": "Upper York Admirals",
           "vsAt": "vs",
           "score": "1-3",
           "result": "L",
           "gf": 1,
           "ga": 3,
+          "ppGoals": 0,
+          "ppOpps": 4,
+          "pkGoalsAllowed": 1,
+          "pkOpps": 2,
+          "shotsFor": 0,
+          "shotsAgainst": 0,
+          "pim": 4,
           "goalLog": [
-            {
-              "type": "goal",
-              "period": 3,
-              "clockTime": "05:22",
-              "team": "self",
-              "teamName": "Newmarket Renegades U13 A",
-              "scorer": ""
-            },
             {
               "type": "goal",
               "period": 1,
@@ -59617,6 +59855,14 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
               "team": "opp",
               "teamName": "Upper York Admirals U13 A",
               "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 3,
+              "clockTime": "05:22",
+              "team": "self",
+              "teamName": "Newmarket Renegades U13 A",
+              "scorer": ""
             }
           ],
           "penaltyLog": [],
@@ -59624,34 +59870,27 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
         },
         {
           "gameId": 3120086,
+          "gameCode": "U13A-RS-151",
           "date": "Nov 1, 2026",
+          "location": "Georgina Sutton (Georgina Sutton)",
           "opp": "Upper York Admirals",
           "vsAt": "@",
           "score": "3-3",
           "result": "T",
           "gf": 3,
           "ga": 3,
+          "ppGoals": 0,
+          "ppOpps": 4,
+          "pkGoalsAllowed": 1,
+          "pkOpps": 3,
+          "shotsFor": 0,
+          "shotsAgainst": 0,
+          "pim": 6,
           "goalLog": [
             {
               "type": "goal",
               "period": 2,
               "clockTime": "13:08",
-              "team": "self",
-              "teamName": "Newmarket Renegades U13 A",
-              "scorer": ""
-            },
-            {
-              "type": "goal",
-              "period": 3,
-              "clockTime": "13:40",
-              "team": "self",
-              "teamName": "Newmarket Renegades U13 A",
-              "scorer": ""
-            },
-            {
-              "type": "goal",
-              "period": 3,
-              "clockTime": "00:14",
               "team": "self",
               "teamName": "Newmarket Renegades U13 A",
               "scorer": ""
@@ -59675,9 +59914,25 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
             {
               "type": "goal",
               "period": 3,
+              "clockTime": "13:40",
+              "team": "self",
+              "teamName": "Newmarket Renegades U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 3,
               "clockTime": "00:52",
               "team": "opp",
               "teamName": "Upper York Admirals U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 3,
+              "clockTime": "00:14",
+              "team": "self",
+              "teamName": "Newmarket Renegades U13 A",
               "scorer": ""
             }
           ],
@@ -59742,8 +59997,8 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
         "diff": "-37",
         "gpg": "1.75",
         "gapg": "4.83",
-        "pim": 72,
-        "pimPg": "6.0"
+        "pim": 38,
+        "pimPg": "3.2"
       },
       "specialTeams": {
         "ppPct": "11.5%",
@@ -59757,30 +60012,23 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
       "last5Games": [
         {
           "gameId": 3170147,
+          "gameCode": "U13A-RS-193",
           "date": "Nov 15, 2026",
+          "location": "Angus Glen (1 - West)",
           "opp": "Barrie Colts U13-2 A Blue",
           "vsAt": "vs",
           "score": "2-4",
           "result": "L",
           "gf": 2,
           "ga": 4,
+          "ppGoals": 0,
+          "ppOpps": 4,
+          "pkGoalsAllowed": 0,
+          "pkOpps": 2,
+          "shotsFor": 0,
+          "shotsAgainst": 0,
+          "pim": 4,
           "goalLog": [
-            {
-              "type": "goal",
-              "period": 2,
-              "clockTime": "06:31",
-              "team": "self",
-              "teamName": "Markham Waxers U13 A",
-              "scorer": ""
-            },
-            {
-              "type": "goal",
-              "period": 3,
-              "clockTime": "13:47",
-              "team": "self",
-              "teamName": "Markham Waxers U13 A",
-              "scorer": ""
-            },
             {
               "type": "goal",
               "period": 2,
@@ -59792,9 +60040,25 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
             {
               "type": "goal",
               "period": 2,
+              "clockTime": "06:31",
+              "team": "self",
+              "teamName": "Markham Waxers U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 2,
               "clockTime": "03:07",
               "team": "opp",
               "teamName": "Barrie Colts U13-2 A Blue",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 3,
+              "clockTime": "13:47",
+              "team": "self",
+              "teamName": "Markham Waxers U13 A",
               "scorer": ""
             },
             {
@@ -59819,13 +60083,22 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
         },
         {
           "gameId": 3166642,
+          "gameCode": "U13A-RS-018",
           "date": "Nov 14, 2026",
+          "location": "Caledon East (1)",
           "opp": "Caledon Hawks",
           "vsAt": "@",
           "score": "0-4",
           "result": "L",
           "gf": 0,
           "ga": 4,
+          "ppGoals": 0,
+          "ppOpps": 2,
+          "pkGoalsAllowed": 1,
+          "pkOpps": 3,
+          "shotsFor": 0,
+          "shotsAgainst": 0,
+          "pim": 6,
           "goalLog": [
             {
               "type": "goal",
@@ -59865,13 +60138,22 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
         },
         {
           "gameId": 3160514,
+          "gameCode": "U13A-RS-168",
           "date": "Nov 11, 2026",
+          "location": "Centennial (Centennial)",
           "opp": "Aurora Tigers",
           "vsAt": "vs",
           "score": "5-0",
           "result": "W",
           "gf": 5,
           "ga": 0,
+          "ppGoals": 0,
+          "ppOpps": 1,
+          "pkGoalsAllowed": 0,
+          "pkOpps": 1,
+          "shotsFor": 0,
+          "shotsAgainst": 0,
+          "pim": 2,
           "goalLog": [
             {
               "type": "goal",
@@ -59919,13 +60201,22 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
         },
         {
           "gameId": 3148266,
+          "gameCode": "U13A-RS-179",
           "date": "Nov 8, 2026",
+          "location": "Milliken Mills (Milliken Mills)",
           "opp": "Barrie Colts",
           "vsAt": "vs",
           "score": "0-6",
           "result": "L",
           "gf": 0,
           "ga": 6,
+          "ppGoals": 0,
+          "ppOpps": 1,
+          "pkGoalsAllowed": 0,
+          "pkOpps": 0,
+          "shotsFor": 0,
+          "shotsAgainst": 0,
+          "pim": 0,
           "goalLog": [
             {
               "type": "goal",
@@ -59981,13 +60272,22 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
         },
         {
           "gameId": 3146847,
+          "gameCode": "U13A-RS-192",
           "date": "Nov 7, 2026",
+          "location": "Peggy Hill (Arena 1)",
           "opp": "Barrie Colts U13-2 A Blue",
           "vsAt": "@",
           "score": "0-7",
           "result": "L",
           "gf": 0,
           "ga": 7,
+          "ppGoals": 0,
+          "ppOpps": 2,
+          "pkGoalsAllowed": 1,
+          "pkOpps": 1,
+          "shotsFor": 0,
+          "shotsAgainst": 0,
+          "pim": 2,
           "goalLog": [
             {
               "type": "goal",
@@ -60107,8 +60407,8 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
         "diff": "+24",
         "gpg": "3.92",
         "gapg": "1.92",
-        "pim": 72,
-        "pimPg": "6.0"
+        "pim": 56,
+        "pimPg": "4.7"
       },
       "specialTeams": {
         "ppPct": "29.6%",
@@ -60122,13 +60422,22 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
       "last5Games": [
         {
           "gameId": 3173778,
+          "gameCode": "U13A-RS-174",
           "date": "Nov 16, 2026",
+          "location": "Peggy Hill (Arena 2)",
           "opp": "Aurora Tigers",
           "vsAt": "vs",
           "score": "11-0",
           "result": "W",
           "gf": 11,
           "ga": 0,
+          "ppGoals": 0,
+          "ppOpps": 0,
+          "pkGoalsAllowed": 0,
+          "pkOpps": 2,
+          "shotsFor": 0,
+          "shotsAgainst": 0,
+          "pim": 4,
           "goalLog": [
             {
               "type": "goal",
@@ -60224,13 +60533,22 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
         },
         {
           "gameId": 3169974,
+          "gameCode": "U13A-RS-149",
           "date": "Nov 15, 2026",
+          "location": "West Orillia (Green)",
           "opp": "Orillia Terriers",
           "vsAt": "@",
           "score": "5-3",
           "result": "W",
           "gf": 5,
           "ga": 3,
+          "ppGoals": 2,
+          "ppOpps": 4,
+          "pkGoalsAllowed": 2,
+          "pkOpps": 6,
+          "shotsFor": 0,
+          "shotsAgainst": 0,
+          "pim": 12,
           "goalLog": [
             {
               "type": "goal",
@@ -60243,9 +60561,33 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
             {
               "type": "goal",
               "period": 2,
+              "clockTime": "10:13",
+              "team": "opp",
+              "teamName": "Orillia Terriers U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 2,
+              "clockTime": "08:05",
+              "team": "opp",
+              "teamName": "Orillia Terriers U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 2,
               "clockTime": "05:19",
               "team": "self",
               "teamName": "Barrie Colts U13-1 A White",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 2,
+              "clockTime": "01:30",
+              "team": "opp",
+              "teamName": "Orillia Terriers U13 A",
               "scorer": ""
             },
             {
@@ -60271,30 +60613,6 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
               "team": "self",
               "teamName": "Barrie Colts U13-1 A White",
               "scorer": ""
-            },
-            {
-              "type": "goal",
-              "period": 2,
-              "clockTime": "10:13",
-              "team": "opp",
-              "teamName": "Orillia Terriers U13 A",
-              "scorer": ""
-            },
-            {
-              "type": "goal",
-              "period": 2,
-              "clockTime": "08:05",
-              "team": "opp",
-              "teamName": "Orillia Terriers U13 A",
-              "scorer": ""
-            },
-            {
-              "type": "goal",
-              "period": 2,
-              "clockTime": "01:30",
-              "team": "opp",
-              "teamName": "Orillia Terriers U13 A",
-              "scorer": ""
             }
           ],
           "penaltyLog": [],
@@ -60302,13 +60620,22 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
         },
         {
           "gameId": 3160515,
+          "gameCode": "U13A-RS-185",
           "date": "Nov 11, 2026",
+          "location": "Ice Palace (Blue)",
           "opp": "Upper York Admirals",
           "vsAt": "@",
           "score": "3-0",
           "result": "W",
           "gf": 3,
           "ga": 0,
+          "ppGoals": 1,
+          "ppOpps": 3,
+          "pkGoalsAllowed": 0,
+          "pkOpps": 2,
+          "shotsFor": 0,
+          "shotsAgainst": 0,
+          "pim": 4,
           "goalLog": [
             {
               "type": "goal",
@@ -60340,13 +60667,22 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
         },
         {
           "gameId": 3148266,
+          "gameCode": "U13A-RS-179",
           "date": "Nov 8, 2026",
+          "location": "Milliken Mills (Milliken Mills)",
           "opp": "Markham Waxers",
           "vsAt": "@",
           "score": "6-0",
           "result": "W",
           "gf": 6,
           "ga": 0,
+          "ppGoals": 0,
+          "ppOpps": 0,
+          "pkGoalsAllowed": 0,
+          "pkOpps": 1,
+          "shotsFor": 0,
+          "shotsAgainst": 0,
+          "pim": 2,
           "goalLog": [
             {
               "type": "goal",
@@ -60402,22 +60738,23 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
         },
         {
           "gameId": 3139395,
+          "gameCode": "U13A-RS-135",
           "date": "Nov 4, 2026",
+          "location": "Allandale Rec (Red)",
           "opp": "Orillia Terriers",
           "vsAt": "vs",
           "score": "1-6",
           "result": "L",
           "gf": 1,
           "ga": 6,
+          "ppGoals": 1,
+          "ppOpps": 3,
+          "pkGoalsAllowed": 0,
+          "pkOpps": 2,
+          "shotsFor": 0,
+          "shotsAgainst": 0,
+          "pim": 4,
           "goalLog": [
-            {
-              "type": "goal",
-              "period": 3,
-              "clockTime": "05:59",
-              "team": "self",
-              "teamName": "Barrie Colts U13-1 A White",
-              "scorer": ""
-            },
             {
               "type": "goal",
               "period": 1,
@@ -60464,6 +60801,14 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
               "clockTime": "09:19",
               "team": "opp",
               "teamName": "Orillia Terriers U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 3,
+              "clockTime": "05:59",
+              "team": "self",
+              "teamName": "Barrie Colts U13-1 A White",
               "scorer": ""
             }
           ],
@@ -60528,8 +60873,8 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
         "diff": "+11",
         "gpg": "3.80",
         "gapg": "2.70",
-        "pim": 60,
-        "pimPg": "6.0"
+        "pim": 78,
+        "pimPg": "7.8"
       },
       "specialTeams": {
         "ppPct": "22.0%",
@@ -60543,14 +60888,31 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
       "last5Games": [
         {
           "gameId": 3173779,
+          "gameCode": "U13A-RS-011",
           "date": "Nov 16, 2026",
+          "location": "Georgina Sutton (Georgina Sutton)",
           "opp": "Barrie Colts U13-2 A Blue",
           "vsAt": "vs",
           "score": "2-2",
           "result": "T",
           "gf": 2,
           "ga": 2,
+          "ppGoals": 0,
+          "ppOpps": 7,
+          "pkGoalsAllowed": 1,
+          "pkOpps": 2,
+          "shotsFor": 0,
+          "shotsAgainst": 0,
+          "pim": 4,
           "goalLog": [
+            {
+              "type": "goal",
+              "period": 1,
+              "clockTime": "04:17",
+              "team": "opp",
+              "teamName": "Barrie Colts U13-2 A Blue",
+              "scorer": ""
+            },
             {
               "type": "goal",
               "period": 2,
@@ -60562,15 +60924,7 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
             {
               "type": "goal",
               "period": 3,
-              "clockTime": "00:46",
-              "team": "self",
-              "teamName": "Upper York Admirals U13 A",
-              "scorer": ""
-            },
-            {
-              "type": "goal",
-              "period": 1,
-              "clockTime": "04:17",
+              "clockTime": "04:21",
               "team": "opp",
               "teamName": "Barrie Colts U13-2 A Blue",
               "scorer": ""
@@ -60578,9 +60932,9 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
             {
               "type": "goal",
               "period": 3,
-              "clockTime": "04:21",
-              "team": "opp",
-              "teamName": "Barrie Colts U13-2 A Blue",
+              "clockTime": "00:46",
+              "team": "self",
+              "teamName": "Upper York Admirals U13 A",
               "scorer": ""
             }
           ],
@@ -60589,13 +60943,22 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
         },
         {
           "gameId": 3169951,
+          "gameCode": "U13A-RS-053",
           "date": "Nov 15, 2026",
+          "location": "Georgina Sutton (Georgina Sutton)",
           "opp": "Orangeville Flyers",
           "vsAt": "vs",
           "score": "4-1",
           "result": "W",
           "gf": 4,
           "ga": 1,
+          "ppGoals": 1,
+          "ppOpps": 7,
+          "pkGoalsAllowed": 0,
+          "pkOpps": 5,
+          "shotsFor": 0,
+          "shotsAgainst": 0,
+          "pim": 10,
           "goalLog": [
             {
               "type": "goal",
@@ -60616,6 +60979,14 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
             {
               "type": "goal",
               "period": 3,
+              "clockTime": "11:15",
+              "team": "opp",
+              "teamName": "Orangeville Flyers U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 3,
               "clockTime": "08:16",
               "team": "self",
               "teamName": "Upper York Admirals U13 A",
@@ -60628,14 +60999,6 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
               "team": "self",
               "teamName": "Upper York Admirals U13 A",
               "scorer": ""
-            },
-            {
-              "type": "goal",
-              "period": 3,
-              "clockTime": "11:15",
-              "team": "opp",
-              "teamName": "Orangeville Flyers U13 A",
-              "scorer": ""
             }
           ],
           "penaltyLog": [],
@@ -60643,13 +61006,22 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
         },
         {
           "gameId": 3160515,
+          "gameCode": "U13A-RS-185",
           "date": "Nov 11, 2026",
+          "location": "Ice Palace (Blue)",
           "opp": "Barrie Colts",
           "vsAt": "vs",
           "score": "0-3",
           "result": "L",
           "gf": 0,
           "ga": 3,
+          "ppGoals": 0,
+          "ppOpps": 2,
+          "pkGoalsAllowed": 1,
+          "pkOpps": 3,
+          "shotsFor": 0,
+          "shotsAgainst": 0,
+          "pim": 6,
           "goalLog": [
             {
               "type": "goal",
@@ -60681,13 +61053,22 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
         },
         {
           "gameId": 3147450,
+          "gameCode": "U13A-RS-132",
           "date": "Nov 8, 2026",
+          "location": "Zancor (JTF)",
           "opp": "King Rebellion",
           "vsAt": "@",
           "score": "7-1",
           "result": "W",
           "gf": 7,
           "ga": 1,
+          "ppGoals": 3,
+          "ppOpps": 7,
+          "pkGoalsAllowed": 0,
+          "pkOpps": 4,
+          "shotsFor": 0,
+          "shotsAgainst": 0,
+          "pim": 8,
           "goalLog": [
             {
               "type": "goal",
@@ -60724,6 +61105,14 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
             {
               "type": "goal",
               "period": 2,
+              "clockTime": "10:17",
+              "team": "opp",
+              "teamName": "King Rebellion 13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 2,
               "clockTime": "05:09",
               "team": "self",
               "teamName": "Upper York Admirals U13 A",
@@ -60744,14 +61133,6 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
               "team": "self",
               "teamName": "Upper York Admirals U13 A",
               "scorer": ""
-            },
-            {
-              "type": "goal",
-              "period": 2,
-              "clockTime": "10:17",
-              "team": "opp",
-              "teamName": "King Rebellion 13 A",
-              "scorer": ""
             }
           ],
           "penaltyLog": [],
@@ -60759,13 +61140,22 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
         },
         {
           "gameId": 3141092,
+          "gameCode": "U13A-RS-124",
           "date": "Nov 5, 2026",
+          "location": "Magna (Pfaff)",
           "opp": "Newmarket Renegades",
           "vsAt": "@",
           "score": "3-1",
           "result": "W",
           "gf": 3,
           "ga": 1,
+          "ppGoals": 1,
+          "ppOpps": 2,
+          "pkGoalsAllowed": 0,
+          "pkOpps": 4,
+          "shotsFor": 0,
+          "shotsAgainst": 0,
+          "pim": 8,
           "goalLog": [
             {
               "type": "goal",
@@ -60975,8 +61365,8 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
         "diff": "-101",
         "gpg": "0.27",
         "gapg": "9.45",
-        "pim": 66,
-        "pimPg": "7.0"
+        "pim": 54,
+        "pimPg": "4.9"
       },
       "specialTeams": {
         "ppPct": "3.8%",
@@ -60990,13 +61380,22 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
       "last5Games": [
         {
           "gameId": 3191664,
+          "gameCode": "U13A-RS-189",
           "date": "Nov 24, 2026",
+          "location": "Aurora Rec Complex (Pfaff)",
           "opp": "Barrie Colts U13-2 A Blue",
           "vsAt": "vs",
           "score": "0-7",
           "result": "L",
           "gf": 0,
           "ga": 7,
+          "ppGoals": 0,
+          "ppOpps": 2,
+          "pkGoalsAllowed": 1,
+          "pkOpps": 5,
+          "shotsFor": 0,
+          "shotsAgainst": 0,
+          "pim": 10,
           "goalLog": [
             {
               "type": "goal",
@@ -61060,13 +61459,22 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
         },
         {
           "gameId": 3182602,
+          "gameCode": "U13A-RS-070",
           "date": "Nov 21, 2026",
+          "location": "Bradford Leisure (Paul Dossey)",
           "opp": "South Simcoe Storm",
           "vsAt": "@",
           "score": "0-11",
           "result": "L",
           "gf": 0,
           "ga": 11,
+          "ppGoals": 0,
+          "ppOpps": 5,
+          "pkGoalsAllowed": 2,
+          "pkOpps": 6,
+          "shotsFor": 0,
+          "shotsAgainst": 0,
+          "pim": 12,
           "goalLog": [
             {
               "type": "goal",
@@ -61162,13 +61570,22 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
         },
         {
           "gameId": 3173778,
+          "gameCode": "U13A-RS-174",
           "date": "Nov 16, 2026",
+          "location": "Peggy Hill (Arena 2)",
           "opp": "Barrie Colts",
           "vsAt": "@",
           "score": "0-11",
           "result": "L",
           "gf": 0,
           "ga": 11,
+          "ppGoals": 0,
+          "ppOpps": 2,
+          "pkGoalsAllowed": 0,
+          "pkOpps": 0,
+          "shotsFor": 0,
+          "shotsAgainst": 0,
+          "pim": 0,
           "goalLog": [
             {
               "type": "goal",
@@ -61264,13 +61681,22 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
         },
         {
           "gameId": 3160514,
+          "gameCode": "U13A-RS-168",
           "date": "Nov 11, 2026",
+          "location": "Centennial (Centennial)",
           "opp": "Markham Waxers",
           "vsAt": "@",
           "score": "0-5",
           "result": "L",
           "gf": 0,
           "ga": 5,
+          "ppGoals": 0,
+          "ppOpps": 1,
+          "pkGoalsAllowed": 0,
+          "pkOpps": 1,
+          "shotsFor": 0,
+          "shotsAgainst": 0,
+          "pim": 2,
           "goalLog": [
             {
               "type": "goal",
@@ -61318,13 +61744,22 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
         },
         {
           "gameId": 3156645,
+          "gameCode": "U13A-RS-015",
           "date": "Nov 10, 2026",
+          "location": "Aurora Rec Complex (Pfaff)",
           "opp": "Caledon Hawks",
           "vsAt": "vs",
           "score": "0-8",
           "result": "L",
           "gf": 0,
           "ga": 8,
+          "ppGoals": 0,
+          "ppOpps": 2,
+          "pkGoalsAllowed": 1,
+          "pkOpps": 2,
+          "shotsFor": 0,
+          "shotsAgainst": 0,
+          "pim": 4,
           "goalLog": [
             {
               "type": "goal",
@@ -61416,13 +61851,22 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
       "allCompletedGames": [
         {
           "gameId": 3191664,
+          "gameCode": "U13A-RS-189",
           "date": "Nov 24, 2026",
+          "location": "Aurora Rec Complex (Pfaff)",
           "opp": "Barrie Colts U13-2 A Blue",
           "vsAt": "vs",
           "score": "0-7",
           "result": "L",
           "gf": 0,
           "ga": 7,
+          "ppGoals": 0,
+          "ppOpps": 2,
+          "pkGoalsAllowed": 1,
+          "pkOpps": 5,
+          "shotsFor": 0,
+          "shotsAgainst": 0,
+          "pim": 10,
           "goalLog": [
             {
               "type": "goal",
@@ -61486,13 +61930,22 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
         },
         {
           "gameId": 3182602,
+          "gameCode": "U13A-RS-070",
           "date": "Nov 21, 2026",
+          "location": "Bradford Leisure (Paul Dossey)",
           "opp": "South Simcoe Storm",
           "vsAt": "@",
           "score": "0-11",
           "result": "L",
           "gf": 0,
           "ga": 11,
+          "ppGoals": 0,
+          "ppOpps": 5,
+          "pkGoalsAllowed": 2,
+          "pkOpps": 6,
+          "shotsFor": 0,
+          "shotsAgainst": 0,
+          "pim": 12,
           "goalLog": [
             {
               "type": "goal",
@@ -61588,13 +62041,22 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
         },
         {
           "gameId": 3173778,
+          "gameCode": "U13A-RS-174",
           "date": "Nov 16, 2026",
+          "location": "Peggy Hill (Arena 2)",
           "opp": "Barrie Colts",
           "vsAt": "@",
           "score": "0-11",
           "result": "L",
           "gf": 0,
           "ga": 11,
+          "ppGoals": 0,
+          "ppOpps": 2,
+          "pkGoalsAllowed": 0,
+          "pkOpps": 0,
+          "shotsFor": 0,
+          "shotsAgainst": 0,
+          "pim": 0,
           "goalLog": [
             {
               "type": "goal",
@@ -61690,13 +62152,22 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
         },
         {
           "gameId": 3160514,
+          "gameCode": "U13A-RS-168",
           "date": "Nov 11, 2026",
+          "location": "Centennial (Centennial)",
           "opp": "Markham Waxers",
           "vsAt": "@",
           "score": "0-5",
           "result": "L",
           "gf": 0,
           "ga": 5,
+          "ppGoals": 0,
+          "ppOpps": 1,
+          "pkGoalsAllowed": 0,
+          "pkOpps": 1,
+          "shotsFor": 0,
+          "shotsAgainst": 0,
+          "pim": 2,
           "goalLog": [
             {
               "type": "goal",
@@ -61744,13 +62215,22 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
         },
         {
           "gameId": 3156645,
+          "gameCode": "U13A-RS-015",
           "date": "Nov 10, 2026",
+          "location": "Aurora Rec Complex (Pfaff)",
           "opp": "Caledon Hawks",
           "vsAt": "vs",
           "score": "0-8",
           "result": "L",
           "gf": 0,
           "ga": 8,
+          "ppGoals": 0,
+          "ppOpps": 2,
+          "pkGoalsAllowed": 1,
+          "pkOpps": 2,
+          "shotsFor": 0,
+          "shotsAgainst": 0,
+          "pim": 4,
           "goalLog": [
             {
               "type": "goal",
@@ -61822,13 +62302,22 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
         },
         {
           "gameId": 3143846,
+          "gameCode": "U13A-RS-056",
           "date": "Nov 6, 2026",
+          "location": "West Orillia (Blue)",
           "opp": "Orillia Terriers",
           "vsAt": "@",
           "score": "0-9",
           "result": "L",
           "gf": 0,
           "ga": 9,
+          "ppGoals": 0,
+          "ppOpps": 3,
+          "pkGoalsAllowed": 1,
+          "pkOpps": 3,
+          "shotsFor": 0,
+          "shotsAgainst": 0,
+          "pim": 6,
           "goalLog": [
             {
               "type": "goal",
@@ -61908,22 +62397,23 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
         },
         {
           "gameId": 3087227,
+          "gameCode": "U13A-RS-130",
           "date": "Oct 20, 2026",
+          "location": "Magna (Pfaff)",
           "opp": "Newmarket Renegades",
           "vsAt": "@",
           "score": "1-8",
           "result": "L",
           "gf": 1,
           "ga": 8,
+          "ppGoals": 0,
+          "ppOpps": 4,
+          "pkGoalsAllowed": 1,
+          "pkOpps": 3,
+          "shotsFor": 0,
+          "shotsAgainst": 0,
+          "pim": 6,
           "goalLog": [
-            {
-              "type": "goal",
-              "period": 2,
-              "clockTime": "04:06",
-              "team": "tigers",
-              "teamName": "Aurora Tigers U13 A",
-              "scorer": ""
-            },
             {
               "type": "goal",
               "period": 1,
@@ -61975,6 +62465,14 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
             {
               "type": "goal",
               "period": 2,
+              "clockTime": "04:06",
+              "team": "tigers",
+              "teamName": "Aurora Tigers U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 2,
               "clockTime": "00:32",
               "team": "opp",
               "teamName": "Newmarket Renegades U13 A",
@@ -61994,13 +62492,22 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
         },
         {
           "gameId": 3057628,
+          "gameCode": "U13A-RS-029",
           "date": "Oct 10, 2026",
+          "location": "Aurora CC (2 - Lincoln)",
           "opp": "Georgian Bay Islanders",
           "vsAt": "vs",
           "score": "0-9",
           "result": "L",
           "gf": 0,
           "ga": 9,
+          "ppGoals": 0,
+          "ppOpps": 0,
+          "pkGoalsAllowed": 1,
+          "pkOpps": 1,
+          "shotsFor": 0,
+          "shotsAgainst": 0,
+          "pim": 2,
           "goalLog": [
             {
               "type": "goal",
@@ -62080,28 +62587,37 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
         },
         {
           "gameId": 3043454,
+          "gameCode": "U13A-RS-057",
           "date": "Oct 6, 2026",
+          "location": "Aurora Rec Complex (Pfaff)",
           "opp": "Orillia Terriers",
           "vsAt": "vs",
           "score": "1-13",
           "result": "L",
           "gf": 1,
           "ga": 13,
+          "ppGoals": 0,
+          "ppOpps": 3,
+          "pkGoalsAllowed": 2,
+          "pkOpps": 2,
+          "shotsFor": 0,
+          "shotsAgainst": 0,
+          "pim": 4,
           "goalLog": [
-            {
-              "type": "goal",
-              "period": 1,
-              "clockTime": "00:51",
-              "team": "tigers",
-              "teamName": "Aurora Tigers U13 A",
-              "scorer": ""
-            },
             {
               "type": "goal",
               "period": 1,
               "clockTime": "01:20",
               "team": "opp",
               "teamName": "Orillia Terriers U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 1,
+              "clockTime": "00:51",
+              "team": "tigers",
+              "teamName": "Aurora Tigers U13 A",
               "scorer": ""
             },
             {
@@ -62206,22 +62722,23 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
         },
         {
           "gameId": 3035362,
+          "gameCode": "U13A-RS-083",
           "date": "Oct 4, 2026",
+          "location": "Georgina Sutton (Georgina Sutton)",
           "opp": "Upper York Admirals",
           "vsAt": "@",
           "score": "1-11",
           "result": "L",
           "gf": 1,
           "ga": 11,
+          "ppGoals": 1,
+          "ppOpps": 3,
+          "pkGoalsAllowed": 1,
+          "pkOpps": 3,
+          "shotsFor": 0,
+          "shotsAgainst": 0,
+          "pim": 6,
           "goalLog": [
-            {
-              "type": "goal",
-              "period": 2,
-              "clockTime": "02:51",
-              "team": "tigers",
-              "teamName": "Aurora Tigers U13 A",
-              "scorer": ""
-            },
             {
               "type": "goal",
               "period": 1,
@@ -62281,6 +62798,14 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
             {
               "type": "goal",
               "period": 2,
+              "clockTime": "02:51",
+              "team": "tigers",
+              "teamName": "Aurora Tigers U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 2,
               "clockTime": "00:46",
               "team": "opp",
               "teamName": "Upper York Admirals U13 A",
@@ -62316,13 +62841,22 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
         },
         {
           "gameId": 3034266,
+          "gameCode": "U13A-RS-014",
           "date": "Oct 3, 2026",
+          "location": "Caledon East (1)",
           "opp": "Caledon Hawks",
           "vsAt": "@",
           "score": "0-12",
           "result": "L",
           "gf": 0,
           "ga": 12,
+          "ppGoals": 0,
+          "ppOpps": 1,
+          "pkGoalsAllowed": 1,
+          "pkOpps": 1,
+          "shotsFor": 0,
+          "shotsAgainst": 0,
+          "pim": 2,
           "goalLog": [
             {
               "type": "goal",
@@ -62447,8 +62981,8 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
         "diff": "+25",
         "gpg": "4.40",
         "gapg": "1.90",
-        "pim": 60,
-        "pimPg": "6.0"
+        "pim": 58,
+        "pimPg": "5.8"
       },
       "specialTeams": {
         "ppPct": "20.7%",
@@ -62462,13 +62996,22 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
       "last5Games": [
         {
           "gameId": 3182602,
+          "gameCode": "U13A-RS-070",
           "date": "Nov 21, 2026",
+          "location": "Bradford Leisure (Paul Dossey)",
           "opp": "Aurora Tigers",
           "vsAt": "vs",
           "score": "11-0",
           "result": "W",
           "gf": 11,
           "ga": 0,
+          "ppGoals": 2,
+          "ppOpps": 6,
+          "pkGoalsAllowed": 0,
+          "pkOpps": 5,
+          "shotsFor": 0,
+          "shotsAgainst": 0,
+          "pim": 10,
           "goalLog": [
             {
               "type": "goal",
@@ -62564,14 +63107,31 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
         },
         {
           "gameId": 3148126,
+          "gameCode": "U13A-RS-090",
           "date": "Nov 8, 2026",
+          "location": "Stouffville Clippers (CC1)",
           "opp": "Stouffville Clippers",
           "vsAt": "@",
           "score": "4-2",
           "result": "W",
           "gf": 4,
           "ga": 2,
+          "ppGoals": 1,
+          "ppOpps": 2,
+          "pkGoalsAllowed": 0,
+          "pkOpps": 2,
+          "shotsFor": 0,
+          "shotsAgainst": 0,
+          "pim": 4,
           "goalLog": [
+            {
+              "type": "goal",
+              "period": 2,
+              "clockTime": "08:40",
+              "team": "opp",
+              "teamName": "Stouffville Clippers U13 A",
+              "scorer": ""
+            },
             {
               "type": "goal",
               "period": 2,
@@ -62606,14 +63166,6 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
             },
             {
               "type": "goal",
-              "period": 2,
-              "clockTime": "08:40",
-              "team": "opp",
-              "teamName": "Stouffville Clippers U13 A",
-              "scorer": ""
-            },
-            {
-              "type": "goal",
               "period": 3,
               "clockTime": "00:32",
               "team": "opp",
@@ -62626,14 +63178,39 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
         },
         {
           "gameId": 3144851,
+          "gameCode": "U13A-RS-089",
           "date": "Nov 7, 2026",
+          "location": "Bradford Leisure (Paul Dossey)",
           "opp": "Stouffville Clippers",
           "vsAt": "vs",
           "score": "4-4",
           "result": "T",
           "gf": 4,
           "ga": 4,
+          "ppGoals": 1,
+          "ppOpps": 4,
+          "pkGoalsAllowed": 0,
+          "pkOpps": 2,
+          "shotsFor": 0,
+          "shotsAgainst": 0,
+          "pim": 4,
           "goalLog": [
+            {
+              "type": "goal",
+              "period": 1,
+              "clockTime": "09:18",
+              "team": "opp",
+              "teamName": "Stouffville Clippers U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 2,
+              "clockTime": "11:00",
+              "team": "opp",
+              "teamName": "Stouffville Clippers U13 A",
+              "scorer": ""
+            },
             {
               "type": "goal",
               "period": 2,
@@ -62661,30 +63238,6 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
             {
               "type": "goal",
               "period": 3,
-              "clockTime": "08:00",
-              "team": "self",
-              "teamName": "South Simcoe Storm U13 A",
-              "scorer": ""
-            },
-            {
-              "type": "goal",
-              "period": 1,
-              "clockTime": "09:18",
-              "team": "opp",
-              "teamName": "Stouffville Clippers U13 A",
-              "scorer": ""
-            },
-            {
-              "type": "goal",
-              "period": 2,
-              "clockTime": "11:00",
-              "team": "opp",
-              "teamName": "Stouffville Clippers U13 A",
-              "scorer": ""
-            },
-            {
-              "type": "goal",
-              "period": 3,
               "clockTime": "13:33",
               "team": "opp",
               "teamName": "Stouffville Clippers U13 A",
@@ -62697,6 +63250,14 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
               "team": "opp",
               "teamName": "Stouffville Clippers U13 A",
               "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 3,
+              "clockTime": "08:00",
+              "team": "self",
+              "teamName": "South Simcoe Storm U13 A",
+              "scorer": ""
             }
           ],
           "penaltyLog": [],
@@ -62704,13 +63265,22 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
         },
         {
           "gameId": 3120088,
+          "gameCode": "U13A-RS-086",
           "date": "Nov 1, 2026",
+          "location": "Elvis Stojko (Elvis Stojko)",
           "opp": "Richmond Hill Jaguars",
           "vsAt": "@",
           "score": "6-0",
           "result": "W",
           "gf": 6,
           "ga": 0,
+          "ppGoals": 0,
+          "ppOpps": 0,
+          "pkGoalsAllowed": 0,
+          "pkOpps": 1,
+          "shotsFor": 0,
+          "shotsAgainst": 0,
+          "pim": 2,
           "goalLog": [
             {
               "type": "goal",
@@ -62766,26 +63336,27 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
         },
         {
           "gameId": 3098846,
+          "gameCode": "U13A-RS-085",
           "date": "Oct 25, 2026",
+          "location": "Bob Fallis (Bob Fallis)",
           "opp": "Richmond Hill Jaguars",
           "vsAt": "vs",
           "score": "2-2",
           "result": "T",
           "gf": 2,
           "ga": 2,
+          "ppGoals": 0,
+          "ppOpps": 1,
+          "pkGoalsAllowed": 0,
+          "pkOpps": 3,
+          "shotsFor": 0,
+          "shotsAgainst": 0,
+          "pim": 6,
           "goalLog": [
             {
               "type": "goal",
               "period": 1,
               "clockTime": "09:08",
-              "team": "self",
-              "teamName": "South Simcoe Storm U13 A",
-              "scorer": ""
-            },
-            {
-              "type": "goal",
-              "period": 3,
-              "clockTime": "01:43",
               "team": "self",
               "teamName": "South Simcoe Storm U13 A",
               "scorer": ""
@@ -62804,6 +63375,14 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
               "clockTime": "09:37",
               "team": "opp",
               "teamName": "Richmond Hill Jaguars U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 3,
+              "clockTime": "01:43",
+              "team": "self",
+              "teamName": "South Simcoe Storm U13 A",
               "scorer": ""
             }
           ],
@@ -62868,8 +63447,8 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
         "diff": "-50",
         "gpg": "1.10",
         "gapg": "6.10",
-        "pim": 60,
-        "pimPg": "6.0"
+        "pim": 30,
+        "pimPg": "3.0"
       },
       "specialTeams": {
         "ppPct": "13.6%",
@@ -62883,22 +63462,23 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
       "last5Games": [
         {
           "gameId": 3148127,
+          "gameCode": "U13A-RS-006",
           "date": "Nov 8, 2026",
+          "location": "Magna (Honda)",
           "opp": "Newmarket Renegades",
           "vsAt": "@",
           "score": "1-6",
           "result": "L",
           "gf": 1,
           "ga": 6,
+          "ppGoals": 1,
+          "ppOpps": 4,
+          "pkGoalsAllowed": 1,
+          "pkOpps": 2,
+          "shotsFor": 0,
+          "shotsAgainst": 0,
+          "pim": 4,
           "goalLog": [
-            {
-              "type": "goal",
-              "period": 3,
-              "clockTime": "11:48",
-              "team": "self",
-              "teamName": "Richmond Hill Jaguars U13 A",
-              "scorer": ""
-            },
             {
               "type": "goal",
               "period": 2,
@@ -62934,6 +63514,14 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
             {
               "type": "goal",
               "period": 3,
+              "clockTime": "11:48",
+              "team": "self",
+              "teamName": "Richmond Hill Jaguars U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 3,
               "clockTime": "05:51",
               "team": "opp",
               "teamName": "Newmarket Renegades U13 A",
@@ -62953,13 +63541,22 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
         },
         {
           "gameId": 3146846,
+          "gameCode": "U13A-RS-110",
           "date": "Nov 7, 2026",
+          "location": "Elgin Barrow (East)",
           "opp": "Newmarket Renegades",
           "vsAt": "vs",
           "score": "0-4",
           "result": "L",
           "gf": 0,
           "ga": 4,
+          "ppGoals": 0,
+          "ppOpps": 1,
+          "pkGoalsAllowed": 0,
+          "pkOpps": 2,
+          "shotsFor": 0,
+          "shotsAgainst": 0,
+          "pim": 4,
           "goalLog": [
             {
               "type": "goal",
@@ -62999,13 +63596,22 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
         },
         {
           "gameId": 3120088,
+          "gameCode": "U13A-RS-086",
           "date": "Nov 1, 2026",
+          "location": "Elvis Stojko (Elvis Stojko)",
           "opp": "South Simcoe Storm",
           "vsAt": "vs",
           "score": "0-6",
           "result": "L",
           "gf": 0,
           "ga": 6,
+          "ppGoals": 0,
+          "ppOpps": 1,
+          "pkGoalsAllowed": 0,
+          "pkOpps": 0,
+          "shotsFor": 0,
+          "shotsAgainst": 0,
+          "pim": 0,
           "goalLog": [
             {
               "type": "goal",
@@ -63061,38 +63667,23 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
         },
         {
           "gameId": 3108425,
+          "gameCode": "U13A-RS-115",
           "date": "Oct 27, 2026",
+          "location": "Elvis Stojko (Elvis Stojko)",
           "opp": "King Rebellion",
           "vsAt": "vs",
           "score": "3-4",
           "result": "L",
           "gf": 3,
           "ga": 4,
+          "ppGoals": 1,
+          "ppOpps": 1,
+          "pkGoalsAllowed": 0,
+          "pkOpps": 1,
+          "shotsFor": 0,
+          "shotsAgainst": 0,
+          "pim": 2,
           "goalLog": [
-            {
-              "type": "goal",
-              "period": 3,
-              "clockTime": "09:33",
-              "team": "self",
-              "teamName": "Richmond Hill Jaguars U13 A",
-              "scorer": ""
-            },
-            {
-              "type": "goal",
-              "period": 3,
-              "clockTime": "08:17",
-              "team": "self",
-              "teamName": "Richmond Hill Jaguars U13 A",
-              "scorer": ""
-            },
-            {
-              "type": "goal",
-              "period": 3,
-              "clockTime": "01:50",
-              "team": "self",
-              "teamName": "Richmond Hill Jaguars U13 A",
-              "scorer": ""
-            },
             {
               "type": "goal",
               "period": 2,
@@ -63120,9 +63711,33 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
             {
               "type": "goal",
               "period": 3,
+              "clockTime": "09:33",
+              "team": "self",
+              "teamName": "Richmond Hill Jaguars U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 3,
+              "clockTime": "08:17",
+              "team": "self",
+              "teamName": "Richmond Hill Jaguars U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 3,
               "clockTime": "02:56",
               "team": "opp",
               "teamName": "King Rebellion 13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 3,
+              "clockTime": "01:50",
+              "team": "self",
+              "teamName": "Richmond Hill Jaguars U13 A",
               "scorer": ""
             }
           ],
@@ -63131,14 +63746,31 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
         },
         {
           "gameId": 3098846,
+          "gameCode": "U13A-RS-085",
           "date": "Oct 25, 2026",
+          "location": "Bob Fallis (Bob Fallis)",
           "opp": "South Simcoe Storm",
           "vsAt": "@",
           "score": "2-2",
           "result": "T",
           "gf": 2,
           "ga": 2,
+          "ppGoals": 0,
+          "ppOpps": 3,
+          "pkGoalsAllowed": 0,
+          "pkOpps": 1,
+          "shotsFor": 0,
+          "shotsAgainst": 0,
+          "pim": 2,
           "goalLog": [
+            {
+              "type": "goal",
+              "period": 1,
+              "clockTime": "09:08",
+              "team": "opp",
+              "teamName": "South Simcoe Storm U13 A",
+              "scorer": ""
+            },
             {
               "type": "goal",
               "period": 2,
@@ -63153,14 +63785,6 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
               "clockTime": "09:37",
               "team": "self",
               "teamName": "Richmond Hill Jaguars U13 A",
-              "scorer": ""
-            },
-            {
-              "type": "goal",
-              "period": 1,
-              "clockTime": "09:08",
-              "team": "opp",
-              "teamName": "South Simcoe Storm U13 A",
               "scorer": ""
             },
             {
@@ -63227,8 +63851,8 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
         "diff": "-7",
         "gpg": "3.08",
         "gapg": "3.67",
-        "pim": 72,
-        "pimPg": "6.0"
+        "pim": 102,
+        "pimPg": "8.5"
       },
       "specialTeams": {
         "ppPct": "21.2%",
@@ -63242,22 +63866,23 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
       "last5Games": [
         {
           "gameId": 3169951,
+          "gameCode": "U13A-RS-053",
           "date": "Nov 15, 2026",
+          "location": "Georgina Sutton (Georgina Sutton)",
           "opp": "Upper York Admirals",
           "vsAt": "@",
           "score": "1-4",
           "result": "L",
           "gf": 1,
           "ga": 4,
+          "ppGoals": 0,
+          "ppOpps": 5,
+          "pkGoalsAllowed": 1,
+          "pkOpps": 7,
+          "shotsFor": 0,
+          "shotsAgainst": 0,
+          "pim": 14,
           "goalLog": [
-            {
-              "type": "goal",
-              "period": 3,
-              "clockTime": "11:15",
-              "team": "self",
-              "teamName": "Orangeville Flyers U13 A",
-              "scorer": ""
-            },
             {
               "type": "goal",
               "period": 1,
@@ -63272,6 +63897,14 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
               "clockTime": "11:18",
               "team": "opp",
               "teamName": "Upper York Admirals U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 3,
+              "clockTime": "11:15",
+              "team": "self",
+              "teamName": "Orangeville Flyers U13 A",
               "scorer": ""
             },
             {
@@ -63296,13 +63929,22 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
         },
         {
           "gameId": 3163300,
+          "gameCode": "U13A-RS-054",
           "date": "Nov 12, 2026",
+          "location": "Alder (Red)",
           "opp": "Stouffville Clippers",
           "vsAt": "vs",
           "score": "5-1",
           "result": "W",
           "gf": 5,
           "ga": 1,
+          "ppGoals": 2,
+          "ppOpps": 3,
+          "pkGoalsAllowed": 1,
+          "pkOpps": 3,
+          "shotsFor": 0,
+          "shotsAgainst": 0,
+          "pim": 6,
           "goalLog": [
             {
               "type": "goal",
@@ -63358,13 +64000,22 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
         },
         {
           "gameId": 3130624,
+          "gameCode": "U13A-RS-133",
           "date": "Nov 2, 2026",
+          "location": "Alder (Red)",
           "opp": "Barrie Colts U13-2 A Blue",
           "vsAt": "vs",
           "score": "1-5",
           "result": "L",
           "gf": 1,
           "ga": 5,
+          "ppGoals": 1,
+          "ppOpps": 6,
+          "pkGoalsAllowed": 1,
+          "pkOpps": 7,
+          "shotsFor": 0,
+          "shotsAgainst": 0,
+          "pim": 14,
           "goalLog": [
             {
               "type": "goal",
@@ -63420,13 +64071,22 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
         },
         {
           "gameId": 3120087,
+          "gameCode": "U13A-RS-055",
           "date": "Nov 1, 2026",
+          "location": "Stouffville Clippers (CC1)",
           "opp": "Stouffville Clippers",
           "vsAt": "@",
           "score": "4-2",
           "result": "W",
           "gf": 4,
           "ga": 2,
+          "ppGoals": 1,
+          "ppOpps": 2,
+          "pkGoalsAllowed": 0,
+          "pkOpps": 4,
+          "shotsFor": 0,
+          "shotsAgainst": 0,
+          "pim": 8,
           "goalLog": [
             {
               "type": "goal",
@@ -63455,17 +64115,17 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
             {
               "type": "goal",
               "period": 3,
-              "clockTime": "05:49",
-              "team": "self",
-              "teamName": "Orangeville Flyers U13 A",
+              "clockTime": "11:39",
+              "team": "opp",
+              "teamName": "Stouffville Clippers U13 A",
               "scorer": ""
             },
             {
               "type": "goal",
               "period": 3,
-              "clockTime": "11:39",
-              "team": "opp",
-              "teamName": "Stouffville Clippers U13 A",
+              "clockTime": "05:49",
+              "team": "self",
+              "teamName": "Orangeville Flyers U13 A",
               "scorer": ""
             },
             {
@@ -63482,22 +64142,23 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
         },
         {
           "gameId": 3112769,
+          "gameCode": "U13A-RS-127",
           "date": "Oct 29, 2026",
+          "location": "Alder (Red)",
           "opp": "Georgian Bay Islanders",
           "vsAt": "vs",
           "score": "1-10",
           "result": "L",
           "gf": 1,
           "ga": 10,
+          "ppGoals": 0,
+          "ppOpps": 3,
+          "pkGoalsAllowed": 3,
+          "pkOpps": 5,
+          "shotsFor": 0,
+          "shotsAgainst": 0,
+          "pim": 10,
           "goalLog": [
-            {
-              "type": "goal",
-              "period": 3,
-              "clockTime": "07:06",
-              "team": "self",
-              "teamName": "Orangeville Flyers U13 A",
-              "scorer": ""
-            },
             {
               "type": "goal",
               "period": 1,
@@ -63568,6 +64229,14 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
               "clockTime": "00:27",
               "team": "opp",
               "teamName": "Georgian Bay Islanders U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 3,
+              "clockTime": "07:06",
+              "team": "self",
+              "teamName": "Orangeville Flyers U13 A",
               "scorer": ""
             },
             {
@@ -63975,8 +64644,8 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
         "diff": "+78",
         "gpg": "8.00",
         "gapg": "1.50",
-        "pim": 72,
-        "pimPg": "6.0"
+        "pim": 54,
+        "pimPg": "4.5"
       },
       "specialTeams": {
         "ppPct": "52.4%",
@@ -63988,13 +64657,22 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
       "last5Games": [
         {
           "gameId": 3183845,
+          "gameCode": "U13A-RS-031",
           "date": "Nov 22, 2026",
+          "location": "Zancor (JTF)",
           "opp": "King Rebellion",
           "vsAt": "@",
           "score": "11-2",
           "result": "W",
           "gf": 11,
           "ga": 2,
+          "ppGoals": 5,
+          "ppOpps": 6,
+          "pkGoalsAllowed": 0,
+          "pkOpps": 4,
+          "shotsFor": 0,
+          "shotsAgainst": 0,
+          "pim": 8,
           "goalLog": [
             {
               "type": "goal",
@@ -64018,6 +64696,14 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
               "clockTime": "03:35",
               "team": "self",
               "teamName": "Georgian Bay Islanders U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 1,
+              "clockTime": "00:35",
+              "team": "opp",
+              "teamName": "King Rebellion 13 A",
               "scorer": ""
             },
             {
@@ -64086,14 +64772,6 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
             },
             {
               "type": "goal",
-              "period": 1,
-              "clockTime": "00:35",
-              "team": "opp",
-              "teamName": "King Rebellion 13 A",
-              "scorer": ""
-            },
-            {
-              "type": "goal",
               "period": 3,
               "clockTime": "01:05",
               "team": "opp",
@@ -64106,13 +64784,22 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
         },
         {
           "gameId": 3182603,
+          "gameCode": "U13A-RS-034",
           "date": "Nov 21, 2026",
+          "location": "Penetang (Penetang)",
           "opp": "Newmarket Renegades",
           "vsAt": "vs",
           "score": "7-0",
           "result": "W",
           "gf": 7,
           "ga": 0,
+          "ppGoals": 0,
+          "ppOpps": 2,
+          "pkGoalsAllowed": 0,
+          "pkOpps": 4,
+          "shotsFor": 0,
+          "shotsAgainst": 0,
+          "pim": 8,
           "goalLog": [
             {
               "type": "goal",
@@ -64176,14 +64863,31 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
         },
         {
           "gameId": 3170148,
+          "gameCode": "U13A-RS-134",
           "date": "Nov 15, 2026",
+          "location": "North Simcoe SRC (Centennial)",
           "opp": "Caledon Hawks",
           "vsAt": "vs",
           "score": "6-1",
           "result": "W",
           "gf": 6,
           "ga": 1,
+          "ppGoals": 2,
+          "ppOpps": 4,
+          "pkGoalsAllowed": 0,
+          "pkOpps": 2,
+          "shotsFor": 0,
+          "shotsAgainst": 0,
+          "pim": 4,
           "goalLog": [
+            {
+              "type": "goal",
+              "period": 1,
+              "clockTime": "09:46",
+              "team": "opp",
+              "teamName": "Caledon Hawks 13 A",
+              "scorer": ""
+            },
             {
               "type": "goal",
               "period": 2,
@@ -64231,14 +64935,6 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
               "team": "self",
               "teamName": "Georgian Bay Islanders U13 A",
               "scorer": ""
-            },
-            {
-              "type": "goal",
-              "period": 1,
-              "clockTime": "09:46",
-              "team": "opp",
-              "teamName": "Caledon Hawks 13 A",
-              "scorer": ""
             }
           ],
           "penaltyLog": [],
@@ -64246,22 +64942,23 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
         },
         {
           "gameId": 3120084,
+          "gameCode": "U13A-RS-143",
           "date": "Nov 1, 2026",
+          "location": "North Simcoe SRC (Centennial)",
           "opp": "Barrie Colts",
           "vsAt": "vs",
           "score": "1-5",
           "result": "L",
           "gf": 1,
           "ga": 5,
+          "ppGoals": 0,
+          "ppOpps": 2,
+          "pkGoalsAllowed": 0,
+          "pkOpps": 1,
+          "shotsFor": 0,
+          "shotsAgainst": 0,
+          "pim": 2,
           "goalLog": [
-            {
-              "type": "goal",
-              "period": 2,
-              "clockTime": "00:20",
-              "team": "self",
-              "teamName": "Georgian Bay Islanders U13 A",
-              "scorer": ""
-            },
             {
               "type": "goal",
               "period": 1,
@@ -64288,6 +64985,14 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
             },
             {
               "type": "goal",
+              "period": 2,
+              "clockTime": "00:20",
+              "team": "self",
+              "teamName": "Georgian Bay Islanders U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
               "period": 3,
               "clockTime": "13:10",
               "team": "opp",
@@ -64308,13 +65013,22 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
         },
         {
           "gameId": 3112769,
+          "gameCode": "U13A-RS-127",
           "date": "Oct 29, 2026",
+          "location": "Alder (Red)",
           "opp": "Orangeville Flyers",
           "vsAt": "@",
           "score": "10-1",
           "result": "W",
           "gf": 10,
           "ga": 1,
+          "ppGoals": 3,
+          "ppOpps": 5,
+          "pkGoalsAllowed": 0,
+          "pkOpps": 3,
+          "shotsFor": 0,
+          "shotsAgainst": 0,
+          "pim": 6,
           "goalLog": [
             {
               "type": "goal",
@@ -64391,17 +65105,17 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
             {
               "type": "goal",
               "period": 3,
-              "clockTime": "05:09",
-              "team": "self",
-              "teamName": "Georgian Bay Islanders U13 A",
+              "clockTime": "07:06",
+              "team": "opp",
+              "teamName": "Orangeville Flyers U13 A",
               "scorer": ""
             },
             {
               "type": "goal",
               "period": 3,
-              "clockTime": "07:06",
-              "team": "opp",
-              "teamName": "Orangeville Flyers U13 A",
+              "clockTime": "05:09",
+              "team": "self",
+              "teamName": "Georgian Bay Islanders U13 A",
               "scorer": ""
             }
           ],
@@ -64436,8 +65150,8 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
         "diff": "-11",
         "gpg": "2.58",
         "gapg": "3.50",
-        "pim": 72,
-        "pimPg": "6.0"
+        "pim": 58,
+        "pimPg": "4.8"
       },
       "specialTeams": {
         "ppPct": "16.7%",
@@ -64449,13 +65163,22 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
       "last5Games": [
         {
           "gameId": 3179075,
+          "gameCode": "U13A-RS-002",
           "date": "Nov 19, 2026",
+          "location": "Zancor (JTF)",
           "opp": "King Rebellion",
           "vsAt": "@",
           "score": "3-1",
           "result": "W",
           "gf": 3,
           "ga": 1,
+          "ppGoals": 1,
+          "ppOpps": 6,
+          "pkGoalsAllowed": 1,
+          "pkOpps": 3,
+          "shotsFor": 0,
+          "shotsAgainst": 0,
+          "pim": 6,
           "goalLog": [
             {
               "type": "goal",
@@ -64463,6 +65186,14 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
               "clockTime": "11:52",
               "team": "self",
               "teamName": "Stouffville Clippers U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 2,
+              "clockTime": "09:40",
+              "team": "opp",
+              "teamName": "King Rebellion 13 A",
               "scorer": ""
             },
             {
@@ -64480,14 +65211,6 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
               "team": "self",
               "teamName": "Stouffville Clippers U13 A",
               "scorer": ""
-            },
-            {
-              "type": "goal",
-              "period": 2,
-              "clockTime": "09:40",
-              "team": "opp",
-              "teamName": "King Rebellion 13 A",
-              "scorer": ""
             }
           ],
           "penaltyLog": [],
@@ -64495,20 +65218,45 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
         },
         {
           "gameId": 3166191,
+          "gameCode": "U13A-RS-068",
           "date": "Nov 14, 2026",
+          "location": "West Orillia (Blue)",
           "opp": "Orillia Terriers",
           "vsAt": "@",
           "score": "3-5",
           "result": "L",
           "gf": 3,
           "ga": 5,
+          "ppGoals": 1,
+          "ppOpps": 4,
+          "pkGoalsAllowed": 1,
+          "pkOpps": 1,
+          "shotsFor": 21,
+          "shotsAgainst": 30,
+          "pim": 2,
           "goalLog": [
+            {
+              "type": "goal",
+              "period": 1,
+              "clockTime": "03:02",
+              "team": "opp",
+              "teamName": "Orillia Terriers U13 A",
+              "scorer": ""
+            },
             {
               "type": "goal",
               "period": 2,
               "clockTime": "08:41",
               "team": "self",
               "teamName": "Stouffville Clippers U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 2,
+              "clockTime": "06:39",
+              "team": "opp",
+              "teamName": "Orillia Terriers U13 A",
               "scorer": ""
             },
             {
@@ -64522,23 +65270,7 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
             {
               "type": "goal",
               "period": 3,
-              "clockTime": "10:36",
-              "team": "self",
-              "teamName": "Stouffville Clippers U13 A",
-              "scorer": ""
-            },
-            {
-              "type": "goal",
-              "period": 1,
-              "clockTime": "03:02",
-              "team": "opp",
-              "teamName": "Orillia Terriers U13 A",
-              "scorer": ""
-            },
-            {
-              "type": "goal",
-              "period": 2,
-              "clockTime": "06:39",
+              "clockTime": "11:06",
               "team": "opp",
               "teamName": "Orillia Terriers U13 A",
               "scorer": ""
@@ -64546,9 +65278,9 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
             {
               "type": "goal",
               "period": 3,
-              "clockTime": "11:06",
-              "team": "opp",
-              "teamName": "Orillia Terriers U13 A",
+              "clockTime": "10:36",
+              "team": "self",
+              "teamName": "Stouffville Clippers U13 A",
               "scorer": ""
             },
             {
@@ -64573,22 +65305,23 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
         },
         {
           "gameId": 3163300,
+          "gameCode": "U13A-RS-054",
           "date": "Nov 12, 2026",
+          "location": "Alder (Red)",
           "opp": "Orangeville Flyers",
           "vsAt": "@",
           "score": "1-5",
           "result": "L",
           "gf": 1,
           "ga": 5,
+          "ppGoals": 1,
+          "ppOpps": 3,
+          "pkGoalsAllowed": 2,
+          "pkOpps": 3,
+          "shotsFor": 0,
+          "shotsAgainst": 0,
+          "pim": 6,
           "goalLog": [
-            {
-              "type": "goal",
-              "period": 3,
-              "clockTime": "00:36",
-              "team": "self",
-              "teamName": "Stouffville Clippers U13 A",
-              "scorer": ""
-            },
             {
               "type": "goal",
               "period": 1,
@@ -64628,6 +65361,14 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
               "team": "opp",
               "teamName": "Orangeville Flyers U13 A",
               "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 3,
+              "clockTime": "00:36",
+              "team": "self",
+              "teamName": "Stouffville Clippers U13 A",
+              "scorer": ""
             }
           ],
           "penaltyLog": [],
@@ -64635,26 +65376,27 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
         },
         {
           "gameId": 3148126,
+          "gameCode": "U13A-RS-090",
           "date": "Nov 8, 2026",
+          "location": "Stouffville Clippers (CC1)",
           "opp": "South Simcoe Storm",
           "vsAt": "vs",
           "score": "2-4",
           "result": "L",
           "gf": 2,
           "ga": 4,
+          "ppGoals": 0,
+          "ppOpps": 2,
+          "pkGoalsAllowed": 1,
+          "pkOpps": 2,
+          "shotsFor": 0,
+          "shotsAgainst": 0,
+          "pim": 4,
           "goalLog": [
             {
               "type": "goal",
               "period": 2,
               "clockTime": "08:40",
-              "team": "self",
-              "teamName": "Stouffville Clippers U13 A",
-              "scorer": ""
-            },
-            {
-              "type": "goal",
-              "period": 3,
-              "clockTime": "00:32",
               "team": "self",
               "teamName": "Stouffville Clippers U13 A",
               "scorer": ""
@@ -64690,6 +65432,14 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
               "team": "opp",
               "teamName": "South Simcoe Storm U13 A",
               "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 3,
+              "clockTime": "00:32",
+              "team": "self",
+              "teamName": "Stouffville Clippers U13 A",
+              "scorer": ""
             }
           ],
           "penaltyLog": [],
@@ -64697,13 +65447,22 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
         },
         {
           "gameId": 3144851,
+          "gameCode": "U13A-RS-089",
           "date": "Nov 7, 2026",
+          "location": "Bradford Leisure (Paul Dossey)",
           "opp": "South Simcoe Storm",
           "vsAt": "@",
           "score": "4-4",
           "result": "T",
           "gf": 4,
           "ga": 4,
+          "ppGoals": 0,
+          "ppOpps": 2,
+          "pkGoalsAllowed": 1,
+          "pkOpps": 4,
+          "shotsFor": 0,
+          "shotsAgainst": 0,
+          "pim": 8,
           "goalLog": [
             {
               "type": "goal",
@@ -64717,22 +65476,6 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
               "type": "goal",
               "period": 2,
               "clockTime": "11:00",
-              "team": "self",
-              "teamName": "Stouffville Clippers U13 A",
-              "scorer": ""
-            },
-            {
-              "type": "goal",
-              "period": 3,
-              "clockTime": "13:33",
-              "team": "self",
-              "teamName": "Stouffville Clippers U13 A",
-              "scorer": ""
-            },
-            {
-              "type": "goal",
-              "period": 3,
-              "clockTime": "08:38",
               "team": "self",
               "teamName": "Stouffville Clippers U13 A",
               "scorer": ""
@@ -64764,6 +65507,22 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
             {
               "type": "goal",
               "period": 3,
+              "clockTime": "13:33",
+              "team": "self",
+              "teamName": "Stouffville Clippers U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 3,
+              "clockTime": "08:38",
+              "team": "self",
+              "teamName": "Stouffville Clippers U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 3,
               "clockTime": "08:00",
               "team": "opp",
               "teamName": "South Simcoe Storm U13 A",
@@ -64776,7 +65535,7 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
       ]
     }
   },
-  "lastSynced": "2026-11-25T12:21:15.336449Z"
+  "lastSynced": "2026-11-25T18:51:07.958795Z"
 };
 
     function getOpponentGameSheetData(oppNameOrCode) {
@@ -65056,14 +65815,21 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
                   console.log("☁️ Cloud Live Broadcast Detected:", data.videoId);
                   tuneLiveStreamId(data.videoId);
                 }
-                // Synchronize real-time score updates across all spectators / parent devices
+                // Synchronize real-time score, clock & ticker updates across all spectators / parent devices
                 if (typeof data.homeScore === 'number' && typeof data.awayScore === 'number') {
                   const scoreChanged = (data.homeScore !== liveGameSheetState.homeScore || data.awayScore !== liveGameSheetState.awayScore);
                   liveGameSheetState.homeScore = data.homeScore;
                   liveGameSheetState.awayScore = data.awayScore;
                   if (data.period !== undefined) liveGameSheetState.period = data.period;
+                  if (typeof data.clockSec === 'number') liveGameSheetState.clockSec = data.clockSec;
+                  if (typeof data.running === 'boolean') liveGameSheetState.running = data.running;
+                  if (data.lastScorekeeperUpdateMs) liveGameSheetState.lastScorekeeperUpdateMs = data.lastScorekeeperUpdateMs;
                   if (data.opponent && !liveGameSheetState.opponent) liveGameSheetState.opponent = data.opponent;
                   if (data.oppAbbr && !liveGameSheetState.oppAbbr) liveGameSheetState.oppAbbr = data.oppAbbr;
+                  if (Array.isArray(data.tickerEvents) && data.tickerEvents.length > 0) {
+                    liveGameSheetState.tickerEvents = data.tickerEvents;
+                    if (typeof renderLiveTickerEvents === 'function') renderLiveTickerEvents();
+                  }
                   renderLiveScoreboardHud();
                   if (scoreChanged) {
                     console.log("☁️ Real-time cloud score updated:", data.homeScore, "-", data.awayScore);
@@ -65072,8 +65838,430 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
               }
             }
           }, err => console.log("Live broadcast cloud listener notice:", err));
+
+          // Listen for real-time shift roster overrides from parents & coaches
+          window.db.collection("shift_overrides").limit(300).onSnapshot(snap => {
+            let changed = false;
+            snap.forEach(doc => {
+              const d = doc.data();
+              if (d && d.game_id && d.shift_id && Array.isArray(d.player_ids)) {
+                try {
+                  localStorage.setItem(`shift_override_${d.game_id}_${d.shift_id}`, JSON.stringify({
+                    player_ids: d.player_ids,
+                    line_label: d.line_label || ''
+                  }));
+                  if (currentGame && String(currentGame.id) === String(d.game_id)) changed = true;
+                } catch(e){}
+              }
+            });
+            if (changed && typeof loadCoachingClips === 'function') {
+              loadCoachingClips();
+            }
+          }, err => console.log("Shift override listener notice:", err));
         } catch(e){}
       }
+    }
+
+    // =========================================================================
+    // REAL-TIME ROSTER CONFIRMATION & 1 -> 2 -> 3 LINE ROTATION BAR
+    // =========================================================================
+
+    let rosterBarSelectedLine = 'Line 1';
+    let rosterBarSelectedPlayers = [...(LINE_PRESETS['Line 1'] || [10, 7, 11, 21, 27])];
+    let rosterBarNextLine = 'Line 1';
+
+    function getNextRotationLine(lineName) {
+      if (lineName === 'Line 1') return 'Line 2';
+      if (lineName === 'Line 2') return 'Line 3';
+      if (lineName === 'Line 3') return 'Line 1';
+      return rosterBarNextLine || 'Line 1';
+    }
+
+    function advanceRosterLineRotation(usedLine) {
+      rosterBarNextLine = getNextRotationLine(usedLine);
+      const nextPill = document.getElementById('roster-bar-next-line-pill');
+      const nextBtnLabel = document.getElementById('roster-bar-tag-next-label');
+      if (nextPill) nextPill.innerText = `Next: ${rosterBarNextLine}`;
+      if (nextBtnLabel) nextBtnLabel.innerText = `Tag ${rosterBarNextLine} Here`;
+    }
+
+    function selectRosterBarLine(lineName) {
+      if (!LINE_PRESETS[lineName]) return;
+      rosterBarSelectedLine = lineName;
+      rosterBarSelectedPlayers = [...LINE_PRESETS[lineName]];
+      renderRosterBarUI();
+    }
+
+    function toggleRosterBarPlayer(jerseyNum) {
+      const n = Number(jerseyNum);
+      const idx = rosterBarSelectedPlayers.indexOf(n);
+      if (idx >= 0) {
+        rosterBarSelectedPlayers.splice(idx, 1);
+      } else {
+        rosterBarSelectedPlayers.push(n);
+      }
+      rosterBarSelectedLine = 'Custom';
+      renderRosterBarUI();
+    }
+
+    function toggleRosterBarEditor() {
+      const grid = document.getElementById('roster-bar-full-grid');
+      if (!grid) return;
+      grid.classList.toggle('hidden');
+      renderRosterBarUI();
+    }
+
+    function renderRosterBarUI() {
+      const chipsEl = document.getElementById('roster-bar-active-chips');
+      const gridEl = document.getElementById('roster-bar-full-grid');
+      const targetBadge = document.getElementById('roster-bar-target-badge');
+      const nextPill = document.getElementById('roster-bar-next-line-pill');
+      const nextBtnLabel = document.getElementById('roster-bar-tag-next-label');
+
+      ['Line 1', 'Line 2', 'Line 3', 'PP 1', 'PK 1'].forEach(ln => {
+        const btn = document.getElementById(`rb-line-btn-${ln}`);
+        if (!btn) return;
+        const isSel = rosterBarSelectedLine === ln;
+        const isNext = rosterBarNextLine === ln;
+        if (isSel) {
+          btn.className = "px-2 py-0.5 rounded bg-amber-400 text-slate-950 border border-amber-300 font-black text-[10px] cursor-pointer transition shadow-xs";
+        } else if (isNext) {
+          btn.className = "px-2 py-0.5 rounded bg-emerald-900/60 hover:bg-emerald-800 text-emerald-300 border border-emerald-400/70 font-bold text-[10px] cursor-pointer transition";
+        } else {
+          btn.className = "px-2 py-0.5 rounded bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 font-bold text-[10px] cursor-pointer transition";
+        }
+      });
+
+      if (targetBadge) {
+        if (typeof activeShiftId !== 'undefined' && activeShiftId) {
+          targetBadge.innerText = `Shift #${activeShiftId}`;
+        } else if (typeof isLiveBroadcastActive !== 'undefined' && isLiveBroadcastActive) {
+          const min = Math.floor((liveGameSheetState.clockSec || 0) / 60);
+          const sec = (liveGameSheetState.clockSec || 0) % 60;
+          targetBadge.innerText = `LIVE P${liveGameSheetState.period} ${min}:${sec.toString().padStart(2, '0')}`;
+        } else {
+          const cur = Math.floor((typeof getThrottledPlayerTime === 'function' ? getThrottledPlayerTime() : 0) || 0);
+          targetBadge.innerText = `Film ${Math.floor(cur/60)}:${(cur%60).toString().padStart(2,'0')}`;
+        }
+      }
+
+      if (nextPill) nextPill.innerText = `Next: ${rosterBarNextLine}`;
+      if (nextBtnLabel) nextBtnLabel.innerText = `Tag ${rosterBarNextLine} Here`;
+
+      if (chipsEl) {
+        if (rosterBarSelectedPlayers.length === 0) {
+          chipsEl.innerHTML = `<span class="text-slate-400 text-[10px] italic">Click a Line or Edit # to select skaters on ice</span>`;
+        } else {
+          chipsEl.innerHTML = rosterBarSelectedPlayers.map(num => {
+            const p = ROSTER_POSITIONS[String(num)] || { name: `#${num}`, pos: 'F' };
+            const shortName = p.name.split(' ')[0];
+            return `<button type="button" onclick="toggleRosterBarPlayer(${num})" title="Click to remove #${num} ${p.name}" class="px-1.5 py-0.5 rounded bg-slate-800 hover:bg-rose-900/60 border border-amber-400/40 text-amber-300 font-bold text-[10px] cursor-pointer flex items-center gap-1 transition">
+              <span>#${num}</span><span class="text-slate-300 font-normal hidden sm:inline">${escapeHtml(shortName)}</span><span class="text-slate-500 text-[9px]">×</span>
+            </button>`;
+          }).join('');
+        }
+      }
+
+      if (gridEl && !gridEl.classList.contains('hidden')) {
+        gridEl.innerHTML = Object.entries(ROSTER_POSITIONS).map(([numStr, p]) => {
+          const num = Number(numStr);
+          const active = rosterBarSelectedPlayers.includes(num);
+          return `<button type="button" onclick="toggleRosterBarPlayer(${num})" class="px-2 py-0.5 rounded text-[10px] font-bold cursor-pointer transition border ${active ? 'bg-amber-400 text-slate-950 border-amber-300' : 'bg-slate-900 text-slate-300 border-slate-700 hover:bg-slate-800'}">
+            #${num} ${escapeHtml(p.name.split(' ')[0])} (${p.pos})
+          </button>`;
+        }).join('');
+      }
+    }
+
+    function confirmRosterBarOnActiveShift() {
+      if (rosterBarSelectedPlayers.length === 0) {
+        showToast("⚠️ Select a Line or at least one player first.");
+        return;
+      }
+      const lineLabel = rosterBarSelectedLine !== 'Custom' ? rosterBarSelectedLine : 'Confirmed Roster';
+      if (typeof activeShiftId !== 'undefined' && activeShiftId && currentGame) {
+        const overrideData = { player_ids: [...rosterBarSelectedPlayers], line_label: lineLabel };
+        try {
+          localStorage.setItem(`shift_override_${currentGame.id}_${activeShiftId}`, JSON.stringify(overrideData));
+          localStorage.setItem(`shift_verified_${currentGame.id}_${activeShiftId}`, 'true');
+        } catch(e){}
+        if (window.db) {
+          window.db.collection("shift_overrides").doc(`${currentGame.id}_${activeShiftId}`).set({
+            game_id: currentGame.id,
+            shift_id: String(activeShiftId),
+            player_ids: [...rosterBarSelectedPlayers],
+            line_label: lineLabel,
+            updated_by: getLiveViewerName(),
+            updated_at: firebase.firestore.FieldValue.serverTimestamp()
+          }, { merge: true }).catch(() => {});
+          window.db.collection("verified_shifts").doc(`${currentGame.id}_${activeShiftId}`).set({
+            game_id: currentGame.id,
+            shift_id: activeShiftId,
+            verified: true,
+            verified_by: getLiveViewerName(),
+            verified_at: firebase.firestore.FieldValue.serverTimestamp()
+          }, { merge: true }).catch(() => {});
+        }
+        if (LINE_PRESETS[rosterBarSelectedLine]) {
+          advanceRosterLineRotation(rosterBarSelectedLine);
+          selectRosterBarLine(rosterBarNextLine);
+        }
+        if (typeof loadCoachingClips === 'function') loadCoachingClips();
+        if (currentStage === 'whiteboard' && typeof renderRinkBackground === 'function') renderRinkBackground();
+        if (typeof redrawCanvasLayers === 'function') redrawCanvasLayers();
+        showToast(`✅ Confirmed Shift #${activeShiftId} (${lineLabel}) • Synced live! Next: ${rosterBarNextLine}`);
+      } else {
+        tagNextRotationShiftHere(true);
+      }
+    }
+
+    function tagNextRotationShiftHere(useCurrentSelection = false) {
+      const targetLine = useCurrentSelection ? rosterBarSelectedLine : rosterBarNextLine;
+      const players = useCurrentSelection && rosterBarSelectedPlayers.length > 0
+        ? [...rosterBarSelectedPlayers]
+        : [...(LINE_PRESETS[targetLine] || rosterBarSelectedPlayers)];
+      const curSec = Math.floor((typeof getThrottledPlayerTime === 'function' ? getThrottledPlayerTime() : 0) || 0);
+      const endSec = curSec + 35;
+      const gameId = (typeof isLiveBroadcastActive !== 'undefined' && isLiveBroadcastActive)
+        ? (liveGameSheetState.leagueCode || 'live_game')
+        : (currentGame ? currentGame.id : 'live_game');
+      const periodNum = (typeof isLiveBroadcastActive !== 'undefined' && isLiveBroadcastActive)
+        ? (liveGameSheetState.period || 1)
+        : (curSec < 900 ? 1 : (curSec < 1800 ? 2 : 3));
+
+      const newShift = {
+        shift_id: "comm_" + Date.now(),
+        period: periodNum,
+        start_seconds: curSec,
+        end_seconds: endSec,
+        duration: 35,
+        player_ids: players,
+        line_label: targetLine,
+        strength_state: targetLine === 'PP 1' ? '5v4 PP' : (targetLine === 'PK 1' ? '4v5 PK' : '5v5'),
+        primary_zone: "Neutral Zone",
+        coach_notes: `${targetLine} shift tagged by ${getLiveViewerName()} (${players.map(n => '#' + n).join(', ')})`,
+        breakout: { attempted: false, successful: false, breakout_type: "Controlled Exit", turnover_location: "None" },
+        confidence: 100,
+        community_tagged: true,
+        contributor: getLiveViewerName(),
+        verified: true
+      };
+
+      if (currentGame && !(typeof isLiveBroadcastActive !== 'undefined' && isLiveBroadcastActive)) {
+        try {
+          const storageKey = `tigers_community_shifts_${currentGame.id}`;
+          const existing = JSON.parse(localStorage.getItem(storageKey) || '[]');
+          existing.push(newShift);
+          localStorage.setItem(storageKey, JSON.stringify(existing));
+        } catch(e){}
+      }
+
+      if (window.db) {
+        window.db.collection("community_shifts").add({
+          game_id: gameId,
+          ...newShift,
+          created_at: firebase.firestore.FieldValue.serverTimestamp()
+        }).catch(() => {});
+      }
+
+      if (typeof isLiveBroadcastActive !== 'undefined' && isLiveBroadcastActive && typeof addLiveTickerEvent === 'function') {
+        addLiveTickerEvent(`🏒 ${targetLine} on ice (${players.map(n => '#' + n).join(' ')})`);
+      }
+
+      advanceRosterLineRotation(targetLine);
+      rosterBarSelectedLine = rosterBarNextLine;
+      if (LINE_PRESETS[rosterBarNextLine]) {
+        rosterBarSelectedPlayers = [...LINE_PRESETS[rosterBarNextLine]];
+      }
+      renderRosterBarUI();
+      if (typeof loadCoachingClips === 'function') loadCoachingClips();
+      showToast(`🏷️ Tagged ${targetLine} (${players.map(n => '#' + n).join(', ')}) • Next Up: ${rosterBarNextLine}`);
+    }
+
+    // Initialize Roster Bar on load
+    setTimeout(() => {
+      if (typeof renderRosterBarUI === 'function') renderRosterBarUI();
+    }, 300);
+
+    // =========================================================================
+    // LIVE VIEWER PRESENCE ("WHO'S WATCHING") & LIVESTREAM CHAT
+    // =========================================================================
+
+    let liveViewerHeartbeatTimer = null;
+    let liveViewersUnsub = null;
+    let liveChatUnsub = null;
+    let liveChatUnreadCount = 0;
+    let liveChatInitialLoad = true;
+
+    function getLiveViewerId() {
+      let id = safeGet('tigers_viewer_id');
+      if (!id) {
+        id = 'v_' + Math.random().toString(36).substring(2, 10) + '_' + Date.now().toString(36);
+        try { localStorage.setItem('tigers_viewer_id', id); } catch(e){}
+      }
+      return id;
+    }
+
+    function getLiveViewerName() {
+      const saved = safeGet('tigers_viewer_name');
+      if (saved) return saved;
+      if (typeof currentRole !== 'undefined') {
+        if (currentRole === 'admin') return 'Admin (Scott)';
+        if (currentRole === 'coach') return 'Coach Staff';
+      }
+      return 'Tigers Parent';
+    }
+
+    function promptSetViewerName() {
+      const cur = getLiveViewerName();
+      const next = prompt("Enter your display name for Live Chat & Viewer List:", cur);
+      if (next && next.trim()) {
+        try { localStorage.setItem('tigers_viewer_name', next.trim().substring(0, 32)); } catch(e){}
+        const nameEl = document.getElementById('live-chat-my-name');
+        if (nameEl) nameEl.innerText = next.trim().substring(0, 32);
+        sendLiveViewerHeartbeat();
+      }
+    }
+
+    function toggleLiveViewersPopover() {
+      const pop = document.getElementById('live-viewers-popover');
+      if (pop) pop.classList.toggle('hidden');
+    }
+
+    function sendLiveViewerHeartbeat() {
+      if (!window.db || !(typeof isLiveBroadcastActive !== 'undefined' && isLiveBroadcastActive)) return;
+      const vid = getLiveViewerId();
+      window.db.collection("live_viewers").doc(vid).set({
+        name: getLiveViewerName(),
+        role: (typeof currentRole !== 'undefined' ? currentRole : 'parent'),
+        lastSeen: Date.now()
+      }, { merge: true }).catch(() => {});
+    }
+
+    function stopLivePresenceHeartbeat() {
+      if (liveViewerHeartbeatTimer) {
+        clearInterval(liveViewerHeartbeatTimer);
+        liveViewerHeartbeatTimer = null;
+      }
+      const pill = document.getElementById('live-viewers-pill');
+      if (pill) pill.classList.add('hidden');
+    }
+
+    function startLivePresenceAndChat() {
+      const pill = document.getElementById('live-viewers-pill');
+      if (pill) pill.classList.remove('hidden');
+      const nameEl = document.getElementById('live-chat-my-name');
+      if (nameEl) nameEl.innerText = getLiveViewerName();
+
+      if (!window.db) return;
+
+      sendLiveViewerHeartbeat();
+      if (!liveViewerHeartbeatTimer) {
+        liveViewerHeartbeatTimer = setInterval(sendLiveViewerHeartbeat, 25000);
+      }
+
+      if (!liveViewersUnsub) {
+        liveViewersUnsub = window.db.collection("live_viewers").onSnapshot(snap => {
+          const now = Date.now();
+          const active = [];
+          snap.forEach(doc => {
+            const d = doc.data();
+            if (d && d.lastSeen && (now - d.lastSeen) < 75000) {
+              active.push(d);
+            }
+          });
+          const count = Math.max(1, active.length);
+          const countEl = document.getElementById('live-viewers-count');
+          const sumEl = document.getElementById('live-chat-viewer-summary');
+          const listEl = document.getElementById('live-viewers-list');
+          if (countEl) countEl.innerText = `${count} Watching`;
+          if (sumEl) sumEl.innerText = `${count} watching`;
+          if (listEl) {
+            if (active.length === 0) {
+              listEl.innerHTML = `<div class="text-slate-400">You (${escapeHtml(getLiveViewerName())})</div>`;
+            } else {
+              listEl.innerHTML = active.map(v => `
+                <div class="flex items-center justify-between py-0.5">
+                  <span class="font-semibold text-white truncate">• ${escapeHtml(v.name || 'Tigers Fan')}</span>
+                  <span class="text-[9px] uppercase font-mono px-1 rounded bg-slate-800 text-amber-300">${escapeHtml(v.role || 'parent')}</span>
+                </div>
+              `).join('');
+            }
+          }
+        }, () => {});
+      }
+
+      if (!liveChatUnsub) {
+        liveChatInitialLoad = true;
+        liveChatUnsub = window.db.collection("live_chat")
+          .orderBy("createdAtMs", "desc")
+          .limit(50)
+          .onSnapshot(snap => {
+            const msgs = [];
+            snap.forEach(doc => msgs.push({ id: doc.id, ...doc.data() }));
+            msgs.reverse();
+            renderLiveChatMessages(msgs);
+
+            const chatTab = document.getElementById('sb-live-tab-chat');
+            const isChatOpen = chatTab && !chatTab.classList.contains('hidden');
+            if (!liveChatInitialLoad && !isChatOpen && msgs.length > 0) {
+              liveChatUnreadCount++;
+              const badge = document.getElementById('live-chat-unread-badge');
+              if (badge) {
+                badge.innerText = liveChatUnreadCount;
+                badge.classList.remove('hidden');
+              }
+            }
+            liveChatInitialLoad = false;
+          }, () => {});
+      }
+    }
+
+    function renderLiveChatMessages(msgs) {
+      const listEl = document.getElementById('live-chat-messages-list');
+      if (!listEl) return;
+      if (!msgs || msgs.length === 0) {
+        listEl.innerHTML = `<div class="text-slate-500 text-center text-[11px] py-6">No messages yet. Say hi or cheer on the Tigers! 🐯</div>`;
+        return;
+      }
+      const myVid = getLiveViewerId();
+      listEl.innerHTML = msgs.map(m => {
+        const isMe = m.viewerId === myVid;
+        const timeStr = m.createdAtMs ? new Date(m.createdAtMs).toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' }) : '';
+        return `
+          <div class="p-2 rounded-xl ${isMe ? 'bg-amber-500/15 border border-amber-400/40' : 'bg-slate-900 border border-slate-800'}">
+            <div class="flex items-center justify-between text-[10px] mb-0.5">
+              <span class="font-black ${isMe ? 'text-amber-300' : 'text-emerald-400'}">${escapeHtml(m.sender || 'Tigers Fan')}</span>
+              <span class="text-slate-500 font-mono text-[9px]">${escapeHtml(timeStr)}</span>
+            </div>
+            <div class="text-slate-100 text-[11px] leading-snug break-words">${escapeHtml(m.text || '')}</div>
+          </div>
+        `;
+      }).join('');
+      listEl.scrollTop = listEl.scrollHeight;
+    }
+
+    function sendLiveChatMessage(customText) {
+      const input = document.getElementById('live-chat-input');
+      const text = (typeof customText === 'string' ? customText : (input ? input.value : '')).trim();
+      if (!text) return;
+      if (!customText && input) input.value = '';
+      if (!window.db) {
+        showToast("⚠️ Cloud chat offline.");
+        return;
+      }
+      window.db.collection("live_chat").add({
+        viewerId: getLiveViewerId(),
+        sender: getLiveViewerName(),
+        role: (typeof currentRole !== 'undefined' ? currentRole : 'parent'),
+        text: text.substring(0, 300),
+        createdAtMs: Date.now(),
+        createdAt: firebase.firestore.FieldValue.serverTimestamp()
+      }).catch(err => console.log("Live chat send error:", err));
+    }
+
+    function sendQuickLiveChat(text) {
+      sendLiveChatMessage(text);
     }
 
     function initAutomatedBroadcastIntegration() {
@@ -65727,12 +66915,19 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
 
       regularSeasonGames.forEach(g => {
         let ym = '';
-        const t = (g.title || g.game_title || '');
-        const m = t.match(/(?:^|\s)\d{1,2}\.(\d{1,2})\.(\d{4})/);
-        if (m) {
-          ym = `${m[2]}-${m[1].padStart(2, '0')}`;
-        } else if (g.date && /^\d{4}-\d{2}/.test(g.date)) {
+        if (g.date && /^\d{4}-\d{2}/.test(g.date)) {
           ym = g.date.substring(0, 7);
+        } else {
+          const t = (g.title || g.game_title || '');
+          const m = t.match(/(?:^|\s)(\d{1,2})\.(\d{1,2})\.(\d{4})/);
+          if (m) {
+            const p1 = parseInt(m[1], 10);
+            const p2 = parseInt(m[2], 10);
+            const moNum = p2 > 12 ? p1 : (p1 > 12 ? p2 : p2);
+            if (moNum >= 1 && moNum <= 12) {
+              ym = `${m[3]}-${String(moNum).padStart(2, '0')}`;
+            }
+          }
         }
         if (!ym) ym = '2026-11';
         if (!monthGroups[ym]) monthGroups[ym] = [];
@@ -66350,40 +67545,68 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
 
     // Show Countdown on Left
     function showGameCountdownStage(match) {
+      if (!match) return;
       const placeholder = document.getElementById('live-offline-placeholder');
       if (!placeholder) return;
 
       placeholder.classList.remove('hidden');
 
-      // Update match info in standby stage
       const leagueTag = document.getElementById('standby-league-tag');
+      const tigRecord = document.getElementById('standby-tigers-record');
       const oppName = document.getElementById('standby-opp-name');
       const oppRecord = document.getElementById('standby-opp-record');
       const gameDate = document.getElementById('standby-game-date');
       const gameTime = document.getElementById('standby-game-time');
       const gameArena = document.getElementById('standby-game-arena');
 
-      if (leagueTag) leagueTag.innerText = match.gameSheetCode ? `Game #${match.gameSheetCode}` : (match.division || 'OMHA U13A');
+      const gsOppData = (typeof getOpponentGameSheetData === 'function') ? getOpponentGameSheetData(match.opponent || match.title) : null;
+      const tigGs = (typeof GAMESHEET_DATABASE !== 'undefined' && GAMESHEET_DATABASE.teams && GAMESHEET_DATABASE.teams.tigers) ? GAMESHEET_DATABASE.teams.tigers : null;
+      const isHome = match.isHome !== undefined ? match.isHome : !(String(match.title || '').toLowerCase().includes(' at '));
+
+      if (leagueTag) {
+        const gsCode = match.gameSheetCode || (match.opponentStats && match.opponentStats.includes('#') ? match.opponentStats.split('#')[1] : '');
+        leagueTag.innerText = gsCode ? `YSMHL Game #${gsCode}` : (match.division || 'OMHA U13A');
+      }
+      if (tigRecord) {
+        const tRec = (tigGs && tigGs.record) ? `${tigGs.record.w}-${tigGs.record.l}-${tigGs.record.t}` : 'YSMHL';
+        tigRecord.innerText = `${isHome ? 'HOME' : 'AWAY'} (${tRec})`;
+      }
       if (oppName) oppName.innerText = match.opponent || 'Opponent Team';
-      if (oppRecord) oppRecord.innerText = match.opponentRecord || 'Regular Season';
+      if (oppRecord) {
+        const oRec = (gsOppData && gsOppData.record) ? `${gsOppData.record.w}-${gsOppData.record.l}-${gsOppData.record.t}` : (match.opponentRecord || 'YSMHL');
+        oppRecord.innerText = `${isHome ? 'AWAY' : 'HOME'} (${oRec})`;
+      }
       if (gameDate) gameDate.innerText = match.date || 'Scheduled Match';
-      if (gameTime) gameTime.innerText = match.time || '7:30 PM EST';
+      if (gameTime) gameTime.innerText = match.time || '6:45 PM EST';
       if (gameArena) {
-        gameArena.innerHTML = `<a href="${match.mapsUrl || '#'}" target="_blank" class="hover:underline flex items-center justify-center gap-1">${match.arena || 'Local Arena'} ↗</a>`;
+        const arenaUrl = match.mapsUrl || `https://maps.google.com/?q=${encodeURIComponent(match.arena || 'Aurora Community Centre')}`;
+        gameArena.innerHTML = `<a href="${arenaUrl}" target="_blank" class="hover:underline flex items-center justify-center gap-1">${match.arena || 'Local Arena'} ↗</a>`;
       }
 
-      // Start custom countdown for this match
       if (typeof standbyCountdownInterval !== 'undefined' && standbyCountdownInterval) {
         clearInterval(standbyCountdownInterval);
       }
 
+      function parseMatchTimestampMs(m) {
+        const dIso = m.dateIso || '2026-11-29';
+        let hh = 18, mm = 45;
+        const tm = String(m.time || '').match(/(\d{1,2}):(\d{2})\s*(AM|PM)/i);
+        if (tm) {
+          hh = parseInt(tm[1], 10);
+          mm = parseInt(tm[2], 10);
+          const ampm = tm[3].toUpperCase();
+          if (ampm === 'PM' && hh < 12) hh += 12;
+          if (ampm === 'AM' && hh === 12) hh = 0;
+        }
+        return new Date(`${dIso}T${String(hh).padStart(2, '0')}:${String(mm).padStart(2, '0')}:00-05:00`).getTime();
+      }
+
+      const targetDate = parseMatchTimestampMs(match);
+
       function updateCountdown() {
         const timerEl = document.getElementById('standby-countdown-timer');
         if (!timerEl) return;
-        const targetTimeStr = match.dateIso ? `${match.dateIso}T19:30:00-05:00` : "2026-11-10T19:30:00-05:00";
-        const targetDate = new Date(targetTimeStr).getTime();
-        const now = new Date().getTime();
-        const diff = targetDate - now;
+        const diff = targetDate - Date.now();
 
         if (diff <= 0) {
           timerEl.innerText = "PUCK DROP PENDING";
@@ -66391,9 +67614,10 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
           return;
         }
 
+        timerEl.className = "text-sm font-mono font-black text-amber-300 tracking-wider";
         const days = Math.floor(diff / (1000 * 60 * 60 * 24));
         const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-        const minutes = Math.floor((diff % (1000 * 60)) / (1000 * 60));
+        const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
         const seconds = Math.floor((diff % (1000 * 60)) / 1000);
         timerEl.innerText = `${days}d ${hours}h ${minutes}m ${seconds}s`;
       }
@@ -66569,22 +67793,24 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
       if (arenaText) arenaText.innerText = (game.teamsnap && game.teamsnap.arena) ? game.teamsnap.arena : (game.arena || 'York Simcoe League Match');
       if (gsLink) gsLink.href = game.gamesheet_url || game.gameSheetUrl || "https://gamesheetstats.com/seasons/15490/teams/534204/schedule";
 
-      // Video Analytics: Dynamic per-game Zone Time & Faceoffs derived from shifts + score
+      // Video Analytics: Real Zone Time derived from observed shifts
       const analytics = game.analytics || {};
       const gameShifts = (game.shifts && Array.isArray(game.shifts)) ? game.shifts : [];
-      const seed = (hScore * 3 + aScore * 2 + gameShifts.length);
-      const defaultOz = Math.max(10, Math.min(24, 13 + (hScore * 2) - Math.floor(aScore / 2)));
-      const defaultDz = Math.max(10, Math.min(24, 12 + aScore - Math.floor(hScore / 2)));
-      const ozTimeStr = analytics.ozone_time || `${defaultOz}m`;
-      const dzTimeStr = analytics.dzone_time || `${defaultDz}m`;
-      const ozMin = parseInt(ozTimeStr, 10) || defaultOz;
-      const dzMin = parseInt(dzTimeStr, 10) || defaultDz;
-      const nzMin = Math.max(7, 40 - ozMin - dzMin);
-      const totalMin = ozMin + dzMin + nzMin;
-
-      const ozPct = Math.round((ozMin / totalMin) * 100);
-      const dzPct = Math.round((dzMin / totalMin) * 100);
-      const nzPct = 100 - ozPct - dzPct;
+      let ozSec = 0, nzSec = 0, dzSec = 0;
+      gameShifts.forEach(s => {
+        const d = Math.max(5, Number(s.end_seconds || 0) - Number(s.start_seconds || 0));
+        const zn = String(s.primary_zone || '').toLowerCase();
+        if (zn.includes('offens')) ozSec += d;
+        else if (zn.includes('defens')) dzSec += d;
+        else nzSec += d;
+      });
+      const totShiftSec = Math.max(1, ozSec + nzSec + dzSec);
+      const ozPct = gameShifts.length > 0 ? Math.round((ozSec / totShiftSec) * 100) : 33;
+      const dzPct = gameShifts.length > 0 ? Math.round((dzSec / totShiftSec) * 100) : 34;
+      const nzPct = Math.max(0, 100 - ozPct - dzPct);
+      const ozMin = Math.max(1, Math.round((ozPct / 100) * 40));
+      const dzMin = Math.max(1, Math.round((dzPct / 100) * 40));
+      const nzMin = Math.max(1, 40 - ozMin - dzMin);
 
       const barOz = document.getElementById('past-bar-ozone');
       const barNz = document.getElementById('past-bar-nzone');
@@ -66603,42 +67829,70 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
       const statOz = document.getElementById('past-stat-ozone');
       const statNz = document.getElementById('past-stat-nzone');
       const statDz = document.getElementById('past-stat-dzone');
-      if (statOz) statOz.innerText = `${ozTimeStr} (${ozPct}%)`;
+      if (statOz) statOz.innerText = `${ozMin}m (${ozPct}%)`;
       if (statNz) statNz.innerText = `${nzMin}m (${nzPct}%)`;
-      if (statDz) statDz.innerText = `${dzTimeStr} (${dzPct}%)`;
+      if (statDz) statDz.innerText = `${dzMin}m (${dzPct}%)`;
 
-      // Video Analytics: Faceoffs
+      // Video Analytics: Real Faceoffs (strictly from verified shift telemetry — zero fake seed numbers!)
       const foWinrate = document.getElementById('past-fo-overall-winrate');
       const foDzone = document.getElementById('past-fo-dzone');
       const foNeutral = document.getElementById('past-fo-neutral');
       const foOzone = document.getElementById('past-fo-ozone');
 
-      const dzW = 4 + (seed % 4), dzT = 9 + (seed % 3);
-      const nzW = 4 + ((seed + 1) % 4), nzT = 8 + ((seed + 1) % 3);
-      const ozW = 3 + ((seed + 2) % 5), ozT = 8 + ((seed + 2) % 3);
+      const foObj = analytics.faceoffs || {};
+      const dzW = foObj.dzone_won ?? gameShifts.filter(s => s.faceoff_location === 'D-Zone Dot' && s.faceoff_won === true).length;
+      const dzT = foObj.dzone_total ?? gameShifts.filter(s => s.faceoff_location === 'D-Zone Dot' && typeof s.faceoff_won === 'boolean').length;
+      const nzW = foObj.center_won ?? gameShifts.filter(s => (s.faceoff_location === 'Center Ice' || s.faceoff_location === 'Neutral Zone Dot') && s.faceoff_won === true).length;
+      const nzT = foObj.center_total ?? gameShifts.filter(s => (s.faceoff_location === 'Center Ice' || s.faceoff_location === 'Neutral Zone Dot') && typeof s.faceoff_won === 'boolean').length;
+      const ozW = foObj.ozone_won ?? gameShifts.filter(s => s.faceoff_location === 'O-Zone Dot' && s.faceoff_won === true).length;
+      const ozT = foObj.ozone_total ?? gameShifts.filter(s => s.faceoff_location === 'O-Zone Dot' && typeof s.faceoff_won === 'boolean').length;
       const totW = dzW + nzW + ozW, totF = dzT + nzT + ozT;
-      if (foWinrate) foWinrate.innerText = `${((totW / totF) * 100).toFixed(1)}% Won`;
-      if (foDzone) foDzone.innerText = `${dzW}/${dzT} (${Math.round((dzW / dzT) * 100)}%)`;
-      if (foNeutral) foNeutral.innerText = `${nzW}/${nzT} (${Math.round((nzW / nzT) * 100)}%)`;
-      if (foOzone) foOzone.innerText = `${ozW}/${ozT} (${Math.round((ozW / ozT) * 100)}%)`;
 
-      // GameSheet Official Special Teams
+      if (totF > 0) {
+        if (foWinrate) foWinrate.innerText = `${((totW / totF) * 100).toFixed(1)}% Won (${totW}/${totF})`;
+        if (foDzone) foDzone.innerText = dzT > 0 ? `${dzW}/${dzT} (${Math.round((dzW / dzT) * 100)}%)` : '0/0';
+        if (foNeutral) foNeutral.innerText = nzT > 0 ? `${nzW}/${nzT} (${Math.round((nzW / nzT) * 100)}%)` : '0/0';
+        if (foOzone) foOzone.innerText = ozT > 0 ? `${ozW}/${ozT} (${Math.round((ozW / ozT) * 100)}%)` : '0/0';
+      } else {
+        if (foWinrate) foWinrate.innerText = `Unverified (Legacy Scan)`;
+        if (foDzone) foDzone.innerText = `—`;
+        if (foNeutral) foNeutral.innerText = `—`;
+        if (foOzone) foOzone.innerText = `—`;
+      }
+
+      // GameSheet Official Special Teams, Shots & PIM (100% Real Box Score — zero fake 24-26 shots or seed math!)
       const statPp = document.getElementById('past-stat-pp');
       const statPk = document.getElementById('past-stat-pk');
       const statSog = document.getElementById('past-stat-sog');
       const statPim = document.getElementById('past-stat-pim');
 
-      const ppG = Math.min(2, Math.floor(hScore / 2));
-      const ppCh = Math.max(ppG + 1, 3 + (seed % 2));
-      const pkStops = Math.max(1, 3 + (seed % 3));
-      const pkOpp = Math.max(pkStops, pkStops + (aScore > 5 ? 1 : 0));
-      if (statPp) statPp.innerText = `${ppG}/${ppCh} (${Math.round((ppG / ppCh) * 100)}%)`;
-      if (statPk) statPk.innerText = `${pkStops}/${pkOpp} (${Math.round((pkStops / pkOpp) * 100)}%)`;
-      if (statSog) statSog.innerText = `${analytics.shots_on_goal || (16 + hScore * 3)} - ${analytics.goalie_saves || (18 + aScore * 2)}`;
-      if (statPim) statPim.innerText = `${(2 + (seed % 4)) * 2} mins`;
+      const gsBox = findMatchingGameSheetBoxscore(game);
+      if (gsBox) {
+        const ppG = Number(gsBox.ppGoals ?? 0);
+        const ppCh = Number(gsBox.ppOpps ?? 0);
+        const pkAllowed = Number(gsBox.pkGoalsAllowed ?? 0);
+        const pkOpp = Number(gsBox.pkOpps ?? 0);
+        const pkStops = Math.max(0, pkOpp - pkAllowed);
+        if (statPp) statPp.innerText = ppCh > 0 ? `${ppG}/${ppCh} (${Math.round((ppG / ppCh) * 100)}%)` : `0/0 (—)`;
+        if (statPk) statPk.innerText = pkOpp > 0 ? `${pkStops}/${pkOpp} (${Math.round((pkStops / pkOpp) * 100)}%)` : `0/0 (—)`;
+        if (Number(gsBox.shotsFor || 0) > 0 || Number(gsBox.shotsAgainst || 0) > 0) {
+          if (statSog) statSog.innerText = `${gsBox.shotsFor} - ${gsBox.shotsAgainst}`;
+        } else {
+          if (statSog) {
+            statSog.innerText = `Not Tracked`;
+            statSog.title = `YSMHL timekeeper did not record shot totals on GameSheet iPad for this game`;
+          }
+        }
+        if (statPim) statPim.innerText = `${gsBox.pim ?? (pkOpp * 2)} mins`;
+      } else {
+        if (statPp) statPp.innerText = `Tournament`;
+        if (statPk) statPk.innerText = `Tournament`;
+        if (statSog) statSog.innerText = `Not Tracked`;
+        if (statPim) statPim.innerText = `—`;
+      }
 
-      // Render inline Video Review Prep Queue at top of Past Game panel
-      if (typeof renderInlineReviewPrepQueue === 'function') renderInlineReviewPrepQueue();
+      // Render Top Game Clips & Prep Queue at top of Past Game panel
+      if (typeof renderInlineReviewPrepQueue === 'function') renderInlineReviewPrepQueue(game);
 
       // Video Shift Cards (Rich Shift Analytics Cards with Breakdown Filter Buttons)
       const shiftCountEl = document.getElementById('past-game-shift-count');
@@ -66799,38 +68053,191 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
       }
     }
 
-    function renderInlineReviewPrepQueue() {
+    function findMatchingGameSheetBoxscore(game) {
+      if (!game) return null;
+      if (game.boxscore && game.boxscore.source) return game.boxscore;
+      const allCompleted = (typeof GAMESHEET_DATABASE !== 'undefined' && GAMESHEET_DATABASE.teams && GAMESHEET_DATABASE.teams.tigers && Array.isArray(GAMESHEET_DATABASE.teams.tigers.allCompletedGames))
+        ? GAMESHEET_DATABASE.teams.tigers.allCompletedGames
+        : [];
+      if (allCompleted.length === 0) return null;
+      const gDate = String(game.date || '').substring(0, 10);
+      const titleL = String(game.title || '').toLowerCase();
+      for (const cg of allCompleted) {
+        let cgIso = '';
+        if (cg.date) {
+          const dt = new Date(cg.date + ' 12:00:00');
+          if (!isNaN(dt.getTime())) cgIso = getLocalIsoDateStr(dt);
+        }
+        const oppL = String(cg.opp || '').toLowerCase();
+        const oppKey = oppL.includes('waxers') || oppL.includes('markham') ? 'waxers' : oppL.split(' ')[0];
+        const dayMatch = cgIso && gDate && Math.abs((new Date(cgIso).getTime() - new Date(gDate).getTime()) / 86400000) <= 1;
+        if (dayMatch && (!oppKey || titleL.includes(oppKey) || (oppKey === 'waxers' && titleL.includes('markham')))) {
+          return cg;
+        }
+      }
+      return null;
+    }
+
+    function getGoalTimeOverridesMap() {
+      try {
+        return JSON.parse(localStorage.getItem('tigers_goal_time_overrides') || '{}');
+      } catch(e) { return {}; }
+    }
+
+    function setGoalClipExactTimeHere(clipId) {
+      if (!currentGame || !clipId) return;
+      const curSec = Math.floor((typeof getThrottledPlayerTime === 'function' ? getThrottledPlayerTime() : 0) || 0);
+      if (curSec <= 2) {
+        showToast("⚠️ Play or scrub the video to the moment the puck enters the net first.");
+        return;
+      }
+      const key = `${currentGame.id || currentGame.youtube_video_id}_${clipId}`;
+      const map = getGoalTimeOverridesMap();
+      map[key] = curSec;
+      try { localStorage.setItem('tigers_goal_time_overrides', JSON.stringify(map)); } catch(e){}
+      if (window.db) {
+        window.db.collection("goal_time_overrides").doc(key).set({
+          game_id: currentGame.id || currentGame.youtube_video_id,
+          clip_id: clipId,
+          goal_second: curSec,
+          updated_by: typeof getLiveViewerName === 'function' ? getLiveViewerName() : 'Coach',
+          updated_at: firebase.firestore.FieldValue.serverTimestamp()
+        }, { merge: true }).catch(() => {});
+      }
+      renderSidebarPastGameIntel(currentGame);
+      if (typeof loadCoachingClips === 'function') loadCoachingClips();
+      showToast(`🎯 Locked exact goal timestamp (${formatTime(Math.max(0, curSec - 18))} – ${formatTime(curSec + 6)}) for whole team!`);
+    }
+
+    function getTopPrepClipsForGame(game) {
+      const targetGame = game || currentGame;
+      if (!targetGame) return [];
+      const gKey = targetGame.id || targetGame.youtube_video_id || '';
+      const overrides = getGoalTimeOverridesMap();
+      let list = [];
+
+      if (Array.isArray(targetGame.top_clips) && targetGame.top_clips.length > 0) {
+        list = targetGame.top_clips.map(tc => {
+          const ov = overrides[`${gKey}_${tc.clip_id}`];
+          if (typeof ov === 'number') {
+            return {
+              ...tc,
+              start_seconds: Math.max(0, ov - 18),
+              end_seconds: ov + 6,
+              verified: true,
+              align_status: 'Verified Exact Timestamp'
+            };
+          }
+          return { ...tc };
+        });
+      } else {
+        const gsBox = findMatchingGameSheetBoxscore(targetGame);
+        const periods = targetGame.periods || { 1: 60, 2: 1100, 3: 2100 };
+        const p1 = Number(periods[1] || periods['1'] || 60);
+        const p2 = Number(periods[2] || periods['2'] || 1100);
+        const p3 = Number(periods[3] || periods['3'] || 2100);
+        const pBounds = { 1: [p1, Math.max(p1 + 600, p2 - 120), 600], 2: [p2, Math.max(p2 + 900, p3 - 120), 900], 3: [p3, p3 + 950, 900] };
+        if (gsBox && Array.isArray(gsBox.goalLog)) {
+          let tg = 0, og = 0;
+          gsBox.goalLog.forEach((gl, i) => {
+            const pNum = Number(gl.period || 1);
+            const parts = String(gl.clockTime || '0:00').split(':');
+            const rem = (parseInt(parts[0] || '0', 10) * 60) + parseInt(parts[1] || '0', 10);
+            const [pst, pen, plen] = pBounds[pNum] || pBounds[1];
+            const ratio = Math.max(0, Math.min(1, (plen - Math.min(plen, rem)) / plen));
+            const clipId = `gs_goal_${i + 1}`;
+            const ov = overrides[`${gKey}_${clipId}`];
+            const gSec = typeof ov === 'number' ? ov : Math.round(pst + ratio * (pen - pst));
+            const isTig = gl.team === 'tigers';
+            if (isTig) tg++; else og++;
+            const lbl = isTig ? `🚨 TIGERS GOAL #${tg} (P${pNum} ${gl.clockTime})` : `🥅 ${(gsBox.opp || 'OPP').toUpperCase()} GOAL #${og} (P${pNum} ${gl.clockTime})`;
+            list.push({
+              clip_id: clipId,
+              type: isTig ? 'tigers_goal' : 'opp_goal',
+              period: pNum,
+              gs_clock: gl.clockTime,
+              start_seconds: Math.max(0, gSec - 18),
+              end_seconds: gSec + 6,
+              verified: typeof ov === 'number',
+              align_status: typeof ov === 'number' ? 'Verified Exact Timestamp' : 'GameSheet Clock Aligned',
+              label: lbl,
+              description: `${lbl} — Official GameSheet P${pNum} @ ${gl.clockTime}`
+            });
+          });
+        }
+      }
+      return list;
+    }
+
+    function playTopPrepClipsReel() {
+      const topList = getTopPrepClipsForGame(currentGame);
+      if (topList.length === 0) {
+        if (typeof playAllClipsInTraySequence === 'function') playAllClipsInTraySequence();
+        return;
+      }
+      const first = topList[0];
+      playClip(first.start_seconds, first.end_seconds, 1);
+      showToast(`▶ Playing Top Game Clip 1/${topList.length}: ${first.label}`);
+    }
+
+    function renderInlineReviewPrepQueue(optGame) {
+      const targetGame = optGame || currentGame;
       const listEl = document.getElementById('past-game-review-prep-queue');
       const countEl = document.getElementById('past-inline-tray-count');
-      const clips = (typeof getCoachingTrayClips === 'function') ? getCoachingTrayClips() : [];
-      if (countEl) countEl.textContent = clips.length;
+      const allTrayClips = (typeof getCoachingTrayClips === 'function') ? getCoachingTrayClips() : [];
+      if (countEl) countEl.textContent = allTrayClips.length;
       if (!listEl) return;
 
-      if (clips.length === 0) {
-        listEl.innerHTML = `<div class="text-xs text-slate-600 py-1">No clips queued yet — click <strong>⭐ + Tray</strong> on any shift card below (across one or multiple games) to build your Video Review playlist.</div>`;
+      const gId = targetGame ? (targetGame.id || targetGame.youtube_video_id) : '';
+      const gameTrayClips = allTrayClips.filter(c => !gId || c.game_id === gId);
+      const topGameClips = getTopPrepClipsForGame(targetGame);
+
+      if (topGameClips.length === 0 && gameTrayClips.length === 0) {
+        listEl.innerHTML = `<div class="text-xs text-slate-600 py-1">No goals or special teams clips recorded for this tape yet — click <strong>⭐ + Tray</strong> on any shift below to pin key moments here.</div>`;
         return;
       }
 
-      listEl.innerHTML = clips.map((c, idx) => `
-        <div class="p-2 rounded-lg bg-white border border-amber-300 flex items-center justify-between gap-2 shadow-2xs">
+      const topHtml = topGameClips.map((tc) => {
+        const isGoal = tc.type === 'tigers_goal' || tc.type === 'opp_goal';
+        const pillCls = tc.type === 'tigers_goal'
+          ? 'bg-emerald-600 text-white'
+          : (tc.type === 'opp_goal' ? 'bg-rose-600 text-white' : (tc.type === 'powerplay' ? 'bg-amber-400 text-slate-950' : 'bg-indigo-600 text-white'));
+        return `
+          <div class="p-2 rounded-lg bg-white border border-slate-200 hover:border-amber-400 flex items-center justify-between gap-2 shadow-2xs transition">
+            <div class="min-w-0 flex-1">
+              <div class="flex items-center gap-1.5 flex-wrap">
+                <span class="px-1.5 py-0.2 rounded font-mono font-black text-[10px] ${pillCls}">${escapeHtml(tc.label || 'Key Clip')}</span>
+                <span class="text-[11px] font-mono text-slate-700 bg-slate-100 px-1.5 py-0.2 rounded">${formatTime(tc.start_seconds || 0)} – ${formatTime(tc.end_seconds || 0)}</span>
+                <span class="text-[9px] font-mono px-1.5 py-0.2 rounded ${tc.verified ? 'bg-emerald-50 text-emerald-700 border border-emerald-200' : 'bg-amber-50 text-amber-800 border border-amber-200'}">${escapeHtml(tc.align_status || '')}</span>
+              </div>
+            </div>
+            <div class="flex items-center gap-1 shrink-0">
+              ${isGoal ? `<button type="button" onclick="setGoalClipExactTimeHere('${tc.clip_id}')" title="Scrub video to exact goal moment and click to lock timestamp" class="px-2 py-1 rounded-md bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-[10px] cursor-pointer">📍 Set Here</button>` : ''}
+              <button type="button" onclick="playClip(${tc.start_seconds || 0}, ${tc.end_seconds || 30}, 1)" class="px-2.5 py-1 rounded-md bg-amber-400 hover:bg-amber-300 text-slate-950 font-black text-xs cursor-pointer">
+                ▶ Play
+              </button>
+            </div>
+          </div>
+        `;
+      }).join('');
+
+      const trayHtml = gameTrayClips.map((c, idx) => `
+        <div class="p-2 rounded-lg bg-amber-50/50 border border-amber-300 flex items-center justify-between gap-2 shadow-2xs">
           <div class="min-w-0 flex-1">
             <div class="flex items-center gap-1.5 flex-wrap">
-              <span class="px-1.5 py-0.2 rounded bg-amber-400 text-slate-950 font-mono font-black text-xs">#${idx + 1}</span>
-              <span class="font-bold text-slate-900 text-xs truncate">${c.title || 'Saved Shift'}</span>
+              <span class="px-1.5 py-0.2 rounded bg-amber-400 text-slate-950 font-mono font-black text-[10px]">⭐ #${idx + 1}</span>
+              <span class="font-bold text-slate-900 text-xs truncate">${escapeHtml(c.title || 'Saved Shift')}</span>
               <span class="text-xs font-mono text-amber-800 bg-amber-100 px-1.5 py-0.2 rounded">${formatTime(c.start_seconds || 0)} – ${formatTime(c.end_seconds || 0)}</span>
             </div>
-            <div class="text-xs text-slate-600 truncate mt-0.5">🎬 ${c.game_title || 'Game Tape'} ${c.coach_notes ? '• ' + c.coach_notes : ''}</div>
           </div>
           <div class="flex items-center gap-1 shrink-0">
-            <button type="button" onclick="playSavedTrayClip('${c.id}')" class="px-2.5 py-1 rounded-md bg-amber-400 hover:bg-amber-300 text-slate-950 font-black text-xs cursor-pointer">
-              ▶ Play Clip
-            </button>
-            <button type="button" onclick="removeClipFromTray('${c.id}'); renderInlineReviewPrepQueue();" class="px-2 py-1 rounded-md bg-slate-100 hover:bg-rose-100 text-slate-600 hover:text-rose-700 font-bold text-xs cursor-pointer" title="Remove from Tray">
-              ✕
-            </button>
+            <button type="button" onclick="playSavedTrayClip('${c.id}')" class="px-2.5 py-1 rounded-md bg-amber-400 hover:bg-amber-300 text-slate-950 font-black text-xs cursor-pointer">▶ Play</button>
+            <button type="button" onclick="removeClipFromTray('${c.id}'); renderInlineReviewPrepQueue();" class="px-2 py-1 rounded-md bg-slate-100 hover:bg-rose-100 text-slate-600 hover:text-rose-700 font-bold text-xs cursor-pointer" title="Remove">✕</button>
           </div>
         </div>
       `).join('');
+
+      listEl.innerHTML = topHtml + trayHtml;
     }
 
     function quickAddShiftToCoachTray(startSec, endSec, titleText, notesText = '', shiftId = 1, folderId = 'teaching') {
@@ -66927,11 +68334,30 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
       }
     });
 
-    // Initial Flyout Render on Load
+    // Initial Homepage Render on Load: Always bind center broadcast card & right Pre-Game Scout to NEXT GAME!
     setTimeout(() => {
       if (typeof updateFlyoutPinUi === 'function') updateFlyoutPinUi();
       renderAppScheduleFlyout('upcoming');
-    }, 200);
+      if (!(typeof isLiveBroadcastOnAir !== 'undefined' && isLiveBroadcastOnAir)) {
+        const nextMatch = (typeof getNextUpcomingScheduledMatchup === 'function') ? getNextUpcomingScheduledMatchup() : null;
+        if (nextMatch) {
+          showGameCountdownStage(nextMatch);
+          renderSidebarScoutingReport(nextMatch);
+        }
+      }
+      if (window.db) {
+        window.db.collection("goal_time_overrides").limit(200).onSnapshot(snap => {
+          const map = getGoalTimeOverridesMap();
+          snap.forEach(doc => {
+            const d = doc.data();
+            if (d && d.game_id && d.clip_id && typeof d.goal_second === 'number') {
+              map[`${d.game_id}_${d.clip_id}`] = d.goal_second;
+            }
+          });
+          try { localStorage.setItem('tigers_goal_time_overrides', JSON.stringify(map)); } catch(e){}
+        }, () => {});
+      }
+    }, 250);
 
 </script>
 
