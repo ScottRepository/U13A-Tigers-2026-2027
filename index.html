@@ -7419,6 +7419,8 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
             </div>
           </div>
 
+          <!-- Coach-Only Player Shift Telemetry (Hidden in Parent View) -->
+          <div id="coach-player-telemetry-wrap" class="space-y-3">
           <!-- Visual Telemetry Confidence & Estimation Disclaimer -->
           <div class="bg-amber-50/90 border border-amber-300/80 rounded-2xl p-3 shadow-xs space-y-1.5">
             <div class="flex items-center justify-between gap-2">
@@ -7501,6 +7503,7 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
               </div>
             </div>
           </div>
+          </div><!-- /coach-player-telemetry-wrap -->
 
           <!-- Goalie Deep-Dive Hub (Visible when Goalie #13 or #98 is selected) -->
           <div id="goalie-analytics-hub" class="hidden bg-gradient-to-br from-slate-900 via-sky-950 to-slate-900 text-white p-3.5 rounded-2xl border-2 border-sky-400/60 shadow-lg space-y-3">
@@ -7632,8 +7635,8 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
             </div>
           </div>
 
-          <!-- Full List of This Player's Shifts with 1-Click Play -->
-          <div class="bg-white p-3 rounded-2xl border border-slate-200 shadow-xs space-y-2">
+          <!-- Full List of This Player's Shifts with 1-Click Play (Coach Mode Only) -->
+          <div id="coach-player-shifts-wrap" class="bg-white p-3 rounded-2xl border border-slate-200 shadow-xs space-y-2">
             <div class="flex justify-between items-center">
               <span class="font-bold text-slate-900 uppercase text-[11px] tracking-wider">Player Game Shifts</span>
               <span id="player-shifts-count-badge" class="text-[10px] font-mono font-bold text-amber-800 bg-amber-50 px-2 py-0.5 rounded-full border border-amber-300">21 Shifts</span>
@@ -9044,6 +9047,12 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
       if (scoreAdjusterCard) scoreAdjusterCard.classList.toggle('hidden', !isCoach && !isAdmin);
       if (streamSyncBar && !isCoach && !isAdmin) streamSyncBar.classList.add('hidden');
       if (railReviewBtn) railReviewBtn.classList.toggle('hidden', !isCoach && !isAdmin);
+
+      // Show player shift telemetry & raw shift list only in Coach/Admin Mode (hide in Parent View)
+      const coachTelemetryWrap = document.getElementById('coach-player-telemetry-wrap');
+      const coachShiftsWrap = document.getElementById('coach-player-shifts-wrap');
+      if (coachTelemetryWrap) coachTelemetryWrap.classList.toggle('hidden', !isCoach);
+      if (coachShiftsWrap) coachShiftsWrap.classList.toggle('hidden', !isCoach);
 
       if (notify) {
         if (role === 'admin') {
@@ -46140,6 +46149,33 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
     window.openSaveTrayModal = openSaveToTrayModal;
     window.quickFlagShiftToTray = quickFlagShiftToTray;
     window.flagShiftToTrayDirectly = quickFlagShiftToTray;
+    window.quickAssignShiftToPlayer = quickAssignShiftToPlayer;
+
+    function quickAssignShiftToPlayer(shiftId, ev) {
+      if (ev && typeof ev.stopPropagation === 'function') ev.stopPropagation();
+      if (!currentGame) return;
+
+      const shifts = getNormalizedShiftsForGame(currentGame);
+      const s = shifts.find(sh => Number(sh.shift_id) === Number(shiftId));
+      if (!s) return;
+
+      const st = Math.round(Number(s.start_seconds || 0));
+      const en = Math.round(Number(s.end_seconds || (st + 35)));
+      const lineup = (typeof resolveShiftLineup === 'function') ? resolveShiftLineup(s) : { skaters: [] };
+      const firstSkater = lineup.skaters.find(sk => sk.num) || null;
+      const targetNum = (currentJersey && currentJersey !== 'all') ? currentJersey : (firstSkater?.num || 'none');
+
+      openSaveToTrayModal({
+        title: `Shift #${shiftId} — P${s.period || 1} (${formatMinSec(st)} - ${formatMinSec(en)})`,
+        startSec: st,
+        endSec: en,
+        shiftId: shiftId,
+        assigned_player: targetNum,
+        folder: s.breakout?.successful ? "good_plays" : (s.breakout?.attempted && !s.breakout?.successful ? "coaching_fixes" : "teaching"),
+        type: s.breakout?.successful ? "good_play" : (s.breakout?.attempted && !s.breakout?.successful ? "coaching_fix" : "teaching"),
+        notes: s.coach_notes || ""
+      });
+    }
 
     function quickFlagShiftToTray(shiftId, ev) {
       if (ev && typeof ev.stopPropagation === 'function') ev.stopPropagation();
@@ -47156,8 +47192,8 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
           const isConfirmed = isShiftPlayerConfirmed(currentGame.id, shiftId, sk.num);
           const statusIcon = isConfirmed 
             ? `<span class="text-emerald-600 font-bold ml-0.5" title="Confirmed on ice">✓</span>` 
-            : `<span class="text-amber-500 font-black ml-0.5" title="Unconfirmed AI detection - Click to verify">?</span>`;
-          return `<span onclick="event.stopPropagation(); openPlayerShiftConfirmPopover(event, '${shiftId}', '${sk.role}', '${sk.num}', '${escapeHtml(sk.name)}')" ondblclick="event.stopPropagation(); openQuickRosterTagModal('${shiftId}', '${sk.role}')" title="Click to verify or reassign #${sk.num} ${sk.name} (${sk.role})" class="px-1.5 py-0.5 rounded text-[9px] font-mono font-bold cursor-pointer transition ${isSelected ? 'bg-tigersGold text-slate-950 font-black ring-1 ring-slate-900' : (isConfirmed ? 'bg-emerald-50 text-emerald-950 border border-emerald-300 hover:border-emerald-500' : 'bg-slate-100 text-slate-700 hover:bg-amber-100 border border-slate-300')}">#${sk.num} <span class="text-[8px] text-amber-700 font-sans font-semibold">${sk.role}</span>${statusIcon}</span>`;
+            : (sk.inferred ? `<span class="text-sky-600 font-bold ml-0.5" title="Inferred from saved game lines — Click to confirm or change">~</span>` : `<span class="text-amber-500 font-black ml-0.5" title="Unconfirmed AI detection - Click to verify">?</span>`);
+          return `<span onclick="event.stopPropagation(); openPlayerShiftConfirmPopover(event, '${shiftId}', '${sk.role}', '${sk.num}', '${escapeHtml(sk.name)}')" ondblclick="event.stopPropagation(); openQuickRosterTagModal('${shiftId}', '${sk.role}')" title="${sk.inferred ? 'Inferred from Coach Lines — ' : ''}Click to verify or reassign #${sk.num} ${sk.name} (${sk.role})" class="px-1.5 py-0.5 rounded text-[9px] font-mono font-bold cursor-pointer transition ${isSelected ? 'bg-tigersGold text-slate-950 font-black ring-1 ring-slate-900' : (isConfirmed ? 'bg-emerald-50 text-emerald-950 border border-emerald-300 hover:border-emerald-500' : (sk.inferred ? 'bg-sky-50 text-sky-900 border border-dashed border-sky-400 hover:bg-sky-100' : 'bg-slate-100 text-slate-700 hover:bg-amber-100 border border-slate-300'))}">#${sk.num} <span class="text-[8px] text-amber-700 font-sans font-semibold">${sk.role}</span>${statusIcon}</span>`;
         }).join('');
 
         const hasUnconfirmed = lineup.skaters.some(sk => sk.num && !isShiftPlayerConfirmed(currentGame.id, shiftId, sk.num));
@@ -47223,6 +47259,9 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
               <button onclick="openSavePassportModalFromShift(${shiftId}, event)" title="Save to Player Passport" class="text-xs px-2 py-0.5 rounded-lg bg-indigo-50 hover:bg-indigo-100 border border-indigo-300 text-indigo-900 font-bold cursor-pointer transition flex items-center gap-1 shadow-2xs">
                 <span>🪪</span> <span class="hidden sm:inline">Passport</span>
               </button>
+              ${isCoach ? `<button onclick="quickAssignShiftToPlayer(${shiftId}, event)" title="Assign shift + coach note to a player's homework tray" class="text-xs px-2 py-0.5 rounded-lg bg-emerald-50 hover:bg-emerald-100 border border-emerald-300 text-emerald-900 font-bold cursor-pointer transition flex items-center gap-1 shadow-2xs">
+                <span>📌</span> <span class="hidden sm:inline">Assign</span>
+              </button>` : ''}
               <button onclick="quickFlagShiftToTray(${shiftId}, event)" title="Save to Coaching Film Tray" class="text-xs px-2 py-0.5 rounded-lg bg-amber-50 hover:bg-amber-100 border border-amber-300 text-amber-900 font-bold cursor-pointer transition flex items-center gap-1 shadow-2xs">
                 <span>⭐</span> <span class="hidden sm:inline">Tray</span>
               </button>
@@ -47360,8 +47399,42 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
         }
       });
 
-      // DO NOT artificially pad with hardcoded fallback players!
-      // Roles with no detected skater remain null so the clickable [+ Tag ${role}] button renders.
+      // 5. Line-Partner Inference from Coach's Saved/Texted Game Lines
+      // e.g. if #9 is detected on ice and Line 1 is [7 LW, 9 C, 11 RW], infer #7 and #11 if those slots are empty.
+      const inferredRoles = new Set();
+      try {
+        let gameLineup = null;
+        const rawLineup = localStorage.getItem(`tigers_custom_lineup_${currentGame?.id || ''}`);
+        if (rawLineup) gameLineup = JSON.parse(rawLineup);
+        else if (currentGame?.verified_lines && typeof currentGame.verified_lines === 'object') {
+          gameLineup = currentGame.verified_lines;
+        }
+        if (gameLineup) {
+          const fLines = [gameLineup.f1, gameLineup.f2, gameLineup.f3].filter(Boolean);
+          const detectedFwds = [assigned.C, assigned.LW, assigned.RW].filter(Boolean).map(String);
+          for (const line of fLines) {
+            const lineIds = [line.lw, line.c, line.rw].filter(Boolean).map(String);
+            if (detectedFwds.some(id => lineIds.includes(id))) {
+              if (!assigned.LW && line.lw && !used.has(String(line.lw))) { assigned.LW = String(line.lw); used.add(assigned.LW); inferredRoles.add('LW'); }
+              if (!assigned.C && line.c && !used.has(String(line.c))) { assigned.C = String(line.c); used.add(assigned.C); inferredRoles.add('C'); }
+              if (!assigned.RW && line.rw && !used.has(String(line.rw))) { assigned.RW = String(line.rw); used.add(assigned.RW); inferredRoles.add('RW'); }
+              break;
+            }
+          }
+          const dPairs = [gameLineup.d1, gameLineup.d2, gameLineup.d3].filter(Boolean);
+          const detectedDefs = [assigned.LD, assigned.RD].filter(Boolean).map(String);
+          for (const pair of dPairs) {
+            const pairIds = [pair.ld, pair.rd].filter(Boolean).map(String);
+            if (detectedDefs.some(id => pairIds.includes(id))) {
+              if (!assigned.LD && pair.ld && !used.has(String(pair.ld))) { assigned.LD = String(pair.ld); used.add(assigned.LD); inferredRoles.add('LD'); }
+              if (!assigned.RD && pair.rd && !used.has(String(pair.rd))) { assigned.RD = String(pair.rd); used.add(assigned.RD); inferredRoles.add('RD'); }
+              break;
+            }
+          }
+        }
+      } catch(e){}
+
+      // Roles with no detected or line-inferred skater remain null so [+ Tag ${role}] renders.
       const skaters = ['C', 'LW', 'RW', 'LD', 'RD'].map(role => {
         const num = assigned[role] || null;
         if (!num) {
@@ -47370,7 +47443,7 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
         const p = ROSTER_POSITIONS[num] || { name: `Player #${num}`, pos: role };
         const parts = p.name.split(' ');
         const surname = parts[parts.length - 1];
-        return { num, role, name: p.name, surname };
+        return { num, role, name: p.name, surname, inferred: inferredRoles.has(role) };
       });
 
       const gInfo = ROSTER_POSITIONS[goalieId] || { name: "Matthew Hart", pos: "G" };
@@ -48156,8 +48229,19 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
             </div>
             
             <p class="text-[11px] text-slate-700 leading-relaxed bg-white/80 p-2.5 rounded-xl border border-amber-200/60">
-              💬 <em>"We analyzed the game broadcast and believe these players dressed and were skating these primary line combinations. <strong>Uncheck any players who were absent/scratched</strong>, adjust the lines below, and click <strong>'Confirm Lineup &amp; Calibrate AI'</strong> to lock in 100% accurate shift telemetry."</em>
+              💬 <em>"Paste the coach's pre-game texted lines below OR adjust the dropdowns, then click <strong>'Confirm Lineup &amp; Calibrate AI'</strong> to auto-infer linemates on every shift."</em>
             </p>
+
+            <!-- Quick Paste / Import Coach's Texted Lines -->
+            <div class="p-2.5 rounded-xl bg-slate-900 text-white space-y-2 border border-slate-700">
+              <div class="flex items-center justify-between gap-2">
+                <span class="text-[10px] font-black uppercase tracking-wider text-amber-300">📱 Paste Coach's Texted Lines (Numbers or Names)</span>
+                <button type="button" onclick="parseAndImportTextedLines()" class="px-2.5 py-1 rounded-lg bg-tigersGold hover:bg-tigersGoldBright text-slate-950 font-black text-[10px] cursor-pointer transition">
+                  ⚡ Parse &amp; Save Lines
+                </button>
+              </div>
+              <textarea id="coach-text-lines-input" rows="3" placeholder="Example text from coach:&#10;L1: 7 9 11&#10;L2: 23 18 88&#10;L3: 14 19 27&#10;D1: 21 28 | D2: 4 12 | G: 98" class="w-full rounded-lg bg-slate-800 border border-slate-700 px-2.5 py-1.5 text-[11px] font-mono text-slate-100 placeholder-slate-400 focus:outline-none focus:border-amber-400"></textarea>
+            </div>
 
             <!-- Attendance / Scratches Checkbox Grid -->
             <div class="space-y-1.5 pt-1">
@@ -48256,6 +48340,71 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
         if (el) el.checked = isDressed;
       });
       saveCustomLineupForGame();
+    }
+
+    function parseAndImportTextedLines() {
+      const raw = document.getElementById('coach-text-lines-input')?.value || '';
+      if (!raw.trim()) { showToast("⚠️ Paste the coach's line text first."); return; }
+
+      const resolveTokens = (txt) => {
+        const found = [];
+        const tokens = txt.replace(/[#,:;/\-]+/g, ' ').split(/\s+/).filter(Boolean);
+        for (const tok of tokens) {
+          const clean = tok.toLowerCase();
+          if (ROSTER_POSITIONS[tok]) { found.push(String(tok)); continue; }
+          const matchEntry = Object.entries(ROSTER_POSITIONS).find(([, p]) => {
+            const parts = p.name.toLowerCase().split(/\s+/);
+            return parts.some(part => part === clean || (clean.length >= 3 && part.startsWith(clean)));
+          });
+          if (matchEntry && !found.includes(matchEntry[0])) found.push(matchEntry[0]);
+        }
+        return found;
+      };
+
+      const setVal = (id, val) => {
+        const el = document.getElementById(`depth-${id}`);
+        if (el && val && ROSTER_POSITIONS[String(val)]) el.value = String(val);
+      };
+
+      const chunks = raw.split(/[\n|]+/).map(s => s.trim()).filter(Boolean);
+      const dressedSet = new Set();
+      let matchedAny = false;
+
+      for (const chunk of chunks) {
+        const lower = chunk.toLowerCase();
+        const ids = resolveTokens(chunk.replace(/^(line\s*\d|l\d|pair\s*\d|d\d|goalie|g)\b/i, ''));
+        ids.forEach(id => dressedSet.add(id));
+        if (/^(l1|line\s*1)\b/.test(lower) && ids.length) {
+          setVal('f1_lw', ids[0]); setVal('f1_c', ids[1]); setVal('f1_rw', ids[2]); matchedAny = true;
+        } else if (/^(l2|line\s*2)\b/.test(lower) && ids.length) {
+          setVal('f2_lw', ids[0]); setVal('f2_c', ids[1]); setVal('f2_rw', ids[2]); matchedAny = true;
+        } else if (/^(l3|line\s*3)\b/.test(lower) && ids.length) {
+          setVal('f3_lw', ids[0]); setVal('f3_c', ids[1]); setVal('f3_rw', ids[2]); matchedAny = true;
+        } else if (/^(d1|pair\s*1)\b/.test(lower) && ids.length) {
+          setVal('d1_ld', ids[0]); setVal('d1_rd', ids[1]); matchedAny = true;
+        } else if (/^(d2|pair\s*2)\b/.test(lower) && ids.length) {
+          setVal('d2_ld', ids[0]); setVal('d2_rd', ids[1]); matchedAny = true;
+        } else if (/^(d3|pair\s*3)\b/.test(lower) && ids.length) {
+          setVal('d3_ld', ids[0]); setVal('d3_rd', ids[1]); matchedAny = true;
+        } else if (/^(g|goalie)\b/.test(lower) && ids.length) {
+          setVal('goalie', ids[0]); matchedAny = true;
+        }
+      }
+
+      if (!matchedAny) {
+        showToast("⚠️ Could not match L1/L2/L3/D1/D2/G labels. Use e.g. 'L1: 7 9 11'.");
+        return;
+      }
+
+      if (dressedSet.size >= 5) {
+        Object.keys(ROSTER_POSITIONS).forEach(num => {
+          const cb = document.getElementById(`attend-check-${num}`);
+          if (cb) cb.checked = dressedSet.has(String(num));
+        });
+      }
+      saveCustomLineupForGame();
+      if (typeof loadCoachingClips === 'function') loadCoachingClips();
+      showToast("✅ Imported coach's texted lines & inferred shift partners!");
     }
 
     function saveCustomLineupForGame() {
@@ -67904,10 +68053,10 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
           aiConf.className = "font-mono font-black px-1.5 py-0.2 rounded bg-emerald-500/20 text-emerald-300 shrink-0";
           aiConf.innerText = `${avgConf}% Confidence`;
         } else {
-          aiBanner.className = "mt-1 px-2.5 py-1.5 rounded-lg bg-amber-950/80 border border-amber-400/50 flex items-center justify-between gap-2 text-[10px]";
-          aiText.className = "font-bold text-amber-300";
+          aiBanner.className = "mt-1 px-2.5 py-1.5 rounded-lg bg-amber-50 border border-amber-400 flex items-center justify-between gap-2 text-[10px] shadow-2xs";
+          aiText.className = "font-bold text-amber-950";
           aiText.innerText = `🟡 Queued for AI Video Scan — Official Box Score Ready`;
-          aiConf.className = "font-mono font-black px-1.5 py-0.2 rounded bg-amber-400/20 text-amber-200 shrink-0";
+          aiConf.className = "font-mono font-black px-1.5 py-0.5 rounded bg-amber-200 text-amber-950 border border-amber-400 shrink-0";
           aiConf.innerText = `Pending Scan`;
         }
       }
