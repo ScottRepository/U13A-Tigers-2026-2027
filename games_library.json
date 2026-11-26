@@ -47,18 +47,22 @@
       "date": "2026-11-24",
       "opponent": "Barrie Colts U13-2 A Blue",
       "periods": {
-        "1": 60,
-        "2": 1571,
-        "3": 3016
+        "1": 921,
+        "2": 1795,
+        "3": 3183
       },
-      "period_ends": null,
+      "period_ends": {
+        "1": 1529,
+        "2": 2931,
+        "3": 4237
+      },
       "period_lengths": {
         "1": 600,
         "2": 900,
         "3": 900
       },
-      "ai_engine": "Pending AI Scan",
-      "analyzed_at": null,
+      "ai_engine": "Google Gemini 4 (gemini-4-hydrogen - Two-Pass Stop-Time Verified)",
+      "analyzed_at": "2026-11-26 03:28 UTC",
       "teamsnap": {
         "date": "2026-11-24",
         "time": "7:30 PM",
@@ -69,21 +73,3086 @@
         "jersey": "Home (White)",
         "is_home": true
       },
-      "shifts": [],
-      "players": {},
+      "shifts": [
+        {
+          "shift_id": 1,
+          "period": 1,
+          "start_seconds": 921,
+          "end_seconds": 971,
+          "display_time": "15:21",
+          "center_id": 9,
+          "player_ids": [
+            9,
+            3,
+            16,
+            28,
+            21,
+            13
+          ],
+          "strength_state": "5v5",
+          "primary_zone": "Offensive Zone",
+          "faceoff_location": "Center Ice",
+          "faceoff_won": true,
+          "breakout": {
+            "attempted": true,
+            "successful": true,
+            "breakout_type": "D-to-D",
+            "turnover_location": "None"
+          },
+          "goal_scored": "None",
+          "is_tigers_goal": false,
+          "is_opp_goal": false,
+          "goal_verified": false,
+          "confidence": 90,
+          "coach_notes": "Clean D-to-D breakout early to establish offensive zone time, though play ends on an icing whistle."
+        },
+        {
+          "shift_id": 2,
+          "period": 1,
+          "start_seconds": 992,
+          "end_seconds": 1037,
+          "display_time": "16:32",
+          "center_id": 18,
+          "player_ids": [
+            18,
+            7,
+            10,
+            27,
+            76,
+            13
+          ],
+          "strength_state": "5v5",
+          "primary_zone": "Defensive Zone",
+          "faceoff_location": "D-Zone Dot",
+          "faceoff_won": true,
+          "breakout": {
+            "attempted": true,
+            "successful": true,
+            "breakout_type": "Rim",
+            "turnover_location": "None"
+          },
+          "goal_scored": "Opponent Goal",
+          "is_tigers_goal": false,
+          "is_opp_goal": true,
+          "goal_verified": true,
+          "confidence": 92,
+          "coach_notes": "Tigers won the D-zone faceoff cleanly and executed controlled rim breakouts to sustain extended offensive zone pressure."
+        },
+        {
+          "shift_id": 3,
+          "period": 1,
+          "start_seconds": 1152,
+          "end_seconds": 1197,
+          "display_time": "19:12",
+          "center_id": 23,
+          "player_ids": [
+            23,
+            5,
+            11,
+            28,
+            97,
+            13
+          ],
+          "strength_state": "5v5",
+          "primary_zone": "Defensive Zone",
+          "faceoff_location": "Center Ice",
+          "faceoff_won": false,
+          "breakout": {
+            "attempted": true,
+            "successful": true,
+            "breakout_type": "Rim",
+            "turnover_location": "None"
+          },
+          "goal_scored": "None",
+          "is_tigers_goal": false,
+          "is_opp_goal": false,
+          "goal_verified": false,
+          "confidence": 85,
+          "coach_notes": "Lost the center ice draw and spent heavy minutes defending the house; forwards need tighter F3 support to relieve wall pressure."
+        },
+        {
+          "shift_id": 4,
+          "period": 1,
+          "start_seconds": 1249,
+          "end_seconds": 1302,
+          "display_time": "20:49",
+          "center_id": 9,
+          "player_ids": [
+            9,
+            3,
+            16,
+            21,
+            76,
+            13
+          ],
+          "strength_state": "5v5",
+          "primary_zone": "Defensive Zone",
+          "faceoff_location": "D-Zone Dot",
+          "faceoff_won": false,
+          "breakout": {
+            "attempted": true,
+            "successful": true,
+            "breakout_type": "Chip Off Glass",
+            "turnover_location": "None"
+          },
+          "goal_scored": "Opponent Goal",
+          "is_tigers_goal": false,
+          "is_opp_goal": true,
+          "goal_verified": true,
+          "confidence": 90,
+          "coach_notes": "Tigers absorbed heavy D-zone pressure off a lost draw, finally cleared the zone late in the shift, but turned the puck over in transition leading to an odd-man rush goal against."
+        },
+        {
+          "shift_id": 5,
+          "period": 1,
+          "start_seconds": 1325,
+          "end_seconds": 1370,
+          "display_time": "22:05",
+          "center_id": 18,
+          "player_ids": [
+            18,
+            7,
+            88,
+            27,
+            28,
+            13
+          ],
+          "strength_state": "5v5",
+          "primary_zone": "Defensive Zone",
+          "faceoff_location": "Center Ice",
+          "faceoff_won": true,
+          "breakout": {
+            "attempted": true,
+            "successful": true,
+            "breakout_type": "Rim",
+            "turnover_location": "None"
+          },
+          "goal_scored": "None",
+          "is_tigers_goal": false,
+          "is_opp_goal": false,
+          "goal_verified": false,
+          "confidence": 88,
+          "coach_notes": "Strong push off the faceoff into the offensive zone followed by resilient defensive box-out work through a long whistle-free stretch."
+        },
+        {
+          "shift_id": 6,
+          "period": 2,
+          "start_seconds": 1794,
+          "end_seconds": 1827,
+          "display_time": "29:54",
+          "center_id": 9,
+          "player_ids": [
+            9,
+            18,
+            10
+          ],
+          "strength_state": "5v5",
+          "primary_zone": "Defensive Zone",
+          "faceoff_location": "Center Ice",
+          "faceoff_won": true,
+          "breakout": {
+            "attempted": true,
+            "successful": false,
+            "breakout_type": "None",
+            "turnover_location": "Half-Wall"
+          },
+          "goal_scored": "Opponent Goal",
+          "is_tigers_goal": false,
+          "is_opp_goal": true,
+          "goal_verified": true,
+          "confidence": 92,
+          "coach_notes": "After winning the opening Period 2 draw and chipping the puck deep, Tigers forwards must track back tighter through the neutral zone to deny the clean entry and slot shot that led to the 14:32 goal against."
+        },
+        {
+          "shift_id": 7,
+          "period": 2,
+          "start_seconds": 1849,
+          "end_seconds": 1883,
+          "display_time": "30:49",
+          "center_id": 18,
+          "player_ids": [
+            18,
+            10,
+            11,
+            27,
+            76,
+            13
+          ],
+          "strength_state": "5v5",
+          "primary_zone": "Neutral Zone",
+          "faceoff_location": "Center Ice",
+          "faceoff_won": false,
+          "breakout": {
+            "attempted": true,
+            "successful": true,
+            "breakout_type": "Wheel",
+            "turnover_location": "None"
+          },
+          "goal_scored": "None",
+          "is_tigers_goal": false,
+          "is_opp_goal": false,
+          "goal_verified": false,
+          "confidence": 88,
+          "coach_notes": "Good wheel breakout from behind the net to transition into the offensive zone before play is whistled at the blue line."
+        },
+        {
+          "shift_id": 8,
+          "period": 2,
+          "start_seconds": 1903,
+          "end_seconds": 1948,
+          "display_time": "31:43",
+          "center_id": 23,
+          "player_ids": [
+            23,
+            5,
+            16,
+            21,
+            97,
+            13
+          ],
+          "strength_state": "5v5",
+          "primary_zone": "Defensive Zone",
+          "faceoff_location": "Neutral Zone Dot",
+          "faceoff_won": false,
+          "breakout": {
+            "attempted": true,
+            "successful": true,
+            "breakout_type": "Rim",
+            "turnover_location": "None"
+          },
+          "goal_scored": "None",
+          "is_tigers_goal": false,
+          "is_opp_goal": false,
+          "goal_verified": false,
+          "confidence": 86,
+          "coach_notes": "Clean rim breakout early in the shift, though Colts regain entry and force a defensive freeze."
+        },
+        {
+          "shift_id": 9,
+          "period": 2,
+          "start_seconds": 2001,
+          "end_seconds": 2046,
+          "display_time": "33:21",
+          "center_id": 9,
+          "player_ids": [
+            9,
+            3,
+            88,
+            28,
+            76,
+            13
+          ],
+          "strength_state": "5v5",
+          "primary_zone": "Defensive Zone",
+          "faceoff_location": "D-Zone Dot",
+          "faceoff_won": true,
+          "breakout": {
+            "attempted": true,
+            "successful": true,
+            "breakout_type": "Chip Off Glass",
+            "turnover_location": "None"
+          },
+          "goal_scored": "None",
+          "is_tigers_goal": false,
+          "is_opp_goal": false,
+          "goal_verified": false,
+          "confidence": 87,
+          "coach_notes": "Strong defensive-zone battles and chip clears relieve pressure and generate late offensive-zone time."
+        },
+        {
+          "shift_id": 10,
+          "period": 2,
+          "start_seconds": 2133,
+          "end_seconds": 2172,
+          "display_time": "35:33",
+          "center_id": 18,
+          "player_ids": [
+            18,
+            7,
+            11,
+            27,
+            97,
+            13
+          ],
+          "strength_state": "5v5",
+          "primary_zone": "Defensive Zone",
+          "faceoff_location": "Neutral Zone Dot",
+          "faceoff_won": false,
+          "breakout": {
+            "attempted": true,
+            "successful": false,
+            "breakout_type": "Rim",
+            "turnover_location": "Half-Wall"
+          },
+          "goal_scored": "None",
+          "is_tigers_goal": false,
+          "is_opp_goal": false,
+          "goal_verified": false,
+          "confidence": 85,
+          "coach_notes": "Need stronger winger support on the half-wall to clear the defensive zone under Colts forecheck."
+        },
+        {
+          "shift_id": 11,
+          "period": 2,
+          "start_seconds": 2192,
+          "end_seconds": 2237,
+          "display_time": "36:32",
+          "center_id": 23,
+          "player_ids": [
+            23,
+            5,
+            10,
+            21,
+            28,
+            13
+          ],
+          "strength_state": "5v5",
+          "primary_zone": "Defensive Zone",
+          "faceoff_location": "D-Zone Dot",
+          "faceoff_won": false,
+          "breakout": {
+            "attempted": true,
+            "successful": true,
+            "breakout_type": "Rim",
+            "turnover_location": "None"
+          },
+          "goal_scored": "None",
+          "is_tigers_goal": false,
+          "is_opp_goal": false,
+          "goal_verified": false,
+          "confidence": 86,
+          "coach_notes": "Multiple successful zone exits lead to offensive-zone entries before icing stops play."
+        },
+        {
+          "shift_id": 12,
+          "period": 2,
+          "start_seconds": 2319,
+          "end_seconds": 2331,
+          "display_time": "38:39",
+          "center_id": 9,
+          "player_ids": [
+            9,
+            16,
+            88,
+            27,
+            76,
+            13
+          ],
+          "strength_state": "5v5",
+          "primary_zone": "Defensive Zone",
+          "faceoff_location": "D-Zone Dot",
+          "faceoff_won": false,
+          "breakout": {
+            "attempted": false,
+            "successful": false,
+            "breakout_type": "None",
+            "turnover_location": "None"
+          },
+          "goal_scored": "None",
+          "is_tigers_goal": false,
+          "is_opp_goal": false,
+          "goal_verified": false,
+          "confidence": 90,
+          "coach_notes": "Tie up the opponent center on defensive-zone draws to prevent immediate point shots."
+        },
+        {
+          "shift_id": 13,
+          "period": 2,
+          "start_seconds": 2344,
+          "end_seconds": 2365,
+          "display_time": "39:04",
+          "center_id": 9,
+          "player_ids": [
+            9,
+            16,
+            88,
+            27,
+            76,
+            13
+          ],
+          "strength_state": "5v5",
+          "primary_zone": "Defensive Zone",
+          "faceoff_location": "D-Zone Dot",
+          "faceoff_won": false,
+          "breakout": {
+            "attempted": true,
+            "successful": false,
+            "breakout_type": "Rim",
+            "turnover_location": "Half-Wall"
+          },
+          "goal_scored": "None",
+          "is_tigers_goal": false,
+          "is_opp_goal": false,
+          "goal_verified": false,
+          "confidence": 89,
+          "coach_notes": "Failed half-wall clear keeps the Tigers hemmed in and results in a minor penalty."
+        },
+        {
+          "shift_id": 14,
+          "period": 2,
+          "start_seconds": 2392,
+          "end_seconds": 2404,
+          "display_time": "39:52",
+          "center_id": 18,
+          "player_ids": [
+            18,
+            88,
+            21,
+            28,
+            13
+          ],
+          "strength_state": "PK (Tigers)",
+          "primary_zone": "Defensive Zone",
+          "faceoff_location": "D-Zone Dot",
+          "faceoff_won": true,
+          "breakout": {
+            "attempted": false,
+            "successful": false,
+            "breakout_type": "None",
+            "turnover_location": "None"
+          },
+          "goal_scored": "None",
+          "is_tigers_goal": false,
+          "is_opp_goal": false,
+          "goal_verified": false,
+          "confidence": 88,
+          "coach_notes": "Tigers win the defensive-zone draw at the top dot and push up the half-wall, but play is stopped near the blue line before establishing a clean breakout."
+        },
+        {
+          "shift_id": 15,
+          "period": 2,
+          "start_seconds": 2408,
+          "end_seconds": 2447,
+          "display_time": "40:08",
+          "center_id": 18,
+          "player_ids": [
+            18,
+            88,
+            21,
+            28,
+            13
+          ],
+          "strength_state": "PK (Tigers)",
+          "primary_zone": "Defensive Zone",
+          "faceoff_location": "O-Zone Dot",
+          "faceoff_won": false,
+          "breakout": {
+            "attempted": false,
+            "successful": false,
+            "breakout_type": "None",
+            "turnover_location": "None"
+          },
+          "goal_scored": "None",
+          "is_tigers_goal": false,
+          "is_opp_goal": false,
+          "goal_verified": false,
+          "confidence": 90,
+          "coach_notes": "Strong offensive-zone forecheck and blue-line holds keep the puck alive after losing the initial O-Zone draw, generating sustained 5v5 pressure until the whistle."
+        },
+        {
+          "shift_id": 16,
+          "period": 2,
+          "start_seconds": 2468,
+          "end_seconds": 2513,
+          "display_time": "41:08",
+          "center_id": 23,
+          "player_ids": [
+            23,
+            76
+          ],
+          "strength_state": "PK (Tigers)",
+          "primary_zone": "Defensive Zone",
+          "faceoff_location": "D-Zone Dot",
+          "faceoff_won": true,
+          "breakout": {
+            "attempted": true,
+            "successful": true,
+            "breakout_type": "Rim",
+            "turnover_location": "None"
+          },
+          "goal_scored": "Opponent Goal",
+          "is_tigers_goal": false,
+          "is_opp_goal": true,
+          "goal_verified": true,
+          "confidence": 85,
+          "coach_notes": "Tigers win the D-zone draw and absorb extended pressure before rimming the puck out for an offensive entry, but concede a goal on the counter-rush."
+        },
+        {
+          "shift_id": 17,
+          "period": 2,
+          "start_seconds": 2586,
+          "end_seconds": 2615,
+          "display_time": "43:06",
+          "center_id": 9,
+          "player_ids": [
+            9,
+            5,
+            11,
+            21,
+            97,
+            13
+          ],
+          "strength_state": "5v5",
+          "primary_zone": "Defensive Zone",
+          "faceoff_location": "Center Ice",
+          "faceoff_won": false,
+          "breakout": {
+            "attempted": true,
+            "successful": false,
+            "breakout_type": "Rim",
+            "turnover_location": "Blue Line"
+          },
+          "goal_scored": "Opponent Goal",
+          "is_tigers_goal": false,
+          "is_opp_goal": true,
+          "goal_verified": true,
+          "confidence": 91,
+          "coach_notes": "Step up tighter on neutral-zone rush defense to deny Barrie's quick strike for Goal #5."
+        },
+        {
+          "shift_id": 18,
+          "period": 2,
+          "start_seconds": 2646,
+          "end_seconds": 2685,
+          "display_time": "44:06",
+          "center_id": 18,
+          "player_ids": [
+            18,
+            7,
+            88,
+            28,
+            76,
+            13
+          ],
+          "strength_state": "5v5",
+          "primary_zone": "Offensive Zone",
+          "faceoff_location": "Center Ice",
+          "faceoff_won": true,
+          "breakout": {
+            "attempted": false,
+            "successful": false,
+            "breakout_type": "None",
+            "turnover_location": "None"
+          },
+          "goal_scored": "None",
+          "is_tigers_goal": false,
+          "is_opp_goal": false,
+          "goal_verified": false,
+          "confidence": 89,
+          "coach_notes": "Clean Center Ice faceoff win generates sustained offensive-zone forecheck pressure."
+        },
+        {
+          "shift_id": 19,
+          "period": 2,
+          "start_seconds": 2706,
+          "end_seconds": 2751,
+          "display_time": "45:06",
+          "center_id": 23,
+          "player_ids": [
+            23,
+            10,
+            88,
+            21,
+            27,
+            13
+          ],
+          "strength_state": "5v5",
+          "primary_zone": "Defensive Zone",
+          "faceoff_location": "D-Zone Dot",
+          "faceoff_won": true,
+          "breakout": {
+            "attempted": true,
+            "successful": true,
+            "breakout_type": "Rim",
+            "turnover_location": "None"
+          },
+          "goal_scored": "None",
+          "is_tigers_goal": false,
+          "is_opp_goal": false,
+          "goal_verified": false,
+          "confidence": 87,
+          "coach_notes": "Relentless effort through a long shift draws a Barrie penalty to put Tigers on the power play."
+        },
+        {
+          "shift_id": 20,
+          "period": 2,
+          "start_seconds": 2896,
+          "end_seconds": 2931,
+          "display_time": "48:16",
+          "center_id": 9,
+          "player_ids": [
+            9,
+            7,
+            88,
+            21,
+            28,
+            13
+          ],
+          "strength_state": "PP (Tigers)",
+          "primary_zone": "Offensive Zone",
+          "faceoff_location": "O-Zone Dot",
+          "faceoff_won": false,
+          "breakout": {
+            "attempted": true,
+            "successful": true,
+            "breakout_type": "Wheel",
+            "turnover_location": "None"
+          },
+          "goal_scored": "None",
+          "is_tigers_goal": false,
+          "is_opp_goal": false,
+          "goal_verified": false,
+          "confidence": 90,
+          "coach_notes": "Composed wheel breakout after an early clear allows the power-play unit to set up in the offensive zone."
+        },
+        {
+          "shift_id": 21,
+          "period": 3,
+          "start_seconds": 3183,
+          "end_seconds": 3233,
+          "display_time": "53:03",
+          "center_id": 9,
+          "player_ids": [
+            9,
+            3,
+            7,
+            21,
+            28,
+            13
+          ],
+          "strength_state": "5v5",
+          "primary_zone": "Defensive Zone",
+          "faceoff_location": "Center Ice",
+          "faceoff_won": false,
+          "breakout": {
+            "attempted": true,
+            "successful": true,
+            "breakout_type": "Rim",
+            "turnover_location": "None"
+          },
+          "goal_scored": "None",
+          "is_tigers_goal": false,
+          "is_opp_goal": false,
+          "goal_verified": false,
+          "confidence": 90,
+          "coach_notes": "After losing the opening Period 3 draw, Tigers execute a clean rim breakout into the neutral zone before defending back down low until the whistle."
+        },
+        {
+          "shift_id": 22,
+          "period": 3,
+          "start_seconds": 3246,
+          "end_seconds": 3269,
+          "display_time": "54:06",
+          "center_id": 18,
+          "player_ids": [
+            18,
+            5,
+            11,
+            27,
+            76,
+            13
+          ],
+          "strength_state": "5v5",
+          "primary_zone": "Defensive Zone",
+          "faceoff_location": "D-Zone Dot",
+          "faceoff_won": false,
+          "breakout": {
+            "attempted": true,
+            "successful": true,
+            "breakout_type": "Rim",
+            "turnover_location": "None"
+          },
+          "goal_scored": "Opponent Goal",
+          "is_tigers_goal": false,
+          "is_opp_goal": true,
+          "goal_verified": true,
+          "confidence": 95,
+          "coach_notes": "Tigers clear the zone briefly via the boards, but a neutral zone turnover leads to a Barrie rush and Goal #6 against from the slot."
+        },
+        {
+          "shift_id": 23,
+          "period": 3,
+          "start_seconds": 3297,
+          "end_seconds": 3342,
+          "display_time": "54:57",
+          "center_id": 23,
+          "player_ids": [
+            23,
+            10,
+            16,
+            27,
+            97,
+            13
+          ],
+          "strength_state": "5v5",
+          "primary_zone": "Defensive Zone",
+          "faceoff_location": "Center Ice",
+          "faceoff_won": false,
+          "breakout": {
+            "attempted": true,
+            "successful": true,
+            "breakout_type": "Rim",
+            "turnover_location": "None"
+          },
+          "goal_scored": "None",
+          "is_tigers_goal": false,
+          "is_opp_goal": false,
+          "goal_verified": false,
+          "confidence": 88,
+          "coach_notes": "Tigers weather sustained defensive zone pressure, complete a rim breakout, and generate a late offensive zone entry before the whistle."
+        },
+        {
+          "shift_id": 24,
+          "period": 3,
+          "start_seconds": 3378,
+          "end_seconds": 3423,
+          "display_time": "56:18",
+          "center_id": 9,
+          "player_ids": [
+            9,
+            3,
+            88,
+            21,
+            28,
+            13
+          ],
+          "strength_state": "5v5",
+          "primary_zone": "Defensive Zone",
+          "faceoff_location": "D-Zone Dot",
+          "faceoff_won": true,
+          "breakout": {
+            "attempted": true,
+            "successful": true,
+            "breakout_type": "Wheel",
+            "turnover_location": "None"
+          },
+          "goal_scored": "None",
+          "is_tigers_goal": false,
+          "is_opp_goal": false,
+          "goal_verified": false,
+          "confidence": 90,
+          "coach_notes": "Strong D-zone draw win sets up a smooth wheel breakout; Tigers push into the offensive zone and draw a Barrie penalty at 58:07."
+        },
+        {
+          "shift_id": 25,
+          "period": 3,
+          "start_seconds": 3582,
+          "end_seconds": 3627,
+          "display_time": "59:42",
+          "center_id": 18,
+          "player_ids": [
+            18,
+            5,
+            11,
+            27,
+            76,
+            13
+          ],
+          "strength_state": "PP (Tigers)",
+          "primary_zone": "Defensive Zone",
+          "faceoff_location": "Neutral Zone Dot",
+          "faceoff_won": false,
+          "breakout": {
+            "attempted": true,
+            "successful": true,
+            "breakout_type": "Rim",
+            "turnover_location": "None"
+          },
+          "goal_scored": "Opponent Goal",
+          "is_tigers_goal": false,
+          "is_opp_goal": true,
+          "goal_verified": true,
+          "confidence": 95,
+          "coach_notes": "On the power play, Tigers struggle to establish zone time and allow a costly shorthanded turnover in front of the net leading to Goal #7."
+        },
+        {
+          "shift_id": 26,
+          "period": 3,
+          "start_seconds": 3695,
+          "end_seconds": 3740,
+          "display_time": "61:35",
+          "center_id": 23,
+          "player_ids": [
+            23,
+            7,
+            16,
+            21,
+            97,
+            13
+          ],
+          "strength_state": "5v5",
+          "primary_zone": "Defensive Zone",
+          "faceoff_location": "Center Ice",
+          "faceoff_won": false,
+          "breakout": {
+            "attempted": true,
+            "successful": true,
+            "breakout_type": "Rim",
+            "turnover_location": "None"
+          },
+          "goal_scored": "None",
+          "is_tigers_goal": false,
+          "is_opp_goal": false,
+          "goal_verified": false,
+          "confidence": 87,
+          "coach_notes": "Tigers defend inside their dots, transition up the boards cleanly, and force a stoppage after Barrie dumps the puck back in."
+        },
+        {
+          "shift_id": 27,
+          "period": 3,
+          "start_seconds": 3789,
+          "end_seconds": 3834,
+          "display_time": "63:09",
+          "center_id": 9,
+          "player_ids": [
+            9,
+            3,
+            10,
+            27,
+            28,
+            13
+          ],
+          "strength_state": "5v5",
+          "primary_zone": "Defensive Zone",
+          "faceoff_location": "D-Zone Dot",
+          "faceoff_won": false,
+          "breakout": {
+            "attempted": true,
+            "successful": true,
+            "breakout_type": "Wheel",
+            "turnover_location": "None"
+          },
+          "goal_scored": "None",
+          "is_tigers_goal": false,
+          "is_opp_goal": false,
+          "goal_verified": false,
+          "confidence": 88,
+          "coach_notes": "Barrie controls the initial D-zone draw, but Tigers stay compact in the slot and skate the puck out across the blue line before the whistle."
+        },
+        {
+          "shift_id": 28,
+          "period": 3,
+          "start_seconds": 3903,
+          "end_seconds": 3948,
+          "display_time": "65:03",
+          "center_id": 18,
+          "player_ids": [
+            18,
+            5,
+            88,
+            76,
+            97,
+            13
+          ],
+          "strength_state": "5v5",
+          "primary_zone": "Defensive Zone",
+          "faceoff_location": "D-Zone Dot",
+          "faceoff_won": true,
+          "breakout": {
+            "attempted": true,
+            "successful": true,
+            "breakout_type": "Wheel",
+            "turnover_location": "None"
+          },
+          "goal_scored": "None",
+          "is_tigers_goal": false,
+          "is_opp_goal": false,
+          "goal_verified": false,
+          "confidence": 89,
+          "coach_notes": "Clean defensive faceoff win sparks a quick breakout up ice, though play returns to the Tigers zone before an offside whistle."
+        },
+        {
+          "shift_id": 29,
+          "period": 3,
+          "start_seconds": 4001,
+          "end_seconds": 4034,
+          "display_time": "66:41",
+          "center_id": 23,
+          "player_ids": [
+            23,
+            11,
+            16,
+            21,
+            28,
+            13
+          ],
+          "strength_state": "5v5",
+          "primary_zone": "Offensive Zone",
+          "faceoff_location": "Neutral Zone Dot",
+          "faceoff_won": true,
+          "breakout": {
+            "attempted": false,
+            "successful": false,
+            "breakout_type": "None",
+            "turnover_location": "None"
+          },
+          "goal_scored": "None",
+          "is_tigers_goal": false,
+          "is_opp_goal": false,
+          "goal_verified": false,
+          "confidence": 88,
+          "coach_notes": "Tigers win the neutral zone draw and pressure the Barrie zone before a quick counter-rush forces a goalie freeze."
+        },
+        {
+          "shift_id": 30,
+          "period": 3,
+          "start_seconds": 4064,
+          "end_seconds": 4109,
+          "display_time": "67:44",
+          "center_id": 9,
+          "player_ids": [
+            9,
+            3,
+            7,
+            27,
+            76,
+            13
+          ],
+          "strength_state": "5v5",
+          "primary_zone": "Defensive Zone",
+          "faceoff_location": "D-Zone Dot",
+          "faceoff_won": false,
+          "breakout": {
+            "attempted": true,
+            "successful": true,
+            "breakout_type": "Rim",
+            "turnover_location": "None"
+          },
+          "goal_scored": "None",
+          "is_tigers_goal": false,
+          "is_opp_goal": false,
+          "goal_verified": false,
+          "confidence": 90,
+          "coach_notes": "Long closing shift with multiple D-zone clearances and battles along the boards until the whistle stops play with 45 seconds left."
+        }
+      ],
+      "players": {
+        "3": {
+          "name": "Stewart Dolmage",
+          "total_ice_time": "5m 33s",
+          "shifts_count": 7,
+          "avg_shift_len": "48s",
+          "shifts": [
+            {
+              "id": 1,
+              "start": 921.0,
+              "end": 971.0,
+              "duration": 50
+            },
+            {
+              "id": 2,
+              "start": 1249.0,
+              "end": 1302.0,
+              "duration": 53
+            },
+            {
+              "id": 3,
+              "start": 2001.0,
+              "end": 2046.0,
+              "duration": 45
+            },
+            {
+              "id": 4,
+              "start": 3183.0,
+              "end": 3233.0,
+              "duration": 50
+            },
+            {
+              "id": 5,
+              "start": 3378.0,
+              "end": 3423.0,
+              "duration": 45
+            },
+            {
+              "id": 6,
+              "start": 3789.0,
+              "end": 3834.0,
+              "duration": 45
+            },
+            {
+              "id": 7,
+              "start": 4064.0,
+              "end": 4109.0,
+              "duration": 45
+            }
+          ]
+        },
+        "5": {
+          "name": "Nathan Zhao",
+          "total_ice_time": "4m 37s",
+          "shifts_count": 7,
+          "avg_shift_len": "40s",
+          "shifts": [
+            {
+              "id": 1,
+              "start": 1152.0,
+              "end": 1197.0,
+              "duration": 45
+            },
+            {
+              "id": 2,
+              "start": 1903.0,
+              "end": 1948.0,
+              "duration": 45
+            },
+            {
+              "id": 3,
+              "start": 2192.0,
+              "end": 2237.0,
+              "duration": 45
+            },
+            {
+              "id": 4,
+              "start": 2586.0,
+              "end": 2615.0,
+              "duration": 29
+            },
+            {
+              "id": 5,
+              "start": 3246.0,
+              "end": 3269.0,
+              "duration": 23
+            },
+            {
+              "id": 6,
+              "start": 3582.0,
+              "end": 3627.0,
+              "duration": 45
+            },
+            {
+              "id": 7,
+              "start": 3903.0,
+              "end": 3948.0,
+              "duration": 45
+            }
+          ]
+        },
+        "7": {
+          "name": "Maxwell Dey",
+          "total_ice_time": "5m 43s",
+          "shifts_count": 8,
+          "avg_shift_len": "43s",
+          "shifts": [
+            {
+              "id": 1,
+              "start": 992.0,
+              "end": 1037.0,
+              "duration": 45
+            },
+            {
+              "id": 2,
+              "start": 1325.0,
+              "end": 1370.0,
+              "duration": 45
+            },
+            {
+              "id": 3,
+              "start": 2133.0,
+              "end": 2172.0,
+              "duration": 39
+            },
+            {
+              "id": 4,
+              "start": 2646.0,
+              "end": 2685.0,
+              "duration": 39
+            },
+            {
+              "id": 5,
+              "start": 2896.0,
+              "end": 2931.0,
+              "duration": 35
+            },
+            {
+              "id": 6,
+              "start": 3183.0,
+              "end": 3233.0,
+              "duration": 50
+            },
+            {
+              "id": 7,
+              "start": 3695.0,
+              "end": 3740.0,
+              "duration": 45
+            },
+            {
+              "id": 8,
+              "start": 4064.0,
+              "end": 4109.0,
+              "duration": 45
+            }
+          ]
+        },
+        "9": {
+          "name": "Oliver Patterson",
+          "total_ice_time": "7m 43s",
+          "shifts_count": 12,
+          "avg_shift_len": "39s",
+          "shifts": [
+            {
+              "id": 1,
+              "start": 921.0,
+              "end": 971.0,
+              "duration": 50
+            },
+            {
+              "id": 2,
+              "start": 1249.0,
+              "end": 1302.0,
+              "duration": 53
+            },
+            {
+              "id": 3,
+              "start": 1794.0,
+              "end": 1827.0,
+              "duration": 33
+            },
+            {
+              "id": 4,
+              "start": 2001.0,
+              "end": 2046.0,
+              "duration": 45
+            },
+            {
+              "id": 5,
+              "start": 2319.0,
+              "end": 2331.0,
+              "duration": 12
+            },
+            {
+              "id": 6,
+              "start": 2344.0,
+              "end": 2365.0,
+              "duration": 21
+            },
+            {
+              "id": 7,
+              "start": 2586.0,
+              "end": 2615.0,
+              "duration": 29
+            },
+            {
+              "id": 8,
+              "start": 2896.0,
+              "end": 2931.0,
+              "duration": 35
+            },
+            {
+              "id": 9,
+              "start": 3183.0,
+              "end": 3233.0,
+              "duration": 50
+            },
+            {
+              "id": 10,
+              "start": 3378.0,
+              "end": 3423.0,
+              "duration": 45
+            },
+            {
+              "id": 11,
+              "start": 3789.0,
+              "end": 3834.0,
+              "duration": 45
+            },
+            {
+              "id": 12,
+              "start": 4064.0,
+              "end": 4109.0,
+              "duration": 45
+            }
+          ]
+        },
+        "10": {
+          "name": "Arjun Manjunath",
+          "total_ice_time": "4m 52s",
+          "shifts_count": 7,
+          "avg_shift_len": "42s",
+          "shifts": [
+            {
+              "id": 1,
+              "start": 992.0,
+              "end": 1037.0,
+              "duration": 45
+            },
+            {
+              "id": 2,
+              "start": 1794.0,
+              "end": 1827.0,
+              "duration": 33
+            },
+            {
+              "id": 3,
+              "start": 1849.0,
+              "end": 1883.0,
+              "duration": 34
+            },
+            {
+              "id": 4,
+              "start": 2192.0,
+              "end": 2237.0,
+              "duration": 45
+            },
+            {
+              "id": 5,
+              "start": 2706.0,
+              "end": 2751.0,
+              "duration": 45
+            },
+            {
+              "id": 6,
+              "start": 3297.0,
+              "end": 3342.0,
+              "duration": 45
+            },
+            {
+              "id": 7,
+              "start": 3789.0,
+              "end": 3834.0,
+              "duration": 45
+            }
+          ]
+        },
+        "11": {
+          "name": "Andrew Bichay",
+          "total_ice_time": "4m 08s",
+          "shifts_count": 7,
+          "avg_shift_len": "35s",
+          "shifts": [
+            {
+              "id": 1,
+              "start": 1152.0,
+              "end": 1197.0,
+              "duration": 45
+            },
+            {
+              "id": 2,
+              "start": 1849.0,
+              "end": 1883.0,
+              "duration": 34
+            },
+            {
+              "id": 3,
+              "start": 2133.0,
+              "end": 2172.0,
+              "duration": 39
+            },
+            {
+              "id": 4,
+              "start": 2586.0,
+              "end": 2615.0,
+              "duration": 29
+            },
+            {
+              "id": 5,
+              "start": 3246.0,
+              "end": 3269.0,
+              "duration": 23
+            },
+            {
+              "id": 6,
+              "start": 3582.0,
+              "end": 3627.0,
+              "duration": 45
+            },
+            {
+              "id": 7,
+              "start": 4001.0,
+              "end": 4034.0,
+              "duration": 33
+            }
+          ]
+        },
+        "13": {
+          "name": "Matthew Hart",
+          "total_ice_time": "18m 19s",
+          "shifts_count": 28,
+          "avg_shift_len": "39s",
+          "shifts": [
+            {
+              "id": 1,
+              "start": 921.0,
+              "end": 971.0,
+              "duration": 50
+            },
+            {
+              "id": 2,
+              "start": 992.0,
+              "end": 1037.0,
+              "duration": 45
+            },
+            {
+              "id": 3,
+              "start": 1152.0,
+              "end": 1197.0,
+              "duration": 45
+            },
+            {
+              "id": 4,
+              "start": 1249.0,
+              "end": 1302.0,
+              "duration": 53
+            },
+            {
+              "id": 5,
+              "start": 1325.0,
+              "end": 1370.0,
+              "duration": 45
+            },
+            {
+              "id": 6,
+              "start": 1849.0,
+              "end": 1883.0,
+              "duration": 34
+            },
+            {
+              "id": 7,
+              "start": 1903.0,
+              "end": 1948.0,
+              "duration": 45
+            },
+            {
+              "id": 8,
+              "start": 2001.0,
+              "end": 2046.0,
+              "duration": 45
+            },
+            {
+              "id": 9,
+              "start": 2133.0,
+              "end": 2172.0,
+              "duration": 39
+            },
+            {
+              "id": 10,
+              "start": 2192.0,
+              "end": 2237.0,
+              "duration": 45
+            },
+            {
+              "id": 11,
+              "start": 2319.0,
+              "end": 2331.0,
+              "duration": 12
+            },
+            {
+              "id": 12,
+              "start": 2344.0,
+              "end": 2365.0,
+              "duration": 21
+            },
+            {
+              "id": 13,
+              "start": 2392.0,
+              "end": 2404.0,
+              "duration": 12
+            },
+            {
+              "id": 14,
+              "start": 2408.0,
+              "end": 2447.0,
+              "duration": 39
+            },
+            {
+              "id": 15,
+              "start": 2586.0,
+              "end": 2615.0,
+              "duration": 29
+            },
+            {
+              "id": 16,
+              "start": 2646.0,
+              "end": 2685.0,
+              "duration": 39
+            },
+            {
+              "id": 17,
+              "start": 2706.0,
+              "end": 2751.0,
+              "duration": 45
+            },
+            {
+              "id": 18,
+              "start": 2896.0,
+              "end": 2931.0,
+              "duration": 35
+            },
+            {
+              "id": 19,
+              "start": 3183.0,
+              "end": 3233.0,
+              "duration": 50
+            },
+            {
+              "id": 20,
+              "start": 3246.0,
+              "end": 3269.0,
+              "duration": 23
+            },
+            {
+              "id": 21,
+              "start": 3297.0,
+              "end": 3342.0,
+              "duration": 45
+            },
+            {
+              "id": 22,
+              "start": 3378.0,
+              "end": 3423.0,
+              "duration": 45
+            },
+            {
+              "id": 23,
+              "start": 3582.0,
+              "end": 3627.0,
+              "duration": 45
+            },
+            {
+              "id": 24,
+              "start": 3695.0,
+              "end": 3740.0,
+              "duration": 45
+            },
+            {
+              "id": 25,
+              "start": 3789.0,
+              "end": 3834.0,
+              "duration": 45
+            },
+            {
+              "id": 26,
+              "start": 3903.0,
+              "end": 3948.0,
+              "duration": 45
+            },
+            {
+              "id": 27,
+              "start": 4001.0,
+              "end": 4034.0,
+              "duration": 33
+            },
+            {
+              "id": 28,
+              "start": 4064.0,
+              "end": 4109.0,
+              "duration": 45
+            }
+          ]
+        },
+        "16": {
+          "name": "Joshua Liu",
+          "total_ice_time": "5m 04s",
+          "shifts_count": 8,
+          "avg_shift_len": "38s",
+          "shifts": [
+            {
+              "id": 1,
+              "start": 921.0,
+              "end": 971.0,
+              "duration": 50
+            },
+            {
+              "id": 2,
+              "start": 1249.0,
+              "end": 1302.0,
+              "duration": 53
+            },
+            {
+              "id": 3,
+              "start": 1903.0,
+              "end": 1948.0,
+              "duration": 45
+            },
+            {
+              "id": 4,
+              "start": 2319.0,
+              "end": 2331.0,
+              "duration": 12
+            },
+            {
+              "id": 5,
+              "start": 2344.0,
+              "end": 2365.0,
+              "duration": 21
+            },
+            {
+              "id": 6,
+              "start": 3297.0,
+              "end": 3342.0,
+              "duration": 45
+            },
+            {
+              "id": 7,
+              "start": 3695.0,
+              "end": 3740.0,
+              "duration": 45
+            },
+            {
+              "id": 8,
+              "start": 4001.0,
+              "end": 4034.0,
+              "duration": 33
+            }
+          ]
+        },
+        "18": {
+          "name": "Nathan Carinci",
+          "total_ice_time": "6m 39s",
+          "shifts_count": 11,
+          "avg_shift_len": "36s",
+          "shifts": [
+            {
+              "id": 1,
+              "start": 992.0,
+              "end": 1037.0,
+              "duration": 45
+            },
+            {
+              "id": 2,
+              "start": 1325.0,
+              "end": 1370.0,
+              "duration": 45
+            },
+            {
+              "id": 3,
+              "start": 1794.0,
+              "end": 1827.0,
+              "duration": 33
+            },
+            {
+              "id": 4,
+              "start": 1849.0,
+              "end": 1883.0,
+              "duration": 34
+            },
+            {
+              "id": 5,
+              "start": 2133.0,
+              "end": 2172.0,
+              "duration": 39
+            },
+            {
+              "id": 6,
+              "start": 2392.0,
+              "end": 2404.0,
+              "duration": 12
+            },
+            {
+              "id": 7,
+              "start": 2408.0,
+              "end": 2447.0,
+              "duration": 39
+            },
+            {
+              "id": 8,
+              "start": 2646.0,
+              "end": 2685.0,
+              "duration": 39
+            },
+            {
+              "id": 9,
+              "start": 3246.0,
+              "end": 3269.0,
+              "duration": 23
+            },
+            {
+              "id": 10,
+              "start": 3582.0,
+              "end": 3627.0,
+              "duration": 45
+            },
+            {
+              "id": 11,
+              "start": 3903.0,
+              "end": 3948.0,
+              "duration": 45
+            }
+          ]
+        },
+        "21": {
+          "name": "Caleb Irgengioro-Wu",
+          "total_ice_time": "8m 46s",
+          "shifts_count": 13,
+          "avg_shift_len": "40s",
+          "shifts": [
+            {
+              "id": 1,
+              "start": 921.0,
+              "end": 971.0,
+              "duration": 50
+            },
+            {
+              "id": 2,
+              "start": 1249.0,
+              "end": 1302.0,
+              "duration": 53
+            },
+            {
+              "id": 3,
+              "start": 1903.0,
+              "end": 1948.0,
+              "duration": 45
+            },
+            {
+              "id": 4,
+              "start": 2192.0,
+              "end": 2237.0,
+              "duration": 45
+            },
+            {
+              "id": 5,
+              "start": 2392.0,
+              "end": 2404.0,
+              "duration": 12
+            },
+            {
+              "id": 6,
+              "start": 2408.0,
+              "end": 2447.0,
+              "duration": 39
+            },
+            {
+              "id": 7,
+              "start": 2586.0,
+              "end": 2615.0,
+              "duration": 29
+            },
+            {
+              "id": 8,
+              "start": 2706.0,
+              "end": 2751.0,
+              "duration": 45
+            },
+            {
+              "id": 9,
+              "start": 2896.0,
+              "end": 2931.0,
+              "duration": 35
+            },
+            {
+              "id": 10,
+              "start": 3183.0,
+              "end": 3233.0,
+              "duration": 50
+            },
+            {
+              "id": 11,
+              "start": 3378.0,
+              "end": 3423.0,
+              "duration": 45
+            },
+            {
+              "id": 12,
+              "start": 3695.0,
+              "end": 3740.0,
+              "duration": 45
+            },
+            {
+              "id": 13,
+              "start": 4001.0,
+              "end": 4034.0,
+              "duration": 33
+            }
+          ]
+        },
+        "23": {
+          "name": "Easton Carpentier",
+          "total_ice_time": "5m 48s",
+          "shifts_count": 8,
+          "avg_shift_len": "44s",
+          "shifts": [
+            {
+              "id": 1,
+              "start": 1152.0,
+              "end": 1197.0,
+              "duration": 45
+            },
+            {
+              "id": 2,
+              "start": 1903.0,
+              "end": 1948.0,
+              "duration": 45
+            },
+            {
+              "id": 3,
+              "start": 2192.0,
+              "end": 2237.0,
+              "duration": 45
+            },
+            {
+              "id": 4,
+              "start": 2468.0,
+              "end": 2513.0,
+              "duration": 45
+            },
+            {
+              "id": 5,
+              "start": 2706.0,
+              "end": 2751.0,
+              "duration": 45
+            },
+            {
+              "id": 6,
+              "start": 3297.0,
+              "end": 3342.0,
+              "duration": 45
+            },
+            {
+              "id": 7,
+              "start": 3695.0,
+              "end": 3740.0,
+              "duration": 45
+            },
+            {
+              "id": 8,
+              "start": 4001.0,
+              "end": 4034.0,
+              "duration": 33
+            }
+          ]
+        },
+        "27": {
+          "name": "Alen Fazlic",
+          "total_ice_time": "7m 24s",
+          "shifts_count": 12,
+          "avg_shift_len": "37s",
+          "shifts": [
+            {
+              "id": 1,
+              "start": 992.0,
+              "end": 1037.0,
+              "duration": 45
+            },
+            {
+              "id": 2,
+              "start": 1325.0,
+              "end": 1370.0,
+              "duration": 45
+            },
+            {
+              "id": 3,
+              "start": 1849.0,
+              "end": 1883.0,
+              "duration": 34
+            },
+            {
+              "id": 4,
+              "start": 2133.0,
+              "end": 2172.0,
+              "duration": 39
+            },
+            {
+              "id": 5,
+              "start": 2319.0,
+              "end": 2331.0,
+              "duration": 12
+            },
+            {
+              "id": 6,
+              "start": 2344.0,
+              "end": 2365.0,
+              "duration": 21
+            },
+            {
+              "id": 7,
+              "start": 2706.0,
+              "end": 2751.0,
+              "duration": 45
+            },
+            {
+              "id": 8,
+              "start": 3246.0,
+              "end": 3269.0,
+              "duration": 23
+            },
+            {
+              "id": 9,
+              "start": 3297.0,
+              "end": 3342.0,
+              "duration": 45
+            },
+            {
+              "id": 10,
+              "start": 3582.0,
+              "end": 3627.0,
+              "duration": 45
+            },
+            {
+              "id": 11,
+              "start": 3789.0,
+              "end": 3834.0,
+              "duration": 45
+            },
+            {
+              "id": 12,
+              "start": 4064.0,
+              "end": 4109.0,
+              "duration": 45
+            }
+          ]
+        },
+        "28": {
+          "name": "Ross Elley",
+          "total_ice_time": "8m 48s",
+          "shifts_count": 13,
+          "avg_shift_len": "41s",
+          "shifts": [
+            {
+              "id": 1,
+              "start": 921.0,
+              "end": 971.0,
+              "duration": 50
+            },
+            {
+              "id": 2,
+              "start": 1152.0,
+              "end": 1197.0,
+              "duration": 45
+            },
+            {
+              "id": 3,
+              "start": 1325.0,
+              "end": 1370.0,
+              "duration": 45
+            },
+            {
+              "id": 4,
+              "start": 2001.0,
+              "end": 2046.0,
+              "duration": 45
+            },
+            {
+              "id": 5,
+              "start": 2192.0,
+              "end": 2237.0,
+              "duration": 45
+            },
+            {
+              "id": 6,
+              "start": 2392.0,
+              "end": 2404.0,
+              "duration": 12
+            },
+            {
+              "id": 7,
+              "start": 2408.0,
+              "end": 2447.0,
+              "duration": 39
+            },
+            {
+              "id": 8,
+              "start": 2646.0,
+              "end": 2685.0,
+              "duration": 39
+            },
+            {
+              "id": 9,
+              "start": 2896.0,
+              "end": 2931.0,
+              "duration": 35
+            },
+            {
+              "id": 10,
+              "start": 3183.0,
+              "end": 3233.0,
+              "duration": 50
+            },
+            {
+              "id": 11,
+              "start": 3378.0,
+              "end": 3423.0,
+              "duration": 45
+            },
+            {
+              "id": 12,
+              "start": 3789.0,
+              "end": 3834.0,
+              "duration": 45
+            },
+            {
+              "id": 13,
+              "start": 4001.0,
+              "end": 4034.0,
+              "duration": 33
+            }
+          ]
+        },
+        "76": {
+          "name": "Matt Davis",
+          "total_ice_time": "7m 32s",
+          "shifts_count": 12,
+          "avg_shift_len": "38s",
+          "shifts": [
+            {
+              "id": 1,
+              "start": 992.0,
+              "end": 1037.0,
+              "duration": 45
+            },
+            {
+              "id": 2,
+              "start": 1249.0,
+              "end": 1302.0,
+              "duration": 53
+            },
+            {
+              "id": 3,
+              "start": 1849.0,
+              "end": 1883.0,
+              "duration": 34
+            },
+            {
+              "id": 4,
+              "start": 2001.0,
+              "end": 2046.0,
+              "duration": 45
+            },
+            {
+              "id": 5,
+              "start": 2319.0,
+              "end": 2331.0,
+              "duration": 12
+            },
+            {
+              "id": 6,
+              "start": 2344.0,
+              "end": 2365.0,
+              "duration": 21
+            },
+            {
+              "id": 7,
+              "start": 2468.0,
+              "end": 2513.0,
+              "duration": 45
+            },
+            {
+              "id": 8,
+              "start": 2646.0,
+              "end": 2685.0,
+              "duration": 39
+            },
+            {
+              "id": 9,
+              "start": 3246.0,
+              "end": 3269.0,
+              "duration": 23
+            },
+            {
+              "id": 10,
+              "start": 3582.0,
+              "end": 3627.0,
+              "duration": 45
+            },
+            {
+              "id": 11,
+              "start": 3903.0,
+              "end": 3948.0,
+              "duration": 45
+            },
+            {
+              "id": 12,
+              "start": 4064.0,
+              "end": 4109.0,
+              "duration": 45
+            }
+          ]
+        },
+        "88": {
+          "name": "Roy Chen",
+          "total_ice_time": "6m 23s",
+          "shifts_count": 11,
+          "avg_shift_len": "35s",
+          "shifts": [
+            {
+              "id": 1,
+              "start": 1325.0,
+              "end": 1370.0,
+              "duration": 45
+            },
+            {
+              "id": 2,
+              "start": 2001.0,
+              "end": 2046.0,
+              "duration": 45
+            },
+            {
+              "id": 3,
+              "start": 2319.0,
+              "end": 2331.0,
+              "duration": 12
+            },
+            {
+              "id": 4,
+              "start": 2344.0,
+              "end": 2365.0,
+              "duration": 21
+            },
+            {
+              "id": 5,
+              "start": 2392.0,
+              "end": 2404.0,
+              "duration": 12
+            },
+            {
+              "id": 6,
+              "start": 2408.0,
+              "end": 2447.0,
+              "duration": 39
+            },
+            {
+              "id": 7,
+              "start": 2646.0,
+              "end": 2685.0,
+              "duration": 39
+            },
+            {
+              "id": 8,
+              "start": 2706.0,
+              "end": 2751.0,
+              "duration": 45
+            },
+            {
+              "id": 9,
+              "start": 2896.0,
+              "end": 2931.0,
+              "duration": 35
+            },
+            {
+              "id": 10,
+              "start": 3378.0,
+              "end": 3423.0,
+              "duration": 45
+            },
+            {
+              "id": 11,
+              "start": 3903.0,
+              "end": 3948.0,
+              "duration": 45
+            }
+          ]
+        },
+        "97": {
+          "name": "Hudson Millar",
+          "total_ice_time": "4m 53s",
+          "shifts_count": 7,
+          "avg_shift_len": "42s",
+          "shifts": [
+            {
+              "id": 1,
+              "start": 1152.0,
+              "end": 1197.0,
+              "duration": 45
+            },
+            {
+              "id": 2,
+              "start": 1903.0,
+              "end": 1948.0,
+              "duration": 45
+            },
+            {
+              "id": 3,
+              "start": 2133.0,
+              "end": 2172.0,
+              "duration": 39
+            },
+            {
+              "id": 4,
+              "start": 2586.0,
+              "end": 2615.0,
+              "duration": 29
+            },
+            {
+              "id": 5,
+              "start": 3297.0,
+              "end": 3342.0,
+              "duration": 45
+            },
+            {
+              "id": 6,
+              "start": 3695.0,
+              "end": 3740.0,
+              "duration": 45
+            },
+            {
+              "id": 7,
+              "start": 3903.0,
+              "end": 3948.0,
+              "duration": 45
+            }
+          ]
+        },
+        "98": {
+          "name": "Hudson Barfitt",
+          "total_ice_time": "0m 00s",
+          "shifts_count": 0,
+          "avg_shift_len": "0s",
+          "shifts": []
+        }
+      },
       "coaching_clips": {
-        "powerplay": [],
-        "penalty_kill": [],
-        "offensive_zone": [],
-        "defensive_zone": [],
-        "neutral_zone": []
+        "powerplay": [
+          {
+            "id": 20,
+            "shift_id": 20,
+            "start": 2896.0,
+            "start_seconds": 2896,
+            "end": 2931.0,
+            "end_seconds": 2931,
+            "duration": 35,
+            "description": "Composed wheel breakout after an early clear allows the power-play unit to set up in the offensive zone.",
+            "coach_notes": "Composed wheel breakout after an early clear allows the power-play unit to set up in the offensive zone.",
+            "suggested": true,
+            "breakout": {
+              "attempted": true,
+              "successful": true,
+              "breakout_type": "Wheel",
+              "turnover_location": "None"
+            },
+            "strength": "PP (Tigers)",
+            "strength_state": "PP (Tigers)",
+            "zone": "Offensive Zone",
+            "primary_zone": "Offensive Zone",
+            "player_ids": [
+              9,
+              7,
+              88,
+              21,
+              28,
+              13
+            ],
+            "center_id": 9
+          },
+          {
+            "id": 25,
+            "shift_id": 25,
+            "start": 3582.0,
+            "start_seconds": 3582,
+            "end": 3627.0,
+            "end_seconds": 3627,
+            "duration": 45,
+            "description": "On the power play, Tigers struggle to establish zone time and allow a costly shorthanded turnover in front of the net leading to Goal #7.",
+            "coach_notes": "On the power play, Tigers struggle to establish zone time and allow a costly shorthanded turnover in front of the net leading to Goal #7.",
+            "suggested": true,
+            "breakout": {
+              "attempted": true,
+              "successful": true,
+              "breakout_type": "Rim",
+              "turnover_location": "None"
+            },
+            "strength": "PP (Tigers)",
+            "strength_state": "PP (Tigers)",
+            "zone": "Defensive Zone",
+            "primary_zone": "Defensive Zone",
+            "player_ids": [
+              18,
+              5,
+              11,
+              27,
+              76,
+              13
+            ],
+            "center_id": 18
+          }
+        ],
+        "penalty_kill": [
+          {
+            "id": 14,
+            "shift_id": 14,
+            "start": 2392.0,
+            "start_seconds": 2392,
+            "end": 2404.0,
+            "end_seconds": 2404,
+            "duration": 12,
+            "description": "Tigers win the defensive-zone draw at the top dot and push up the half-wall, but play is stopped near the blue line before establishing a clean breakout.",
+            "coach_notes": "Tigers win the defensive-zone draw at the top dot and push up the half-wall, but play is stopped near the blue line before establishing a clean breakout.",
+            "suggested": true,
+            "breakout": {
+              "attempted": false,
+              "successful": false,
+              "breakout_type": "None",
+              "turnover_location": "None"
+            },
+            "strength": "PK (Tigers)",
+            "strength_state": "PK (Tigers)",
+            "zone": "Defensive Zone",
+            "primary_zone": "Defensive Zone",
+            "player_ids": [
+              18,
+              88,
+              21,
+              28,
+              13
+            ],
+            "center_id": 18
+          },
+          {
+            "id": 15,
+            "shift_id": 15,
+            "start": 2408.0,
+            "start_seconds": 2408,
+            "end": 2447.0,
+            "end_seconds": 2447,
+            "duration": 39,
+            "description": "Strong offensive-zone forecheck and blue-line holds keep the puck alive after losing the initial O-Zone draw, generating sustained 5v5 pressure until the whistle.",
+            "coach_notes": "Strong offensive-zone forecheck and blue-line holds keep the puck alive after losing the initial O-Zone draw, generating sustained 5v5 pressure until the whistle.",
+            "suggested": true,
+            "breakout": {
+              "attempted": false,
+              "successful": false,
+              "breakout_type": "None",
+              "turnover_location": "None"
+            },
+            "strength": "PK (Tigers)",
+            "strength_state": "PK (Tigers)",
+            "zone": "Defensive Zone",
+            "primary_zone": "Defensive Zone",
+            "player_ids": [
+              18,
+              88,
+              21,
+              28,
+              13
+            ],
+            "center_id": 18
+          },
+          {
+            "id": 16,
+            "shift_id": 16,
+            "start": 2468.0,
+            "start_seconds": 2468,
+            "end": 2513.0,
+            "end_seconds": 2513,
+            "duration": 45,
+            "description": "Tigers win the D-zone draw and absorb extended pressure before rimming the puck out for an offensive entry, but concede a goal on the counter-rush.",
+            "coach_notes": "Tigers win the D-zone draw and absorb extended pressure before rimming the puck out for an offensive entry, but concede a goal on the counter-rush.",
+            "suggested": true,
+            "breakout": {
+              "attempted": true,
+              "successful": true,
+              "breakout_type": "Rim",
+              "turnover_location": "None"
+            },
+            "strength": "PK (Tigers)",
+            "strength_state": "PK (Tigers)",
+            "zone": "Defensive Zone",
+            "primary_zone": "Defensive Zone",
+            "player_ids": [
+              23,
+              76
+            ],
+            "center_id": 23
+          }
+        ],
+        "offensive_zone": [
+          {
+            "id": 1,
+            "shift_id": 1,
+            "start": 921.0,
+            "start_seconds": 921,
+            "end": 971.0,
+            "end_seconds": 971,
+            "duration": 50,
+            "description": "Clean D-to-D breakout early to establish offensive zone time, though play ends on an icing whistle.",
+            "coach_notes": "Clean D-to-D breakout early to establish offensive zone time, though play ends on an icing whistle.",
+            "suggested": false,
+            "breakout": {
+              "attempted": true,
+              "successful": true,
+              "breakout_type": "D-to-D",
+              "turnover_location": "None"
+            },
+            "strength": "5v5",
+            "strength_state": "5v5",
+            "zone": "Offensive Zone",
+            "primary_zone": "Offensive Zone",
+            "player_ids": [
+              9,
+              3,
+              16,
+              28,
+              21,
+              13
+            ],
+            "center_id": 9
+          },
+          {
+            "id": 18,
+            "shift_id": 18,
+            "start": 2646.0,
+            "start_seconds": 2646,
+            "end": 2685.0,
+            "end_seconds": 2685,
+            "duration": 39,
+            "description": "Clean Center Ice faceoff win generates sustained offensive-zone forecheck pressure.",
+            "coach_notes": "Clean Center Ice faceoff win generates sustained offensive-zone forecheck pressure.",
+            "suggested": false,
+            "breakout": {
+              "attempted": false,
+              "successful": false,
+              "breakout_type": "None",
+              "turnover_location": "None"
+            },
+            "strength": "5v5",
+            "strength_state": "5v5",
+            "zone": "Offensive Zone",
+            "primary_zone": "Offensive Zone",
+            "player_ids": [
+              18,
+              7,
+              88,
+              28,
+              76,
+              13
+            ],
+            "center_id": 18
+          },
+          {
+            "id": 29,
+            "shift_id": 29,
+            "start": 4001.0,
+            "start_seconds": 4001,
+            "end": 4034.0,
+            "end_seconds": 4034,
+            "duration": 33,
+            "description": "Tigers win the neutral zone draw and pressure the Barrie zone before a quick counter-rush forces a goalie freeze.",
+            "coach_notes": "Tigers win the neutral zone draw and pressure the Barrie zone before a quick counter-rush forces a goalie freeze.",
+            "suggested": false,
+            "breakout": {
+              "attempted": false,
+              "successful": false,
+              "breakout_type": "None",
+              "turnover_location": "None"
+            },
+            "strength": "5v5",
+            "strength_state": "5v5",
+            "zone": "Offensive Zone",
+            "primary_zone": "Offensive Zone",
+            "player_ids": [
+              23,
+              11,
+              16,
+              21,
+              28,
+              13
+            ],
+            "center_id": 23
+          }
+        ],
+        "defensive_zone": [
+          {
+            "id": 2,
+            "shift_id": 2,
+            "start": 992.0,
+            "start_seconds": 992,
+            "end": 1037.0,
+            "end_seconds": 1037,
+            "duration": 45,
+            "description": "Tigers won the D-zone faceoff cleanly and executed controlled rim breakouts to sustain extended offensive zone pressure.",
+            "coach_notes": "Tigers won the D-zone faceoff cleanly and executed controlled rim breakouts to sustain extended offensive zone pressure.",
+            "suggested": false,
+            "breakout": {
+              "attempted": true,
+              "successful": true,
+              "breakout_type": "Rim",
+              "turnover_location": "None"
+            },
+            "strength": "5v5",
+            "strength_state": "5v5",
+            "zone": "Defensive Zone",
+            "primary_zone": "Defensive Zone",
+            "player_ids": [
+              18,
+              7,
+              10,
+              27,
+              76,
+              13
+            ],
+            "center_id": 18
+          },
+          {
+            "id": 3,
+            "shift_id": 3,
+            "start": 1152.0,
+            "start_seconds": 1152,
+            "end": 1197.0,
+            "end_seconds": 1197,
+            "duration": 45,
+            "description": "Lost the center ice draw and spent heavy minutes defending the house; forwards need tighter F3 support to relieve wall pressure.",
+            "coach_notes": "Lost the center ice draw and spent heavy minutes defending the house; forwards need tighter F3 support to relieve wall pressure.",
+            "suggested": false,
+            "breakout": {
+              "attempted": true,
+              "successful": true,
+              "breakout_type": "Rim",
+              "turnover_location": "None"
+            },
+            "strength": "5v5",
+            "strength_state": "5v5",
+            "zone": "Defensive Zone",
+            "primary_zone": "Defensive Zone",
+            "player_ids": [
+              23,
+              5,
+              11,
+              28,
+              97,
+              13
+            ],
+            "center_id": 23
+          },
+          {
+            "id": 4,
+            "shift_id": 4,
+            "start": 1249.0,
+            "start_seconds": 1249,
+            "end": 1302.0,
+            "end_seconds": 1302,
+            "duration": 53,
+            "description": "Tigers absorbed heavy D-zone pressure off a lost draw, finally cleared the zone late in the shift, but turned the puck over in transition leading to an odd-man rush goal against.",
+            "coach_notes": "Tigers absorbed heavy D-zone pressure off a lost draw, finally cleared the zone late in the shift, but turned the puck over in transition leading to an odd-man rush goal against.",
+            "suggested": false,
+            "breakout": {
+              "attempted": true,
+              "successful": true,
+              "breakout_type": "Chip Off Glass",
+              "turnover_location": "None"
+            },
+            "strength": "5v5",
+            "strength_state": "5v5",
+            "zone": "Defensive Zone",
+            "primary_zone": "Defensive Zone",
+            "player_ids": [
+              9,
+              3,
+              16,
+              21,
+              76,
+              13
+            ],
+            "center_id": 9
+          },
+          {
+            "id": 5,
+            "shift_id": 5,
+            "start": 1325.0,
+            "start_seconds": 1325,
+            "end": 1370.0,
+            "end_seconds": 1370,
+            "duration": 45,
+            "description": "Strong push off the faceoff into the offensive zone followed by resilient defensive box-out work through a long whistle-free stretch.",
+            "coach_notes": "Strong push off the faceoff into the offensive zone followed by resilient defensive box-out work through a long whistle-free stretch.",
+            "suggested": false,
+            "breakout": {
+              "attempted": true,
+              "successful": true,
+              "breakout_type": "Rim",
+              "turnover_location": "None"
+            },
+            "strength": "5v5",
+            "strength_state": "5v5",
+            "zone": "Defensive Zone",
+            "primary_zone": "Defensive Zone",
+            "player_ids": [
+              18,
+              7,
+              88,
+              27,
+              28,
+              13
+            ],
+            "center_id": 18
+          },
+          {
+            "id": 6,
+            "shift_id": 6,
+            "start": 1794.0,
+            "start_seconds": 1794,
+            "end": 1827.0,
+            "end_seconds": 1827,
+            "duration": 33,
+            "description": "After winning the opening Period 2 draw and chipping the puck deep, Tigers forwards must track back tighter through the neutral zone to deny the clean entry and slot shot that led to the 14:32 goal against.",
+            "coach_notes": "After winning the opening Period 2 draw and chipping the puck deep, Tigers forwards must track back tighter through the neutral zone to deny the clean entry and slot shot that led to the 14:32 goal against.",
+            "suggested": true,
+            "breakout": {
+              "attempted": true,
+              "successful": false,
+              "breakout_type": "None",
+              "turnover_location": "Half-Wall"
+            },
+            "strength": "5v5",
+            "strength_state": "5v5",
+            "zone": "Defensive Zone",
+            "primary_zone": "Defensive Zone",
+            "player_ids": [
+              9,
+              18,
+              10
+            ],
+            "center_id": 9
+          },
+          {
+            "id": 8,
+            "shift_id": 8,
+            "start": 1903.0,
+            "start_seconds": 1903,
+            "end": 1948.0,
+            "end_seconds": 1948,
+            "duration": 45,
+            "description": "Clean rim breakout early in the shift, though Colts regain entry and force a defensive freeze.",
+            "coach_notes": "Clean rim breakout early in the shift, though Colts regain entry and force a defensive freeze.",
+            "suggested": false,
+            "breakout": {
+              "attempted": true,
+              "successful": true,
+              "breakout_type": "Rim",
+              "turnover_location": "None"
+            },
+            "strength": "5v5",
+            "strength_state": "5v5",
+            "zone": "Defensive Zone",
+            "primary_zone": "Defensive Zone",
+            "player_ids": [
+              23,
+              5,
+              16,
+              21,
+              97,
+              13
+            ],
+            "center_id": 23
+          },
+          {
+            "id": 9,
+            "shift_id": 9,
+            "start": 2001.0,
+            "start_seconds": 2001,
+            "end": 2046.0,
+            "end_seconds": 2046,
+            "duration": 45,
+            "description": "Strong defensive-zone battles and chip clears relieve pressure and generate late offensive-zone time.",
+            "coach_notes": "Strong defensive-zone battles and chip clears relieve pressure and generate late offensive-zone time.",
+            "suggested": false,
+            "breakout": {
+              "attempted": true,
+              "successful": true,
+              "breakout_type": "Chip Off Glass",
+              "turnover_location": "None"
+            },
+            "strength": "5v5",
+            "strength_state": "5v5",
+            "zone": "Defensive Zone",
+            "primary_zone": "Defensive Zone",
+            "player_ids": [
+              9,
+              3,
+              88,
+              28,
+              76,
+              13
+            ],
+            "center_id": 9
+          },
+          {
+            "id": 10,
+            "shift_id": 10,
+            "start": 2133.0,
+            "start_seconds": 2133,
+            "end": 2172.0,
+            "end_seconds": 2172,
+            "duration": 39,
+            "description": "Need stronger winger support on the half-wall to clear the defensive zone under Colts forecheck.",
+            "coach_notes": "Need stronger winger support on the half-wall to clear the defensive zone under Colts forecheck.",
+            "suggested": true,
+            "breakout": {
+              "attempted": true,
+              "successful": false,
+              "breakout_type": "Rim",
+              "turnover_location": "Half-Wall"
+            },
+            "strength": "5v5",
+            "strength_state": "5v5",
+            "zone": "Defensive Zone",
+            "primary_zone": "Defensive Zone",
+            "player_ids": [
+              18,
+              7,
+              11,
+              27,
+              97,
+              13
+            ],
+            "center_id": 18
+          },
+          {
+            "id": 11,
+            "shift_id": 11,
+            "start": 2192.0,
+            "start_seconds": 2192,
+            "end": 2237.0,
+            "end_seconds": 2237,
+            "duration": 45,
+            "description": "Multiple successful zone exits lead to offensive-zone entries before icing stops play.",
+            "coach_notes": "Multiple successful zone exits lead to offensive-zone entries before icing stops play.",
+            "suggested": false,
+            "breakout": {
+              "attempted": true,
+              "successful": true,
+              "breakout_type": "Rim",
+              "turnover_location": "None"
+            },
+            "strength": "5v5",
+            "strength_state": "5v5",
+            "zone": "Defensive Zone",
+            "primary_zone": "Defensive Zone",
+            "player_ids": [
+              23,
+              5,
+              10,
+              21,
+              28,
+              13
+            ],
+            "center_id": 23
+          },
+          {
+            "id": 12,
+            "shift_id": 12,
+            "start": 2319.0,
+            "start_seconds": 2319,
+            "end": 2331.0,
+            "end_seconds": 2331,
+            "duration": 12,
+            "description": "Tie up the opponent center on defensive-zone draws to prevent immediate point shots.",
+            "coach_notes": "Tie up the opponent center on defensive-zone draws to prevent immediate point shots.",
+            "suggested": false,
+            "breakout": {
+              "attempted": false,
+              "successful": false,
+              "breakout_type": "None",
+              "turnover_location": "None"
+            },
+            "strength": "5v5",
+            "strength_state": "5v5",
+            "zone": "Defensive Zone",
+            "primary_zone": "Defensive Zone",
+            "player_ids": [
+              9,
+              16,
+              88,
+              27,
+              76,
+              13
+            ],
+            "center_id": 9
+          },
+          {
+            "id": 13,
+            "shift_id": 13,
+            "start": 2344.0,
+            "start_seconds": 2344,
+            "end": 2365.0,
+            "end_seconds": 2365,
+            "duration": 21,
+            "description": "Failed half-wall clear keeps the Tigers hemmed in and results in a minor penalty.",
+            "coach_notes": "Failed half-wall clear keeps the Tigers hemmed in and results in a minor penalty.",
+            "suggested": true,
+            "breakout": {
+              "attempted": true,
+              "successful": false,
+              "breakout_type": "Rim",
+              "turnover_location": "Half-Wall"
+            },
+            "strength": "5v5",
+            "strength_state": "5v5",
+            "zone": "Defensive Zone",
+            "primary_zone": "Defensive Zone",
+            "player_ids": [
+              9,
+              16,
+              88,
+              27,
+              76,
+              13
+            ],
+            "center_id": 9
+          },
+          {
+            "id": 17,
+            "shift_id": 17,
+            "start": 2586.0,
+            "start_seconds": 2586,
+            "end": 2615.0,
+            "end_seconds": 2615,
+            "duration": 29,
+            "description": "Step up tighter on neutral-zone rush defense to deny Barrie's quick strike for Goal #5.",
+            "coach_notes": "Step up tighter on neutral-zone rush defense to deny Barrie's quick strike for Goal #5.",
+            "suggested": true,
+            "breakout": {
+              "attempted": true,
+              "successful": false,
+              "breakout_type": "Rim",
+              "turnover_location": "Blue Line"
+            },
+            "strength": "5v5",
+            "strength_state": "5v5",
+            "zone": "Defensive Zone",
+            "primary_zone": "Defensive Zone",
+            "player_ids": [
+              9,
+              5,
+              11,
+              21,
+              97,
+              13
+            ],
+            "center_id": 9
+          },
+          {
+            "id": 19,
+            "shift_id": 19,
+            "start": 2706.0,
+            "start_seconds": 2706,
+            "end": 2751.0,
+            "end_seconds": 2751,
+            "duration": 45,
+            "description": "Relentless effort through a long shift draws a Barrie penalty to put Tigers on the power play.",
+            "coach_notes": "Relentless effort through a long shift draws a Barrie penalty to put Tigers on the power play.",
+            "suggested": false,
+            "breakout": {
+              "attempted": true,
+              "successful": true,
+              "breakout_type": "Rim",
+              "turnover_location": "None"
+            },
+            "strength": "5v5",
+            "strength_state": "5v5",
+            "zone": "Defensive Zone",
+            "primary_zone": "Defensive Zone",
+            "player_ids": [
+              23,
+              10,
+              88,
+              21,
+              27,
+              13
+            ],
+            "center_id": 23
+          },
+          {
+            "id": 21,
+            "shift_id": 21,
+            "start": 3183.0,
+            "start_seconds": 3183,
+            "end": 3233.0,
+            "end_seconds": 3233,
+            "duration": 50,
+            "description": "After losing the opening Period 3 draw, Tigers execute a clean rim breakout into the neutral zone before defending back down low until the whistle.",
+            "coach_notes": "After losing the opening Period 3 draw, Tigers execute a clean rim breakout into the neutral zone before defending back down low until the whistle.",
+            "suggested": false,
+            "breakout": {
+              "attempted": true,
+              "successful": true,
+              "breakout_type": "Rim",
+              "turnover_location": "None"
+            },
+            "strength": "5v5",
+            "strength_state": "5v5",
+            "zone": "Defensive Zone",
+            "primary_zone": "Defensive Zone",
+            "player_ids": [
+              9,
+              3,
+              7,
+              21,
+              28,
+              13
+            ],
+            "center_id": 9
+          },
+          {
+            "id": 22,
+            "shift_id": 22,
+            "start": 3246.0,
+            "start_seconds": 3246,
+            "end": 3269.0,
+            "end_seconds": 3269,
+            "duration": 23,
+            "description": "Tigers clear the zone briefly via the boards, but a neutral zone turnover leads to a Barrie rush and Goal #6 against from the slot.",
+            "coach_notes": "Tigers clear the zone briefly via the boards, but a neutral zone turnover leads to a Barrie rush and Goal #6 against from the slot.",
+            "suggested": false,
+            "breakout": {
+              "attempted": true,
+              "successful": true,
+              "breakout_type": "Rim",
+              "turnover_location": "None"
+            },
+            "strength": "5v5",
+            "strength_state": "5v5",
+            "zone": "Defensive Zone",
+            "primary_zone": "Defensive Zone",
+            "player_ids": [
+              18,
+              5,
+              11,
+              27,
+              76,
+              13
+            ],
+            "center_id": 18
+          },
+          {
+            "id": 23,
+            "shift_id": 23,
+            "start": 3297.0,
+            "start_seconds": 3297,
+            "end": 3342.0,
+            "end_seconds": 3342,
+            "duration": 45,
+            "description": "Tigers weather sustained defensive zone pressure, complete a rim breakout, and generate a late offensive zone entry before the whistle.",
+            "coach_notes": "Tigers weather sustained defensive zone pressure, complete a rim breakout, and generate a late offensive zone entry before the whistle.",
+            "suggested": false,
+            "breakout": {
+              "attempted": true,
+              "successful": true,
+              "breakout_type": "Rim",
+              "turnover_location": "None"
+            },
+            "strength": "5v5",
+            "strength_state": "5v5",
+            "zone": "Defensive Zone",
+            "primary_zone": "Defensive Zone",
+            "player_ids": [
+              23,
+              10,
+              16,
+              27,
+              97,
+              13
+            ],
+            "center_id": 23
+          },
+          {
+            "id": 24,
+            "shift_id": 24,
+            "start": 3378.0,
+            "start_seconds": 3378,
+            "end": 3423.0,
+            "end_seconds": 3423,
+            "duration": 45,
+            "description": "Strong D-zone draw win sets up a smooth wheel breakout; Tigers push into the offensive zone and draw a Barrie penalty at 58:07.",
+            "coach_notes": "Strong D-zone draw win sets up a smooth wheel breakout; Tigers push into the offensive zone and draw a Barrie penalty at 58:07.",
+            "suggested": false,
+            "breakout": {
+              "attempted": true,
+              "successful": true,
+              "breakout_type": "Wheel",
+              "turnover_location": "None"
+            },
+            "strength": "5v5",
+            "strength_state": "5v5",
+            "zone": "Defensive Zone",
+            "primary_zone": "Defensive Zone",
+            "player_ids": [
+              9,
+              3,
+              88,
+              21,
+              28,
+              13
+            ],
+            "center_id": 9
+          },
+          {
+            "id": 26,
+            "shift_id": 26,
+            "start": 3695.0,
+            "start_seconds": 3695,
+            "end": 3740.0,
+            "end_seconds": 3740,
+            "duration": 45,
+            "description": "Tigers defend inside their dots, transition up the boards cleanly, and force a stoppage after Barrie dumps the puck back in.",
+            "coach_notes": "Tigers defend inside their dots, transition up the boards cleanly, and force a stoppage after Barrie dumps the puck back in.",
+            "suggested": false,
+            "breakout": {
+              "attempted": true,
+              "successful": true,
+              "breakout_type": "Rim",
+              "turnover_location": "None"
+            },
+            "strength": "5v5",
+            "strength_state": "5v5",
+            "zone": "Defensive Zone",
+            "primary_zone": "Defensive Zone",
+            "player_ids": [
+              23,
+              7,
+              16,
+              21,
+              97,
+              13
+            ],
+            "center_id": 23
+          },
+          {
+            "id": 27,
+            "shift_id": 27,
+            "start": 3789.0,
+            "start_seconds": 3789,
+            "end": 3834.0,
+            "end_seconds": 3834,
+            "duration": 45,
+            "description": "Barrie controls the initial D-zone draw, but Tigers stay compact in the slot and skate the puck out across the blue line before the whistle.",
+            "coach_notes": "Barrie controls the initial D-zone draw, but Tigers stay compact in the slot and skate the puck out across the blue line before the whistle.",
+            "suggested": false,
+            "breakout": {
+              "attempted": true,
+              "successful": true,
+              "breakout_type": "Wheel",
+              "turnover_location": "None"
+            },
+            "strength": "5v5",
+            "strength_state": "5v5",
+            "zone": "Defensive Zone",
+            "primary_zone": "Defensive Zone",
+            "player_ids": [
+              9,
+              3,
+              10,
+              27,
+              28,
+              13
+            ],
+            "center_id": 9
+          },
+          {
+            "id": 28,
+            "shift_id": 28,
+            "start": 3903.0,
+            "start_seconds": 3903,
+            "end": 3948.0,
+            "end_seconds": 3948,
+            "duration": 45,
+            "description": "Clean defensive faceoff win sparks a quick breakout up ice, though play returns to the Tigers zone before an offside whistle.",
+            "coach_notes": "Clean defensive faceoff win sparks a quick breakout up ice, though play returns to the Tigers zone before an offside whistle.",
+            "suggested": false,
+            "breakout": {
+              "attempted": true,
+              "successful": true,
+              "breakout_type": "Wheel",
+              "turnover_location": "None"
+            },
+            "strength": "5v5",
+            "strength_state": "5v5",
+            "zone": "Defensive Zone",
+            "primary_zone": "Defensive Zone",
+            "player_ids": [
+              18,
+              5,
+              88,
+              76,
+              97,
+              13
+            ],
+            "center_id": 18
+          },
+          {
+            "id": 30,
+            "shift_id": 30,
+            "start": 4064.0,
+            "start_seconds": 4064,
+            "end": 4109.0,
+            "end_seconds": 4109,
+            "duration": 45,
+            "description": "Long closing shift with multiple D-zone clearances and battles along the boards until the whistle stops play with 45 seconds left.",
+            "coach_notes": "Long closing shift with multiple D-zone clearances and battles along the boards until the whistle stops play with 45 seconds left.",
+            "suggested": false,
+            "breakout": {
+              "attempted": true,
+              "successful": true,
+              "breakout_type": "Rim",
+              "turnover_location": "None"
+            },
+            "strength": "5v5",
+            "strength_state": "5v5",
+            "zone": "Defensive Zone",
+            "primary_zone": "Defensive Zone",
+            "player_ids": [
+              9,
+              3,
+              7,
+              27,
+              76,
+              13
+            ],
+            "center_id": 9
+          }
+        ],
+        "neutral_zone": [
+          {
+            "id": 7,
+            "shift_id": 7,
+            "start": 1849.0,
+            "start_seconds": 1849,
+            "end": 1883.0,
+            "end_seconds": 1883,
+            "duration": 34,
+            "description": "Good wheel breakout from behind the net to transition into the offensive zone before play is whistled at the blue line.",
+            "coach_notes": "Good wheel breakout from behind the net to transition into the offensive zone before play is whistled at the blue line.",
+            "suggested": false,
+            "breakout": {
+              "attempted": true,
+              "successful": true,
+              "breakout_type": "Wheel",
+              "turnover_location": "None"
+            },
+            "strength": "5v5",
+            "strength_state": "5v5",
+            "zone": "Neutral Zone",
+            "primary_zone": "Neutral Zone",
+            "player_ids": [
+              18,
+              10,
+              11,
+              27,
+              76,
+              13
+            ],
+            "center_id": 18
+          }
+        ]
       },
       "analytics": {
-        "active_play_time": "Pending Scan",
+        "active_play_time": "70m",
+        "possession_tigers_pct": 50,
+        "possession_opp_pct": 50,
+        "ozone_time": "23m",
+        "dzone_time": "24m",
+        "shots_on_goal": null,
+        "goalie_saves": null,
+        "faceoffs": {
+          "dzone_won": 7,
+          "dzone_total": 14,
+          "center_won": 5,
+          "center_total": 14,
+          "ozone_won": 0,
+          "ozone_total": 2
+        },
         "breakouts": {
-          "attempts": 0,
-          "successes": 0,
-          "success_pct": "0%"
+          "attempts": 25,
+          "successes": 21,
+          "success_pct": "84.0%",
+          "breakout_types": {
+            "Rim": 16,
+            "D-to-D": 1,
+            "Wheel": 5,
+            "Chip Off Glass": 2
+          },
+          "turnover_locations": {
+            "Behind Goal Line": 0,
+            "Half-Wall": 3,
+            "Blue Line": 1
+          }
         }
       },
       "boxscore": {
@@ -165,9 +3234,299 @@
         ],
         "penaltyLog": []
       },
-      "ai_verified": false,
-      "ai_confidence_avg": null,
-      "top_clips": []
+      "ai_verified": true,
+      "clock_checkpoints": [
+        {
+          "period": 1,
+          "clock_str": "10:00",
+          "video_second": 921
+        },
+        {
+          "period": 1,
+          "clock_str": "09:05",
+          "video_second": 993
+        },
+        {
+          "period": 1,
+          "clock_str": "06:49",
+          "video_second": 1125
+        },
+        {
+          "period": 1,
+          "clock_str": "05:24",
+          "video_second": 1251
+        },
+        {
+          "period": 1,
+          "clock_str": "04:32",
+          "video_second": 1326
+        },
+        {
+          "period": 1,
+          "clock_str": "01:00",
+          "video_second": 1527
+        },
+        {
+          "period": 2,
+          "clock_str": "15:00",
+          "video_second": 1795
+        },
+        {
+          "period": 2,
+          "clock_str": "14:32",
+          "video_second": 1827
+        },
+        {
+          "period": 2,
+          "clock_str": "13:30",
+          "video_second": 1883
+        },
+        {
+          "period": 2,
+          "clock_str": "08:23",
+          "video_second": 2301
+        },
+        {
+          "period": 2,
+          "clock_str": "06:23",
+          "video_second": 2568
+        },
+        {
+          "period": 2,
+          "clock_str": "05:49",
+          "video_second": 2615
+        },
+        {
+          "period": 3,
+          "clock_str": "08:15",
+          "video_second": 3686
+        },
+        {
+          "period": 3,
+          "clock_str": "06:56",
+          "video_second": 3772
+        },
+        {
+          "period": 3,
+          "clock_str": "05:49",
+          "video_second": 3864
+        },
+        {
+          "period": 3,
+          "clock_str": "04:14",
+          "video_second": 3930
+        },
+        {
+          "period": 3,
+          "clock_str": "02:52",
+          "video_second": 4034
+        },
+        {
+          "period": 3,
+          "clock_str": "00:00",
+          "video_second": 4237
+        }
+      ],
+      "ai_confidence_avg": 89,
+      "verified_goals": [
+        {
+          "goal_index": 1,
+          "period": 1,
+          "gs_clock": "06:49",
+          "video_second": 1125,
+          "team": "opp",
+          "notes": "Barrie Colts score from the slot in the Tigers defensive zone; XbotGo clock reads 06:49 at puck entry."
+        },
+        {
+          "goal_index": 2,
+          "period": 1,
+          "gs_clock": "04:44",
+          "video_second": 1300,
+          "team": "opp",
+          "notes": "Barrie Colts capitalize on sustained offensive zone pressure into the Tigers net; Center Ice faceoff follows."
+        },
+        {
+          "goal_index": 3,
+          "period": 2,
+          "gs_clock": "14:32",
+          "video_second": 1827,
+          "team": "opp",
+          "notes": "Barrie Colts score in Tigers defensive zone (left net); followed by Center Ice faceoff at 1850s."
+        },
+        {
+          "goal_index": 4,
+          "period": 2,
+          "gs_clock": "06:23",
+          "video_second": 2568,
+          "team": "opp",
+          "notes": "Barrie Colts Goal #4 confirmed by scorer's table, scoreboard update (3->4), and Center Ice faceoff at 2587s."
+        },
+        {
+          "goal_index": 5,
+          "period": 2,
+          "gs_clock": "05:49",
+          "video_second": 2615,
+          "team": "opp",
+          "notes": "Barrie Colts score in Tigers defensive zone (left net); scoreboard updates (4->5) and Center Ice faceoff follows at 2647s."
+        },
+        {
+          "goal_index": 6,
+          "period": 3,
+          "gs_clock": "13:32",
+          "video_second": 3268,
+          "team": "opp",
+          "notes": "Barrie Colts U13-2 A Blue scores on a shot in the Tigers defensive zone at 54:28 (3268s); center ice faceoff follows at 3297s."
+        },
+        {
+          "goal_index": 7,
+          "period": 3,
+          "gs_clock": "08:20",
+          "video_second": 3665,
+          "team": "opp",
+          "notes": "Barrie Colts U13-2 A Blue scores shorthanded in the Tigers defensive zone at 61:05 (3665s); center ice faceoff follows at 3695s."
+        }
+      ],
+      "top_clips": [
+        {
+          "clip_id": "gs_goal_1",
+          "type": "opp_goal",
+          "period": 1,
+          "gs_clock": "06:49",
+          "start_seconds": 1109,
+          "end_seconds": 1131,
+          "verified": true,
+          "align_status": "AI Visual + Clock Verified",
+          "label": "🥅 BARRIE COLTS U13-2 A BLUE GOAL #1 (P1 06:49)",
+          "description": "🥅 BARRIE COLTS U13-2 A BLUE GOAL #1 (P1 06:49) — Official GameSheet P1 @ 06:49 (AI Visual + Clock Verified)"
+        },
+        {
+          "clip_id": "gs_goal_2",
+          "type": "opp_goal",
+          "period": 1,
+          "gs_clock": "04:44",
+          "start_seconds": 1109,
+          "end_seconds": 1131,
+          "verified": true,
+          "align_status": "AI Visual + Clock Verified",
+          "label": "🥅 BARRIE COLTS U13-2 A BLUE GOAL #2 (P1 04:44)",
+          "description": "🥅 BARRIE COLTS U13-2 A BLUE GOAL #2 (P1 04:44) — Official GameSheet P1 @ 04:44 (AI Visual + Clock Verified)"
+        },
+        {
+          "clip_id": "gs_goal_3",
+          "type": "opp_goal",
+          "period": 2,
+          "gs_clock": "14:32",
+          "start_seconds": 1811,
+          "end_seconds": 1833,
+          "verified": true,
+          "align_status": "AI Visual + Clock Verified",
+          "label": "🥅 BARRIE COLTS U13-2 A BLUE GOAL #3 (P2 14:32)",
+          "description": "🥅 BARRIE COLTS U13-2 A BLUE GOAL #3 (P2 14:32) — Official GameSheet P2 @ 14:32 (AI Visual + Clock Verified)"
+        },
+        {
+          "clip_id": "gs_goal_4",
+          "type": "opp_goal",
+          "period": 2,
+          "gs_clock": "06:23",
+          "start_seconds": 2552,
+          "end_seconds": 2574,
+          "verified": true,
+          "align_status": "AI Visual + Clock Verified",
+          "label": "🥅 BARRIE COLTS U13-2 A BLUE GOAL #4 (P2 06:23)",
+          "description": "🥅 BARRIE COLTS U13-2 A BLUE GOAL #4 (P2 06:23) — Official GameSheet P2 @ 06:23 (AI Visual + Clock Verified)"
+        },
+        {
+          "clip_id": "gs_goal_5",
+          "type": "opp_goal",
+          "period": 2,
+          "gs_clock": "05:49",
+          "start_seconds": 2552,
+          "end_seconds": 2574,
+          "verified": true,
+          "align_status": "AI Visual + Clock Verified",
+          "label": "🥅 BARRIE COLTS U13-2 A BLUE GOAL #5 (P2 05:49)",
+          "description": "🥅 BARRIE COLTS U13-2 A BLUE GOAL #5 (P2 05:49) — Official GameSheet P2 @ 05:49 (AI Visual + Clock Verified)"
+        },
+        {
+          "clip_id": "gs_goal_6",
+          "type": "opp_goal",
+          "period": 3,
+          "gs_clock": "13:32",
+          "start_seconds": 3252,
+          "end_seconds": 3274,
+          "verified": true,
+          "align_status": "AI Visual + Clock Verified",
+          "label": "🥅 BARRIE COLTS U13-2 A BLUE GOAL #6 (P3 13:32)",
+          "description": "🥅 BARRIE COLTS U13-2 A BLUE GOAL #6 (P3 13:32) — Official GameSheet P3 @ 13:32 (AI Visual + Clock Verified)"
+        },
+        {
+          "clip_id": "gs_goal_7",
+          "type": "opp_goal",
+          "period": 3,
+          "gs_clock": "08:20",
+          "start_seconds": 3649,
+          "end_seconds": 3671,
+          "verified": true,
+          "align_status": "AI Visual + Clock Verified",
+          "label": "🥅 BARRIE COLTS U13-2 A BLUE GOAL #7 (P3 08:20)",
+          "description": "🥅 BARRIE COLTS U13-2 A BLUE GOAL #7 (P3 08:20) — Official GameSheet P3 @ 08:20 (AI Visual + Clock Verified)"
+        },
+        {
+          "clip_id": "pk_shift_14",
+          "type": "penalty_kill",
+          "period": 2,
+          "start_seconds": 2392,
+          "end_seconds": 2404,
+          "verified": true,
+          "align_status": "Verified 4v5 Penalty Kill",
+          "label": "🛡️ PENALTY KILL • P2 (39:52)",
+          "description": "Tigers win the defensive-zone draw at the top dot and push up the half-wall, but play is stopped near the blue line before establishing a clean breakout."
+        },
+        {
+          "clip_id": "pk_shift_15",
+          "type": "penalty_kill",
+          "period": 2,
+          "start_seconds": 2408,
+          "end_seconds": 2447,
+          "verified": true,
+          "align_status": "Verified 4v5 Penalty Kill",
+          "label": "🛡️ PENALTY KILL • P2 (40:08)",
+          "description": "Strong offensive-zone forecheck and blue-line holds keep the puck alive after losing the initial O-Zone draw, generating sustained 5v5 pressure until the whistle."
+        },
+        {
+          "clip_id": "pk_shift_16",
+          "type": "penalty_kill",
+          "period": 2,
+          "start_seconds": 2468,
+          "end_seconds": 2513,
+          "verified": true,
+          "align_status": "Verified 4v5 Penalty Kill",
+          "label": "🛡️ PENALTY KILL • P2 (41:08)",
+          "description": "Tigers win the D-zone draw and absorb extended pressure before rimming the puck out for an offensive entry, but concede a goal on the counter-rush."
+        },
+        {
+          "clip_id": "pp_shift_20",
+          "type": "powerplay",
+          "period": 2,
+          "start_seconds": 2896,
+          "end_seconds": 2931,
+          "verified": true,
+          "align_status": "Verified 5v4 Power Play",
+          "label": "⚡ POWER PLAY • P2 (48:16)",
+          "description": "Composed wheel breakout after an early clear allows the power-play unit to set up in the offensive zone."
+        },
+        {
+          "clip_id": "pp_shift_25",
+          "type": "powerplay",
+          "period": 3,
+          "start_seconds": 3582,
+          "end_seconds": 3627,
+          "verified": true,
+          "align_status": "Verified 5v4 Power Play",
+          "label": "⚡ POWER PLAY • P3 (59:42)",
+          "description": "On the power play, Tigers struggle to establish zone time and allow a costly shorthanded turnover in front of the net leading to Goal #7."
+        }
+      ]
     },
     {
       "id": "game_5WA3M3h3FZM",
