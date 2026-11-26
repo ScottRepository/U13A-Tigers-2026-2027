@@ -745,35 +745,63 @@
     </div>
   </div>
 
-  <!-- ================= SAVE TO FILM TRAY MODAL ================= -->
-  <div id="save-tray-modal" onclick="if(event.target === this) closeSaveToTrayModal()" class="fixed inset-0 bg-slate-950/80 backdrop-blur-md z-[9999] flex items-center justify-center p-4 hidden" style="display: none;">
-    <div class="bg-white rounded-2xl max-w-md w-full border border-slate-200 shadow-2xl overflow-hidden animate-in fade-in zoom-in-95 duration-150">
-      <div class="p-3.5 bg-slate-900 text-white flex items-center justify-between">
+  <!-- ================= SAVE & ASSIGN PLAYER VIDEO REVIEW MODAL ================= -->
+  <div id="save-tray-modal" onclick="if(event.target === this) closeSaveToTrayModal()" class="fixed inset-0 bg-slate-950/80 backdrop-blur-md z-[9999] flex items-center justify-center p-3 sm:p-4 hidden" style="display: none;">
+    <div class="bg-white rounded-2xl max-w-lg w-full max-h-[92vh] border border-slate-200 shadow-2xl overflow-hidden flex flex-col animate-in fade-in zoom-in-95 duration-150">
+      <div class="p-3.5 bg-slate-900 text-white flex items-center justify-between shrink-0">
         <div class="flex items-center gap-2">
-          <span class="text-base">⭐</span>
-          <h3 class="font-display font-bold text-sm tracking-wider uppercase text-tigersGold">Save to Coaching Film Tray</h3>
+          <span class="text-base">📌</span>
+          <div>
+            <h3 id="modal-tray-heading" class="font-display font-bold text-sm tracking-wider uppercase text-tigersGold">Assign Player Review &amp; Coach Note</h3>
+            <div class="text-[10px] text-slate-400">Pick player(s), add notes or voice feedback, and sync to their Roster Homework</div>
+          </div>
         </div>
-        <button onclick="closeSaveToTrayModal()" class="text-slate-400 hover:text-white text-base leading-none cursor-pointer">✕</button>
+        <div class="flex items-center gap-2">
+          <button type="button" onclick="previewModalClipRange()" class="px-2.5 py-1 rounded-lg bg-amber-400 hover:bg-amber-300 text-slate-950 font-black text-[10px] cursor-pointer transition flex items-center gap-1">
+            <span>▶️</span> <span>Preview Clip</span>
+          </button>
+          <button onclick="closeSaveToTrayModal()" class="text-slate-400 hover:text-white text-base leading-none cursor-pointer px-1">✕</button>
+        </div>
       </div>
-      <div class="p-4 space-y-3 text-xs">
+      <div class="p-4 space-y-3 text-xs overflow-y-auto custom-scroll">
         <div>
-          <label class="block font-bold text-slate-700 uppercase text-[10px] tracking-wider mb-1">Clip Title / Reference</label>
-          <input type="text" id="modal-tray-title" class="w-full bg-slate-50 border border-slate-300 rounded-xl px-3 py-2 text-slate-900 font-semibold focus:outline-none focus:border-tigersGold" placeholder="e.g. Period 1 Breakout vs Newmarket" />
+          <label class="block font-bold text-slate-700 uppercase text-[10px] tracking-wider mb-1">Clip Title / Play Summary</label>
+          <input type="text" id="modal-tray-title" class="w-full bg-slate-50 border border-slate-300 rounded-xl px-3 py-1.5 text-slate-900 font-semibold focus:outline-none focus:border-tigersGold" placeholder="e.g. P1 D-Zone Breakout vs Barrie" />
         </div>
         <div class="grid grid-cols-2 gap-2">
           <div>
-            <label class="block font-bold text-slate-700 uppercase text-[10px] tracking-wider mb-1">Start Time (sec or M:SS)</label>
-            <input type="text" id="modal-tray-start" class="w-full bg-slate-50 border border-slate-300 rounded-xl px-3 py-2 text-slate-900 font-mono font-bold" />
+            <div class="flex items-center justify-between mb-1">
+              <label class="font-bold text-slate-700 uppercase text-[10px] tracking-wider">Start (M:SS)</label>
+              <div class="flex gap-1">
+                <button type="button" onclick="nudgeModalClipTime('start', -5)" class="px-1.5 py-0.5 rounded bg-slate-100 hover:bg-slate-200 text-[9px] font-mono font-bold text-slate-700 cursor-pointer">-5s</button>
+                <button type="button" onclick="nudgeModalClipTime('start', 5)" class="px-1.5 py-0.5 rounded bg-slate-100 hover:bg-slate-200 text-[9px] font-mono font-bold text-slate-700 cursor-pointer">+5s</button>
+              </div>
+            </div>
+            <input type="text" id="modal-tray-start" class="w-full bg-slate-50 border border-slate-300 rounded-xl px-3 py-1.5 text-slate-900 font-mono font-bold" />
           </div>
           <div>
-            <label class="block font-bold text-slate-700 uppercase text-[10px] tracking-wider mb-1">End Time (sec or M:SS)</label>
-            <input type="text" id="modal-tray-end" class="w-full bg-slate-50 border border-slate-300 rounded-xl px-3 py-2 text-slate-900 font-mono font-bold" />
+            <div class="flex items-center justify-between mb-1">
+              <label class="font-bold text-slate-700 uppercase text-[10px] tracking-wider">End (M:SS)</label>
+              <div class="flex gap-1">
+                <button type="button" onclick="nudgeModalClipTime('end', -5)" class="px-1.5 py-0.5 rounded bg-slate-100 hover:bg-slate-200 text-[9px] font-mono font-bold text-slate-700 cursor-pointer">-5s</button>
+                <button type="button" onclick="nudgeModalClipTime('end', 5)" class="px-1.5 py-0.5 rounded bg-slate-100 hover:bg-slate-200 text-[9px] font-mono font-bold text-slate-700 cursor-pointer">+5s</button>
+              </div>
+            </div>
+            <input type="text" id="modal-tray-end" class="w-full bg-slate-50 border border-slate-300 rounded-xl px-3 py-1.5 text-slate-900 font-mono font-bold" />
           </div>
         </div>
         <div class="grid grid-cols-2 gap-2">
           <div>
-            <label class="block font-bold text-slate-700 uppercase text-[10px] tracking-wider mb-1">Target Folder</label>
-            <select id="modal-tray-folder" class="w-full bg-slate-50 border border-slate-300 rounded-xl px-2.5 py-2 text-slate-900 font-bold focus:outline-none cursor-pointer">
+            <label class="block font-bold text-slate-700 uppercase text-[10px] tracking-wider mb-1">Play Evaluation</label>
+            <select id="modal-tray-type" onchange="syncModalFolderFromType(this.value)" class="w-full bg-slate-50 border border-slate-300 rounded-xl px-2.5 py-1.5 text-slate-900 font-bold focus:outline-none cursor-pointer">
+              <option value="good_play">🟢 Good Play (Praise)</option>
+              <option value="coaching_fix">🔴 Coaching Fix (Improve)</option>
+              <option value="teaching">💡 Teaching Point</option>
+            </select>
+          </div>
+          <div>
+            <label class="block font-bold text-slate-700 uppercase text-[10px] tracking-wider mb-1">Tray Folder</label>
+            <select id="modal-tray-folder" class="w-full bg-slate-50 border border-slate-300 rounded-xl px-2.5 py-1.5 text-slate-900 font-bold focus:outline-none cursor-pointer">
               <option value="teaching">💡 Teaching Moments</option>
               <option value="good_plays">🟢 Good Plays (Keep Doing)</option>
               <option value="coaching_fixes">🔴 Coaching Fixes (To Improve)</option>
@@ -781,50 +809,62 @@
               <option value="special_teams">⚡ PP &amp; PK Execution</option>
             </select>
           </div>
-          <div>
-            <label class="block font-bold text-slate-700 uppercase text-[10px] tracking-wider mb-1">Play Evaluation</label>
-            <select id="modal-tray-type" class="w-full bg-slate-50 border border-slate-300 rounded-xl px-2.5 py-2 text-slate-900 font-bold focus:outline-none cursor-pointer">
-              <option value="good_play">🟢 Good Play (Praise)</option>
-              <option value="coaching_fix">🔴 Coaching Fix (Correction)</option>
-              <option value="teaching">💡 Teaching Point</option>
-            </select>
+        </div>
+
+        <!-- 1-Tap Multi-Player Assignment Chips (On-Ice Highlighted First) -->
+        <div class="p-2.5 rounded-xl bg-slate-50 border border-slate-200 space-y-1.5">
+          <div class="flex items-center justify-between gap-2">
+            <label class="font-bold text-slate-800 uppercase text-[10px] tracking-wider">
+              👤 Assign Homework to Player(s) <span class="text-slate-400 font-normal normal-case">(tap 1 or more)</span>
+            </label>
+            <button type="button" onclick="clearModalAssignedPlayers()" class="text-[10px] font-semibold text-slate-500 hover:text-slate-800 cursor-pointer">Clear Selection</button>
+          </div>
+          <div id="modal-assign-player-chips" class="flex flex-wrap gap-1"></div>
+          <select id="modal-tray-target-player" class="hidden"><option value="none">none</option></select>
+        </div>
+
+        <!-- Written Coach Notes + 1-Tap Coaching Tags -->
+        <div class="space-y-1.5">
+          <label class="block font-bold text-slate-700 uppercase text-[10px] tracking-wider">
+            📝 Coach Notes (What the Player Should Watch For)
+          </label>
+          <div class="flex flex-wrap gap-1">
+            <button type="button" onclick="appendQuickCoachPrompt('Keep stick flat on the ice for the pass.')" class="px-2 py-0.5 rounded-full bg-amber-50 hover:bg-amber-100 border border-amber-300 text-amber-900 font-semibold text-[10px] cursor-pointer">+ Stick on ice</button>
+            <button type="button" onclick="appendQuickCoachPrompt('Box out in front of our net and tie up their stick.')" class="px-2 py-0.5 rounded-full bg-amber-50 hover:bg-amber-100 border border-amber-300 text-amber-900 font-semibold text-[10px] cursor-pointer">+ Net-front box-out</button>
+            <button type="button" onclick="appendQuickCoachPrompt('Shoulder-check before retrieving and move the puck quick.')" class="px-2 py-0.5 rounded-full bg-amber-50 hover:bg-amber-100 border border-amber-300 text-amber-900 font-semibold text-[10px] cursor-pointer">+ Quick breakout</button>
+            <button type="button" onclick="appendQuickCoachPrompt('Track hard back through the middle lane on the backcheck.')" class="px-2 py-0.5 rounded-full bg-amber-50 hover:bg-amber-100 border border-amber-300 text-amber-900 font-semibold text-[10px] cursor-pointer">+ Backcheck middle</button>
+            <button type="button" onclick="appendQuickCoachPrompt('Awesome hustle and positioning here — keep doing this!')" class="px-2 py-0.5 rounded-full bg-emerald-50 hover:bg-emerald-100 border border-emerald-300 text-emerald-900 font-semibold text-[10px] cursor-pointer">+ Great hustle!</button>
+          </div>
+          <textarea id="modal-tray-notes" rows="2" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-2.5 text-slate-900 text-xs focus:outline-none focus:border-tigersGold" placeholder="e.g., Watch your gap at the blue line here — see how keeping your stick in the passing lane takes away their rush..."></textarea>
+        </div>
+
+        <!-- Built-In Coach Audio Feedback Recorder (Synced to Cloud Database) -->
+        <div class="p-2.5 rounded-xl bg-rose-50/60 border border-rose-200 space-y-1.5">
+          <div class="flex items-center justify-between gap-2">
+            <div>
+              <div class="font-bold text-rose-950 uppercase text-[10px] tracking-wider flex items-center gap-1">
+                <span>🎙️</span> <span>Coach Audio Feedback (Optional Voice Note)</span>
+              </div>
+              <div id="modal-audio-status-text" class="text-[10px] text-slate-600">Record a quick 10–45s voice explanation for the player to listen to while watching.</div>
+            </div>
+            <div class="flex items-center gap-1.5 shrink-0">
+              <button type="button" id="modal-audio-rec-btn" onclick="toggleModalVoiceRecording()" class="px-2.5 py-1 rounded-lg bg-rose-600 hover:bg-rose-500 text-white font-black text-[10px] cursor-pointer transition flex items-center gap-1 shadow-2xs">
+                <span>🎙️</span> <span>Record Voice</span>
+              </button>
+              <button type="button" id="modal-audio-play-btn" onclick="previewModalVoiceNote()" class="hidden px-2.5 py-1 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white font-black text-[10px] cursor-pointer transition flex items-center gap-1">
+                <span>🔊</span> <span>Listen</span>
+              </button>
+              <button type="button" id="modal-audio-clear-btn" onclick="clearModalVoiceNote()" class="hidden px-2 py-1 rounded-lg bg-slate-200 hover:bg-slate-300 text-slate-700 font-bold text-[10px] cursor-pointer transition" title="Remove audio">
+                🗑️
+              </button>
+            </div>
           </div>
         </div>
-        <div>
-          <label class="block font-bold text-slate-700 uppercase text-[10px] tracking-wider mb-1">
-            👤 Assign Review to Player (Optional Homework)
-          </label>
-          <select id="modal-tray-target-player" class="w-full bg-slate-50 border border-slate-300 rounded-xl px-2.5 py-2 text-slate-900 font-bold focus:outline-none cursor-pointer">
-            <option value="none">-- General Team Tray (Not Player-Specific) --</option>
-            <option value="3">#3 Stewart Dolmage (LW)</option>
-            <option value="5">#5 Nathan Zhao (RW)</option>
-            <option value="7">#7 Maxwell Dey (RW)</option>
-            <option value="9">#9 Oliver Patterson (C)</option>
-            <option value="10">#10 Arjun Manjunath (LW)</option>
-            <option value="11">#11 Andrew Bichay (RW)</option>
-            <option value="13">#13 Matthew Hart (G)</option>
-            <option value="16">#16 Joshua Liu (LW)</option>
-            <option value="18">#18 Nathan Carinci (C)</option>
-            <option value="21">#21 Caleb Irgengioro-Wu (RD)</option>
-            <option value="23">#23 Easton Carpentier (C)</option>
-            <option value="27">#27 Alen Fazlic (RD)</option>
-            <option value="28">#28 Ross Elley (LD)</option>
-            <option value="76">#76 Matt Davis (LD)</option>
-            <option value="88">#88 Roy Chen (RW)</option>
-            <option value="97">#97 Hudson Millar (LD)</option>
-            <option value="98">#98 Hudson Barfitt (G)</option>
-          </select>
-        </div>
-        <div>
-          <label class="block font-bold text-slate-700 uppercase text-[10px] tracking-wider mb-1">
-            Coach Notes &amp; Teaching Rationale (Why You Picked This Play)
-          </label>
-          <textarea id="modal-tray-notes" rows="2" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-2.5 text-slate-900 text-xs focus:outline-none focus:border-tigersGold" placeholder="Explain why you picked this clip for this player (e.g., 'Watch your gap here — see how having your stick down breaks up their cross-ice pass')..."></textarea>
-        </div>
+
         <div class="flex items-center justify-end gap-2 pt-2 border-t border-slate-100">
           <button onclick="closeSaveToTrayModal()" class="px-3.5 py-1.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold cursor-pointer transition">Cancel</button>
           <button onclick="saveModalClipToTray()" class="px-4 py-1.5 rounded-xl bg-tigersGold hover:bg-tigersGoldBright text-slate-950 font-black cursor-pointer transition shadow-sm flex items-center gap-1.5">
-            <span>⭐</span> <span>Save to Tray</span>
+            <span>📌</span> <span id="modal-tray-save-label">Save &amp; Assign Review</span>
           </button>
         </div>
       </div>
@@ -45017,16 +45057,104 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
       try {
         localStorage.setItem('studied_plays', JSON.stringify(studied));
       } catch (e) {}
+      if (db) {
+        db.collection("tray").doc("studied_status").set({
+          studied: studied,
+          updated_at: firebase.firestore.FieldValue.serverTimestamp()
+        }, { merge: true }).catch(() => {});
+      }
       renderPlayerAssignedPlays(currentJersey, ROSTER_POSITIONS[currentJersey]);
+      if (currentMode === 'film_tray') renderFilmTrayView();
       showToast(studied[clipId] ? "✅ Play marked as studied!" : "Marked as unstudied");
     }
 
     function openAssignModalForCurrentPlayer() {
       if (!currentGame) return;
       openSaveToTrayModal({
+        assigned_players: currentJersey && currentJersey !== 'all' ? [String(currentJersey)] : [],
         assigned_player: currentJersey || "23",
         title: `Film Study for #${currentJersey} ${ROSTER_POSITIONS[currentJersey]?.name || ''}`
       });
+    }
+
+    function clipAssignedPlayersList(c) {
+      if (Array.isArray(c?.assigned_players) && c.assigned_players.length > 0) {
+        return c.assigned_players.map(String).filter(p => p && p !== 'none');
+      }
+      if (c?.assigned_player && String(c.assigned_player) !== 'none') {
+        return [String(c.assigned_player)];
+      }
+      return [];
+    }
+
+    function watchAssignedHomeworkClip(clipId) {
+      const allClips = getCoachingTrayClips();
+      const c = allClips.find(x => x.id === clipId);
+      if (!c) return;
+      const noteText = c.coach_notes || "Watch this sequence closely to observe positioning and stick awareness.";
+      if (typeof isTheaterMode !== 'undefined' && isTheaterMode && isFlyoutOpen) toggleFlyoutDrawer(false);
+
+      const needSwitch = c.game_id && (!currentGame || (currentGame.id !== c.game_id && currentGame.youtube_video_id !== c.youtube_video_id));
+      if (needSwitch && typeof loadGame === 'function') {
+        loadGame(c.game_id);
+        setTimeout(() => {
+          playClip(Number(c.start_seconds || 0), Number(c.end_seconds || 30), noteText, c.shift_id || null);
+        }, 700);
+      } else {
+        playClip(Number(c.start_seconds || 0), Number(c.end_seconds || 30), noteText, c.shift_id || null);
+      }
+    }
+
+    async function playClipAudioNote(audioNoteId, fallbackShiftId, ev) {
+      if (ev && typeof ev.stopPropagation === 'function') ev.stopPropagation();
+      if (currentActiveAudio) {
+        currentActiveAudio.pause();
+        currentActiveAudio = null;
+      }
+      let dataUrl = null;
+      let dur = '';
+      if (audioNoteId) {
+        try {
+          const cached = localStorage.getItem(`coach_audio_note_${audioNoteId}`);
+          if (cached) {
+            const parsed = JSON.parse(cached);
+            dataUrl = parsed.audioDataUrl;
+            dur = parsed.durationSec || '';
+          }
+        } catch (e) {}
+        if (!dataUrl && db) {
+          showToast("🔊 Loading Coach's Audio Note...");
+          try {
+            const doc = await db.collection("coach_audio_notes").doc(audioNoteId).get();
+            if (doc.exists && doc.data()?.audioDataUrl) {
+              dataUrl = doc.data().audioDataUrl;
+              dur = doc.data().durationSec || '';
+              try {
+                localStorage.setItem(`coach_audio_note_${audioNoteId}`, JSON.stringify({ audioDataUrl: dataUrl, durationSec: dur }));
+              } catch (e) {}
+            }
+          } catch (err) {
+            console.error("Cloud audio fetch error:", err);
+          }
+        }
+      }
+      if (!dataUrl && fallbackShiftId) {
+        const shiftMemo = (typeof getCoachVoiceNote === 'function') ? getCoachVoiceNote(fallbackShiftId) : null;
+        if (shiftMemo?.audioDataUrl) {
+          dataUrl = shiftMemo.audioDataUrl;
+          dur = shiftMemo.durationSec || '';
+        }
+      }
+      if (!dataUrl) {
+        showToast("⚠️ Could not find audio note for this clip.");
+        return;
+      }
+      try {
+        currentActiveAudio = new Audio(dataUrl);
+        currentActiveAudio.play().then(() => {
+          showToast(`🔊 Playing Coach Audio Feedback${dur ? ' (' + dur + 's)' : ''}...`);
+        }).catch(() => showToast("⚠️ Tap again to allow audio playback."));
+      } catch (e) {}
     }
 
     function renderPlayerAssignedPlays(numStr, pInfo) {
@@ -45038,8 +45166,7 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
       if (coachBtn) coachBtn.classList.toggle('hidden', !isCoach);
 
       const allClips = getCoachingTrayClips();
-      // Filter clips assigned specifically to this player
-      const assigned = allClips.filter(c => String(c.assigned_player) === String(numStr));
+      const assigned = allClips.filter(c => clipAssignedPlayersList(c).includes(String(numStr)));
       const studiedMap = getStudiedPlays();
 
       if (badgeCount) {
@@ -45067,18 +45194,19 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
         const typeBadge = c.type === 'good_play'
           ? `<span class="px-2 py-0.5 rounded text-[9px] font-bold bg-emerald-100 text-emerald-800 border border-emerald-300">🟢 Good Play (Praise)</span>`
           : (c.type === 'coaching_fix'
-            ? `<span class="px-2 py-0.5 rounded text-[9px] font-bold bg-rose-100 text-rose-800 border border-rose-300">🔴 Coaching Fix (Adjustment)</span>`
+            ? `<span class="px-2 py-0.5 rounded text-[9px] font-bold bg-rose-100 text-rose-800 border border-rose-300">🔴 Coaching Fix (Improve)</span>`
             : `<span class="px-2 py-0.5 rounded text-[9px] font-bold bg-amber-100 text-amber-900 border border-amber-300">💡 Teaching Point</span>`);
         
-        const noteText = c.coach_notes ? c.coach_notes : "Watch this sequence closely to observe on-ice positioning and stick awareness.";
-        const safeNote = noteText.replace(/'/g, "\\'");
+        const noteText = c.coach_notes ? escapeHtml(c.coach_notes) : "Watch this sequence closely to observe on-ice positioning and stick awareness.";
+        const hasAudio = Boolean(c.audio_note_id || (c.shift_id && typeof getCoachVoiceNote === 'function' && getCoachVoiceNote(c.shift_id)));
 
         return `
-          <div class="p-3 rounded-xl border transition space-y-2 ${isStudied ? 'bg-emerald-50/40 border-emerald-300/80' : 'bg-slate-50 border-slate-200 hover:border-amber-400'}">
-            <div class="flex items-center justify-between gap-1">
-              <div class="flex items-center gap-1.5">
-                <span class="font-bold text-xs text-slate-900">${c.title || 'Assigned Play'}</span>
+          <div class="p-3 rounded-xl border transition space-y-2 ${isStudied ? 'bg-emerald-50/40 border-emerald-300/80' : 'bg-white border-slate-200 hover:border-amber-400 shadow-2xs'}">
+            <div class="flex items-center justify-between gap-1 flex-wrap">
+              <div class="flex items-center gap-1.5 flex-wrap">
+                <span class="font-bold text-xs text-slate-900">${escapeHtml(c.title || 'Assigned Play')}</span>
                 <span class="text-[10px] font-mono text-slate-500 font-semibold">${formatMinSec(c.start_seconds)} - ${formatMinSec(c.end_seconds)}</span>
+                ${c.game_title ? `<span class="px-1.5 py-0.2 rounded bg-slate-100 text-slate-600 font-mono text-[9px]">🎬 ${escapeHtml(String(c.game_title).substring(0, 28))}</span>` : ''}
               </div>
               <div class="flex items-center gap-1">
                 ${typeBadge}
@@ -45088,20 +45216,30 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
 
             <!-- Coach Rationale Note Box -->
             <div class="p-2 rounded-lg bg-amber-50/90 border border-amber-200 text-xs text-slate-800 font-medium leading-relaxed">
-              <strong class="text-amber-950 font-bold block text-[10px] uppercase tracking-wider mb-0.5">👨‍🏫 Why Coach Picked This Play:</strong>
+              <strong class="text-amber-950 font-bold block text-[10px] uppercase tracking-wider mb-0.5">👨‍🏫 What Coach Wants You to Watch For:</strong>
               ${noteText}
             </div>
 
-            <div class="flex items-center justify-between pt-1">
-              <button onclick="playClip(${c.start_seconds}, ${c.end_seconds}, '${safeNote}'); if (typeof isTheaterMode !== 'undefined' && isTheaterMode && isFlyoutOpen) toggleFlyoutDrawer(false);" class="px-3 py-1 rounded-lg bg-slate-900 hover:bg-slate-800 text-tigersGold text-xs font-bold cursor-pointer transition shadow-xs flex items-center gap-1.5">
-                <span>▶️</span> <span>Watch Play</span>
-              </button>
+            <div class="flex items-center justify-between pt-1 flex-wrap gap-1.5">
+              <div class="flex items-center gap-1.5">
+                <button onclick="watchAssignedHomeworkClip('${c.id}')" class="px-3 py-1 rounded-lg bg-slate-900 hover:bg-slate-800 text-tigersGold text-xs font-bold cursor-pointer transition shadow-xs flex items-center gap-1.5">
+                  <span>▶️</span> <span>Watch Clip</span>
+                </button>
+                ${hasAudio ? `
+                  <button onclick="playClipAudioNote('${c.audio_note_id || ''}', '${c.shift_id || ''}', event)" class="px-2.5 py-1 rounded-lg bg-rose-600 hover:bg-rose-500 text-white text-xs font-bold cursor-pointer transition shadow-xs flex items-center gap-1">
+                    <span>🔊</span> <span>Coach Audio${c.audio_duration_sec ? ' (' + c.audio_duration_sec + 's)' : ''}</span>
+                  </button>
+                ` : ''}
+              </div>
               
               <div class="flex items-center gap-1.5">
                 <button onclick="togglePlayStudied('${c.id}')" class="px-2.5 py-1 rounded-lg border text-[10px] font-bold cursor-pointer transition flex items-center gap-1 ${isStudied ? 'bg-emerald-100 hover:bg-emerald-200 text-emerald-900 border-emerald-300' : 'bg-white hover:bg-slate-100 text-slate-700 border-slate-300'}">
                   <span>${isStudied ? '✓' : '○'}</span> <span>${isStudied ? 'Studied' : 'Mark as Studied'}</span>
                 </button>
                 ${isCoach ? `
+                  <button onclick="openEditTrayClipModal('${c.id}')" title="Edit notes, players, or audio" class="px-2 py-1 rounded-lg bg-slate-100 hover:bg-amber-100 text-slate-700 font-bold text-[10px] cursor-pointer">
+                    ✏️ Edit
+                  </button>
                   <button onclick="removeClipFromTray('${c.id}'); renderPlayerAssignedPlays('${numStr}', ROSTER_POSITIONS['${numStr}']);" title="Remove assigned play" class="p-1 text-slate-400 hover:text-rose-600 cursor-pointer">
                     🗑️
                   </button>
@@ -45737,6 +45875,17 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
         }, (err) => console.log("Tray sync notice:", err));
       } catch(e) {}
 
+      // 1b. Studied Homework Status Listener (so coach sees ✓ Reviewed across devices)
+      try {
+        db.collection("tray").doc("studied_status").onSnapshot((doc) => {
+          if (doc && doc.exists && doc.data()?.studied) {
+            try { localStorage.setItem('studied_plays', JSON.stringify(doc.data().studied)); } catch(e) {}
+            if (currentMode === 'player_analytics') renderPlayerAnalyticsDossier(currentJersey);
+            if (currentMode === 'film_tray') renderFilmTrayView();
+          }
+        }, () => {});
+      } catch(e) {}
+
       // 2. Feedback Cloud Submissions Listener (for Coaches)
       try {
         db.collection("feedback").orderBy("created_at", "desc").limit(30).onSnapshot((snapshot) => {
@@ -45804,9 +45953,212 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
       }
     }
 
+    let modalSelectedPlayers = new Set();
+    let modalEditingClipId = null;
+    let modalOnIcePlayers = new Set();
+    let modalAudioBlobDataUrl = null;
+    let modalAudioDurationSec = 0;
+    let modalExistingAudioNoteId = null;
+    let modalMediaRecorder = null;
+    let modalAudioChunks = [];
+    let modalRecordTimer = null;
+    let modalRecordStartMs = 0;
+
+    function syncModalFolderFromType(typeVal) {
+      const fSel = document.getElementById('modal-tray-folder');
+      if (!fSel) return;
+      if (typeVal === 'good_play') fSel.value = 'good_plays';
+      else if (typeVal === 'coaching_fix') fSel.value = 'coaching_fixes';
+      else fSel.value = 'teaching';
+    }
+
+    function renderModalAssignPlayerChips() {
+      const wrap = document.getElementById('modal-assign-player-chips');
+      if (!wrap) return;
+      const entries = Object.entries(ROSTER_POSITIONS).sort((a, b) => {
+        const aOn = modalOnIcePlayers.has(String(a[0])) ? 0 : 1;
+        const bOn = modalOnIcePlayers.has(String(b[0])) ? 0 : 1;
+        if (aOn !== bOn) return aOn - bOn;
+        return Number(a[0]) - Number(b[0]);
+      });
+      wrap.innerHTML = entries.map(([num, p]) => {
+        const sel = modalSelectedPlayers.has(String(num));
+        const onIce = modalOnIcePlayers.has(String(num));
+        const firstName = p.name.split(' ')[0];
+        const cls = sel
+          ? 'bg-slate-900 text-tigersGold border-slate-900 ring-2 ring-tigersGold/60 font-black'
+          : (onIce
+              ? 'bg-amber-100/90 hover:bg-amber-200 text-amber-950 border-amber-400 font-bold'
+              : 'bg-white hover:bg-slate-100 text-slate-700 border-slate-300 font-semibold');
+        return `<button type="button" onclick="toggleModalAssignPlayer('${num}')" class="px-2 py-1 rounded-lg border text-[10px] cursor-pointer transition flex items-center gap-1 ${cls}">
+          ${onIce ? '<span title="Detected on ice for this play">⭐</span>' : ''}
+          <span class="font-mono">#${num}</span>
+          <span>${escapeHtml(firstName)}</span>
+          ${sel ? '<span>✓</span>' : ''}
+        </button>`;
+      }).join('');
+
+      const saveLbl = document.getElementById('modal-tray-save-label');
+      if (saveLbl) {
+        const cnt = modalSelectedPlayers.size;
+        saveLbl.innerText = cnt > 0 ? `Assign to ${cnt} Player${cnt > 1 ? 's' : ''} & Save` : 'Save to Team Tray';
+      }
+    }
+
+    function toggleModalAssignPlayer(num) {
+      const k = String(num);
+      if (modalSelectedPlayers.has(k)) modalSelectedPlayers.delete(k);
+      else modalSelectedPlayers.add(k);
+      renderModalAssignPlayerChips();
+    }
+
+    function clearModalAssignedPlayers() {
+      modalSelectedPlayers.clear();
+      renderModalAssignPlayerChips();
+    }
+
+    function appendQuickCoachPrompt(text) {
+      const notesInput = document.getElementById('modal-tray-notes');
+      if (!notesInput) return;
+      const cur = notesInput.value.trim();
+      notesInput.value = cur ? `${cur} ${text}` : text;
+      notesInput.focus();
+    }
+
+    function nudgeModalClipTime(which, deltaSec) {
+      const el = document.getElementById(which === 'start' ? 'modal-tray-start' : 'modal-tray-end');
+      if (!el) return;
+      const cur = parseTimeStr(el.value || 0);
+      el.value = formatMinSec(Math.max(0, cur + deltaSec));
+    }
+
+    function previewModalClipRange() {
+      const st = parseTimeStr(document.getElementById('modal-tray-start')?.value || 0);
+      const en = Math.max(st + 3, parseTimeStr(document.getElementById('modal-tray-end')?.value || (st + 25)));
+      playClip(st, en, document.getElementById('modal-tray-title')?.value || 'Clip Preview');
+    }
+
+    function updateModalAudioUI() {
+      const recBtn = document.getElementById('modal-audio-rec-btn');
+      const playBtn = document.getElementById('modal-audio-play-btn');
+      const clearBtn = document.getElementById('modal-audio-clear-btn');
+      const statusTxt = document.getElementById('modal-audio-status-text');
+      const hasAudio = Boolean(modalAudioBlobDataUrl || modalExistingAudioNoteId);
+      if (recBtn) {
+        recBtn.className = "px-2.5 py-1 rounded-lg bg-rose-600 hover:bg-rose-500 text-white font-black text-[10px] cursor-pointer transition flex items-center gap-1 shadow-2xs";
+        recBtn.innerHTML = `<span>🎙️</span> <span>${hasAudio ? 'Re-Record' : 'Record Voice'}</span>`;
+      }
+      if (playBtn) playBtn.classList.toggle('hidden', !hasAudio);
+      if (clearBtn) clearBtn.classList.toggle('hidden', !hasAudio);
+      if (statusTxt) {
+        statusTxt.innerText = hasAudio
+          ? `✅ Voice note attached${modalAudioDurationSec ? ' (' + modalAudioDurationSec + 's)' : ''} — synced to player's homework.`
+          : 'Record a quick 10–45s voice explanation for the player to listen to while watching.';
+      }
+    }
+
+    async function toggleModalVoiceRecording() {
+      if (modalMediaRecorder && modalMediaRecorder.state === 'recording') {
+        modalMediaRecorder.stop();
+        return;
+      }
+      if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+        alert("Microphone recording is not supported in this browser.");
+        return;
+      }
+      try {
+        const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+        modalAudioChunks = [];
+        modalRecordStartMs = Date.now();
+        const opts = MediaRecorder.isTypeSupported('audio/webm;codecs=opus')
+          ? { mimeType: 'audio/webm;codecs=opus', audioBitsPerSecond: 24000 }
+          : {};
+        modalMediaRecorder = new MediaRecorder(stream, opts);
+        modalMediaRecorder.ondataavailable = (e) => {
+          if (e.data && e.data.size > 0) modalAudioChunks.push(e.data);
+        };
+        modalMediaRecorder.onstop = () => {
+          modalAudioDurationSec = Math.max(1, Math.round((Date.now() - modalRecordStartMs) / 1000));
+          const blob = new Blob(modalAudioChunks, { type: 'audio/webm' });
+          const reader = new FileReader();
+          reader.onloadend = () => {
+            modalAudioBlobDataUrl = reader.result;
+            modalExistingAudioNoteId = null;
+            updateModalAudioUI();
+            showToast(`🎙️ Voice note recorded (${modalAudioDurationSec}s)!`);
+          };
+          reader.readAsDataURL(blob);
+          stream.getTracks().forEach(t => t.stop());
+          if (modalRecordTimer) { clearInterval(modalRecordTimer); modalRecordTimer = null; }
+        };
+        modalMediaRecorder.start(250);
+        const recBtn = document.getElementById('modal-audio-rec-btn');
+        const statusTxt = document.getElementById('modal-audio-status-text');
+        if (recBtn) {
+          recBtn.className = "px-2.5 py-1 rounded-lg bg-rose-700 text-white font-black text-[10px] animate-pulse cursor-pointer flex items-center gap-1";
+          recBtn.innerHTML = `<span>🛑</span> <span>Stop (0s)</span>`;
+        }
+        if (statusTxt) statusTxt.innerText = "🔴 Recording... Speak your coaching feedback now.";
+        let sec = 0;
+        modalRecordTimer = setInterval(() => {
+          sec++;
+          if (recBtn) recBtn.innerHTML = `<span>🛑</span> <span>Stop (${sec}s)</span>`;
+          if (sec >= 90 && modalMediaRecorder?.state === 'recording') modalMediaRecorder.stop();
+        }, 1000);
+      } catch (err) {
+        alert("Could not access microphone. Please allow microphone permission in your browser.");
+      }
+    }
+
+    function previewModalVoiceNote() {
+      if (modalAudioBlobDataUrl) {
+        if (currentActiveAudio) currentActiveAudio.pause();
+        currentActiveAudio = new Audio(modalAudioBlobDataUrl);
+        currentActiveAudio.play().catch(() => {});
+      } else if (modalExistingAudioNoteId) {
+        playClipAudioNote(modalExistingAudioNoteId, null);
+      }
+    }
+
+    function clearModalVoiceNote() {
+      modalAudioBlobDataUrl = null;
+      modalExistingAudioNoteId = null;
+      modalAudioDurationSec = 0;
+      updateModalAudioUI();
+    }
+
+    function openEditTrayClipModal(clipId) {
+      const clips = getCoachingTrayClips();
+      const c = clips.find(x => x.id === clipId);
+      if (!c) return;
+      openSaveToTrayModal({
+        editClipId: c.id,
+        title: c.title,
+        startSec: c.start_seconds,
+        endSec: c.end_seconds,
+        shiftId: c.shift_id,
+        folder: c.folder,
+        type: c.type,
+        notes: c.coach_notes || '',
+        assigned_players: clipAssignedPlayersList(c),
+        audio_note_id: c.audio_note_id || null,
+        audio_duration_sec: c.audio_duration_sec || 0
+      });
+    }
+
     function openSaveToTrayModal(presetData) {
       const modal = document.getElementById('save-tray-modal');
       if (!modal) return;
+
+      modalEditingClipId = presetData?.editClipId || null;
+      modalAudioBlobDataUrl = null;
+      modalExistingAudioNoteId = presetData?.audio_note_id || null;
+      modalAudioDurationSec = presetData?.audio_duration_sec || 0;
+      modalSelectedPlayers = new Set();
+      modalOnIcePlayers = new Set();
+
+      const headingEl = document.getElementById('modal-tray-heading');
+      if (headingEl) headingEl.innerText = modalEditingClipId ? 'Edit Assigned Review & Coach Note' : 'Assign Player Review & Coach Note';
 
       const titleInput = document.getElementById('modal-tray-title');
       const startInput = document.getElementById('modal-tray-start');
@@ -45823,6 +46175,19 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
       }
 
       const curTime = Math.round(Number(getThrottledPlayerTime() || 0));
+      const targetShiftId = presetData?.shiftId ?? activePlayingShiftId;
+      if (targetShiftId && currentGame) {
+        const shifts = getNormalizedShiftsForGame(currentGame);
+        const sh = shifts.find(s => Number(s.shift_id) === Number(targetShiftId));
+        if (sh && typeof resolveShiftLineup === 'function') {
+          const lu = resolveShiftLineup(sh);
+          (lu.skaters || []).forEach(sk => { if (sk.num) modalOnIcePlayers.add(String(sk.num)); });
+          if (lu.goalie?.num) modalOnIcePlayers.add(String(lu.goalie.num));
+        }
+      }
+      if (Array.isArray(presetData?.onIcePlayers)) {
+        presetData.onIcePlayers.forEach(n => { if (n) modalOnIcePlayers.add(String(n)); });
+      }
 
       if (presetData) {
         if (titleInput) titleInput.value = presetData.title || `Shift #${presetData.shiftId || ''}`;
@@ -45849,22 +46214,25 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
         if (notesInput) notesInput.value = "";
       }
 
-      const targetPlayerSelect = document.getElementById('modal-tray-target-player');
-      if (targetPlayerSelect) {
-        if (presetData && presetData.assigned_player) {
-          targetPlayerSelect.value = String(presetData.assigned_player);
-        } else if (currentJersey && currentJersey !== 'all') {
-          targetPlayerSelect.value = String(currentJersey);
-        } else {
-          targetPlayerSelect.value = 'none';
-        }
+      if (Array.isArray(presetData?.assigned_players)) {
+        presetData.assigned_players.forEach(p => { if (p && p !== 'none') modalSelectedPlayers.add(String(p)); });
+      } else if (presetData?.assigned_player && presetData.assigned_player !== 'none') {
+        modalSelectedPlayers.add(String(presetData.assigned_player));
+      } else if (!modalEditingClipId && currentJersey && currentJersey !== 'all') {
+        modalSelectedPlayers.add(String(currentJersey));
       }
+
+      renderModalAssignPlayerChips();
+      updateModalAudioUI();
 
       modal.style.display = 'flex';
       modal.classList.remove('hidden');
     }
 
     function closeSaveToTrayModal() {
+      if (modalMediaRecorder && modalMediaRecorder.state === 'recording') {
+        try { modalMediaRecorder.stop(); } catch(e) {}
+      }
       const modal = document.getElementById('save-tray-modal');
       if (modal) {
         modal.style.display = 'none';
@@ -46130,48 +46498,91 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
       return Number(val) || 0;
     }
 
-    function saveModalClipToTray() {
+    async function saveModalClipToTray() {
       const titleInput = document.getElementById('modal-tray-title');
       const startInput = document.getElementById('modal-tray-start');
       const endInput = document.getElementById('modal-tray-end');
       const folderSelect = document.getElementById('modal-tray-folder');
       const typeSelect = document.getElementById('modal-tray-type');
       const notesInput = document.getElementById('modal-tray-notes');
-      const targetPlayerSelect = document.getElementById('modal-tray-target-player');
 
       const st = parseTimeStr(startInput?.value || 0);
       const en = Math.max(st + 3, parseTimeStr(endInput?.value || (st + 30)));
       const folder = folderSelect?.value || "teaching";
       const type = typeSelect?.value || "teaching";
-      const assignedPlayer = targetPlayerSelect?.value || "none";
+      const selectedArr = Array.from(modalSelectedPlayers).filter(p => p && p !== 'none');
+      const primaryPlayer = selectedArr.length > 0 ? selectedArr[0] : null;
       const title = titleInput?.value?.trim() || `Film Clip (${formatMinSec(st)})`;
       const notes = notesInput?.value?.trim() || "";
 
-      const newClip = {
-        id: "clip_" + Date.now() + "_" + Math.floor(Math.random() * 1000),
-        game_id: currentGame?.id || "game_active",
-        game_title: currentGame?.title || "Match Film",
-        youtube_video_id: currentGame?.youtube_video_id || "",
-        shift_id: activePlayingShiftId || null,
-        title: title,
-        start_seconds: st,
-        end_seconds: en,
-        duration: en - st,
-        folder: folder,
-        type: type,
-        assigned_player: (assignedPlayer !== "none" ? assignedPlayer : null),
-        coach_notes: notes,
-        created_at: new Date().toISOString()
-      };
+      // Save voice note to localStorage + Cloud Firestore if newly recorded
+      let audioNoteId = modalExistingAudioNoteId || null;
+      let audioDurationSec = modalAudioDurationSec || 0;
+      if (modalAudioBlobDataUrl) {
+        audioNoteId = "audio_" + Date.now() + "_" + Math.floor(Math.random() * 1000);
+        try {
+          localStorage.setItem(`coach_audio_note_${audioNoteId}`, JSON.stringify({
+            audioDataUrl: modalAudioBlobDataUrl,
+            durationSec: audioDurationSec
+          }));
+        } catch (e) {}
+        if (db) {
+          db.collection("coach_audio_notes").doc(audioNoteId).set({
+            id: audioNoteId,
+            game_id: currentGame?.id || "game_active",
+            audioDataUrl: modalAudioBlobDataUrl,
+            durationSec: audioDurationSec,
+            assigned_players: selectedArr,
+            created_at: firebase.firestore.FieldValue.serverTimestamp()
+          }).catch(err => console.log("Audio cloud sync notice:", err));
+        }
+      }
 
       const clips = getCoachingTrayClips();
-      clips.unshift(newClip);
+      if (modalEditingClipId) {
+        const existing = clips.find(c => c.id === modalEditingClipId);
+        if (existing) {
+          existing.title = title;
+          existing.start_seconds = st;
+          existing.end_seconds = en;
+          existing.duration = en - st;
+          existing.folder = folder;
+          existing.type = type;
+          existing.assigned_players = selectedArr;
+          existing.assigned_player = primaryPlayer;
+          existing.coach_notes = notes;
+          existing.audio_note_id = audioNoteId;
+          existing.audio_duration_sec = audioDurationSec;
+        }
+      } else {
+        const newClip = {
+          id: "clip_" + Date.now() + "_" + Math.floor(Math.random() * 1000),
+          game_id: currentGame?.id || "game_active",
+          game_title: currentGame?.title || "Match Film",
+          youtube_video_id: currentGame?.youtube_video_id || "",
+          shift_id: activePlayingShiftId || null,
+          title: title,
+          start_seconds: st,
+          end_seconds: en,
+          duration: en - st,
+          folder: folder,
+          type: type,
+          assigned_players: selectedArr,
+          assigned_player: primaryPlayer,
+          coach_notes: notes,
+          audio_note_id: audioNoteId,
+          audio_duration_sec: audioDurationSec,
+          created_at: new Date().toISOString()
+        };
+        clips.unshift(newClip);
+      }
+
       saveCoachingTrayClips(clips);
       closeSaveToTrayModal();
 
       const folderObj = getAllTrayFolders().find(f => f.id === folder);
-      if (assignedPlayer !== "none") {
-        showToast(`⭐ Assigned review play to #${assignedPlayer}!`);
+      if (selectedArr.length > 0) {
+        showToast(`📌 Assigned review${audioNoteId ? ' + audio' : ''} to #${selectedArr.join(', #')}!`);
       } else {
         showToast(`⭐ Saved to ${folderObj?.name || 'Tray'}!`);
       }
@@ -46181,6 +46592,8 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
       } else if (currentMode === 'film_tray') {
         renderFilmTrayView();
       }
+      if (typeof renderAiSuggestedClips === 'function') renderAiSuggestedClips();
+      if (typeof renderInlineReviewPrepQueue === 'function') renderInlineReviewPrepQueue();
     }
 
     // Global alias helpers for UI event handlers
@@ -46581,6 +46994,35 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
       return true;
     }
 
+    function assignAiSuggestionToPlayer(suggestionId) {
+      if (!currentGame) return;
+      const suggestions = generateAiClipSuggestions(currentGame);
+      const item = suggestions.find(s => s.id === suggestionId);
+      if (!item) return;
+
+      const onIce = [];
+      if (item.shift_id) {
+        const shifts = getNormalizedShiftsForGame(currentGame);
+        const sh = shifts.find(x => Number(x.shift_id) === Number(item.shift_id));
+        if (sh && typeof resolveShiftLineup === 'function') {
+          const lu = resolveShiftLineup(sh);
+          (lu.skaters || []).forEach(sk => { if (sk.num) onIce.push(String(sk.num)); });
+        }
+      }
+
+      openSaveToTrayModal({
+        title: item.title,
+        startSec: item.startSec,
+        endSec: item.endSec,
+        shiftId: item.shift_id || null,
+        folder: item.target_folder || (item.type === 'good_play' ? 'good_plays' : 'coaching_fixes'),
+        type: item.type === 'good_play' || item.is_tigers_goal ? 'good_play' : (item.type === 'coaching_fix' || item.is_opp_goal ? 'coaching_fix' : 'teaching'),
+        notes: item.tactical_insight || '',
+        onIcePlayers: onIce,
+        assigned_players: onIce.slice(0, 1)
+      });
+    }
+
     function addAiSuggestionToTray(suggestionId) {
       if (!currentGame) return;
       const suggestions = generateAiClipSuggestions(currentGame);
@@ -46667,22 +47109,41 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
         const typeBadge = `<span class="px-2 py-0.5 rounded text-[10px] font-black uppercase border ${badgeCls}">${badgeLabel}</span>`;
         const borderCls = isGood ? 'border-emerald-200 hover:border-emerald-400' : (isFix ? 'border-rose-200 hover:border-rose-400' : 'border-amber-200 hover:border-amber-400');
         const bgCls = isGood ? 'bg-emerald-50/40' : (isFix ? 'bg-rose-50/40' : 'bg-amber-50/40');
-        const alreadySaved = savedClips.some(c => c.game_id === gId && Math.abs(Number(c.start_seconds || 0) - Number(s.startSec || 0)) <= 2);
+        const matchedTrayClip = savedClips.find(c => c.game_id === gId && Math.abs(Number(c.start_seconds || 0) - Number(s.startSec || 0)) <= 2);
+        const alreadySaved = Boolean(matchedTrayClip);
+        const assignedList = matchedTrayClip ? clipAssignedPlayersList(matchedTrayClip) : [];
+        let onIceBadges = '';
+        if (s.shift_id && typeof resolveShiftLineup === 'function') {
+          const shifts = getNormalizedShiftsForGame(currentGame);
+          const sh = shifts.find(x => Number(x.shift_id) === Number(s.shift_id));
+          if (sh) {
+            const lu = resolveShiftLineup(sh);
+            const nums = (lu.skaters || []).map(sk => sk.num).filter(Boolean);
+            if (nums.length) {
+              onIceBadges = `<span class="text-[9px] font-mono text-slate-600 bg-white/80 border border-slate-200 px-1.5 py-0.2 rounded">On Ice: #${nums.join(' #')}</span>`;
+            }
+          }
+        }
 
         return `
           <div class="p-2.5 rounded-xl border ${borderCls} ${bgCls} space-y-1.5 shadow-2xs transition">
-            <div class="flex items-center justify-between gap-1.5">
+            <div class="flex items-center justify-between gap-1.5 flex-wrap">
               <div class="flex items-center gap-1.5 flex-wrap">
                 ${typeBadge}
                 <span class="font-bold text-slate-900 text-xs">${s.category}</span>
                 <span class="text-[10px] font-mono text-slate-500">P${s.period} • ${formatMinSec(s.startSec)} - ${formatMinSec(s.endSec)}</span>
+                ${onIceBadges}
+                ${assignedList.length > 0 ? `<span class="px-1.5 py-0.2 rounded bg-emerald-600 text-white font-mono font-bold text-[9px]">👤 #${assignedList.join(', #')}</span>` : ''}
               </div>
               <div class="flex items-center gap-1 shrink-0">
                 <button onclick="playClip(${s.startSec}, ${s.endSec}, '${s.title.replace(/'/g, "\\'")}', '${s.shift_id || s.id}'); if(typeof isTheaterMode !== 'undefined' && isTheaterMode && isFlyoutOpen) toggleFlyoutDrawer(false);" class="px-2 py-1 rounded-lg bg-white hover:bg-tigersGold hover:text-slate-950 text-slate-800 font-bold text-[10px] border border-slate-300 cursor-pointer transition shadow-2xs flex items-center gap-1">
                   <span>▶️</span> <span>Play</span>
                 </button>
-                <button onclick="addAiSuggestionToTray('${s.id}')" title="Save to Tray above" class="px-2 py-1 rounded-lg ${alreadySaved ? 'bg-emerald-600 text-white' : 'bg-amber-500 hover:bg-amber-400 text-slate-950'} font-bold text-[10px] cursor-pointer transition shadow-2xs flex items-center gap-1">
-                  <span>${alreadySaved ? '✅' : '➕'}</span> <span>${alreadySaved ? 'Saved' : 'To Tray'}</span>
+                <button onclick="${matchedTrayClip ? `openEditTrayClipModal('${matchedTrayClip.id}')` : `assignAiSuggestionToPlayer('${s.id}')`}" title="Assign to Player Homework with Note & Voice" class="px-2.5 py-1 rounded-lg bg-slate-900 hover:bg-slate-800 text-tigersGold font-black text-[10px] cursor-pointer transition shadow-2xs flex items-center gap-1">
+                  <span>📌</span> <span>${assignedList.length > 0 ? 'Edit Assign' : 'Assign'}</span>
+                </button>
+                <button onclick="addAiSuggestionToTray('${s.id}')" title="Quick-pin to Team Tray" class="px-2 py-1 rounded-lg ${alreadySaved ? 'bg-emerald-600 text-white' : 'bg-amber-500 hover:bg-amber-400 text-slate-950'} font-bold text-[10px] cursor-pointer transition shadow-2xs flex items-center gap-1">
+                  <span>${alreadySaved ? '✅' : '➕'}</span> <span>${alreadySaved ? 'Saved' : 'Tray'}</span>
                 </button>
               </div>
             </div>
@@ -46766,16 +47227,30 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
                   ? `<span class="px-1.5 py-0.5 rounded text-[9px] font-black uppercase bg-indigo-100 text-indigo-900 border border-indigo-300">🛡️ Penalty Kill</span>`
                   : `<span class="px-1.5 py-0.5 rounded text-[9px] font-black uppercase bg-amber-100 text-amber-900 border border-amber-300">💡 Teaching</span>`)));
 
+          const assignedPlayers = clipAssignedPlayersList(c);
+          const studiedMap = getStudiedPlays();
+          const isStudied = Boolean(studiedMap[c.id]);
+          const assignedPills = assignedPlayers.map(num => {
+            const pName = ROSTER_POSITIONS[num]?.name?.split(' ')[0] || '';
+            return `<span class="px-1.5 py-0.5 rounded bg-emerald-50 text-emerald-900 border border-emerald-300 font-mono font-bold text-[9px]">👤 #${num} ${escapeHtml(pName)}</span>`;
+          }).join('');
+
           return `
             <div class="p-3 rounded-2xl bg-white border border-slate-200 hover:border-tigersGold transition shadow-xs space-y-2 group">
-              <div class="flex items-center justify-between gap-1.5">
+              <div class="flex items-center justify-between gap-1.5 flex-wrap">
                 <div class="flex items-center gap-1.5 flex-wrap">
                   <span class="px-2 py-0.5 rounded bg-slate-900 text-tigersGold font-mono text-[10px] font-bold">#${idx + 1}</span>
-                  <span class="font-bold text-slate-900 text-xs">${c.title}</span>
+                  <span class="font-bold text-slate-900 text-xs">${escapeHtml(c.title)}</span>
                   ${typeBadge}
                   <span class="text-[11px] font-mono text-slate-500 font-semibold">${formatMinSec(c.start_seconds)} - ${formatMinSec(c.end_seconds)} (${c.duration || Math.max(1, (c.end_seconds || 0) - (c.start_seconds || 0))}s)</span>
+                  ${assignedPills}
+                  ${isStudied ? `<span class="px-1.5 py-0.5 rounded bg-emerald-600 text-white font-bold text-[9px]">✓ Reviewed</span>` : ''}
                 </div>
                 <div class="flex items-center gap-1 shrink-0">
+                  ${c.audio_note_id ? `<button onclick="playClipAudioNote('${c.audio_note_id}', '${c.shift_id || ''}', event)" class="px-2 py-1 rounded-lg bg-rose-600 hover:bg-rose-500 text-white font-bold text-[10px] cursor-pointer transition flex items-center gap-1"><span>🔊</span> <span>${c.audio_duration_sec ? c.audio_duration_sec + 's' : 'Audio'}</span></button>` : ''}
+                  <button onclick="openEditTrayClipModal('${c.id}')" class="px-2 py-1 rounded-lg bg-slate-100 hover:bg-amber-100 text-slate-800 border border-slate-300 font-bold text-[10px] cursor-pointer transition flex items-center gap-1">
+                    <span>📌</span> <span>${assignedPlayers.length > 0 ? 'Edit' : 'Assign'}</span>
+                  </button>
                   <button onclick="playSavedTrayClip('${c.id}'); if(typeof isTheaterMode !== 'undefined' && isTheaterMode && isFlyoutOpen) toggleFlyoutDrawer(false);" class="px-2.5 py-1 rounded-lg bg-tigersGold hover:bg-tigersGoldBright text-slate-950 font-black text-[10px] cursor-pointer transition shadow-2xs flex items-center gap-1">
                     <span>▶️</span> <span>Play Clip</span>
                   </button>
@@ -68536,6 +69011,7 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
             </div>
             <div class="flex items-center gap-1 shrink-0">
               ${isGoal ? `<button type="button" onclick="setGoalClipExactTimeHere('${tc.clip_id}')" title="Scrub video to exact goal moment and click to lock timestamp" class="px-2 py-1 rounded-md bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-[10px] cursor-pointer">📍 Set Here</button>` : ''}
+              ${isCoach ? `<button type="button" onclick="openSaveToTrayModal({ title: '${escapeHtml(tc.label || 'Key Clip').replace(/'/g, "\\'")}', startSec: ${tc.start_seconds || 0}, endSec: ${tc.end_seconds || 30}, type: '${tc.type === 'tigers_goal' ? 'good_play' : (tc.type === 'opp_goal' ? 'coaching_fix' : 'teaching')}', folder: '${tc.type === 'tigers_goal' ? 'good_plays' : (tc.type === 'opp_goal' ? 'coaching_fixes' : 'special_teams')}' })" class="px-2 py-1 rounded-md bg-slate-900 hover:bg-slate-800 text-tigersGold font-black text-[10px] cursor-pointer">📌 Assign</button>` : ''}
               <button type="button" onclick="playClip(${tc.start_seconds || 0}, ${tc.end_seconds || 30}, 1)" class="px-2.5 py-1 rounded-md bg-amber-400 hover:bg-amber-300 text-slate-950 font-black text-xs cursor-pointer">
                 ▶ Play
               </button>
