@@ -1391,32 +1391,95 @@
       "gameSheetCode": "U13A-RS-168",
       "gameSheetUrl": "https://gamesheetstats.com/seasons/15490/teams/534252/schedule",
       "record": {
-        "gp": 12,
+        "gp": 13,
         "w": 2,
-        "l": 9,
+        "l": 10,
         "t": 1,
         "pts": 5,
-        "winPct": ".167"
+        "winPct": ".154"
       },
       "stats": {
         "gf": 21,
-        "ga": 58,
-        "diff": "-37",
-        "gpg": "1.75",
-        "gapg": "4.83",
-        "pim": 38,
-        "pimPg": "3.2"
+        "ga": 63,
+        "diff": "-42",
+        "gpg": "1.62",
+        "gapg": "4.85",
+        "pim": 44,
+        "pimPg": "3.4"
       },
       "specialTeams": {
-        "ppPct": "11.5%",
+        "ppPct": "10.0%",
         "ppGoals": 3,
-        "ppOpps": 26,
-        "pkPct": "57.9%",
+        "ppOpps": 30,
+        "pkPct": "54.5%",
         "shGoals": 2,
         "shAllowed": 7,
         "tendency": "Strong cycle game below hash marks; uses D for point shots with heavy screens."
       },
       "last5Games": [
+        {
+          "gameId": 3193156,
+          "gameCode": "U13A-RS-096",
+          "date": "Nov 25, 2026",
+          "location": "Centennial (Centennial)",
+          "opp": "TNT Tornados",
+          "vsAt": "vs",
+          "score": "0-5",
+          "result": "L",
+          "gf": 0,
+          "ga": 5,
+          "ppGoals": 0,
+          "ppOpps": 4,
+          "pkGoalsAllowed": 2,
+          "pkOpps": 3,
+          "shotsFor": 0,
+          "shotsAgainst": 0,
+          "pim": 6,
+          "goalLog": [
+            {
+              "type": "goal",
+              "period": 1,
+              "clockTime": "02:47",
+              "team": "opp",
+              "teamName": "TNT Tornados U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 1,
+              "clockTime": "02:08",
+              "team": "opp",
+              "teamName": "TNT Tornados U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 1,
+              "clockTime": "02:06",
+              "team": "opp",
+              "teamName": "TNT Tornados U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 2,
+              "clockTime": "02:49",
+              "team": "opp",
+              "teamName": "TNT Tornados U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 3,
+              "clockTime": "14:17",
+              "team": "opp",
+              "teamName": "TNT Tornados U13 A",
+              "scorer": ""
+            }
+          ],
+          "penaltyLog": [],
+          "notes": "Home GameSheet regular season box score"
+        },
         {
           "gameId": 3170147,
           "gameCode": "U13A-RS-193",
@@ -1676,85 +1739,6 @@
           ],
           "penaltyLog": [],
           "notes": "Home GameSheet regular season box score"
-        },
-        {
-          "gameId": 3146847,
-          "gameCode": "U13A-RS-192",
-          "date": "Nov 7, 2026",
-          "location": "Peggy Hill (Arena 1)",
-          "opp": "Barrie Colts U13-2 A Blue",
-          "vsAt": "@",
-          "score": "0-7",
-          "result": "L",
-          "gf": 0,
-          "ga": 7,
-          "ppGoals": 0,
-          "ppOpps": 2,
-          "pkGoalsAllowed": 1,
-          "pkOpps": 1,
-          "shotsFor": 0,
-          "shotsAgainst": 0,
-          "pim": 2,
-          "goalLog": [
-            {
-              "type": "goal",
-              "period": 1,
-              "clockTime": "07:24",
-              "team": "opp",
-              "teamName": "Barrie Colts U13-2 A Blue",
-              "scorer": ""
-            },
-            {
-              "type": "goal",
-              "period": 1,
-              "clockTime": "07:15",
-              "team": "opp",
-              "teamName": "Barrie Colts U13-2 A Blue",
-              "scorer": ""
-            },
-            {
-              "type": "goal",
-              "period": 2,
-              "clockTime": "14:42",
-              "team": "opp",
-              "teamName": "Barrie Colts U13-2 A Blue",
-              "scorer": ""
-            },
-            {
-              "type": "goal",
-              "period": 2,
-              "clockTime": "10:50",
-              "team": "opp",
-              "teamName": "Barrie Colts U13-2 A Blue",
-              "scorer": ""
-            },
-            {
-              "type": "goal",
-              "period": 2,
-              "clockTime": "02:47",
-              "team": "opp",
-              "teamName": "Barrie Colts U13-2 A Blue",
-              "scorer": ""
-            },
-            {
-              "type": "goal",
-              "period": 3,
-              "clockTime": "14:14",
-              "team": "opp",
-              "teamName": "Barrie Colts U13-2 A Blue",
-              "scorer": ""
-            },
-            {
-              "type": "goal",
-              "period": 3,
-              "clockTime": "03:44",
-              "team": "opp",
-              "teamName": "Barrie Colts U13-2 A Blue",
-              "scorer": ""
-            }
-          ],
-          "penaltyLog": [],
-          "notes": "Away GameSheet regular season box score"
         }
       ],
       "dangerPlayers": [
@@ -6942,5 +6926,5 @@
       ]
     }
   },
-  "lastSynced": "2026-11-25T23:58:46.242341Z"
+  "lastSynced": "2026-11-26T02:31:58.829483Z"
 }
