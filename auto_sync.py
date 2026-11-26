@@ -1306,11 +1306,14 @@ def resolve_stop_time_goal_second(
     p_end: int,
     period_shifts: List[Dict[str, Any]],
     checkpoints: List[Dict[str, Any]],
+    p3_run_time: bool = False,
+    mercy_elapsed_sec: Optional[int] = None,
 ) -> int:
     """
     Maps a GameSheet countdown clock (rem_sec) in period p_num to a YouTube video_second using:
     1) On-screen clock_checkpoints linear interpolation if available for this period.
-    2) Piecewise Stop-Time integration across active [puck_drop, whistle] shift intervals!
+    2) Period 3 Mercy Rule Run-Time (1:1 real-time clock, no whistle pauses) when 5+ goal differential is active.
+    3) Piecewise Stop-Time integration across active [puck_drop, whistle] shift intervals!
     """
     target_elapsed = max(0, p_len - min(p_len, rem_sec))
 
@@ -1329,6 +1332,18 @@ def resolve_stop_time_goal_second(
             if e0 <= target_elapsed <= e1 and e1 > e0 and v1 >= v0:
                 frac = (target_elapsed - e0) / float(e1 - e0)
                 return int(v0 + frac * (v1 - v0))
+
+    # 2. Period 3 Mercy Rule Run-Time (5+ goal differential -> clock runs 1:1 continuously without stopping on whistles)
+    if p_num == 3 and p3_run_time:
+        m_el = max(0, int(mercy_elapsed_sec or 0))
+        if target_elapsed >= m_el:
+            if m_el == 0:
+                return min(p_end, int(p_start + target_elapsed))
+            # Stop-time up to mercy trigger, then 1:1 run-time afterward
+            mercy_v = resolve_stop_time_goal_second(
+                3, p_len - m_el, p_len, p_start, p_end, period_shifts, checkpoints, p3_run_time=False
+            )
+            return min(p_end, int(mercy_v + (target_elapsed - m_el)))
 
     # 2. Piecewise Stop-Time integration across active shifts (clock freezes during whistle stoppages!)
     if period_shifts:
@@ -1493,6 +1508,13 @@ def sanitize_and_enrich_game_entry(
     if gs_match and gs_match.get("goalLog"):
         t_goal_num = 0
         o_goal_num = 0
+        # Detect Period 3 Mercy Rule Run-Time (5+ goal differential)
+        p12_t = sum(1 for gl in gs_match["goalLog"] if int(gl.get("period") or 1) < 3 and gl.get("team") == "tigers")
+        p12_o = sum(1 for gl in gs_match["goalLog"] if int(gl.get("period") or 1) < 3 and gl.get("team") != "tigers")
+        p3_run_time = abs(p12_t - p12_o) >= 5
+        mercy_elapsed_sec: Optional[int] = 0 if p3_run_time else None
+
+        run_t, run_o = 0, 0
         for g_idx, gl in enumerate(gs_match["goalLog"], start=1):
             p_num = int(gl.get("period") or 1)
             clk_str = str(gl.get("clockTime") or "0:00")
@@ -1501,8 +1523,21 @@ def sanitize_and_enrich_game_entry(
             p_shifts = [s for s in cleaned_shifts if int(s.get("period") or 1) == p_num]
 
             est_goal_sec = resolve_stop_time_goal_second(
-                p_num, rem_sec, p_len, p_st, p_en, p_shifts, cps_list
+                p_num, rem_sec, p_len, p_st, p_en, p_shifts, cps_list,
+                p3_run_time=p3_run_time, mercy_elapsed_sec=mercy_elapsed_sec
             )
+            if gl.get("team") == "tigers":
+                run_t += 1
+            else:
+                run_o += 1
+            if p_num == 3 and not p3_run_time and abs(run_t - run_o) >= 5:
+                p3_run_time = True
+                mercy_elapsed_sec = max(0, p_len - min(p_len, rem_sec))
+                entry["p3_run_time"] = True
+                entry["p3_mercy_elapsed_sec"] = mercy_elapsed_sec
+            elif p_num == 3 and p3_run_time and "p3_run_time" not in entry:
+                entry["p3_run_time"] = True
+                entry["p3_mercy_elapsed_sec"] = mercy_elapsed_sec or 0
             matched_vg = next(
                 (
                     vg for vg in vg_list

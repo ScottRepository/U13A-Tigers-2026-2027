@@ -8526,11 +8526,27 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
       const periodLengthSec = pLengths[periodNum] || (periodNum === 1 ? 600 : 900);
       let remainingSec = periodLengthSec;
 
+      // Check Period 3 Mercy Rule Run-Time (5+ goal differential -> clock runs 1:1 without stopping on whistles)
+      const gsGoalsAll = gsEvents.filter(e => e.type === 'goal');
+      let scoreTAtCur = 0, scoreOAtCur = 0;
+      gsGoalsAll.forEach(g => {
+        const evSec = Number(g.videoSec ?? g.alignedVideoSec ?? 0);
+        if (evSec <= curSec) {
+          if (g.team === 'tigers' || g.team === 'home') scoreTAtCur++;
+          else scoreOAtCur++;
+        }
+      });
+      const isP3RunTime = (periodNum === 3) && (Math.abs(scoreTAtCur - scoreOAtCur) >= 5 || Boolean(currentGame.p3_run_time && Math.abs(scoreTAtCur - scoreOAtCur) >= 5));
+
       if (!isWarmup) {
         const rawPShifts = Array.isArray(currentGame.shifts)
           ? currentGame.shifts.filter(s => Number(s.period || 1) === periodNum && Number(s.start_seconds || 0) >= periodStart)
           : [];
-        if (rawPShifts.length > 0) {
+        if (isP3RunTime) {
+          // Run-Time Mode: 1:1 real video seconds (does NOT pause on referee whistles)
+          const rawElapsed = Math.max(0, curSec - periodStart);
+          remainingSec = Math.max(0, periodLengthSec - Math.round(rawElapsed));
+        } else if (rawPShifts.length > 0) {
           // Piecewise stop-time: clock ONLY ticks during active [start_seconds, end_seconds] shifts!
           const totalActive = rawPShifts.reduce((acc, s) => acc + Math.max(1, Number(s.end_seconds || 0) - Number(s.start_seconds || 0)), 0);
           const scale = periodLengthSec / Math.max(180, totalActive);
@@ -8679,7 +8695,10 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
 
       if (vScoreH) vScoreH.innerText = homeScore;
       if (vScoreA) vScoreA.innerText = awayScore;
-      if (vPeriod) vPeriod.innerText = `P${periodNum}`;
+      if (vPeriod) {
+        vPeriod.innerText = isP3RunTime ? `P3 • RUN` : `P${periodNum}`;
+        vPeriod.title = isP3RunTime ? "Mercy Rule Run-Time Active (5+ Goal Differential in P3)" : "";
+      }
       if (vClock) vClock.innerText = clockStr;
       if (vOpp) vOpp.innerText = oppAbbr;
       if (vStatusText) vStatusText.innerText = "FILM";
