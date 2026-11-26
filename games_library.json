@@ -3526,7 +3526,9 @@
           "label": "⚡ POWER PLAY • P3 (59:42)",
           "description": "On the power play, Tigers struggle to establish zone time and allow a costly shorthanded turnover in front of the net leading to Goal #7."
         }
-      ]
+      ],
+      "p3_run_time": true,
+      "p3_mercy_elapsed_sec": 0
     },
     {
       "id": "game_5WA3M3h3FZM",
@@ -6560,8 +6562,8 @@
           "type": "opp_goal",
           "period": 3,
           "gs_clock": "11:40",
-          "start_seconds": 3370,
-          "end_seconds": 3392,
+          "start_seconds": 3416,
+          "end_seconds": 3438,
           "verified": false,
           "align_status": "Stop-Time Clock Aligned",
           "label": "🥅 SOUTH SIMCOE STORM GOAL #10 (P3 11:40)",
@@ -6572,8 +6574,8 @@
           "type": "opp_goal",
           "period": 3,
           "gs_clock": "00:10",
-          "start_seconds": 3885,
-          "end_seconds": 3907,
+          "start_seconds": 4106,
+          "end_seconds": 4128,
           "verified": false,
           "align_status": "Stop-Time Clock Aligned",
           "label": "🥅 SOUTH SIMCOE STORM GOAL #11 (P3 00:10)",
@@ -6603,7 +6605,9 @@
         }
       ],
       "ai_verified": true,
-      "ai_confidence_avg": 89
+      "ai_confidence_avg": 89,
+      "p3_run_time": true,
+      "p3_mercy_elapsed_sec": 0
     },
     {
       "id": "game_qpXLIvsACvI",
@@ -9504,8 +9508,8 @@
           "type": "opp_goal",
           "period": 3,
           "gs_clock": "10:55",
-          "start_seconds": 3450,
-          "end_seconds": 3472,
+          "start_seconds": 3525,
+          "end_seconds": 3547,
           "verified": false,
           "align_status": "Stop-Time Clock Aligned",
           "label": "🥅 BARRIE COLTS GOAL #7 (P3 10:55)",
@@ -9516,8 +9520,8 @@
           "type": "opp_goal",
           "period": 3,
           "gs_clock": "10:17",
-          "start_seconds": 3467,
-          "end_seconds": 3489,
+          "start_seconds": 3563,
+          "end_seconds": 3585,
           "verified": false,
           "align_status": "Stop-Time Clock Aligned",
           "label": "🥅 BARRIE COLTS GOAL #8 (P3 10:17)",
@@ -9528,8 +9532,8 @@
           "type": "opp_goal",
           "period": 3,
           "gs_clock": "04:03",
-          "start_seconds": 3684,
-          "end_seconds": 3706,
+          "start_seconds": 3937,
+          "end_seconds": 3959,
           "verified": false,
           "align_status": "Stop-Time Clock Aligned",
           "label": "🥅 BARRIE COLTS GOAL #9 (P3 04:03)",
@@ -9540,8 +9544,8 @@
           "type": "opp_goal",
           "period": 3,
           "gs_clock": "01:38",
-          "start_seconds": 3753,
-          "end_seconds": 3775,
+          "start_seconds": 4082,
+          "end_seconds": 4104,
           "verified": false,
           "align_status": "Stop-Time Clock Aligned",
           "label": "🥅 BARRIE COLTS GOAL #10 (P3 01:38)",
@@ -9552,8 +9556,8 @@
           "type": "opp_goal",
           "period": 3,
           "gs_clock": "00:45",
-          "start_seconds": 3777,
-          "end_seconds": 3799,
+          "start_seconds": 4135,
+          "end_seconds": 4157,
           "verified": false,
           "align_status": "Stop-Time Clock Aligned",
           "label": "🥅 BARRIE COLTS GOAL #11 (P3 00:45)",
@@ -9572,7 +9576,9 @@
         }
       ],
       "ai_verified": true,
-      "ai_confidence_avg": 88
+      "ai_confidence_avg": 88,
+      "p3_run_time": true,
+      "p3_mercy_elapsed_sec": 0
     },
     {
       "id": "game_DZptzovnHtk",
@@ -12170,7 +12176,9 @@
         }
       ],
       "ai_verified": true,
-      "ai_confidence_avg": 89
+      "ai_confidence_avg": 89,
+      "p3_run_time": true,
+      "p3_mercy_elapsed_sec": 306
     },
     {
       "id": "game_l7RAv5VWcx4",
@@ -14878,8 +14886,8 @@
           "type": "opp_goal",
           "period": 3,
           "gs_clock": "10:16",
-          "start_seconds": 2845,
-          "end_seconds": 2867,
+          "start_seconds": 2957,
+          "end_seconds": 2979,
           "verified": false,
           "align_status": "Stop-Time Clock Aligned",
           "label": "🥅 CALEDON HAWKS GOAL #6 (P3 10:16)",
@@ -14890,8 +14898,8 @@
           "type": "opp_goal",
           "period": 3,
           "gs_clock": "07:25",
-          "start_seconds": 2952,
-          "end_seconds": 2974,
+          "start_seconds": 3128,
+          "end_seconds": 3150,
           "verified": false,
           "align_status": "Stop-Time Clock Aligned",
           "label": "🥅 CALEDON HAWKS GOAL #7 (P3 07:25)",
@@ -14902,8 +14910,8 @@
           "type": "opp_goal",
           "period": 3,
           "gs_clock": "05:20",
-          "start_seconds": 3018,
-          "end_seconds": 3040,
+          "start_seconds": 3253,
+          "end_seconds": 3275,
           "verified": false,
           "align_status": "Stop-Time Clock Aligned",
           "label": "🥅 CALEDON HAWKS GOAL #8 (P3 05:20)",
@@ -14922,7 +14930,9 @@
         }
       ],
       "ai_verified": true,
-      "ai_confidence_avg": 90
+      "ai_confidence_avg": 90,
+      "p3_run_time": true,
+      "p3_mercy_elapsed_sec": 64
     },
     {
       "id": "game_A-2-QEqPFqk",
@@ -17850,8 +17860,8 @@
           "type": "opp_goal",
           "period": 3,
           "gs_clock": "13:04",
-          "start_seconds": 2162,
-          "end_seconds": 2184,
+          "start_seconds": 2239,
+          "end_seconds": 2261,
           "verified": false,
           "align_status": "Stop-Time Clock Aligned",
           "label": "🥅 ORILLIA TERRIERS GOAL #8 (P3 13:04)",
@@ -17862,8 +17872,8 @@
           "type": "opp_goal",
           "period": 3,
           "gs_clock": "04:34",
-          "start_seconds": 2452,
-          "end_seconds": 2474,
+          "start_seconds": 2749,
+          "end_seconds": 2771,
           "verified": false,
           "align_status": "Stop-Time Clock Aligned",
           "label": "🥅 ORILLIA TERRIERS GOAL #9 (P3 04:34)",
@@ -17882,7 +17892,9 @@
         }
       ],
       "ai_verified": true,
-      "ai_confidence_avg": 90
+      "ai_confidence_avg": 90,
+      "p3_run_time": true,
+      "p3_mercy_elapsed_sec": 0
     },
     {
       "id": "game_pfbgkQG_vYQ",
@@ -34868,8 +34880,8 @@
           "type": "opp_goal",
           "period": 3,
           "gs_clock": "06:55",
-          "start_seconds": 3026,
-          "end_seconds": 3048,
+          "start_seconds": 3142,
+          "end_seconds": 3164,
           "verified": false,
           "align_status": "Stop-Time Clock Aligned",
           "label": "🥅 NEWMARKET RENEGADES GOAL #8 (P3 06:55)",
@@ -34921,7 +34933,9 @@
         }
       ],
       "ai_verified": true,
-      "ai_confidence_avg": 88
+      "ai_confidence_avg": 88,
+      "p3_run_time": true,
+      "p3_mercy_elapsed_sec": 0
     },
     {
       "id": "game_IjPhCAFZStc",
@@ -37508,8 +37522,8 @@
           "type": "opp_goal",
           "period": 3,
           "gs_clock": "08:52",
-          "start_seconds": 2959,
-          "end_seconds": 2981,
+          "start_seconds": 2815,
+          "end_seconds": 2837,
           "verified": false,
           "align_status": "Stop-Time Clock Aligned",
           "label": "🥅 GEORGIAN BAY ISLANDERS GOAL #6 (P3 08:52)",
@@ -37520,8 +37534,8 @@
           "type": "opp_goal",
           "period": 3,
           "gs_clock": "07:59",
-          "start_seconds": 2979,
-          "end_seconds": 3001,
+          "start_seconds": 2868,
+          "end_seconds": 2890,
           "verified": false,
           "align_status": "Stop-Time Clock Aligned",
           "label": "🥅 GEORGIAN BAY ISLANDERS GOAL #7 (P3 07:59)",
@@ -37532,8 +37546,8 @@
           "type": "opp_goal",
           "period": 3,
           "gs_clock": "05:40",
-          "start_seconds": 3259,
-          "end_seconds": 3281,
+          "start_seconds": 3007,
+          "end_seconds": 3029,
           "verified": false,
           "align_status": "Stop-Time Clock Aligned",
           "label": "🥅 GEORGIAN BAY ISLANDERS GOAL #8 (P3 05:40)",
@@ -37544,8 +37558,8 @@
           "type": "opp_goal",
           "period": 3,
           "gs_clock": "02:25",
-          "start_seconds": 3366,
-          "end_seconds": 3388,
+          "start_seconds": 3202,
+          "end_seconds": 3224,
           "verified": false,
           "align_status": "Stop-Time Clock Aligned",
           "label": "🥅 GEORGIAN BAY ISLANDERS GOAL #9 (P3 02:25)",
@@ -37553,7 +37567,9 @@
         }
       ],
       "ai_verified": true,
-      "ai_confidence_avg": 88
+      "ai_confidence_avg": 88,
+      "p3_run_time": true,
+      "p3_mercy_elapsed_sec": 251
     },
     {
       "id": "game_p18H81X2Bp0",
@@ -40289,8 +40305,8 @@
           "type": "opp_goal",
           "period": 3,
           "gs_clock": "08:20",
-          "start_seconds": 2520,
-          "end_seconds": 2542,
+          "start_seconds": 2879,
+          "end_seconds": 2901,
           "verified": false,
           "align_status": "Stop-Time Clock Aligned",
           "label": "🥅 UPPER YORK ADMIRALS GOAL #10 (P3 08:20)",
@@ -40301,8 +40317,8 @@
           "type": "opp_goal",
           "period": 3,
           "gs_clock": "02:48",
-          "start_seconds": 2842,
-          "end_seconds": 2864,
+          "start_seconds": 3211,
+          "end_seconds": 3233,
           "verified": false,
           "align_status": "Stop-Time Clock Aligned",
           "label": "🥅 UPPER YORK ADMIRALS GOAL #11 (P3 02:48)",
@@ -40332,7 +40348,9 @@
         }
       ],
       "ai_verified": true,
-      "ai_confidence_avg": 86
+      "ai_confidence_avg": 86,
+      "p3_run_time": true,
+      "p3_mercy_elapsed_sec": 0
     },
     {
       "id": "game_KxRUQu2z-Ao",
@@ -42969,8 +42987,8 @@
           "type": "opp_goal",
           "period": 3,
           "gs_clock": "13:24",
-          "start_seconds": 2238,
-          "end_seconds": 2249,
+          "start_seconds": 2318,
+          "end_seconds": 2340,
           "verified": false,
           "align_status": "Stop-Time Clock Aligned",
           "label": "🥅 CALEDON HAWKS GOAL #8 (P3 13:24)",
@@ -42981,8 +42999,8 @@
           "type": "opp_goal",
           "period": 3,
           "gs_clock": "11:52",
-          "start_seconds": 2238,
-          "end_seconds": 2249,
+          "start_seconds": 2410,
+          "end_seconds": 2432,
           "verified": false,
           "align_status": "Stop-Time Clock Aligned",
           "label": "🥅 CALEDON HAWKS GOAL #9 (P3 11:52)",
@@ -42993,8 +43011,8 @@
           "type": "opp_goal",
           "period": 3,
           "gs_clock": "06:22",
-          "start_seconds": 2238,
-          "end_seconds": 2249,
+          "start_seconds": 2740,
+          "end_seconds": 2762,
           "verified": false,
           "align_status": "Stop-Time Clock Aligned",
           "label": "🥅 CALEDON HAWKS GOAL #10 (P3 06:22)",
@@ -43005,8 +43023,8 @@
           "type": "opp_goal",
           "period": 3,
           "gs_clock": "04:33",
-          "start_seconds": 2238,
-          "end_seconds": 2249,
+          "start_seconds": 2849,
+          "end_seconds": 2871,
           "verified": false,
           "align_status": "Stop-Time Clock Aligned",
           "label": "🥅 CALEDON HAWKS GOAL #11 (P3 04:33)",
@@ -43017,8 +43035,8 @@
           "type": "opp_goal",
           "period": 3,
           "gs_clock": "02:11",
-          "start_seconds": 2258,
-          "end_seconds": 2280,
+          "start_seconds": 2991,
+          "end_seconds": 3013,
           "verified": false,
           "align_status": "Stop-Time Clock Aligned",
           "label": "🥅 CALEDON HAWKS GOAL #12 (P3 02:11)",
@@ -43037,7 +43055,9 @@
         }
       ],
       "ai_verified": true,
-      "ai_confidence_avg": 87
+      "ai_confidence_avg": 87,
+      "p3_run_time": true,
+      "p3_mercy_elapsed_sec": 0
     },
     {
       "id": "game_DYH1Kgffsjc",
