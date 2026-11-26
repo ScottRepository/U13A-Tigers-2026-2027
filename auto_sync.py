@@ -713,7 +713,7 @@ def process_video_with_gemini(
                 video_metadata=types.VideoMetadata(
                     start_offset=f"{st_off}s",
                     end_offset=f"{en_off}s",
-                    fps=1.0,
+                    fps=0.5,
                 ),
             )
             seg_prompt = (
@@ -744,13 +744,13 @@ def process_video_with_gemini(
                         sh["period"] = p_num
                         segmented_shifts.append(sh)
 
-        # PASS 2: High-Resolution 2.0 FPS Zoom Verification on Top Clips (Goals, PP, PK — up to 8 key windows)
+        # PASS 2: High-Resolution 1.5 FPS Zoom Verification on Top Clips (Goals, PP, PK — up to 6 key windows)
         key_shifts = [
             s for s in segmented_shifts
             if s.get("goal_scored") in ("Tigers Goal", "Opponent Goal")
             or "PP" in str(s.get("strength_state", ""))
             or "PK" in str(s.get("strength_state", ""))
-        ][:8]
+        ][:6]
         for ks in key_shifts:
             kst = max(0, int(ks.get("start_seconds", 0)) - 5)
             ken = min(int(duration_sec), int(ks.get("end_seconds", kst + 30)) + 5)
@@ -761,7 +761,7 @@ def process_video_with_gemini(
                 video_metadata=types.VideoMetadata(
                     start_offset=f"{kst}s",
                     end_offset=f"{ken}s",
-                    fps=2.0,
+                    fps=1.5,
                 ),
             )
             zoom_prompt = (
@@ -1575,6 +1575,42 @@ def is_gemini_analyzed(game_entry: Dict[str, Any]) -> bool:
     shifts = game_entry.get("shifts") or []
     return ("Gemini" in engine) and len(shifts) > 0
 
+def _decode_firestore_val(val: Any) -> Any:
+    if not isinstance(val, dict):
+        return val
+    if "stringValue" in val:
+        return val["stringValue"]
+    if "integerValue" in val:
+        return int(val["integerValue"])
+    if "doubleValue" in val:
+        return float(val["doubleValue"])
+    if "booleanValue" in val:
+        return bool(val["booleanValue"])
+    if "nullValue" in val:
+        return None
+    if "arrayValue" in val:
+        return [_decode_firestore_val(v) for v in val["arrayValue"].get("values", [])]
+    if "mapValue" in val:
+        return {k: _decode_firestore_val(v) for k, v in val["mapValue"].get("fields", {}).items()}
+    return val
+
+def fetch_firestore_lineups() -> Dict[str, Dict[str, Any]]:
+    """Fetches coach-submitted or texted game lineups from Cloud Firestore."""
+    url = "https://firestore.googleapis.com/v1/projects/aurora-tigers-u13a/databases/(default)/documents/lineups"
+    out: Dict[str, Dict[str, Any]] = {}
+    try:
+        req = urllib.request.Request(url, headers={"Accept": "application/json"})
+        with urllib.request.urlopen(req, timeout=10) as resp:
+            data = json.loads(resp.read().decode("utf-8"))
+        for doc in data.get("documents", []):
+            fields = {k: _decode_firestore_val(v) for k, v in doc.get("fields", {}).items()}
+            doc_id = str(fields.get("game_id") or doc.get("name", "").split("/")[-1])
+            if doc_id and fields.get("lineup"):
+                out[doc_id] = fields
+    except Exception as e:
+        logger.info(f"ℹ️ Firestore lineups fetch skipped/empty: {e}")
+    return out
+
 def run_sync():
     logger.info(f"🔍 Reading playlist: {SOURCE_URL}")
     setup_cookies()
@@ -1658,6 +1694,22 @@ def run_sync():
         existing_entry = existing_games_by_vid.get(vid_id)
         known_scratches = existing_entry.get("scratches", []) if existing_entry else []
         known_lines = existing_entry.get("verified_lines", {}) if existing_entry else {}
+
+        # Merge any coach-texted or cloud-saved lineups from Firestore for this game
+        if not hasattr(run_sync, "_cloud_lineups"):
+            run_sync._cloud_lineups = fetch_firestore_lineups()
+        game_id_key = existing_entry.get("id") if existing_entry else f"game_{vid_id}"
+        cloud_doc = run_sync._cloud_lineups.get(game_id_key) or run_sync._cloud_lineups.get(vid_id)
+        if cloud_doc and isinstance(cloud_doc.get("lineup"), dict):
+            lu = cloud_doc["lineup"]
+            known_lines = {
+                "forward_lines": {k: lu[k] for k in ("f1", "f2", "f3") if k in lu},
+                "defense_pairs": {k: lu[k] for k in ("d1", "d2", "d3") if k in lu},
+                "goalie": lu.get("goalie", ""),
+            }
+            att = cloud_doc.get("attendance") or {}
+            if isinstance(att.get("scratches"), list) and att["scratches"]:
+                known_scratches = [int(x) for x in att["scratches"] if str(x).isdigit()]
 
         try:
             gemini_result = process_video_with_gemini(
