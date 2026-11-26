@@ -22,10 +22,12 @@ const CONFIG = {
 };
 
 const ROSTER = {
-  '3': 'Mason', '4': 'Kaleb', '7': 'Hunter', '8': 'Chase', '9': 'Brayden',
-  '11': 'Nathan', '13': 'Matthew', '14': 'Owen', '15': 'Jackson', '18': 'Nathan',
-  '19': 'Cole', '21': 'Landon', '23': 'Easton', '27': 'Lucas', '28': 'Liam',
-  '44': 'Colton', '88': 'Noah', '98': 'Hudson'
+  '3': 'Stewart Dolmage', '5': 'Nathan Zhao', '7': 'Maxwell Dey',
+  '9': 'Oliver Patterson', '10': 'Arjun Manjunath', '11': 'Andrew Bichay',
+  '13': 'Matthew Hart', '16': 'Joshua Liu', '18': 'Nathan Carinci',
+  '21': 'Caleb Irgengioro-Wu', '23': 'Easton Carpentier', '27': 'Alen Fazlic',
+  '28': 'Ross Elley', '76': 'Matt Davis', '88': 'Roy Chen',
+  '97': 'Hudson Millar', '98': 'Hudson Barfitt'
 };
 
 function syncTextedLinesToFirestore() {
