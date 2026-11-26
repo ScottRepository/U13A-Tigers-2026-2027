@@ -764,9 +764,20 @@
         </div>
       </div>
       <div class="p-4 space-y-3 text-xs overflow-y-auto custom-scroll">
-        <div>
-          <label class="block font-bold text-slate-700 uppercase text-[10px] tracking-wider mb-1">Clip Title / Play Summary</label>
-          <input type="text" id="modal-tray-title" class="w-full bg-slate-50 border border-slate-300 rounded-xl px-3 py-1.5 text-slate-900 font-semibold focus:outline-none focus:border-tigersGold" placeholder="e.g. P1 D-Zone Breakout vs Barrie" />
+        <!-- Top Clip Context Header: Shift #, Clip Name & AI Play Summary -->
+        <div class="p-3 rounded-xl bg-slate-900 text-white space-y-2 border border-slate-700">
+          <div class="flex items-center justify-between gap-2">
+            <span id="modal-tray-shift-badge" class="px-2 py-0.5 rounded bg-tigersGold text-slate-950 font-mono font-black text-[10px] uppercase">SHIFT #1</span>
+            <span class="text-[10px] text-slate-400 font-mono">Clip Summary &amp; AI Context</span>
+          </div>
+          <div>
+            <label class="block font-bold text-slate-300 uppercase text-[9px] tracking-wider mb-1">Clip Title / Name</label>
+            <input type="text" id="modal-tray-title" class="w-full bg-slate-800 border border-slate-600 rounded-lg px-2.5 py-1.5 text-white font-semibold focus:outline-none focus:border-tigersGold" placeholder="e.g. Shift #2 • P1 D-Zone Breakout" />
+          </div>
+          <div id="modal-ai-summary-wrap" class="p-2 rounded-lg bg-slate-800/90 border border-slate-700 text-[11px] text-slate-200 leading-snug">
+            <span class="text-[9px] font-black uppercase tracking-wider text-amber-300 block mb-0.5">🤖 AI Play Description:</span>
+            <span id="modal-ai-summary-text">Select a shift or clip to see AI play context.</span>
+          </div>
         </div>
         <div class="grid grid-cols-2 gap-2">
           <div>
@@ -6027,7 +6038,7 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
           <div id="past-game-subview-stats" class="space-y-3 hidden">
 
           <!-- VIDEO ANALYTICS: ZONE TIME & POSSESSION -->
-          <div class="p-3 rounded-xl bg-[var(--bg-surface)] border border-[var(--border-color)] space-y-2">
+          <div class="hidden p-3 rounded-xl bg-[var(--bg-surface)] border border-[var(--border-color)] space-y-2">
             <div class="flex items-center justify-between text-[10px] font-bold uppercase tracking-wider text-slate-700">
               <span class="flex items-center gap-1 text-amber-500">
                 <span>⏱️</span> <span>Video Analytics: Zone Time Possession</span>
@@ -6064,8 +6075,8 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
             </div>
           </div>
 
-          <!-- VIDEO ANALYTICS: FACEOFF DOMINANCE -->
-          <div class="p-3 rounded-xl bg-[var(--bg-surface)] border border-[var(--border-color)] space-y-2">
+          <!-- VIDEO ANALYTICS: FACEOFF DOMINANCE (Hidden until optically verified) -->
+          <div class="hidden p-3 rounded-xl bg-[var(--bg-surface)] border border-[var(--border-color)] space-y-2">
             <div class="flex items-center justify-between text-[10px] font-bold uppercase tracking-wider text-slate-700">
               <span class="flex items-center gap-1 text-emerald-600">
                 <span>🏒</span> <span>Faceoff Dominance (Game Video Breakdown)</span>
@@ -44807,10 +44818,14 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
         if (roleSubEl) roleSubEl.innerText = "Offensive Zone Sustained Attack";
       }
 
-      // Goalie Deep-Dive Hub Visibility & Telemetry
+      // Goalie Deep-Dive Hub Visibility & Telemetry (Hide skater shift telemetry for Goalies!)
+      const isGoalie = (pInfo.pos === 'G');
+      const skaterTelemetryWrap = document.getElementById('coach-player-telemetry-wrap');
+      if (skaterTelemetryWrap) {
+        skaterTelemetryWrap.classList.toggle('hidden', !isCoach || isGoalie);
+      }
       const goalieHub = document.getElementById('goalie-analytics-hub');
       if (goalieHub) {
-        const isGoalie = (pInfo.pos === 'G');
         goalieHub.classList.toggle('hidden', !isGoalie);
         if (isGoalie) {
           const isHart = (num === 13);
@@ -44823,23 +44838,20 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
           const slotSub = document.getElementById('goalie-slot-sub');
           const freezeVal = document.getElementById('goalie-freeze-val');
 
-          if (goalieTitle) goalieTitle.innerText = `#${numStr} ${pInfo.name} • Goaltender Deep-Dive`;
-          if (goalieSub) goalieSub.innerText = `${isHart ? 'Starter (Yellow/White Gear)' : 'Tandem Goalie (Red/White Gear)'} • Rebound control & crease telemetry`;
-          if (anchorText) anchorText.innerHTML = `<strong>Visual Anchor:</strong> #${numStr} ${pInfo.name} wears <strong>${isHart ? 'Yellow/White' : 'Red/White'}</strong> pads • Catches Left • Sticks to RVH post-lock`;
-          
-          if (isHart) {
-            if (reboundVal) reboundVal.innerText = "84% Controlled";
-            if (reboundSub) reboundSub.innerText = "16 Controlled • 3 Pushed to Corner • 1 Danger";
-            if (slotVal) slotVal.innerText = "88.2% (15/17)";
-            if (slotSub) slotSub.innerText = "Perimeter: 100% (12/12) • SV: 27/29";
-            if (freezeVal) freezeVal.innerText = "11 Freezes • 8 Played";
-          } else {
-            if (reboundVal) reboundVal.innerText = "80% Controlled";
-            if (reboundSub) reboundSub.innerText = "12 Controlled • 3 Pushed to Corner • 2 Danger";
-            if (slotVal) slotVal.innerText = "83.3% (10/12)";
-            if (slotSub) slotSub.innerText = "Perimeter: 100% (9/9) • SV: 19/21";
-            if (freezeVal) freezeVal.innerText = "8 Freezes • 5 Played";
-          }
+          const parsedScore = (typeof parseGameScoreAndOpponent === 'function') ? parseGameScoreAndOpponent(currentGame) : { awayScore: null };
+          const gaCount = parsedScore?.oppScore ?? currentGame?.analytics?.goals_against ?? '—';
+          const pkStr = document.getElementById('past-stat-pk')?.innerText || 'Official GameSheet';
+          const sogStr = currentGame?.analytics?.shots_on_goal ? `${currentGame.analytics.shots_on_goal}` : 'Not Tracked on GameSheet';
+
+          if (goalieTitle) goalieTitle.innerText = `#${numStr} ${pInfo.name} • Goaltender Game Summary`;
+          if (goalieSub) goalieSub.innerText = `${isHart ? 'Yellow/White Pads' : 'Red/White Pads'} • Official Box Score & Crease Film`;
+          if (anchorText) anchorText.innerHTML = `<strong>Visual Anchor:</strong> #${numStr} ${pInfo.name} wears <strong>${isHart ? 'Yellow/White' : 'Red/White'}</strong> pads • Catches Left`;
+
+          if (reboundVal) reboundVal.innerText = `${gaCount} GA`;
+          if (reboundSub) reboundSub.innerText = "Official Goals Against (GameSheet)";
+          if (slotVal) slotVal.innerText = pkStr;
+          if (slotSub) slotSub.innerText = "Team Penalty Kill Result";
+          if (freezeVal) freezeVal.innerText = sogStr;
         }
       }
 
@@ -45087,30 +45099,7 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
       return [];
     }
 
-    function watchAssignedHomeworkClip(clipId) {
-      const allClips = getCoachingTrayClips();
-      const c = allClips.find(x => x.id === clipId);
-      if (!c) return;
-      const noteText = c.coach_notes || "Watch this sequence closely to observe positioning and stick awareness.";
-      if (typeof isTheaterMode !== 'undefined' && isTheaterMode && isFlyoutOpen) toggleFlyoutDrawer(false);
-
-      const needSwitch = c.game_id && (!currentGame || (currentGame.id !== c.game_id && currentGame.youtube_video_id !== c.youtube_video_id));
-      if (needSwitch && typeof loadGame === 'function') {
-        loadGame(c.game_id);
-        setTimeout(() => {
-          playClip(Number(c.start_seconds || 0), Number(c.end_seconds || 30), noteText, c.shift_id || null);
-        }, 700);
-      } else {
-        playClip(Number(c.start_seconds || 0), Number(c.end_seconds || 30), noteText, c.shift_id || null);
-      }
-    }
-
-    async function playClipAudioNote(audioNoteId, fallbackShiftId, ev) {
-      if (ev && typeof ev.stopPropagation === 'function') ev.stopPropagation();
-      if (currentActiveAudio) {
-        currentActiveAudio.pause();
-        currentActiveAudio = null;
-      }
+    async function resolveClipAudioData(audioNoteId, fallbackShiftId) {
       let dataUrl = null;
       let dur = '';
       if (audioNoteId) {
@@ -45123,7 +45112,6 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
           }
         } catch (e) {}
         if (!dataUrl && db) {
-          showToast("🔊 Loading Coach's Audio Note...");
           try {
             const doc = await db.collection("coach_audio_notes").doc(audioNoteId).get();
             if (doc.exists && doc.data()?.audioDataUrl) {
@@ -45145,6 +45133,80 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
           dur = shiftMemo.durationSec || '';
         }
       }
+      return { dataUrl, dur };
+    }
+
+    async function watchAssignedHomeworkClip(clipId) {
+      const allClips = getCoachingTrayClips();
+      const c = allClips.find(x => x.id === clipId);
+      if (!c) return;
+      const noteText = c.coach_notes || c.ai_summary || "Watch this sequence closely to observe positioning and stick awareness.";
+      if (typeof isTheaterMode !== 'undefined' && isTheaterMode && isFlyoutOpen) toggleFlyoutDrawer(false);
+
+      const st = Number(c.start_seconds || 0);
+      const en = Number(c.end_seconds || 30);
+      const needSwitch = c.game_id && (!currentGame || (currentGame.id !== c.game_id && currentGame.youtube_video_id !== c.youtube_video_id));
+      if (needSwitch && typeof loadGame === 'function') {
+        loadGame(c.game_id);
+      }
+
+      const startVideoClipNow = () => {
+        playClip(st, en, noteText, c.shift_id || null);
+      };
+
+      const hasAudioRef = Boolean(c.audio_note_id || (c.shift_id && typeof getCoachVoiceNote === 'function' && getCoachVoiceNote(c.shift_id)));
+      if (hasAudioRef) {
+        // Pause & cue the game video first so Coach's voice plays cleanly with zero background crowd noise!
+        setTimeout(() => {
+          try {
+            if (typeof ytPlayer !== 'undefined' && ytPlayer) {
+              if (typeof ytPlayer.seekTo === 'function') ytPlayer.seekTo(st, true);
+              if (typeof ytPlayer.pauseVideo === 'function') ytPlayer.pauseVideo();
+            }
+          } catch (e) {}
+        }, needSwitch ? 650 : 50);
+
+        const { dataUrl, dur } = await resolveClipAudioData(c.audio_note_id, c.shift_id);
+        if (dataUrl) {
+          if (currentActiveAudio) {
+            currentActiveAudio.pause();
+            currentActiveAudio = null;
+          }
+          try {
+            currentActiveAudio = new Audio(dataUrl);
+            currentActiveAudio.onended = () => {
+              currentActiveAudio = null;
+              showToast("🎬 Starting clip now...");
+              startVideoClipNow();
+            };
+            await currentActiveAudio.play();
+            showToast(`🔊 Coach Briefing${dur ? ' (' + dur + 's)' : ''} — Video starts automatically when Coach finishes!`);
+            return;
+          } catch (e) {
+            currentActiveAudio = null;
+          }
+        }
+      }
+
+      if (needSwitch) {
+        setTimeout(startVideoClipNow, 700);
+      } else {
+        startVideoClipNow();
+      }
+    }
+
+    async function playClipAudioNote(audioNoteId, fallbackShiftId, ev) {
+      if (ev && typeof ev.stopPropagation === 'function') ev.stopPropagation();
+      if (currentActiveAudio) {
+        currentActiveAudio.pause();
+        currentActiveAudio = null;
+      }
+      try {
+        if (typeof ytPlayer !== 'undefined' && ytPlayer && typeof ytPlayer.pauseVideo === 'function') {
+          ytPlayer.pauseVideo();
+        }
+      } catch (e) {}
+      const { dataUrl, dur } = await resolveClipAudioData(audioNoteId, fallbackShiftId);
       if (!dataUrl) {
         showToast("⚠️ Could not find audio note for this clip.");
         return;
@@ -45152,7 +45214,7 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
       try {
         currentActiveAudio = new Audio(dataUrl);
         currentActiveAudio.play().then(() => {
-          showToast(`🔊 Playing Coach Audio Feedback${dur ? ' (' + dur + 's)' : ''}...`);
+          showToast(`🔊 Playing Isolated Coach Audio${dur ? ' (' + dur + 's)' : ''}...`);
         }).catch(() => showToast("⚠️ Tap again to allow audio playback."));
       } catch (e) {}
     }
@@ -45214,7 +45276,8 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
               </div>
             </div>
 
-            <!-- Coach Rationale Note Box -->
+            <!-- AI Context + Coach Rationale Note Box -->
+            ${c.ai_summary ? `<div class="px-2.5 py-1.5 rounded-lg bg-slate-100 border border-slate-200 text-[11px] text-slate-600"><strong class="text-slate-800 uppercase text-[9px] tracking-wider">🤖 Play Summary:</strong> ${escapeHtml(c.ai_summary)}</div>` : ''}
             <div class="p-2 rounded-lg bg-amber-50/90 border border-amber-200 text-xs text-slate-800 font-medium leading-relaxed">
               <strong class="text-amber-950 font-bold block text-[10px] uppercase tracking-wider mb-0.5">👨‍🏫 What Coach Wants You to Watch For:</strong>
               ${noteText}
@@ -46057,11 +46120,20 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
       }
     }
 
+    let modalCurrentAiSummary = "";
+    let modalCurrentShiftId = null;
+
     async function toggleModalVoiceRecording() {
       if (modalMediaRecorder && modalMediaRecorder.state === 'recording') {
         modalMediaRecorder.stop();
         return;
       }
+      // Pause background game video immediately so rink audio doesn't bleed into Coach's microphone!
+      try {
+        if (typeof ytPlayer !== 'undefined' && ytPlayer && typeof ytPlayer.pauseVideo === 'function') {
+          ytPlayer.pauseVideo();
+        }
+      } catch (e) {}
       if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
         alert("Microphone recording is not supported in this browser.");
         return;
@@ -46139,6 +46211,7 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
         shiftId: c.shift_id,
         folder: c.folder,
         type: c.type,
+        aiSummary: c.ai_summary || '',
         notes: c.coach_notes || '',
         assigned_players: clipAssignedPlayersList(c),
         audio_note_id: c.audio_note_id || null,
@@ -46156,6 +46229,8 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
       modalAudioDurationSec = presetData?.audio_duration_sec || 0;
       modalSelectedPlayers = new Set();
       modalOnIcePlayers = new Set();
+      modalCurrentAiSummary = presetData?.aiSummary || "";
+      modalCurrentShiftId = presetData?.shiftId ?? activePlayingShiftId ?? null;
 
       const headingEl = document.getElementById('modal-tray-heading');
       if (headingEl) headingEl.innerText = modalEditingClipId ? 'Edit Assigned Review & Coach Note' : 'Assign Player Review & Coach Note';
@@ -46166,6 +46241,9 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
       const folderSelect = document.getElementById('modal-tray-folder');
       const typeSelect = document.getElementById('modal-tray-type');
       const notesInput = document.getElementById('modal-tray-notes');
+      const shiftBadgeEl = document.getElementById('modal-tray-shift-badge');
+      const aiSummaryWrap = document.getElementById('modal-ai-summary-wrap');
+      const aiSummaryText = document.getElementById('modal-ai-summary-text');
 
       if (folderSelect) {
         const allFolders = getAllTrayFolders().filter(f => f.id !== 'all');
@@ -46175,18 +46253,33 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
       }
 
       const curTime = Math.round(Number(getThrottledPlayerTime() || 0));
-      const targetShiftId = presetData?.shiftId ?? activePlayingShiftId;
-      if (targetShiftId && currentGame) {
+      let matchedShiftObj = null;
+      if (modalCurrentShiftId && currentGame) {
         const shifts = getNormalizedShiftsForGame(currentGame);
-        const sh = shifts.find(s => Number(s.shift_id) === Number(targetShiftId));
-        if (sh && typeof resolveShiftLineup === 'function') {
-          const lu = resolveShiftLineup(sh);
+        matchedShiftObj = shifts.find(s => Number(s.shift_id) === Number(modalCurrentShiftId)) || null;
+        if (matchedShiftObj && typeof resolveShiftLineup === 'function') {
+          const lu = resolveShiftLineup(matchedShiftObj);
           (lu.skaters || []).forEach(sk => { if (sk.num) modalOnIcePlayers.add(String(sk.num)); });
           if (lu.goalie?.num) modalOnIcePlayers.add(String(lu.goalie.num));
+        }
+        if (!modalCurrentAiSummary && matchedShiftObj?.coach_notes) {
+          modalCurrentAiSummary = matchedShiftObj.coach_notes;
         }
       }
       if (Array.isArray(presetData?.onIcePlayers)) {
         presetData.onIcePlayers.forEach(n => { if (n) modalOnIcePlayers.add(String(n)); });
+      }
+
+      if (shiftBadgeEl) {
+        shiftBadgeEl.innerText = modalCurrentShiftId ? `SHIFT #${modalCurrentShiftId}` : 'CUSTOM CLIP';
+      }
+      if (aiSummaryWrap && aiSummaryText) {
+        if (modalCurrentAiSummary) {
+          aiSummaryWrap.classList.remove('hidden');
+          aiSummaryText.innerText = modalCurrentAiSummary;
+        } else {
+          aiSummaryWrap.classList.add('hidden');
+        }
       }
 
       if (presetData) {
@@ -46197,14 +46290,12 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
         if (typeSelect && presetData.type) typeSelect.value = presetData.type;
         if (notesInput) notesInput.value = presetData.notes || "";
       } else if (activePlayingShiftId && currentGame) {
-        const shifts = getNormalizedShiftsForGame(currentGame);
-        const activeShift = shifts.find(s => Number(s.shift_id) === Number(activePlayingShiftId));
-        const st = activeShift ? Number(activeShift.start_seconds || 0) : Math.max(0, curTime - 15);
-        const en = activeShift ? Number(activeShift.end_seconds || (st + 35)) : (curTime + 15);
+        const st = matchedShiftObj ? Number(matchedShiftObj.start_seconds || 0) : Math.max(0, curTime - 15);
+        const en = matchedShiftObj ? Number(matchedShiftObj.end_seconds || (st + 35)) : (curTime + 15);
         if (titleInput) titleInput.value = `Shift #${activePlayingShiftId} (${currentGame.title || 'Game Film'})`;
         if (startInput) startInput.value = formatMinSec(st);
         if (endInput) endInput.value = formatMinSec(en);
-        if (notesInput) notesInput.value = activeShift?.coach_notes || "";
+        if (notesInput) notesInput.value = "";
       } else {
         const st = Math.max(0, curTime - 15);
         const en = curTime + 15;
@@ -46550,6 +46641,7 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
           existing.type = type;
           existing.assigned_players = selectedArr;
           existing.assigned_player = primaryPlayer;
+          existing.ai_summary = modalCurrentAiSummary || existing.ai_summary || "";
           existing.coach_notes = notes;
           existing.audio_note_id = audioNoteId;
           existing.audio_duration_sec = audioDurationSec;
@@ -46560,7 +46652,7 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
           game_id: currentGame?.id || "game_active",
           game_title: currentGame?.title || "Match Film",
           youtube_video_id: currentGame?.youtube_video_id || "",
-          shift_id: activePlayingShiftId || null,
+          shift_id: modalCurrentShiftId || activePlayingShiftId || null,
           title: title,
           start_seconds: st,
           end_seconds: en,
@@ -46569,6 +46661,7 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
           type: type,
           assigned_players: selectedArr,
           assigned_player: primaryPlayer,
+          ai_summary: modalCurrentAiSummary || "",
           coach_notes: notes,
           audio_note_id: audioNoteId,
           audio_duration_sec: audioDurationSec,
@@ -46625,7 +46718,8 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
         assigned_player: targetNum,
         folder: s.breakout?.successful ? "good_plays" : (s.breakout?.attempted && !s.breakout?.successful ? "coaching_fixes" : "teaching"),
         type: s.breakout?.successful ? "good_play" : (s.breakout?.attempted && !s.breakout?.successful ? "coaching_fix" : "teaching"),
-        notes: s.coach_notes || ""
+        aiSummary: s.coach_notes || "",
+        notes: ""
       });
     }
 
@@ -46786,9 +46880,16 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
       const parsed = (typeof parseGameScoreAndOpponent === 'function') ? parseGameScoreAndOpponent(game) : { opponent: 'Opponent' };
       const oppName = parsed.opponent || game.opponent || 'Opponent';
 
+      // Helper: never classify a shift with a turnover or goal against as a "Good Play"
+      const hasNegativeOutcome = (s) => {
+        if (s.is_opp_goal || String(s.goal_scored || '').toLowerCase().includes('opponent')) return true;
+        const txt = String(s.coach_notes || s.description || '').toLowerCase();
+        return txt.includes('turnover') || txt.includes('goal against') || /goal\s*#?\d+\s*against/.test(txt) || txt.includes('shorthanded turnover') || txt.includes('struggle');
+      };
+
       // 1. Highlight Top 3 Clean Breakouts (Max 5 Good Plays total!)
       const cleanBreakouts = shifts
-        .filter(s => s.breakout && s.breakout.attempted && s.breakout.successful && !s.is_tigers_goal && !s.is_opp_goal)
+        .filter(s => s.breakout && s.breakout.attempted && s.breakout.successful && !s.is_tigers_goal && !hasNegativeOutcome(s))
         .sort((a, b) => Number(b.confidence || 85) - Number(a.confidence || 85))
         .slice(0, 3);
       cleanBreakouts.forEach((cb, idx) => {
@@ -46817,7 +46918,7 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
 
       // 2. Highlight Top 2 Sustained O-Zone Pressure Plays (Completes Max 5 Good Plays)
       const oZoneShifts = shifts
-        .filter(s => String(s.primary_zone || '').toLowerCase().includes('offens') && !s.is_tigers_goal && !s.is_opp_goal)
+        .filter(s => String(s.primary_zone || '').toLowerCase().includes('offens') && !s.is_tigers_goal && !hasNegativeOutcome(s))
         .sort((a, b) => Number(b.confidence || 85) - Number(a.confidence || 85))
         .slice(0, 2);
       oZoneShifts.forEach((oz, idx) => {
@@ -47017,7 +47118,8 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
         shiftId: item.shift_id || null,
         folder: item.target_folder || (item.type === 'good_play' ? 'good_plays' : 'coaching_fixes'),
         type: item.type === 'good_play' || item.is_tigers_goal ? 'good_play' : (item.type === 'coaching_fix' || item.is_opp_goal ? 'coaching_fix' : 'teaching'),
-        notes: item.tactical_insight || '',
+        aiSummary: item.tactical_insight || '',
+        notes: '',
         onIcePlayers: onIce,
         assigned_players: onIce.slice(0, 1)
       });
@@ -47129,6 +47231,7 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
           <div class="p-2.5 rounded-xl border ${borderCls} ${bgCls} space-y-1.5 shadow-2xs transition">
             <div class="flex items-center justify-between gap-1.5 flex-wrap">
               <div class="flex items-center gap-1.5 flex-wrap">
+                ${s.shift_id ? `<span class="px-1.5 py-0.5 rounded bg-slate-900 text-tigersGold font-mono font-black text-[9px]">SHIFT #${s.shift_id}</span>` : ''}
                 ${typeBadge}
                 <span class="font-bold text-slate-900 text-xs">${s.category}</span>
                 <span class="text-[10px] font-mono text-slate-500">P${s.period} • ${formatMinSec(s.startSec)} - ${formatMinSec(s.endSec)}</span>
@@ -51417,6 +51520,11 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
     }
 
     async function startCoachVoiceRecording(shiftId) {
+      try {
+        if (typeof ytPlayer !== 'undefined' && ytPlayer && typeof ytPlayer.pauseVideo === 'function') {
+          ytPlayer.pauseVideo();
+        }
+      } catch (e) {}
       if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
         alert("Audio recording is not supported in this browser environment.");
         return;
@@ -67133,7 +67241,7 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
 
       if (typeof setLayoutMode === 'function') setLayoutMode('split');
       if (typeof selectPlayer === 'function') selectPlayer(String(jersey || '23'), true);
-      toggleAppSidebar(false);
+      if (!isFlyoutPinned) toggleAppSidebar(false);
     }
 
     function openVideoReviewPrep() {
@@ -67150,7 +67258,7 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
       if (typeof setLayoutMode === 'function') setLayoutMode('split');
       if (typeof switchViewMode === 'function') switchViewMode('film_tray');
       if (typeof renderCoachTray === 'function') renderCoachTray();
-      toggleAppSidebar(false);
+      if (!isFlyoutPinned) toggleAppSidebar(false);
       showToast("⭐ Video Review Prep (Coach Tray) Ready!");
     }
 
@@ -68103,7 +68211,7 @@ P3 09:30 Penalty: #7 Opponent (Hooking, 2:00) - PP State"></textarea>
 
       // Show Player Dossier & Shifts on the right side-by-side with the video on the left!
       if (typeof switchViewMode === 'function') switchViewMode('player_analytics');
-      toggleAppSidebar(false);
+      if (!isFlyoutPinned) toggleAppSidebar(false);
 
       setTimeout(() => {
         jumpToShiftTime(seconds);
