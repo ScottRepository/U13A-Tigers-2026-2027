@@ -15,33 +15,80 @@
       "gameSheetCode": "U13A-RS-015",
       "gameSheetUrl": "https://gamesheetstats.com/seasons/15490/teams/534275/schedule",
       "record": {
-        "gp": 10,
-        "w": 8,
+        "gp": 11,
+        "w": 9,
         "l": 1,
         "t": 1,
-        "pts": 17,
-        "winPct": ".800"
+        "pts": 19,
+        "winPct": ".818"
       },
       "stats": {
-        "gf": 49,
+        "gf": 52,
         "ga": 12,
-        "diff": "+37",
-        "gpg": "4.90",
-        "gapg": "1.20",
-        "pim": 30,
-        "pimPg": "3.0"
+        "diff": "+40",
+        "gpg": "4.73",
+        "gapg": "1.09",
+        "pim": 34,
+        "pimPg": "3.1"
       },
       "specialTeams": {
-        "ppPct": "30.8%",
-        "ppGoals": 8,
-        "ppOpps": 26,
+        "ppPct": "28.1%",
+        "ppGoals": 9,
+        "ppOpps": 32,
         "ppGpg": "0.86",
-        "pkPct": "86.7%",
+        "pkPct": "88.2%",
         "shGoals": 1,
         "shAllowed": 0,
         "tendency": "Lethal 35.3% power play and perfect 100.0% penalty kill. Dangerous transition rush with high slot support."
       },
       "last5Games": [
+        {
+          "gameId": 3195322,
+          "gameCode": "U13A-RS-144",
+          "date": "Nov 26, 2026",
+          "location": "Alder (Red)",
+          "opp": "Orangeville Flyers",
+          "vsAt": "@",
+          "score": "3-0",
+          "result": "W",
+          "gf": 3,
+          "ga": 0,
+          "ppGoals": 1,
+          "ppOpps": 6,
+          "pkGoalsAllowed": 0,
+          "pkOpps": 2,
+          "shotsFor": 0,
+          "shotsAgainst": 0,
+          "pim": 4,
+          "goalLog": [
+            {
+              "type": "goal",
+              "period": 2,
+              "clockTime": "02:56",
+              "team": "self",
+              "teamName": "Caledon Hawks 13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 3,
+              "clockTime": "12:11",
+              "team": "self",
+              "teamName": "Caledon Hawks 13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 3,
+              "clockTime": "06:06",
+              "team": "self",
+              "teamName": "Caledon Hawks 13 A",
+              "scorer": ""
+            }
+          ],
+          "penaltyLog": [],
+          "notes": "Away GameSheet regular season box score"
+        },
         {
           "gameId": 3170148,
           "gameCode": "U13A-RS-134",
@@ -304,77 +351,6 @@
               "clockTime": "00:05",
               "team": "self",
               "teamName": "Caledon Hawks 13 A",
-              "scorer": ""
-            }
-          ],
-          "penaltyLog": [],
-          "notes": "Home GameSheet regular season box score"
-        },
-        {
-          "gameId": 3096089,
-          "gameCode": "U13A-RS-026",
-          "date": "Oct 24, 2026",
-          "location": "Caledon East (1)",
-          "opp": "Stouffville Clippers",
-          "vsAt": "vs",
-          "score": "3-3",
-          "result": "T",
-          "gf": 3,
-          "ga": 3,
-          "ppGoals": 0,
-          "ppOpps": 3,
-          "pkGoalsAllowed": 0,
-          "pkOpps": 1,
-          "shotsFor": 0,
-          "shotsAgainst": 0,
-          "pim": 2,
-          "goalLog": [
-            {
-              "type": "goal",
-              "period": 1,
-              "clockTime": "04:03",
-              "team": "self",
-              "teamName": "Caledon Hawks 13 A",
-              "scorer": ""
-            },
-            {
-              "type": "goal",
-              "period": 2,
-              "clockTime": "07:46",
-              "team": "self",
-              "teamName": "Caledon Hawks 13 A",
-              "scorer": ""
-            },
-            {
-              "type": "goal",
-              "period": 2,
-              "clockTime": "00:16",
-              "team": "opp",
-              "teamName": "Stouffville Clippers U13 A",
-              "scorer": ""
-            },
-            {
-              "type": "goal",
-              "period": 3,
-              "clockTime": "12:09",
-              "team": "opp",
-              "teamName": "Stouffville Clippers U13 A",
-              "scorer": ""
-            },
-            {
-              "type": "goal",
-              "period": 3,
-              "clockTime": "02:48",
-              "team": "self",
-              "teamName": "Caledon Hawks 13 A",
-              "scorer": ""
-            },
-            {
-              "type": "goal",
-              "period": 3,
-              "clockTime": "02:24",
-              "team": "opp",
-              "teamName": "Stouffville Clippers U13 A",
               "scorer": ""
             }
           ],
@@ -2251,32 +2227,87 @@
       "gameSheetCode": "U13A-RS-083",
       "gameSheetUrl": "https://gamesheetstats.com/seasons/15490/teams/534243/schedule",
       "record": {
-        "gp": 10,
+        "gp": 11,
         "w": 5,
         "l": 3,
-        "t": 2,
-        "pts": 12,
-        "winPct": ".500"
+        "t": 3,
+        "pts": 13,
+        "winPct": ".455"
       },
       "stats": {
-        "gf": 38,
-        "ga": 27,
+        "gf": 40,
+        "ga": 29,
         "diff": "+11",
-        "gpg": "3.80",
-        "gapg": "2.70",
-        "pim": 78,
+        "gpg": "3.64",
+        "gapg": "2.64",
+        "pim": 86,
         "pimPg": "7.8"
       },
       "specialTeams": {
-        "ppPct": "22.0%",
-        "ppGoals": 9,
-        "ppOpps": 41,
-        "pkPct": "82.1%",
+        "ppPct": "23.3%",
+        "ppGoals": 10,
+        "ppOpps": 43,
+        "pkPct": "83.7%",
         "shGoals": 1,
         "shAllowed": 10,
         "tendency": "Physical grinding squad; heavy hits along boards."
       },
       "last5Games": [
+        {
+          "gameId": 3195321,
+          "gameCode": "U13A-RS-010",
+          "date": "Nov 26, 2026",
+          "location": "Eastview (Eastview)",
+          "opp": "Barrie Colts U13-2 A Blue",
+          "vsAt": "@",
+          "score": "2-2",
+          "result": "T",
+          "gf": 2,
+          "ga": 2,
+          "ppGoals": 1,
+          "ppOpps": 2,
+          "pkGoalsAllowed": 0,
+          "pkOpps": 4,
+          "shotsFor": 0,
+          "shotsAgainst": 0,
+          "pim": 8,
+          "goalLog": [
+            {
+              "type": "goal",
+              "period": 2,
+              "clockTime": "10:55",
+              "team": "opp",
+              "teamName": "Barrie Colts U13-2 A Blue",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 2,
+              "clockTime": "02:55",
+              "team": "self",
+              "teamName": "Upper York Admirals U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 2,
+              "clockTime": "02:00",
+              "team": "self",
+              "teamName": "Upper York Admirals U13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 3,
+              "clockTime": "07:56",
+              "team": "opp",
+              "teamName": "Barrie Colts U13-2 A Blue",
+              "scorer": ""
+            }
+          ],
+          "penaltyLog": [],
+          "notes": "Away GameSheet regular season box score"
+        },
         {
           "gameId": 3173779,
           "gameCode": "U13A-RS-011",
@@ -2523,61 +2554,6 @@
               "clockTime": "00:05",
               "team": "self",
               "teamName": "Upper York Admirals U13 A",
-              "scorer": ""
-            }
-          ],
-          "penaltyLog": [],
-          "notes": "Away GameSheet regular season box score"
-        },
-        {
-          "gameId": 3141092,
-          "gameCode": "U13A-RS-124",
-          "date": "Nov 5, 2026",
-          "location": "Magna (Pfaff)",
-          "opp": "Newmarket Renegades",
-          "vsAt": "@",
-          "score": "3-1",
-          "result": "W",
-          "gf": 3,
-          "ga": 1,
-          "ppGoals": 1,
-          "ppOpps": 2,
-          "pkGoalsAllowed": 0,
-          "pkOpps": 4,
-          "shotsFor": 0,
-          "shotsAgainst": 0,
-          "pim": 8,
-          "goalLog": [
-            {
-              "type": "goal",
-              "period": 1,
-              "clockTime": "07:09",
-              "team": "self",
-              "teamName": "Upper York Admirals U13 A",
-              "scorer": ""
-            },
-            {
-              "type": "goal",
-              "period": 2,
-              "clockTime": "09:29",
-              "team": "self",
-              "teamName": "Upper York Admirals U13 A",
-              "scorer": ""
-            },
-            {
-              "type": "goal",
-              "period": 3,
-              "clockTime": "09:15",
-              "team": "self",
-              "teamName": "Upper York Admirals U13 A",
-              "scorer": ""
-            },
-            {
-              "type": "goal",
-              "period": 3,
-              "clockTime": "05:22",
-              "team": "opp",
-              "teamName": "Newmarket Renegades U13 A",
               "scorer": ""
             }
           ],
@@ -5229,32 +5205,79 @@
       "gameSheetCode": "U13A-RS-043",
       "gameSheetUrl": "https://gamesheetstats.com/seasons/15490/teams/534261/schedule",
       "record": {
-        "gp": 12,
+        "gp": 13,
         "w": 4,
-        "l": 7,
+        "l": 8,
         "t": 1,
         "pts": 9,
-        "winPct": ".333"
+        "winPct": ".308"
       },
       "stats": {
         "gf": 37,
-        "ga": 44,
-        "diff": "-7",
-        "gpg": "3.08",
-        "gapg": "3.67",
-        "pim": 102,
-        "pimPg": "8.5"
+        "ga": 47,
+        "diff": "-10",
+        "gpg": "2.85",
+        "gapg": "3.62",
+        "pim": 114,
+        "pimPg": "8.8"
       },
       "specialTeams": {
-        "ppPct": "21.2%",
+        "ppPct": "20.0%",
         "ppGoals": 7,
-        "ppOpps": 33,
-        "pkPct": "84.3%",
+        "ppOpps": 35,
+        "pkPct": "84.2%",
         "shGoals": 0,
         "shAllowed": 10,
         "tendency": "Gritty, physical forechecking style; dumps puck deep and pursues with 2 men."
       },
       "last5Games": [
+        {
+          "gameId": 3195322,
+          "gameCode": "U13A-RS-144",
+          "date": "Nov 26, 2026",
+          "location": "Alder (Red)",
+          "opp": "Caledon Hawks",
+          "vsAt": "vs",
+          "score": "0-3",
+          "result": "L",
+          "gf": 0,
+          "ga": 3,
+          "ppGoals": 0,
+          "ppOpps": 2,
+          "pkGoalsAllowed": 1,
+          "pkOpps": 6,
+          "shotsFor": 0,
+          "shotsAgainst": 0,
+          "pim": 12,
+          "goalLog": [
+            {
+              "type": "goal",
+              "period": 2,
+              "clockTime": "02:56",
+              "team": "opp",
+              "teamName": "Caledon Hawks 13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 3,
+              "clockTime": "12:11",
+              "team": "opp",
+              "teamName": "Caledon Hawks 13 A",
+              "scorer": ""
+            },
+            {
+              "type": "goal",
+              "period": 3,
+              "clockTime": "06:06",
+              "team": "opp",
+              "teamName": "Caledon Hawks 13 A",
+              "scorer": ""
+            }
+          ],
+          "penaltyLog": [],
+          "notes": "Home GameSheet regular season box score"
+        },
         {
           "gameId": 3169951,
           "gameCode": "U13A-RS-053",
@@ -5530,117 +5553,6 @@
           ],
           "penaltyLog": [],
           "notes": "Away GameSheet regular season box score"
-        },
-        {
-          "gameId": 3112769,
-          "gameCode": "U13A-RS-127",
-          "date": "Oct 29, 2026",
-          "location": "Alder (Red)",
-          "opp": "Georgian Bay Islanders",
-          "vsAt": "vs",
-          "score": "1-10",
-          "result": "L",
-          "gf": 1,
-          "ga": 10,
-          "ppGoals": 0,
-          "ppOpps": 3,
-          "pkGoalsAllowed": 3,
-          "pkOpps": 5,
-          "shotsFor": 0,
-          "shotsAgainst": 0,
-          "pim": 10,
-          "goalLog": [
-            {
-              "type": "goal",
-              "period": 1,
-              "clockTime": "06:38",
-              "team": "opp",
-              "teamName": "Georgian Bay Islanders U13 A",
-              "scorer": ""
-            },
-            {
-              "type": "goal",
-              "period": 1,
-              "clockTime": "05:03",
-              "team": "opp",
-              "teamName": "Georgian Bay Islanders U13 A",
-              "scorer": ""
-            },
-            {
-              "type": "goal",
-              "period": 1,
-              "clockTime": "03:14",
-              "team": "opp",
-              "teamName": "Georgian Bay Islanders U13 A",
-              "scorer": ""
-            },
-            {
-              "type": "goal",
-              "period": 1,
-              "clockTime": "01:20",
-              "team": "opp",
-              "teamName": "Georgian Bay Islanders U13 A",
-              "scorer": ""
-            },
-            {
-              "type": "goal",
-              "period": 2,
-              "clockTime": "07:25",
-              "team": "opp",
-              "teamName": "Georgian Bay Islanders U13 A",
-              "scorer": ""
-            },
-            {
-              "type": "goal",
-              "period": 2,
-              "clockTime": "07:04",
-              "team": "opp",
-              "teamName": "Georgian Bay Islanders U13 A",
-              "scorer": ""
-            },
-            {
-              "type": "goal",
-              "period": 2,
-              "clockTime": "04:41",
-              "team": "opp",
-              "teamName": "Georgian Bay Islanders U13 A",
-              "scorer": ""
-            },
-            {
-              "type": "goal",
-              "period": 2,
-              "clockTime": "02:19",
-              "team": "opp",
-              "teamName": "Georgian Bay Islanders U13 A",
-              "scorer": ""
-            },
-            {
-              "type": "goal",
-              "period": 2,
-              "clockTime": "00:27",
-              "team": "opp",
-              "teamName": "Georgian Bay Islanders U13 A",
-              "scorer": ""
-            },
-            {
-              "type": "goal",
-              "period": 3,
-              "clockTime": "07:06",
-              "team": "self",
-              "teamName": "Orangeville Flyers U13 A",
-              "scorer": ""
-            },
-            {
-              "type": "goal",
-              "period": 3,
-              "clockTime": "05:09",
-              "team": "opp",
-              "teamName": "Georgian Bay Islanders U13 A",
-              "scorer": ""
-            }
-          ],
-          "penaltyLog": [],
-          "notes": "Home GameSheet regular season box score"
         }
       ],
       "dangerPlayers": [
@@ -6926,5 +6838,5 @@
       ]
     }
   },
-  "lastSynced": "2026-11-26T20:30:52.995070Z"
+  "lastSynced": "2026-11-27T03:14:52.946558Z"
 }
